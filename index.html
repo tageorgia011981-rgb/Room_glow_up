@@ -1,11 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Room Glow Up</title>
-
-    <style>
+<style>
         /* 1. Basic Page Reset */
         html, body {
             margin: 0;
@@ -14,93 +7,76 @@
             height: 100%;
         }
 
-        /* 2. Main Background & Centering */
+        /* 2. Main Background */
         body {
-            /* Deep teal to match your image edges seamlessly */
-            background-color: #052e32; 
-            font-family: 'Times New Roman', serif; 
-            
-            /* This centers the "app" in the middle of a computer screen */
+            background-color: #052e32; /* Deep teal */
+            font-family: 'Times New Roman', serif;
             display: flex;
             flex-direction: column;
-            align-items: center; 
+            align-items: center;
             min-height: 100vh;
         }
 
-        /* 3. The Main Container (Controls the size) */
+        /* 3. The Main Container */
         .app-container {
             width: 100%;
-            max-width: 700px; /* <--- THIS FIXES THE HUGE SIZE */
+            /* CHANGED: Increased from 700px to 1200px for a wider, fuller look */
+            max-width: 1200px; 
             background-color: #052e32;
             display: flex;
             flex-direction: column;
             align-items: center;
-            box-shadow: 0 0 20px rgba(0,0,0,0.5); /* Adds a shadow for depth */
+            /* Added a subtle shadow to pop it off the background */
+            box-shadow: 0 0 30px rgba(0,0,0,0.8); 
         }
 
         /* 4. The Header Image */
         .header-img {
-            width: 100%;       
-            height: auto;      
-            display: block; /* Removes gap under image */
+            width: 100%;
+            height: auto;
+            display: block;
         }
 
         /* 5. Text & Button Styling */
         .content {
             width: 100%;
             text-align: center;
-            padding: 40px 20px;
+            padding: 50px 20px; /* Added more breathing room */
             box-sizing: border-box;
         }
 
         h2 {
-            color: #d4af37; /* Gold color */
-            margin-top: 0;
-            font-size: 1.5rem;
-            letter-spacing: 1px;
+            color: #d4af37; /* Gold */
+            font-size: 2rem; /* Made text slightly larger */
+            letter-spacing: 2px;
             font-weight: normal;
+            margin-top: 0;
         }
 
         p {
-            color: #a8c5c7; /* Soft teal-grey text */
-            margin-bottom: 30px;
+            color: #a8c5c7;
+            font-size: 1.1rem;
+            margin-bottom: 40px;
         }
 
-        /* The "Fancy" Button */
+        /* High-End Button */
         .enter-btn {
             display: inline-block;
             text-decoration: none;
             color: #d4af37;
             border: 1px solid #d4af37;
-            padding: 15px 50px;
-            font-size: 1.1rem;
+            padding: 18px 60px; /* Larger button */
+            font-size: 1.2rem;
             text-transform: uppercase;
-            letter-spacing: 2px;
+            letter-spacing: 3px;
             transition: all 0.3s ease;
         }
 
         .enter-btn:hover {
             background-color: #d4af37;
             color: #052e32;
-            box-shadow: 0 0 15px rgba(212, 175, 55, 0.4);
+            box-shadow: 0 0 20px rgba(212, 175, 55, 0.6);
         }
-
     </style>
-</head>
 
-<body>
-
-    <div class="app-container">
-        <img src="wallpaper.jpg" alt="Room Glow Up" class="header-img">
-
-        <div class="content">
-            <h2>Welcome</h2>
-            <p>Tap below to start browsing categories.</p>
-            
-            <a href="#" class="enter-btn">Enter</a>
-        </div>
-    </div>
-
-</body>
-</html>
 
