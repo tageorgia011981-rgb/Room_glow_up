@@ -1,4 +1,11 @@
-<style>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Room Glow Up</title>
+
+    <style>
         /* 1. Basic Page Reset */
         html, body {
             margin: 0;
@@ -9,7 +16,7 @@
 
         /* 2. Main Background */
         body {
-            background-color: #052e32; /* Deep teal */
+            background-color: #052e32; /* Deep teal to match image */
             font-family: 'Times New Roman', serif;
             display: flex;
             flex-direction: column;
@@ -20,13 +27,11 @@
         /* 3. The Main Container */
         .app-container {
             width: 100%;
-            /* CHANGED: Increased from 700px to 1200px for a wider, fuller look */
-            max-width: 1200px; 
+            max-width: 1200px; /* Limits width so it's not "huge" on desktops */
             background-color: #052e32;
             display: flex;
             flex-direction: column;
             align-items: center;
-            /* Added a subtle shadow to pop it off the background */
             box-shadow: 0 0 30px rgba(0,0,0,0.8); 
         }
 
@@ -41,13 +46,13 @@
         .content {
             width: 100%;
             text-align: center;
-            padding: 50px 20px; /* Added more breathing room */
+            padding: 50px 20px;
             box-sizing: border-box;
         }
 
         h2 {
             color: #d4af37; /* Gold */
-            font-size: 2rem; /* Made text slightly larger */
+            font-size: 2rem;
             letter-spacing: 2px;
             font-weight: normal;
             margin-top: 0;
@@ -65,7 +70,7 @@
             text-decoration: none;
             color: #d4af37;
             border: 1px solid #d4af37;
-            padding: 18px 60px; /* Larger button */
+            padding: 18px 60px;
             font-size: 1.2rem;
             text-transform: uppercase;
             letter-spacing: 3px;
@@ -78,5 +83,22 @@
             box-shadow: 0 0 20px rgba(212, 175, 55, 0.6);
         }
     </style>
+</head>
+
+<body>
+
+    <div class="app-container">
+        <img src="wallpaper.jpg" alt="Room Glow Up Header" class="header-img">
+
+        <div class="content">
+            <h2>Welcome</h2>
+            <p>Tap below to start browsing categories.</p>
+            <a href="#" class="enter-btn">Enter</a>
+        </div>
+    </div>
+
+</body>
+</html>
+
 
 
