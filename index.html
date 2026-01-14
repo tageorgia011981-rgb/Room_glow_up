@@ -1,104 +1,101 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Room Glow Up</title>
-
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+    
     <style>
-        /* 1. Basic Page Reset */
-        html, body {
+        body {
+            /* 1. SETTING YOUR FLORAL BACKGROUND */
+            background-image: url('image_aba925.jpg');
+            
+            /* This ensures the flowers cover the whole screen */
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            
+            /* HIGH-END EFFECT: Background stays still while you scroll */
+            background-attachment: fixed;
+            
             margin: 0;
             padding: 0;
-            width: 100%;
-            height: 100%;
+            font-family: 'Playfair Display', serif; /* Fancy font */
+            
+            /* Extra height so you can scroll and test the stickiness */
+            min-height: 2000px;
         }
 
-        /* 2. Main Background */
-        body {
-            background-color: #052e32; /* Deep teal to match image */
-            font-family: 'Times New Roman', serif;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            min-height: 100vh;
-        }
-
-        /* 3. The Main Container */
-        .app-container {
-            width: 100%;
-            max-width: 1200px; /* Limits width so it's not "huge" on desktops */
-            background-color: #052e32;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            box-shadow: 0 0 30px rgba(0,0,0,0.8); 
-        }
-
-        /* 4. The Header Image */
-        .header-img {
-            width: 100%;
-            height: auto;
-            display: block;
-        }
-
-        /* 5. Text & Button Styling */
-        .content {
-            width: 100%;
+        /* 2. THE STICKY HEADER (MAKES THE LOGO "HANG ON") */
+        .sticky-header {
+            position: sticky;
+            top: 0;
+            z-index: 1000; /* Keeps it on top of everything */
+            
+            /* Adds a subtle dark fade so the gold logo pops off the floral background */
+            background: linear-gradient(to bottom, rgba(1, 50, 32, 0.9), rgba(1, 50, 32, 0));
+            
             text-align: center;
-            padding: 50px 20px;
-            box-sizing: border-box;
+            padding-top: 10px;
+            padding-bottom: 30px;
         }
 
-        h2 {
-            color: #d4af37; /* Gold */
-            font-size: 2rem;
-            letter-spacing: 2px;
-            font-weight: normal;
-            margin-top: 0;
-        }
-
-        p {
-            color: #a8c5c7;
-            font-size: 1.1rem;
-            margin-bottom: 40px;
-        }
-
-        /* High-End Button */
-        .enter-btn {
-            display: inline-block;
-            text-decoration: none;
-            color: #d4af37;
-            border: 1px solid #d4af37;
-            padding: 18px 60px;
-            font-size: 1.2rem;
-            text-transform: uppercase;
-            letter-spacing: 3px;
+        /* 3. LOGO SETTINGS */
+        .logo-img {
+            width: 85%;
+            max-width: 500px; /* Limits size on big screens */
+            height: auto;
+            
+            /* Adds a 3D shadow to the logo */
+            filter: drop-shadow(0px 5px 5px rgba(0,0,0,0.5));
+            
+            /* smooth transition if you change size later */
             transition: all 0.3s ease;
         }
 
-        .enter-btn:hover {
-            background-color: #d4af37;
-            color: #052e32;
-            box-shadow: 0 0 20px rgba(212, 175, 55, 0.6);
+        /* 4. CONTENT AREA (Where your categories/furniture will go) */
+        .content-area {
+            text-align: center;
+            padding: 20px;
+            color: #FDF5E6; /* Cream/Gold text */
+            text-shadow: 2px 2px 4px #000000; /* Shadow makes text read clearly over flowers */
+        }
+        
+        .placeholder-box {
+            background-color: rgba(0, 0, 0, 0.6); /* See-through black box */
+            margin: 20px auto;
+            padding: 40px;
+            max-width: 600px;
+            border: 1px solid #BF953F; /* Gold border */
+            border-radius: 10px;
         }
     </style>
 </head>
-
 <body>
 
-    <div class="app-container">
-        <img src="wallpaper.jpg" alt="Room Glow Up Header" class="header-img">
+    <div class="sticky-header">
+        <img src="image_aba242.png" class="logo-img" alt="Room Glow Up Logo">
+    </div>
 
-        <div class="content">
-            <h2>Welcome</h2>
-            <p>Tap below to start browsing categories.</p>
-            <a href="#" class="enter-btn">Enter</a>
+    <div class="content-area">
+        <div class="placeholder-box">
+            <h2>Where Your Dream Space Comes To Life</h2>
+            <p>Welcome to Room Glow Up.</p>
+        </div>
+        
+        <div class="placeholder-box">
+            <h3>Furniture Category 1</h3>
+            <p>Scroll down to see the logo stay at the top.</p>
+        </div>
+
+        <div class="placeholder-box">
+            <h3>Furniture Category 2</h3>
+            <p>More items here...</p>
         </div>
     </div>
 
 </body>
 </html>
+
 
 
 
