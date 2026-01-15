@@ -3,96 +3,106 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Room Glow Up | Luxury Design</title>
+    <title>Room Glow Up | Modern Luxury</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&display=swap" rel="stylesheet">
     <style>
-        /* 1. FONT & RESET */
-        @import url('https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap');
-
         * { margin: 0; padding: 0; box-sizing: border-box; }
 
         body, html {
             height: 100%;
-            background-color: #002b2b;
-            overflow: hidden;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            background-color: #0d2629; 
+            overflow-x: hidden;
+            font-family: 'Cinzel', serif;
         }
 
-        /* 2. THE BACKGROUND (Linked to your renamed file) */
-        .hero-background {
+        /* USES background.jpg FROM YOUR REPOSITORY */
+        .hero-bg {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            /* Note: Renamed to background.jpg */
             background: url('background.jpg') no-repeat center center;
             background-size: cover;
-            filter: contrast(1.3) brightness(0.5) saturate(1.1);
+            filter: brightness(0.75) contrast(1.2) saturate(1.1);
             z-index: -1;
         }
 
-        /* 3. THE VIGNETTE OVERLAY */
-        .vignette {
+        /* VIVID OVERLAY FOR DEPTH */
+        .overlay {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: radial-gradient(circle, rgba(0,0,0,0) 40%, rgba(0,43,43,0.8) 100%);
+            background: radial-gradient(circle, rgba(13, 38, 41, 0) 20%, rgba(13, 38, 41, 0.85) 100%);
             z-index: 0;
         }
 
-        /* 4. BRONZE TEXT STYLING */
         .content {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
             text-align: center;
             z-index: 10;
+            position: relative;
+            padding: 20px;
         }
 
-        .room-title {
-            font-family: 'Great Vibes', cursive;
-            font-size: clamp(5rem, 18vw, 12rem);
-            line-height: 0.8;
-            background: linear-gradient(
-                to bottom,
-                #d4af37 0%, 
-                #C5A059 20%, 
-                #996515 50%, 
-                #C5A059 80%, 
-                #7a4f0f 100%
-            );
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-            filter: drop-shadow(0px 8px 15px rgba(0, 0, 0, 1));
-            background-size: 200% auto;
-            animation: textShine 5s linear infinite;
-        }
-
-        @keyframes textShine {
-            to { background-position: 200% center; }
-        }
-
-        .subtitle {
-            font-family: 'Great Vibes', cursive;
-            font-size: clamp(1.8rem, 6vw, 4rem);
+        .slogan {
             color: #d4af37;
-            margin-top: -10px;
-            text-shadow: 2px 4px 8px rgba(0,0,0,0.8);
+            font-size: clamp(1.5rem, 5vw, 3rem);
+            text-transform: uppercase;
+            letter-spacing: 10px;
+            margin-bottom: 15px;
+            text-shadow: 0 4px 20px rgba(0,0,0,0.8);
+            font-weight: 700;
+        }
+
+        .sub-text {
+            color: #d4af37;
+            font-size: clamp(0.7rem, 2vw, 1rem);
+            letter-spacing: 5px;
+            text-transform: uppercase;
+            margin-bottom: 50px;
+            opacity: 0.8;
+        }
+
+        .cta-btn {
+            padding: 22px 60px;
+            color: #e2a08d; 
+            text-decoration: none;
+            border: 1px solid #e2a08d;
+            background: rgba(13, 38, 41, 0.3);
+            backdrop-filter: blur(12px);
+            letter-spacing: 5px;
+            font-weight: bold;
+            transition: all 0.5s ease;
+            text-transform: uppercase;
+        }
+
+        .cta-btn:hover {
+            background: #e2a08d;
+            color: #0d2629;
+            box-shadow: 0 0 40px rgba(226, 160, 141, 0.5);
+            letter-spacing: 7px;
         }
     </style>
 </head>
 <body>
 
-    <div class="hero-background"></div>
-    <div class="vignette"></div>
+    <div class="hero-bg"></div>
+    <div class="overlay"></div>
 
     <div class="content">
-        <h1 class="room-title">Room Glow Up</h1>
-        <h2 class="subtitle">Your dream space come to life</h2>
+        <h1 class="slogan">Room Glow Up</h1>
+        <p class="sub-text">Where Your Dream Space Comes To Life</p>
+        <a href="#" class="cta-btn">Experience The Glow</a>
     </div>
 
 </body>
 </html>
+
 
