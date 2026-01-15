@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Room Glow Up | Modern Luxury</title>
+<style>
+/* 1. Reset and Body Setup */
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body, html {
+height: 100%;
+background-color: #0d2629; /* Matches the dark teal texture */
+overflow-x: hidden;
+font-family: 'Georgia', serif;
+}
+
+/* 2. THE BACKGROUND LAYER */
+.hero-background {
+position: fixed; /* Keeps it still while content scrolls */
+top: 0;
+left: 0;
+width: 100%;
+height: 100%;
+background-image: url('image_cd0fc6.jpg');
+
+/* THE SECRET TO NO STRETCHING: */
+background-size: cover;
+background-position: center center;
+background-repeat: no-repeat;
+
+/* ENHANCEMENT: Makes the texture pop and the rose-gold lines vivid */
+filter: contrast(1.2) brightness(0.8) saturate(1.1);
+z-index: -1;
+}
+
+/* 3. THE VIGNETTE (Adds depth and hides the 'photo' edges) */
+.overlay {
+position: fixed;
+top: 0;
+left: 0;
+width: 100%;
+height: 100%;
+background: radial-gradient(circle, rgba(13, 38, 41, 0) 30%, rgba(13, 38, 41, 0.7) 100%);
+z-index: 0;
+}
+
+/* 4. CONTENT AREA */
+.content-layer {
+position: relative;
+z-index: 10;
+height: 100vh;
+display: flex;
+flex-direction: column;
+justify-content: center;
+align-items: center;
+text-align: center;
+}
+
+.cta-button {
+padding: 18px 50px;
+color: #e2a08d; /* Matches the rose-gold lines in the image */
+text-decoration: none;
+border: 1px solid #e2a08d;
+background: rgba(13, 38, 41, 0.4);
+backdrop-filter: blur(10px); /* Premium frosted glass effect */
+text-transform: uppercase;
+letter-spacing: 5px;
+font-weight: bold;
+transition: 0.4s ease;
+box-shadow: 0 0 20px rgba(226, 160, 141, 0.2);
+}
+
+.cta-button:hover {
+background: #e2a08d;
+color: #0d2629;
+box-shadow: 0 0 50px rgba(226, 160, 141, 0.6);
+transform: scale(1.05);
+}
+</style>
+</head>
+<body>
+
+<div class="hero-background"></div>
+
+<div class="overlay"></div>
+
+<div class="content-layer">
+<a href="#" class="cta-button">Enter The Glow Up</a>
+</div>
+
+</body>
+</html>
