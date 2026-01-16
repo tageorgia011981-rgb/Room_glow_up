@@ -1,94 +1,18 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Room Glow Up</title>
-    <link href="https://fonts.googleapis.com/css2?family=Pinyon+Script&display=swap" rel="stylesheet">
-    <style>
-        body, html {
-            margin: 0;
-            padding: 0;
-            width: 100%;
-            height: 100%;
-            overflow: hidden;
-            background-color: #0b2d6b;
-        }
-
-        .bg-image {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: url('background.jpg') no-repeat center center;
-            background-size: cover;
-            z-index: 1;
-        }
-
-        /* Darkens the background slightly so the white bold text pops */
-        .bg-overlay {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.2);
-            z-index: 2;
-        }
-
-        .header-container {
-            position: relative;
-            z-index: 3;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            width: 100%;
-            padding-top: 60px;
-            color: white;
-        }
-
-        /* TOP LINE: Stretched, Bold, and Impactful */
-        .top-line {
-            font-family: 'Pinyon Script', cursive;
-            font-size: clamp(60px, 14vw, 180px); /* Slightly larger for first-impression impact */
-            line-height: 1;
-            text-align: center;
-            letter-spacing: 0.2em; 
-            width: 100%;
-            white-space: nowrap;
-
-            /* This creates the BOLD effect for script fonts */
-            -webkit-text-stroke: 1.5px white; 
-            text-shadow: 4px 4px 20px rgba(0,0,0,0.8);
-            font-weight: bold;
-        }
-
-        /* BOTTOM LINE: Centered and thick underneath */
-        .bottom-line {
-            font-family: 'Pinyon Script', cursive;
-            font-size: clamp(25px, 6vw, 75px);
-            margin-top: 10px;
-            text-align: center;
-            letter-spacing: 1px;
-            -webkit-text-stroke: 0.5px white;
-            text-shadow: 2px 2px 12px rgba(0,0,0,0.7);
-        }
-    </style>
+    <title>My Website</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-    <div class="bg-image"></div>
-    <div class="bg-overlay"></div>
-
-    <div class="header-container">
-        <div class="top-line">Room Glow Up</div>
-        <div class="bottom-line">Your Dream Space Come To Life</div>
-    </div>
+    <h1>This is a Heading</h1>
+    <p>This paragraph is styled by the separate file.</p>
 
 </body>
 </html>
    
+
 
 
 
