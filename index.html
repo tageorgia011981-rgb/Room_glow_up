@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Room Glow Up</title>
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Pinyon+Script&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Pinyon+Script&family=Playfair+Display:ital,wght@1,900&display=swap" rel="stylesheet">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body, html { height: 100%; width: 100%; background-color: #000; overflow-x: hidden; }
@@ -16,64 +16,49 @@
             background-size: cover;
             display: flex;
             flex-direction: column;
-            justify-content: flex-start; /* Pushes content to the top */
+            justify-content: flex-start;
             align-items: center;
-            padding-top: 50px; /* Space from the very top edge */
+            padding-top: 5vh;
         }
 
-        .header-group {
-            width: 95%; /* Goes almost from one side to the other */
+        .header-container {
+            width: 98%; /* Stretches almost side-to-other */
             text-align: center;
-            position: relative;
         }
 
         .main-title {
-            font-family: 'Cinzel', serif;
-            font-size: 10vw; /* Scales with screen width to stay huge */
-            color: #f4d0dc; /* The soft pink from your image */
-            line-height: 1;
-            position: relative;
-            z-index: 2;
-            text-shadow: 2px 4px 10px rgba(0,0,0,0.8);
-        }
-
-        /* This creates those long, loopy flourishes from your image */
-        .main-title::before {
-            content: 'Room Glow Up';
             font-family: 'Pinyon Script', cursive;
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            font-size: 11vw;
-            color: rgba(244, 208, 220, 0.4); /* Faded flourish look */
-            z-index: -1;
-            transform: translateY(-10px);
+            font-size: 14vw; /* Maximum scale for "Big" impact */
+            line-height: 0.9;
+            margin-bottom: -10px;
+            
+            /* The "Shiny" Metallic Effect */
+            background: linear-gradient(180deg, #f4d0dc 0%, #ffffff 45%, #e5a9bc 55%, #f4d0dc 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+
+            /* Sharp Black Shadow (Not a Glow) */
+            filter: drop-shadow(5px 8px 0px rgba(0, 0, 0, 0.9));
         }
 
         .sub-title {
-            font-family: 'Cinzel', serif;
+            font-family: 'Playfair Display', serif;
             font-size: 2vw;
+            font-style: italic;
             color: #f4d0dc;
-            text-transform: uppercase;
-            letter-spacing: 1.5vw;
-            margin-top: 10px;
-            opacity: 0.9;
+            text-transform: capitalize;
+            letter-spacing: 12px;
+            /* Subtle shadow to separate from background */
+            text-shadow: 3px 3px 5px rgba(0,0,0,1);
         }
     </style>
 </head>
 <body>
     <div id="main-display">
-        <div class="header-group">
+        <div class="header-container">
             <h1 class="main-title">Room Glow Up</h1>
-            <h2 class="sub-title">Your Dreams Come To Life</h2>
+            <h2 class="sub-title">Your Dream Space Come To Life</h2>
         </div>
     </div>
 </body>
 </html>
-
-
-
-
-
-
