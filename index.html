@@ -4,61 +4,160 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Room Glow Up</title>
-    <link href="https://fonts.googleapis.com/css2?family=Pinyon+Script&family=Playfair+Display:ital,wght@1,900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Pinyon+Script&family=Special+Elite&display=swap" rel="stylesheet">
+    
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body, html { height: 100%; width: 100%; background-color: #000; overflow-x: hidden; }
+        body { background-color: #000; overflow-x: hidden; }
 
         #main-display {
-            height: 100vh;
+            min-height: 100vh;
             width: 100vw;
-            background: url('https://tageorgia011981-rgb.github.io/Room_glow_up/background.jpg') no-repeat center center;
+            background: url('background.jpg') no-repeat center top;
             background-size: cover;
             display: flex;
             flex-direction: column;
-            justify-content: flex-start;
             align-items: center;
-            padding-top: 5vh;
-        }
-
-        .header-container {
-            width: 98%; /* Stretches almost side-to-other */
-            text-align: center;
+            padding-top: 20px;
         }
 
         .main-title {
             font-family: 'Pinyon Script', cursive;
-            font-size: 14vw; /* Maximum scale for "Big" impact */
-            line-height: 0.9;
-            margin-bottom: -10px;
-            
-            /* The "Shiny" Metallic Effect */
+            font-size: 10vw;
             background: linear-gradient(180deg, #f4d0dc 0%, #ffffff 45%, #e5a9bc 55%, #f4d0dc 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-
-            /* Sharp Black Shadow (Not a Glow) */
-            filter: drop-shadow(5px 8px 0px rgba(0, 0, 0, 0.9));
+            filter: drop-shadow(4px 6px 0px rgba(0, 0, 0, 0.9));
         }
 
-        .sub-title {
-            font-family: 'Playfair Display', serif;
-            font-size: 2vw;
-            font-style: italic;
+        /* TOP NAV: Stretched across */
+        .nav-top-row {
+            display: flex;
+            justify-content: space-evenly;
+            width: 95%;
+            margin: 20px 0;
+        }
+
+        /* LEFT SIDE: Spaced out for Rooms */
+        .nav-left-column {
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+            position: absolute;
+            left: 30px;
+            top: 320px;
+            width: 220px;
+        }
+
+        /* THE FILING CABINET DESIGN */
+        .silver-holder {
+            background: linear-gradient(145deg, #cfcfcf, #888888);
+            padding: 5px;
+            border: 1px solid #777;
+            border-radius: 2px;
+            box-shadow: 4px 4px 10px rgba(0,0,0,0.6);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .pink-insert {
+            background-color: #f4d0dc;
+            padding: 12px;
+            border: 1px inset rgba(0,0,0,0.1);
+            text-align: center;
+        }
+
+        .label-text {
+            font-family: 'Special Elite', serif;
+            color: #000;
+            font-weight: 900;
+            text-transform: uppercase;
+            font-size: 1.1rem;
+            -webkit-text-stroke: 0.5px #000;
+        }
+
+        /* THE GLOW: When you hover or it's "active" */
+        .silver-holder:hover {
+            transform: scale(1.05);
+            border-color: #f4d0dc;
+            box-shadow: 0 0 20px #f4d0dc;
+        }
+
+        /* THE MAIN STAGE */
+        .main-stage {
+            position: absolute;
+            left: 280px; 
+            top: 320px;
+            right: 40px;
+            bottom: 40px;
+            background: rgba(0, 0, 0, 0.5);
+            border: 4px solid #a0a0a0;
+            border-radius: 8px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+        }
+
+        #room-canvas {
+            width: 100%;
+            height: 100%;
+            object-fit: contain; /* Keeps your room image from being distorted */
+            display: none;
+            transition: opacity 0.5s ease;
+        }
+
+        #stage-placeholder {
+            font-family: 'Special Elite', serif;
             color: #f4d0dc;
-            text-transform: capitalize;
-            letter-spacing: 12px;
-            /* Subtle shadow to separate from background */
-            text-shadow: 3px 3px 5px rgba(0,0,0,1);
+            font-size: 1.5rem;
+            opacity: 0.6;
         }
     </style>
 </head>
 <body>
+
     <div id="main-display">
-        <div class="header-container">
-            <h1 class="main-title">Room Glow Up</h1>
-            <h2 class="sub-title">Your Dream Space Come To Life</h2>
+        <h1 class="main-title">Room Glow Up</h1>
+
+        <div class="nav-top-row">
+            <div class="silver-holder"><div class="pink-insert"><span class="label-text">Rooms</span></div></div>
+            <div class="silver-holder"><div class="pink-insert"><span class="label-text">Furniture</span></div></div>
+            <div class="silver-holder"><div class="pink-insert"><span class="label-text">Decor</span></div></div>
+            <div class="silver-holder"><div class="pink-insert"><span class="label-text">Upload</span></div></div>
+            <div class="silver-holder"><div class="pink-insert"><span class="label-text">Save</span></div></div>
+        </div>
+
+        <div class="nav-left-column">
+            <div class="silver-holder" onclick="loadRoom('image_f92424.jpg')">
+                <div class="pink-insert"><span class="label-text">Livingroom 1</span></div>
+            </div>
+            
+            <div class="silver-holder" onclick="loadRoom('image_f9281e.jpg')">
+                <div class="pink-insert"><span class="label-text">Livingroom 2</span></div>
+            </div>
+        </div>
+
+        <div class="main-stage">
+            <img src="" id="room-canvas" alt="Room Stage">
+            <span id="stage-placeholder">Select a Room to Begin</span>
         </div>
     </div>
+
+    <script>
+        function loadRoom(imageFile) {
+            const canvas = document.getElementById('room-canvas');
+            const placeholder = document.getElementById('stage-placeholder');
+
+            // Set the image and show it
+            canvas.src = imageFile;
+            canvas.style.display = 'block';
+            placeholder.style.display = 'none';
+            
+            console.log("Stage updated with: " + imageFile);
+        }
+    </script>
+
 </body>
 </html>
+
