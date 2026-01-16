@@ -1,69 +1,69 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Room Glow Up</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stretched Header Design</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: sans-serif;
+            background-color: #f4f4f4;
+        }
 
-  <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" rel="stylesheet">
+        header {
+            background-color: #ffffff;
+            padding: 20px 40px; /* Adjust padding to give the text breathing room */
+            border-bottom: 2px solid #333;
+        }
 
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
+        /* The Justified Look */
+        .stretched-title {
+            width: 100%;
+            margin: 0;
+            text-transform: uppercase;
+            font-size: 2rem;
+            font-weight: 900;
+            
+            /* The Magic Properties */
+            text-align: justify;
+            text-align-last: justify;
+            
+            /* Fallback for older browsers */
+            -moz-text-align-last: justify;
+        }
 
-    body {
-      background: #000;
-    }
+        /* Optional: Making it responsive with viewport units */
+        .responsive-title {
+            font-size: 8vw; /* Text size scales with screen width */
+            line-height: 1;
+            display: block;
+            width: 100%;
+            text-align: justify;
+            text-align-last: justify;
+        }
 
-    /* OVERSIZED HEADER */
-    header {
-      height: 120vh;              /* ⬅️ THIS makes the header bigger */
-      width: 100%;
-      background-image: url("background.jpg");
-      background-size: 120%;      /* ⬅️ THIS scales image up */
-      background-position: center top;
-      background-repeat: no-repeat;
-
-      text-align: center;
-      color: white;
-      padding-top: 20px;
-    }
-
-    header h1 {
-      font-family: 'Great Vibes', cursive;
-      font-size: 10rem;
-      line-height: 1;
-      margin-bottom: 12px;
-    }
-
-    header p {
-      font-family: 'Great Vibes', cursive;
-      font-size: 4.5rem;
-      line-height: 1.1;
-      opacity: 0.95;
-    }
-  </style>
+        .container {
+            padding: 50px;
+            text-align: center;
+        }
+    </style>
 </head>
-
 <body>
 
-  <header>
-    <h1>Room Glow Up</h1>
-    <p>Your Dream Space Come To Life</p>
-  </header>
+    <header>
+        <h1 class="stretched-title">Headline Stretching Across</h1>
+    </header>
+
+    <div class="container">
+        <p>The header above is using <b>text-align-last</b> to force the spacing between words.</p>
+        
+        <hr style="margin: 40px 0;">
+
+        <h2 class="responsive-title">STRETCH</h2>
+        <p>(This version uses viewport units to scale the font size to the edges)</p>
+    </div>
 
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
