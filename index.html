@@ -7,19 +7,57 @@
     
     <link href="https://fonts.googleapis.com/css2?family=Lavishly+Yours&display=swap" rel="stylesheet">
     
-    <link rel="stylesheet" href="style.css">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #000000; 
+            /* Make sure your image is still named background.jpg! */
+            background-image: url('background.jpg'); 
+            background-size: cover;      
+            background-position: center center; 
+            background-attachment: fixed; 
+            background-repeat: no-repeat; 
+            min-height: 100vh;
+        }
+
+        #main-display {
+            text-align: center; 
+            padding-top: 50px; /* Added a little more space at the top */
+            width: 100%;
+        }
+
+        /* Here is the code to make the font HUGE */
+        .main-title {
+            font-family: 'Lavishly Yours', cursive;
+            font-size: 120px; /* I bumped it to 120px to be safe */
+            color: #ffffff;
+            margin: 0;
+            font-weight: 400;
+            line-height: 1.2;
+        }
+
+        .sub-title {
+            font-family: sans-serif; 
+            font-size: 24px;   
+            color: #cccccc;
+            letter-spacing: 4px; /* WIDER spacing to go across the page */
+            text-transform: uppercase;
+            margin-top: 10px;
+        }
+    </style>
 </head>
 <body>
 
     <div id="main-display">
         <h1 class="main-title">Room Glow Up</h1>
-        
         <h2 class="sub-title">Your Dream Space Come To Life</h2>
     </div>
 
 </body>
 </html>
    
+
 
 
 
