@@ -2,15 +2,14 @@ body {
     margin: 0;
     padding: 0;
     
-    /* The Background Color (fills the sides) */
+    /* 1. The Background Color (fills the sides) */
     background-color: #000000; 
 
-    /* The Blue Flower Image */
-    background-image: url('blue_flower_bg.jpg'); 
+    /* 2. THE FIX: Using the correct file name now */
+    background-image: url('background.jpg'); 
     
-    /* 'contain' keeps the whole image visible (no zooming) */
+    /* 3. The Fit */
     background-size: contain;     
-    
     background-position: top center; 
     background-attachment: fixed; 
     background-repeat: no-repeat; 
