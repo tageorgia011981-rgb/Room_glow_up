@@ -1,0 +1,16 @@
+/* You write straight CSS here */
+
+body {
+background-color: lightblue;
+font-family: sans-serif;
+}
+
+h1 {
+color: navy;
+text-align: center;
+}
+
+p {
+font-size: 18px;
+padding: 20px;
+}
