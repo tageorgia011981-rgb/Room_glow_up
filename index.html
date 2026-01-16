@@ -1,208 +1,66 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Design Studio</title>
-    <link href="https://fonts.googleapis.com/css2?family=Pinyon+Script&family=Special+Elite&display=swap" rel="stylesheet">
-    
-    <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        
-        body { 
-            background-color: #000; 
-            background: url('image_03a390.jpg') no-repeat center center fixed;
-            background-size: cover;
-            overflow-y: auto;
-            min-height: 100vh;
-        }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Room Glow Up</title>
 
-        #main-display {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            width: 100%;
-            padding-bottom: 80px;
-        }
+  <!-- Elegant Google Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;1,600&family=Great+Vibes&display=swap" rel="stylesheet">
 
-        /* THE TITLE: Thick Soft Pink with Shiny Black Background */
-        .main-title {
-            font-family: 'Pinyon Script', cursive;
-            font-size: 9rem; 
-            font-weight: 900; /* Forcing the script to be as thick as possible */
-            color: #f4d0dc; /* The soft pink you requested */
-            
-            /* The "Shiny Black" effect behind the letters */
-            text-shadow: 
-                2px 2px 0px #000, 
-                4px 4px 10px rgba(0,0,0,0.9), 
-                0px 0px 15px rgba(0,0,0,1);
-            
-            margin: 20px 0;
-            text-align: center;
-            letter-spacing: 5px;
-        }
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
 
-        /* LINE 1: TOP NAVIGATION (Main Tabs) */
-        .main-nav-row {
-            display: flex;
-            justify-content: center;
-            gap: 20px;
-            width: 100%;
-            margin-bottom: 50px;
-        }
+    body {
+      min-height: 100vh;
+      background-image: url("background.jpg");
+      background-size: cover;
+      background-position: center top;
+      background-repeat: no-repeat;
+      font-family: 'Playfair Display', serif;
+    }
 
-        /* THE WORKSPACE */
-        .workspace-area {
-            display: flex;
-            width: 95%;
-            max-width: 1800px;
-            gap: 40px;
-            align-items: flex-start;
-        }
+    header {
+      text-align: center;
+      padding: 60px 20px 40px;
+      color: white;
+    }
 
-        /* LEFT COLUMN (The specific choices) */
-        #left-options-column {
-            display: none; 
-            flex-direction: column;
-            gap: 80px; 
-            min-width: 320px;
-        }
+    header h1 {
+      font-family: 'Great Vibes', cursive;
+      font-size: clamp(3rem, 6vw, 5rem);
+      font-weight: bold;
+      margin-bottom: 15px;
+    }
 
-        /* THE INDUSTRIAL SILVER HOLDER */
-        .silver-holder {
-            position: relative;
-            background: linear-gradient(145deg, #e0e0e0, #7a7a7a); 
-            padding: 22px; 
-            border: 2px solid #9c844a; 
-            border-radius: 4px;
-            box-shadow: 12px 12px 25px rgba(0,0,0,0.9);
-            cursor: pointer;
-            transition: all 0.2s ease-in-out;
-        }
+    header p {
+      font-family: 'Great Vibes', cursive;
+      font-size: clamp(1.5rem, 3vw, 2.2rem);
+      opacity: 0.95;
+    }
 
-        .bolt {
-            position: absolute;
-            width: 10px;
-            height: 10px;
-            background: radial-gradient(circle, #d4af37 20%, #8a6d1a 100%);
-            border-radius: 50%;
-            border: 1px solid #444;
-        }
-        .bolt.tl { top: 8px; left: 8px; }
-        .bolt.tr { top: 8px; right: 8px; }
-        .bolt.bl { bottom: 8px; left: 8px; }
-        .bolt.br { bottom: 8px; right: 8px; }
-
-        /* THE INSERT: Shiny Black to match the title's backing */
-        .label-insert {
-            background: linear-gradient(to bottom, #2b2b2b, #000);
-            padding: 15px 30px;
-            border: 3px inset rgba(255,255,255,0.05);
-            text-align: center;
-        }
-
-        /* THE FONT: Keeping Special Elite thick and gold */
-        .label-text {
-            font-family: 'Special Elite', serif;
-            color: #d4af37; 
-            font-weight: 900;
-            text-transform: uppercase;
-            font-size: 1.8rem;
-            letter-spacing: 3px;
-        }
-
-        .silver-holder:hover {
-            transform: scale(1.05);
-            box-shadow: 0 0 40px rgba(244, 208, 220, 0.3);
-        }
-
-        /* THE MAIN STAGE */
-        .main-stage {
-            flex-grow: 1;
-            min-height: 70vh;
-            background: rgba(0, 0, 0, 0.7);
-            border: 10px solid #b0b0b0;
-            border-radius: 12px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            overflow: hidden;
-            box-shadow: 0 40px 80px rgba(0,0,0,1);
-        }
-
-        #room-canvas {
-            width: 100%;
-            height: 100%;
-            object-fit: contain;
-            display: none;
-        }
-    </style>
+    /* Optional: space for future content */
+    main {
+      min-height: 100vh;
+    }
+  </style>
 </head>
+
 <body>
 
-    <div id="main-display">
-        <h1 class="main-title">Design Studio</h1>
+  <header>
+    <h1>Room Glow Up</h1>
+    <p>Your Dream Space Come To Life</p>
+  </header>
 
-        <div class="main-nav-row">
-            <div class="silver-holder" onclick="showCategory('rooms')">
-                <div class="bolt tl"></div><div class="bolt tr"></div><div class="bolt bl"></div><div class="bolt br"></div>
-                <div class="label-insert"><span class="label-text">Rooms</span></div>
-            </div>
-            <div class="silver-holder" onclick="showCategory('furniture')">
-                <div class="bolt tl"></div><div class="bolt tr"></div><div class="bolt bl"></div><div class="bolt br"></div>
-                <div class="label-insert"><span class="label-text">Furniture</span></div>
-            </div>
-            <div class="silver-holder"><div class="bolt tl"></div><div class="bolt tr"></div><div class="bolt bl"></div><div class="bolt br"></div><div class="label-insert"><span class="label-text">Decor</span></div></div>
-            <div class="silver-holder"><div class="bolt tl"></div><div class="bolt tr"></div><div class="bolt bl"></div><div class="bolt br"></div><div class="label-insert"><span class="label-text">Upload</span></div></div>
-            <div class="silver-holder"><div class="bolt tl"></div><div class="bolt tr"></div><div class="bolt bl"></div><div class="bolt br"></div><div class="label-insert"><span class="label-text">Save</span></div></div>
-        </div>
+  <main>
+    <!-- Your future content goes here -->
+  </main>
 
-        <div class="workspace-area">
-            <div id="left-options-column">
-                </div>
-
-            <div class="main-stage">
-                <img src="" id="room-canvas">
-                <span id="placeholder-text" style="font-family: 'Special Elite'; color: #d4af37; font-size: 3rem; opacity: 0.3;">WORKSPACE</span>
-            </div>
-        </div>
-    </div>
-
-    <script>
-        const leftColumn = document.getElementById('left-options-column');
-
-        function showCategory(type) {
-            leftColumn.style.display = "flex";
-            leftColumn.innerHTML = ''; 
-
-            if (type === 'rooms') {
-                leftColumn.innerHTML = `
-                    <div class="silver-holder" onclick="loadItem('image_f92424.jpg')">
-                        <div class="bolt tl"></div><div class="bolt tr"></div><div class="bolt bl"></div><div class="bolt br"></div>
-                        <div class="label-insert"><span class="label-text" style="font-size: 1.4rem;">Suite 01</span></div>
-                    </div>
-                    <div class="silver-holder" onclick="loadItem('image_f9281e.jpg')">
-                        <div class="bolt tl"></div><div class="bolt tr"></div><div class="bolt bl"></div><div class="bolt br"></div>
-                        <div class="label-insert"><span class="label-text" style="font-size: 1.4rem;">Studio 02</span></div>
-                    </div>`;
-            } else if (type === 'furniture') {
-                leftColumn.innerHTML = `
-                    <div class="silver-holder" onclick="loadItem('image_f92425.png')">
-                        <div class="bolt tl"></div><div class="bolt tr"></div><div class="bolt bl"></div><div class="bolt br"></div>
-                        <div class="label-insert"><span class="label-text" style="font-size: 1.4rem;">Elegant Sofa</span></div>
-                    </div>`;
-            }
-        }
-
-        function loadItem(file) {
-            const canvas = document.getElementById('room-canvas');
-            const placeholder = document.getElementById('placeholder-text');
-            canvas.src = file;
-            canvas.style.display = 'block';
-            placeholder.style.display = 'none';
-        }
-    </script>
 </body>
 </html>
 
