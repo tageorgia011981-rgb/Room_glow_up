@@ -5,28 +5,33 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Room Glow Up</title>
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
+        /* This removes the white border around the edge */
+        * { margin: 0; padding: 0; }
 
         body, html {
             height: 100%;
-            background-color: black; 
+            width: 100%;
+            background-color: black;
             overflow: hidden;
         }
 
         .hero-bg {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100vw;
             height: 100vh;
-            /* Using the full link that we know works */
-            background: url('https://tageorgia011981-rgb.github.io/Room_glow_up/background.jpg') no-repeat center center;
-            background-size: cover;
-            z-index: -1;
+            width: 100vw;
+            /* This links to your flowers */
+            background-image: url('background.jpg');
+            background-position: center;
+            background-repeat: no-repeat;
+            
+            /* THIS IS THE FIX: it stretches the tiny image to fill the screen */
+            background-size: cover; 
         }
     </style>
 </head>
 <body>
+
     <div class="hero-bg"></div>
+
 </body>
 </html>
+
