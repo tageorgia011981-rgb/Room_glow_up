@@ -5,7 +5,10 @@ body {
     /* BACKGROUND SETTINGS */
     background-color: #000000; 
     background-image: url('background.jpg'); 
+    
+    /* Keeps the image as a "picture" in the middle */
     background-size: contain;     
+    
     background-position: top center; 
     background-attachment: fixed; 
     background-repeat: no-repeat; 
@@ -13,26 +16,46 @@ body {
     min-height: 100vh;
 }
 
-/* --- THE HEADER --- */
+/* --- THE HEADER CONTAINER --- */
 #main-display {
-    text-align: center; /* Puts the title in the middle */
-    padding-top: 40px;  /* Moves it down slightly from the top edge */
+    text-align: center; 
+    padding-top: 20px;
+    width: 100%;
 }
 
+/* --- MAIN BIG TITLE --- */
 .main-title {
-    /* The New Curly Font */
-    font-family: 'Great Vibes', cursive;
+    font-family: 'Lavishly Yours', cursive;
     
-    /* Size & Color */
-    font-size: 6rem;      /* Nice and big */
-    color: #ffffff;       /* Pearly White */
+    /* HUGE Size */
+    font-size: 9rem;      
+    color: #ffffff;       
     
-    /* The "Lifted" Shadow Effect */
-    /* 2px right, 2px down, 10px blur (soft shadow) */
-    text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.9); 
+    /* Force one line */
+    white-space: nowrap;
     
-    /* Spacing */
+    /* Lifted Shadow */
+    text-shadow: 4px 4px 10px rgba(0, 0, 0, 0.9); 
+    
     margin: 0;
-    font-weight: normal;  /* Keeps it elegant, not too thick */
+    font-weight: normal; 
+}
+
+/* --- FANCY SUB-HEADER --- */
+.sub-title {
+    font-family: 'Lavishly Yours', cursive;
+    
+    /* Smaller Size */
+    font-size: 4rem;      
+    color: #ffffff;       
+    
+    /* Pull it up closer to the title */
+    margin-top: -30px;    
+    
+    /* Slightly softer shadow */
+    text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.9); 
+    
+    margin-bottom: 0;
+    font-weight: normal;
 }
 
