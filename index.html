@@ -4,12 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Room Glow Up</title>
-    <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,wght@0,900;1,900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,wght@1,900&display=swap" rel="stylesheet">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body, html { height: 100%; width: 100%; background-color: black; color: white; }
+        body, html { height: 100%; width: 100%; background-color: #000; }
 
-        /* This container forces the image to exist no matter what */
         #main-display {
             height: 100vh;
             width: 100vw;
@@ -20,24 +19,44 @@
             flex-direction: column;
             justify-content: center;
             align-items: center;
+            text-align: center;
         }
 
         .main-title {
             font-family: 'Bodoni Moda', serif;
-            font-size: 8rem;
+            font-size: 9rem;
+            font-weight: 900;
             font-style: italic;
             text-transform: uppercase;
-            color: black;
-            text-shadow: -1px -1px 0 #f4d0dc, 1px -1px 0 #f4d0dc, -1px 1px 0 #f4d0dc, 1px 1px 0 #f4d0dc;
+            color: #000; /* Sleek Black */
+            /* Subtle 'pressed' effect with a soft rose-gold highlight */
+            text-shadow: 
+                1px 1px 0px rgba(244, 208, 220, 0.2), 
+                -1px -1px 1px rgba(0, 0, 0, 0.8),
+                10px 15px 25px rgba(0, 0, 0, 0.9);
+            line-height: 0.8;
+            letter-spacing: -4px;
+        }
+
+        .sub-title {
+            font-family: 'Bodoni Moda', serif;
+            font-size: 1rem;
+            color: #f4d0dc;
+            text-transform: uppercase;
+            letter-spacing: 18px; /* Elegant, wide luxury spacing */
+            margin-top: 40px;
+            opacity: 0.6; /* Keeps it subtle and sleek */
         }
     </style>
 </head>
 <body>
     <div id="main-display">
-        <h1 class="main-title">Room Glow Up</h1>
+        <h1 class="main-title">Room<br>Glow Up</h1>
+        <h2 class="sub-title">Your Dreams Come To Life</h2>
     </div>
 </body>
 </html>
+
 
 
 
