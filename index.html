@@ -32,23 +32,36 @@
         .header-container {
             height: 100vh;
             display: flex;
+            flex-direction: column;
             justify-content: center;
             align-items: center;
+            text-align: center;
         }
 
         .main-title {
-            font-size: 8rem; /* Very big as requested */
-            color: black;    /* Black fill */
-            text-align: center;
-            /* This creates the shiny pinkish outline/glow */
+            font-size: 8.5rem; 
+            color: black;
+            margin-bottom: 0;
+            /* Using a soft Rose Gold/Champagne pink outline */
             text-shadow: 
-                -2px -2px 0 #ffb6c1,  
-                 2px -2px 0 #ffb6c1,
-                -2px  2px 0 #ffb6c1,
-                 2px  2px 0 #ffb6c1,
-                 0 0 20px #ff69b4, 
-                 0 0 40px #ff1493;
-            letter-spacing: 5px;
+                -1px -1px 0 #f4d0dc,  
+                 1px -1px 0 #f4d0dc,
+                -1px  1px 0 #f4d0dc,
+                 1px  1px 0 #f4d0dc,
+                 0 0 12px rgba(244, 208, 220, 0.5); /* Soft, hazy glow */
+        }
+
+        .sub-title {
+            font-size: 3rem;
+            color: black;
+            margin-top: -15px;
+            /* Same soft outline for the sub-header */
+            text-shadow: 
+                -0.5px -0.5px 0 #f4d0dc,  
+                 0.5px -0.5px 0 #f4d0dc,
+                -0.5px  0.5px 0 #f4d0dc,
+                 0.5px  0.5px 0 #f4d0dc,
+                 0 0 8px rgba(244, 208, 220, 0.4);
         }
     </style>
 </head>
@@ -58,9 +71,11 @@
 
     <div class="header-container">
         <h1 class="main-title">Room Glow Up</h1>
+        <h2 class="sub-title">Your Dreams Come To Life</h2>
     </div>
 
 </body>
 </html>
+
 
 
