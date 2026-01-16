@@ -15,27 +15,26 @@
             font-family: 'Cinzel', serif;
         }
 
-        /* USES background.jpg FROM YOUR REPOSITORY */
+        /* DIRECT LINK TO YOUR IMAGE TO BYPASS ERRORS */
         .hero-bg {
             position: fixed;
             top: 0;
             left: 0;
-            width: 100%;
-            height: 100%;
-            background: url('background.jpg') no-repeat center center;
+            width: 100vw;
+            height: 100vh;
+            background: url('https://raw.githubusercontent.com/tageorgia011981-rgb/Room_glow_up/main/background.jpg') no-repeat center center;
             background-size: cover;
-            filter: brightness(0.75) contrast(1.2) saturate(1.1);
+            filter: brightness(0.7) contrast(1.2);
             z-index: -1;
         }
 
-        /* VIVID OVERLAY FOR DEPTH */
         .overlay {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: radial-gradient(circle, rgba(13, 38, 41, 0) 20%, rgba(13, 38, 41, 0.85) 100%);
+            background: radial-gradient(circle, rgba(13, 38, 41, 0) 20%, rgba(13, 38, 41, 0.8) 100%);
             z-index: 0;
         }
 
@@ -53,31 +52,31 @@
 
         .slogan {
             color: #d4af37;
-            font-size: clamp(1.5rem, 5vw, 3rem);
+            font-size: clamp(2rem, 8vw, 4rem);
             text-transform: uppercase;
-            letter-spacing: 10px;
-            margin-bottom: 15px;
-            text-shadow: 0 4px 20px rgba(0,0,0,0.8);
+            letter-spacing: 12px;
+            margin-bottom: 10px;
+            text-shadow: 0 4px 20px rgba(0,0,0,0.9);
             font-weight: 700;
         }
 
         .sub-text {
             color: #d4af37;
-            font-size: clamp(0.7rem, 2vw, 1rem);
-            letter-spacing: 5px;
+            font-size: clamp(0.8rem, 3vw, 1.2rem);
+            letter-spacing: 6px;
             text-transform: uppercase;
-            margin-bottom: 50px;
-            opacity: 0.8;
+            margin-bottom: 60px;
+            opacity: 0.9;
         }
 
         .cta-btn {
-            padding: 22px 60px;
+            padding: 22px 65px;
             color: #e2a08d; 
             text-decoration: none;
-            border: 1px solid #e2a08d;
-            background: rgba(13, 38, 41, 0.3);
-            backdrop-filter: blur(12px);
-            letter-spacing: 5px;
+            border: 2px solid #e2a08d;
+            background: rgba(13, 38, 41, 0.4);
+            backdrop-filter: blur(15px);
+            letter-spacing: 6px;
             font-weight: bold;
             transition: all 0.5s ease;
             text-transform: uppercase;
@@ -86,8 +85,8 @@
         .cta-btn:hover {
             background: #e2a08d;
             color: #0d2629;
-            box-shadow: 0 0 40px rgba(226, 160, 141, 0.5);
-            letter-spacing: 7px;
+            box-shadow: 0 0 50px rgba(226, 160, 141, 0.6);
+            transform: scale(1.05);
         }
     </style>
 </head>
@@ -99,10 +98,11 @@
     <div class="content">
         <h1 class="slogan">Room Glow Up</h1>
         <p class="sub-text">Where Your Dream Space Comes To Life</p>
-        <a href="#" class="cta-btn">Experience The Glow</a>
+        <a href="#" class="cta-btn">Begin Transformation</a>
     </div>
 
 </body>
 </html>
+
 
 
