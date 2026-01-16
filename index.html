@@ -3,106 +3,31 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Room Glow Up | Modern Luxury</title>
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&display=swap" rel="stylesheet">
+    <title>Room Glow Up</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
 
         body, html {
             height: 100%;
-            background-color: #0d2629; 
-            overflow-x: hidden;
-            font-family: 'Cinzel', serif;
+            background-color: #1a1a1a;
+            overflow: hidden;
         }
 
-        /* DIRECT LINK TO YOUR IMAGE TO BYPASS ERRORS */
         .hero-bg {
             position: fixed;
             top: 0;
             left: 0;
             width: 100vw;
             height: 100vh;
-            background: url('https://raw.githubusercontent.com/tageorgia011981-rgb/Room_glow_up/main/background.jpg') no-repeat center center;
+            background: url('background.jpg') no-repeat center center;
             background-size: cover;
-            filter: brightness(0.7) contrast(1.2);
             z-index: -1;
-        }
-
-        .overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: radial-gradient(circle, rgba(13, 38, 41, 0) 20%, rgba(13, 38, 41, 0.8) 100%);
-            z-index: 0;
-        }
-
-        .content {
-            height: 100vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-            z-index: 10;
-            position: relative;
-            padding: 20px;
-        }
-
-        .slogan {
-            color: #d4af37;
-            font-size: clamp(2rem, 8vw, 4rem);
-            text-transform: uppercase;
-            letter-spacing: 12px;
-            margin-bottom: 10px;
-            text-shadow: 0 4px 20px rgba(0,0,0,0.9);
-            font-weight: 700;
-        }
-
-        .sub-text {
-            color: #d4af37;
-            font-size: clamp(0.8rem, 3vw, 1.2rem);
-            letter-spacing: 6px;
-            text-transform: uppercase;
-            margin-bottom: 60px;
-            opacity: 0.9;
-        }
-
-        .cta-btn {
-            padding: 22px 65px;
-            color: #e2a08d; 
-            text-decoration: none;
-            border: 2px solid #e2a08d;
-            background: rgba(13, 38, 41, 0.4);
-            backdrop-filter: blur(15px);
-            letter-spacing: 6px;
-            font-weight: bold;
-            transition: all 0.5s ease;
-            text-transform: uppercase;
-        }
-
-        .cta-btn:hover {
-            background: #e2a08d;
-            color: #0d2629;
-            box-shadow: 0 0 50px rgba(226, 160, 141, 0.6);
-            transform: scale(1.05);
         }
     </style>
 </head>
 <body>
 
     <div class="hero-bg"></div>
-    <div class="overlay"></div>
-
-    <div class="content">
-        <h1 class="slogan">Room Glow Up</h1>
-        <p class="sub-text">Where Your Dream Space Comes To Life</p>
-        <a href="#" class="cta-btn">Begin Transformation</a>
-    </div>
 
 </body>
 </html>
-
-
-
