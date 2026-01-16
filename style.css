@@ -5,11 +5,8 @@ body {
     /* BACKGROUND SETTINGS */
     background-color: #000000; 
     background-image: url('background.jpg'); 
-    
-    /* Keeps the image as a "picture" in the middle */
-    background-size: contain;     
-    
-    background-position: top center; 
+    background-size: cover;      
+    background-position: center center; 
     background-attachment: fixed; 
     background-repeat: no-repeat; 
     
@@ -19,61 +16,25 @@ body {
 /* --- THE HEADER CONTAINER --- */
 #main-display {
     text-align: center; 
-    padding-top: 20px;
+    padding-top: 50px;
     width: 100%;
 }
 
-/* --- MAIN BIG TITLE --- */
-.main-title {
-    font-family: 'Lavishly Yours', cursive;
-    
-    /* HUGE Size */
-    font-size: 9rem;      
-    color: #ffffff;       
-    
-    /* Force one line */
-    white-space: nowrap;
-    
-    /* Lifted Shadow */
-    text-shadow: 4px 4px 10px rgba(0, 0, 0, 0.9); 
-    
-    margin: 0;
-    font-weight: normal; 
-}
-
-/* --- FANCY SUB-HEADER --- */
-.sub-title {
-    font-family: 'Lavishly Yours', cursive;
-    
-    /* Smaller Size */
-    font-size: 4rem;      
-    color: #ffffff;       
-    
-    /* Pull it up closer to the title */
-    margin-top: -30px;    
-    
-    /* Slightly softer shadow */
-    text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.9); 
-    
-    margin-bottom: 0;
-    font-weight: normal;
-}
 /* --- HEADER TEXT STYLES --- */
-
 .main-title {
     font-family: 'Lavishly Yours', cursive;
     font-size: 100px;  /* This makes it HUGE */
-    color: #ffffff;    /* White text to show up on the dark background */
-    margin-bottom: 0;  /* Brings the subtitle closer */
-    font-weight: 400;  /* Keeps it elegant, not bold */
+    color: #ffffff;    /* White text */
+    margin-bottom: 0;
+    font-weight: 400;
 }
 
 .sub-title {
-    /* You can use a standard font here for contrast, or Lavishly Yours again */
     font-family: sans-serif; 
     font-size: 24px;   
-    color: #cccccc;    /* Light gray */
-    letter-spacing: 2px; /* Stretches the text out slightly */
-    text-transform: uppercase; /* Makes it look like a pro design */
+    color: #cccccc;    /* Light gray text */
+    letter-spacing: 2px;
+    text-transform: uppercase;
 }
+
 
