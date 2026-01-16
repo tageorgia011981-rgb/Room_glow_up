@@ -1,16 +1,19 @@
-/* You write straight CSS here */
-
 body {
-background-color: lightblue;
-font-family: sans-serif;
-}
+    margin: 0;
+    padding: 0;
+    
+    /* The Background Color (fills the sides) */
+    background-color: #000000; 
 
-h1 {
-color: navy;
-text-align: center;
-}
-
-p {
-font-size: 18px;
-padding: 20px;
+    /* The Blue Flower Image */
+    background-image: url('blue_flower_bg.jpg'); 
+    
+    /* 'contain' keeps the whole image visible (no zooming) */
+    background-size: contain;     
+    
+    background-position: top center; 
+    background-attachment: fixed; 
+    background-repeat: no-repeat; 
+    
+    min-height: 100vh;
 }
