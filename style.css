@@ -58,4 +58,22 @@ body {
     margin-bottom: 0;
     font-weight: normal;
 }
+/* --- HEADER TEXT STYLES --- */
+
+.main-title {
+    font-family: 'Lavishly Yours', cursive;
+    font-size: 100px;  /* This makes it HUGE */
+    color: #ffffff;    /* White text to show up on the dark background */
+    margin-bottom: 0;  /* Brings the subtitle closer */
+    font-weight: 400;  /* Keeps it elegant, not bold */
+}
+
+.sub-title {
+    /* You can use a standard font here for contrast, or Lavishly Yours again */
+    font-family: sans-serif; 
+    font-size: 24px;   
+    color: #cccccc;    /* Light gray */
+    letter-spacing: 2px; /* Stretches the text out slightly */
+    text-transform: uppercase; /* Makes it look like a pro design */
+}
 
