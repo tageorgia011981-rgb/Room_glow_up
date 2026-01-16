@@ -4,27 +4,51 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Room Glow Up</title>
+    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" rel="stylesheet">
     <style>
-        /* This removes the white border around the edge */
-        * { margin: 0; padding: 0; }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
 
         body, html {
             height: 100%;
             width: 100%;
             background-color: black;
             overflow: hidden;
+            font-family: 'Great Vibes', cursive;
         }
 
         .hero-bg {
-            height: 100vh;
+            position: fixed;
+            top: 0;
+            left: 0;
             width: 100vw;
-            /* This links to your flowers */
+            height: 100vh;
             background-image: url('background.jpg');
             background-position: center;
             background-repeat: no-repeat;
-            
-            /* THIS IS THE FIX: it stretches the tiny image to fill the screen */
-            background-size: cover; 
+            background-size: cover;
+            z-index: -1;
+        }
+
+        .header-container {
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .main-title {
+            font-size: 8rem; /* Very big as requested */
+            color: black;    /* Black fill */
+            text-align: center;
+            /* This creates the shiny pinkish outline/glow */
+            text-shadow: 
+                -2px -2px 0 #ffb6c1,  
+                 2px -2px 0 #ffb6c1,
+                -2px  2px 0 #ffb6c1,
+                 2px  2px 0 #ffb6c1,
+                 0 0 20px #ff69b4, 
+                 0 0 40px #ff1493;
+            letter-spacing: 5px;
         }
     </style>
 </head>
@@ -32,6 +56,11 @@
 
     <div class="hero-bg"></div>
 
+    <div class="header-container">
+        <h1 class="main-title">Room Glow Up</h1>
+    </div>
+
 </body>
 </html>
+
 
