@@ -1,40 +1,103 @@
-body {
+/* 1. Global Reset & Background Anchor */
+* { box-sizing: border-box; }
+
+body, html {
     margin: 0;
     padding: 0;
-    
-    /* BACKGROUND SETTINGS */
-    background-color: #000000; 
-    background-image: url('background.jpg'); 
-    background-size: cover;      
-    background-position: center center; 
-    background-attachment: fixed; 
-    background-repeat: no-repeat; 
-    
     min-height: 100vh;
+    /* PURPLE FLOWERS ATMOSPHERE */
+    background-color: #0b0d10; 
+    background-image: url('background5.jpg'); 
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed; 
+    display: flex;
+    flex-direction: column;
 }
 
-/* --- THE HEADER CONTAINER --- */
-#main-display {
-    text-align: center; 
-    padding-top: 50px;
+/* 2. Header Area (Logo & Top Navigation) */
+.studio-header {
+    text-align: center;
+    padding: 60px 0;
+    background: rgba(0, 0, 0, 0.5); 
+}
+
+.main-logo {
+    max-width: 550px;
+    height: auto;
+    margin-bottom: 30px;
+}
+
+.master-nav {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+}
+
+/* 3. THE WORKSPACE: Jewel Mosaic Background */
+.workspace-container {
+    display: flex;
+    flex: 1;
+    /* LOCKED JEWEL BACKGROUND */
+    background-image: url('background3.jpg');
+    background-size: 400px; 
+    background-attachment: fixed;
+    border-top: 3px solid #7d6333; 
+}
+
+/* 4. Filing Cabinet Sidebar */
+#filing-cabinet {
+    width: 320px;
+    background: rgba(0, 0, 0, 0.7); 
+    backdrop-filter: blur(10px);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 40px 0;
+    gap: 20px;
+    border-right: 2px solid #7d6333;
+}
+
+/* 5. Center Stage & Room Image */
+#center-stage {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 50px;
+}
+
+.hero-image {
     width: 100%;
+    max-width: 1200px;
+    height: auto;
+    border: 12px solid #000; 
+    box-shadow: 0 0 60px rgba(0,0,0,1);
 }
 
-/* --- HEADER TEXT STYLES --- */
-.main-title {
-    font-family: 'Lavishly Yours', cursive;
-    font-size: 100px;  /* This makes it HUGE */
-    color: #ffffff;    /* White text */
-    margin-bottom: 0;
-    font-weight: 400;
+/* 6. VINTAGE LABEL HOLDERS (Hardware Style) */
+.vintage-holder {
+    padding: 5px;
+    background: #000; 
+    border: 1px solid #7d6333; 
+    border-radius: 2px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.9);
+    display: inline-block;
 }
 
-.sub-title {
-    font-family: sans-serif; 
-    font-size: 24px;   
-    color: #cccccc;    /* Light gray text */
-    letter-spacing: 2px;
+.plaque {
+    background: #151515; 
+    color: #c5a059;    
+    padding: 12px 25px;
+    min-width: 190px;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 17px;
+    font-weight: 900;
     text-transform: uppercase;
+    text-align: center;
+    border: none;
+    cursor: pointer;
 }
+
 
 
