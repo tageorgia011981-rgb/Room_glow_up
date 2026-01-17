@@ -1,28 +1,21 @@
-/* 1. Global Reset & Background Anchor */
+/* 1. Global Reset & Studio Color */
 * { box-sizing: border-box; }
 
 body, html {
     margin: 0;
     padding: 0;
     min-height: 100vh;
-    background-color: #0b0d10; 
-    
-    /* BACKGROUND 4: FIXED ZOOM */
-    background-image: url('background4.jpg'); 
-    background-size: contain; 
-    background-position: center top; 
-    background-repeat: no-repeat;
-    background-attachment: fixed; 
-    
+    background-color: #0d0e11; /* Corrected to Deep Black */
     display: flex;
     flex-direction: column;
 }
 
-/* 2. Header Scaling */
+/* 2. THE HEADER & LOGO */
 .studio-header {
     text-align: center;
     padding: 40px 0;
-    background: rgba(0, 0, 0, 0.5); 
+    background: #000;
+    border-bottom: 2px solid #7d6333; 
 }
 
 .main-logo {
@@ -31,53 +24,7 @@ body, html {
     margin-bottom: 25px;
 }
 
-.master-nav {
-    display: flex;
-    justify-content: center;
-    gap: 20px;
-}
-
-/* 3. The Workspace: Jewel Mosaic Lining */
-.workspace-container {
-    display: flex;
-    flex: 1;
-    background-image: url('background3.jpg');
-    background-size: 400px; 
-    background-attachment: fixed;
-    border-top: 3px solid #7d6333; 
-}
-
-/* 4. Filing Cabinet Sidebar */
-#filing-cabinet {
-    width: 320px;
-    background: rgba(0, 0, 0, 0.7); 
-    backdrop-filter: blur(10px);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 40px 0;
-    gap: 20px;
-    border-right: 2px solid #7d6333;
-}
-
-/* 5. Center Stage & Room Image */
-#center-stage {
-    flex: 1;
-    display: flex;
-    justify-content: center;
-    align-items: flex-start;
-    padding: 50px;
-}
-
-.hero-image {
-    width: 100%;
-    max-width: 1200px;
-    height: auto;
-    border: 12px solid #000; 
-    box-shadow: 0 0 60px rgba(0,0,0,1);
-}
-
-/* 6. VINTAGE LABEL HOLDERS (Hardware Style) */
+/* 3. VINTAGE LABEL HOLDERS (The Hardware) */
 .vintage-holder {
     padding: 5px;
     background: #000; 
@@ -85,21 +32,58 @@ body, html {
     border-radius: 2px;
     box-shadow: 0 4px 15px rgba(0,0,0,0.9);
     display: inline-block;
+    cursor: pointer;
 }
 
 .plaque {
     background: #151515; 
     color: #c5a059;    
-    padding: 12px 25px;
-    min-width: 190px;
+    padding: 10px 20px;
+    min-width: 180px;
     font-family: 'Courier New', Courier, monospace;
-    font-size: 17px;
+    font-size: 16px;
     font-weight: 900;
     text-transform: uppercase;
     text-align: center;
     border: none;
-    cursor: pointer;
 }
+
+/* 4. THE DRAWERS (Hidden by default) */
+#filing-cabinet {
+    width: 320px;
+    background: #000;
+    display: none; /* DRAWER IS CLOSED */
+    flex-direction: column;
+    align-items: center;
+    padding: 40px 0;
+    gap: 15px;
+    border-right: 1px solid #7d6333;
+}
+
+/* Shows drawer when 'active' class is added */
+#filing-cabinet.active {
+    display: flex;
+}
+
+/* 5. THE ROOM SQUARE (Gemstone Stage) */
+#center-stage {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center; 
+    padding: 60px;
+    background-image: url('background7.jpg'); 
+    background-size: cover; 
+    background-position: center;
+}
+
+.hero-image {
+    width: 100%;
+    max-width: 1000px; 
+    border: 12px solid #000; 
+    box-shadow: 0 0 80px rgba(0,0,0,1);
+}
+
 
 
 
