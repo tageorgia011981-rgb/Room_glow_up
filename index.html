@@ -1,54 +1,18 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Room Glow Up Studio</title>
-    <link rel="stylesheet" href="style.css">
-</head>
-<body>
+<!-- In index.html -->
+<link rel="stylesheet" href="style.css">
 
-    <header class="studio-header">
-        <img src="logo.png" alt="Room Glow Up" class="main-logo">
-        <nav style="display: flex; justify-content: center; gap: 15px;">
-            <div class="vintage-holder" onclick="toggleDrawers()">
-                <div class="plaque">Rooms</div>
-            </div>
-            <div class="vintage-holder"><div class="plaque">Furniture</div></div>
-            <div class="vintage-holder"><div class="plaque">Decor</div></div>
-        </nav>
-    </header>
+<div class="hero" style="background: url('assets/background5.jpg') no-repeat center center fixed; background-size: cover;">
+<div class="header-content">
+<h1 class="brand-title">Room Glow Up</h1>
+<h2 class="brand-subtitle">Your Dream Space Come To Life</h2>
+</div>
 
-    <div class="workspace-container" style="display: flex; flex: 1;">
-        <aside id="filing-cabinet">
-            <div class="vintage-holder"><div class="plaque">Living Room</div></div>
-            <div class="vintage-holder"><div class="plaque">Bedroom</div></div>
-        </aside>
-        
-        <main id="center-stage">
-            <img src="livingroom.jpg" id="active-room-image" class="hero-image">
-        </main>
-    </div>
-
-    <script>
-        function toggleDrawers() {
-            var cabinet = document.getElementById("filing-cabinet");
-            cabinet.classList.toggle("active");
-        }
-    </script>
-</body>
-</html>
-   
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+<nav class="main-nav">
+<a href="#"><span>Rooms</span></a>
+<a href="#"><span>Furniture</span></a>
+<a href="#"><span>Decor</span></a>
+<a href="#"><span>Upload</span></a>
+<a href="#"><span>Save</span></a>
+<a href="#"><span>Inspiration</span></a>
+</nav>
+</div>
