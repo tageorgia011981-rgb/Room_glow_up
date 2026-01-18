@@ -1,6 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Lavishly+Yours&family=Playfair+Display:wght@400;700&family=Special+Elite&display=swap');
 
-/* ===== GLOBAL RE-LOCK ===== */
+/* ===== GLOBAL RESET ===== */
 * {
     box-sizing: border-box;
     margin: 0;
@@ -9,6 +9,7 @@
 
 body {
     font-family: 'Inter', sans-serif;
+    /* Fixed background to prevent scrolling bugs on GitHub */
     background: url('background7.jpg') no-repeat center center fixed !important;
     background-size: cover !important;
     background-color: #0d0a08;
@@ -54,16 +55,16 @@ body {
     text-align: center;
 }
 
-/* ===== THE PHOTO CABINET PANEL ===== */
+/* ===== THE PHOTO CABINET PANEL (SCALED UP) ===== */
 .side-panel {
     position: absolute;
-    left: 15px !important; /* Locked to the left wall */
-    top: 350px; 
-    width: 260px; 
-    height: 700px;
+    left: 15px !important; /* Locked to the left edge */
+    top: 280px;            /* Moved up higher so it's not set back */
+    width: 320px;          /* Increased width for a bigger look */
+    height: 850px;         /* Increased height */
     margin: 0;
     
-    /* Make sure your transparent PNG is named cabinet.png */
+    /* Ensure your file is named cabinet.png */
     background: url('cabinet.png') no-repeat center center;
     background-size: contain;
     
@@ -71,9 +72,9 @@ body {
     flex-direction: column;
     z-index: 100;
     
-    /* ALIGNMENT FOR 4 DRAWER HANDLES */
-    padding-top: 125px; /* Moves first label to the top handle */
-    gap: 92px;          /* Spacing between handles */
+    /* ALIGNMENT FOR THE 4 HANDLES */
+    padding-top: 155px; /* Moves Living Room to the top handle */
+    gap: 125px;         /* Spacing between the handles on the larger image */
     
     opacity: 0;
     visibility: hidden;
@@ -94,20 +95,19 @@ body {
     width: 100%;
     display: flex;
     justify-content: center;
-    position: relative;
 }
 
 /* ===== VINTAGE LABELS ===== */
 .label {
-    display: inline-block; /* Prevents the 'line of light' across the screen */
+    display: inline-block; /* Fixes the "line of light" across screen */
     background: rgba(18, 13, 10, 0.9);
     color: #f1d9a8;
     font-family: 'Special Elite', monospace;
-    font-size: 0.65rem;
-    padding: 4px 10px;
+    font-size: 0.75rem;
+    padding: 5px 12px;
     border-radius: 2px;
     border: 1px solid #c2a46f;
-    box-shadow: 2px 2px 6px rgba(0,0,0,0.7);
+    box-shadow: 2px 2px 8px rgba(0,0,0,0.8);
     transform: rotate(-1deg);
     transition: all 0.3s ease;
 }
@@ -118,15 +118,16 @@ body {
     border-color: #fff !important;
     color: #fff !important;
     text-shadow: 0 0 5px rgba(255,255,255,0.5);
-    transform: translateX(5px) rotate(-1deg); /* Slight 'opening' nudge */
+    /* Nudges the label out slightly like a drawer opening */
+    transform: translateX(8px) rotate(-1deg); 
 }
 
-/* Hide the old coded parts since we have the photo */
+/* Hide extra clutter since it's in the cabinet photo */
 .screw, .side-drawer::after {
     display: none !important;
 }
 
-/* Ensure sub-header is legible */
+/* Fixed sub-header styling */
 .brand-subtitle span {
     display: inline-block !important;
     margin-top: 5px;
