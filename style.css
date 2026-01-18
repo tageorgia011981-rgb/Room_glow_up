@@ -4,16 +4,20 @@ html, body {
     height: 100%;
 }
 
-body {
+
+   body {
     font-family: 'Inter', sans-serif;
-    background: url('background_color.jpg') no-repeat center center;
-    background-size: cover;       /* ensures the whole image fits */
-    background-attachment: fixed;
+    background-image: url('background_color.jpg');
+    background-repeat: no-repeat;
+    background-position: center center;  /* center the image */
+    background-size: cover;              /* fill screen but keep proportions */
+    background-attachment: fixed;        /* keeps it from scrolling oddly */
     color: #f1d9a8;
     min-height: 100vh;
-    display: flex;
-    flex-direction: column;
+    margin: 0;
+    padding: 0;
 }
+
 
 /* HEADER */
 .header-content {
@@ -93,3 +97,4 @@ body {
     padding-left: 15px;
     min-height: 500px; /* placeholder for cabinet & room display */
 }
+
