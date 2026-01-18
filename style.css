@@ -59,12 +59,30 @@ body {
 
 /* ===== THE PHOTO CABINET PANEL ===== */
 .side-panel {
+  /* THE PHOTO CABINET PANEL */
+.side-panel {
     position: absolute;
-    left: 15px;
+    left: 15px; /* Locked to the left edge for a chic, high-end look */
     top: 350px; 
-    width: 280px;  /* Adjusted for your specific tall cabinet photo */
+    width: 260px; 
     height: 700px;
     
+    /* Ensure your transparent PNG is named exactly cabinet.png */
+    background: url('cabinet.png') no-repeat center center;
+    background-size: contain;
+    
+    display: flex;
+    flex-direction: column;
+    z-index: 100;
+    
+    /* ALIGNMENT: Adjust these if labels don't hit the handles on your photo */
+    padding-top: 115px; 
+    gap: 95px;          
+    
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.5s ease;
+}
     /* YOUR UPLOADED IMAGE */
     background: url('cabinet.png') no-repeat center center;
     background-size: contain;
@@ -129,3 +147,4 @@ body {
 .screw, .side-drawer::after {
     display: none !important;
 }
+
