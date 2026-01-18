@@ -24,11 +24,47 @@
     </nav>
 
     <div class="side-panel" id="sideCabinet">
-        <div class="side-drawer" onclick="this.classList.toggle('lit-up')"><span class="label">Living Room</span></div>
-        <div class="side-drawer" onclick="this.classList.toggle('lit-up')"><span class="label">Bedroom</span></div>
-        <div class="side-drawer" onclick="this.classList.toggle('lit-up')"><span class="label">Kitchen</span></div>
-        <div class="side-drawer" onclick="this.classList.toggle('lit-up')"><span class="label">Dining Room</span></div>
+        <div class="side-drawer" onclick="uploadRoom('livingroom.png', this)">
+            <span class="label">Living Room 1</span>
+        </div>
+        <div class="side-drawer" onclick="uploadRoom('livingroom2.png', this)">
+            <span class="label">Living Room 2</span>
+        </div>
+        <div class="side-drawer" onclick="this.classList.toggle('lit-up')">
+            <span class="label">Bedroom</span>
+        </div>
+        <div class="side-drawer" onclick="this.classList.toggle('lit-up')">
+            <span class="label">Kitchen</span>
+        </div>
+        <div class="side-drawer" onclick="this.classList.toggle('lit-up')">
+            <span class="label">Office</span>
+        </div>
     </div>
 
+    <div class="furniture-fan-container" id="furnitureFan">
+        <div class="fan-item" title="Seating" onclick="openCategory('seating')">
+            <img src="seating-icon.png" alt="Seating">
+        </div>
+        <div class="fan-item" title="Tables" onclick="openCategory('tables')">
+            <img src="tables-icon.png" alt="Tables">
+        </div>
+        <div class="fan-item" title="Storage" onclick="openCategory('storage')">
+            <img src="storage-icon.png" alt="Storage">
+        </div>
+        <div class="fan-item" title="Beds" onclick="openCategory('beds')">
+            <img src="beds-icon.png" alt="Beds">
+        </div>
+    </div>
+
+    <div class="main-display" id="mainDisplay">
+        <div class="display-placeholder" id="placeholderText">Select a Room to Begin</div>
+        <img src="" alt="Room Display" class="room-viewport" id="roomImage">
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
+
     
+
 
