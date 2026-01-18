@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Room Glow Up | Vogue Edition</title>
+    <title>Room Glow Up</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -14,9 +14,7 @@
     </div>
 
     <nav class="main-nav">
-        <div class="nav-tab" id="rooms-trigger" onclick="toggleRooms()">
-            <span class="label">Rooms</span>
-        </div>
+        <div class="nav-tab" onclick="toggleRooms()"><span class="label">Rooms</span></div>
         <div class="nav-tab"><span class="label">Furniture</span></div>
         <div class="nav-tab"><span class="label">Decor</span></div>
         <div class="nav-tab"><span class="label">Upload</span></div>
@@ -24,37 +22,20 @@
     </nav>
 
     <div class="side-panel" id="sideCabinet">
-        <div class="side-drawer" onclick="uploadRoom('livingroom.png', this)">
-            <span class="label">Living Room</span>
-        </div>
-        <div class="side-drawer" onclick="uploadRoom('bedroom.png', this)">
-            <span class="label">Bedroom</span>
-        </div>
-        <div class="side-drawer" onclick="uploadRoom('kitchen.png', this)">
-            <span class="label">Kitchen</span>
-        </div>
-        <div class="side-drawer" onclick="uploadRoom('diningroom.png', this)">
-            <span class="label">Dining Room</span>
-        </div>
-    </div>
+        <div class="side-drawer" onclick="uploadRoom('livingroom.png', this)"><span class="label">Living Room</span></div>
+        <div class="side-drawer" onclick="uploadRoom('bedroom.png', this)"><span class="label">Bedroom</span></div>
+        <div class="side-drawer" onclick="uploadRoom('kitchen.png', this)"><span class="label">Kitchen</span></div>
+        <div class="side-drawer" onclick="uploadRoom('diningroom.png', this)"><span class="label">Dining Room</span></div>
 
-    <div class="furniture-fan-container" id="furnitureFan">
-        <div class="fan-item" onclick="openCategory('seating')">
-            <img src="iconsseating.png" alt="Seating" class="icon-img">
-        </div>
-        <div class="fan-item" onclick="openCategory('tables')">
-            <img src="iconstables.png" alt="Tables" class="icon-img">
-        </div>
-        <div class="fan-item" onclick="openCategory('storage')">
-            <img src="iconsstorage.png" alt="Storage" class="icon-img">
-        </div>
-        <div class="fan-item" onclick="openCategory('beds')">
-            <img src="iconsbed.png" alt="Beds" class="icon-img">
+        <div class="furniture-fan-container" id="furnitureFan">
+            <div class="fan-item" onclick="openCategory('seating')"><img src="iconsseating.png" class="icon-img"></div>
+            <div class="fan-item" onclick="openCategory('tables')"><img src="iconstables.png" class="icon-img"></div>
+            <div class="fan-item" onclick="openCategory('storage')"><img src="iconsstorage.png" class="icon-img"></div>
+            <div class="fan-item" onclick="openCategory('beds')"><img src="iconsbed.png" class="icon-img"></div>
         </div>
     </div>
 
     <div class="main-display" id="mainDisplay">
-        <div class="display-placeholder" id="placeholderText">Select a Room to Begin</div>
         <img src="" alt="" class="room-viewport" id="roomImage">
     </div>
 
