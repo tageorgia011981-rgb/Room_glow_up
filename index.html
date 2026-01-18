@@ -8,140 +8,27 @@
 <!-- Fonts -->
 <link href="https://fonts.googleapis.com/css2?family=Monsieur+La+Doulaise&family=Playfair+Display:wght@700&family=Special+Elite&family=Inter:wght@400;600&display=swap" rel="stylesheet">
 
-<style>
-/* BASIC RESET */
-*{box-sizing:border-box;margin:0;padding:0;}
-body{font-family:'Inter',sans-serif;background-color:#0d0a08;color:#f1d9a8;min-height:100vh;}
-
-/* HEADER */
-.header-content{text-align:center;padding:70px 0 30px 0;}
-.brand-title{font-family:'Monsieur La Doulaise',cursive;font-size:14rem;line-height:0.5;color:#f5f5f0;-webkit-text-stroke:1.2px rgba(241,217,168,0.7);text-shadow:0px 4px 0px rgba(0,0,0,1),0px 15px 25px rgba(0,0,0,0.8),0px 0px 30px rgba(241,217,168,0.2);letter-spacing:-2px;filter:drop-shadow(0 10px 20px rgba(0,0,0,1));}
-.vogue-subtitle{font-family:'Playfair Display',serif;font-size:1.1rem;letter-spacing:24px;color:#f5f5f0;text-transform:uppercase;margin-top:50px;display:block;-webkit-text-stroke:0.4px rgba(241,217,168,0.5);text-shadow:0px 5px 10px rgba(0,0,0,0.9);}
-
-/* NAV */
-.main-nav{display:flex;justify-content:center;gap:15px;margin-bottom:20px;}
-.main-nav .nav-tab{cursor:pointer;padding:10px 20px;background:#332a1e;border-radius:4px;color:#f5f5f0;font-family:'Special Elite',monospace;}
-
-/* CONTAINER */
-.glow-up-container{display:flex;justify-content:flex-start;padding-left:15px;}
-
-/* SIDE PANEL / CABINET */
-.side-panel{flex:0 0 480px;display:flex;flex-direction:column;padding-top:250px;gap:200px;position:relative;}
-
-/* DRAWERS */
-.side-drawer .label{font-family:'Special Elite',monospace;font-size:1.1rem;padding:10px 25px;background:linear-gradient(145deg,#a88b56,#d4ba8a,#a88b56);border:1px solid #5c4a33;border-radius:2px 2px 0 0;text-transform:uppercase;position:relative;}
-.screw{position:absolute;width:6px;height:6px;background:radial-gradient(circle,#5c4a33,#1a140d);border-radius:50%;}
-.tl{top:4px;left:4px;} .tr{top:4px;right:4px;} .bl{bottom:4px;left:4px;} .br{bottom:4px;right:4px;}
-
-/* FAN SYSTEM */
-.fan-system{position:absolute;right:0;top:50%;width:0;height:0;pointer-events:none;}
-.fan-arm{position:absolute;width:120px;height:0;transform-origin:0 0;transform:rotate(0deg) scale(0);transition:transform 0.5s ease;pointer-events:auto;}
-.side-drawer.lit-up .fan-arm{transform:rotate(var(--angle)) scale(1);}
-
-/* ICON BOX */
-.icon-box{width:50px;height:50px;background:#1a140d;border:1px solid #c2a46f;border-radius:8px;display:flex;justify-content:center;align-items:center;transform:translateX(100%);transition:box-shadow 0.3s ease,transform 0.3s ease;cursor:pointer;}
-.icon-box.active{box-shadow:0 0 15px #f5d26d,0 0 25px #f5d26d,0 0 40px #f5d26d;transform:translateX(100%) scale(1.1);}
-
-/* MAIN DISPLAY */
-.main-display{flex:1;height:750px;background:#000;margin-left:-75px;margin-top:20px;border:1px solid #4a3721;box-shadow:0 50px 120px rgba(0,0,0,1);}
-.room-viewport{width:100%;height:100%;object-fit:cover;}
-</style>
-
+<link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-<!-- HEADER -->
 <header class="header-content">
     <h1 class="brand-title">Room Glow Up</h1>
     <p class="vogue-subtitle">Your Dream Space Come To Life</p>
 </header>
 
-<!-- NAV -->
 <nav class="main-nav">
-    <div class="nav-tab" onclick="toggleRooms()"><span class="label">Rooms</span></div>
-    <div class="nav-tab"><span class="label">Furniture</span></div>
-    <div class="nav-tab"><span class="label">Decor</span></div>
-    <div class="nav-tab"><span class="label">Upload</span></div>
-    <div class="nav-tab"><span class="label">Save</span></div>
+    <div class="nav-tab" onclick="toggleRooms(this)">Rooms</div>
+    <div class="nav-tab">Furniture</div>
+    <div class="nav-tab">Decor</div>
+    <div class="nav-tab">Upload</div>
+    <div class="nav-tab">Save</div>
 </nav>
 
-<!-- MAIN CONTAINER -->
 <div class="glow-up-container">
-
-    <!-- SIDE PANEL / CABINET -->
-    <div class="side-panel" id="sideCabinet">
-
-        <!-- Living Room -->
-        <div class="side-drawer" onclick="uploadRoom('livingroom.png', this)">
-            <span class="label">
-                <span class="screw tl"></span><span class="screw tr"></span>
-                Living Room
-                <span class="screw bl"></span><span class="screw br"></span>
-            </span>
-            <div class="fan-system">
-                <div class="fan-arm" style="--angle:-30deg;" onclick="activateIcon(event)">
-                    <div class="icon-box"><img src="iconsseating.png"></div>
-                </div>
-                <div class="fan-arm" style="--angle:0deg;" onclick="activateIcon(event)">
-                    <div class="icon-box"><img src="iconsbed.png"></div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Bedroom -->
-        <div class="side-drawer" onclick="uploadRoom('bedroom.png', this)">
-            <span class="label">
-                <span class="screw tl"></span><span class="screw tr"></span>
-                Bedroom
-                <span class="screw bl"></span><span class="screw br"></span>
-            </span>
-            <div class="fan-system">
-                <div class="fan-arm" style="--angle:-25deg;" onclick="activateIcon(event)">
-                    <div class="icon-box"><img src="iconsseating.png"></div>
-                </div>
-                <div class="fan-arm" style="--angle:0deg;" onclick="activateIcon(event)">
-                    <div class="icon-box"><img src="iconsbed.png"></div>
-                </div>
-                <div class="fan-arm" style="--angle:25deg;" onclick="activateIcon(event)">
-                    <div class="icon-box"><img src="iconsstorage.png"></div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Dining Room -->
-        <div class="side-drawer" onclick="uploadRoom('diningroom.png', this)">
-            <span class="label">
-                <span class="screw tl"></span><span class="screw tr"></span>
-                Dining Room
-                <span class="screw bl"></span><span class="screw br"></span>
-            </span>
-            <div class="fan-system">
-                <div class="fan-arm" style="--angle:-20deg;" onclick="activateIcon(event)">
-                    <div class="icon-box"><img src="iconsseating.png"></div>
-                </div>
-                <div class="fan-arm" style="--angle:0deg;" onclick="activateIcon(event)">
-                    <div class="icon-box"><img src="iconstable.png"></div>
-                </div>
-                <div class="fan-arm" style="--angle:20deg;" onclick="activateIcon(event)">
-                    <div class="icon-box"><img src="iconsstorage.png"></div>
-                </div>
-            </div>
-        </div>
-
-    </div>
-
-    <!-- MAIN DISPLAY -->
-    <div class="main-display" id="mainDisplay">
-        <img src="" class="room-viewport" id="roomImage">
-    </div>
-
+    <!-- Cabinet and room will come later -->
 </div>
 
-<script>
-function toggleRooms(){document.getElementById('sideCabinet').classList.toggle('active');}
-function uploadRoom(imgSrc,drawer){document.getElementById('roomImage').src=imgSrc;document.querySelectorAll('.side-drawer').forEach(d=>d.classList.remove('lit-up'));document.querySelectorAll('.icon-box').forEach(i=>i.classList.remove('active'));drawer.classList.add('lit-up');}
-function activateIcon(e){e.stopPropagation();const i=e.currentTarget.querySelector('.icon-box');e.currentTarget.parentElement.querySelectorAll('.icon-box').forEach(b=>b.classList.remove('active'));i.classList.add('active');}
-</script>
-
+<script src="script.js"></script>
 </body>
 </html>
