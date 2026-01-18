@@ -1,0 +1,99 @@
+@import url('https://fonts.googleapis.com/css2?family=Lavishly+Yours&family=Playfair+Display:wght@400;700&family=Special+Elite&display=swap');
+
+/* GLOBAL RESET */
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+    font-family: 'Inter', sans-serif;
+    background: url('background7.jpg') no-repeat center center fixed !important;
+    background-size: cover !important;
+    background-color: #0d0a08;
+    min-height: 100vh;
+    overflow-x: hidden;
+}
+
+/* HEADER & NAV */
+.header-content { text-align: center; margin-top: 2rem; }
+.brand-title {
+    font-family: 'Lavishly Yours', cursive;
+    font-size: clamp(3.5rem, 8vw, 5.5rem);
+    background: linear-gradient(180deg, #f1d9a8, #caa86a, #9e7c3a);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.main-nav {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin: 1.5rem auto 3rem auto;
+}
+
+.nav-tab {
+    padding: 8px 15px;
+    background: linear-gradient(145deg, #8a6842, #2a1f12);
+    border: 1px solid #4a3721;
+    border-radius: 4px 4px 8px 8px;
+    cursor: pointer;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+}
+
+/* THE NEW CABINET - SCALED UP */
+.side-panel {
+    position: absolute !important;
+    left: 15px !important;    /* Locked to the left */
+    top: 240px !important;    /* Adjusted height */
+    width: 420px !important;  /* Wide enough to see the details */
+    height: 900px !important; 
+    margin: 0 !important;
+    
+    background: url('cabinet.png') no-repeat center center !important;
+    background-size: contain !important;
+    
+    display: flex !important;
+    flex-direction: column;
+    z-index: 1000;
+    
+    /* ALIGNMENT: Adjust these for your new photo handles */
+    padding-top: 210px; 
+    gap: 140px; 
+    
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.5s ease;
+}
+
+.side-panel.active {
+    opacity: 1 !important;
+    visibility: visible !important;
+}
+
+/* DRAWER STYLING */
+.side-drawer { 
+    width: 100%;
+    display: flex; 
+    justify-content: center; 
+    cursor: pointer;
+}
+
+.label {
+    display: inline-block; /* Keeps the light on the label only */
+    background: rgba(18, 13, 10, 0.9);
+    color: #f1d9a8;
+    font-family: 'Special Elite', monospace;
+    font-size: 0.9rem;
+    padding: 6px 14px;
+    border: 1px solid #c2a46f;
+    box-shadow: 2px 2px 8px rgba(0,0,0,0.8);
+    transform: rotate(-1.5deg);
+    transition: all 0.3s ease;
+}
+
+/* AMBER GLOW */
+.side-drawer.lit-up .label,
+.nav-tab.lit-up .label {
+    box-shadow: 0 0 20px rgba(241, 217, 168, 0.9) !important;
+    color: #fff !important;
+    border-color: #fff !important;
+    transform: translateX(12px) rotate(-1.5deg); /* Slides out like a drawer */
+}
