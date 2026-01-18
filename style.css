@@ -1,23 +1,111 @@
-/* FIXED POSITION FOR THE FURNITURE FAN */
-.furniture-fan-container { 
-    position: absolute; 
-    /* This pushes it down to the level of the first drawer */
-    top: 580px;  
-    /* This aligns it to the right side of the cabinet */
-    left: 450px; 
-    width: 100px;
-    height: 100px;
-    z-index: 9999; 
-    pointer-events: none; 
+@import url('https://fonts.googleapis.com/css2?family=Lavishly+Yours&family=Playfair+Display:wght@700&family=Special+Elite&family=Inter:wght@400;600&display=swap');
+
+/* GLOBAL RESET */
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+    font-family: 'Inter', sans-serif;
+    /* SAFETY: Added a solid dark color so it stays dark even if image fails */
+    background-color: #0d0a08; 
+    background-image: url('background7.jpg'); 
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-attachment: fixed;
+    background-size: cover;
+    min-height: 120vh;
+}
+
+/* HEADER SECTION */
+.header-content { text-align: center; padding-top: 50px; }
+.brand-title {
+    font-family: 'Lavishly Yours', cursive;
+    font-size: clamp(5rem, 12vw, 9rem);
+    color: #f1d9a8;
+    line-height: 1;
+}
+.vogue-subtitle {
+    font-family: 'Playfair Display', serif;
+    color: #8a6842;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+}
+
+/* TOP NAVIGATION */
+.main-nav { display: flex; justify-content: center; gap: 15px; margin: 40px auto; }
+.nav-tab { 
+    background: #1a140d; 
+    color: #f1d9a8; 
+    padding: 10px 20px; 
+    border: 1px solid #4a3721;
+    font-family: 'Special Elite', monospace;
+    cursor: pointer;
+}
+
+/* CABINET POSITION */
+.side-panel {
+    position: absolute;
+    left: 20px;
+    top: 360px;
+    width: 500px;
+    display: flex;
+    flex-direction: column;
+    gap: 150px; /* Spaced out drawers */
+    z-index: 10;
+}
+
+.side-drawer { cursor: pointer; }
+.side-drawer .label {
+    background: rgba(18, 13, 10, 0.9);
+    color: #f1d9a8;
+    padding: 8px 15px;
+    border: 1px solid #c2a46f;
+    font-family: 'Special Elite', monospace;
+}
+
+/* ROOM VIEWPORT */
+.main-display {
+    position: absolute;
+    left: 550px;
+    top: 360px;
+    width: 800px;
+    height: 500px;
+    background: #120d0a;
+    border: 2px solid #4a3721;
+    z-index: 5;
+}
+
+.room-viewport { width: 100%; height: 100%; object-fit: contain; }
+
+/* THE FAN - THE IMPORTANT PART */
+.furniture-fan-container {
+    position: absolute;
+    left: 450px; /* Aligned next to cabinet */
+    top: 400px;  /* Aligned near top drawer */
+    width: 300px;
+    height: 300px;
+    z-index: 100;
+    pointer-events: none;
+}
+
+.fan-item {
+    position: absolute;
+    width: 70px;
+    height: 70px;
+    background: #1a140d;
+    border: 1px solid #c2a46f;
     display: flex;
     justify-content: center;
     align-items: center;
+    opacity: 0;
+    transition: 0.5s ease-out;
 }
 
-/* Ensure the icons fit the circles perfectly */
-.icon-img {
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
-    pointer-events: none;
-}
+.fan-active .fan-item { opacity: 1; pointer-events: auto; }
+
+/* Spread logic */
+.fan-active .fan-item:nth-child(1) { transform: translate(140px, -60px); }
+.fan-active .fan-item:nth-child(2) { transform: translate(180px, 0px); }
+.fan-active .fan-item:nth-child(3) { transform: translate(180px, 80px); }
+.fan-active .fan-item:nth-child(4) { transform: translate(140px, 140px); }
+
+.icon-img { width: 90%; height: 90%; object-fit: contain; }
