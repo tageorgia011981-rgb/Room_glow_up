@@ -1,16 +1,11 @@
 function toggleRooms() {
-    const cabinet = document.getElementById('sideCabinet');
-    cabinet.classList.toggle('active');
+    document.getElementById('sideCabinet').classList.toggle('active');
 }
 
 function uploadRoom(imgSrc, drawerElement) {
-    const mainDisplay = document.getElementById('mainDisplay');
-    const roomImg = document.getElementById('roomImage');
-    
-    mainDisplay.classList.add('active');
-    roomImg.src = imgSrc;
+    document.getElementById('mainDisplay').classList.add('active');
+    document.getElementById('roomImage').src = imgSrc;
 
-    // Reset everything
     document.querySelectorAll('.side-drawer').forEach(d => d.classList.remove('lit-up'));
     document.querySelectorAll('.sub-fan').forEach(sf => sf.classList.remove('active'));
 
@@ -18,11 +13,7 @@ function uploadRoom(imgSrc, drawerElement) {
 }
 
 function openCategory(event, categoryId) {
-    event.stopPropagation(); // Prevents clicking the drawer accidentally
+    event.stopPropagation();
     const subFan = document.getElementById(categoryId + 'SubFan');
     if (subFan) subFan.classList.toggle('active');
-}
-
-function placeFurniture(imgSrc) {
-    console.log("Placing: " + imgSrc);
 }
