@@ -38,25 +38,26 @@ body {
     box-shadow: 0 4px 10px rgba(0,0,0,0.5);
 }
 
-/* THE NEW CABINET - SCALED UP */
+/* THE CABINET - ZOOMED & POSITIONED */
 .side-panel {
     position: absolute !important;
-    left: 15px !important;    /* Locked to the left */
-    top: 240px !important;    /* Adjusted height */
-    width: 420px !important;  /* Wide enough to see the details */
-    height: 900px !important; 
+    left: 15px !important; 
+    top: 240px !important; 
+    width: 420px !important; 
+    height: 900px !important;
     margin: 0 !important;
     
     background: url('cabinet.png') no-repeat center center !important;
-    background-size: contain !important;
+    /* This zooms the image so the handles meet the labels */
+    background-size: 115% !important; 
     
     display: flex !important;
     flex-direction: column;
     z-index: 1000;
     
-    /* ALIGNMENT: Adjust these for your new photo handles */
-    padding-top: 210px; 
-    gap: 140px; 
+    /* ALIGNMENT FOR THE 4 HANDLES */
+    padding-top: 225px; 
+    gap: 138px; 
     
     opacity: 0;
     visibility: hidden;
@@ -68,7 +69,6 @@ body {
     visibility: visible !important;
 }
 
-/* DRAWER STYLING */
 .side-drawer { 
     width: 100%;
     display: flex; 
@@ -77,7 +77,7 @@ body {
 }
 
 .label {
-    display: inline-block; /* Keeps the light on the label only */
+    display: inline-block; 
     background: rgba(18, 13, 10, 0.9);
     color: #f1d9a8;
     font-family: 'Special Elite', monospace;
@@ -95,5 +95,5 @@ body {
     box-shadow: 0 0 20px rgba(241, 217, 168, 0.9) !important;
     color: #fff !important;
     border-color: #fff !important;
-    transform: translateX(12px) rotate(-1.5deg); /* Slides out like a drawer */
+    transform: translateX(12px) rotate(-1.5deg);
 }
