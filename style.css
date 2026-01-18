@@ -70,9 +70,9 @@ body {
 /* ===== EDITORIAL CABINET PANEL: POSITIONED TO SIDE ===== */
 .side-panel {
     position: absolute !important;
-    left: 20px !important; /* Locked to the far left */
+    left: -20px !important; 
     top: 450px !important;
-    width: 500px !important; /* Slightly narrower to prevent overlap */
+    width: 480px !important; 
     height: 900px !important;
     background: url('cabinet.png') no-repeat left center !important;
     background-size: contain !important;
@@ -92,7 +92,7 @@ body {
     width: 100%;
     display: flex;
     align-items: center;
-    padding-left: 20px;
+    padding-left: 40px;
     cursor: pointer;
 }
 
@@ -108,19 +108,19 @@ body {
 
 .side-drawer::after {
     content: '';
-    width: 80px; /* Shortened line so it doesn't cross into the center */
+    width: 60px;
     height: 1px;
     background: linear-gradient(90deg, #c2a46f, transparent);
     margin-left: 15px;
     opacity: 0.5;
 }
 
-/* ===== PERFECTLY CENTERED MAIN DISPLAY: NO OVERLAP ===== */
+/* ===== PERFECTLY CENTERED MAIN DISPLAY ===== */
 .main-display {
     position: absolute;
     left: 50%;
     top: 450px;
-    transform: translateX(-50%); /* This keeps it dead center */
+    transform: translateX(-50%);
     width: 900px;
     height: 600px;
     background: rgba(15, 12, 10, 0.95);
@@ -144,10 +144,10 @@ body {
 
 .room-viewport.show { opacity: 1; }
 
-/* ===== DYNAMIC BLADE FAN (FANS TOWARD CENTER) ===== */
+/* ===== MECHANICAL BLADE FAN (OVERLAPS DISPLAY) ===== */
 .furniture-fan-container {
     position: absolute;
-    left: 420px; /* Anchored between cabinet and center box */
+    left: 380px; 
     z-index: 999;
     pointer-events: none;
     transition: top 0.4s ease-out;
@@ -174,11 +174,11 @@ body {
 
 .fan-active .fan-item { opacity: 1; }
 
-/* Blades spreading out towards the center display */
-.fan-active .fan-item:nth-child(1) { transform: rotate(-35deg) translateX(200px); }
-.fan-active .fan-item:nth-child(2) { transform: rotate(-12deg) translateX(240px); }
-.fan-active .fan-item:nth-child(3) { transform: rotate(12deg) translateX(240px); }
-.fan-active .fan-item:nth-child(4) { transform: rotate(35deg) translateX(200px); }
+/* Blades extended further to overlap the display for easy drag-and-drop */
+.fan-active .fan-item:nth-child(1) { transform: rotate(-35deg) translateX(320px); }
+.fan-active .fan-item:nth-child(2) { transform: rotate(-12deg) translateX(380px); }
+.fan-active .fan-item:nth-child(3) { transform: rotate(12deg) translateX(380px); }
+.fan-active .fan-item:nth-child(4) { transform: rotate(35deg) translateX(320px); }
 
 .fan-item.lit-up {
     border-color: #f1d9a8;
