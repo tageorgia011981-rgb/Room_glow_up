@@ -1,5 +1,6 @@
-@import url('https://fonts.googleapis.com/css2?family=Lavishly+Yours&family=Playfair+Display:wght@700&family=Special+Elite&family=Inter:wght@400;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Pinyon+Script&family=Playfair+Display:wght@700&family=Special+Elite&family=Inter:wght@400;600&display=swap');
 
+/* ===== GLOBAL RESET ===== */
 * { box-sizing: border-box; margin: 0; padding: 0; }
 
 body {
@@ -11,25 +12,73 @@ body {
     overflow-x: hidden;
 }
 
-/* BRANDING */
-.header-content { text-align: center; margin-top: 20px; }
-.brand-title { font-family: 'Lavishly Yours', cursive; font-size: 7rem; color: #f1d9a8; margin: 0; }
-.vogue-subtitle { font-family: 'Playfair Display', serif; letter-spacing: 5px; color: #8a6842; text-transform: uppercase; }
+/* ===== END-TO-END FANCY HEADER ===== */
+.header-content {
+    width: 100%;
+    padding: 60px 0 30px 0;
+    text-align: center;
+    background: linear-gradient(to bottom, rgba(26, 20, 13, 0.9), transparent);
+    border-bottom: 1px solid rgba(194, 164, 111, 0.15);
+}
 
-.main-nav { display: flex; justify-content: center; gap: 15px; margin: 30px auto; }
-.nav-tab .label { background: #1a140d; color: #f1d9a8; font-family: 'Special Elite', monospace; padding: 10px 20px; border: 1px solid #4a3721; cursor: pointer; }
+.brand-title {
+    font-family: 'Pinyon Script', cursive; /* Thick, fancy script */
+    font-size: 12rem; /* Massive end-to-end presence */
+    color: #f1d9a8;
+    line-height: 0.6;
+    margin: 0;
+    display: block;
+    text-shadow: 4px 4px 15px rgba(0,0,0,0.6);
+}
 
-/* THE WORKSPACE */
+.vogue-subtitle {
+    font-family: 'Playfair Display', serif;
+    font-weight: 700;
+    font-size: 1.3rem;
+    letter-spacing: 18px; /* High-end editorial stretching */
+    color: #8a6842;
+    text-transform: uppercase;
+    margin-top: 20px;
+    display: block;
+}
+
+/* ===== NAVIGATION ===== */
+.main-nav {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    margin: 40px auto;
+}
+
+.nav-tab .label {
+    background: transparent;
+    color: #f1d9a8;
+    font-family: 'Special Elite', monospace;
+    font-size: 1rem;
+    padding: 12px 28px;
+    border: 1px solid rgba(194, 164, 111, 0.3);
+    cursor: pointer;
+    text-transform: uppercase;
+    transition: 0.4s ease;
+}
+
+.nav-tab:hover .label {
+    background: #f1d9a8;
+    color: #1a140d;
+    box-shadow: 0 0 25px rgba(241, 217, 168, 0.3);
+}
+
+/* ===== MAIN WORKSPACE (SIDE-BY-SIDE) ===== */
 .glow-up-container {
     display: flex;
     justify-content: flex-start;
     align-items: flex-start;
     width: 100%;
-    padding-left: 10px;
+    padding-left: 20px;
     overflow: visible;
 }
 
-/* THE CABINET - RESIZED FOR WEIGHT */
+/* THE HEAVY CABINET */
 .side-panel {
     flex: 0 0 520px;
     height: 950px;
@@ -49,18 +98,16 @@ body {
 
 .side-drawer { position: relative; cursor: pointer; width: 100%; }
 .side-drawer .label { font-family: 'Special Elite', monospace; background: rgba(18, 13, 10, 0.9); padding: 8px 15px; border: 1px solid #c2a46f; margin-left: 10px; display: inline-block; transition: 0.3s; }
-
-/* LABEL GLOW */
 .side-drawer.lit-up .label { background: #f1d9a8; color: #1a140d; box-shadow: 0 0 15px #f1d9a8; }
 
-/* MASSIVE DISPLAY BOX */
+/* ENLARGED DISPLAY BOX */
 .main-display {
     flex: 1;
     height: 800px;
     background: #000;
     border: 2px solid #4a3721;
-    margin-top: 80px;
-    margin-left: -80px; /* Connects room directly to the cabinet handle area */
+    margin-top: 40px; /* Lowered slightly under new header */
+    margin-left: -80px; 
     opacity: 0;
     visibility: hidden;
     transition: 0.5s;
@@ -71,10 +118,10 @@ body {
 .main-display.active { opacity: 1; visibility: visible; }
 .room-viewport { width: 100%; height: 100%; object-fit: cover; }
 
-/* FAN ARMS */
+/* ===== FAN ARMS & BLOOM SYSTEM ===== */
 .fan-system {
     position: absolute;
-    right: 40px; /* Anchored to handle */
+    right: 40px; 
     top: 50%;
     width: 1px; height: 1px;
     z-index: 9999;
@@ -95,7 +142,6 @@ body {
     pointer-events: none;
 }
 
-/* GOLD ARM LINES */
 .fan-item::before {
     content: '';
     position: absolute;
@@ -109,6 +155,26 @@ body {
 .side-drawer.lit-up .fan-item:nth-child(2) { transform: rotate(-15deg); }
 .side-drawer.lit-up .fan-item:nth-child(3) { transform: rotate(15deg); }
 .side-drawer.lit-up .fan-item:nth-child(4) { transform: rotate(40deg); }
+
+/* SUB-FAN (FURNITURE BLOOM) */
+.sub-fan {
+    position: absolute;
+    left: 90px;
+    top: 50%;
+    width: 1px; height: 1px;
+    pointer-events: none;
+    z-index: 10000;
+}
+.sub-fan.active .furniture-item { opacity: 1; transform: scale(1); pointer-events: auto; }
+
+.furniture-item {
+    position: absolute;
+    width: 110px; height: 110px;
+    background: #1a140d; border: 1px solid #f1d9a8;
+    display: flex; justify-content: center; align-items: center;
+    opacity: 0; transform: scale(0);
+    transition: 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
 
 .icon-box { width: 85px; height: 85px; background: #1a140d; border: 1px solid #c2a46f; display: flex; justify-content: center; align-items: center; box-shadow: 0 10px 20px rgba(0,0,0,0.6); }
 .icon-img { width: 85%; height: 85%; object-fit: contain; }
