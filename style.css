@@ -1,6 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Lavishly+Yours&family=Playfair+Display:wght@400;700&family=Special+Elite&display=swap');
 
-/* ===== GLOBAL RESET ===== */
+/* ===== GLOBAL RESET & BACKGROUND ===== */
 * { box-sizing: border-box; margin: 0; padding: 0; }
 
 body {
@@ -8,11 +8,11 @@ body {
     background: url('background7.jpg') no-repeat center center fixed !important;
     background-size: cover !important;
     background-color: #0d0a08;
-    min-height: 110vh;
+    min-height: 110vh; /* Keeps it as a scrolling page */
     overflow-x: hidden;
 }
 
-/* ===== HEADER SECTION restored ===== */
+/* ===== HEADER SECTION restored to original glory ===== */
 .header-content {
     text-align: center;
     margin-top: 2rem;
@@ -27,8 +27,15 @@ body {
     filter: drop-shadow(0 2px 4px rgba(0,0,0,0.5));
 }
 
-.brand-subtitle {
-    margin-top: 0.5rem;
+.vogue-subtitle {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.2rem;
+    font-weight: 600;
+    margin-top: 5px;
+    background: linear-gradient(180deg, #f1d9a8, #c2a46f);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    display: inline-block !important;
 }
 
 /* ===== TOP NAVIGATION restored ===== */
@@ -49,20 +56,17 @@ body {
     border: 1px solid #4a3721;
     border-radius: 4px 4px 8px 8px;
     cursor: pointer;
-    position: relative;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.5);
     text-align: center;
-    transition: all 0.3s ease;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.5);
 }
 
-/* ===== THE CABINET - LARGE & TUCKED LEFT ===== */
+/* ===== THE LARGE CABINET PANEL (15px Left) ===== */
 .side-panel {
     position: absolute !important;
     left: 15px !important; 
     top: 240px !important; 
     width: 440px !important; 
     height: 900px !important;
-    margin: 0 !important;
     
     background: url('cabinet.png') no-repeat center center !important;
     background-size: contain !important; 
@@ -71,9 +75,9 @@ body {
     flex-direction: column;
     z-index: 1000;
     
-    /* ADJUST THESE TO HIT YOUR NEW PHOTO HANDLES */
-    padding-top: 200px; 
-    gap: 130px; 
+    /* These numbers are for the 4 DRAWER handles */
+    padding-top: 195px; 
+    gap: 135px; 
     
     opacity: 0;
     visibility: hidden;
@@ -85,32 +89,24 @@ body {
     visibility: visible !important;
 }
 
-.side-drawer { 
-    width: 100%;
-    display: flex; 
-    justify-content: center; 
-    cursor: pointer;
-}
-
 /* ===== VINTAGE LABELS ===== */
+.side-drawer { width: 100%; display: flex; justify-content: center; cursor: pointer; }
+
 .label {
     display: inline-block; 
     background: rgba(18, 13, 10, 0.95);
     color: #f1d9a8;
     font-family: 'Special Elite', monospace;
-    font-size: 0.85rem;
+    font-size: 0.9rem;
     padding: 6px 14px;
     border: 1px solid #c2a46f;
     box-shadow: 2px 2px 8px rgba(0,0,0,0.8);
     transform: rotate(-1.5deg);
-    transition: all 0.3s ease;
 }
 
-/* ===== AMBER GLOW (For Cabinet & Top Nav) ===== */
-.side-drawer.lit-up .label,
-.nav-tab.lit-up .label {
+/* ===== AMBER GLOW lit-up ===== */
+.lit-up .label {
     box-shadow: 0 0 15px rgba(241, 217, 168, 0.9) !important;
     color: #fff !important;
     border-color: #fff !important;
-    text-shadow: 0 0 5px rgba(255,255,255,0.5);
 }
