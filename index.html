@@ -1,44 +1,20 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Room Glow Up</title>
-    <link rel="stylesheet" href="style.css">
-</head>
-<body>
-
-    <div class="header-content">
-        <h1 class="brand-title">Room Glow Up</h1>
-        <span class="vogue-subtitle">Your Dream Space Come To Life</span>
-    </div>
-
-    <nav class="main-nav">
-        <div class="nav-tab" onclick="toggleRooms()"><span class="label">Rooms</span></div>
-        <div class="nav-tab"><span class="label">Furniture</span></div>
-        <div class="nav-tab"><span class="label">Decor</span></div>
-        <div class="nav-tab"><span class="label">Upload</span></div>
-        <div class="nav-tab"><span class="label">Save</span></div>
-    </nav>
-
+<div class="glow-up-container">
+    
     <div class="side-panel" id="sideCabinet">
-        <div class="side-drawer" onclick="uploadRoom('livingroom.png', this)"><span class="label">Living Room</span></div>
-        <div class="side-drawer" onclick="uploadRoom('bedroom.png', this)"><span class="label">Bedroom</span></div>
-        <div class="side-drawer" onclick="uploadRoom('kitchen.png', this)"><span class="label">Kitchen</span></div>
-        <div class="side-drawer" onclick="uploadRoom('diningroom.png', this)"><span class="label">Dining Room</span></div>
-
-        <div class="furniture-fan-container" id="furnitureFan">
-            <div class="fan-item" onclick="openCategory('seating')"><img src="iconsseating.png" class="icon-img"></div>
-            <div class="fan-item" onclick="openCategory('tables')"><img src="iconstables.png" class="icon-img"></div>
-            <div class="fan-item" onclick="openCategory('storage')"><img src="iconsstorage.png" class="icon-img"></div>
-            <div class="fan-item" onclick="openCategory('beds')"><img src="iconsbed.png" class="icon-img"></div>
+        <div class="side-drawer" onclick="uploadRoom('livingroom.png', this)">
+            <span class="label">Living Room</span>
+            <div class="fan-system">
+                <div class="fan-item" onclick="openCategory('seating')"><div class="icon-box"><img src="iconsseating.png" class="icon-img"></div></div>
+                <div class="fan-item" onclick="openCategory('tables')"><div class="icon-box"><img src="iconstables.png" class="icon-img"></div></div>
+                <div class="fan-item" onclick="openCategory('storage')"><div class="icon-box"><img src="iconsstorage.png" class="icon-img"></div></div>
+                <div class="fan-item" onclick="openCategory('beds')"><div class="icon-box"><img src="iconsbed.png" class="icon-img"></div></div>
+            </div>
         </div>
-    </div>
+
+        </div>
 
     <div class="main-display" id="mainDisplay">
         <img src="" alt="" class="room-viewport" id="roomImage">
     </div>
 
-    <script src="script.js"></script>
-</body>
-</html>
+</div>
