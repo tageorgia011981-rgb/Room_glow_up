@@ -8,28 +8,39 @@
 </head>
 <body>
 
-    <div class="header-content">
-        <h1 class="brand-title">Room Glow Up</h1>
-    </div>
+    <div class="hero">
+        <div class="header-content">
+            <h1 class="brand-title">Room Glow Up</h1>
+            <h2 class="brand-subtitle">
+                <span class="vogue-subtitle">Your Dream Space Come To Life</span>
+            </h2>
+        </div>
 
-    <nav class="main-nav">
-        <div class="nav-tab" onclick="toggleRooms()">Rooms</div>
-        <div class="nav-tab">Furniture</div>
-        <div class="nav-tab">Decor</div>
-        <div class="nav-tab">Upload</div>
-    </nav>
+        <nav class="main-nav">
+            <div class="nav-tab" id="rooms-trigger" onclick="toggleRooms()">
+                <span class="label">Rooms</span>
+            </div>
+            <div class="nav-tab" onclick="this.classList.toggle('lit-up')"><span class="label">Furniture</span></div>
+            <div class="nav-tab" onclick="this.classList.toggle('lit-up')"><span class="label">Decor</span></div>
+            <div class="nav-tab" onclick="this.classList.toggle('lit-up')"><span class="label">Upload</span></div>
+            <div class="nav-tab" onclick="this.classList.toggle('lit-up')"><span class="label">Save</span></div>
+            <div class="nav-tab" onclick="this.classList.toggle('lit-up')"><span class="label">Inspiration</span></div>
+        </nav>
 
-    <div class="side-panel" id="sideCabinet">
-        <div class="side-drawer" onclick="this.classList.toggle('lit-up')"><span class="label">Living Room</span></div>
-        <div class="side-drawer" onclick="this.classList.toggle('lit-up')"><span class="label">Bedroom</span></div>
-        <div class="side-drawer" onclick="this.classList.toggle('lit-up')"><span class="label">Kitchen</span></div>
-        <div class="side-drawer" onclick="this.classList.toggle('lit-up')"><span class="label">Dining Room</span></div>
+        <div class="side-panel" id="sideCabinet">
+            <div class="side-drawer" onclick="this.classList.toggle('lit-up')"><span class="label">Living Room</span></div>
+            <div class="side-drawer" onclick="this.classList.toggle('lit-up')"><span class="label">Bedroom</span></div>
+            <div class="side-drawer" onclick="this.classList.toggle('lit-up')"><span class="label">Kitchen</span></div>
+            <div class="side-drawer" onclick="this.classList.toggle('lit-up')"><span class="label">Dining Room</span></div>
+        </div>
     </div>
 
     <script>
         function toggleRooms() {
-            var panel = document.getElementById('sideCabinet');
+            const panel = document.getElementById('sideCabinet');
+            const btn = document.getElementById('rooms-trigger');
             panel.classList.toggle('active');
+            btn.classList.toggle('lit-up');
         }
     </script>
 </body>
