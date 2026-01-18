@@ -1,51 +1,37 @@
-/**
- * STEP 1: Toggle the Cabinet
- * This handles the "Rooms" tab. It slides the cabinet in or out.
- */
+// STAGE 1: Reveal the Cabinet
 function toggleRooms() {
     const cabinet = document.getElementById('sideCabinet');
     const display = document.getElementById('mainDisplay');
     
     cabinet.classList.toggle('active');
 
-    // If we close the cabinet, we hide the room display and fans too
+    // Reset if cabinet is closed
     if (!cabinet.classList.contains('active')) {
         display.classList.remove('active');
-        const drawers = document.querySelectorAll('.side-drawer');
-        drawers.forEach(d => d.classList.remove('lit-up'));
+        document.querySelectorAll('.side-drawer').forEach(d => d.classList.remove('lit-up'));
     }
 }
 
-/**
- * STEP 2: Upload the Room & Open the Fan
- * Triggered when a specific drawer (Living Room, etc.) is clicked.
- */
+// STAGE 2: Reveal the Room and the Specific Fan
 function uploadRoom(imgSrc, drawerElement) {
     const mainDisplay = document.getElementById('mainDisplay');
     const roomImg = document.getElementById('roomImage');
 
-    // 1. Show the main display box (The "Glow Up" area)
+    // Show display box and room
     mainDisplay.classList.add('active');
-
-    // 2. Load the specific room image
     roomImg.src = imgSrc;
-    roomImg.classList.add('show');
 
-    // 3. Clear any fans that are already open
-    const allDrawers = document.querySelectorAll('.side-drawer');
-    allDrawers.forEach(drawer => {
+    // Reset all fans first
+    document.querySelectorAll('.side-drawer').forEach(drawer => {
         drawer.classList.remove('lit-up');
     });
 
-    // 4. Open the mechanical fan for THIS drawer only
+    // Swing out ONLY this drawer's fan
     drawerElement.classList.add('lit-up');
 }
 
-/**
- * STEP 3: Category Selection (Placeholder for next step)
- * This will handle clicking Seating, Tables, etc.
- */
+// STAGE 3: Handle Category Selection
 function openCategory(category) {
-    console.log("Opening category: " + category);
-    // We will build the furniture "Sub-Fan" here next!
+    console.log("Selected category: " + category);
+    // This is where we will add the furniture items next!
 }
