@@ -4,9 +4,16 @@ function toggleRooms() {
 }
 
 function uploadRoom(imgSrc, drawerElement) {
-    document.getElementById('mainDisplay').classList.add('active');
-    document.getElementById('roomImage').src = imgSrc;
+    const mainDisplay = document.getElementById('mainDisplay');
+    const roomImg = document.getElementById('roomImage');
+    
+    mainDisplay.classList.add('active');
+    roomImg.src = imgSrc;
 
     document.querySelectorAll('.side-drawer').forEach(d => d.classList.remove('lit-up'));
     drawerElement.classList.add('lit-up');
+}
+
+function openCategory(category) {
+    console.log("Opening " + category);
 }
