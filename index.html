@@ -1,113 +1,68 @@
-@import url('https://fonts.googleapis.com/css2?family=Lavishly+Yours&family=Playfair+Display:wght@700&family=Special+Elite&family=Inter:wght@400;600&display=swap');
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Room Glow Up</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
 
-/* RESET */
-* { box-sizing: border-box; margin: 0; padding: 0; }
+    <header class="header-content">
+        <h1 class="brand-title">Room Glow Up</h1>
+        <span class="vogue-subtitle">Your Dream Space Come To Life</span>
+    </header>
 
-body {
-    font-family: 'Inter', sans-serif;
-    background: #0d0a08 url('background7.jpg') no-repeat center center fixed;
-    background-size: cover;
-    color: #f1d9a8;
-    overflow-x: hidden;
-}
+    <nav class="main-nav">
+        <div class="nav-tab" onclick="toggleRooms()"><span class="label">Rooms</span></div>
+        <div class="nav-tab"><span class="label">Furniture</span></div>
+        <div class="nav-tab"><span class="label">Decor</span></div>
+        <div class="nav-tab"><span class="label">Upload</span></div>
+        <div class="nav-tab"><span class="label">Save</span></div>
+    </nav>
 
-/* HEADER & NAV */
-.header-content { text-align: center; margin-top: 2rem; }
-.brand-title { font-family: 'Lavishly Yours', cursive; font-size: 8rem; color: #f1d9a8; line-height: 0.8; }
-.vogue-subtitle { font-family: 'Playfair Display', serif; letter-spacing: 5px; color: #8a6842; text-transform: uppercase; font-size: 1.1rem; }
+    <main class="glow-up-container">
+        
+        <div class="side-panel" id="sideCabinet">
+            
+            <div class="side-drawer" onclick="uploadRoom('livingroom.png', this)">
+                <span class="label">Living Room</span>
+                <div class="fan-system">
+                    <div class="fan-item" onclick="openCategory('seating')"><div class="icon-box"><img src="iconsseating.png" class="icon-img"></div></div>
+                    <div class="fan-item" onclick="openCategory('tables')"><div class="icon-box"><img src="iconstables.png" class="icon-img"></div></div>
+                    <div class="fan-item" onclick="openCategory('storage')"><div class="icon-box"><img src="iconsstorage.png" class="icon-img"></div></div>
+                    <div class="fan-item" onclick="openCategory('beds')"><div class="icon-box"><img src="iconsbed.png" class="icon-img"></div></div>
+                </div>
+            </div>
 
-.main-nav { display: flex; justify-content: center; gap: 15px; margin: 3rem auto; }
-.nav-tab .label { background: #1a140d; color: #f1d9a8; font-family: 'Special Elite', monospace; padding: 10px 20px; border: 1px solid #4a3721; cursor: pointer; transition: 0.3s; }
-.nav-tab:hover .label { background: #2a1f12; border-color: #c2a46f; }
+            <div class="side-drawer" onclick="uploadRoom('bedroom.png', this)">
+                <span class="label">Bedroom</span>
+                <div class="fan-system">
+                    <div class="fan-item" onclick="openCategory('seating')"><div class="icon-box"><img src="iconsseating.png" class="icon-img"></div></div>
+                    <div class="fan-item" onclick="openCategory('tables')"><div class="icon-box"><img src="iconstables.png" class="icon-img"></div></div>
+                    <div class="fan-item" onclick="openCategory('storage')"><div class="icon-box"><img src="iconsstorage.png" class="icon-img"></div></div>
+                    <div class="fan-item" onclick="openCategory('beds')"><div class="icon-box"><img src="iconsbed.png" class="icon-img"></div></div>
+                </div>
+            </div>
 
-/* THE WORKSPACE (SIDE-BY-SIDE) */
-.glow-up-container {
-    display: flex;
-    justify-content: center;
-    align-items: flex-start;
-    gap: 40px;
-    padding: 0 50px;
-    margin-top: 20px;
-}
+            <div class="side-drawer" onclick="uploadRoom('diningroom.png', this)">
+                <span class="label">Dining Room</span>
+                <div class="fan-system">
+                    <div class="fan-item" onclick="openCategory('seating')"><div class="icon-box"><img src="iconsseating.png" class="icon-img"></div></div>
+                    <div class="fan-item" onclick="openCategory('tables')"><div class="icon-box"><img src="iconstables.png" class="icon-img"></div></div>
+                    <div class="fan-item" onclick="openCategory('storage')"><div class="icon-box"><img src="iconsstorage.png" class="icon-img"></div></div>
+                    <div class="fan-item" onclick="openCategory('beds')"><div class="icon-box"><img src="iconsbed.png" class="icon-img"></div></div>
+                </div>
+            </div>
 
-/* THE CABINET SURPRISE */
-.side-panel {
-    width: 500px;
-    height: 850px;
-    background: url('cabinet.png') no-repeat right center;
-    background-size: contain;
-    display: flex;
-    flex-direction: column;
-    padding-top: 240px; /* Aligns labels to handles */
-    gap: 220px;         /* Spacing for 3 drawers */
-    opacity: 0;
-    visibility: hidden;
-    transition: 0.7s ease;
-    overflow: visible;
-    z-index: 10;
-}
-.side-panel.active { opacity: 1; visibility: visible; }
+        </div>
 
-.side-drawer { position: relative; cursor: pointer; display: flex; align-items: center; }
-.side-drawer .label { font-family: 'Special Elite', monospace; background: rgba(18, 13, 10, 0.95); padding: 8px 15px; border: 1px solid #c2a46f; margin-left: 40px; }
+        <div class="main-display" id="mainDisplay">
+            <img src="" alt="" class="room-viewport" id="roomImage">
+        </div>
 
-/* MAIN DISPLAY BOX */
-.main-display {
-    width: 850px;
-    height: 550px;
-    background: rgba(10, 8, 6, 0.9);
-    border: 2px solid #4a3721;
-    opacity: 0;
-    visibility: hidden;
-    transition: 0.5s;
-    box-shadow: 0 30px 60px rgba(0,0,0,0.8);
-    z-index: 5;
-}
-.main-display.active { opacity: 1; visibility: visible; }
-.room-viewport { width: 100%; height: 100%; object-fit: contain; }
+    </main>
 
-/* MECHANICAL FAN BLADES */
-.fan-system {
-    position: absolute;
-    left: 85%; /* Pivot point at the drawer edge */
-    top: 50%;
-    width: 1px; height: 1px;
-    pointer-events: none;
-}
-
-.fan-item {
-    position: absolute;
-    width: 210px; /* Blade length */
-    height: 80px;
-    left: 0; top: -40px;
-    transform-origin: left center;
-    display: flex;
-    align-items: center;
-    justify-content: flex-end;
-    opacity: 0;
-    transform: rotate(0deg);
-    transition: 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-}
-
-/* Blade Arm Line */
-.fan-item::before {
-    content: '';
-    position: absolute;
-    left: 0; width: 130px; height: 1px;
-    background: linear-gradient(90deg, transparent, #c2a46f);
-    z-index: -1;
-}
-
-.icon-box {
-    width: 75px; height: 75px;
-    background: #1a140d; border: 1px solid #c2a46f; border-radius: 4px;
-    display: flex; justify-content: center; align-items: center;
-}
-.icon-img { width: 85%; height: 85%; object-fit: contain; }
-
-/* THE SWING REVEAL (Active when room drawer is clicked) */
-.lit-up .fan-item { opacity: 1; pointer-events: auto; }
-.lit-up .fan-item:nth-child(1) { transform: rotate(-55deg); }
-.lit-up .fan-item:nth-child(2) { transform: rotate(-20deg); }
-.lit-up .fan-item:nth-child(3) { transform: rotate(20deg); }
-.lit-up .fan-item:nth-child(4) { transform: rotate(55deg); }
+    <script src="script.js"></script>
+</body>
+</html>
