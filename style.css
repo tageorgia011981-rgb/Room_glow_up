@@ -14,7 +14,7 @@ html, body {
     /* This sets the image and centers it */
     background: url('background_color.jpg') no-repeat center center fixed;
     /* This MUST stay at the bottom of this block to work */
-    background-size: 60%; 
+    background-size: 30%; 
 }
 
 
@@ -97,6 +97,7 @@ html, body {
     padding-left: 15px;
     min-height: 500px; /* placeholder for cabinet & room display */
 }
+
 
 
 
