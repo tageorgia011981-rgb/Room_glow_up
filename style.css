@@ -6,16 +6,15 @@ html, body {
 
 
     body {
-    font-family: 'Inter', sans-serif;
-    background-image: url('background_color.jpg');
-    background-repeat: no-repeat;
-    background-position: center top;   /* aligns top so header stays visible */
-    background-size: contain;          /* fit entire image inside viewport */
-    background-attachment: scroll;     /* scrolls normally with page */
+font-family: 'Inter', sans-serif;
+    /* 1. Added a dark color (#000) to fill the gaps */
+    background: #000 url('background_color.jpg') no-repeat center center fixed; 
+    
+    /* 2. Changed 'cover' to a percentage to "zoom out" */
+    background-size: 80%; 
+    
     color: #f1d9a8;
     min-height: 100vh;
-    margin: 0;
-    padding: 0;
 }
 
 
@@ -98,5 +97,6 @@ html, body {
     padding-left: 15px;
     min-height: 500px; /* placeholder for cabinet & room display */
 }
+
 
 
