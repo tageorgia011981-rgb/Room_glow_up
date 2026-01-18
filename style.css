@@ -12,7 +12,7 @@ body {
     overflow-x: hidden;
 }
 
-/* ===== MASSIVE VOGUE HEADER ===== */
+/* ===== VOGUE HEADER RESTORED ===== */
 .header-content { text-align: center; margin-top: 4rem; }
 .brand-title {
     font-family: 'Lavishly Yours', cursive;
@@ -22,22 +22,41 @@ body {
     -webkit-text-fill-color: transparent;
     filter: drop-shadow(0 6px 12px rgba(0,0,0,0.7));
 }
+.vogue-subtitle {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.4rem;
+    letter-spacing: 4px;
+    color: #c2a46f;
+    text-transform: uppercase;
+    display: block;
+    margin-top: 10px;
+}
 
-/* ===== THE INDUSTRIAL HARDWARE STYLE (Tabs & Drawers) ===== */
-.nav-tab, .side-drawer {
+/* ===== INDUSTRIAL TOP TABS (WITH SCREWS & LIPS) ===== */
+.main-nav {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin: 3rem auto 5rem auto;
+    max-width: 1000px;
+}
+
+.nav-tab {
+    flex: 1;
     position: relative;
     cursor: pointer;
+    text-align: center;
     transition: all 0.3s ease;
 }
 
-/* The Metal Label Frame */
-.label {
-    display: inline-block;
+/* The Metal Tab Face with Screws */
+.nav-tab .label {
+    display: block;
     background: linear-gradient(145deg, #3d2b1a, #1a140d);
     color: #f1d9a8;
     font-family: 'Special Elite', monospace;
-    font-size: 1rem;
-    padding: 10px 25px;
+    font-size: 0.9rem;
+    padding: 12px 20px;
     border: 1px solid #4a3721;
     border-radius: 2px;
     box-shadow: inset 0 0 10px rgba(0,0,0,0.5), 3px 3px 10px rgba(0,0,0,0.8);
@@ -45,43 +64,43 @@ body {
     z-index: 2;
 }
 
-/* The Screw Holes */
-.label::before, .label::after {
+/* Screw Holes on Tabs */
+.nav-tab .label::before, .nav-tab .label::after {
     content: '';
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
-    width: 6px;
-    height: 6px;
+    width: 5px;
+    height: 5px;
     background: radial-gradient(circle, #1a140d 20%, #4a3721 80%);
     border-radius: 50%;
     box-shadow: inset 1px 1px 2px rgba(0,0,0,0.8);
 }
-.label::before { left: 8px; }
-.label::after { right: 8px; }
+.nav-tab .label::before { left: 6px; }
+.nav-tab .label::after { right: 6px; }
 
-/* The Pull Lip (Bottom Metal Edge) */
-.nav-tab::after, .side-drawer::after {
+/* The Metal Pull Lip (Bottom Edge) */
+.nav-tab::after {
     content: '';
     position: absolute;
-    bottom: -5px;
-    left: 10%;
-    width: 80%;
-    height: 10px;
+    bottom: -6px;
+    left: 15%;
+    width: 70%;
+    height: 12px;
     background: linear-gradient(180deg, #4a3721, #1a140d);
     border-radius: 0 0 8px 8px;
     border: 1px solid #2a1f12;
     z-index: 1;
 }
 
-/* ===== CABINET SCALING (600px) ===== */
+/* ===== EDITORIAL CABINET (750px WIDTH) ===== */
 .side-panel {
     position: absolute !important;
     left: 15px !important;
-    top: 380px !important;
-    width: 600px !important;
+    top: 400px !important;
+    width: 750px !important;
     height: 1100px !important;
-    background: url('cabinet.png') no-repeat center center !important;
+    background: url('cabinet.png') no-repeat right center !important;
     background-size: contain !important;
     display: flex !important;
     flex-direction: column;
@@ -90,22 +109,45 @@ body {
     gap: 175px;
     opacity: 0;
     visibility: hidden;
-    transition: all 0.5s ease;
+    transition: all 0.6s ease;
 }
-
 .side-panel.active { opacity: 1 !important; visibility: visible !important; }
 
-/* ===== NAVIGATION BAR ALIGNMENT ===== */
-.main-nav {
+/* Side Drawer Row */
+.side-drawer {
+    width: 100%;
     display: flex;
-    justify-content: center;
-    gap: 20px;
-    margin: 3rem auto;
+    align-items: center;
+    padding-left: 30px;
+    cursor: pointer;
+}
+
+/* Cabinet Label Styling (Matches Tabs) */
+.side-drawer .label {
+    font-family: 'Special Elite', monospace;
+    color: #f1d9a8;
+    background: rgba(18, 13, 10, 0.9);
+    padding: 8px 18px;
+    border: 1px solid #c2a46f;
+    font-size: 1.1rem;
+    white-space: nowrap;
+}
+
+/* Connecting Line */
+.side-drawer::after {
+    content: '';
+    flex-grow: 1;
+    height: 1px;
+    background: linear-gradient(90deg, #c2a46f, transparent);
+    margin-left: 20px;
+    margin-right: 180px; 
+    opacity: 0.5;
 }
 
 /* ===== AMBER GLOW (LIT UP) ===== */
 .lit-up .label {
-    box-shadow: 0 0 20px rgba(241, 217, 168, 1) !important;
+    box-shadow: 0 0 20px #f1d9a8 !important;
     color: #fff !important;
-    border-color: #f1d9a8 !important;
+    border-color: #fff !important;
 }
+.nav-tab.lit-up::after { background: #f1d9a8; }
