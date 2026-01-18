@@ -2,7 +2,7 @@
   <div class="header-content">
     <h1 class="brand-title">Room Glow Up</h1>
     <h2 class="brand-subtitle" id="sub-header-vogue">
-      <span style="background: linear-gradient(180deg, #f1d9a8, #c2a46f); -webkit-background-clip: text; -webkit-text-fill-color: transparent; display: inline-block !important; color: #c2a46f !important;">
+      <span style="background: linear-gradient(180deg, #f1d9a8, #c2a46f); -webkit-background-clip: text; -webkit-text-fill-color: transparent; display: inline-block !important; color: #c2a46f !important; font-family: 'Playfair Display', serif; font-size: 1.2rem; font-weight: 600;">
         Your Dream Space Come To Life
       </span>
     </h2>
@@ -10,9 +10,7 @@
 
   <nav class="main-nav">
     <div class="nav-tab" id="rooms-trigger" onclick="toggleRooms()">
-      <span class="screw screw-left"></span>
-      <span class="label">Rooms</span>
-      <span class="screw screw-right"></span>
+      <span class="screw screw-left"></span><span class="label">Rooms</span><span class="screw screw-right"></span>
     </div>
     <div class="nav-tab" onclick="this.classList.toggle('lit-up')"><span class="label">Furniture</span></div>
     <div class="nav-tab" onclick="this.classList.toggle('lit-up')"><span class="label">Decor</span></div>
@@ -28,6 +26,8 @@
     <div class="side-drawer" onclick="this.classList.toggle('lit-up')"><span class="label">Dining Room</span></div>
     <div class="side-drawer" onclick="this.classList.toggle('lit-up')"><span class="label">Office</span></div>
   </div>
+
+  <div class="main-display-box"></div>
 </div>
 
 <script>
