@@ -10,7 +10,7 @@
 
     <header class="header-content">
         <h1 class="brand-title">Room Glow Up</h1>
-        <span class="vogue-subtitle">Your Dream Space Come To Life</span>
+        <p class="vogue-subtitle">Your Dream Space Come To Life</p>
     </header>
 
     <nav class="main-nav">
@@ -21,10 +21,8 @@
         <div class="nav-tab"><span class="label">Save</span></div>
     </nav>
 
-    <main class="glow-up-container">
-        
+    <div class="glow-up-container">
         <div class="side-panel" id="sideCabinet">
-            
             <div class="side-drawer" onclick="uploadRoom('livingroom.png', this)">
                 <span class="label">Living Room</span>
                 <div class="fan-system">
@@ -54,14 +52,12 @@
                     <div class="fan-item" onclick="openCategory('beds')"><div class="icon-box"><img src="iconsbed.png" class="icon-img"></div></div>
                 </div>
             </div>
-
         </div>
 
         <div class="main-display" id="mainDisplay">
             <img src="" alt="" class="room-viewport" id="roomImage">
         </div>
-
-    </main>
+    </div>
 
     <script src="script.js"></script>
 </body>
