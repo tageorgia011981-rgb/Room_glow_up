@@ -1,67 +1,88 @@
 @import url('https://fonts.googleapis.com/css2?family=Lavishly+Yours&family=Playfair+Display:wght@400;700&family=Special+Elite&display=swap');
 
-/* GLOBAL RESET */
+/* ===== GLOBAL RESET ===== */
 * { box-sizing: border-box; margin: 0; padding: 0; }
 
 body {
     font-family: 'Inter', sans-serif;
-    background: url('background7.jpg') no-repeat center center fixed;
-    background-size: cover;
+    background: url('background7.jpg') no-repeat center center fixed !important;
+    background-size: cover !important;
     background-color: #0d0a08;
-    min-height: 100vh;
+    min-height: 110vh;
+    overflow-x: hidden;
 }
 
-/* HEADER & NAV */
-.header-content { text-align: center; margin-top: 20px; }
+/* ===== HEADER SECTION restored ===== */
+.header-content {
+    text-align: center;
+    margin-top: 2rem;
+}
+
 .brand-title {
     font-family: 'Lavishly Yours', cursive;
-    font-size: 5rem;
-    color: #f1d9a8;
+    font-size: clamp(3.5rem, 8vw, 5.5rem);
+    background: linear-gradient(180deg, #f1d9a8 0%, #caa86a 45%, #9e7c3a 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    filter: drop-shadow(0 2px 4px rgba(0,0,0,0.5));
 }
 
+.brand-subtitle {
+    margin-top: 0.5rem;
+}
+
+/* ===== TOP NAVIGATION restored ===== */
 .main-nav {
     display: flex;
     justify-content: center;
-    gap: 10px;
-    margin: 20px auto;
+    gap: 8px;
+    width: 95%;
+    max-width: 750px;
+    margin: 1.5rem auto 3rem auto;
 }
 
 .nav-tab {
-    padding: 10px 20px;
-    background: #4a3721;
-    color: #f1d9a8;
-    border: 1px solid #c2a46f;
+    flex: 1;
+    max-width: 105px;
+    padding: 8px;
+    background: linear-gradient(145deg, #8a6842, #2a1f12);
+    border: 1px solid #4a3721;
+    border-radius: 4px 4px 8px 8px;
     cursor: pointer;
+    position: relative;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+    text-align: center;
+    transition: all 0.3s ease;
 }
 
-/* THE CABINET - STABLE VERSION */
+/* ===== THE CABINET - LARGE & TUCKED LEFT ===== */
 .side-panel {
-    position: absolute;
-    left: 15px; 
-    top: 250px; 
-    width: 400px; 
-    height: 850px;
+    position: absolute !important;
+    left: 15px !important; 
+    top: 240px !important; 
+    width: 440px !important; 
+    height: 900px !important;
+    margin: 0 !important;
     
-    /* Make sure your new picture is named cabinet.png */
-    background: url('cabinet.png') no-repeat center center;
-    background-size: contain;
+    background: url('cabinet.png') no-repeat center center !important;
+    background-size: contain !important; 
     
-    display: flex;
+    display: flex !important;
     flex-direction: column;
-    z-index: 100;
+    z-index: 1000;
     
-    /* ALIGNMENT: Adjust these after you see it on screen */
-    padding-top: 180px; 
-    gap: 120px; 
+    /* ADJUST THESE TO HIT YOUR NEW PHOTO HANDLES */
+    padding-top: 200px; 
+    gap: 130px; 
     
     opacity: 0;
     visibility: hidden;
-    transition: opacity 0.5s ease;
+    transition: all 0.5s ease;
 }
 
 .side-panel.active {
-    opacity: 1;
-    visibility: visible;
+    opacity: 1 !important;
+    visibility: visible !important;
 }
 
 .side-drawer { 
@@ -71,18 +92,25 @@ body {
     cursor: pointer;
 }
 
+/* ===== VINTAGE LABELS ===== */
 .label {
     display: inline-block; 
-    background: rgba(18, 13, 10, 0.9);
+    background: rgba(18, 13, 10, 0.95);
     color: #f1d9a8;
     font-family: 'Special Elite', monospace;
-    padding: 5px 15px;
+    font-size: 0.85rem;
+    padding: 6px 14px;
     border: 1px solid #c2a46f;
+    box-shadow: 2px 2px 8px rgba(0,0,0,0.8);
+    transform: rotate(-1.5deg);
+    transition: all 0.3s ease;
 }
 
-/* AMBER GLOW */
-.side-drawer.lit-up .label {
-    box-shadow: 0 0 15px #f1d9a8;
-    color: #fff;
-    border-color: #fff;
+/* ===== AMBER GLOW (For Cabinet & Top Nav) ===== */
+.side-drawer.lit-up .label,
+.nav-tab.lit-up .label {
+    box-shadow: 0 0 15px rgba(241, 217, 168, 0.9) !important;
+    color: #fff !important;
+    border-color: #fff !important;
+    text-shadow: 0 0 5px rgba(255,255,255,0.5);
 }
