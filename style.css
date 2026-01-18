@@ -1,14 +1,16 @@
 @import url('https://fonts.googleapis.com/css2?family=Lavishly+Yours&family=Playfair+Display:wght@400;700&family=Special+Elite&display=swap');
 
+/* ===== GLOBAL RE-LOCK ===== */
 * {
     box-sizing: border-box;
     margin: 0;
     padding: 0;
+    -webkit-tap-highlight-color: transparent;
 }
 
 body {
     font-family: 'Inter', sans-serif;
-    /* Fixed background ensures it follows you down the page */
+    /* Fixed background stops the black-screen-on-scroll bug */
     background: url('background7.jpg') no-repeat center center fixed !important;
     background-size: cover !important;
     background-color: #0d0a08;
@@ -16,50 +18,68 @@ body {
     overflow-x: hidden;
 }
 
-.header-content { text-align: center; margin-top: 2rem; }
+/* ===== HEADER SECTION ===== */
+.header-content {
+    text-align: center;
+    margin-top: 2.5rem;
+    margin-bottom: 2rem;
+}
 
 .brand-title {
     font-family: 'Lavishly Yours', cursive;
-    font-size: clamp(3rem, 8vw, 5rem);
+    font-size: clamp(3rem, 8vw, 5.5rem);
     background: linear-gradient(180deg, #f1d9a8 0%, #caa86a 45%, #9e7c3a 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
-    margin-bottom: 0.2rem;
+    filter: drop-shadow(0 2px 4px rgba(0,0,0,0.5));
+    letter-spacing: 1px;
 }
 
-/* ===== ELEGANT TOP NAV ===== */
+/* ===== TOP NAVIGATION (CHIC TABS) ===== */
 .main-nav {
     display: flex;
     justify-content: center;
-    gap: 6px;
+    gap: 8px;
     width: 95%;
-    max-width: 700px; /* Narrower for chic look */
-    margin: 1rem auto;
+    max-width: 700px;
+    margin: 0 auto 3rem auto;
 }
 
 .nav-tab {
     flex: 1;
-    max-width: 90px; /* Small, refined tabs */
-    padding: 4px;
-    background: linear-gradient(145deg, #a67c52, #2a1f12);
-    border: 1px solid #3d2e0b;
+    max-width: 95px;
+    padding: 5px;
+    background: linear-gradient(145deg, #8a6842, #2a1f12);
+    border: 1px solid #4a3721;
     border-radius: 4px 4px 8px 8px;
     cursor: pointer;
     position: relative;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.5);
 }
 
-/* ===== THE FILE CABINET ===== */
+/* ===== THE PHOTO CABINET PANEL ===== */
 .side-panel {
     position: absolute;
     left: 15px;
-    top: 320px; /* Anchored just below the nav */
+    top: 350px; 
+    width: 280px;  /* Adjusted for your specific tall cabinet photo */
+    height: 700px;
+    
+    /* YOUR UPLOADED IMAGE */
+    background: url('cabinet.png') no-repeat center center;
+    background-size: contain;
+    
     display: flex;
     flex-direction: column;
-    gap: 2px; /* Super tight cabinet stacking */
     z-index: 100;
+    
+    /* ALIGNMENT FOR THE 4 DRAWERS */
+    padding-top: 115px; /* Moves first label to top drawer handle */
+    gap: 98px;          /* Spacing between the 4 drawer handles */
+    
     opacity: 0;
     visibility: hidden;
-    transition: all 0.4s ease-in-out;
+    transition: all 0.5s ease;
 }
 
 .side-panel.active {
@@ -67,40 +87,45 @@ body {
     visibility: visible;
 }
 
+/* ===== INVISIBLE DRAWER BUTTONS ===== */
 .side-drawer {
-    width: 140px;
-    padding: 4px;
-    background: linear-gradient(145deg, #a67c52, #2a1f12);
-    border: 1px solid #3d2e0b;
-    border-radius: 2px 2px 6px 6px;
+    background: none !important;
+    border: none !important;
+    box-shadow: none !important;
     cursor: pointer;
-    transform: translateX(-10px);
-    transition: all 0.3s ease;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    transition: transform 0.2s ease;
 }
 
-.side-panel.active .side-drawer { transform: translateX(0); }
-
+/* ===== VINTAGE LABELS ===== */
 .label {
     display: block;
-    background: #1a140f;
+    background: rgba(18, 13, 10, 0.85); /* Semi-transparent vintage black */
     color: #f1d9a8;
     font-family: 'Special Elite', monospace;
-    font-size: 0.65rem; /* Smaller font for vogue feel */
-    padding: 4px;
-    text-align: center;
+    font-size: 0.65rem;
+    padding: 4px 10px;
     border-radius: 2px;
-    box-shadow: inset 0 2px 5px rgba(0,0,0,1);
+    border: 1px solid #c2a46f;
+    box-shadow: 2px 2px 6px rgba(0,0,0,0.7);
+    transform: rotate(-1deg); /* Slight tilt for eclectic feel */
+    text-align: center;
 }
 
-/* AMBER GLOW */
+/* AMBER GLOW (When Lit Up) */
 .lit-up {
-    box-shadow: 0 0 15px rgba(202, 168, 106, 0.9) !important;
-    border-color: #f1d9a8 !important;
+    box-shadow: 0 0 15px rgba(241, 217, 168, 0.8) !important;
 }
 
-.screw {
-    position: absolute; top: 50%; transform: translateY(-50%);
-    width: 4px; height: 4px; border-radius: 50%;
-    background: radial-gradient(circle, #f1d9a8, #4a3721);
+.lit-up .label {
+    border-color: #fff !important;
+    color: #fff !important;
+    text-shadow: 0 0 5px rgba(255,255,255,0.5);
 }
-.screw-left { left: 4px; } .screw-right { right: 4px; }
+
+/* Hide extra clutter since it's in the photo */
+.screw, .side-drawer::after {
+    display: none !important;
+}
