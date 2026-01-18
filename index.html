@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Room Glow Up</title>
+    <title>Room Glow Up | Vogue Edition</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -24,17 +24,33 @@
     </nav>
 
     <div class="side-panel" id="sideCabinet">
-        <div class="side-drawer" onclick="uploadRoom('livingroom.png', this)"><span class="label">Living Room 1</span></div>
-        <div class="side-drawer" onclick="uploadRoom('livingroom2.png', this)"><span class="label">Living Room 2</span></div>
-        <div class="side-drawer" onclick="uploadRoom('bedroom.png', this)"><span class="label">Bedroom</span></div>
-        <div class="side-drawer" onclick="uploadRoom('kitchen.png', this)"><span class="label">Kitchen</span></div>
+        <div class="side-drawer" onclick="uploadRoom('livingroom.png', this)">
+            <span class="label">Living Room</span>
+        </div>
+        <div class="side-drawer" onclick="uploadRoom('bedroom.png', this)">
+            <span class="label">Bedroom</span>
+        </div>
+        <div class="side-drawer" onclick="uploadRoom('kitchen.png', this)">
+            <span class="label">Kitchen</span>
+        </div>
+        <div class="side-drawer" onclick="uploadRoom('diningroom.png', this)">
+            <span class="label">Dining Room</span>
+        </div>
     </div>
 
     <div class="furniture-fan-container" id="furnitureFan">
-        <div class="fan-item" title="Seating">S</div>
-        <div class="fan-item" title="Tables">T</div>
-        <div class="fan-item" title="Storage">St</div>
-        <div class="fan-item" title="Beds">B</div>
+        <div class="fan-item" onclick="openCategory('seating')">
+            <img src="iconsseating.png" alt="Seating" class="icon-img">
+        </div>
+        <div class="fan-item" onclick="openCategory('tables')">
+            <img src="iconstables.png" alt="Tables" class="icon-img">
+        </div>
+        <div class="fan-item" onclick="openCategory('storage')">
+            <img src="iconsstorage.png" alt="Storage" class="icon-img">
+        </div>
+        <div class="fan-item" onclick="openCategory('beds')">
+            <img src="iconsbed.png" alt="Beds" class="icon-img">
+        </div>
     </div>
 
     <div class="main-display" id="mainDisplay">
