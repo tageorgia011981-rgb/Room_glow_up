@@ -38,26 +38,27 @@ body {
     box-shadow: 0 4px 10px rgba(0,0,0,0.5);
 }
 
-/* THE CABINET - ZOOMED & POSITIONED */
+/* THE CABINET - MAXIMUM ZOOM & SCALE */
 .side-panel {
     position: absolute !important;
     left: 15px !important; 
-    top: 240px !important; 
-    width: 420px !important; 
-    height: 900px !important;
+    top: 220px !important; /* Slightly higher for the bigger scale */
+    width: 460px !important; /* Wider container */
+    height: 950px !important;
     margin: 0 !important;
     
     background: url('cabinet.png') no-repeat center center !important;
-    /* This zooms the image so the handles meet the labels */
-    background-size: 115% !important; 
+    
+    /* MAXIMUM ZOOM: Increased to 125% to pull handles toward labels */
+    background-size: 125% !important; 
     
     display: flex !important;
     flex-direction: column;
     z-index: 1000;
     
     /* ALIGNMENT FOR THE 4 HANDLES */
-    padding-top: 225px; 
-    gap: 138px; 
+    padding-top: 240px; /* Nudged for the 125% zoom */
+    gap: 142px;         /* Spaced out for the larger image */
     
     opacity: 0;
     visibility: hidden;
@@ -81,8 +82,8 @@ body {
     background: rgba(18, 13, 10, 0.9);
     color: #f1d9a8;
     font-family: 'Special Elite', monospace;
-    font-size: 0.9rem;
-    padding: 6px 14px;
+    font-size: 0.95rem; /* Slightly larger text for the bigger cabinet */
+    padding: 6px 16px;
     border: 1px solid #c2a46f;
     box-shadow: 2px 2px 8px rgba(0,0,0,0.8);
     transform: rotate(-1.5deg);
