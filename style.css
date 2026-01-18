@@ -1,92 +1,94 @@
-@import url('https://fonts.googleapis.com/css2?family=Lavishly+Yours&family=Playfair+Display:wght@700&family=Special+Elite&family=Inter:wght@400;600&display=swap');
-
-/* ===== GLOBAL RESET ===== */
-* { box-sizing: border-box; margin: 0; padding: 0; }
-
-body {
-    font-family: 'Inter', sans-serif;
-    background: #0d0a08 url('background7.jpg') no-repeat center center fixed;
-    background-size: cover;
-    color: #f1d9a8;
-    overflow-x: hidden;
+/* THE CONTAINER THAT HOLDS BOTH SIDE-BY-SIDE */
+.glow-up-container {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 40px; /* Space between cabinet and room */
+    margin-top: 50px;
+    width: 100%;
+    padding: 0 50px;
 }
 
-/* ===== BRANDING ===== */
-.header-content { text-align: center; margin-top: 3rem; }
-.brand-title { font-family: 'Lavishly Yours', cursive; font-size: 8rem; color: #f1d9a8; line-height: 0.8; }
-.vogue-subtitle { font-family: 'Playfair Display', serif; letter-spacing: 5px; color: #8a6842; text-transform: uppercase; }
-
-/* ===== NAVIGATION ===== */
-.main-nav { display: flex; justify-content: center; gap: 15px; margin: 3rem auto; }
-.nav-tab .label { background: #1a140d; color: #f1d9a8; font-family: 'Special Elite', monospace; padding: 10px 20px; border: 1px solid #4a3721; cursor: pointer; }
-
-/* ===== CABINET (THE SURPRISE) ===== */
+/* THE CABINET */
 .side-panel {
-    position: absolute; left: 20px; top: 360px; width: 550px; height: 1000px;
-    background: url('cabinet.png') no-repeat right center; background-size: contain;
-    display: flex; flex-direction: column; padding-top: 240px; gap: 180px;
-    opacity: 0; visibility: hidden; transition: 0.6s ease; z-index: 10;
-    overflow: visible; /* CRITICAL: Allows blades to swing out past the cabinet */
+    width: 500px;
+    height: 900px;
+    background: url('cabinet.png') no-repeat right center;
+    background-size: contain;
+    display: flex;
+    flex-direction: column;
+    padding-top: 220px;
+    gap: 160px; /* Adjust to hit your drawer handles */
+    opacity: 0;
+    visibility: hidden;
+    transition: 0.8s ease;
+    overflow: visible; /* CRITICAL for fans to stick out */
 }
 .side-panel.active { opacity: 1; visibility: visible; }
 
-.side-drawer .label { font-family: 'Special Elite', monospace; background: rgba(18, 13, 10, 0.9); padding: 8px 15px; border: 1px solid #c2a46f; cursor: pointer; display: inline-block; margin-left: 40px; }
-
-/* ===== MAIN DISPLAY ===== */
+/* THE ROOM DISPLAY (Now sits naturally to the right) */
 .main-display {
-    position: absolute; left: 580px; top: 360px; width: 850px; height: 550px;
-    background: rgba(10, 8, 6, 0.9); border: 2px solid #4a3721;
-    opacity: 0; visibility: hidden; transition: 0.5s; z-index: 5;
+    width: 850px;
+    height: 550px;
+    background: rgba(10, 8, 6, 0.9);
+    border: 2px solid #4a3721;
+    opacity: 0;
+    visibility: hidden;
+    transition: 0.5s;
+    box-shadow: 0 30px 60px rgba(0,0,0,0.8);
 }
 .main-display.active { opacity: 1; visibility: visible; }
-.room-viewport { width: 100%; height: 100%; object-fit: contain; }
 
-/* ===== THE MECHANICAL FAN BLADES ===== */
-.furniture-fan-container {
-    position: absolute; 
-    right: -20px; /* Anchored to the cabinet handle edge */
-    top: 280px;  /* Level with top drawer */
-    width: 1px; height: 1px; 
-    z-index: 999;
+/* THE DRAWER-SPECIFIC FAN SYSTEM */
+.side-drawer { 
+    position: relative; 
+    cursor: pointer; 
+    display: flex; 
+    align-items: center; 
 }
 
+.fan-system {
+    position: absolute;
+    left: 80%; /* Starts at the drawer handle */
+    top: 50%;
+    width: 1px; height: 1px;
+    pointer-events: none;
+    z-index: 100;
+}
+
+/* MECHANICAL BLADES */
 .fan-item {
     position: absolute;
-    width: 220px; /* The length of the blade */
-    height: 80px;
-    left: 0; top: -40px;
-    transform-origin: left center; /* Pivot point at the cabinet edge */
+    width: 200px; /* Length of the arm */
+    height: 70px;
+    left: 0; top: -35px;
+    transform-origin: left center;
     display: flex;
     align-items: center;
-    justify-content: flex-end; /* Icon sits at the tip of the blade */
+    justify-content: flex-end;
     opacity: 0;
     transform: rotate(0deg);
-    transition: 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-    pointer-events: none;
+    transition: 0.7s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
-/* The Blade Line */
+/* Swing out when the drawer is 'lit-up' */
+.lit-up .fan-item { opacity: 1; pointer-events: auto; }
+.lit-up .fan-item:nth-child(1) { transform: rotate(-55deg); }
+.lit-up .fan-item:nth-child(2) { transform: rotate(-20deg); }
+.lit-up .fan-item:nth-child(3) { transform: rotate(20deg); }
+.lit-up .fan-item:nth-child(4) { transform: rotate(55deg); }
+
+/* Blade Line Styling */
 .fan-item::before {
     content: '';
     position: absolute;
-    left: 0; width: 140px; height: 2px;
+    left: 0; width: 130px; height: 2px;
     background: linear-gradient(90deg, transparent, #c2a46f);
-    z-index: -1;
 }
 
 .icon-box {
-    width: 80px; height: 80px;
-    background: linear-gradient(145deg, #2a1f12, #0d0a08);
-    border: 1px solid #c2a46f; border-radius: 5px;
+    width: 75px; height: 75px;
+    background: #1a140d; border: 1px solid #c2a46f; border-radius: 4px;
     display: flex; justify-content: center; align-items: center;
-    box-shadow: 5px 5px 15px rgba(0,0,0,0.6);
 }
-
 .icon-img { width: 85%; height: 85%; object-fit: contain; }
-
-/* THE SWING REVEAL */
-.fan-active .fan-item { opacity: 1; pointer-events: auto; }
-.fan-active .fan-item:nth-child(1) { transform: rotate(-50deg); }
-.fan-active .fan-item:nth-child(2) { transform: rotate(-18deg); }
-.fan-active .fan-item:nth-child(3) { transform: rotate(18deg); }
-.fan-active .fan-item:nth-child(4) { transform: rotate(50deg); }
