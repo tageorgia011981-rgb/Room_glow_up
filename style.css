@@ -1,127 +1,39 @@
-@import url('https://fonts.googleapis.com/css2?family=Monsieur+La+Doulaise&family=Playfair+Display:wght@700&family=Special+Elite&family=Inter:wght@400;600&display=swap');
+/* Side Panel & Cabinet */
+.side-panel { flex:0 0 480px; display:flex; flex-direction:column; padding-top:250px; gap:200px; position:relative; }
 
-* { box-sizing: border-box; margin: 0; padding: 0; }
-body {
-    font-family: 'Inter', sans-serif;
-    background-color: #0d0a08;
-    background-image: url('background7.jpg');
-    background-size: cover;
-    background-attachment: fixed;
-    color: #f1d9a8;
-    min-height: 100vh;
-    overflow-x: hidden;
-}
-
-.header-content {
-    width: 100%;
-    padding: 60px 0 40px;
-    text-align: center;
-}
-
-.brand-title {
-    font-family: 'Monsieur La Doulaise', cursive;
-    font-size: 12rem;
-    line-height: 0.75;
-    color: #f5f5f0; 
-    -webkit-text-stroke: 1.2px rgba(241,217,168,0.7);
-    text-shadow: 0 4px 0 rgba(0,0,0,1),0 15px 25px rgba(0,0,0,0.8),0 0 30px rgba(241,217,168,0.2);
-    letter-spacing: -2px;
-    filter: drop-shadow(0 10px 20px rgba(0,0,0,1));
-}
-
-.vogue-subtitle {
-    font-family: 'Playfair Display', serif;
-    font-size: 1.1rem;
-    letter-spacing: 18px; 
-    color: #f5f5f0;
-    text-transform: uppercase;
-    margin-top: 20px;
-    display: block;
-    -webkit-text-stroke: 0.4px rgba(241,217,168,0.5);
-    text-shadow: 0 5px 10px rgba(0,0,0,0.9);
-}
-
-.main-nav { display: flex; justify-content: center; margin-bottom: 40px; gap: 25px; }
-.main-nav .nav-tab { cursor: pointer; text-transform: uppercase; font-family: 'Special Elite', monospace; color: #f1d9a8; }
-
-.glow-up-container { display: flex; align-items: flex-start; width: 100%; padding: 0 10px 120px; }
-
-.side-panel {
-    flex: 0 0 520px;
-    background: url('cabinet.png') no-repeat right top;
-    background-size: contain;
-    display: flex;
-    flex-direction: column;
-    padding-top: 260px;
-    gap: 90px;
-    position: relative;
-    z-index: 2;
-
-    /* Hidden until Rooms clicked */
-    transform: translateX(-120px);
-    opacity: 0;
-    pointer-events: none;
-    transition: transform 0.8s cubic-bezier(.25,.8,.25,1), opacity 0.5s ease;
-}
-.side-panel.active { transform: translateX(0); opacity:1; pointer-events:auto; }
-
+/* Drawer Label */
 .side-drawer .label { 
-    font-family: 'Special Elite', monospace; 
-    font-size: 1.2rem;
-    color: #332a1e;
-    position: relative;
-    display: inline-block;
-    padding: 12px 30px;
-    margin-left: 35px;
-    background: linear-gradient(145deg,#a88b56,#d4ba8a,#a88b56);
-    border: 1px solid #5c4a33;
-    border-radius: 2px 2px 0 0;
-    box-shadow: 4px 4px 12px rgba(0,0,0,0.8);
-    text-transform: uppercase;
+    font-family:'Special Elite', monospace; font-size:1.1rem; padding:10px 25px; 
+    background:linear-gradient(145deg,#a88b56,#d4ba8a,#a88b56); 
+    border:1px solid #5c4a33; border-radius:2px 2px 0 0; text-transform:uppercase; position:relative;
 }
 
-.side-drawer .label::after {
-    content: '';
-    position: absolute;
-    bottom: -15px; left:0; width:100%; height:15px;
-    background: linear-gradient(to bottom,#a88b56,#5c4a33);
-    border-radius:0 0 10px 10px;
-    border:1px solid #5c4a33; border-top:none;
-    box-shadow:0 5px 10px rgba(0,0,0,0.6);
+/* Screws */
+.screw { position:absolute; width:6px;height:6px;background:radial-gradient(circle,#5c4a33,#1a140d); border-radius:50%; }
+.tl{top:4px;left:4px;} .tr{top:4px;right:4px;} .bl{bottom:4px;left:4px;} .br{bottom:4px;right:4px;}
+
+/* Fan System */
+.fan-system { position:absolute; right:0; top:50%; width:0;height:0; pointer-events:none; }
+
+.fan-arm { 
+    position:absolute; width:120px; height:0; transform-origin:0 0; 
+    transform: rotate(0deg) scale(0); transition: transform 0.5s ease; pointer-events:auto;
 }
 
-.side-drawer .label .screw {
-    position:absolute; width:6px; height:6px;
-    background: radial-gradient(circle,#5c4a33,#1a140d);
-    border-radius:50%;
-    box-shadow: inset 1px 1px 1px rgba(255,255,255,0.3);
-}
-.screw.tl{top:4px;left:4px;}.screw.tr{top:4px;right:4px;}.screw.bl{bottom:4px;left:4px;}.screw.br{bottom:4px;right:4px;}
+.side-drawer.lit-up .fan-arm { transform: rotate(var(--angle)) scale(1); }
 
-.main-display {
-    flex:1; min-height:620px; background:#000; border:1px solid #4a3721; margin-top:40px;
-    box-shadow: inset 0 0 40px rgba(0,0,0,0.6),0 60px 140px rgba(0,0,0,1);
-    position: relative; z-index:1;
+/* Icon Box */
+.icon-box { 
+    width:50px;height:50px; background:#1a140d; border:1px solid #c2a46f; border-radius:8px;
+    display:flex; justify-content:center; align-items:center; transform:translateX(100%); transition: box-shadow 0.3s ease, transform 0.3s ease; cursor:pointer;
 }
 
-.room-viewport { width:100%; height:100%; object-fit:contain; }
-
-.fan-system { position:absolute; right:-40px; top:50%; z-index:5; pointer-events:auto; }
-
-.fan-item {
-    position:absolute; width:260px; height:60px; left:0; top:-30px;
-    transform-origin:left center; display:flex; align-items:center; justify-content:flex-end;
-    opacity:0; transform:rotate(0deg) translateX(0px);
-    transition: transform 0.5s ease, opacity 0.4s ease;
+/* Glow on active */
+.icon-box.active { 
+    box-shadow: 0 0 15px #f5d26d, 0 0 25px #f5d26d, 0 0 40px #f5d26d; 
+    transform: translateX(100%) scale(1.1);
 }
 
-/* Fan-out for only the opened drawer */
-.side-drawer.lit-up .fan-item:nth-child(1){ opacity:1; transform:rotate(-25deg) translateX(80px); transition-delay:0s;}
-.side-drawer.lit-up .fan-item:nth-child(2){ opacity:1; transform:rotate(25deg) translateX(80px); transition-delay:0.05s;}
-.side-drawer.lit-up .fan-item:nth-child(3){ opacity:1; transform:rotate(-15deg) translateX(120px); transition-delay:0.1s;}
-.side-drawer.lit-up .fan-item:nth-child(4){ opacity:1; transform:rotate(15deg) translateX(120px); transition-delay:0.15s;}
-
-.icon-box{ width:75px; height:75px; background:#1a140d; border:1px solid #c2a46f; display:flex; justify-content:center; align-items:center; }
-
-.sub-fan{ opacity:0; transform:scale(0.9); pointer-events:none; transition:opacity 0.4s ease, transform 0.4s ease; }
-.sub-fan.active{ opacity:1; transform:scale(1); pointer-events:auto; }
+/* Main Display */
+.main-display { flex:1; height:750px; background:#000; margin-left:-75px; margin-top:20px; border:1px solid #4a3721; box-shadow:0 50px 120px rgba(0,0,0,1); }
+.room-viewport { width:100%; height:100%; object-fit:cover; }
