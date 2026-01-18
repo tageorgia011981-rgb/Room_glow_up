@@ -1,67 +1,133 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Room Glow Up</title>
-    <link href="https://fonts.googleapis.com/css2?family=Monsieur+La+Doulaise&family=Playfair+Display:wght@700&family=Special+Elite&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="style.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Room Glow Up</title>
+<link href="https://fonts.googleapis.com/css2?family=Monsieur+La+Doulaise&family=Playfair+Display:wght@700&family=Special+Elite&family=Inter:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-    <header class="header-content">
-        <h1 class="brand-title">Room Glow Up</h1>
-        <p class="vogue-subtitle">Your Dream Space Come To Life</p>
-    </header>
+<header class="header-content">
+    <h1 class="brand-title">Room Glow Up</h1>
+    <p class="vogue-subtitle">Your Dream Space Come To Life</p>
+</header>
 
-    <nav class="main-nav">
-        <div class="nav-tab" onclick="toggleRooms()"><span class="label">Rooms</span></div>
-        <div class="nav-tab"><span class="label">Furniture</span></div>
-        <div class="nav-tab"><span class="label">Decor</span></div>
-        <div class="nav-tab"><span class="label">Upload</span></div>
-        <div class="nav-tab"><span class="label">Save</span></div>
-    </nav>
+<nav class="main-nav">
+    <div class="nav-tab" onclick="toggleRooms()"><span class="label">Rooms</span></div>
+    <div class="nav-tab"><span class="label">Furniture</span></div>
+    <div class="nav-tab"><span class="label">Decor</span></div>
+    <div class="nav-tab"><span class="label">Upload</span></div>
+    <div class="nav-tab"><span class="label">Save</span></div>
+</nav>
 
-    <div class="glow-up-container">
-        <div class="side-panel" id="sideCabinet">
-            
-            <div class="side-drawer" onclick="uploadRoom('livingroom.png', this)">
-                <span class="label">
-                    <span class="screw tl"></span><span class="screw tr"></span>
-                    Living Room
-                    <span class="screw bl"></span><span class="screw br"></span>
-                </span>
-                <div class="fan-system">
-                    <div class="fan-item" onclick="openCategory(event, 'lr-seating')"><div class="icon-box"><img src="iconsseating.png" class="icon-img"></div></div>
-                    <div class="fan-item" onclick="openCategory(event, 'lr-beds')"><div class="icon-box"><img src="iconsbed.png" class="icon-img"></div></div>
+<div class="glow-up-container">
+
+    <!-- Cabinet / Side Panel -->
+    <div class="side-panel" id="sideCabinet">
+
+        <!-- Living Room -->
+        <div class="side-drawer" onclick="uploadRoom('livingroom.png', this)">
+            <span class="label">
+                <span class="screw tl"></span><span class="screw tr"></span>
+                Living Room
+                <span class="screw bl"></span><span class="screw br"></span>
+            </span>
+            <div class="fan-system">
+                <div class="fan-item" onclick="openCategory(event,'lr-seating')">
+                    <div class="icon-box"><img src="iconsseating.png" class="icon-img"></div>
+                </div>
+                <div class="fan-item" onclick="openCategory(event,'lr-beds')">
+                    <div class="icon-box"><img src="iconsbed.png" class="icon-img"></div>
                 </div>
             </div>
+        </div>
 
-            <div class="side-drawer" onclick="uploadRoom('bedroom.png', this)">
-                <span class="label">
-                    <span class="screw tl"></span><span class="screw tr"></span>
-                    Bedroom
-                    <span class="screw bl"></span><span class="screw br"></span>
-                </span>
-                <div class="fan-system">
-                    <div class="fan-item" onclick="openCategory(event, 'br-seating')"><div class="icon-box"><img src="iconsseating.png" class="icon-img"></div></div>
-                    <div class="fan-item" onclick="openCategory(event, 'br-beds')">
-                        <div class="icon-box"><img src="iconsbed.png" class="icon-img"></div>
-                        <div class="sub-fan" id="br-bedsSubFan">
-                            <div class="furniture-item" onclick="placeFurniture('hester.png')"><img src="hester.png"></div>
-                            <div class="furniture-item" onclick="placeFurniture('nadette.png')"><img src="nadette.png"></div>
-                        </div>
+        <!-- Bedroom -->
+        <div class="side-drawer" onclick="uploadRoom('bedroom.png', this)">
+            <span class="label">
+                <span class="screw tl"></span><span class="screw tr"></span>
+                Bedroom
+                <span class="screw bl"></span><span class="screw br"></span>
+            </span>
+            <div class="fan-system">
+                <div class="fan-item" onclick="openCategory(event,'br-seating')">
+                    <div class="icon-box"><img src="iconsseating.png" class="icon-img"></div>
+                </div>
+                <div class="fan-item" onclick="openCategory(event,'br-beds')">
+                    <div class="icon-box"><img src="iconsbed.png" class="icon-img"></div>
+                    <div class="sub-fan" id="br-bedsSubFan">
+                        <div class="furniture-item" onclick="placeFurniture('hester.png')"><img src="hester.png"></div>
+                        <div class="furniture-item" onclick="placeFurniture('nadette.png')"><img src="nadette.png"></div>
                     </div>
                 </div>
+                <div class="fan-item" onclick="openCategory(event,'br-storage')">
+                    <div class="icon-box"><img src="iconsstorage.png" class="icon-img"></div>
+                </div>
             </div>
-
         </div>
 
-        <div class="main-display" id="mainDisplay">
-            <img src="" alt="" class="room-viewport" id="roomImage">
+        <!-- Kitchen -->
+        <div class="side-drawer" onclick="uploadRoom('kitchen.png', this)">
+            <span class="label">
+                <span class="screw tl"></span><span class="screw tr"></span>
+                Kitchen
+                <span class="screw bl"></span><span class="screw br"></span>
+            </span>
+            <div class="fan-system">
+                <div class="fan-item" onclick="openCategory(event,'kt-seating')">
+                    <div class="icon-box"><img src="iconsseating.png" class="icon-img"></div>
+                </div>
+                <div class="fan-item" onclick="openCategory(event,'kt-storage')">
+                    <div class="icon-box"><img src="iconsstorage.png" class="icon-img"></div>
+                </div>
+            </div>
         </div>
+
+        <!-- Bathroom -->
+        <div class="side-drawer" onclick="uploadRoom('bathroom.png', this)">
+            <span class="label">
+                <span class="screw tl"></span><span class="screw tr"></span>
+                Bathroom
+                <span class="screw bl"></span><span class="screw br"></span>
+            </span>
+            <div class="fan-system">
+                <div class="fan-item" onclick="openCategory(event,'ba-storage')">
+                    <div class="icon-box"><img src="iconsstorage.png" class="icon-img"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Dining Room -->
+        <div class="side-drawer" onclick="uploadRoom('diningroom.png', this)">
+            <span class="label">
+                <span class="screw tl"></span><span class="screw tr"></span>
+                Dining Room
+                <span class="screw bl"></span><span class="screw br"></span>
+            </span>
+            <div class="fan-system">
+                <div class="fan-item" onclick="openCategory(event,'dr-seating')">
+                    <div class="icon-box"><img src="iconsseating.png" class="icon-img"></div>
+                </div>
+                <div class="fan-item" onclick="openCategory(event,'dr-tables')">
+                    <div class="icon-box"><img src="iconstable.png" class="icon-img"></div>
+                </div>
+                <div class="fan-item" onclick="openCategory(event,'dr-storage')">
+                    <div class="icon-box"><img src="iconsstorage.png" class="icon-img"></div>
+                </div>
+            </div>
+        </div>
+
     </div>
 
-    <script src="script.js"></script>
+    <!-- Main Display -->
+    <div class="main-display" id="mainDisplay">
+        <img src="" alt="" class="room-viewport" id="roomImage">
+    </div>
+
+</div>
+
+<script src="script.js"></script>
 </body>
 </html>
