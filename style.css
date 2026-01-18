@@ -1,111 +1,61 @@
 @import url('https://fonts.googleapis.com/css2?family=Lavishly+Yours&family=Playfair+Display:wght@700&family=Special+Elite&family=Inter:wght@400;600&display=swap');
 
-/* GLOBAL RESET */
 * { box-sizing: border-box; margin: 0; padding: 0; }
 
 body {
     font-family: 'Inter', sans-serif;
-    /* SAFETY: Added a solid dark color so it stays dark even if image fails */
-    background-color: #0d0a08; 
-    background-image: url('background7.jpg'); 
-    background-repeat: no-repeat;
-    background-position: center center;
-    background-attachment: fixed;
+    background: #0d0a08 url('background7.jpg') no-repeat center center fixed;
     background-size: cover;
-    min-height: 120vh;
-}
-
-/* HEADER SECTION */
-.header-content { text-align: center; padding-top: 50px; }
-.brand-title {
-    font-family: 'Lavishly Yours', cursive;
-    font-size: clamp(5rem, 12vw, 9rem);
     color: #f1d9a8;
-    line-height: 1;
-}
-.vogue-subtitle {
-    font-family: 'Playfair Display', serif;
-    color: #8a6842;
-    letter-spacing: 4px;
-    text-transform: uppercase;
+    overflow-x: hidden;
 }
 
-/* TOP NAVIGATION */
-.main-nav { display: flex; justify-content: center; gap: 15px; margin: 40px auto; }
-.nav-tab { 
-    background: #1a140d; 
-    color: #f1d9a8; 
-    padding: 10px 20px; 
-    border: 1px solid #4a3721;
-    font-family: 'Special Elite', monospace;
-    cursor: pointer;
-}
+/* HEADER & NAV */
+.header-content { text-align: center; margin-top: 3rem; }
+.brand-title { font-family: 'Lavishly Yours', cursive; font-size: 8rem; color: #f1d9a8; line-height: 0.8; }
+.vogue-subtitle { font-family: 'Playfair Display', serif; letter-spacing: 5px; color: #8a6842; text-transform: uppercase; }
 
-/* CABINET POSITION */
+.main-nav { display: flex; justify-content: center; gap: 15px; margin: 3rem auto; }
+.nav-tab .label { background: #1a140d; color: #f1d9a8; font-family: 'Special Elite', monospace; padding: 10px 20px; border: 1px solid #4a3721; cursor: pointer; }
+
+/* CABINET: THE SURPRISE */
 .side-panel {
-    position: absolute;
-    left: 20px;
-    top: 360px;
-    width: 500px;
-    display: flex;
-    flex-direction: column;
-    gap: 150px; /* Spaced out drawers */
-    z-index: 10;
+    position: absolute; left: 20px; top: 360px; width: 550px; height: 1000px;
+    background: url('cabinet.png') no-repeat right center; background-size: contain;
+    display: flex; flex-direction: column; padding-top: 240px; gap: 180px;
+    opacity: 0; visibility: hidden; transition: 0.6s; z-index: 10;
+    overflow: visible; /* Lets the fan stick out the side */
 }
+.side-panel.active { opacity: 1; visibility: visible; }
 
-.side-drawer { cursor: pointer; }
-.side-drawer .label {
-    background: rgba(18, 13, 10, 0.9);
-    color: #f1d9a8;
-    padding: 8px 15px;
-    border: 1px solid #c2a46f;
-    font-family: 'Special Elite', monospace;
-}
+.side-drawer .label { font-family: 'Special Elite', monospace; background: rgba(18, 13, 10, 0.9); padding: 8px 15px; border: 1px solid #c2a46f; cursor: pointer; display: inline-block; margin-left: 40px; }
 
-/* ROOM VIEWPORT */
+/* MAIN DISPLAY */
 .main-display {
-    position: absolute;
-    left: 550px;
-    top: 360px;
-    width: 800px;
-    height: 500px;
-    background: #120d0a;
-    border: 2px solid #4a3721;
-    z-index: 5;
+    position: absolute; left: 580px; top: 360px; width: 850px; height: 550px;
+    background: rgba(10, 8, 6, 0.9); border: 2px solid #4a3721;
+    opacity: 0; visibility: hidden; transition: 0.5s; z-index: 5;
 }
-
+.main-display.active { opacity: 1; visibility: visible; }
 .room-viewport { width: 100%; height: 100%; object-fit: contain; }
 
-/* THE FAN - THE IMPORTANT PART */
+/* THE FAN: Anchored to the cabinet */
 .furniture-fan-container {
-    position: absolute;
-    left: 450px; /* Aligned next to cabinet */
-    top: 400px;  /* Aligned near top drawer */
-    width: 300px;
-    height: 300px;
-    z-index: 100;
-    pointer-events: none;
+    position: absolute; right: -50px; top: 280px; /* Aligns with top drawer handle */
+    width: 50px; height: 50px; z-index: 999; pointer-events: none;
 }
-
 .fan-item {
-    position: absolute;
-    width: 70px;
-    height: 70px;
-    background: #1a140d;
-    border: 1px solid #c2a46f;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    opacity: 0;
-    transition: 0.5s ease-out;
+    position: absolute; width: 75px; height: 75px;
+    background: #1a140d; border: 1px solid #c2a46f; border-radius: 5px;
+    display: flex; justify-content: center; align-items: center;
+    opacity: 0; transform: scale(0); transition: 0.5s;
 }
+.fan-active .fan-item { opacity: 1; transform: scale(1); pointer-events: auto; }
 
-.fan-active .fan-item { opacity: 1; pointer-events: auto; }
-
-/* Spread logic */
-.fan-active .fan-item:nth-child(1) { transform: translate(140px, -60px); }
-.fan-active .fan-item:nth-child(2) { transform: translate(180px, 0px); }
-.fan-active .fan-item:nth-child(3) { transform: translate(180px, 80px); }
-.fan-active .fan-item:nth-child(4) { transform: translate(140px, 140px); }
+/* Spread out toward the middle */
+.fan-active .fan-item:nth-child(1) { transform: translate(120px, -70px); }
+.fan-active .fan-item:nth-child(2) { transform: translate(180px, 10px); }
+.fan-active .fan-item:nth-child(3) { transform: translate(180px, 90px); }
+.fan-active .fan-item:nth-child(4) { transform: translate(120px, 170px); }
 
 .icon-img { width: 90%; height: 90%; object-fit: contain; }
