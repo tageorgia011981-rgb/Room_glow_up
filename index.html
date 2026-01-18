@@ -1,62 +1,19 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Room Glow Up</title>
-    <link href="https://fonts.googleapis.com/css2?family=Monsieur+La+Doulaise&family=Playfair+Display:wght@700&family=Special+Elite&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="style.css">
-</head>
-<body>
-
-    <header class="header-content">
-        <h1 class="brand-title">Room Glow Up</h1>
-        <p class="vogue-subtitle">Your Dream Space Come To Life</p>
-    </header>
-
-    <nav class="main-nav">
-        <div class="nav-tab" onclick="toggleRooms()"><span class="label">Rooms</span></div>
-        <div class="nav-tab"><span class="label">Furniture</span></div>
-        <div class="nav-tab"><span class="label">Decor</span></div>
-        <div class="nav-tab"><span class="label">Upload</span></div>
-        <div class="nav-tab"><span class="label">Save</span></div>
-    </nav>
-
-    <div class="glow-up-container">
-        <div class="side-panel" id="sideCabinet">
-            
-            <div class="side-drawer" onclick="uploadRoom('bedroom.png', this)">
-                <span class="label">Bedroom</span>
-                <div class="fan-system">
-                    <div class="fan-item" onclick="openCategory(event, 'br-seating')">
-                        <div class="icon-box"><img src="iconsseating.png" class="icon-img"></div>
-                        <div class="sub-fan" id="br-seatingSubFan"></div>
-                    </div>
-                    <div class="fan-item" onclick="openCategory(event, 'br-beds')">
-                        <div class="icon-box"><img src="iconsbed.png" class="icon-img"></div>
-                        <div class="sub-fan" id="br-bedsSubFan">
-                            <div class="furniture-item" onclick="placeFurniture('hester.png')"><img src="hester.png"></div>
-                            <div class="furniture-item" onclick="placeFurniture('nadette.png')"><img src="nadette.png"></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="side-drawer" onclick="uploadRoom('livingroom.png', this)">
-                <span class="label">Living Room</span>
-                <div class="fan-system">
-                    <div class="fan-item" onclick="openCategory(event, 'lr-seating')"><div class="icon-box"><img src="iconsseating.png" class="icon-img"></div><div class="sub-fan" id="lr-seatingSubFan"></div></div>
-                    <div class="fan-item" onclick="openCategory(event, 'lr-beds')"><div class="icon-box"><img src="iconsbed.png" class="icon-img"></div><div class="sub-fan" id="lr-bedsSubFan"></div></div>
-                </div>
-            </div>
-
+<div class="side-panel" id="sideCabinet">
+    
+    <div class="side-drawer" onclick="uploadRoom('livingroom.png', this)">
+        <span class="label">
+            <span class="screw tl"></span><span class="screw tr"></span>
+            Living Room
+            <span class="screw bl"></span><span class="screw br"></span>
+        </span>
         </div>
 
-        <div class="main-display" id="mainDisplay">
-            <img src="" alt="" class="room-viewport" id="roomImage">
+    <div class="side-drawer" onclick="uploadRoom('bedroom.png', this)">
+        <span class="label">
+            <span class="screw tl"></span><span class="screw tr"></span>
+            Bedroom
+            <span class="screw bl"></span><span class="screw br"></span>
+        </span>
         </div>
-    </div>
 
-    <script src="script.js"></script>
-</body>
-</html>
+</div>
