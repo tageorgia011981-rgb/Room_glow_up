@@ -24,22 +24,12 @@
     </nav>
 
     <div class="side-panel" id="sideCabinet">
-        <div class="side-drawer" onclick="uploadRoom('livingroom.png', this)">
-            <span class="label">Living Room 1</span>
-        </div>
-        <div class="side-drawer" onclick="uploadRoom('livingroom2.png', this)">
-            <span class="label">Living Room 2</span>
-        </div>
-        <div class="side-drawer" onclick="this.classList.toggle('lit-up')">
-            <span class="label">Bedroom</span>
-        </div>
-        <div class="side-drawer" onclick="this.classList.toggle('lit-up')">
-            <span class="label">Kitchen</span>
-        </div>
-        <div class="side-drawer" onclick="this.classList.toggle('lit-up')">
-            <span class="label">Office</span>
-        </div>
-    </div>
+        <div class="side-panel" id="sideCabinet">
+    <div class="side-drawer" onclick="uploadRoom('livingroom.png', this)"><span class="label">Living Room</span></div>
+    <div class="side-drawer" onclick="uploadRoom('bedroom.png', this)"><span class="label">Bedroom</span></div>
+    <div class="side-drawer" onclick="uploadRoom('kitchen.png', this)"><span class="label">Kitchen</span></div>
+    <div class="side-drawer" onclick="uploadRoom('diningroom.png', this)"><span class="label">Dining Room</span></div>
+</div>
 
     <div class="furniture-fan-container" id="furnitureFan">
         <div class="fan-item" title="Seating" onclick="openCategory('seating')">
@@ -66,5 +56,6 @@
 </html>
 
     
+
 
 
