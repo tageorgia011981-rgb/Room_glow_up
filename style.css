@@ -53,13 +53,6 @@ body {
     margin: 3rem auto 5rem auto;
 }
 
-.nav-tab {
-    flex: 1;
-    position: relative;
-    cursor: pointer;
-    text-align: center;
-}
-
 .nav-tab .label {
     display: block;
     background: linear-gradient(145deg, #3d2b1a, #1a140d);
@@ -74,33 +67,20 @@ body {
     z-index: 2;
 }
 
-.nav-tab::after {
-    content: '';
-    position: absolute;
-    bottom: -6px;
-    left: 15%;
-    width: 70%;
-    height: 12px;
-    background: linear-gradient(180deg, #4a3721, #1a140d);
-    border-radius: 0 0 8px 8px;
-    border: 1px solid #2a1f12;
-    z-index: 1;
-}
-
-/* ===== EDITORIAL CABINET PANEL ===== */
+/* ===== EDITORIAL CABINET PANEL: POSITIONED TO SIDE ===== */
 .side-panel {
     position: absolute !important;
-    left: 15px !important;
-    top: 420px !important;
-    width: 750px !important;
-    height: 1100px !important;
-    background: url('cabinet.png') no-repeat right center !important;
+    left: 20px !important; /* Locked to the far left */
+    top: 450px !important;
+    width: 500px !important; /* Slightly narrower to prevent overlap */
+    height: 900px !important;
+    background: url('cabinet.png') no-repeat left center !important;
     background-size: contain !important;
     display: flex !important;
     flex-direction: column;
-    z-index: 1000;
-    padding-top: 260px;
-    gap: 175px;
+    z-index: 100;
+    padding-top: 180px;
+    gap: 130px;
     opacity: 0;
     visibility: hidden;
     transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
@@ -112,7 +92,7 @@ body {
     width: 100%;
     display: flex;
     align-items: center;
-    padding-left: 30px;
+    padding-left: 20px;
     cursor: pointer;
 }
 
@@ -128,23 +108,22 @@ body {
 
 .side-drawer::after {
     content: '';
-    flex-grow: 1;
+    width: 80px; /* Shortened line so it doesn't cross into the center */
     height: 1px;
     background: linear-gradient(90deg, #c2a46f, transparent);
-    margin-left: 20px;
-    margin-right: 180px; 
+    margin-left: 15px;
     opacity: 0.5;
 }
 
-/* ===== PERFECTLY CENTERED MAIN DISPLAY ===== */
+/* ===== PERFECTLY CENTERED MAIN DISPLAY: NO OVERLAP ===== */
 .main-display {
     position: absolute;
     left: 50%;
-    transform: translateX(-50%);
     top: 450px;
-    width: 950px;
-    height: 650px;
-    background: rgba(15, 12, 10, 0.9);
+    transform: translateX(-50%); /* This keeps it dead center */
+    width: 900px;
+    height: 600px;
+    background: rgba(15, 12, 10, 0.95);
     border: 2px solid #4a3721;
     border-radius: 4px;
     box-shadow: 0 25px 60px rgba(0,0,0,1), inset 0 0 40px rgba(0,0,0,0.6);
@@ -165,34 +144,29 @@ body {
 
 .room-viewport.show { opacity: 1; }
 
-/* ===== MECHANICAL BLADE FAN (FANS TOWARD MIDDLE) ===== */
+/* ===== DYNAMIC BLADE FAN (FANS TOWARD CENTER) ===== */
 .furniture-fan-container {
     position: absolute;
-    left: 480px; /* Anchored near cabinet drawer */
-    top: 280px;
-    width: 600px;
-    height: 500px;
+    left: 420px; /* Anchored between cabinet and center box */
     z-index: 999;
     pointer-events: none;
+    transition: top 0.4s ease-out;
 }
 
 .fan-item {
     position: absolute;
-    width: 100px;
-    height: 100px;
-    background: linear-gradient(145deg, #3d2b1a, #1a140d);
-    border: 2px solid #c2a46f;
-    border-radius: 4px;
+    width: 90px;
+    height: 90px;
+    background: linear-gradient(145deg, #2a1f12, #0d0a08);
+    border: 1px solid #4a3721;
+    border-radius: 6px;
     display: flex;
     justify-content: center;
     align-items: center;
-    
     opacity: 0;
-    /* This pivot point makes it fan out like a hand fan */
     transform-origin: left center; 
-    transform: rotate(0deg) scale(0.5);
+    transform: rotate(0deg) scale(0.2);
     transition: all 0.7s cubic-bezier(0.19, 1, 0.22, 1);
-    
     box-shadow: 5px 5px 20px rgba(0,0,0,0.9);
     cursor: pointer;
     pointer-events: auto;
@@ -200,19 +174,24 @@ body {
 
 .fan-active .fan-item { opacity: 1; }
 
-/* The "Blades" spreading toward the middle display */
-.fan-active .fan-item:nth-child(1) { transform: rotate(-35deg) translateX(300px); }
-.fan-active .fan-item:nth-child(2) { transform: rotate(-12deg) translateX(340px); }
-.fan-active .fan-item:nth-child(3) { transform: rotate(12deg) translateX(340px); }
-.fan-active .fan-item:nth-child(4) { transform: rotate(35deg) translateX(300px); }
+/* Blades spreading out towards the center display */
+.fan-active .fan-item:nth-child(1) { transform: rotate(-35deg) translateX(200px); }
+.fan-active .fan-item:nth-child(2) { transform: rotate(-12deg) translateX(240px); }
+.fan-active .fan-item:nth-child(3) { transform: rotate(12deg) translateX(240px); }
+.fan-active .fan-item:nth-child(4) { transform: rotate(35deg) translateX(200px); }
 
-.fan-item img { width: 70%; height: 70%; object-fit: contain; }
+.fan-item.lit-up {
+    border-color: #f1d9a8;
+    box-shadow: 0 0 20px rgba(241, 217, 168, 0.8);
+}
 
-/* ===== AMBER GLOW (LIT UP) ===== */
+.fan-item img { width: 65%; height: 65%; object-fit: contain; }
+
+/* ===== AMBER GLOW ===== */
 .lit-up .label {
     box-shadow: 0 0 25px rgba(241, 217, 168, 1) !important;
     color: #fff !important;
     border-color: #fff !important;
 }
 
-.side-drawer.lit-up::after { background: #fff; opacity: 1; height: 2px; }
+.side-drawer.lit-up::after { background: #fff; opacity: 1; height: 1px; }
