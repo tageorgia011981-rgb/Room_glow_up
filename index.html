@@ -1,7 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Room Glow Up</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
 <div class="hero">
   <div class="header-content">
     <h1 class="brand-title">Room Glow Up</h1>
-    <h2 class="brand-subtitle" id="sub-header-vogue" style="color: #c2a46f !important; -webkit-text-fill-color: #c2a46f !important;">Your Dream Space Come To Life</h2>
+    
+    <h2 class="brand-subtitle" id="sub-header-vogue">
+      <span style="background: linear-gradient(180deg, #f1d9a8, #c2a46f); -webkit-background-clip: text; -webkit-text-fill-color: transparent; display: inline-block !important; color: #c2a46f !important; font-family: 'Playfair Display', serif;">
+        Your Dream Space Come To Life
+      </span>
+    </h2>
   </div>
 
   <nav class="main-nav">
@@ -28,12 +43,24 @@
   </nav>
 
   <div class="side-panel" id="sideCabinet">
-    <div class="side-drawer" onclick="this.classList.toggle('lit-up')"><span class="screw screw-left"></span><span class="label">Living Room</span><span class="screw screw-right"></span></div>
-    <div class="side-drawer" onclick="this.classList.toggle('lit-up')"><span class="screw screw-left"></span><span class="label">Bedroom</span><span class="screw screw-right"></span></div>
-    <div class="side-drawer" onclick="this.classList.toggle('lit-up')"><span class="screw screw-left"></span><span class="label">Kitchen</span><span class="screw screw-right"></span></div>
-    <div class="side-drawer" onclick="this.classList.toggle('lit-up')"><span class="screw screw-left"></span><span class="label">Dining Room</span><span class="screw screw-right"></span></div>
-    <div class="side-drawer" onclick="this.classList.toggle('lit-up')"><span class="screw screw-left"></span><span class="label">Office</span><span class="screw screw-right"></span></div>
+    <div class="side-drawer" onclick="this.classList.toggle('lit-up')">
+      <span class="screw screw-left"></span><span class="label">Living Room</span><span class="screw screw-right"></span>
+    </div>
+    <div class="side-drawer" onclick="this.classList.toggle('lit-up')">
+      <span class="screw screw-left"></span><span class="label">Bedroom</span><span class="screw screw-right"></span>
+    </div>
+    <div class="side-drawer" onclick="this.classList.toggle('lit-up')">
+      <span class="screw screw-left"></span><span class="label">Kitchen</span><span class="screw screw-right"></span>
+    </div>
+    <div class="side-drawer" onclick="this.classList.toggle('lit-up')">
+      <span class="screw screw-left"></span><span class="label">Dining Room</span><span class="screw screw-right"></span>
+    </div>
+    <div class="side-drawer" onclick="this.classList.toggle('lit-up')">
+      <span class="screw screw-left"></span><span class="label">Office</span><span class="screw screw-right"></span>
+    </div>
   </div>
+
+  <div class="main-display"></div>
 </div>
 
 <script>
@@ -44,3 +71,6 @@
     btn.classList.toggle('lit-up');
   }
 </script>
+
+</body>
+</html>
