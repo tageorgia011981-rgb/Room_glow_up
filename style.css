@@ -6,15 +6,15 @@ html, body {
 
 
     body {
-font-family: 'Inter', sans-serif;
-    /* 1. Added a dark color (#000) to fill the gaps */
-    background: #000 url('background_color.jpg') no-repeat center center fixed; 
-    
-    /* 2. Changed 'cover' to a percentage to "zoom out" */
-    background-size: 80%; 
-    
+    font-family: 'Inter', sans-serif;
     color: #f1d9a8;
     min-height: 100vh;
+    margin: 0;
+    padding: 0;
+    /* This sets the image and centers it */
+    background: url('background_color.jpg') no-repeat center center fixed;
+    /* This MUST stay at the bottom of this block to work */
+    background-size: 60%; 
 }
 
 
@@ -97,6 +97,7 @@ font-family: 'Inter', sans-serif;
     padding-left: 15px;
     min-height: 500px; /* placeholder for cabinet & room display */
 }
+
 
 
 
