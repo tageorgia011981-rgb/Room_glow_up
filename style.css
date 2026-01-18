@@ -1,5 +1,14 @@
 @import url('https://fonts.googleapis.com/css2?family=Lavishly+Yours&family=Playfair+Display:wght@400;700&family=Special+Elite&display=swap');
 
+/* ===== ATOMIC COLOR LOCK ===== */
+/* This forces the bronze color on the sub-header by targeting every possible attribute */
+#sub-header-vogue {
+  color: #c2a46f !important;
+  -webkit-text-fill-color: #c2a46f !important;
+  text-decoration: none !important;
+  opacity: 1 !important;
+}
+
 /* ===== RESET & BASE ===== */
 * {
   box-sizing: border-box;
@@ -9,10 +18,8 @@
 
 body {
   font-family: 'Inter', sans-serif;
-  color: #fff;
   background-color: #0d0a08;
   line-height: 1.6;
-  overflow-x: hidden;
 }
 
 /* ===== HERO SECTION ===== */
@@ -24,142 +31,115 @@ body {
   align-items: center;
   justify-content: flex-start;
   text-align: center;
-  padding: 8rem 2rem 4rem 2rem;
+  padding: 6rem 2rem 4rem 2rem;
   background: url('background7.jpg') no-repeat center center fixed;
   background-size: cover;
+  position: relative; 
 }
 
-/* ===== HEADER (VOGUE STYLE WITH LATTICE SHADOW) ===== */
-.header-content {
-  margin-bottom: 5rem;
-  width: 100%;
-}
-
+/* ===== HEADER (VOGUE SHIMMER) ===== */
 .brand-title {
   font-family: 'Lavishly Yours', cursive;
-  font-size: clamp(4.5rem, 14vw, 9rem); /* Bold presence */
+  font-size: clamp(4.5rem, 14vw, 9rem);
   font-weight: 700;
   letter-spacing: 0.05em;
-  
-  /* Gold-to-Bronze gradient */
   background: linear-gradient(180deg, #f1d9a8 0%, #caa86a 45%, #9e7c3a 100%);
   background-size: 200% auto;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-
-  /* MULTI-LAYERED DARK LATTICE SHADOW */
-  /* This creates a dark "halo" or lattice effect so it doesn't blend in */
-  filter: drop-shadow(0 2px 2px rgba(0,0,0,1)) 
-          drop-shadow(0 4px 10px rgba(0,0,0,0.8))
-          drop-shadow(0 0 20px rgba(0,0,0,0.6));
-  
+  filter: drop-shadow(0 2px 2px rgba(0,0,0,1)) drop-shadow(0 4px 10px rgba(0,0,0,0.8));
   animation: shimmerText 3s linear infinite;
   line-height: 1.1;
+  margin-bottom: 0.5rem;
 }
 
-.brand-subtitle {
-  font-family: 'Playfair Display', serif;
-  font-size: clamp(1.3rem, 4vw, 2.5rem);
-  font-weight: 600;
-  color: #c2a46f;
-  /* Darker backing for the subtitle too */
-  text-shadow: 2px 2px 4px rgba(0,0,0,0.8), 0 0 10px rgba(0,0,0,0.5);
-  margin-top: 0.5rem;
-  letter-spacing: 0.1em;
+/* ===== LIT UP STATE ===== */
+.nav-tab.lit-up, .side-drawer.lit-up {
+  transform: translateY(2px);
+  box-shadow: 0 0 25px rgba(255, 191, 0, 0.4), 0 0 50px rgba(202, 168, 106, 0.5), inset 0 1px 3px rgba(255,255,255,0.4) !important;
+}
+.nav-tab.lit-up .label, .side-drawer.lit-up .label {
+  color: #fff !important;
+  text-shadow: 0 0 12px rgba(241, 217, 168, 0.9) !important;
 }
 
-/* ===== BRUSHED BRONZE NAV (BALANCED SCALE) ===== */
-.main-nav {
-  display: flex;
-  justify-content: center;
-  flex-wrap: nowrap;
-  gap: 1.2rem;
-  width: 95%;
-  max-width: 1200px;
-  margin: 0 auto;
-}
-
-/* Slimmed Distressed Bronze Frame */
-.nav-tab {
+/* ===== SHARED DRAWER STYLING ===== */
+.nav-tab, .side-drawer {
   display: inline-block;
   position: relative;
   cursor: pointer;
-  border-radius: 10px 10px 22px 22px; 
-  background: 
-    repeating-linear-gradient(45deg, rgba(0,0,0,0.05) 0px, rgba(0,0,0,0.05) 1px, transparent 1px, transparent 2px),
-    linear-gradient(145deg, #a67c52 0%, #6d5231 20%, #4a3721 50%, #2a1f12 100%);
-  padding: 8px; 
-  box-shadow: 0 10px 25px rgba(0,0,0,0.8), inset 0 1px 1px rgba(255,255,255,0.2);
-  transition: all 0.2s ease;
-  flex: 1;
-  min-width: 130px;
-  max-width: 175px;
-  user-select: none;
+  border-radius: 8px 8px 25px 25px; 
+  background: linear-gradient(145deg, #a67c52 0%, #6d5231 20%, #4a3721 50%, #2a1f12 100%);
+  padding: 10px; 
+  box-shadow: 8px 12px 25px rgba(0,0,0,0.8);
+  transition: all 0.4s ease;
   border: 1px solid #3d2e0b;
 }
 
-/* Finger Pull Lip */
-.nav-tab::after {
+.nav-tab::after, .side-drawer::after {
   content: "";
   position: absolute;
-  bottom: -11px; 
-  left: 50%;
-  transform: translateX(-50%);
-  width: 65%;
-  height: 16px;
+  bottom: -12px; left: 50%; transform: translateX(-50%);
+  width: 75%; height: 18px;
   background: linear-gradient(180deg, #6d5231 0%, #1a140f 100%);
-  border-radius: 0 0 16px 16px;
-  box-shadow: 0 5px 10px rgba(0,0,0,0.7);
-  border-top: 1px solid #4a3721;
+  border-radius: 0 0 18px 18px;
+  border-top: 2px solid #4a3721;
 }
 
-/* Vintage Label */
-.nav-tab .label {
-  display: block;
-  background: #1a140f; 
-  color: #f1d9a8; 
-  font-family: 'Special Elite', monospace;
-  font-size: 1rem;
-  letter-spacing: 0.1em;
-  padding: 0.8rem 0.5rem;
-  border-radius: 4px;
-  box-shadow: inset 0 8px 15px rgba(0,0,0,1);
-  text-align: center;
-  border: 1px solid #2b2118;
-  position: relative;
-  z-index: 1;
-  white-space: nowrap;
+.nav-tab .label, .side-drawer .label {
+  display: block; background: #1a140f; color: #f1d9a8; font-family: 'Special Elite', monospace;
+  padding: 0.9rem 1.2rem; border-radius: 4px; box-shadow: inset 0 10px 18px rgba(0,0,0,1);
 }
 
-/* Screws */
 .screw {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  width: 7px;
-  height: 7px;
+  position: absolute; top: 50%; transform: translateY(-50%);
+  width: 8px; height: 8px; border-radius: 50%;
   background: radial-gradient(circle at 30% 30%, #f1d9a8 0%, #4a3721 70%, #000 100%);
-  border-radius: 50%;
-  box-shadow: inset 0 1px 1px #000;
-  z-index: 2;
 }
-.screw-left { left: 8px; }
-.screw-right { right: 8px; }
+.screw-left { left: 10px; } .screw-right { right: 10px; }
 
-/* Backlight Glow on Press */
-.nav-tab:active {
-  transform: translateY(1px);
-  box-shadow: 0 0 20px rgba(255, 191, 0, 0.25), 0 0 40px rgba(202, 168, 106, 0.35);
-}
-
-/* ===== ANIMATIONS ===== */
-@keyframes shimmerText {
-  0% { background-position: -200% 0; }
-  100% { background-position: 200% 0; }
+/* ===== SIDE PANEL (STACKING SEQUENCE) ===== */
+.side-panel {
+  position: absolute;
+  left: 40px; 
+  top: 1200px; /* Pushed way down */
+  display: flex;
+  flex-direction: column;
+  gap: 450px; 
+  z-index: 10;
 }
 
-/* ===== RESPONSIVE ===== */
-@media (max-width: 900px) {
-  .main-nav { flex-wrap: wrap; justify-content: center; gap: 1.5rem; }
-  .nav-tab { flex: none; width: 42%; max-width: none; }
+.side-drawer {
+  width: 260px;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.5s ease, transform 0.5s ease;
 }
+
+/* Stacking animation classes */
+.side-panel.active .side-drawer {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Sequence Delays */
+.side-panel.active .side-drawer:nth-child(1) { transition-delay: 0.1s; }
+.side-panel.active .side-drawer:nth-child(2) { transition-delay: 0.3s; }
+.side-panel.active .side-drawer:nth-child(3) { transition-delay: 0.5s; }
+.side-panel.active .side-drawer:nth-child(4) { transition-delay: 0.7s; }
+.side-panel.active .side-drawer:nth-child(5) { transition-delay: 0.9s; }
+
+/* ===== MAIN SCROLL AREA ===== */
+.main-display {
+  width: 85%;
+  max-width: 1100px;
+  min-height: 4000px; 
+  margin: 200px auto;
+  background: rgba(0,0,0,0.05);
+}
+
+/* ===== TOP NAV ===== */
+.main-nav { display: flex; justify-content: center; gap: 1.2rem; width: 95%; max-width: 1200px; margin-bottom: 20px; }
+.nav-tab { flex: 1; min-width: 140px; max-width: 180px; }
+
+@keyframes shimmerText { 0% { background-position: -200% 0; } 100% { background-position: 200% 0; } }
