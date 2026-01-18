@@ -10,10 +10,11 @@ function uploadRoom(imgSrc, drawerElement) {
     mainDisplay.classList.add('active');
     roomImg.src = imgSrc;
 
+    // Reset old highlights and set the new one
     document.querySelectorAll('.side-drawer').forEach(d => d.classList.remove('lit-up'));
     drawerElement.classList.add('lit-up');
 }
 
 function openCategory(category) {
-    console.log("Opening " + category);
+    console.log("Exploring category: " + category);
 }
