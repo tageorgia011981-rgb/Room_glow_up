@@ -1,7 +1,11 @@
-@import url('https://fonts.googleapis.com/css2?family=Lavishly+Yours&family=Playfair+Display:wght@400;700&family=Special+Elite&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Lavishly+Yours&family=Playfair+Display:wght@400;700&family=Special+Elite&family=Inter:wght@400;600&display=swap');
 
-/* ===== GLOBAL RESET ===== */
-* { box-sizing: border-box; margin: 0; padding: 0; }
+/* ===== GLOBAL RESET & BACKGROUND ===== */
+* { 
+    box-sizing: border-box; 
+    margin: 0; 
+    padding: 0; 
+}
 
 body {
     font-family: 'Inter', sans-serif;
@@ -12,33 +16,50 @@ body {
     overflow-x: hidden;
 }
 
-/* ===== VOGUE HEADER RESTORED ===== */
-.header-content { text-align: center; margin-top: 4rem; }
-.brand-title {
-    font-family: 'Lavishly Yours', cursive;
-    font-size: clamp(6rem, 15vw, 10rem);
-    background: linear-gradient(180deg, #f1d9a8, #caa86a, #9e7c3a);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    filter: drop-shadow(0 6px 12px rgba(0,0,0,0.7));
-}
-.vogue-subtitle {
-    font-family: 'Playfair Display', serif;
-    font-size: 1.4rem;
-    letter-spacing: 4px;
-    color: #c2a46f;
-    text-transform: uppercase;
-    display: block;
-    margin-top: 10px;
+/* ===== MASSIVE VOGUE HEADER SECTION ===== */
+.header-content { 
+    text-align: center; 
+    margin-top: 4rem; 
+    margin-bottom: 1rem;
+    position: relative;
+    z-index: 10;
 }
 
-/* ===== INDUSTRIAL TOP TABS (WITH SCREWS & LIPS) ===== */
+.brand-title {
+    font-family: 'Lavishly Yours', cursive;
+    font-size: clamp(6.5rem, 16vw, 11rem);
+    background: linear-gradient(180deg, #f1d9a8 0%, #caa86a 45%, #9e7c3a 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    /* DARK TRACE/GLOW: Layered shadows to create a silhouette effect */
+    filter: drop-shadow(0 0 15px rgba(0,0,0,0.9)) 
+            drop-shadow(0 0 5px rgba(0,0,0,1))
+            drop-shadow(4px 4px 0px rgba(0,0,0,0.5));
+    line-height: 0.85;
+}
+
+.vogue-subtitle {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.6rem;
+    font-weight: 700;
+    letter-spacing: 5px;
+    /* DARKER SUBHEADER: Deep bronze/gold for better visibility */
+    color: #8a6842; 
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.9), 
+                 0 0 10px rgba(0,0,0,0.5);
+    display: inline-block !important;
+    margin-top: 15px;
+    text-transform: uppercase;
+}
+
+/* ===== TOP INDUSTRIAL NAVIGATION TABS ===== */
 .main-nav {
     display: flex;
     justify-content: center;
     gap: 20px;
-    margin: 3rem auto 5rem auto;
+    width: 95%;
     max-width: 1000px;
+    margin: 3rem auto 5rem auto;
 }
 
 .nav-tab {
@@ -49,7 +70,6 @@ body {
     transition: all 0.3s ease;
 }
 
-/* The Metal Tab Face with Screws */
 .nav-tab .label {
     display: block;
     background: linear-gradient(145deg, #3d2b1a, #1a140d);
@@ -65,7 +85,8 @@ body {
 }
 
 /* Screw Holes on Tabs */
-.nav-tab .label::before, .nav-tab .label::after {
+.nav-tab .label::before, 
+.nav-tab .label::after {
     content: '';
     position: absolute;
     top: 50%;
@@ -79,7 +100,7 @@ body {
 .nav-tab .label::before { left: 6px; }
 .nav-tab .label::after { right: 6px; }
 
-/* The Metal Pull Lip (Bottom Edge) */
+/* The Metal Pull Lip */
 .nav-tab::after {
     content: '';
     position: absolute;
@@ -93,11 +114,11 @@ body {
     z-index: 1;
 }
 
-/* ===== EDITORIAL CABINET (750px WIDTH) ===== */
+/* ===== EDITORIAL CABINET PANEL (750px WIDTH) ===== */
 .side-panel {
     position: absolute !important;
     left: 15px !important;
-    top: 400px !important;
+    top: 420px !important;
     width: 750px !important;
     height: 1100px !important;
     background: url('cabinet.png') no-repeat right center !important;
@@ -109,31 +130,36 @@ body {
     gap: 175px;
     opacity: 0;
     visibility: hidden;
-    transition: all 0.6s ease;
+    transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
 }
-.side-panel.active { opacity: 1 !important; visibility: visible !important; }
 
-/* Side Drawer Row */
+.side-panel.active {
+    opacity: 1 !important;
+    visibility: visible !important;
+}
+
 .side-drawer {
     width: 100%;
     display: flex;
     align-items: center;
     padding-left: 30px;
     cursor: pointer;
+    position: relative;
 }
 
-/* Cabinet Label Styling (Matches Tabs) */
 .side-drawer .label {
     font-family: 'Special Elite', monospace;
     color: #f1d9a8;
-    background: rgba(18, 13, 10, 0.9);
+    background: rgba(18, 13, 10, 0.95);
     padding: 8px 18px;
     border: 1px solid #c2a46f;
     font-size: 1.1rem;
     white-space: nowrap;
+    z-index: 2;
+    box-shadow: 3px 3px 10px rgba(0,0,0,0.8);
+    transform: rotate(-1deg);
 }
 
-/* Connecting Line */
 .side-drawer::after {
     content: '';
     flex-grow: 1;
@@ -142,12 +168,24 @@ body {
     margin-left: 20px;
     margin-right: 180px; 
     opacity: 0.5;
+    transition: all 0.3s ease;
 }
 
-/* ===== AMBER GLOW (LIT UP) ===== */
+/* ===== AMBER GLOW (LIT UP STATE) ===== */
 .lit-up .label {
-    box-shadow: 0 0 20px #f1d9a8 !important;
+    box-shadow: 0 0 25px rgba(241, 217, 168, 1) !important;
     color: #fff !important;
     border-color: #fff !important;
+    text-shadow: 0 0 8px rgba(255,255,255,0.6);
 }
-.nav-tab.lit-up::after { background: #f1d9a8; }
+
+.nav-tab.lit-up::after {
+    background: linear-gradient(180deg, #f1d9a8, #8a6842);
+    box-shadow: 0 0 10px #f1d9a8;
+}
+
+.side-drawer.lit-up::after {
+    background: #fff;
+    opacity: 1;
+    height: 2px;
+}
