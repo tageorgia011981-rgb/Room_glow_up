@@ -5,18 +5,19 @@ html, body {
 }
 
 
-   body {
+    body {
     font-family: 'Inter', sans-serif;
     background-image: url('background_color.jpg');
     background-repeat: no-repeat;
-    background-position: center center;  /* center the image */
-    background-size: cover;              /* fill screen but keep proportions */
-    background-attachment: fixed;        /* keeps it from scrolling oddly */
+    background-position: center top;   /* aligns top so header stays visible */
+    background-size: contain;          /* fit entire image inside viewport */
+    background-attachment: scroll;     /* scrolls normally with page */
     color: #f1d9a8;
     min-height: 100vh;
     margin: 0;
     padding: 0;
 }
+
 
 
 /* HEADER */
@@ -97,4 +98,5 @@ html, body {
     padding-left: 15px;
     min-height: 500px; /* placeholder for cabinet & room display */
 }
+
 
