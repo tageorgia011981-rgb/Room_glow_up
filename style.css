@@ -188,7 +188,6 @@ body {
     pointer-events: auto;
 }
 
-/* The Fan Logic */
 .fan-active .fan-item { opacity: 1; transform: scale(1); }
 .fan-active .fan-item:nth-child(1) { transform: rotate(-45deg) translateX(240px) rotate(45deg); }
 .fan-active .fan-item:nth-child(2) { transform: rotate(-15deg) translateX(260px) rotate(15deg); }
