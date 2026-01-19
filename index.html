@@ -2,42 +2,67 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Room Glow Up</title>
-  <link rel="stylesheet" href="style.css" />
+
+  <link href="https://fonts.googleapis.com/css2?family=Mrs+Saint+Delafield&family=Special+Elite&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
 
-  <!-- HEADER -->
   <header class="site-header">
-    <h1 class="title">Room Glow Up</h1>
-    <p class="subtitle">Your Dream Space Come to Life</p>
-
-    <nav class="top-nav">
-      <button id="roomsBtn">Rooms</button>
-    </nav>
+    <h1 class="brand-title">Room Glow Up</h1>
+    <p class="sub-title">Your Dream Space Come To Life</p>
   </header>
 
-  <!-- MAIN DISPLAY AREA -->
-  <main class="room-display">
-    <!-- this stays empty for now on purpose -->
+  <nav class="top-nav">
+    <button id="roomsBtn">Rooms</button>
+  </nav>
+
+  <main class="workspace">
+
+    <!-- CABINET (hidden by default) -->
+    <aside id="cabinet">
+
+      <div class="drawer" data-room="living">
+        Living Room
+        <div class="fan">
+          <img src="iconsseating.png">
+          <img src="iconsbed.png">
+          <img src="iconstables.png">
+          <img src="iconsstorage.png">
+        </div>
+      </div>
+
+      <div class="drawer" data-room="bedroom">
+        Bedroom
+        <div class="fan">
+          <img src="iconsseating.png">
+          <img src="iconsbed.png">
+          <img src="iconstables.png">
+          <img src="iconsstorage.png">
+        </div>
+      </div>
+
+      <div class="drawer" data-room="dining">
+        Dining Room
+        <div class="fan">
+          <img src="iconsseating.png">
+          <img src="iconstables.png">
+          <img src="iconsstorage.png">
+        </div>
+      </div>
+
+    </aside>
+
+    <!-- ROOM DISPLAY (hidden by default) -->
+    <section id="roomDisplay">
+      <img id="roomImage" src="" alt="">
+    </section>
+
   </main>
 
-  <!-- CABINET (HIDDEN BY DEFAULT) -->
-  <aside id="cabinet" class="cabinet hidden">
-    <div class="drawer">Living Room</div>
-    <div class="drawer">Bedroom</div>
-    <div class="drawer">Dining Room</div>
-  </aside>
-
-  <!-- SCRIPT -->
-  <script>
-    const roomsBtn = document.getElementById("roomsBtn");
-    const cabinet = document.getElementById("cabinet");
-
-    roomsBtn.addEventListener("click", () => {
-      cabinet.classList.toggle("hidden");
-    });
-  </script>
-
+  <script src="script.js"></script>
 </body>
 </html>
