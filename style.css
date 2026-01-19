@@ -98,4 +98,10 @@ body {
 #roomImage {
   max-width: 100%;
   display: block;
-}
+}<div class="drawer">
+  <span class="screw left"></span>
+  Living Room
+  <span class="screw right"></span>
+</div>
+
+
