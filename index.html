@@ -1,96 +1,43 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Room Glow Up</title>
-<link href="https://fonts.googleapis.com/css2?family=Mrs+Saint+Delafield&family=Special+Elite&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8" />
+  <title>Room Glow Up</title>
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
 
-<header class="header-content">
-  <h1 class="brand-title">Room Glow Up</h1>
-  <p class="vogue-subtitle">Your Dream Space Come To Life</p>
-</header>
+  <!-- HEADER -->
+  <header class="site-header">
+    <h1 class="title">Room Glow Up</h1>
+    <p class="subtitle">Your Dream Space Come to Life</p>
 
-<button id="roomsBtn">Rooms</button>
+    <nav class="top-nav">
+      <button id="roomsBtn">Rooms</button>
+    </nav>
+  </header>
 
-<div class="glow-up-container">
-  <div class="side-panel" id="sideCabinet">
+  <!-- MAIN DISPLAY AREA -->
+  <main class="room-display">
+    <!-- this stays empty for now on purpose -->
+  </main>
 
-    <!-- Living Room Drawer -->
-    <div class="side-drawer" data-room="livingroom.png">
-      <span class="label">Living Room</span>
-      <div class="fan-system">
-        <div class="fan-item" data-category="lr-tables">
-          <div class="icon-box"><img src="iconstable.png" class="icon-img"></div>
-          <div class="sub-fan">
-            <div class="furniture-item" data-src="lr-tables-1.png">Table 1</div>
-            <div class="furniture-item" data-src="lr-tables-2.png">Table 2</div>
-          </div>
-        </div>
-        <div class="fan-item" data-category="lr-beds">
-          <div class="icon-box"><img src="iconsbed.png" class="icon-img"></div>
-          <div class="sub-fan">
-            <div class="furniture-item" data-src="lr-beds-1.png">Bed 1</div>
-            <div class="furniture-item" data-src="lr-beds-2.png">Bed 2</div>
-          </div>
-        </div>
-      </div>
-    </div>
+  <!-- CABINET (HIDDEN BY DEFAULT) -->
+  <aside id="cabinet" class="cabinet hidden">
+    <div class="drawer">Living Room</div>
+    <div class="drawer">Bedroom</div>
+    <div class="drawer">Dining Room</div>
+  </aside>
 
-    <!-- Bedroom Drawer -->
-    <div class="side-drawer" data-room="bedroom.png">
-      <span class="label">Bedroom</span>
-      <div class="fan-system">
-        <div class="fan-item" data-category="br-tables">
-          <div class="icon-box"><img src="iconstable.png" class="icon-img"></div>
-          <div class="sub-fan">
-            <div class="furniture-item" data-src="br-tables-1.png">Table 1</div>
-            <div class="furniture-item" data-src="br-tables-2.png">Table 2</div>
-          </div>
-        </div>
-        <div class="fan-item" data-category="br-beds">
-          <div class="icon-box"><img src="iconsbed.png" class="icon-img"></div>
-          <div class="sub-fan">
-            <div class="furniture-item" data-src="br-beds-1.png">Bed 1</div>
-            <div class="furniture-item" data-src="br-beds-2.png">Bed 2</div>
-          </div>
-        </div>
-      </div>
-    </div>
+  <!-- SCRIPT -->
+  <script>
+    const roomsBtn = document.getElementById("roomsBtn");
+    const cabinet = document.getElementById("cabinet");
 
-    <!-- Dining Room Drawer -->
-    <div class="side-drawer" data-room="diningroom.png">
-      <span class="label">Dining Room</span>
-      <div class="fan-system">
-        <div class="fan-item" data-category="dr-tables">
-          <div class="icon-box"><img src="iconstable.png" class="icon-img"></div>
-          <div class="sub-fan">
-            <div class="furniture-item" data-src="dr-tables-1.png">Table 1</div>
-            <div class="furniture-item" data-src="dr-tables-2.png">Table 2</div>
-          </div>
-        </div>
-        <div class="fan-item" data-category="dr-storage">
-          <div class="icon-box"><img src="iconsstorage.png" class="icon-img"></div>
-          <div class="sub-fan">
-            <div class="furniture-item" data-src="dr-storage-1.png">Storage 1</div>
-            <div class="furniture-item" data-src="dr-storage-2.png">Storage 2</div>
-          </div>
-        </div>
-      </div>
-    </div>
+    roomsBtn.addEventListener("click", () => {
+      cabinet.classList.toggle("hidden");
+    });
+  </script>
 
-  </div>
-
-  <div class="main-display" id="mainDisplay">
-    <img src="" id="roomImage" class="room-viewport">
-    <div id="furniturePreview"></div>
-  </div>
-</div>
-
-<script src="script.js"></script>
 </body>
 </html>
-
