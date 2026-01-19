@@ -1,140 +1,75 @@
+/* RESET */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+/* BODY */
 body {
-margin: 0;
-font-family: 'Special Elite', monospace;
-background: url('background_color.jpg') center center no-repeat;
-background-size: cover;
+  min-height: 100vh;
+  background: #0e0e0e;
+  color: #e6d7a3;
+  font-family: Arial, sans-serif;
 }
 
-.header-content {
-text-align: center;
-padding: 40px 0 20px 0;
+/* HEADER */
+.site-header {
+  padding: 20px;
+  text-align: center;
 }
 
-.brand-title {
-font-family: 'Mrs Saint Delafield', cursive;
-font-size: 100px;
-color: #d4af37;
-text-shadow: 2px 2px 6px #000;
+.title {
+  font-size: 48px;
+  letter-spacing: 4px;
 }
 
-.vogue-subtitle {
-font-size: 2.5rem;
-letter-spacing: 5px;
-color: #f5f5f0;
+.subtitle {
+  margin-top: 10px;
+  font-size: 20px;
+  letter-spacing: 3px;
 }
 
-#roomsBtn {
-display: block;
-margin: 0 auto 20px auto;
-padding: 10px 30px;
-font-size: 1.2rem;
-cursor: pointer;
+/* NAV */
+.top-nav {
+  margin-top: 20px;
 }
 
-.glow-up-container {
-display: flex;
-padding: 0 20px;
+.top-nav button {
+  background: #c9a84a;
+  border: none;
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
 }
 
-.side-panel {
-width: 400px;
-position: relative;
-display: none;
+/* ROOM DISPLAY */
+.room-display {
+  height: 400px;
 }
 
-.side-panel.active {
-display: block;
+/* CABINET */
+.cabinet {
+  position: fixed;
+  top: 120px;
+  left: 20px;
+  width: 220px;
+  background: #1a1a1a;
+  border: 2px solid #c9a84a;
+  padding: 10px;
 }
 
-.side-drawer {
-margin: 20px 0;
-position: relative;
-cursor: pointer;
+/* DRAWERS */
+.drawer {
+  padding: 12px;
+  margin-bottom: 8px;
+  background: #c9a84a;
+  color: #000;
+  cursor: pointer;
+  text-align: center;
 }
 
-.side-drawer .label {
-background: linear-gradient(145deg, #a88b56, #d4ba8a);
-padding: 10px 20px;
-display: inline-block;
-cursor: pointer;
-border: 1px solid #5c4a33;
-}
-
-.fan-system {
-position: absolute;
-left: 100%;
-top: 0;
-display: none;
-flex-direction: row;
-gap: 10px;
-}
-
-.fan-system.active {
-display: flex;
-}
-
-.fan-item {
-display: flex;
-flex-direction: column;
-align-items: center;
-}
-
-.icon-box {
-width: 60px;
-height: 60px;
-border: 1px solid #c2a46f;
-display: flex;
-justify-content: center;
-align-items: center;
-cursor: pointer;
-transition: all 0.2s ease;
-}
-
-.icon-box:hover, .icon-box.active {
-box-shadow: 0 0 10px #ffd700;
-transform: scale(1.1);
-}
-
-.icon-box img {
-width: 40px;
-height: 40px;
-}
-
-.sub-fan {
-display: none;
-margin-top: 5px;
-flex-direction: column;
-gap: 5px;
-}
-
-.sub-fan.active {
-display: flex;
-}
-
-.furniture-item {
-cursor: pointer;
-background: #fff;
-padding: 5px;
-text-align: center;
-}
-
-.main-display {
-flex: 1;
-position: relative;
-height: 700px;
-margin-left: 20px;
-border: 1px solid #4a3721;
-background: #000;
-}
-
-#roomImage {
-width: 100%;
-height: 100%;
-object-fit: contain;
-}
-
-#furniturePreview {
-position: absolute;
-top: 10px;
-left: 10px;
+/* HIDDEN STATE */
+.hidden {
+  display: none;
 }
