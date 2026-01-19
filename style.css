@@ -32,24 +32,15 @@ body {
         0px 0px 20px rgba(200,162,255,0.4);
 }
 
-.vogue-subtitle {
-    font-family: 'Playfair Display', serif;
-    font-size: 1.2rem;
-    letter-spacing: 24px;
-    background: linear-gradient(135deg, #c8a2ff, #ffd700);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    text-shadow: 0px 3px 6px rgba(0,0,0,0.7);
-}
-
+/* SUB-HEADER */
 .sub-header {
     font-family: 'Playfair Display', serif;
-    font-size: 1.5rem;
+    font-size: 2rem;
     letter-spacing: 4px;
-    background: linear-gradient(135deg, #d4af37, #c8a2ff);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    text-shadow: 0px 2px 5px rgba(0,0,0,0.6);
+    color: #f5f5f0;
+    text-shadow: 1px 1px 4px rgba(0,0,0,0.7);
+    text-align: center;
+    margin-top: 15px;
 }
 
 /* NAV TABS - VINTAGE METAL LABELS */
