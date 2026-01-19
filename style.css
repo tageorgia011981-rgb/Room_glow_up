@@ -1,111 +1,140 @@
 body {
-  margin: 0;
-  font-family: 'Special Elite', monospace;
-  background: url('background_color.jpg') center center no-repeat;
-  background-size: cover;
+margin: 0;
+font-family: 'Special Elite', monospace;
+background: url('background_color.jpg') center center no-repeat;
+background-size: cover;
 }
 
 .header-content {
-  text-align: center;
-  padding: 40px 0 20px 0;
+text-align: center;
+padding: 40px 0 20px 0;
 }
 
 .brand-title {
-  font-family: 'Mrs Saint Delafield', cursive;
-  font-size: 120px;
-  color: #d4af37;
-  text-shadow: 2px 2px 4px #000;
+font-family: 'Mrs Saint Delafield', cursive;
+font-size: 100px;
+color: #d4af37;
+text-shadow: 2px 2px 6px #000;
 }
 
 .vogue-subtitle {
-  font-size: 2rem;
-  letter-spacing: 5px;
-  color: #f5f5f0;
+font-size: 2.5rem;
+letter-spacing: 5px;
+color: #f5f5f0;
 }
 
 #roomsBtn {
-  display: block;
-  margin: 0 auto 20px auto;
-  padding: 10px 30px;
-  font-size: 1.2rem;
-  cursor: pointer;
+display: block;
+margin: 0 auto 20px auto;
+padding: 10px 30px;
+font-size: 1.2rem;
+cursor: pointer;
 }
 
 .glow-up-container {
-  display: flex;
-  padding: 0 20px;
+display: flex;
+padding: 0 20px;
 }
 
 .side-panel {
-  width: 400px;
-  position: relative;
-  display: none; /* hidden until Rooms button pressed */
+width: 400px;
+position: relative;
+display: none;
 }
 
 .side-panel.active {
-  display: block;
+display: block;
 }
 
 .side-drawer {
-  margin: 20px 0;
-  position: relative;
+margin: 20px 0;
+position: relative;
+cursor: pointer;
 }
 
 .side-drawer .label {
-  background: linear-gradient(145deg, #a88b56, #d4ba8a);
-  padding: 10px 20px;
-  display: inline-block;
-  cursor: pointer;
-  border: 1px solid #5c4a33;
+background: linear-gradient(145deg, #a88b56, #d4ba8a);
+padding: 10px 20px;
+display: inline-block;
+cursor: pointer;
+border: 1px solid #5c4a33;
 }
 
 .fan-system {
-  position: absolute;
-  left: 100%;
-  top: 0;
-  display: none;
+position: absolute;
+left: 100%;
+top: 0;
+display: none;
+flex-direction: row;
+gap: 10px;
 }
 
 .fan-system.active {
-  display: flex;
+display: flex;
 }
 
 .fan-item {
-  margin: 0 5px;
+display: flex;
+flex-direction: column;
+align-items: center;
 }
 
 .icon-box {
-  width: 60px;
-  height: 60px;
-  border: 1px solid #c2a46f;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  cursor: pointer;
+width: 60px;
+height: 60px;
+border: 1px solid #c2a46f;
+display: flex;
+justify-content: center;
+align-items: center;
+cursor: pointer;
+transition: all 0.2s ease;
+}
+
+.icon-box:hover, .icon-box.active {
+box-shadow: 0 0 10px #ffd700;
+transform: scale(1.1);
 }
 
 .icon-box img {
-  width: 40px;
-  height: 40px;
+width: 40px;
+height: 40px;
+}
+
+.sub-fan {
+display: none;
+margin-top: 5px;
+flex-direction: column;
+gap: 5px;
+}
+
+.sub-fan.active {
+display: flex;
+}
+
+.furniture-item {
+cursor: pointer;
+background: #fff;
+padding: 5px;
+text-align: center;
 }
 
 .main-display {
-  flex: 1;
-  position: relative;
-  height: 700px;
-  margin-left: 20px;
-  border: 1px solid #4a3721;
-  background: #000;
+flex: 1;
+position: relative;
+height: 700px;
+margin-left: 20px;
+border: 1px solid #4a3721;
+background: #000;
 }
 
 #roomImage {
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
+width: 100%;
+height: 100%;
+object-fit: contain;
 }
 
 #furniturePreview {
-  position: absolute;
-  top: 10px;
-  left: 10px;
+position: absolute;
+top: 10px;
+left: 10px;
 }
