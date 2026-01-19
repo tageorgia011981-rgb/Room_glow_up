@@ -9,7 +9,7 @@
 body {
     margin: 0;
     font-family: sans-serif;
-    background-color: #0d0a08;
+    background: url('background_color.jpg') center/cover no-repeat;
     display: flex;
     justify-content: center;
     align-items: flex-start;
@@ -38,8 +38,8 @@ body {
     bottom: 30px;
     left: 20px;
     padding: 10px 15px;
-    background: #a88b56;
-    color: #fff;
+    background: gold;
+    color: #000;
     cursor: pointer;
     font-family: monospace;
     z-index: 20;
@@ -58,8 +58,8 @@ body {
 
 .fan-item {
     position: absolute;
-    width: 55px;
-    height: 55px;
+    width: 45px;       /* smaller icons */
+    height: 45px;
     transform-origin: left center;
     display: flex;
     justify-content: center;
@@ -116,9 +116,12 @@ function toggleFan(drawer) {
     const fanSystem = drawer.querySelector('.fan-system');
     const items = fanSystem.querySelectorAll('.fan-item');
 
+    // Spread fan out over half-circle (less wide)
+    const startAngle = -30; // left-most
+    const step = 20;        // angle between items
     items.forEach((item, index) => {
-        const angle = index * 20; // half-circle spread
-        item.style.transform = `rotate(${angle}deg) translateX(120px)`;
+        const angle = startAngle + index * step;
+        item.style.transform = `rotate(${angle}deg) translateX(100px)`;
         item.classList.toggle('active');
     });
 
