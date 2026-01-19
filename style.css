@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Mrs+Saint+Delafield&family=Playfair+Display:wght@700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Mrs+Saint+Delafield&display=swap');
 
 /* RESET & BODY */
 * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -35,15 +35,15 @@ body {
 /* SUB-HEADER */
 .sub-header {
     font-family: 'Mrs Saint Delafield', cursive;
-    font-size: 80px;
-    letter-spacing: 8px;
+    font-size: 100px;              /* bigger and readable */
+    letter-spacing: 10px;          /* spread out letters */
     background: linear-gradient(135deg, #ffd700, #c8a2ff, #d4af37);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     text-shadow: 
-        0px 4px 0px rgba(0,0,0,0.8),
-        0px 8px 15px rgba(0,0,0,0.5),
-        0px 0px 25px rgba(255,215,0,0.3);
+        0px 4px 0px rgba(0,0,0,0.9),
+        0px 8px 15px rgba(0,0,0,0.6),
+        0px 0px 30px rgba(255,215,0,0.4);
     text-align: center;
-    margin-top: 20px;
+    margin-top: 30px;              /* space below main header */
 }
