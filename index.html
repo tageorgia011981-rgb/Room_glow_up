@@ -3,8 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Room Glow Up - Fan Demo</title>
-
+<title>Room Glow Up</title>
 <style>
 body {
     margin: 0;
@@ -16,6 +15,22 @@ body {
     min-height: 100vh;
 }
 
+/* BUTTON */
+#showCabinetBtn {
+    position: fixed;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 12px 20px;
+    font-family: 'Special Elite', monospace;
+    font-size: 1rem;
+    background: linear-gradient(145deg, #a88b56, #d4ba8a, #a88b56);
+    border: 1px solid #5c4a33;
+    border-radius: 4px;
+    cursor: pointer;
+    z-index: 100;
+}
+
 /* CONTAINER */
 .glow-up-container {
     display: flex;
@@ -23,43 +38,64 @@ body {
     padding: 20px;
 }
 
-/* SIDE PANEL / CABINET */
+/* CABINET */
 .side-panel {
-    flex: 0 0 200px;
-    background: url('cabinet.png') no-repeat center;
+    flex: 0 0 280px;
+    background: url('cabinet.png') no-repeat center bottom;
     background-size: contain;
     height: 500px;
     position: relative;
+    opacity: 0;
+    transform: translateX(-50px);
+    transition: opacity 0.5s ease, transform 0.5s ease;
+}
+.side-panel.active {
+    opacity: 1;
+    transform: translateX(0);
 }
 
-/* DRAWER */
+/* DRAWERS */
 .side-drawer {
     position: absolute;
-    bottom: 30px;
-    left: 20px;
-    padding: 10px 15px;
-    background: gold;
-    color: #000;
+    left: 30px;
+    padding: 8px 14px;
+    font-family: 'Special Elite', monospace;
+    font-size: 1rem;
+    color: #332a1e;
+    background: linear-gradient(145deg, #a88b56, #d4ba8a, #a88b56);
+    border: 1px solid #5c4a33;
+    border-radius: 4px 4px 0 0;
+    box-shadow: 2px 2px 8px rgba(0,0,0,0.7);
     cursor: pointer;
-    font-family: monospace;
-    z-index: 20;
+    z-index: 10;
 }
 
+/* Drawer vertical positions */
+#livingDrawer { bottom: 180px; }
+#bedroomDrawer { bottom: 120px; }
+#diningDrawer { bottom: 60px; }
+
 /* FAN SYSTEM */
-.fan-system {
+.fan-system, .sub-fan {
+    display: none;
     position: absolute;
-    top: 0;
+    top: 50%;
     left: 100%;
     width: 1px;
     height: 1px;
-    z-index: 15;
     pointer-events: none;
 }
 
+/* Show active fans */
+.fan-system.active, .sub-fan.active {
+    display: block;
+}
+
+/* FAN ITEMS & ARMS */
 .fan-item {
     position: absolute;
-    width: 45px;       /* smaller icons */
-    height: 45px;
+    width: 50px;
+    height: 50px;
     transform-origin: left center;
     display: flex;
     justify-content: center;
@@ -68,12 +104,23 @@ body {
     cursor: pointer;
     transition: transform 0.3s ease, filter 0.2s ease;
 }
+.fan-item::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 50%;
+    height: 2px;
+    width: 120px; /* arm length */
+    background: gold;
+    transform-origin: left center;
+    transition: transform 0.3s ease;
+}
 
+/* Icon glow */
 .fan-item img {
     width: 100%;
     height: 100%;
 }
-
 .fan-item.active img {
     filter: drop-shadow(0 0 12px gold);
 }
@@ -82,50 +129,140 @@ body {
 .main-display {
     flex: 1;
     height: 500px;
-    background: url('livingroom.png') center/cover no-repeat;
+    background: #000;
     border: 1px solid #444;
     position: relative;
+}
+.main-display img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
 }
 </style>
 </head>
 <body>
 
+<button id="showCabinetBtn">Rooms</button>
+
 <div class="glow-up-container">
 
     <!-- CABINET -->
-    <div class="side-panel">
-        <div class="side-drawer" onclick="toggleFan(this)">
-            Rooms
-            <div class="fan-system" id="drawerFan">
-                <div class="fan-item"><img src="iconsbed.png" alt="Bed Icon"></div>
-                <div class="fan-item"><img src="iconsseating.png" alt="Seating Icon"></div>
-                <div class="fan-item"><img src="iconstable.png" alt="Table Icon"></div>
-                <div class="fan-item"><img src="iconsstorage.png" alt="Storage Icon"></div>
+    <div class="side-panel" id="sideCabinet">
+
+        <!-- Living Room Drawer -->
+        <div class="side-drawer" id="livingDrawer" onclick="selectRoom('livingroom.png', 'livingFan')">
+            Living Room
+            <div class="fan-system" id="livingFan">
+                <div class="fan-item" onclick="openSubFan(event, 'livingBeds')"><img src="iconsbed.png" alt="Bed"></div>
+                <div class="fan-item" onclick="openSubFan(event, 'livingSeating')"><img src="iconsseating.png" alt="Seating"></div>
+
+                <div class="sub-fan" id="livingBeds">
+                    <div class="fan-item"><img src="iconsbed.png"></div>
+                </div>
+                <div class="sub-fan" id="livingSeating">
+                    <div class="fan-item"><img src="iconsseating.png"></div>
+                </div>
             </div>
         </div>
+
+        <!-- Bedroom Drawer -->
+        <div class="side-drawer" id="bedroomDrawer" onclick="selectRoom('bedroom.png', 'bedroomFan')">
+            Bedroom
+            <div class="fan-system" id="bedroomFan">
+                <div class="fan-item" onclick="openSubFan(event, 'bedroomBeds')"><img src="iconsbed.png" alt="Bed"></div>
+                <div class="fan-item" onclick="openSubFan(event, 'bedroomSeating')"><img src="iconsseating.png" alt="Seating"></div>
+
+                <div class="sub-fan" id="bedroomBeds">
+                    <div class="fan-item"><img src="iconsbed.png"></div>
+                </div>
+                <div class="sub-fan" id="bedroomSeating">
+                    <div class="fan-item"><img src="iconsseating.png"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Dining Room Drawer -->
+        <div class="side-drawer" id="diningDrawer" onclick="selectRoom('diningroom.png', 'diningFan')">
+            Dining Room
+            <div class="fan-system" id="diningFan">
+                <div class="fan-item" onclick="openSubFan(event, 'diningTables')"><img src="iconstable.png" alt="Table"></div>
+                <div class="fan-item" onclick="openSubFan(event, 'diningStorage')"><img src="iconsstorage.png" alt="Storage"></div>
+
+                <div class="sub-fan" id="diningTables">
+                    <div class="fan-item"><img src="iconstable.png"></div>
+                </div>
+                <div class="sub-fan" id="diningStorage">
+                    <div class="fan-item"><img src="iconsstorage.png"></div>
+                </div>
+            </div>
+        </div>
+
     </div>
 
-    <!-- ROOM DISPLAY -->
+    <!-- MAIN DISPLAY -->
     <div class="main-display" id="mainDisplay">
+        <img id="roomImage" src="" alt="">
     </div>
 
 </div>
 
 <script>
-function toggleFan(drawer) {
-    const fanSystem = drawer.querySelector('.fan-system');
-    const items = fanSystem.querySelectorAll('.fan-item');
+// Show cabinet when Rooms button clicked
+document.getElementById('showCabinetBtn').addEventListener('click', () => {
+    document.getElementById('sideCabinet').classList.add('active');
+});
 
-    // Spread fan out over half-circle (less wide)
-    const startAngle = -30; // left-most
-    const step = 20;        // angle between items
-    items.forEach((item, index) => {
-        const angle = startAngle + index * step;
-        item.style.transform = `rotate(${angle}deg) translateX(100px)`;
-        item.classList.toggle('active');
+// Select room and open its fan
+function selectRoom(imgSrc, fanId) {
+    document.getElementById('roomImage').src = imgSrc;
+
+    // Close all other fans
+    document.querySelectorAll('.fan-system').forEach(f => {
+        if (f.id !== fanId) {
+            f.classList.remove('active');
+            f.querySelectorAll('.fan-item').forEach(i => i.style.transform = '');
+            f.querySelectorAll('.sub-fan').forEach(sf => sf.classList.remove('active'));
+        }
     });
 
-    fanSystem.classList.toggle('active');
+    // Toggle current fan
+    const fan = document.getElementById(fanId);
+    if (fan.classList.contains('active')) {
+        fan.classList.remove('active');
+        fan.querySelectorAll('.fan-item').forEach(i => i.style.transform = '');
+    } else {
+        fan.classList.add('active');
+        const items = fan.querySelectorAll('.fan-item');
+        const startAngle = -45;
+        const step = 30;
+        items.forEach((item, index) => {
+            item.style.transform = `rotate(${startAngle + index*step}deg) translateX(120px)`;
+            item.classList.add('active');
+        });
+    }
+}
+
+// Sub-fan toggle
+function openSubFan(event, subFanId) {
+    event.stopPropagation();
+    const allSubFans = document.querySelectorAll('.sub-fan');
+    allSubFans.forEach(sf => {
+        if (sf.id !== subFanId) sf.classList.remove('active');
+    });
+
+    const subFan = document.getElementById(subFanId);
+    subFan.classList.toggle('active');
+
+    const items = subFan.querySelectorAll('.fan-item');
+    const startAngle = -30;
+    const step = 30;
+    items.forEach((item, index) => {
+        if (item.style.transform) {
+            item.style.transform = '';
+        } else {
+            item.style.transform = `rotate(${startAngle + index*step}deg) translateX(80px)`;
+        }
+    });
 }
 </script>
 
