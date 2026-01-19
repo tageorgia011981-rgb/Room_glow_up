@@ -1,46 +1,22 @@
-// Cabinet toggle
-document.getElementById('roomsBtn').addEventListener('click', () => {
-    const cabinet = document.getElementById('sideCabinet');
-    cabinet.style.display = cabinet.style.display === 'flex' ? 'none' : 'flex';
+const roomsBtn = document.getElementById("roomsBtn");
+const cabinet = document.getElementById("cabinet");
+const drawers = document.querySelectorAll(".drawer");
+const roomDisplay = document.getElementById("roomDisplay");
+const roomImage = document.getElementById("roomImage");
+
+roomsBtn.addEventListener("click", () => {
+  cabinet.classList.toggle("active");
 });
 
-// Drawer selection
-document.querySelectorAll('.side-drawer').forEach(drawer => {
-    drawer.addEventListener('click', () => {
-        // highlight selected drawer
-        document.querySelectorAll('.side-drawer').forEach(d => d.classList.remove('active'));
-        drawer.classList.add('active');
+drawers.forEach(drawer => {
+  drawer.addEventListener("click", () => {
 
-        // update main room image
-        const roomImg = document.getElementById('roomImage');
-        roomImg.src = drawer.dataset.room;
+    drawers.forEach(d => d.classList.remove("active"));
+    drawer.classList.add("active");
 
-        // hide all sub-fans initially
-        document.querySelectorAll('.sub-fan').forEach(sf => sf.classList.remove('active'));
-    });
-});
+    roomDisplay.classList.add("active");
 
-// Fan icon click
-document.querySelectorAll('.fan-item').forEach(fan => {
-    fan.addEventListener('click', (e) => {
-        e.stopPropagation();
-        const category = fan.dataset.category;
-        const subFan = document.getElementById(category + 'SubFan');
-
-        // close all sub-fans except this one
-        document.querySelectorAll('.sub-fan').forEach(sf => {
-            if(sf !== subFan) sf.classList.remove('active');
-        });
-
-        subFan.classList.toggle('active');
-    });
-});
-
-// Furniture item click → preview
-document.querySelectorAll('.furniture-item').forEach(item => {
-    item.addEventListener('click', (e) => {
-        e.stopPropagation();
-        const roomImg = document.getElementById('roomImage');
-        roomImg.src = item.src;
-    });
+    const room = drawer.dataset.room;
+    roomImage.src = `${room}.png`;
+  });
 });
