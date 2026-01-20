@@ -118,17 +118,18 @@ body {
 }
 
 /* --- CABINET SLIDE SYSTEM --- */
+/* --- CABINET SLIDE SYSTEM --- */
 .cabinet-wrapper {
   position: fixed !important; 
-  left: -600px;      /* Increased to hide the bigger cabinet */
-  top: 550px;        /* Pushed further down the page */
-  width: 500px;      /* Made it bigger from 350px */
-  z-index: 5;        
+  left: -550px;      /* Adjusted to match the 500px width */
+  top: 400px;        /* Nudged up just a bit more for better visibility */
+  width: 500px;      
+  z-index: 5;        /* Stays behind the main stage */
   transition: 0.7s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
 .cabinet-wrapper.show-me {
-  left: -20px !important; /* Glides in but stays tucked slightly left */
+  left: -50px !important; /* Tucked back so it only peeks out enough to use */
 }
 
 .cabinet-img {
@@ -138,13 +139,13 @@ body {
 
 /* --- MAIN STAGE (Center Screen) --- */
 .main-stage {
-  margin: 40px auto;
-  width: 80vw;
-  height: 60vh;
+  margin: 20px auto; /* Reduced top margin to pull it closer to the tabs */
+  width: 60vw;       
+  max-width: 950px;  
+  height: 50vh;      /* Adjusted height to prevent overflow on shorter screens */
   border: 12px solid #7e7668;
   background: rgba(0, 0, 0, 0.4);
   box-shadow: inset 0 0 40px #000, 0 10px 30px rgba(0,0,0,0.5);
   position: relative;
-  z-index: 10;
+  z-index: 10;       /* Higher than cabinet so it stays in front */
 }
-
