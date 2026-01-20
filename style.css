@@ -125,3 +125,19 @@ body {
   transform: translateY(2px);
   text-shadow: 0 1px 0 rgba(255,255,255,0.6);
 }
+.cabinet-wrapper {
+  position: fixed; 
+  left: -350px; 
+  top: 250px; 
+  width: 320px; 
+  z-index: 9999; 
+  transition: 0.6s ease-in-out; 
+}
+
+.cabinet-wrapper.show-me {
+  left: 20px; 
+}
+
+.cabinet-img {
+  width: 100%;
+}
