@@ -1,68 +1,49 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Room Glow Up</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Room Glow Up</title>
 
-  <link href="https://fonts.googleapis.com/css2?family=Mrs+Saint+Delafield&family=Special+Elite&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css">
+<link href="https://fonts.googleapis.com/css2?family=Eagle+Lake&family=Special+Elite&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
-  <header class="site-header">
-    <h1 class="brand-title">Room Glow Up</h1>
-    <p class="sub-title">Your Dream Space Come To Life</p>
-  </header>
+<header class="site-header">
+  <h1 class="brand-title">Room Glow Up</h1>
+  <p class="sub-title">Where Your Dream Space Comes To Life</p>
+</header>
 
-  <nav class="top-nav">
-    <button id="roomsBtn">Rooms</button>
-  </nav>
+<nav class="vintage-tabs">
+  <div class="tab-card">
+    <div class="tab-card-inner">Rooms</div>
+    <div class="screw-right"></div>
+  </div>
+  <div class="tab-card">
+    <div class="tab-card-inner">Furniture</div>
+    <div class="screw-right"></div>
+  </div>
+  <div class="tab-card">
+    <div class="tab-card-inner">Decor</div>
+    <div class="screw-right"></div>
+  </div>
+  <div class="tab-card">
+    <div class="tab-card-inner">Inspiration</div>
+    <div class="screw-right"></div>
+  </div>
+  <div class="tab-card">
+    <div class="tab-card-inner">Upload</div>
+    <div class="screw-right"></div>
+  </div>
+  <div class="tab-card">
+    <div class="tab-card-inner">Save</div>
+    <div class="screw-right"></div>
+  </div>
+</nav>
 
-  <main class="workspace">
+<script src="script.js"></script>
 
-    <!-- CABINET (hidden by default) -->
-    <aside id="cabinet">
-
-      <div class="drawer" data-room="living">
-        Living Room
-        <div class="fan">
-          <img src="iconsseating.png">
-          <img src="iconsbed.png">
-          <img src="iconstables.png">
-          <img src="iconsstorage.png">
-        </div>
-      </div>
-
-      <div class="drawer" data-room="bedroom">
-        Bedroom
-        <div class="fan">
-          <img src="iconsseating.png">
-          <img src="iconsbed.png">
-          <img src="iconstables.png">
-          <img src="iconsstorage.png">
-        </div>
-      </div>
-
-      <div class="drawer" data-room="dining">
-        Dining Room
-        <div class="fan">
-          <img src="iconsseating.png">
-          <img src="iconstables.png">
-          <img src="iconsstorage.png">
-        </div>
-      </div>
-
-    </aside>
-
-    <!-- ROOM DISPLAY (hidden by default) -->
-    <section id="roomDisplay">
-      <img id="roomImage" src="" alt="">
-    </section>
-
-  </main>
-
-  <script src="script.js"></script>
 </body>
 </html>
