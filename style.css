@@ -117,19 +117,19 @@ body {
   text-shadow: 0 1px 0 rgba(255,255,255,0.6);
 }
 
-/* --- CABINET SLIDE SYSTEM --- */
+
 /* --- CABINET SLIDE SYSTEM --- */
 .cabinet-wrapper {
   position: fixed !important; 
-  left: -550px;      /* Adjusted to match the 500px width */
-  top: 400px;        /* Nudged up just a bit more for better visibility */
-  width: 500px;      
-  z-index: 5;        /* Stays behind the main stage */
+  left: -510px;      /* Hidden off-screen */
+  top: 180px;        /* Moves it down so it sits under the header */
+  width: 500px;      /* Your big cabinet size */
+  z-index: 5; 
   transition: 0.7s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
 .cabinet-wrapper.show-me {
-  left: -50px !important; /* Tucked back so it only peeks out enough to use */
+  left: 10px !important; /* Glides out to the left edge */
 }
 
 .cabinet-img {
@@ -137,15 +137,21 @@ body {
   filter: drop-shadow(15px 15px 30px rgba(0,0,0,0.8));
 }
 
-/* --- MAIN STAGE (Center Screen) --- */
+/* --- MAIN STAGE (Right Side Box) --- */
 .main-stage {
-  margin: 20px auto; /* Reduced top margin to pull it closer to the tabs */
-  width: 60vw;       
-  max-width: 950px;  
-  height: 50vh;      /* Adjusted height to prevent overflow on shorter screens */
+  position: fixed;   /* Pins it to the glass so it doesn't move when scrolling */
+  top: 180px;        /* Lines up perfectly with the top of the cabinet */
+  left: 520px;       /* Starts exactly after the 500px cabinet ends */
+  
+  /* This calculates the remaining width of the screen */
+  width: calc(100% - 550px); 
+  max-width: 1000px; /* Keeps it from getting too stretched on wide screens */
+  height: 65vh;      /* Makes it tall enough to see clearly */
+  
   border: 12px solid #7e7668;
   background: rgba(0, 0, 0, 0.4);
   box-shadow: inset 0 0 40px #000, 0 10px 30px rgba(0,0,0,0.5);
-  position: relative;
-  z-index: 10;       /* Higher than cabinet so it stays in front */
+  z-index: 10;
 }
+
+
