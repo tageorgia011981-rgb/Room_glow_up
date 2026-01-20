@@ -57,15 +57,12 @@ body {
   text-align: center;
   background: linear-gradient(180deg, #7e7668 0%, #a59d8f 50%, #7e7668 100%);
   border-radius: 6px;
-
-  /* Holder depth */
   box-shadow:
     0 10px 20px rgba(0,0,0,0.6),
     inset 0 4px 8px rgba(0,0,0,0.45),
     inset 0 -2px 4px rgba(255,255,255,0.15);
 }
 
-/* Finger lip */
 .tab-card::after {
   content: "";
   position: absolute;
@@ -78,7 +75,6 @@ body {
   border-radius: 0 0 8px 8px;
 }
 
-/* Screw holes */
 .tab-card::before,
 .tab-card .screw-right {
   content: "";
@@ -89,23 +85,18 @@ body {
   background: radial-gradient(circle at center, #1a1a1a 30%, #777 35%, #444 70%);
   border-radius: 50%;
 }
-
 .tab-card::before { left: 6px; }
 .tab-card .screw-right { right: 6px; }
 
-/* INNER CARD - recessed metal label */
 .tab-card-inner {
   margin: 0 10px 10px 10px;
   padding: 18px 0;
   border-radius: 4px;
   background: linear-gradient(180deg, #d4cdbf 0%, #b7a891 50%, #d4cdbf 100%);
-  
-  /* Recessed effect */
   box-shadow:
     inset 0 4px 8px rgba(0,0,0,0.6),
     inset 0 -4px 8px rgba(255,255,255,0.25),
     0 4px 6px rgba(0,0,0,0.3);
-  
   font-family: 'Special Elite', monospace;
   font-size: 22px;
   font-weight: bold;
@@ -115,7 +106,6 @@ body {
   cursor: pointer;
 }
 
-/* ACTIVE / WARM GLOW */
 .tab-card-inner.active {
   background: linear-gradient(#fff7d6, #e8d7a3);
   box-shadow:
@@ -129,20 +119,31 @@ body {
 
 /* --- CABINET SLIDE SYSTEM --- */
 .cabinet-wrapper {
-  position: fixed; 
-  left: -450px; /* Fully hidden off-screen to the left */
-  top: 220px; 
+  position: fixed !important; 
+  left: -450px; 
+  top: 350px;       /* Set specifically to keep it from coming out too high */
   width: 350px; 
-  z-index: 9999; /* Higher layer so it stays in front of background */
-  transition: 0.7s cubic-bezier(0.175, 0.885, 0.32, 1.275); /* The "Pop Out" movement */
+  z-index: 99999; 
+  transition: 0.7s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
-/* The switch for the glide */
 .cabinet-wrapper.show-me {
-  left: 20px; 
+  left: 20px !important; 
 }
 
 .cabinet-img {
   width: 100%;
   filter: drop-shadow(15px 15px 30px rgba(0,0,0,0.8));
+}
+
+/* --- MAIN STAGE (Center Screen) --- */
+.main-stage {
+  margin: 40px auto;
+  width: 80vw;
+  height: 60vh;
+  border: 12px solid #7e7668;
+  background: rgba(0, 0, 0, 0.4);
+  box-shadow: inset 0 0 40px #000, 0 10px 30px rgba(0,0,0,0.5);
+  position: relative;
+  z-index: 10;
 }
