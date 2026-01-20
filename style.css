@@ -1,7 +1,7 @@
 * {
   margin: 0;
   padding: 0;
-  box-sizing: border-box;
+  box-sizing: border-box; /* Fixed spelling */
 }
 
 body {
@@ -117,19 +117,18 @@ body {
   text-shadow: 0 1px 0 rgba(255,255,255,0.6);
 }
 
-
 /* --- CABINET SLIDE SYSTEM --- */
 .cabinet-wrapper {
   position: fixed !important; 
   left: -510px;      /* Hidden off-screen */
-  top: 180px;        /* Moves it down so it sits under the header */
-  width: 500px;      /* Your big cabinet size */
+  top: 180px;        
+  width: 500px;      
   z-index: 5; 
   transition: 0.7s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
 .cabinet-wrapper.show-me {
-  left: 10px !important; /* Glides out to the left edge */
+  left: 0px !important; /* Glides exactly to the edge */
 }
 
 .cabinet-img {
@@ -137,21 +136,18 @@ body {
   filter: drop-shadow(15px 15px 30px rgba(0,0,0,0.8));
 }
 
-/* --- MAIN STAGE (Right Side Box) --- */
+/* --- MAIN STAGE (The Workspace Box) --- */
 .main-stage {
-  position: fixed;   /* Pins it to the glass so it doesn't move when scrolling */
-  top: 180px;        /* Lines up perfectly with the top of the cabinet */
-  left: 520px;       /* Starts exactly after the 500px cabinet ends */
+  position: fixed;   
+  top: 180px;        
+  left: 520px;       /* Pushes it right to make a "lane" for the cabinet */
   
-  /* This calculates the remaining width of the screen */
   width: calc(100% - 550px); 
-  max-width: 1000px; /* Keeps it from getting too stretched on wide screens */
-  height: 65vh;      /* Makes it tall enough to see clearly */
+  max-width: 900px;  /* Stops it from stretching too wide */
+  height: 60vh;      
   
   border: 12px solid #7e7668;
   background: rgba(0, 0, 0, 0.4);
   box-shadow: inset 0 0 40px #000, 0 10px 30px rgba(0,0,0,0.5);
   z-index: 10;
 }
-
-
