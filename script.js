@@ -1,22 +1,9 @@
-const roomsBtn = document.getElementById("roomsBtn");
-const cabinet = document.getElementById("cabinet");
-const drawers = document.querySelectorAll(".drawer");
-const roomDisplay = document.getElementById("roomDisplay");
-const roomImage = document.getElementById("roomImage");
+// Glow stays lit on click
+const innerCards = document.querySelectorAll('.tab-card-inner');
 
-roomsBtn.addEventListener("click", () => {
-  cabinet.classList.toggle("active");
-});
-
-drawers.forEach(drawer => {
-  drawer.addEventListener("click", () => {
-
-    drawers.forEach(d => d.classList.remove("active"));
-    drawer.classList.add("active");
-
-    roomDisplay.classList.add("active");
-
-    const room = drawer.dataset.room;
-    roomImage.src = `${room}.png`;
+innerCards.forEach(card => {
+  card.addEventListener('click', () => {
+    innerCards.forEach(c => c.classList.remove('active'));
+    card.classList.add('active');
   });
 });
