@@ -7,3 +7,9 @@ innerCards.forEach(card => {
     card.classList.add('active');
   });
 });
+const roomsButton = document.getElementById('rooms-btn');
+const cabinetImage = document.getElementById('main-cabinet');
+
+roomsButton.addEventListener('click', function() {
+  cabinetImage.classList.toggle('show-me');
+});
