@@ -120,15 +120,15 @@ body {
 /* --- CABINET SLIDE SYSTEM --- */
 .cabinet-wrapper {
   position: fixed !important; 
-  left: -450px; 
-  top: 350px;       /* Set specifically to keep it from coming out too high */
-  width: 350px; 
-  z-index: 99999; 
+  left: -600px;      /* Increased to hide the bigger cabinet */
+  top: 550px;        /* Pushed further down the page */
+  width: 500px;      /* Made it bigger from 350px */
+  z-index: 5;        
   transition: 0.7s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
 .cabinet-wrapper.show-me {
-  left: 20px !important; 
+  left: -20px !important; /* Glides in but stays tucked slightly left */
 }
 
 .cabinet-img {
@@ -147,3 +147,4 @@ body {
   position: relative;
   z-index: 10;
 }
+
