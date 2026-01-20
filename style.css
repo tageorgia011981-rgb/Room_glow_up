@@ -1,13 +1,143 @@
-.cabinet-wrapper {
-  position: fixed; 
-  left: -450px; /* Hidden off-screen */
-  top: 220px;   /* Positions it below your header title */
-  width: 350px; 
-  z-index: 9999; /* Ensures it stays in front of everything */
-  transition: 0.7s cubic-bezier(0.175, 0.885, 0.32, 1.275); /* Smooth pop-out effect */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
-/* This is the class the JavaScript toggles to slide it in */
+body {
+  background: url("background_color.jpg") center / cover no-repeat fixed;
+  min-height: 100vh;
+  font-family: 'Eagle Lake', serif;
+  overflow-x: hidden;
+}
+
+/* HEADER */
+.site-header {
+  text-align: center;
+  padding: 40px 20px 10px;
+}
+
+.brand-title {
+  font-family: 'Eagle Lake', serif;
+  font-size: 150px;
+  color: #0b3d0b;
+  -webkit-text-stroke: 4px #c9a24d;
+  text-shadow:
+    0 2px 0 #0a2e0a,
+    0 6px 10px rgba(0,0,0,0.75);
+  background: linear-gradient(45deg,#c9a24d,#ffd675,#c9a24d);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.sub-title {
+  font-family: 'Eagle Lake', serif;
+  font-size: 36px;
+  margin-top: 10px;
+  color: #0f2f22;
+  -webkit-text-stroke: 1.5px #c9a24d;
+  text-shadow: 2px 2px 4px #0a2e0a;
+}
+
+/* TAB HOLDERS CONTAINER */
+.vintage-tabs {
+  display: flex;
+  gap: 24px;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin: 30px auto;
+  max-width: 1200px;
+}
+
+/* TAB HOLDER WITH DEPTH */
+.tab-card {
+  position: relative;
+  width: 160px;
+  padding-top: 20px;
+  text-align: center;
+  background: linear-gradient(180deg, #7e7668 0%, #a59d8f 50%, #7e7668 100%);
+  border-radius: 6px;
+
+  /* Holder depth */
+  box-shadow:
+    0 10px 20px rgba(0,0,0,0.6),
+    inset 0 4px 8px rgba(0,0,0,0.45),
+    inset 0 -2px 4px rgba(255,255,255,0.15);
+}
+
+/* Finger lip */
+.tab-card::after {
+  content: "";
+  position: absolute;
+  bottom: -8px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 60%;
+  height: 8px;
+  background: linear-gradient(#c8c4b5, #9f9b8d);
+  border-radius: 0 0 8px 8px;
+}
+
+/* Screw holes */
+.tab-card::before,
+.tab-card .screw-right {
+  content: "";
+  position: absolute;
+  top: 8px;
+  width: 6px;
+  height: 6px;
+  background: radial-gradient(circle at center, #1a1a1a 30%, #777 35%, #444 70%);
+  border-radius: 50%;
+}
+
+.tab-card::before { left: 6px; }
+.tab-card .screw-right { right: 6px; }
+
+/* INNER CARD - recessed metal label */
+.tab-card-inner {
+  margin: 0 10px 10px 10px;
+  padding: 18px 0;
+  border-radius: 4px;
+  background: linear-gradient(180deg, #d4cdbf 0%, #b7a891 50%, #d4cdbf 100%);
+  
+  /* Recessed effect */
+  box-shadow:
+    inset 0 4px 8px rgba(0,0,0,0.6),
+    inset 0 -4px 8px rgba(255,255,255,0.25),
+    0 4px 6px rgba(0,0,0,0.3);
+  
+  font-family: 'Special Elite', monospace;
+  font-size: 22px;
+  font-weight: bold;
+  letter-spacing: 1.5px;
+  color: #1a1a1a;
+  transition: all 0.2s ease;
+  cursor: pointer;
+}
+
+/* ACTIVE / WARM GLOW */
+.tab-card-inner.active {
+  background: linear-gradient(#fff7d6, #e8d7a3);
+  box-shadow:
+    inset 0 0 25px rgba(255,215,140,0.95),
+    inset 0 -6px 12px rgba(0,0,0,0.45),
+    0 8px 16px rgba(0,0,0,0.45);
+  color: #2a1d0c;
+  transform: translateY(2px);
+  text-shadow: 0 1px 0 rgba(255,255,255,0.6);
+}
+
+/* --- CABINET SLIDE SYSTEM --- */
+.cabinet-wrapper {
+  position: fixed; 
+  left: -450px; /* Fully hidden off-screen to the left */
+  top: 220px; 
+  width: 350px; 
+  z-index: 9999; /* Higher layer so it stays in front of background */
+  transition: 0.7s cubic-bezier(0.175, 0.885, 0.32, 1.275); /* The "Pop Out" movement */
+}
+
+/* The switch for the glide */
 .cabinet-wrapper.show-me {
   left: 20px; 
 }
