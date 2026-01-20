@@ -1,13 +1,11 @@
-const roomsBtn = document.getElementById('rooms-btn');
-const cabinet = document.getElementById('main-cabinet');
+document.addEventListener('DOMContentLoaded', () => {
+    const roomsBtn = document.getElementById('rooms-btn');
+    const cabinet = document.getElementById('main-cabinet');
+    const metalPlate = roomsBtn.querySelector('.tab-card-inner');
 
-// This targets the specific metal plate inside the Rooms tab
-const roomsInner = roomsBtn.querySelector('.tab-card-inner');
-
-roomsBtn.onclick = function() {
-    // This makes the cabinet glide
-    cabinet.classList.toggle('show-me');
-    
-    // This turns your CSS "Warm Glow" on and off
-    roomsInner.classList.toggle('active');
-};
+    roomsBtn.addEventListener('click', () => {
+        cabinet.classList.toggle('show-me');
+        metalPlate.classList.toggle('active');
+        console.log("Cabinet and Glow toggled!");
+    });
+});
