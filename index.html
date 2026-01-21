@@ -5,7 +5,7 @@
   <title>Room Glow Up</title>
   <link href="https://fonts.googleapis.com/css2?family=Limelight&family=Special+Elite&display=swap" rel="stylesheet">
   <style>
-    /* 1. BACKGROUND & LAYOUT */
+    /* --- SYSTEM SETUP --- */
     * { margin: 0; padding: 0; box-sizing: border-box; }
     body {
       background: url("background_color.jpg") center / cover no-repeat fixed;
@@ -15,7 +15,7 @@
       font-family: 'Special Elite', cursive;
     }
 
-    /* 2. HEADER */
+    /* --- HEADER --- */
     .site-header { text-align: center; padding: 30px 0 10px; }
     .brand-title {
       font-family: 'Limelight', cursive;
@@ -32,63 +32,64 @@
       color: #fff2ac; text-transform: uppercase; letter-spacing: 10px; margin-top: 5px;
     }
 
-    /* 3. VINTAGE LABEL HOLDERS */
-    .vintage-tabs { display: flex; gap: 15px; justify-content: center; padding: 20px; }
-    
+    /* --- VINTAGE TABS --- */
+    .vintage-tabs { display: flex; gap: 15px; justify-content: center; padding: 20px; position: relative; }
     .library-pull {
       position: relative; width: 190px; height: 75px;
       background: linear-gradient(145deg, #5c441a 0%, #a68b4c 50%, #3d2b14 100%);
       display: flex; align-items: center; justify-content: center; cursor: pointer;
       clip-path: polygon(0% 20%, 5% 20%, 5% 0%, 95% 0%, 95% 20%, 100% 20%, 100% 80%, 95% 80%, 95% 100%, 5% 100%, 5% 80%, 0% 80%);
-      margin-bottom: 12px;
-      transition: box-shadow 0.3s ease;
+      transition: 0.3s;
     }
-    
     .plate-style {
       width: 82%; height: 55%; background: #0d1a0d; border: 1px solid #4a3511;
       color: #fff2ac; display: flex; align-items: center; justify-content: center;
       text-transform: uppercase; font-size: 12px; pointer-events: none;
     }
+    .active-glow { box-shadow: 0 0 25px 5px rgba(255, 215, 0, 0.8); filter: brightness(1.2); z-index: 100; }
 
-    /* THE GLOW EFFECT */
-    .active-glow { 
-      box-shadow: 0 0 20px 5px rgba(255, 215, 0, 0.7), inset 0 0 10px rgba(255, 215, 0, 0.5);
-      filter: brightness(1.2);
+    /* --- THE FURNITURE FAN (Updated Labels) --- */
+    .swatch-container { position: absolute; top: 65px; left: 50%; transform: translateX(-50%); pointer-events: none; z-index: 90; }
+    .swatch-strip {
+      position: absolute; width: 140px; height: 45px; background: #fdf5e6; color: #3d2b14;
+      border: 1px solid #8a6d3b; display: flex; align-items: center; justify-content: center;
+      top: 0; left: -70px; opacity: 0; transition: 0.8s cubic-bezier(0.4, 0, 0.2, 1); 
+      transform-origin: top center; font-size: 11px; font-weight: bold;
+      box-shadow: 3px 3px 10px rgba(0,0,0,0.4);
     }
+    .active-glow .swatch-strip { opacity: 1; pointer-events: auto; }
+    .strip-1 { transform: rotate(-45deg) translateY(20px); }
+    .strip-2 { transform: rotate(-15deg) translateY(35px); }
+    .strip-3 { transform: rotate(15deg) translateY(35px); }
+    .strip-4 { transform: rotate(45deg) translateY(20px); }
 
-    /* 4. CABINET & WORKSPACE */
+    /* --- THE CABINET (Slow Motion Glide) --- */
     .workspace { display: flex; padding: 20px; gap: 40px; flex-grow: 1; justify-content: center; align-items: flex-start; }
     
     .cabinet-container { 
       width: 400px; 
       position: relative; 
-      display: none; /* Stays hidden until a top tab is pressed */
+      opacity: 0;
+      transform: translateX(-80px); /* Starts further left for a longer glide */
+      transition: opacity 1.2s ease-out, transform 1.2s ease-out; 
+      pointer-events: none;
     }
     
-    .cabinet-img { width: 100%; height: auto; display: block; }
-    
-    .cabinet-overlay { 
-      position: absolute; 
-      top: 0; left: 0; width: 100%; height: 100%; 
-      padding: 70px 20px; 
-      display: flex; 
-      flex-direction: column; 
-      align-items: center;
+    .cabinet-container.show { 
+      opacity: 1; 
+      transform: translateX(0); 
+      pointer-events: auto;
     }
 
-    /* 5. THE STAGE (CENTER IMAGE) */
-    .stage { 
-      flex-grow: 1; 
-      max-width: 850px; 
-      background: rgba(0,0,0,0.6); 
-      border: 10px solid #1a1a1a;
-      box-shadow: 0 0 40px rgba(0,0,0,0.8);
-      display: flex; 
-      justify-content: center; 
-      align-items: center;
-      min-height: 500px;
+    .cabinet-img { width: 100%; height: auto; display: block; }
+    .cabinet-overlay { 
+      position: absolute; top: 0; left: 0; width: 100%; height: 100%; 
+      padding: 70px 20px; display: flex; flex-direction: column; align-items: center; 
     }
-    .room-img { width: 100%; height: auto; display: block; transition: opacity 0.5s ease; }
+
+    /* --- STAGE --- */
+    .stage { flex-grow: 1; max-width: 850px; background: rgba(0,0,0,0.5); border: 10px solid #1a1a1a; display: flex; justify-content: center; align-items: center; min-height: 500px; }
+    .room-img { width: 100%; height: auto; display: block; opacity: 0; transition: 0.8s; }
   </style>
 </head>
 <body>
@@ -100,7 +101,17 @@
 
   <nav class="vintage-tabs" id="top-nav">
     <div class="library-pull" onclick="toggle('rooms', this)"><div class="plate-style">Rooms</div></div>
-    <div class="library-pull" onclick="toggle('furniture', this)"><div class="plate-style">Furniture</div></div>
+    
+    <div class="library-pull" onclick="toggle('furniture', this)">
+      <div class="plate-style">Furniture</div>
+      <div class="swatch-container">
+        <div class="swatch-strip strip-1" onclick="openDrawer('Seating')">Seating</div>
+        <div class="swatch-strip strip-2" onclick="openDrawer('Tables')">Tables</div>
+        <div class="swatch-strip strip-3" onclick="openDrawer('Beds')">Beds</div>
+        <div class="swatch-strip strip-4" onclick="openDrawer('Storage')">Storage</div>
+      </div>
+    </div>
+
     <div class="library-pull" onclick="toggle('decor', this)"><div class="plate-style">Decor</div></div>
     <div class="library-pull" onclick="toggle('inspiration', this)"><div class="plate-style">Inspiration</div></div>
   </nav>
@@ -110,44 +121,69 @@
       <img src="cabinet.png" class="cabinet-img">
       <div class="cabinet-overlay" id="cab-content"></div>
     </div>
-
-    <div class="stage">
-      <img id="main-room" src="" class="room-img" style="opacity: 0;">
-    </div>
+    <div class="stage"><img id="main-room" src="" class="room-img"></div>
   </div>
+
+  <input type="file" id="room-upload" style="display: none;" accept="image/*" onchange="handleUpload(event)">
 
   <script>
     function toggle(type, el) {
-      // Clear glow from all top nav buttons
       document.querySelectorAll('#top-nav .library-pull').forEach(b => b.classList.remove('active-glow'));
       el.classList.add('active-glow');
       
       const cabinetShell = document.getElementById('cabinet-shell');
       const cabContent = document.getElementById('cab-content');
 
-      cabinetShell.style.display = 'block';
+      // Glides the cabinet in slowly
+      cabinetShell.classList.add('show');
 
       if (type === 'rooms') {
         cabContent.innerHTML = `
           <div class="library-pull inner-btn" onclick="changeRoom('livingroom.jpg', this)"><div class="plate-style">Living Room</div></div>
           <div class="library-pull inner-btn" onclick="changeRoom('bedroom.jpg', this)"><div class="plate-style">Bedroom</div></div>
           <div class="library-pull inner-btn" onclick="changeRoom('diningroom.jpg', this)"><div class="plate-style">Dining Room</div></div>
-          <div class="library-pull inner-btn"><div class="plate-style">Upload</div></div>
+          <div class="library-pull inner-btn" onclick="triggerUpload(this)"><div class="plate-style">Upload</div></div>
         `;
+      } else if (type === 'furniture') {
+        cabContent.innerHTML = `<div style="color:#fff2ac; padding-top:20px; text-align:center;">Pick a Furniture category from the fan!</div>`;
       } else {
-        cabContent.innerHTML = `<div style="color:#fff2ac; padding-top:20px;">${type.toUpperCase()} DRAWER</div>`;
+        cabContent.innerHTML = `<div style="color:#fff2ac; padding-top:20px; text-align:center;">${type.toUpperCase()} DRAWER</div>`;
       }
     }
 
+    function openDrawer(item) {
+      // Clears the cabinet content to show the specific furniture drawer selected
+      document.getElementById('cab-content').innerHTML = `
+        <div style="color:#fff2ac; padding-bottom:15px; text-transform:uppercase;">${item} Drawer</div>
+        <div class="library-pull inner-btn"><div class="plate-style">Sample ${item}</div></div>
+      `;
+    }
+
     function changeRoom(src, el) {
-      // Handle the glow for the inner cabinet buttons
       document.querySelectorAll('.inner-btn').forEach(b => b.classList.remove('active-glow'));
       el.classList.add('active-glow');
-
-      // Update the main stage image
       const img = document.getElementById('main-room');
       img.src = src;
       img.style.opacity = '1';
+    }
+
+    function triggerUpload(el) {
+      document.querySelectorAll('.inner-btn').forEach(b => b.classList.remove('active-glow'));
+      el.classList.add('active-glow');
+      document.getElementById('room-upload').click();
+    }
+
+    function handleUpload(event) {
+      const file = event.target.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+          const img = document.getElementById('main-room');
+          img.src = e.target.result;
+          img.style.opacity = '1';
+        }
+        reader.readAsDataURL(file);
+      }
     }
   </script>
 </body>
