@@ -34,4 +34,16 @@ function openSubFan(category) {
         subFan.appendChild(blade);
     }
     subFan.classList.add('open');
+}/* --- ROOM CLICK TRIGGER --- */
+function triggerFanFromRoom() {
+    // This finds the drawer currently highlighted with your glow style
+    const activeDrawer = document.querySelector('.inner-btn.active-glow');
+    
+    if (activeDrawer) {
+        // This fires the fan function you already have written
+        openCategoryFan(currentCategory, activeDrawer);
+    } else {
+        console.log("Cabinet drawer must be active to launch fan.");
+    }
 }
+
