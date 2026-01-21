@@ -5,11 +5,11 @@
   <title>Room Glow Up</title>
   <link href="https://fonts.googleapis.com/css2?family=Limelight&family=Special+Elite&display=swap" rel="stylesheet">
   <style>
-    /* --- SYSTEM & BACKGROUND --- */
     * { margin: 0; padding: 0; box-sizing: border-box; }
     
+    /* 1. THE BACKGROUND (Using your specific file) */
     body {
-      background-color: #3a0a0a !important; /* Your Chosen Dark Red */
+      background: url("background_color.jpg") center / cover no-repeat fixed;
       min-height: 100vh;
       display: flex;
       flex-direction: column;
@@ -17,14 +17,12 @@
       overflow-x: hidden;
     }
 
-    /* --- THE ART DECO HEADER --- */
+    /* 2. THE ART DECO HEADER */
     .site-header { text-align: center; padding: 40px 0 20px; }
-    
     .brand-title {
       font-family: 'Limelight', cursive;
       font-size: clamp(50px, 8vw, 90px);
       text-transform: uppercase;
-      /* Gold Metallic Gradient */
       background: linear-gradient(165deg, #4a3511 0%, #c9a24d 25%, #ffffff 48%, #f8e48d 52%, #c9a24d 75%, #4a3511 100%);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
@@ -32,7 +30,7 @@
       display: inline-block;
     }
 
-    /* --- THE VINTAGE LABEL HOLDERS --- */
+    /* 3. THE VINTAGE LABEL HOLDERS (The Notched Brass Pulls) */
     .vintage-tabs { display: flex; gap: 20px; justify-content: center; padding: 20px; }
 
     .library-pull {
@@ -44,15 +42,14 @@
       align-items: center;
       justify-content: center;
       cursor: pointer;
-      /* The Notched Hardware Shape */
+      /* The Hardware Notch Shape */
       clip-path: polygon(0% 20%, 8% 20%, 8% 0%, 92% 0%, 92% 20%, 100% 20%, 100% 80%, 92% 80%, 92% 100%, 8% 100%, 8% 80%, 0% 80%);
-      transition: 0.3s;
     }
 
     .plate-style {
       width: 85%;
       height: 60%;
-      background: #1a0505; /* Matches the dark red theme */
+      background: rgba(0,0,0,0.6); /* Semi-transparent to let background peek through */
       color: #fff2ac;
       display: flex;
       align-items: center;
@@ -60,14 +57,11 @@
       text-transform: uppercase;
       font-size: 14px;
       border: 1.5px solid #4a3511;
-      box-shadow: inset 0 5px 10px rgba(0,0,0,0.8);
     }
 
-    .active-glow {
-      box-shadow: 0 0 25px #ffd700;
-    }
+    .active-glow { box-shadow: 0 0 25px #ffd700; }
 
-    /* --- DECOR SWATCH FAN --- */
+    /* 4. THE DECOR SWATCH FAN */
     .swatch-container { position: absolute; top: 80px; left: 50%; transform: translateX(-50%); pointer-events: none; }
     .swatch-strip {
       position: absolute; width: 130px; height: 40px; background: #fdf5e6; color: #3d2b14;
@@ -82,8 +76,8 @@
 
     /* --- WORKSPACE --- */
     .workspace { display: flex; padding: 20px; gap: 20px; flex-grow: 1; height: 700px; }
-    .cabinet { width: 450px; background: #111; border: 5px solid #333; position: relative; }
-    .stage { flex-grow: 1; background: #000; border: 10px solid #1a1a1a; display: flex; justify-content: center; }
+    .cabinet { width: 450px; background: rgba(0,0,0,0.5); border: 5px solid #333; position: relative; }
+    .stage { flex-grow: 1; background: rgba(0,0,0,0.3); border: 10px solid #1a1a1a; display: flex; justify-content: center; }
     .room-img { width: 100%; height: 100%; object-fit: contain; }
   </style>
 </head>
@@ -119,9 +113,9 @@
       
       const cab = document.getElementById('cab-content');
       if (type === 'rooms') {
-        cab.innerHTML = '<div style="padding:20px; color:#fff2ac;">Rooms Drawer Opened</div>';
+        cab.innerHTML = '<div style="padding:20px; color:#fff2ac;">Rooms Drawer</div>';
       } else if (type === 'decor') {
-        cab.innerHTML = '<div style="padding:20px; color:#fff2ac;">Pick a swatch above!</div>';
+        cab.innerHTML = '<div style="padding:20px; color:#fff2ac;">Pick a swatch!</div>';
       }
     }
   </script>
