@@ -6,16 +6,47 @@
     <title>Room Glow Up</title>
     
     <link href="https://fonts.googleapis.com/css2?family=Limelight&family=Special+Elite&display=swap" rel="stylesheet">
-
-    <style>
-        /* PASTE ALL THE CSS I VERIFIED HERE */
-    </style>
+    
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-    <script>
-        /* PASTE THE JAVASCRIPT FUNCTIONS HERE */
-    </script>
+    <header class="site-header">
+        <h1 class="brand-title">Room Glow Up</h1>
+        <span class="sub-title">Your Dream Space Come To Life</span>
+    </header>
+
+    <nav class="vintage-tabs">
+        <div class="library-pull" onclick="toggle('rooms', this)">
+            <div class="plate-style">Rooms</div>
+            <div class="pull-lip"></div>
+        </div>
+        <div class="library-pull" onclick="toggle('furniture', this)">
+            <div class="plate-style">Furniture</div>
+            <div class="pull-lip"></div>
+        </div>
+        <div class="library-pull" onclick="toggle('decor', this)">
+            <div class="plate-style">Decor</div>
+            <div class="pull-lip"></div>
+        </div>
+        <div class="library-pull" onclick="toggle('inspiration', this)">
+            <div class="plate-style">Inspiration</div>
+            <div class="pull-lip"></div>
+        </div>
+    </nav>
+
+    <div class="workspace">
+        <div class="cabinet-container" id="cabinet-shell">
+            <img src="cabinet.png" class="cabinet-img" alt="Cabinet Hardware">
+            <div class="cabinet-overlay" id="cab-content"></div>
+        </div>
+
+        <div class="stage">
+            <img id="main-room" src="" class="room-img" alt="Selected Room Stage">
+        </div>
+    </div>
+
+    <script src="script.js"></script>
 
 </body>
 </html>
