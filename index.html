@@ -32,24 +32,85 @@
       color: #fff2ac; text-transform: uppercase; letter-spacing: 10px; margin-top: 5px;
     }
 
-    /* --- VINTAGE TABS --- */
-    .vintage-tabs { display: flex; gap: 15px; justify-content: center; padding: 20px; position: relative; }
-    .library-pull {
-      position: relative; width: 190px; height: 75px;
-      background: linear-gradient(145deg, #5c441a 0%, #a68b4c 50%, #3d2b14 100%);
-      display: flex; align-items: center; justify-content: center; cursor: pointer;
-      clip-path: polygon(0% 20%, 5% 20%, 5% 0%, 95% 0%, 95% 20%, 100% 20%, 100% 80%, 95% 80%, 95% 100%, 5% 100%, 5% 80%, 0% 80%);
-      transition: 0.3s;
-    }
-    .plate-style {
-      width: 82%; height: 55%; background: #0d1a0d; border: 1px solid #4a3511;
-      color: #fff2ac; display: flex; align-items: center; justify-content: center;
-      text-transform: uppercase; font-size: 12px; pointer-events: none;
-    }
-    .active-glow { box-shadow: 0 0 25px 5px rgba(255, 215, 0, 0.8); filter: brightness(1.2); z-index: 100; }
+    /* --- THE VINTAGE HARDWARE PIECE --- */
+    .vintage-tabs { display: flex; gap: 25px; justify-content: center; padding: 20px; position: relative; }
 
-    /* --- THE FURNITURE FAN (Updated Labels) --- */
-    .swatch-container { position: absolute; top: 65px; left: 50%; transform: translateX(-50%); pointer-events: none; z-index: 90; }
+    .library-pull {
+      position: relative; 
+      width: 190px; 
+      height: 90px; 
+      background: #8b6d3b; /* Solid Antique Brass */
+      display: flex; 
+      flex-direction: column;
+      align-items: center; 
+      justify-content: center; 
+      cursor: pointer;
+      /* Precise Notched Hardware Shape */
+      clip-path: polygon(0% 20%, 8% 20%, 8% 0%, 92% 0%, 92% 20%, 100% 20%, 100% 80%, 92% 80%, 92% 100%, 8% 100%, 8% 80%, 0% 80%);
+      box-shadow: 6px 8px 15px rgba(0,0,0,0.8);
+      border: 1px solid #4a3511;
+      transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      z-index: 10;
+    }
+
+    /* REAL SCREW HOLES */
+    .library-pull::before, .library-pull::after {
+      content: '';
+      position: absolute;
+      width: 8px;
+      height: 8px;
+      background: #1a1a1a;
+      border-radius: 50%;
+      top: 6px;
+      box-shadow: inset 1px 1px 2px #000, 1px 1px 1px rgba(255,255,255,0.1);
+    }
+    .library-pull::before { left: 12px; }
+    .library-pull::after { right: 12px; }
+
+    /* PAPER LABEL WITH BOLD TYPEWRITER INK */
+    .plate-style {
+      width: 76%; 
+      height: 44%; 
+      background: #e8e0d0; /* Aged Paper Label */
+      border: 2px solid #3d2b14;
+      color: #000; 
+      display: flex; 
+      align-items: center; 
+      justify-content: center; 
+      text-transform: uppercase; 
+      font-family: 'Special Elite', cursive;
+      font-weight: 900; /* Extra Bold Ink */
+      font-size: 14px; 
+      pointer-events: none;
+      box-shadow: inset 0 2px 5px rgba(0,0,0,0.3);
+    }
+
+    /* PHYSICAL PULL LIP */
+    .pull-lip {
+      width: 50px;
+      height: 10px;
+      background: linear-gradient(180deg, #5c441a, #2a1f0d);
+      border-radius: 0 0 12px 12px;
+      margin-top: 5px;
+      border: 1px solid #1a150a;
+      box-shadow: 2px 3px 5px rgba(0,0,0,0.6);
+    }
+
+    /* THE BACKLIGHT GLOW (TRIGGERED ON CLICK) */
+    .active-glow { 
+      transform: translateY(-5px);
+      background: #c9a24d; 
+      box-shadow: 0 0 35px 12px rgba(255, 170, 0, 0.5); 
+      z-index: 100; 
+    }
+    .active-glow .plate-style {
+      background: #fffdf5; /* Paper glows when light is behind it */
+      box-shadow: inset 0 0 12px #ffcc00, 0 0 8px #ffcc00;
+      border-color: #8b6d3b;
+    }
+
+    /* --- THE FURNITURE FAN --- */
+    .swatch-container { position: absolute; top: 75px; left: 50%; transform: translateX(-50%); pointer-events: none; z-index: 90; }
     .swatch-strip {
       position: absolute; width: 140px; height: 45px; background: #fdf5e6; color: #3d2b14;
       border: 1px solid #8a6d3b; display: flex; align-items: center; justify-content: center;
@@ -63,29 +124,16 @@
     .strip-3 { transform: rotate(15deg) translateY(35px); }
     .strip-4 { transform: rotate(45deg) translateY(20px); }
 
-    /* --- THE CABINET (Slow Motion Glide) --- */
+    /* --- CABINET SLOW GLIDE --- */
     .workspace { display: flex; padding: 20px; gap: 40px; flex-grow: 1; justify-content: center; align-items: flex-start; }
-    
     .cabinet-container { 
-      width: 400px; 
-      position: relative; 
-      opacity: 0;
-      transform: translateX(-80px); /* Starts further left for a longer glide */
-      transition: opacity 1.2s ease-out, transform 1.2s ease-out; 
+      width: 400px; position: relative; opacity: 0;
+      transform: translateX(-80px); transition: opacity 1.2s ease-out, transform 1.2s ease-out; 
       pointer-events: none;
     }
-    
-    .cabinet-container.show { 
-      opacity: 1; 
-      transform: translateX(0); 
-      pointer-events: auto;
-    }
-
+    .cabinet-container.show { opacity: 1; transform: translateX(0); pointer-events: auto; }
     .cabinet-img { width: 100%; height: auto; display: block; }
-    .cabinet-overlay { 
-      position: absolute; top: 0; left: 0; width: 100%; height: 100%; 
-      padding: 70px 20px; display: flex; flex-direction: column; align-items: center; 
-    }
+    .cabinet-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; padding: 75px 20px; display: flex; flex-direction: column; align-items: center; }
 
     /* --- STAGE --- */
     .stage { flex-grow: 1; max-width: 850px; background: rgba(0,0,0,0.5); border: 10px solid #1a1a1a; display: flex; justify-content: center; align-items: center; min-height: 500px; }
@@ -100,10 +148,14 @@
   </header>
 
   <nav class="vintage-tabs" id="top-nav">
-    <div class="library-pull" onclick="toggle('rooms', this)"><div class="plate-style">Rooms</div></div>
+    <div class="library-pull" onclick="toggle('rooms', this)">
+      <div class="plate-style">Rooms</div>
+      <div class="pull-lip"></div>
+    </div>
     
     <div class="library-pull" onclick="toggle('furniture', this)">
       <div class="plate-style">Furniture</div>
+      <div class="pull-lip"></div>
       <div class="swatch-container">
         <div class="swatch-strip strip-1" onclick="openDrawer('Seating')">Seating</div>
         <div class="swatch-strip strip-2" onclick="openDrawer('Tables')">Tables</div>
@@ -112,8 +164,14 @@
       </div>
     </div>
 
-    <div class="library-pull" onclick="toggle('decor', this)"><div class="plate-style">Decor</div></div>
-    <div class="library-pull" onclick="toggle('inspiration', this)"><div class="plate-style">Inspiration</div></div>
+    <div class="library-pull" onclick="toggle('decor', this)">
+      <div class="plate-style">Decor</div>
+      <div class="pull-lip"></div>
+    </div>
+    <div class="library-pull" onclick="toggle('inspiration', this)">
+      <div class="plate-style">Inspiration</div>
+      <div class="pull-lip"></div>
+    </div>
   </nav>
 
   <div class="workspace">
@@ -133,29 +191,34 @@
       
       const cabinetShell = document.getElementById('cabinet-shell');
       const cabContent = document.getElementById('cab-content');
-
-      // Glides the cabinet in slowly
       cabinetShell.classList.add('show');
 
       if (type === 'rooms') {
         cabContent.innerHTML = `
-          <div class="library-pull inner-btn" onclick="changeRoom('livingroom.jpg', this)"><div class="plate-style">Living Room</div></div>
-          <div class="library-pull inner-btn" onclick="changeRoom('bedroom.jpg', this)"><div class="plate-style">Bedroom</div></div>
-          <div class="library-pull inner-btn" onclick="changeRoom('diningroom.jpg', this)"><div class="plate-style">Dining Room</div></div>
-          <div class="library-pull inner-btn" onclick="triggerUpload(this)"><div class="plate-style">Upload</div></div>
+          <div class="library-pull inner-btn" onclick="changeRoom('livingroom.jpg', this)">
+            <div class="plate-style">Living Room</div>
+            <div class="pull-lip"></div>
+          </div>
+          <div class="library-pull inner-btn" onclick="changeRoom('bedroom.jpg', this)">
+            <div class="plate-style">Bedroom</div>
+            <div class="pull-lip"></div>
+          </div>
+          <div class="library-pull inner-btn" onclick="triggerUpload(this)">
+            <div class="plate-style">Upload</div>
+            <div class="pull-lip"></div>
+          </div>
         `;
-      } else if (type === 'furniture') {
-        cabContent.innerHTML = `<div style="color:#fff2ac; padding-top:20px; text-align:center;">Pick a Furniture category from the fan!</div>`;
       } else {
-        cabContent.innerHTML = `<div style="color:#fff2ac; padding-top:20px; text-align:center;">${type.toUpperCase()} DRAWER</div>`;
+        cabContent.innerHTML = `<div style="color:#fff2ac; padding-top:20px; text-align:center;">${type.toUpperCase()}</div>`;
       }
     }
 
     function openDrawer(item) {
-      // Clears the cabinet content to show the specific furniture drawer selected
       document.getElementById('cab-content').innerHTML = `
-        <div style="color:#fff2ac; padding-bottom:15px; text-transform:uppercase;">${item} Drawer</div>
-        <div class="library-pull inner-btn"><div class="plate-style">Sample ${item}</div></div>
+        <div class="library-pull inner-btn">
+          <div class="plate-style">${item}</div>
+          <div class="pull-lip"></div>
+        </div>
       `;
     }
 
