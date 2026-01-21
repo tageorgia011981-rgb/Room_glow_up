@@ -1,231 +1,39 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>Room Glow Up</title>
-  <link href="https://fonts.googleapis.com/css2?family=Limelight&family=Special+Elite&display=swap" rel="stylesheet">
-  <style>
-    /* --- SYSTEM SETUP --- */
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    body {
-      background: url("background_color.jpg") center / cover no-repeat fixed;
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      font-family: 'Special Elite', cursive;
-      overflow-x: hidden;
-    }
+<header class="site-header">
+  <h1 class="brand-title">Room Glow Up</h1>
+  <span class="sub-title">Your Dream Space Come To Life</span>
+</header>
 
-    /* --- HEADER --- */
-    .site-header { text-align: center; padding: 30px 0 10px; }
-    .brand-title {
-      font-family: 'Limelight', cursive;
-      font-size: clamp(50px, 8vw, 90px);
-      text-transform: uppercase;
-      background: linear-gradient(165deg, #161719 0%, #4b4d4f 25%, #ffffff 48%, #8e9196 52%, #4b4d4f 75%, #161719 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      filter: drop-shadow(4px 4px 0px #000);
-      display: inline-block;
-    }
-    .sub-title {
-      display: block; font-family: 'Limelight', cursive; font-size: 18px;
-      color: #fff2ac; text-transform: uppercase; letter-spacing: 10px; margin-top: 5px;
-    }
+<nav class="vintage-tabs">
+  <div class="library-pull" onclick="toggle('rooms', this)">
+    <div class="plate-style">Rooms</div>
+    <div class="pull-lip"></div>
+  </div>
+  
+  <div class="library-pull" onclick="toggle('furniture', this)">
+    <div class="plate-style">Furniture</div>
+    <div class="pull-lip"></div>
+  </div>
+  
+  <div class="library-pull" onclick="toggle('decor', this)">
+    <div class="plate-style">Decor</div>
+    <div class="pull-lip"></div>
+  </div>
+  
+  <div class="library-pull" onclick="toggle('inspiration', this)">
+    <div class="plate-style">Inspiration</div>
+    <div class="pull-lip"></div>
+  </div>
+</nav>
 
-    /* --- TOP NAVIGATION (HORIZONTAL) --- */
-    .vintage-tabs { 
-      display: flex; 
-      gap: 15px; 
-      justify-content: center; 
-      padding: 20px 0; 
-      width: 100%;
-      position: relative; 
-      z-index: 100;
-    }
-
-    /* --- GLOBAL HARDWARE STYLE (GUNMETAL) --- */
-    .library-pull, .inner-btn {
-      position: relative; 
-      width: 215px; 
-      height: 100px; 
-      background: linear-gradient(135deg, #4b4d4f 0%, #2c2e30 50%, #161719 100%);
-      display: flex; 
-      flex-direction: column;
-      align-items: center; 
-      justify-content: center; 
-      cursor: pointer;
-      clip-path: polygon(0% 20%, 8% 20%, 8% 0%, 92% 0%, 92% 20%, 100% 20%, 100% 80%, 92% 80%, 92% 100%, 8% 100%, 8% 80%, 0% 80%);
-      box-shadow: 8px 10px 20px rgba(0,0,0,0.9), inset 1.5px 1.5px 3px rgba(255,255,255,0.1);
-      border: 1px solid #1a1b1d;
-      transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-    }
-
-    /* Drawer Specific Absolute Positions */
-    .inner-btn {
-      position: absolute; 
-      left: 50%;
-      transform: translateX(-50%);
-      width: 200px; 
-      height: 85px; 
-      pointer-events: auto;
-    }
-
-    .library-pull::before, .library-pull::after, .inner-btn::before, .inner-btn::after {
-      content: '⊖';
-      position: absolute; font-size: 14px; color: #000; top: 4px; font-weight: bold;
-      opacity: 0.8; text-shadow: 0.5px 0.5px 0px rgba(255,255,255,0.1);
-    }
-    .library-pull::before, .inner-btn::before { left: 14px; }
-    .library-pull::after, .inner-btn::after { right: 14px; }
-
-    .plate-style {
-      width: 82%; height: 44%; background: #e8e0d0; border: 2px solid #2c2e30;
-      color: #000; display: flex; align-items: center; justify-content: center;
-      text-transform: uppercase; font-family: 'Special Elite', cursive; font-weight: 900; font-size: 14px;
-      letter-spacing: -0.5px; pointer-events: none;
-      box-shadow: inset 4px 4px 8px rgba(0,0,0,0.7), inset -1px -1px 2px rgba(255,255,255,0.3);
-    }
-
-    .pull-lip {
-      width: 65px; height: 14px; background: linear-gradient(180deg, #3a3c3e 0%, #0c0d0e 100%);
-      border-radius: 0 0 18px 18px; margin-top: 8px; border: 1px solid #000;
-      box-shadow: 0 5px 8px rgba(0,0,0,0.8);
-    }
-
-    /* Active Glow */
-    .active-glow { 
-      transform: translateY(-4px);
-      filter: drop-shadow(0 0 15px rgba(100, 150, 255, 0.6)) brightness(1.2);
-    }
-    .inner-btn.active-glow { transform: translateX(-50%) translateY(-4px); }
-
-    /* Snap to Drawer Heights */
-    .drw-1 { top: 110px; } .drw-2 { top: 215px; } .drw-3 { top: 320px; } .drw-4 { top: 425px; } 
-
-    /* --- WORKSPACE & STAGE --- */
-    .workspace { display: flex; padding: 20px; gap: 40px; flex-grow: 1; justify-content: center; align-items: flex-start; }
+<div class="workspace">
+  <div class="cabinet-container" id="cabinet-shell">
+    <img src="cabinet.png" class="cabinet-img" alt="Cabinet Hardware">
     
-    .cabinet-container { 
-      width: 550px; 
-      position: relative; 
-      opacity: 0; 
-      transform: translateX(-100px); 
-      transition: 1.2s; 
-      z-index: 20; 
-    }
-    .cabinet-container.show { opacity: 1; transform: translateX(0); }
-    .cabinet-img { width: 100%; height: auto; display: block; }
-    .cabinet-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; padding: 0; pointer-events: none; }
-
-    .stage { 
-      flex-grow: 1; 
-      max-width: 850px; 
-      background: rgba(0,0,0,0.5); 
-      border: 10px solid #1a1a1a; 
-      display: flex; 
-      justify-content: center; 
-      align-items: center; 
-      min-height: 550px; 
-      position: relative; 
-      z-index: 10;
-    }
-    .room-img { 
-      width: 100%; 
-      height: auto; 
-      display: block; 
-      opacity: 0; 
-      transition: 0.8s; 
-      position: relative; 
-      z-index: 15;
-    }
-
-    /* --- THE FAN --- */
-    .swatch-container { position: fixed; top: 50%; left: -350px; pointer-events: none; z-index: 200; transition: 1.2s; opacity: 0; }
-    .active-glow .swatch-container { opacity: 1; left: 42%; }
-    .swatch-strip {
-      position: absolute; width: 210px; height: 70px; background: #fdf5e6; border: 2px solid #2c2e30; 
-      display: flex; align-items: center; padding-left: 20px; transition: 1.5s;
-      font-family: 'Special Elite', cursive; font-weight: 900; text-transform: uppercase;
-      box-shadow: 6px 6px 15px rgba(0,0,0,0.6); transform-origin: left center;
-    }
-    .fan-icon { width: 32px; height: 32px; margin-right: 15px; }
-    .active-glow .strip-1 { transform: rotate(-35deg) translateX(40px); transition-delay: 0.1s; }
-    .active-glow .strip-2 { transform: rotate(-12deg) translateX(75px); transition-delay: 0.2s; }
-    .active-glow .strip-3 { transform: rotate(12deg) translateX(75px); transition-delay: 0.3s; }
-    .active-glow .strip-4 { transform: rotate(35deg) translateX(40px); transition-delay: 0.4s; }
-  </style>
-</head>
-<body>
-
-  <header class="site-header">
-    <h1 class="brand-title">Room Glow Up</h1>
-    <span class="sub-title">Your Dream Space Come To Life</span>
-  </header>
-
-  <nav class="vintage-tabs">
-    <div class="library-pull" onclick="toggle('rooms', this)"><div class="plate-style">Rooms</div><div class="pull-lip"></div></div>
-    <div class="library-pull" onclick="toggle('furniture', this)"><div class="plate-style">Furniture</div><div class="pull-lip"></div></div>
-    <div class="library-pull" onclick="toggle('decor', this)"><div class="plate-style">Decor</div><div class="pull-lip"></div></div>
-    <div class="library-pull" onclick="toggle('inspiration', this)"><div class="plate-style">Inspiration</div><div class="pull-lip"></div></div>
-  </nav>
-
-  <div id="furniture-fan" class="swatch-container">
-    <div class="swatch-strip strip-1"><img src="iconseating.png" class="fan-icon"> Seating</div>
-    <div class="swatch-strip strip-2"><img src="icontables.png" class="fan-icon"> Tables</div>
-    <div class="swatch-strip strip-3"><img src="iconbeds.png" class="fan-icon"> Beds</div>
-    <div class="swatch-strip strip-4"><img src="iconstorage.png" class="fan-icon"> Storage</div>
+    <div class="cabinet-overlay" id="cab-content">
+      </div>
   </div>
 
-  <div class="workspace">
-    <div class="cabinet-container" id="cabinet-shell">
-      <img src="cabinet.png" class="cabinet-img">
-      <div class="cabinet-overlay" id="cab-content"></div>
-    </div>
-    <div class="stage"><img id="main-room" src="" class="room-img"></div>
+  <div class="stage">
+    <img id="main-room" src="" class="room-img" alt="Selected Room Stage">
   </div>
-
-  <script>
-    function toggle(type, el) {
-      document.querySelectorAll('.library-pull, .inner-btn').forEach(b => b.classList.remove('active-glow'));
-      el.classList.add('active-glow');
-      
-      const fan = document.getElementById('furniture-fan');
-      const cabinetShell = document.getElementById('cabinet-shell');
-      const cabContent = document.getElementById('cab-content');
-      cabinetShell.classList.add('show');
-
-      if (type === 'furniture') {
-        fan.classList.add('active-glow');
-        cabContent.innerHTML = `<div style="color:#fff2ac; position:absolute; top:250px; left:50%; transform:translateX(-50%); text-transform:uppercase; text-align:center; pointer-events:none; width:80%;">Select Category from Fan</div>`;
-      } else {
-        if(fan) fan.classList.remove('active-glow');
-      }
-
-      if (type === 'rooms') {
-        cabContent.innerHTML = `
-          <div class="inner-btn drw-1" onclick="changeRoom('livingroom.jpg', this)"><div class="plate-style">Living Room</div><div class="pull-lip"></div></div>
-          <div class="inner-btn drw-2" onclick="changeRoom('bedroom.jpg', this)"><div class="plate-style">Bedroom</div><div class="pull-lip"></div></div>
-          <div class="inner-btn drw-3" onclick="changeRoom('diningroom.jpg', this)"><div class="plate-style">Dining Room</div><div class="pull-lip"></div></div>
-          <div class="inner-btn drw-4"><div class="plate-style">Upload</div><div class="pull-lip"></div></div>
-        `;
-      }
-    }
-
-    function changeRoom(src, el) {
-      document.querySelectorAll('.inner-btn').forEach(b => b.classList.remove('active-glow'));
-      if(el) el.classList.add('active-glow');
-      
-      const img = document.getElementById('main-room');
-      img.style.opacity = '0';
-      
-      setTimeout(() => {
-        img.src = src;
-        img.onload = function() {
-          img.style.opacity = '1';
-        };
-      }, 300);
-    }
-  </script>
-</body>
-</html>
+</div>
