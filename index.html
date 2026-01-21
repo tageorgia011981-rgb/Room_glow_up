@@ -5,29 +5,74 @@
   <title>Room Glow Up</title>
   <link href="https://fonts.googleapis.com/css2?family=Limelight&family=Special+Elite&display=swap" rel="stylesheet">
   <style>
-    /* --- THE LOOK (CSS) --- */
+    /* --- SYSTEM & BACKGROUND --- */
     * { margin: 0; padding: 0; box-sizing: border-box; }
-    body { background: #0a1a0a; color: #fff2ac; font-family: 'Special Elite', cursive; overflow-x: hidden; display: flex; flex-direction: column; min-height: 100vh; }
     
-    .site-header { text-align: center; padding: 25px; flex-shrink: 0; }
-    .brand-title { font-family: 'Limelight', cursive; font-size: clamp(50px, 8vw, 80px); color: #c9a24d; text-transform: uppercase; }
-
-    /* NAVIGATION TABS */
-    .vintage-tabs { display: flex; gap: 20px; justify-content: center; padding: 20px; flex-shrink: 0; }
-    .library-pull {
-      width: 180px; height: 75px; background: linear-gradient(#8a6d3b, #2a1f0d);
-      border: 1px solid #1a150a; display: flex; align-items: center; justify-content: center;
-      cursor: pointer; position: relative; z-index: 20;
+    body {
+      background-color: #3a0a0a !important; /* Your Chosen Dark Red */
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      font-family: 'Special Elite', cursive;
+      overflow-x: hidden;
     }
-    .plate-style { text-transform: uppercase; pointer-events: none; }
-    .active-glow { box-shadow: 0 0 25px #ffd700; border-color: #ffd700; }
 
-    /* DECOR SWATCH FAN (The strips that drop down) */
-    .swatch-container { position: absolute; top: 75px; left: 50%; transform: translateX(-50%); pointer-events: none; }
+    /* --- THE ART DECO HEADER --- */
+    .site-header { text-align: center; padding: 40px 0 20px; }
+    
+    .brand-title {
+      font-family: 'Limelight', cursive;
+      font-size: clamp(50px, 8vw, 90px);
+      text-transform: uppercase;
+      /* Gold Metallic Gradient */
+      background: linear-gradient(165deg, #4a3511 0%, #c9a24d 25%, #ffffff 48%, #f8e48d 52%, #c9a24d 75%, #4a3511 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      filter: drop-shadow(4px 4px 0px #000);
+      display: inline-block;
+    }
+
+    /* --- THE VINTAGE LABEL HOLDERS --- */
+    .vintage-tabs { display: flex; gap: 20px; justify-content: center; padding: 20px; }
+
+    .library-pull {
+      position: relative;
+      width: 200px;
+      height: 80px;
+      background: linear-gradient(145deg, #3d2b14 0%, #8a6d3b 50%, #2a1f0d 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      /* The Notched Hardware Shape */
+      clip-path: polygon(0% 20%, 8% 20%, 8% 0%, 92% 0%, 92% 20%, 100% 20%, 100% 80%, 92% 80%, 92% 100%, 8% 100%, 8% 80%, 0% 80%);
+      transition: 0.3s;
+    }
+
+    .plate-style {
+      width: 85%;
+      height: 60%;
+      background: #1a0505; /* Matches the dark red theme */
+      color: #fff2ac;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-transform: uppercase;
+      font-size: 14px;
+      border: 1.5px solid #4a3511;
+      box-shadow: inset 0 5px 10px rgba(0,0,0,0.8);
+    }
+
+    .active-glow {
+      box-shadow: 0 0 25px #ffd700;
+    }
+
+    /* --- DECOR SWATCH FAN --- */
+    .swatch-container { position: absolute; top: 80px; left: 50%; transform: translateX(-50%); pointer-events: none; }
     .swatch-strip {
       position: absolute; width: 130px; height: 40px; background: #fdf5e6; color: #3d2b14;
       border: 1px solid #8a6d3b; text-align: center; line-height: 40px; top: 0; left: -65px;
-      opacity: 0; transition: 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275); transform-origin: top center;
+      opacity: 0; transition: 0.5s; transform-origin: top center;
     }
     .active-glow .swatch-strip { opacity: 1; pointer-events: auto; }
     .active-glow .strip-1 { transform: rotate(-30deg) translateY(10px); }
@@ -35,65 +80,49 @@
     .active-glow .strip-3 { transform: rotate(10deg) translateY(20px); }
     .active-glow .strip-4 { transform: rotate(30deg) translateY(10px); }
 
-    /* WORKSPACE (Cabinet on left, Room on right) */
-    .workspace-area { display: flex; padding: 20px; gap: 20px; flex-grow: 1; height: 750px; }
-    .cabinet-zone { width: 450px; height: 100%; background: #111; border: 5px solid #333; position: relative; }
-    .main-stage { flex-grow: 1; height: 100%; background: #000; border: 15px solid #1a1a1a; display: flex; justify-content: center; align-items: center; }
-    .room-display { width: 100%; height: 100%; object-fit: contain; }
+    /* --- WORKSPACE --- */
+    .workspace { display: flex; padding: 20px; gap: 20px; flex-grow: 1; height: 700px; }
+    .cabinet { width: 450px; background: #111; border: 5px solid #333; position: relative; }
+    .stage { flex-grow: 1; background: #000; border: 10px solid #1a1a1a; display: flex; justify-content: center; }
+    .room-img { width: 100%; height: 100%; object-fit: contain; }
   </style>
 </head>
 <body>
 
-  <header class="site-header"><h1 class="brand-title">Room Glow Up</h1></header>
+  <header class="site-header">
+    <h1 class="brand-title">Room Glow Up</h1>
+  </header>
 
   <nav class="vintage-tabs">
     <div class="library-pull" onclick="toggle('rooms', this)"><div class="plate-style">Rooms</div></div>
     <div class="library-pull" onclick="toggle('furniture', this)"><div class="plate-style">Furniture</div></div>
-    
     <div class="library-pull" onclick="toggle('decor', this)">
       <div class="plate-style">Decor</div>
       <div class="swatch-container">
-        <div class="swatch-strip strip-1" onclick="loadDrawer('Lamps')">Lamps</div>
-        <div class="swatch-strip strip-2" onclick="loadDrawer('Rugs')">Rugs</div>
-        <div class="swatch-strip strip-3" onclick="loadDrawer('Curtains')">Curtains</div>
-        <div class="swatch-strip strip-4" onclick="loadDrawer('Vases')">Vases</div>
+        <div class="swatch-strip strip-1">Lamps</div>
+        <div class="swatch-strip strip-2">Rugs</div>
+        <div class="swatch-strip strip-3">Curtains</div>
+        <div class="swatch-strip strip-4">Vases</div>
       </div>
     </div>
   </nav>
 
-  <div class="workspace-area">
-    <div id="cabinet" class="cabinet-zone">
-      </div>
-    <div class="main-stage">
-      <img id="active-room" src="livingroom.jpg" class="room-display">
-    </div>
+  <div class="workspace">
+    <div class="cabinet" id="cab-content"></div>
+    <div class="stage"><img id="main-room" src="livingroom.jpg" class="room-img"></div>
   </div>
 
   <script>
-    /* --- THE BRAINS (JS) --- */
     function toggle(type, el) {
-      // Glow the active tab
-      document.querySelectorAll('.library-pull').forEach(tab => tab.classList.remove('active-glow'));
+      document.querySelectorAll('.library-pull').forEach(b => b.classList.remove('active-glow'));
       el.classList.add('active-glow');
-
-      const cab = document.getElementById('cabinet');
       
+      const cab = document.getElementById('cab-content');
       if (type === 'rooms') {
-        cab.innerHTML = `
-          <div class="library-pull" style="margin:20px auto;" onclick="changeRoom('livingroom.jpg')">Living Room</div>
-          <div class="library-pull" style="margin:20px auto;" onclick="changeRoom('bedroom.jpg')">Bedroom</div>`;
+        cab.innerHTML = '<div style="padding:20px; color:#fff2ac;">Rooms Drawer Opened</div>';
       } else if (type === 'decor') {
-        cab.innerHTML = '<div style="padding:40px; text-align:center;">Click a paper swatch above to open a drawer!</div>';
+        cab.innerHTML = '<div style="padding:20px; color:#fff2ac;">Pick a swatch above!</div>';
       }
-    }
-
-    function loadDrawer(item) {
-      const cab = document.getElementById('cabinet');
-      cab.innerHTML = `<div style="padding:40px; text-align:center; font-size:24px;">${item} Drawer Opened</div>`;
-    }
-
-    function changeRoom(src) {
-      document.getElementById('active-room').src = src;
     }
   </script>
 </body>
