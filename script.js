@@ -1,77 +1,106 @@
-function toggle(type, el) {
-  // 1. Remove glow from all tabs and drawers
-  document.querySelectorAll('.library-pull, .inner-btn').forEach(b => b.classList.remove('active-glow'));
-  
-  // 2. Light up the clicked tab
-  el.classList.add('active-glow');
-  
-  // 3. Slide the cabinet into view
-  const cabinetShell = document.getElementById('cabinet-shell');
-  const cabContent = document.getElementById('cab-content');
-  cabinetShell.classList.add('show');
-
-  // 4. Fill the cabinet with the correct drawers
-  if (type === 'rooms') {
-    cabContent.innerHTML = `
-      <div class="inner-btn drw-1" onclick="changeRoom('livingroom.jpg', this)">
-        <div class="plate-style">Living Room</div>
-        <div class="pull-lip"></div>
-      </div>
-      <div class="inner-btn drw-2" onclick="changeRoom('bedroom.jpg', this)">
-        <div class="plate-style">Bedroom</div>
-        <div class="pull-lip"></div>
-      </div>
-      <div class="inner-btn drw-3" onclick="changeRoom('diningroom.jpg', this)">
-        <div class="plate-style">Dining Room</div>
-        <div class="pull-lip"></div>
-      </div>
-      <div class="inner-btn drw-4" onclick="triggerUpload(this)">
-        <div class="plate-style">Upload</div>
-        <div class="pull-lip"></div>
-      </div>
-    `;
-  } else {
-    // Keeps cabinet empty for Furniture, Decor, and Inspiration for now
-    cabContent.innerHTML = ''; 
-  }
+/* --- SYSTEM SETUP --- */
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+  background: url("background_color.jpg") center / cover no-repeat fixed;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  font-family: 'Special Elite', cursive;
+  overflow-x: hidden;
 }
 
-function changeRoom(src, el) {
-  // Clear glow from other drawers and light up this one
-  document.querySelectorAll('.inner-btn').forEach(b => b.classList.remove('active-glow'));
-  if(el) el.classList.add('active-glow');
-  
-  const img = document.getElementById('main-room');
-  
-  // Fade out old image
-  img.style.opacity = '0';
-  
-  // Wait for fade, then swap source and fade back in
-  setTimeout(() => {
-    img.src = src;
-    img.onload = function() {
-      img.style.opacity = '1';
-    };
-  }, 300);
+/* --- HEADER --- */
+.site-header { text-align: center; padding: 30px 0 10px; }
+.brand-title {
+  font-family: 'Limelight', cursive;
+  font-size: clamp(40px, 8vw, 90px);
+  text-transform: uppercase;
+  background: linear-gradient(165deg, #161719 0%, #4b4d4f 25%, #ffffff 48%, #8e9196 52%, #4b4d4f 75%, #161719 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  filter: drop-shadow(4px 4px 0px #000);
+  display: inline-block;
+}
+.sub-title {
+  display: block; font-family: 'Limelight', cursive; font-size: 18px;
+  color: #fff2ac; text-transform: uppercase; letter-spacing: 10px; margin-top: 5px;
 }
 
-function triggerUpload(el) {
-  // Create a hidden file picker
-  const input = document.createElement('input');
-  input.type = 'file';
-  input.accept = 'image/*';
-  
-  input.onchange = e => {
-    const file = e.target.files[0];
-    const reader = new FileReader();
-    
-    reader.onload = event => {
-      // Load the uploaded file into the stage
-      changeRoom(event.target.result, el);
-    };
-    
-    reader.readAsDataURL(file);
-  };
-  
-  input.click();
+/* --- TABS & HARDWARE DESIGN --- */
+.vintage-tabs { 
+  display: flex; 
+  gap: 15px; 
+  justify-content: center; 
+  padding: 20px 0; 
+  z-index: 100;
 }
+
+/* Gunmetal Hardware Style */
+.library-pull, .inner-btn {
+  position: relative; 
+  width: 215px; 
+  height: 100px; 
+  background: linear-gradient(135deg, #4b4d4f 0%, #2c2e30 50%, #161719 100%);
+  display: flex; 
+  flex-direction: column;
+  align-items: center; 
+  justify-content: center; 
+  cursor: pointer;
+  clip-path: polygon(0% 20%, 8% 20%, 8% 0%, 92% 0%, 92% 20%, 100% 20%, 100% 80%, 92% 80%, 92% 100%, 8% 100%, 8% 80%, 0% 80%);
+  box-shadow: 8px 10px 20px rgba(0,0,0,0.9), inset 1.5px 1.5px 3px rgba(255,255,255,0.1);
+  border: 1px solid #1a1b1d;
+  transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+/* Screw Head Details */
+.library-pull::before, .library-pull::after, .inner-btn::before, .inner-btn::after {
+  content: '⊖';
+  position: absolute; font-size: 14px; color: #000; top: 4px; font-weight: bold;
+  opacity: 0.8; text-shadow: 0.5px 0.5px 0px rgba(255,255,255,0.1);
+}
+.library-pull::before, .inner-btn::before { left: 14px; }
+.library-pull::after, .inner-btn::after { right: 14px; }
+
+/* Cream Label Plate */
+.plate-style {
+  width: 82%; height: 44%; background: #e8e0d0; border: 2px solid #2c2e30;
+  color: #000; display: flex; align-items: center; justify-content: center;
+  text-transform: uppercase; font-family: 'Special Elite', cursive; font-weight: 900; font-size: 14px;
+  box-shadow: inset 4px 4px 8px rgba(0,0,0,0.7);
+}
+
+/* Rounded Pull Handle */
+.pull-lip {
+  width: 65px; height: 14px; background: linear-gradient(180deg, #3a3c3e 0%, #0c0d0e 100%);
+  border-radius: 0 0 18px 18px; margin-top: 8px; border: 1px solid #000;
+}
+
+/* Activation Glow */
+.active-glow { 
+  transform: translateY(-4px);
+  filter: drop-shadow(0 0 15px rgba(100, 150, 255, 0.8)) brightness(1.2);
+}
+
+/* --- CABINET & STAGE LAYOUT --- */
+.workspace { display: flex; padding: 20px; gap: 40px; justify-content: center; align-items: flex-start; }
+.cabinet-container { 
+  width: 550px; 
+  position: relative; 
+  opacity: 0; 
+  transform: translateX(-100px); 
+  transition: 1.2s; 
+  z-index: 20; 
+}
+.cabinet-container.show { opacity: 1; transform: translateX(0); }
+.cabinet-img { width: 100%; height: auto; display: block; }
+
+.cabinet-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; padding: 0; pointer-events: none; }
+.inner-btn { position: absolute; left: 50%; transform: translateX(-50%); width: 200px; height: 85px; pointer-events: auto; }
+.inner-btn.active-glow { transform: translateX(-50%) translateY(-4px); }
+
+/* Individual Drawer Heights */
+.drw-1 { top: 110px; } .drw-2 { top: 215px; } .drw-3 { top: 320px; } .drw-4 { top: 425px; } 
+
+/* The Room Stage */
+.stage { flex-grow: 1; max-width: 850px; background: rgba(0,0,0,0.5); border: 10px solid #1a1a1a; display: flex; justify-content: center; align-items: center; min-height: 550px; position: relative; z-index: 10; }
+.room-img { width: 100%; height: auto; display: block; opacity: 0; transition: 0.8s; position: relative; z-index: 15; }
