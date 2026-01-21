@@ -7,6 +7,7 @@ body {
   flex-direction: column;
   font-family: 'Special Elite', cursive;
   overflow-x: hidden;
+  
 }<link rel="stylesheet" href="style.css">
 
 /* --- HEADER --- */
@@ -34,7 +35,7 @@ body {
   padding: 20px 0; 
   z-index: 100;
 }
-
+<script src="script.js"></script>
 /* Gunmetal Hardware Style */
 .library-pull, .inner-btn {
   position: relative; 
@@ -104,4 +105,5 @@ body {
 /* The Room Stage */
 .stage { flex-grow: 1; max-width: 850px; background: rgba(0,0,0,0.5); border: 10px solid #1a1a1a; display: flex; justify-content: center; align-items: center; min-height: 550px; position: relative; z-index: 10; }
 .room-img { width: 100%; height: auto; display: block; opacity: 0; transition: 0.8s; position: relative; z-index: 15; }
+
 
