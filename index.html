@@ -4,148 +4,82 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Room Glow Up</title>
-
 <link href="https://fonts.googleapis.com/css2?family=Limelight&family=Special+Elite&display=swap" rel="stylesheet">
 
 <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
-
     body {
         background: #0f1011 url("background_color.jpg") center / cover fixed;
-        min-height: 100vh;
-        font-family: 'Special Elite', cursive;
-        overflow-x: hidden;
+        min-height: 100vh; font-family: 'Special Elite', cursive; overflow-x: hidden;
     }
 
     /* HEADER */
     .site-header { text-align: center; padding: 25px 0 15px; }
-
     .brand-title {
-        font-family: 'Limelight', cursive;
-        font-size: clamp(35px, 6vw, 65px);
-        text-transform: uppercase;
+        font-family: 'Limelight', cursive; font-size: clamp(35px, 6vw, 65px); text-transform: uppercase;
         background: linear-gradient(to bottom, #2c2e30 0%, #ffffff 50%, #161719 100%);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
+        -webkit-background-clip: text; -webkit-text-fill-color: transparent;
         filter: drop-shadow(0 0 15px rgba(255,255,255,0.5));
     }
 
-    .sub-title {
-        font-size: 14px;
-        letter-spacing: 12px;
-        color: rgba(255,255,255,0.4);
-        text-transform: uppercase;
-    }
-
-    /* NAV - RESTORED FULL TABS */
+    /* NAV */
     .vintage-tabs { display: flex; justify-content: center; gap: 15px; padding: 15px 0; }
-
     .top-nav-tab {
-        width: 180px; height: 85px;
-        background: linear-gradient(135deg,#2c2e30,#0f1011);
+        width: 180px; height: 85px; background: linear-gradient(135deg,#2c2e30,#0f1011);
         display: flex; align-items: center; justify-content: center; cursor: pointer;
-        border: 1px solid rgba(255,255,255,0.2);
-        box-shadow: 6px 8px 20px rgba(0,0,0,0.9);
-        transition: 0.3s;
+        border: 1px solid rgba(255,255,255,0.2); box-shadow: 6px 8px 20px rgba(0,0,0,0.9);
     }
-    .top-nav-tab:hover { border-color: rgba(255,255,255,0.8); box-shadow: 0 0 15px rgba(255,255,255,0.2); }
-
     .plate-style {
-        width: 85%; height: 45%;
-        background: url("background_color.jpg") center/cover;
-        box-shadow: inset 0 0 0 1000px rgba(0,0,0,0.75);
-        color: #fff;
-        display: flex; align-items: center; justify-content: center;
-        font-size: 13px; letter-spacing: 1.5px;
-        border: 1px solid rgba(255,255,255,0.2);
-        text-transform: uppercase;
-    }
-
-    /* WORKSPACE */
-    .workspace { display: flex; justify-content: center; padding: 20px; transition: 1.2s; }
-
-    .stage {
-        width: 1050px; min-height: 700px;
-        background: #1a1b1d;
-        border: 8px solid #2c2e30;
-        position: relative;
-        box-shadow: 0 0 50px rgba(0,0,0,1);
-    }
-
-    .room-img {
-        position: absolute; inset: 0;
-        width: 100%; height: 100%;
-        object-fit: cover; display: none;
+        width: 85%; height: 45%; background: rgba(0,0,0,0.6);
+        color: #fff; display: flex; align-items: center; justify-content: center;
+        font-size: 13px; letter-spacing: 1.5px; border: 1px solid rgba(255,255,255,0.2); text-transform: uppercase;
     }
 
     /* CABINET */
-    .cabinet-container {
-        width: 0; opacity: 0;
-        transform: translateX(-100px);
-        transition: all 1.2s cubic-bezier(0.19,1,0.22,1);
-        position: relative;
-    }
-
-    .workspace.active-glide .cabinet-container {
-        width: 480px; opacity: 1; transform: translateX(0);
-    }
-
+    .workspace { display: flex; justify-content: center; padding: 20px; transition: 1.2s; }
+    .stage { width: 1050px; min-height: 700px; background: #1a1b1d; border: 8px solid #2c2e30; position: relative; }
+    .cabinet-container { width: 0; opacity: 0; transform: translateX(-100px); transition: 1.2s cubic-bezier(0.19,1,0.22,1); position: relative; }
+    .workspace.active-glide .cabinet-container { width: 480px; opacity: 1; transform: translateX(0); }
     .cabinet-img { width: 480px; display: block; }
     #cab-content { position: absolute; inset: 0; pointer-events: none; }
 
     /* DRAWERS */
     .drawer-tab {
-        position: absolute; left: 50%; transform: translateX(-50%);
-        width: 155px; height: 75px;
-        background: linear-gradient(135deg,#2c2e30,#0f1011);
-        display: flex; align-items: center; justify-content: center;
-        cursor: pointer; pointer-events: auto;
-        border: 1px solid rgba(255,255,255,0.2);
-        transition: 0.4s ease-in-out;
+        position: absolute; left: 50%; transform: translateX(-50%); width: 155px; height: 75px;
+        background: linear-gradient(135deg,#2c2e30,#0f1011); display: flex; align-items: center; justify-content: center;
+        cursor: pointer; pointer-events: auto; border: 1px solid rgba(255,255,255,0.2); transition: 0.4s ease-in-out;
     }
+    .drw-1 { top: 110px; } .drw-2 { top: 220px; } .drw-3 { top: 330px; } .drw-upload { top: 440px; border: 1px dashed rgba(255,255,255,0.5); }
+    .drawer-tab.opened { transform: translateX(-30%) scale(1.1); border-color: #fff; }
 
-    .drw-1 { top: 110px; } 
-    .drw-2 { top: 220px; } 
-    .drw-3 { top: 330px; }
-    .drw-upload { top: 440px; border: 1px dashed rgba(255,255,255,0.5); }
-
-    .drawer-tab.opened { transform: translateX(-35%) scale(1.1); border-color: #fff; }
-
-    /* GUNMETAL SWATCH FAN */
+    /* ULTRA-TIGHT FAN ARMS (The Swatch) */
     .fan-container {
-        position: fixed; width: 300px; height: 300px;
-        display: none; z-index: 9999; pointer-events: none;
+        position: fixed; width: 200px; height: 200px; display: none; z-index: 9999; pointer-events: none;
     }
-
     .fan-container.active { display: block; }
-
     .fan-blade {
-        position: absolute; left: 150px; top: 135px;
-        width: 180px; height: 36px;
+        position: absolute; left: 60px; top: 100px; /* Moved pivot way back */
+        width: 140px; height: 32px; 
         background: linear-gradient(to right, #161719, #2c2e30, #8e9196);
-        border: 1px solid rgba(255,255,255,0.4);
-        border-left: none;
-        transform-origin: left center;
-        opacity: 0;
-        transition: 0.6s cubic-bezier(0.19,1,0.22,1);
-        display: flex; align-items: center; justify-content: flex-end; padding-right: 10px;
-        box-shadow: 4px 4px 12px rgba(0,0,0,0.8);
+        border: 1px solid rgba(255,255,255,0.4); border-left: none;
+        transform-origin: left center; opacity: 0; transition: 0.5s cubic-bezier(0.19,1,0.22,1);
+        display: flex; align-items: center; justify-content: flex-end; padding-right: 8px;
+        box-shadow: 4px 4px 10px rgba(0,0,0,0.8);
     }
-
     .fan-container.active .fan-blade { opacity: 1; pointer-events: auto; }
 
-    /* Swatch Rotation Angles */
-    .fan-container.active .blade-1 { transform: rotate(-30deg); transition-delay: 0.05s; }
-    .fan-container.active .blade-2 { transform: rotate(-10deg); transition-delay: 0.1s; }
-    .fan-container.active .blade-3 { transform: rotate(10deg); transition-delay: 0.15s; }
-    .fan-container.active .blade-4 { transform: rotate(30deg); transition-delay: 0.2s; }
+    /* Tight Overlap Angles */
+    .fan-container.active .blade-1 { transform: rotate(-24deg); }
+    .fan-container.active .blade-2 { transform: rotate(-8deg); }
+    .fan-container.active .blade-3 { transform: rotate(8deg); }
+    .fan-container.active .blade-4 { transform: rotate(24deg); }
 
     .category-icon-img {
-        width: 28px; height: 28px;
-        object-fit: contain; cursor: pointer;
-        filter: drop-shadow(0 0 5px white);
-        transition: 0.3s;
+        width: 24px; height: 24px; object-fit: contain; cursor: pointer;
+        filter: drop-shadow(0 0 3px white); transition: 0.3s;
     }
+    /* If image fails, show this white dot so you know where it is */
+    .category-icon-img:before { content: ""; display: block; width: 10px; height: 10px; background: white; border-radius: 50%; }
 </style>
 </head>
 
@@ -153,7 +87,6 @@
 
 <header class="site-header">
     <h1 class="brand-title">Room Glow Up</h1>
-    <div class="sub-title">Your Dream Space Come To Life</div>
 </header>
 
 <nav class="vintage-tabs">
@@ -168,14 +101,11 @@
         <img src="cabinet.png" class="cabinet-img">
         <div id="cab-content"></div>
     </div>
-
-    <div class="stage">
-        <img id="main-room" class="room-img">
-    </div>
+    <div class="stage"><img id="main-room" class="room-img"></div>
 </div>
 
 <div id="global-fan" class="fan-container">
-    <div class="fan-blade blade-1"><img src="iconseating.png" class="category-icon-img"></div>
+    <div class="fan-blade blade-1"><img src="iconseating.png" class="category-icon-img" onerror="this.src='data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/x8AAwMCAO+ip1sAAAAASUVORK5CYII='"></div>
     <div class="fan-blade blade-2"><img src="iconbeds.png" class="category-icon-img"></div>
     <div class="fan-blade blade-3"><img src="iconstorage.png" class="category-icon-img"></div>
     <div class="fan-blade blade-4"><img src="icontables.png" class="category-icon-img"></div>
@@ -201,23 +131,21 @@ function handleRoomsClick() {
 }
 
 function loadRoom(src, el) {
-    mainRoom.src = src;
+    if(src) mainRoom.src = src;
     mainRoom.style.display = 'block';
-
     document.querySelectorAll('.drawer-tab').forEach(d => d.classList.remove('opened'));
     if(el) el.classList.add('opened');
 
     fan.classList.remove('active');
-    
     const r = el.getBoundingClientRect();
-    fan.style.top = (r.top + r.height / 2 - 150) + 'px';
-    fan.style.left = (r.right - 50) + 'px';
+    // MOVED BACK: fan.style.left is now much closer to the cabinet edge
+    fan.style.top = (r.top + r.height / 2 - 115) + 'px';
+    fan.style.left = (r.right - 110) + 'px';
     
     setTimeout(() => { fan.classList.add('active'); }, 50);
 }
 
 function triggerUpload() { uploadInput.click(); }
-
 uploadInput.onchange = e => {
     const file = e.target.files[0];
     if (file) {
