@@ -1,52 +1,196 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Room Glow Up</title>
-    
-    <link href="https://fonts.googleapis.com/css2?family=Limelight&family=Special+Elite&display=swap" rel="stylesheet">
-    
-    <link rel="stylesheet" href="style.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Room Glow Up</title>
+<link href="https://fonts.googleapis.com/css2?family=Limelight&family=Special+Elite&display=swap" rel="stylesheet">
+<style>
+/* --- RESET & BODY --- */
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+    background: url("background_color.jpg") center/cover no-repeat fixed;
+    min-height: 100vh;
+    font-family: 'Special Elite', cursive;
+    overflow-x: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+/* --- HEADER --- */
+.site-header { text-align: center; padding: 40px 0 20px; }
+.brand-title { 
+    font-family: 'Limelight', cursive; 
+    font-size: clamp(60px, 10vw, 130px); 
+    text-transform: uppercase;
+    background: linear-gradient(to bottom, #2c2e30 0%, #8e9196 25%, #ffffff 50%, #8e9196 75%, #161719 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    filter: drop-shadow(0 0 10px rgba(142,145,150,0.8)) drop-shadow(6px 6px 4px #000);
+    display: inline-block;
+}
+.sub-title { 
+    display: block; font-family: 'Limelight', cursive; 
+    font-size: 22px; color: #ffffff; 
+    text-transform: uppercase; letter-spacing: 15px; margin-top: 10px;
+    text-shadow: 0 0 15px rgba(255,255,255,0.4);
+}
+
+/* --- VINTAGE TABS --- */
+.vintage-tabs { display: flex; gap: 20px; justify-content: center; padding: 30px 0; z-index: 100; }
+.library-pull {
+    position: relative; width: 240px; height: 115px; 
+    background: linear-gradient(135deg,#4b4d4f 0%,#2c2e30 50%,#161719 100%);
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    cursor: pointer;
+    clip-path: polygon(0% 20%,8% 20%,8% 0%,92% 0%,92% 20%,100% 20%,100% 80%,92% 80%,92% 100%,8% 100%,8% 80%,0% 80%);
+    box-shadow: 8px 10px 25px rgba(0,0,0,1);
+    border: 1px solid #1a1b1d;
+    transition: 0.4s;
+}
+.library-pull.active-glow { filter: drop-shadow(0 0 15px rgba(100,150,255,0.8)) brightness(1.2); }
+
+/* --- LABEL HOLDERS --- */
+.plate-style { width: 85%; height: 45%; background: #e8e0d0; border: 2px solid #2c2e30; color: #000;
+    display: flex; align-items: center; justify-content: center;
+    text-transform: uppercase; font-family: 'Special Elite', cursive; font-weight: 900; font-size: 16px;
+    box-shadow: inset 4px 4px 8px rgba(0,0,0,0.8); pointer-events: none;
+}
+.pull-lip { width: 80px; height: 18px; background: linear-gradient(180deg,#3a3c3e 0%,#0c0d0e 100%);
+    border-radius: 0 0 22px 22px; margin-top: 10px; border: 1px solid #000; pointer-events: none;
+}
+
+/* --- WORKSPACE --- */
+.workspace { display: flex; justify-content: center; align-items: flex-start; gap: 50px; padding: 40px; width: 100%; transition: all 2.5s ease; }
+.workspace.active-layout .stage { transform: translateX(50px); transition: transform 2.5s cubic-bezier(0.19, 1, 0.22, 1); }
+
+/* --- CABINET --- */
+.cabinet-container {
+    width: 700px; position: relative; display: none; opacity: 0;
+    transform: translateX(-100%); 
+    transition: transform 2.5s cubic-bezier(0.19,1,0.22,1), opacity 2s ease;
+}
+.cabinet-container.show { display: block; opacity: 1; transform: translateX(0); }
+.cabinet-img { width: 100%; display: block; }
+.cabinet-overlay { position: absolute; inset: 0; pointer-events: none; }
+.inner-btn { position: absolute; left: 50%; transform: translateX(-50%); width: 260px; height: 105px; pointer-events: auto; z-index: 50; }
+.drw-1 { top: 160px; } .drw-2 { top: 300px; } .drw-3 { top: 440px; } .drw-4 { top: 580px; }
+
+/* --- STAGE --- */
+.stage { width: 950px; min-height: 650px; background: rgba(0,0,0,0.5); border: 10px solid #1a1a1a;
+    display: flex; justify-content: center; align-items: center; box-shadow: 0 0 50px rgba(0,0,0,1); transition: transform 2.5s cubic-bezier(0.19,1,0.22,1);
+}
+.room-img { width: 100%; height: auto; display: none; }
+
+/* --- FAN --- */
+.fan-container {
+    position: absolute; left: 200px; top: 50%; width: 320px; height: 320px;
+    transform: translateY(-50%); pointer-events: none; z-index: -1;
+}
+.fan-blade {
+    position: absolute; left: 0; top: 45%; width: 260px; height: 65px;
+    background: linear-gradient(90deg,#2c2e30,#8e9196,#ffffff);
+    border: 1px solid #161719;
+    clip-path: polygon(0% 15%,82% 0%,100% 50%,82% 100%,0% 85%);
+    display: flex; align-items: center; justify-content: flex-end; padding-right: 12px;
+    transform-origin: left center; opacity: 0;
+    transition: transform 1.2s cubic-bezier(0.19,1,0.22,1), opacity 0.8s ease;
+}
+.fan-container.active .fan-blade { opacity: 1; pointer-events: auto; }
+.fan-container.active .blade-1 { transform: rotate(-40deg); }
+.fan-container.active .blade-2 { transform: rotate(-15deg); }
+.fan-container.active .blade-3 { transform: rotate(15deg); }
+.fan-container.active .blade-4 { transform: rotate(40deg); }
+.category-icon-img { width: 50px; height: 50px; background: #fff; border: 2px solid #2c2e30; border-radius: 4px; object-fit: cover; box-shadow: 2px 2px 8px rgba(0,0,0,0.6); cursor: pointer; transition: transform 0.3s ease; }
+.category-icon-img:hover { transform: scale(1.1); }
+
+/* --- HIDE FILE INPUT --- */
+#id-upload { display: none; }
+</style>
 </head>
 <body>
 
-    <header class="site-header">
-        <h1 class="brand-title">Room Glow Up</h1>
-        <span class="sub-title">Your Dream Space Come To Life</span>
-    </header>
+<header class="site-header">
+    <h1 class="brand-title">Room Glow Up</h1>
+    <span class="sub-title">Your Dream Space Come To Life</span>
+</header>
 
-    <nav class="vintage-tabs">
-        <div class="library-pull" onclick="toggle('rooms', this)">
-            <div class="plate-style">Rooms</div>
-            <div class="pull-lip"></div>
-        </div>
-        <div class="library-pull" onclick="toggle('furniture', this)">
-            <div class="plate-style">Furniture</div>
-            <div class="pull-lip"></div>
-        </div>
-        <div class="library-pull" onclick="toggle('decor', this)">
-            <div class="plate-style">Decor</div>
-            <div class="pull-lip"></div>
-        </div>
-        <div class="library-pull" onclick="toggle('inspiration', this)">
-            <div class="plate-style">Inspiration</div>
-            <div class="pull-lip"></div>
-        </div>
-    </nav>
+<input type="file" id="id-upload" accept="image/*">
 
-    <div class="workspace">
-        <div class="cabinet-container" id="cabinet-shell">
-            <img src="cabinet.png" class="cabinet-img" alt="Cabinet Hardware">
-            <div class="cabinet-overlay" id="cab-content"></div>
-        </div>
+<nav class="vintage-tabs">
+    <div class="library-pull" onclick="openRooms(this)"><div class="plate-style">Rooms</div><div class="pull-lip"></div></div>
+    <div class="library-pull"><div class="plate-style">Furniture</div><div class="pull-lip"></div></div>
+    <div class="library-pull"><div class="plate-style">Decor</div><div class="pull-lip"></div></div>
+    <div class="library-pull"><div class="plate-style">Inspiration</div><div class="pull-lip"></div></div>
+</nav>
 
-        <div class="stage">
-            <img id="main-room" src="" class="room-img" alt="Selected Room Stage">
-        </div>
+<div class="workspace" id="main-workspace">
+    <div class="cabinet-container" id="cabinet">
+        <img src="cabinet.png" class="cabinet-img">
+        <div class="cabinet-overlay" id="cab-content"></div>
     </div>
+    <div class="stage">
+        <img id="main-room" class="room-img">
+    </div>
+</div>
 
-    <script src="script.js"></script>
+<script>
+const cabinet = document.getElementById('cabinet');
+const workspace = document.getElementById('main-workspace');
+const cabContent = document.getElementById('cab-content');
+const mainRoom = document.getElementById('main-room');
+const fileInput = document.getElementById('id-upload');
+
+function resetTabs() {
+    document.querySelectorAll('.library-pull').forEach(tab => tab.classList.remove('active-glow'));
+}
+
+function openRooms(tabElement) {
+    resetTabs();
+    tabElement.classList.add('active-glow');
+
+    workspace.classList.add('active-layout');
+    cabinet.style.display = 'block';
+    setTimeout(()=>{ cabinet.classList.add('show'); },50);
+
+    cabContent.innerHTML = `
+        <div class="inner-btn drw-1" onclick="loadRoom('livingroom.jpg', this)"><div class="plate-style">Living Room</div><div class="pull-lip"></div></div>
+        <div class="inner-btn drw-2" onclick="loadRoom('bedroom.jpg', this)"><div class="plate-style">Bedroom</div><div class="pull-lip"></div></div>
+        <div class="inner-btn drw-3" onclick="loadRoom('diningroom.jpg', this)"><div class="plate-style">Dining Room</div><div class="pull-lip"></div></div>
+        <div class="inner-btn drw-4" onclick="fileInput.click()"><div class="plate-style">Upload</div><div class="pull-lip"></div></div>
+    `;
+}
+
+function loadRoom(src, drawerElement) {
+    mainRoom.src = src;
+    mainRoom.style.display = 'block';
+
+    // Remove old fan
+    document.querySelectorAll('.fan-container').forEach(f => f.remove());
+
+    // Create fan anchored to the drawer
+    const fan = document.createElement('div');
+    fan.className = 'fan-container';
+    fan.innerHTML = `
+        <div class="fan-blade blade-1"><img src="iconseating.jpg" class="category-icon-img" onclick="openCategory('seating')" title="Seating"></div>
+        <div class="fan-blade blade-2"><img src="iconbeds.jpg" class="category-icon-img" onclick="openCategory('beds')" title="Beds"></div>
+        <div class="fan-blade blade-3"><img src="iconstorage.jpg" class="category-icon-img" onclick="openCategory('storage')" title="Storage"></div>
+        <div class="fan-blade blade-4"><img src="icontables.jpg" class="category-icon-img" onclick="openCategory('tables')" title="Tables"></div>
+    `;
+    drawerElement.appendChild(fan);
+    setTimeout(()=>{ fan.classList.add('active'); },50);
+}
+
+function openCategory(cat) { console.log("Category:", cat); }
+
+fileInput.addEventListener('change', () => {
+    const file = fileInput.files[0];
+    if(file) {
+        mainRoom.src = URL.createObjectURL(file);
+        mainRoom.style.display = 'block';
+    }
+});
+</script>
 
 </body>
 </html>
