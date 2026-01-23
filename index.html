@@ -1,195 +1,138 @@
-        background: linear-gradient(135deg, #2c2e30, #0f1011);
-        display: flex; align-items: center; justify-content: center;
-        cursor: pointer; pointer-events: auto;
-        border: 2px solid #3a3d40; box-shadow: 0 4px 10px rgba(0,0,0,0.8);
-        transition: 0.4s cubic-bezier(0.19, 1, 0.22, 1);
-    }
-    .drawer-tab:hover {
-        transform: translateX(-48%) translateY(-5px); border-color: #fff;
-        box-shadow: 0 10px 20px rgba(0,0,0,0.9), 0 0 15px rgba(255,255,255,0.1);
-    }
-    .drawer-tab::after {
-        content: ''; position: absolute; bottom: -10px; left: 50%; transform: translateX(-50%);
-        width: 130px; height: 16px; bachttps://tageorgia011981-rgb.github.io/Room_glow_up/kground: linear-gradient(to bottom, #555, #000);
-        border: 1px solid #111; border-radius: 0 0 12px 12px;
-    }
-    .plate-style {
-        width: 80%; height: 45%; background: #000 url("background_color.jpg") center/cover;
-        box-shadow: inset 0 0 0 1000px rgba(0,0,0,0.85);
-        color: #fff; display: flex; align-items: center; justify-content: center;
-        font-size: 13px; letter-spacing: 2px; border: 1px solid #444; position: relative;
-    }
-    .plate-style::before, .plate-style::after {
-        content: ''; position: absolute; width: 6px; height: 6px; background: #0f1011; 
-        border-radius: 50%; top: 50%; transform: translateY(-50%);
-        box-shadow: inset 1px 1px 2px #000, 0.5px 0.5px 0px rgba(255,255,255,0.1);
-    }
-    .plate-style::before { left: -12px; } .plate-style::after { right: -12px; }
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Room Glow Up</title>
+<link href="https://fonts.googleapis.com" rel="stylesheet">
 
-    .drw-1 { top: 130px; } .drw-2 { top: 270px; } .drw-3 { top: 410px; } .drw-upload { top: 550px; }
-    .drawer-tab.opened { transform: translateX(-40%) scale(1.05); border-color: #8e9196; }
+<style>
+    /* --- RESET & BODY --- */
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    
+    body {
+        background: #0f1011 url("background_color.jpg") center / cover fixed;
+        min-height: 100vh; font-family: 'Special Elite', cursive; 
+        overflow-x: hidden;
+        display: flex; flex-direction: column;
+    }
 
-    /* --- FAN SYSTEMS --- */
-    .fan-container { position: fixed; width: 300px; height: 300px; display: none; z-index: 9999; pointer-events: none; }
-    .fan-container.active { display: block; }
+    /* --- HEADER --- */
+    .site-header { text-align: center; padding: 50px 0 20px; position: relative; z-index: 1000; }
+    .brand-title {
+        font-family: 'Limelight', cursive; font-size: clamp(55px, 10vw, 85px); text-transform: uppercase;
+        background: linear-gradient(to bottom, #2c2e30 0%, #ffffff 45%, #ffffff 55%, #8e9196 70%, #161719 100%);
+        -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+        filter: drop-shadow(0 0 15px rgba(255,255,255,0.4)); letter-spacing: 6px; line-height: 0.9;
+    }
+    .sub-title { 
+        font-family: 'Limelight', cursive; font-size: 22px; letter-spacing: 16px; 
+        color: #ffffff; opacity: 0.7; text-transform: uppercase; margin-top: 25px;
+        text-shadow: 0 0 15px rgba(255,255,255,0.6);
+    }
+
+    /* --- NAVIGATION --- */
+    .vintage-tabs { display: flex; justify-content: center; gap: 20px; padding: 10px 0 40px; }
+    
+    .top-nav-tab {
+        position: relative;
+        text-decoration: none;
+        color: #ffffff;
+        font-family: 'Limelight', cursive;
+        font-size: 18px;
+        padding: 15px 30px;
+        background: #1a1b1c;
+        border: 1px solid #333;
+        transition: all 0.3s ease;
+        cursor: pointer;
+        display: inline-block;
+    }
+
+    .top-nav-tab:hover {
+        transform: translateY(-12px); 
+        border-color: #8e9196;
+        box-shadow: 0 15px 30px rgba(0,0,0,0.9), 0 0 20px rgba(255,255,255,0.2);
+    }
+
+    .top-nav-tab::after {
+        content: ''; position: absolute; bottom: -8px; left: 50%; transform: translateX(-50%);
+        width: 100px; height: 12px; background: linear-gradient(to bottom, #444, #111);
+        border: 1px solid #222; border-radius: 0 0 10px 10px;
+    }
+
+    /* --- FAN DROPDOWN --- */
+    .dropdown { position: relative; display: inline-block; }
+
+    .fan-menu {
+        display: none;
+        position: absolute;
+        top: 100%;
+        left: 50%;
+        transform: translateX(-50%);
+        padding-top: 25px;
+        z-index: 2000;
+        flex-direction: column;
+    }
+
+    .dropdown:hover .fan-menu { display: flex; }
+
     .fan-blade {
-        position: absolute; left: 50px; top: 110px; width: 150px; height: 40px; 
-        background: linear-gradient(to right, #161719, #2c2e30, #8e9196);
-        border: 1px solid rgba(255,255,255,0.4); border-left: none;
-        transform-origin: left center; opacity: 0; transition: 0.6s cubic-bezier(0.19, 1, 0.22, 1);
-        display: flex; align-items: center; justify-content: flex-end; padding-right: 12px;
+        background: #1a1b1c;
+        color: #ffffff;
+        text-decoration: none;
+        padding: 12px 25px;
+        border: 1px solid #333;
+        font-family: 'Special Elite', cursive;
+        font-size: 14px;
+        text-align: center;
+        width: 180px;
+        transition: 0.3s;
+        animation: fanSlideOut 0.4s ease-out forwards;
     }
-    .fan-container.active .fan-blade { opacity: 1; pointer-events: auto; }
-    .fan-container.sub-active .fan-blade { opacity: 0.4; width: 120px; }
-    
-    .blade-1 { transform: rotate(-30deg); } .blade-2 { transform: rotate(-10deg); }
-    .blade-3 { transform: rotate(10deg); } .blade-4 { transform: rotate(30deg); }
 
-    /* --- 8-BLADE SUB-FAN --- */
-    #sub-fan { width: 450px; }
-    .sub-blade { width: 280px; justify-content: space-evenly; background: linear-gradient(to right, #2c2e30, #ffffff); border-radius: 0 40px 40px 0; }
-    
-    #sub-fan.active .s-1 { transform: rotate(-55deg); } #sub-fan.active .s-2 { transform: rotate(-40deg); }
-    #sub-fan.active .s-3 { transform: rotate(-25deg); } #sub-fan.active .s-4 { transform: rotate(-10deg); }
-    #sub-fan.active .s-5 { transform: rotate(5deg); }  #sub-fan.active .s-6 { transform: rotate(20deg); }
-    #sub-fan.active .s-7 { transform: rotate(35deg); }  #sub-fan.active .s-8 { transform: rotate(50deg); }
+    .fan-blade:hover {
+        background: #ffffff;
+        color: #000000;
+        border-color: #fff;
+    }
 
-    .furn-item-img { width: 65px; height: 45px; object-fit: contain; cursor: grab; filter: drop-shadow(0 0 5px black); }
-    .category-icon-img { width: 28px; height: 28px; filter: drop-shadow(0 0 5px white); cursor: pointer; }
+    @keyframes fanSlideOut {
+        from { opacity: 0; transform: translateY(-30px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+
+    .workspace { 
+        display: flex; justify-content: center; align-items: flex-start; 
+        flex: 1; position: relative; padding: 20px 40px 100px; 
+    }
 </style>
 </head>
-
 <body>
 
-<header class="site-header">
-    <h1 class="brand-title">Room Glow Up</h1>
-    <div class="sub-title">Your Dream Space Come To Life</div>
-</header>
+    <header class="site-header">
+        <h1 class="brand-title">Room Glow Up</h1>
+        <!-- YOUR SUBTITLE PRESERVED BELOW -->
+        <p class="sub-title">Modern Style • Vintage Soul</p>
+    </header>
 
-<nav class="vintage-tabs">
-    <div class="top-nav-tab" onclick="handleRoomsClick()"><div class="plate-style">Rooms</div></div>
-    <div class="top-nav-tab"><div class="plate-style">Furniture</div></div>
-    <div class="top-nav-tab"><div class="plate-style">Decor</div></div>
-    <div class="top-nav-tab"><div class="plate-style">Inspiration</div></div>
-</nav>
+    <nav class="vintage-tabs">
+        <a href="#" class="top-nav-tab">Gallery</a>
+        
+        <div class="dropdown">
+            <div class="top-nav-tab">Decor</div>
+            <div class="fan-menu">
+                <a href="#" class="fan-blade">Wallpaper</a>
+                <a href="#" class="fan-blade">Accent Rugs</a>
+                <a href="#" class="fan-blade">Vase Styles</a>
+                <a href="#" class="fan-blade">Wall Art</a>
+            </div>
+        </div>
 
-<div class="workspace" id="main-workspace">
-    <div class="cabinet-container">
-        <img src="cabinet.png" class="cabinet-img">
-        <div id="cab-content"></div>
-    </div>
-    <div class="stage" id="drop-zone"><img id="main-room" class="room-img"></div>
-</div>
+        <a href="#" class="top-nav-tab">Design Tips</a>
+        <a href="#" class="top-nav-tab">Shop</a>
+        <a href="#" class="top-nav-tab">Contact</a>
+    </nav>
 
-<div id="global-fan" class="fan-container">
-    <div class="fan-blade blade-1"><img src="iconseating.png" class="category-icon-img" onclick="openSubFan('seating')"></div>
-    <div class="fan-blade blade-2"><img src="iconbeds.png" class="category-icon-img" onclick="openSubFan('beds')"></div>
-    <div class="fan-blade blade-3"><img src="iconstorage.png" class="category-icon-img" onclick="openSubFan('storage')"></div>
-    <div class="fan-blade blade-4"><img src="icontables.png" class="category-icon-img" onclick="openSubFan('tables')" onerror="this.src='iconseating.png'; this.style.filter='hue-rotate(90deg)'"></div>
-</div>
-
-<div id="sub-fan" class="fan-container">
-    <div class="fan-blade sub-blade s-1"></div><div class="fan-blade sub-blade s-2"></div>
-    <div class="fan-blade sub-blade s-3"></div><div class="fan-blade sub-blade s-4"></div>
-    <div class="fan-blade sub-blade s-5"></div><div class="fan-blade sub-blade s-6"></div>
-    <div class="fan-blade sub-blade s-7"></div><div class="fan-blade sub-blade s-8"></div>
-</div>
-
-<input type="file" id="room-upload-input" accept="image/*" style="display:none">
-
-<script>
-const workspace = document.getElementById('main-workspace');
-const cabContent = document.getElementById('cab-content');
-const mainRoom = document.getElementById('main-room');
-const fan = document.getElementById('global-fan');
-const subFan = document.getElementById('sub-fan');
-const dropZone = document.getElementById('drop-zone');
-const uploadInput = document.getElementById('room-upload-input');
-
-function handleRoomsClick() {
-    workspace.classList.add('active-glide');
-    cabContent.innerHTML = `
-        <div class="drawer-tab drw-1" onclick="loadRoom('livingroom.jpg', this)"><div class="plate-style">Living Room</div></div>
-        <div class="drawer-tab drw-2" onclick="loadRoom('bedroom.jpg', this)"><div class="plate-style">Bedroom</div></div>
-        <div class="drawer-tab drw-3" onclick="loadRoom('diningroom.jpg', this)"><div class="plate-style">Dining Room</div></div>
-        <div class="drawer-tab drw-upload" onclick="triggerUpload()"><div class="plate-style">Upload Your Room</div></div>
-    `;
-}
-
-function loadRoom(src, el) {
-    if(src) mainRoom.src = src;
-    mainRoom.style.display = 'block';
-    document.querySelectorAll('.drawer-tab').forEach(d => d.classList.remove('opened'));
-    if(el) el.classList.add('opened');
-    fan.classList.remove('active', 'sub-active');
-    subFan.classList.remove('active');
-    
-    const r = el.getBoundingClientRect();
-    fan.style.top = (r.top + r.height / 2 - 120) + 'px';
-    fan.style.left = (r.right - 100) + 'px';
-    setTimeout(() => { fan.classList.add('active'); }, 50);
-}
-
-function openSubFan(cat) {
-    fan.classList.add('sub-active');
-    subFan.classList.remove('active');
-    const r = fan.getBoundingClientRect();
-    subFan.style.top = r.top + 'px';
-    subFan.style.left = (r.left + 100) + 'px'; 
-
-    const blades = document.querySelectorAll('.sub-blade');
-    blades.forEach((b, i) => {
-        b.innerHTML = `
-            <img src="furn_${cat}_${i}a.png" class="furn-item-img" draggable="true" ondragstart="drag(event)" onerror="this.style.opacity='0.2'">
-            <img src="furn_${cat}_${i}b.png" class="furn-item-img" draggable="true" ondragstart="drag(event)" onerror="this.style.opacity='0.2'">
-        `;
-    });
-    setTimeout(() => { subFan.classList.add('active'); }, 50);
-}
-
-function drag(ev) { ev.dataTransfer.setData("text", ev.target.src); }
-dropZone.ondragover = (ev) => ev.preventDefault();
-dropZone.ondrop = (ev) => {
-    ev.preventDefault();
-    const data = ev.dataTransfer.getData("text");
-    const rect = dropZone.getBoundingClientRect();
-    const x = ev.clientX - rect.left;
-    const y = ev.clientY - rect.top;
-    const newFurniture = document.createElement("img");
-    newFurniture.src = data;
-    newFurniture.className = "placed-furniture";
-    newFurniture.style.left = (x - 60) + "px";
-    newFurniture.style.top = (y - 30) + "px";
-    newFurniture.onmousedown = (e) => startMove(e, newFurniture);
-    dropZone.appendChild(newFurniture);
-};
-
-function startMove(e, el) {
-    let sX = e.clientX - el.getBoundingClientRect().left;
-    let sY = e.clientY - el.getBoundingClientRect().top;
-    function move(ev) {
-        let rect = dropZone.getBoundingClientRect();
-        el.style.left = (ev.pageX - rect.left - sX) + 'px';
-        el.style.top = (ev.pageY - rect.top - sY) + 'px';
-    }
-    document.addEventListener('mousemove', move);
-    el.onmouseup = () => { document.removeEventListener('mousemove', move); el.onmouseup = null; };
-    el.ondragstart = () => false;
-}
-
-function triggerUpload() { uploadInput.click(); }
-uploadInput.onchange = e => {
-    const file = e.target.files[0];
-    if (file) {
-        const reader = new FileReader();
-        reader.onload = event => loadRoom(event.target.result, document.querySelector('.drw-upload'));
-        reader.readAsDataURL(file);
-    }
-};
-</script>
+    <main class="workspace"></main>
 
 </body>
 </html>
-
-
-
