@@ -30,7 +30,7 @@
     }
 
     /* --- NAVIGATION --- */
-    .vintage-tabs { display: flex; justify-content: center; gap: 20px; padding: 10px 0 40px; position: relative; z-index: 9999; }
+    .vintage-tabs { display: flex; justify-content: center; gap: 20px; padding: 10px 0 40px; position: relative; z-index: 10000; }
     .top-nav-tab {
         width: 170px; height: 85px; background: linear-gradient(135deg, #2c2e30, #0f1011);
         display: flex; align-items: center; justify-content: center; cursor: pointer;
@@ -57,7 +57,7 @@
     }
     .workspace.active-glide .cabinet-container { width: 600px; opacity: 1; transform: translateX(0); }
     .cabinet-img { width: 600px; display: block; }
-    #cab-content { position: absolute; inset: 0; pointer-events: none; overflow-y: auto; }
+    #cab-content { position: absolute; inset: 0; pointer-events: none; overflow-y: auto; overflow-x: visible; }
 
     /* --- DRAWERS --- */
     .drawer-tab {
@@ -66,20 +66,20 @@
         display: flex; align-items: center; justify-content: center; cursor: pointer; pointer-events: auto;
         border: 2px solid #3a3d40; box-shadow: 0 4px 10px rgba(0,0,0,0.8); transition: 0.4s;
     }
+    .drawer-tab.opened { transform: translateX(-40%) scale(1.05); border-color: #8e9196; }
     .plate-style { 
         width: 80%; height: 45%; background: #000 url("background_color.jpg") center/cover;
         box-shadow: inset 0 0 0 1000px rgba(0,0,0,0.85); color: #fff; display: flex; 
         align-items: center; justify-content: center; font-size: 13px; letter-spacing: 2px; border: 1px solid #444;
     }
     .drw-1 { top: 130px; } .drw-2 { top: 270px; } .drw-3 { top: 410px; } .drw-upload { top: 550px; }
-    .drawer-tab.opened { transform: translateX(-40%) scale(1.05); border-color: #8e9196; }
 
-    /* --- GLOBAL FANS (Pinning at body level) --- */
+    /* --- FANS (Absolute for Scrolling, Fixed for Over-Stage) --- */
     .fan-container { 
         position: fixed; width: 300px; height: 300px; display: none; z-index: 99999; pointer-events: none;
     }
     .fan-container.active { display: block; }
-
+    
     .fan-blade {
         position: absolute; left: 50px; top: 110px; width: 150px; height: 40px; 
         background: linear-gradient(to right, #161719, #2c2e30, #8e9196);
@@ -89,30 +89,26 @@
         display: flex; align-items: center; justify-content: flex-end; padding-right: 12px;
     }
     .fan-container.active .fan-blade { opacity: 1; pointer-events: auto; }
-    
-    /* Side Fan Angles */
+
     .side-fan.active .blade-1 { transform: rotate(-30deg); }
     .side-fan.active .blade-2 { transform: rotate(-10deg); }
     .side-fan.active .blade-3 { transform: rotate(10deg); }
     .side-fan.active .blade-4 { transform: rotate(30deg); }
 
-    /* Decor Fan Angles (Downward) */
+    /* Decor Fan Pivot Anchor */
     .top-fan .fan-blade { transform-origin: top center; left: 50%; top: 0; transform: translateX(-50%) rotate(0deg); width: 180px; }
     .top-fan.active .blade-1 { transform: translateX(-50%) rotate(55deg); }
     .top-fan.active .blade-2 { transform: translateX(-50%) rotate(80deg); }
     .top-fan.active .blade-3 { transform: translateX(-50%) rotate(105deg); }
     .top-fan.active .blade-4 { transform: translateX(-50%) rotate(130deg); }
 
-    /* Sub-Fan */
-    .sub-fan.active { display: block; }
-    .sub-blade { width: 280px; justify-content: space-evenly; border-radius: 0 40px 40px 0; transform: rotate(0deg); }
-    .sub-fan.active .s-1 { transform: rotate(-55deg); } .sub-fan.active .s-2 { transform: rotate(-40deg); }
-    .sub-fan.active .s-3 { transform: rotate(-25deg); } .sub-fan.active .s-4 { transform: rotate(-10deg); }
-    .sub-fan.active .s-5 { transform: rotate(5deg); } .sub-fan.active .s-6 { transform: rotate(20deg); }
-    .sub-fan.active .s-7 { transform: rotate(35deg); } .sub-fan.active .s-8 { transform: rotate(50deg); }
+    /* Sub Fan Matching Styles */
+    .sub-blade { width: 280px; justify-content: space-evenly; border-radius: 0 40px 40px 0; }
+    .sub-fan.active .s-1 { transform: rotate(-55deg); } 
+    .sub-fan.active .s-8 { transform: rotate(50deg); }
 
-    .furn-item-img { width: 65px; height: 45px; object-fit: contain; cursor: grab; filter: drop-shadow(0 0 5px black); }
     .category-icon-img { width: 28px; height: 28px; filter: drop-shadow(0 0 5px white); cursor: pointer; }
+    .furn-item-img { width: 65px; height: 45px; object-fit: contain; cursor: grab; }
 </style>
 </head>
 
@@ -160,7 +156,6 @@
 <input type="file" id="room-upload-input" accept="image/*" style="display:none">
 
 <script>
-const workspace = document.getElementById('main-workspace');
 const cabContent = document.getElementById('cab-content');
 const mainRoom = document.getElementById('main-room');
 const gFan = document.getElementById('global-fan');
@@ -170,14 +165,14 @@ const dropZone = document.getElementById('drop-zone');
 let activeDrawer = null;
 
 function handleRoomsClick() {
-    workspace.classList.add('active-glide');
+    document.getElementById('main-workspace').classList.add('active-glide');
     cabContent.innerHTML = `
         <div class="drawer-tab drw-1" onclick="loadRoom('livingroom.jpg', this)"><div class="plate-style">Living Room</div></div>
         <div class="drawer-tab drw-2" onclick="loadRoom('bedroom.jpg', this)"><div class="plate-style">Bedroom</div></div>
         <div class="drawer-tab drw-3" onclick="loadRoom('diningroom.jpg', this)"><div class="plate-style">Dining Room</div></div>
         <div class="drawer-tab drw-upload" onclick="triggerUpload()"><div class="plate-style">Upload Your Room</div></div>
     `;
-    cabContent.onscroll = syncFan; // Sync on scroll
+    cabContent.addEventListener('scroll', syncFan);
 }
 
 function loadRoom(src, el) {
@@ -186,33 +181,29 @@ function loadRoom(src, el) {
     document.querySelectorAll('.drawer-tab').forEach(d => d.classList.remove('opened'));
     el.classList.add('opened');
     activeDrawer = el;
-    syncFan();
     gFan.classList.add('active');
     sFan.classList.remove('active');
+    syncFan();
 }
 
 function syncFan() {
-    if(!activeDrawer || !gFan.classList.contains('active')) return;
+    if(!activeDrawer) return;
     const rect = activeDrawer.getBoundingClientRect();
-    gFan.style.top = (rect.top + rect.height/2 - 130) + 'px';
-    gFan.style.left = (rect.right - 50) + 'px';
-    // Mirror to subfan
+    gFan.style.top = (rect.top + (rect.height / 2) - 150) + 'px';
+    gFan.style.left = (rect.right - 60) + 'px';
     sFan.style.top = gFan.style.top;
-    sFan.style.left = (rect.right + 50) + 'px';
+    sFan.style.left = (rect.right + 80) + 'px';
 }
 
 function openSubFan(cat) {
-    gFan.style.opacity = "0.5";
+    gFan.style.opacity = "0.4";
     const blades = sFan.querySelectorAll('.sub-blade');
     blades.forEach((b, i) => {
         let content = "";
         if (cat === 'seating') {
             if (i === 0) content = `<img src="seating_BLK_LEATHER_COUCH.png" class="furn-item-img" draggable="true" ondragstart="drag(event)">`;
-            if (i === 1) content = `<img src="seating_grey_dinnerchair.png" class="furn-item-img" draggable="true" ondragstart="drag(event)">`;
-        } else if (cat === 'storage') {
-            if (i === 0) content = `<img src="storage_dresser_drkbrn.png" class="furn-item-img" draggable="true" ondragstart="drag(event)">`;
-        } else {
-            content = `<img src="furn_${cat}_${i}a.png" class="furn-item-img" draggable="true" ondragstart="drag(event)" onerror="this.style.opacity='0.2'">`;
+        } else if (cat === 'tables') {
+            content = `<img src="table_${i}.png" class="furn-item-img" draggable="true" ondragstart="drag(event)" onerror="this.style.opacity='0'">`;
         }
         b.innerHTML = content;
     });
@@ -223,41 +214,36 @@ function toggleDecorFan() {
     const trigger = document.getElementById('decor-trigger');
     const rect = trigger.getBoundingClientRect();
     dFan.style.top = rect.bottom + 'px';
-    dFan.style.left = (rect.left + rect.width/2) + 'px';
+    dFan.style.left = (rect.left + (rect.width / 2)) + 'px';
     dFan.classList.toggle('active');
 }
 
-// Drag & Drop
 function drag(ev) { ev.dataTransfer.setData("text", ev.target.src); }
 dropZone.ondragover = ev => ev.preventDefault();
 dropZone.ondrop = ev => {
     ev.preventDefault();
     const data = ev.dataTransfer.getData("text");
-    const rect = dropZone.getBoundingClientRect();
-    const newFurn = document.createElement("img");
-    newFurn.src = data;
-    newFurn.className = "placed-furniture";
-    newFurn.style.left = (ev.clientX - rect.left - 50) + "px";
-    newFurn.style.top = (ev.clientY - rect.top - 25) + "px";
-    newFurn.onmousedown = e => startMove(e, newFurn);
-    dropZone.appendChild(newFurn);
+    const r = dropZone.getBoundingClientRect();
+    const img = document.createElement("img");
+    img.src = data; img.className = "placed-furniture";
+    img.style.left = (ev.clientX - r.left - 50) + "px";
+    img.style.top = (ev.clientY - r.top - 25) + "px";
+    img.onmousedown = e => {
+        let sX = e.clientX - img.getBoundingClientRect().left;
+        let sY = e.clientY - img.getBoundingClientRect().top;
+        const move = ev => {
+            img.style.left = (ev.pageX - r.left - sX) + 'px';
+            img.style.top = (ev.pageY - r.top - sY) + 'px';
+        };
+        document.addEventListener('mousemove', move);
+        img.onmouseup = () => document.removeEventListener('mousemove', move);
+    };
+    dropZone.appendChild(img);
 };
 
-function startMove(e, el) {
-    let sX = e.clientX - el.getBoundingClientRect().left;
-    let sY = e.clientY - el.getBoundingClientRect().top;
-    function move(ev) {
-        let r = dropZone.getBoundingClientRect();
-        el.style.left = (ev.pageX - r.left - sX) + 'px';
-        el.style.top = (ev.pageY - r.top - sY) + 'px';
-    }
-    document.addEventListener('mousemove', move);
-    el.onmouseup = () => document.removeEventListener('mousemove', move);
-}
-
 function triggerUpload() { document.getElementById('room-upload-input').click(); }
+window.addEventListener('resize', syncFan);
 </script>
 
 </body>
 </html>
-
