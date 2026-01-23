@@ -30,7 +30,7 @@
     }
 
     /* --- NAVIGATION --- */
-    .vintage-tabs { display: flex; justify-content: center; gap: 20px; padding: 10px 0 40px; position: relative; z-index: 5000; }
+    .vintage-tabs { display: flex; justify-content: center; gap: 20px; padding: 10px 0 40px; position: relative; z-index: 9999; }
     .top-nav-tab {
         width: 170px; height: 85px; background: linear-gradient(135deg, #2c2e30, #0f1011);
         display: flex; align-items: center; justify-content: center; cursor: pointer;
@@ -60,7 +60,7 @@
         border-right: 25px solid #161719;
         position: relative; 
         box-shadow: 0 0 60px rgba(0,0,0,1); 
-        z-index: 10;
+        z-index: 1; /* Stage must be low */
         transition: transform 1.2s cubic-bezier(0.19, 1, 0.22, 1);
         border-radius: 12px;
         overflow: hidden;
@@ -72,7 +72,9 @@
     /* --- CABINET --- */
     .cabinet-container { 
         width: 0; opacity: 0; transform: translateX(-150px); 
-        transition: 1.2s cubic-bezier(0.19,1,0.22,1); position: relative; z-index: 500;
+        transition: 1.2s cubic-bezier(0.19,1,0.22,1); position: relative; 
+        z-index: 5000; /* Promotes everything inside cabinet above stage */
+        isolation: isolate; 
     }
     .workspace.active-glide .cabinet-container { width: 600px; opacity: 1; transform: translateX(0); }
     .cabinet-img { width: 600px; display: block; }
@@ -87,7 +89,7 @@
         cursor: pointer; pointer-events: auto;
         border: 2px solid #3a3d40; box-shadow: 0 4px 10px rgba(0,0,0,0.8);
         transition: 0.4s cubic-bezier(0.19, 1, 0.22, 1);
-        z-index: 1000;
+        z-index: 100;
     }
     .drawer-tab:hover { transform: translateX(-48%) translateY(-5px); border-color: #fff; }
     .plate-style { width: 80%; height: 45%; background: #000 url("background_color.jpg") center/cover;
@@ -105,38 +107,45 @@
     .drw-1 { top: 130px; } .drw-2 { top: 270px; } .drw-3 { top: 410px; } .drw-upload { top: 550px; }
     .drawer-tab.opened { transform: translateX(-40%) scale(1.05); border-color: #8e9196; }
 
-    /* --- FAN MOTION SYSTEM --- */
+    /* --- FAN SYSTEM --- */
     .fan-container { 
-        position: absolute; width: 300px; height: 300px; display: none; z-index: 9999; pointer-events: none;
+        position: absolute; width: 300px; height: 300px; display: none; z-index: 99999; pointer-events: none;
     }
     .fan-container.active { display: block; }
     
     .side-fan { left: 180px; top: -100px; }
-    .top-fan { left: 50%; transform: translateX(-50%); top: 85px; }
+    
+    /* FIX: Decor Fan Positioned Center-Down */
+    .top-fan { left: 50%; transform: translateX(-50%); top: 85px; width: 400px; height: 400px; }
 
     .fan-blade {
         position: absolute; left: 50px; top: 110px; width: 150px; height: 40px; 
         background: linear-gradient(to right, #161719, #2c2e30, #8e9196);
         border: 1px solid rgba(255,255,255,0.4); border-left: none;
         transform-origin: left center; opacity: 0; 
-        transform: rotate(0deg); /* Start Stacked */
+        transform: rotate(0deg); 
         transition: transform 0.6s cubic-bezier(0.19, 1, 0.22, 1), opacity 0.4s ease;
         display: flex; align-items: center; justify-content: flex-end; padding-right: 12px;
     }
     .fan-container.active .fan-blade { opacity: 1; pointer-events: auto; }
 
-    /* Side Fan Final Positions */
+    /* Side Fan Motion */
     .side-fan.active .blade-1 { transform: rotate(-30deg); }
     .side-fan.active .blade-2 { transform: rotate(-10deg); }
     .side-fan.active .blade-3 { transform: rotate(10deg); }
     .side-fan.active .blade-4 { transform: rotate(30deg); }
 
-    /* Top Fan Final Positions (Downward Fan) */
-    .top-fan .fan-blade { transform-origin: top center; left: 50%; top: 0; transform: translateX(-50%) rotate(0deg); }
-    .top-fan.active .blade-1 { transform: translateX(-50%) rotate(70deg); }
-    .top-fan.active .blade-2 { transform: translateX(-50%) rotate(85deg); }
-    .top-fan.active .blade-3 { transform: translateX(-50%) rotate(100deg); }
-    .top-fan.active .blade-4 { transform: translateX(-50%) rotate(115deg); }
+    /* FIX: Decor Pivot Point - Drop from Top Center */
+    .top-fan .fan-blade { 
+        transform-origin: top center; 
+        left: 50%; 
+        top: 0; 
+        transform: translateX(-50%) rotate(0deg); 
+    }
+    .top-fan.active .blade-1 { transform: translateX(-50%) rotate(50deg); }
+    .top-fan.active .blade-2 { transform: translateX(-50%) rotate(75deg); }
+    .top-fan.active .blade-3 { transform: translateX(-50%) rotate(105deg); }
+    .top-fan.active .blade-4 { transform: translateX(-50%) rotate(130deg); }
 
     /* Sub-Fan Motion */
     .sub-fan-inner { position: absolute; left: 280px; width: 450px; }
