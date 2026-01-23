@@ -7,89 +7,52 @@
 <link href="https://fonts.googleapis.com/css2?family=Limelight&family=Special+Elite&display=swap" rel="stylesheet">
 
 <style>
-    /* --- RESET & BODY --- */
     * { margin: 0; padding: 0; box-sizing: border-box; }
     body {
         background: #0f1011 url("background_color.jpg") center / cover fixed;
         min-height: 100vh; font-family: 'Special Elite', cursive; 
         overflow-x: hidden; display: flex; flex-direction: column;
     }
-
-    /* --- HEADER --- */
     .site-header { text-align: center; padding: 50px 0 20px; position: relative; z-index: 1000; }
-    .brand-title {
-        font-family: 'Limelight', cursive; font-size: clamp(55px, 10vw, 85px); text-transform: uppercase;
+    .brand-title { font-family: 'Limelight', cursive; font-size: clamp(55px, 10vw, 85px); text-transform: uppercase;
         background: linear-gradient(to bottom, #2c2e30 0%, #ffffff 45%, #ffffff 55%, #8e9196 70%, #161719 100%);
         -webkit-background-clip: text; -webkit-text-fill-color: transparent;
         filter: drop-shadow(0 0 15px rgba(255,255,255,0.4)); letter-spacing: 6px; line-height: 0.9;
     }
-    .sub-title { 
-        font-family: 'Limelight', cursive; font-size: 22px; letter-spacing: 16px; 
-        color: #ffffff; opacity: 0.7; text-transform: uppercase; margin-top: 25px;
+    .sub-title { font-family: 'Limelight', cursive; font-size: 22px; letter-spacing: 16px; color: #fff;
+        opacity: 0.7; text-transform: uppercase; margin-top: 25px;
         text-shadow: 0 0 15px rgba(255,255,255,0.6);
     }
-
-    /* --- NAVIGATION --- */
-    .vintage-tabs { display: flex; justify-content: center; gap: 20px; padding: 10px 0 40px; position: relative; z-index: 9999; }
-    .top-nav-tab {
-        width: 170px; height: 85px; background: linear-gradient(135deg, #2c2e30, #0f1011);
+    .vintage-tabs { display: flex; justify-content: center; gap: 20px; padding: 10px 0 40px; }
+    .top-nav-tab { width: 170px; height: 85px; background: linear-gradient(135deg, #2c2e30, #0f1011);
         display: flex; align-items: center; justify-content: center; cursor: pointer;
         border: 2px solid #3a3d40; box-shadow: 0 6px 15px rgba(0,0,0,0.8);
         transition: all 0.4s cubic-bezier(0.19, 1, 0.22, 1); position: relative; border-radius: 4px;
     }
-    .top-nav-tab:hover {
-        transform: translateY(-12px); border-color: #8e9196;
-        box-shadow: 0 15px 30px rgba(0,0,0,0.9), 0 0 20px rgba(255,255,255,0.2);
-    }
-    .top-nav-tab::after {
-        content: ''; position: absolute; bottom: -8px; left: 50%; transform: translateX(-50%);
+    .top-nav-tab:hover { transform: translateY(-12px); border-color: #8e9196; }
+    .top-nav-tab::after { content: ''; position: absolute; bottom: -8px; left: 50%; transform: translateX(-50%);
         width: 100px; height: 12px; background: linear-gradient(to bottom, #444, #111);
         border: 1px solid #222; border-radius: 0 0 10px 10px;
     }
-
-    /* --- WORKSPACE --- */
-    .workspace { 
-        display: flex; justify-content: center; align-items: flex-start; 
-        flex: 1; position: relative; padding: 20px 40px 100px; 
+    .workspace { display: flex; justify-content: center; align-items: flex-start; flex: 1;
+        position: relative; padding: 20px 40px 100px; 
     }
-
-    .stage { 
-        width: 1000px; height: 650px; 
-        background: #1a1b1d; 
-        border: 12px solid #2c2e30; 
-        border-right: 25px solid #161719;
-        position: relative; 
-        box-shadow: 0 0 60px rgba(0,0,0,1); 
-        z-index: 1; /* Stage must be low */
-        transition: transform 1.2s cubic-bezier(0.19, 1, 0.22, 1);
-        border-radius: 12px;
-        overflow: hidden;
+    .stage { width: 1000px; height: 650px; background: #1a1b1d;
+        border: 12px solid #2c2e30; border-right: 25px solid #161719;
+        position: relative; box-shadow: 0 0 60px rgba(0,0,0,1); z-index: 10;
+        transition: transform 1.2s cubic-bezier(0.19, 1, 0.22, 1); border-radius: 12px; overflow: hidden;
     }
     .workspace.active-glide .stage { transform: translateX(80px); }
     .room-img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: none; }
     .placed-furniture { position: absolute; cursor: move; z-index: 60; max-width: 250px; filter: drop-shadow(0 10px 15px rgba(0,0,0,0.5)); }
-
-    /* --- CABINET --- */
-    .cabinet-container { 
-        width: 0; opacity: 0; transform: translateX(-150px); 
-        transition: 1.2s cubic-bezier(0.19,1,0.22,1); position: relative; 
-        z-index: 5000; /* Promotes everything inside cabinet above stage */
-        isolation: isolate; 
-    }
+    .cabinet-container { width: 0; opacity: 0; transform: translateX(-150px); transition: 1.2s cubic-bezier(0.19,1,0.22,1); position: relative; z-index: 200; }
     .workspace.active-glide .cabinet-container { width: 600px; opacity: 1; transform: translateX(0); }
     .cabinet-img { width: 600px; display: block; }
-    #cab-content { position: absolute; inset: 0; pointer-events: none; overflow-y: auto; overflow-x: visible; }
-
-    /* --- DRAWERS --- */
-    .drawer-tab {
-        position: absolute; left: 50%; transform: translateX(-50%); 
-        width: 200px; height: 100px; 
-        background: linear-gradient(135deg, #2c2e30, #0f1011);
-        display: flex; align-items: center; justify-content: center;
-        cursor: pointer; pointer-events: auto;
-        border: 2px solid #3a3d40; box-shadow: 0 4px 10px rgba(0,0,0,0.8);
+    #cab-content { position: absolute; inset: 0; pointer-events: none; }
+    .drawer-tab { position: absolute; left: 50%; transform: translateX(-50%); width: 200px; height: 100px;
+        background: linear-gradient(135deg, #2c2e30, #0f1011); display: flex; align-items: center; justify-content: center;
+        cursor: pointer; pointer-events: auto; border: 2px solid #3a3d40; box-shadow: 0 4px 10px rgba(0,0,0,0.8);
         transition: 0.4s cubic-bezier(0.19, 1, 0.22, 1);
-        z-index: 100;
     }
     .drawer-tab:hover { transform: translateX(-48%) translateY(-5px); border-color: #fff; }
     .plate-style { width: 80%; height: 45%; background: #000 url("background_color.jpg") center/cover;
@@ -97,71 +60,23 @@
         color: #fff; display: flex; align-items: center; justify-content: center;
         font-size: 13px; letter-spacing: 2px; border: 1px solid #444; position: relative;
     }
-    .plate-style::before, .plate-style::after {
-        content: ''; position: absolute; width: 6px; height: 6px; background: #0f1011; 
-        border-radius: 50%; top: 50%; transform: translateY(-50%);
-        box-shadow: inset 1px 1px 2px #000, 0.5px 0.5px 0px rgba(255,255,255,0.1);
-    }
-    .plate-style::before { left: -12px; } .plate-style::after { right: -12px; }
-
     .drw-1 { top: 130px; } .drw-2 { top: 270px; } .drw-3 { top: 410px; } .drw-upload { top: 550px; }
     .drawer-tab.opened { transform: translateX(-40%) scale(1.05); border-color: #8e9196; }
 
-    /* --- FAN SYSTEM --- */
-    .fan-container { 
-        position: absolute; width: 300px; height: 300px; display: none; z-index: 99999; pointer-events: none;
-    }
+    /* --- FAN --- */
+    .fan-container { position: absolute; width: 300px; height: 300px; display: none; z-index: 9999; pointer-events: none; }
     .fan-container.active { display: block; }
-    
-    .side-fan { left: 180px; top: -100px; }
-    
-    /* FIX: Decor Fan Positioned Center-Down */
-    .top-fan { left: 50%; transform: translateX(-50%); top: 85px; width: 400px; height: 400px; }
-
     .fan-blade {
         position: absolute; left: 50px; top: 110px; width: 150px; height: 40px; 
         background: linear-gradient(to right, #161719, #2c2e30, #8e9196);
         border: 1px solid rgba(255,255,255,0.4); border-left: none;
-        transform-origin: left center; opacity: 0; 
-        transform: rotate(0deg); 
-        transition: transform 0.6s cubic-bezier(0.19, 1, 0.22, 1), opacity 0.4s ease;
+        transform-origin: left center; opacity: 0; transition: 0.6s cubic-bezier(0.19, 1, 0.22, 1);
         display: flex; align-items: center; justify-content: flex-end; padding-right: 12px;
     }
     .fan-container.active .fan-blade { opacity: 1; pointer-events: auto; }
-
-    /* Side Fan Motion */
-    .side-fan.active .blade-1 { transform: rotate(-30deg); }
-    .side-fan.active .blade-2 { transform: rotate(-10deg); }
-    .side-fan.active .blade-3 { transform: rotate(10deg); }
-    .side-fan.active .blade-4 { transform: rotate(30deg); }
-
-    /* FIX: Decor Pivot Point - Drop from Top Center */
-    .top-fan .fan-blade { 
-        transform-origin: top center; 
-        left: 50%; 
-        top: 0; 
-        transform: translateX(-50%) rotate(0deg); 
-    }
-    .top-fan.active .blade-1 { transform: translateX(-50%) rotate(50deg); }
-    .top-fan.active .blade-2 { transform: translateX(-50%) rotate(75deg); }
-    .top-fan.active .blade-3 { transform: translateX(-50%) rotate(105deg); }
-    .top-fan.active .blade-4 { transform: translateX(-50%) rotate(130deg); }
-
-    /* Sub-Fan Motion */
-    .sub-fan-inner { position: absolute; left: 280px; width: 450px; }
-    .sub-blade { 
-        width: 280px; justify-content: space-evenly; 
-        background: linear-gradient(to right, #161719, #2c2e30, #8e9196); 
-        border-radius: 0 40px 40px 0; border: 1px solid rgba(255,255,255,0.4);
-        transform: rotate(0deg);
-    }
-    .sub-fan-inner.active .s-1 { transform: rotate(-55deg); } .sub-fan-inner.active .s-2 { transform: rotate(-40deg); }
-    .sub-fan-inner.active .s-3 { transform: rotate(-25deg); } .sub-fan-inner.active .s-4 { transform: rotate(-10deg); }
-    .sub-fan-inner.active .s-5 { transform: rotate(5deg); }  .sub-fan-inner.active .s-6 { transform: rotate(20deg); }
-    .sub-fan-inner.active .s-7 { transform: rotate(35deg); } .sub-fan-inner.active .s-8 { transform: rotate(50deg); }
-
-    .furn-item-img { width: 65px; height: 45px; object-fit: contain; cursor: grab; filter: drop-shadow(0 0 5px black); }
-    .category-icon-img { width: 28px; height: 28px; filter: drop-shadow(0 0 5px white); cursor: pointer; }
+    .fan-container.sub-active .fan-blade { opacity: 0.4; width: 120px; }
+    .blade-1 { transform: rotate(-30deg); } .blade-2 { transform: rotate(-10deg); }
+    .blade-3 { transform: rotate(10deg); } .blade-4 { transform: rotate(30deg); }
 </style>
 </head>
 
@@ -175,15 +90,7 @@
 <nav class="vintage-tabs">
     <div class="top-nav-tab" onclick="handleRoomsClick()"><div class="plate-style">Rooms</div></div>
     <div class="top-nav-tab"><div class="plate-style">Furniture</div></div>
-    <div class="top-nav-tab" onclick="handleDecorClick(this)">
-        <div class="plate-style">Decor</div>
-        <div id="decor-fan" class="fan-container top-fan">
-            <div class="fan-blade blade-1"></div>
-            <div class="fan-blade blade-2"></div>
-            <div class="fan-blade blade-3"></div>
-            <div class="fan-blade blade-4"></div>
-        </div>
-    </div>
+    <div class="top-nav-tab" onclick="handleDecorClick()"><div class="plate-style">Decor</div></div>
     <div class="top-nav-tab"><div class="plate-style">Inspiration</div></div>
 </nav>
 
@@ -191,6 +98,13 @@
     <div class="cabinet-container">
         <img src="cabinet.png" class="cabinet-img">
         <div id="cab-content"></div>
+        <!-- Attach the decor fan inside cabinet container to scroll with it -->
+        <div id="decor-fan" class="fan-container">
+            <div class="fan-blade blade-1"></div>
+            <div class="fan-blade blade-2"></div>
+            <div class="fan-blade blade-3"></div>
+            <div class="fan-blade blade-4"></div>
+        </div>
     </div>
     <div class="stage" id="drop-zone"><img id="main-room" class="room-img"></div>
 </div>
@@ -201,133 +115,34 @@
 const workspace = document.getElementById('main-workspace');
 const cabContent = document.getElementById('cab-content');
 const mainRoom = document.getElementById('main-room');
+const fan = document.getElementById('global-fan');
+const decorFan = document.getElementById('decor-fan');
 const dropZone = document.getElementById('drop-zone');
 const uploadInput = document.getElementById('room-upload-input');
 
 function handleRoomsClick() {
     workspace.classList.add('active-glide');
     cabContent.innerHTML = `
-        <div class="drawer-tab drw-1" onclick="loadRoom('livingroom.jpg', this)">
-            <div class="plate-style">Living Room</div>
-            ${createFanHTML()}
-        </div>
-        <div class="drawer-tab drw-2" onclick="loadRoom('bedroom.jpg', this)">
-            <div class="plate-style">Bedroom</div>
-            ${createFanHTML()}
-        </div>
-        <div class="drawer-tab drw-3" onclick="loadRoom('diningroom.jpg', this)">
-            <div class="plate-style">Dining Room</div>
-            ${createFanHTML()}
-        </div>
-        <div class="drawer-tab drw-upload" onclick="triggerUpload()">
-            <div class="plate-style">Upload Your Room</div>
-        </div>
+        <div class="drawer-tab drw-1" onclick="loadRoom('livingroom.jpg', this)"><div class="plate-style">Living Room</div></div>
+        <div class="drawer-tab drw-2" onclick="loadRoom('bedroom.jpg', this)"><div class="plate-style">Bedroom</div></div>
+        <div class="drawer-tab drw-3" onclick="loadRoom('diningroom.jpg', this)"><div class="plate-style">Dining Room</div></div>
+        <div class="drawer-tab drw-upload" onclick="triggerUpload()"><div class="plate-style">Upload Your Room</div></div>
     `;
+    decorFan.style.display = 'none';
 }
 
-function createFanHTML() {
-    return `
-    <div class="fan-container side-fan global-fan-inner">
-        <div class="fan-blade blade-1"><img src="iconseating.png" class="category-icon-img" onclick="openSubFan(event, 'seating')"></div>
-        <div class="fan-blade blade-2"><img src="iconbeds.png" class="category-icon-img" onclick="openSubFan(event, 'beds')"></div>
-        <div class="fan-blade blade-3"><img src="iconstorage.png" class="category-icon-img" onclick="openSubFan(event, 'storage')"></div>
-        <div class="fan-blade blade-4"><img src="icontable.png" class="category-icon-img" onclick="openSubFan(event, 'tables')"></div>
-    </div>
-    <div class="fan-container side-fan sub-fan-inner">
-        <div class="fan-blade sub-blade s-1"></div><div class="fan-blade sub-blade s-2"></div>
-        <div class="fan-blade sub-blade s-3"></div><div class="fan-blade sub-blade s-4"></div>
-        <div class="fan-blade sub-blade s-5"></div><div class="fan-blade sub-blade s-6"></div>
-        <div class="fan-blade sub-blade s-7"></div><div class="fan-blade sub-blade s-8"></div>
-    </div>`;
-}
-
-function handleDecorClick(el) {
-    const fan = el.querySelector('#decor-fan');
-    const isActive = fan.classList.contains('active');
-    document.querySelectorAll('.fan-container').forEach(f => f.classList.remove('active'));
-    if (!isActive) setTimeout(() => fan.classList.add('active'), 10);
+function handleDecorClick() {
+    decorFan.style.display = 'block';
 }
 
 function loadRoom(src, el) {
     if(src) mainRoom.src = src;
     mainRoom.style.display = 'block';
-    document.querySelectorAll('.drawer-tab').forEach(d => {
-        d.classList.remove('opened');
-        d.querySelector('.global-fan-inner')?.classList.remove('active');
-        d.querySelector('.sub-fan-inner')?.classList.remove('active');
-    });
-    el.classList.add('opened');
-    setTimeout(() => { el.querySelector('.global-fan-inner').classList.add('active'); }, 50);
+    document.querySelectorAll('.drawer-tab').forEach(d => d.classList.remove('opened'));
+    if(el) el.classList.add('opened');
 }
-
-function openSubFan(event, cat) {
-    event.stopPropagation();
-    const drawer = event.target.closest('.drawer-tab');
-    const gFan = drawer.querySelector('.global-fan-inner');
-    const sFan = drawer.querySelector('.sub-fan-inner');
-    
-    gFan.classList.add('sub-active');
-    sFan.classList.remove('active');
-
-    const blades = sFan.querySelectorAll('.sub-blade');
-    blades.forEach((b, i) => {
-        let content = "";
-        if (cat === 'seating') {
-            if (i === 0) content = `<img src="seating_BLK_LEATHER_COUCH.png" class="furn-item-img" draggable="true" ondragstart="drag(event)"> <img src="seating_TAN.png" class="furn-item-img" draggable="true" ondragstart="drag(event)">`;
-            if (i === 1) content = `<img src="seating_grey_dinnerchair.png" class="furn-item-img" draggable="true" ondragstart="drag(event)">`;
-        } 
-        else if (cat === 'storage') {
-            if (i === 0) content = `<img src="storage_dresser_drkbrn.png" class="furn-item-img" draggable="true" ondragstart="drag(event)">`;
-            if (i === 1) content = `<img src="storage_shelf.png" class="furn-item-img" draggable="true" ondragstart="drag(event)"> <img src="storage_grnshelf.png" class="furn-item-img" draggable="true" ondragstart="drag(event)">`;
-        }
-        else {
-            content = `<img src="furn_${cat}_${i}a.png" class="furn-item-img" draggable="true" ondragstart="drag(event)" onerror="this.style.opacity='0.2'">`;
-        }
-        b.innerHTML = content;
-    });
-    setTimeout(() => { sFan.classList.add('active'); }, 50);
-}
-
-function drag(ev) { ev.dataTransfer.setData("text", ev.target.src); }
-dropZone.ondragover = (ev) => ev.preventDefault();
-dropZone.ondrop = (ev) => {
-    ev.preventDefault();
-    const data = ev.dataTransfer.getData("text");
-    const rect = dropZone.getBoundingClientRect();
-    const x = ev.clientX - rect.left;
-    const y = ev.clientY - rect.top;
-    const newFurniture = document.createElement("img");
-    newFurniture.src = data;
-    newFurniture.className = "placed-furniture";
-    newFurniture.style.left = (x - 60) + "px";
-    newFurniture.style.top = (y - 30) + "px";
-    newFurniture.onmousedown = (e) => startMove(e, newFurniture);
-    dropZone.appendChild(newFurniture);
-};
-
-function startMove(e, el) {
-    let sX = e.clientX - el.getBoundingClientRect().left;
-    let sY = e.clientY - el.getBoundingClientRect().top;
-    function move(ev) {
-        let rect = dropZone.getBoundingClientRect();
-        el.style.left = (ev.pageX - rect.left - sX) + 'px';
-        el.style.top = (ev.pageY - rect.top - sY) + 'px';
-    }
-    document.addEventListener('mousemove', move);
-    el.onmouseup = () => { document.removeEventListener('mousemove', move); el.onmouseup = null; };
-    el.ondragstart = () => false;
-}
-
-function triggerUpload() { uploadInput.click(); }
-uploadInput.onchange = e => {
-    const file = e.target.files[0];
-    if (file) {
-        const reader = new FileReader();
-        reader.onload = event => loadRoom(event.target.result, document.querySelector('.drw-upload'));
-        reader.readAsDataURL(file);
-    }
-};
 </script>
 
 </body>
 </html>
+
