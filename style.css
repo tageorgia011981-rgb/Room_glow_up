@@ -1,73 +1,107 @@
-/* --- SYSTEM SETUP --- */
-* { margin: 0; padding: 0; box-sizing: border-box; }
-body {
-  background: url("background_color.jpg") center / cover no-repeat fixed;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  font-family: 'Special Elite', cursive;
-  overflow-x: hidden;
-}
+<style>
+    /* --- RESET & VINTAGE THEME --- */
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    
+    body {
+        background: #0f1011 url("background_color.jpg") center / cover fixed;
+        min-height: 100vh; font-family: 'Special Elite', cursive; 
+        overflow-x: hidden;
+        display: flex; flex-direction: column;
+    }
 
-/* --- HEADER --- */
-.site-header { text-align: center; padding: 30px 0 10px; }
-.brand-title {
-  font-family: 'Limelight', cursive;
-  font-size: clamp(40px, 8vw, 90px);
-  text-transform: uppercase;
-  background: linear-gradient(165deg, #161719 0%, #4b4d4f 25%, #ffffff 48%, #8e9196 52%, #4b4d4f 75%, #161719 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  filter: drop-shadow(4px 4px 0px #000);
-  display: inline-block;
-}
-.sub-title {
-  display: block; font-family: 'Limelight', cursive; font-size: 18px;
-  color: #fff2ac; text-transform: uppercase; letter-spacing: 10px; margin-top: 5px;
-}
+    /* --- HEADER & NAVIGATION --- */
+    .site-header { text-align: center; padding: 30px 0 10px; z-index: 1000; }
+    .brand-title {
+        font-family: 'Limelight', cursive; font-size: clamp(45px, 8vw, 75px); text-transform: uppercase;
+        background: linear-gradient(to bottom, #2c2e30 0%, #ffffff 45%, #ffffff 55%, #8e9196 70%, #161719 100%);
+        -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+        filter: drop-shadow(0 0 15px rgba(255,255,255,0.4)); letter-spacing: 6px;
+    }
+    .vintage-tabs { display: flex; justify-content: center; gap: 20px; padding: 10px 0 30px; }
+    .top-nav-tab {
+        width: 150px; height: 75px; background: linear-gradient(135deg, #2c2e30, #0f1011);
+        display: flex; align-items: center; justify-content: center; cursor: pointer;
+        border: 2px solid #3a3d40; box-shadow: 0 6px 15px rgba(0,0,0,0.8);
+        transition: 0.4s cubic-bezier(0.19, 1, 0.22, 1); border-radius: 4px;
+    }
+    .top-nav-tab:hover { transform: translateY(-8px); border-color: #8e9196; box-shadow: 0 0 15px white; }
 
-/* --- TABS & HARDWARE DESIGN --- */
-.vintage-tabs { display: flex; gap: 15px; justify-content: center; padding: 20px 0; z-index: 100; }
+    /* --- WORKSPACE & STAGE --- */
+    .workspace { display: flex; justify-content: center; align-items: center; flex: 1; position: relative; padding: 20px; }
+    .stage { 
+        width: 800px; height: 500px; background: #1a1b1d; border: 12px solid #2c2e30;
+        position: relative; box-shadow: 0 0 60px black; z-index: 10;
+        transition: transform 1.2s cubic-bezier(0.19, 1, 0.22, 1); border-radius: 12px;
+        overflow: visible; /* Allows fans to sit on top edge */
+    }
+    .workspace.active-glide .stage { transform: translateX(200px); }
+    .room-img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: none; }
 
-.library-pull, .inner-btn {
-  position: relative; width: 215px; height: 100px; 
-  background: linear-gradient(135deg, #4b4d4f 0%, #2c2e30 50%, #161719 100%);
-  display: flex; flex-direction: column; align-items: center; justify-content: center; cursor: pointer;
-  clip-path: polygon(0% 20%, 8% 20%, 8% 0%, 92% 0%, 92% 20%, 100% 20%, 100% 80%, 92% 80%, 92% 100%, 8% 100%, 8% 80%, 0% 80%);
-  box-shadow: 8px 10px 20px rgba(0,0,0,0.9), inset 1.5px 1.5px 3px rgba(255,255,255,0.1);
-  border: 1px solid #1a1b1d;
-  transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-}
+    /* --- CABINET & DRAWERS --- */
+    .cabinet-container { 
+        width: 0; opacity: 0; transform: translateX(-150px); 
+        transition: 1.2s cubic-bezier(0.19,1,0.22,1); position: absolute; left: 50px; z-index: 200;
+    }
+    .workspace.active-glide .cabinet-container { width: 450px; opacity: 1; transform: translateX(0); }
+    .cabinet-img { width: 450px; display: block; filter: drop-shadow(10px 0 20px black); position: relative; z-index: 50; }
+    .drawer-tab {
+        position: absolute; left: 50%; transform: translateX(-50%); width: 160px; height: 80px; 
+        background: linear-gradient(135deg, #2c2e30, #0f1011); border: 2px solid #3a3d40;
+        cursor: pointer; transition: 0.4s; z-index: 100;
+    }
+    .drawer-tab:hover { border-color: #fff; box-shadow: 0 0 20px rgba(255,255,255,0.5); }
+    .plate-style {
+        width: 100%; height: 100%; display: flex; align-items: center; justify-content: center;
+        color: #fff; font-size: 11px; letter-spacing: 2px;
+    }
 
-.library-pull::before, .library-pull::after, .inner-btn::before, .inner-btn::after {
-  content: '⊖'; position: absolute; font-size: 14px; color: #000; top: 4px; font-weight: bold;
-  opacity: 0.8; text-shadow: 0.5px 0.5px 0px rgba(255,255,255,0.1);
-}
-.library-pull::before, .inner-btn::before { left: 14px; }
-.library-pull::after, .inner-btn::after { right: 14px; }
+    /* --- FAN PHYSICS (THE SWEEP) --- */
+    .fan-container { position: absolute; width: 300px; height: 300px; display: none; z-index: 300; pointer-events: none; }
+    .fan-container.active { display: block; }
+    
+    .fan-blade {
+        position: absolute; left: 0; top: 130px; width: 0; height: 40px; 
+        background: linear-gradient(to right, #161719, #2c2e30, #8e9196);
+        border: 1px solid rgba(255,255,255,0.4); transform-origin: left center;
+        transition: width 0.8s cubic-bezier(0.17, 0.67, 0.36, 1), transform 0.8s cubic-bezier(0.17, 0.67, 0.36, 1), opacity 0.4s;
+        display: flex; align-items: center; justify-content: flex-end; padding-right: 12px; opacity: 0;
+    }
+    .fan-container.active .fan-blade { width: 160px; opacity: 1; pointer-events: auto; }
+    
+    /* Furniture Fan Sweep Angles */
+    .furn-fan.active .blade-1 { transform: rotate(-40deg); } 
+    .furn-fan.active .blade-2 { transform: rotate(-15deg); }
+    .furn-fan.active .blade-3 { transform: rotate(15deg); } 
+    .furn-fan.active .blade-4 { transform: rotate(40deg); }
 
-.plate-style {
-  width: 82%; height: 44%; background: #e8e0d0; border: 2px solid #2c2e30;
-  color: #000; display: flex; align-items: center; justify-content: center;
-  text-transform: uppercase; font-family: 'Special Elite', cursive; font-weight: 900; font-size: 14px;
-  box-shadow: inset 4px 4px 8px rgba(0,0,0,0.7);
-}
+    /* Decor Fan Sweep (Downward) */
+    .decor-fan-container { position: absolute; top: 0; left: 50%; transform: translateX(-50%); width: 400px; display: none; z-index: 500; }
+    .decor-fan-container.active { display: block; }
+    .decor-blade {
+        position: absolute; top: 0; left: 50%; width: 45px; height: 0;
+        background: linear-gradient(to bottom, #161719, #8e9196); transform-origin: top center;
+        transition: height 0.8s cubic-bezier(0.17, 0.67, 0.36, 1), transform 0.8s; opacity: 0;
+        display: flex; align-items: flex-end; justify-content: center; padding-bottom: 10px; color: white; font-size: 10px;
+    }
+    .decor-fan-container.active .decor-blade { height: 160px; opacity: 1; pointer-events: auto; }
+    .decor-fan-container.active .d-1 { transform: translateX(-50%) rotate(-45deg); }
+    .decor-fan-container.active .d-2 { transform: translateX(-50%) rotate(-15deg); }
+    .decor-fan-container.active .d-3 { transform: translateX(-50%) rotate(15deg); }
+    .decor-fan-container.active .d-4 { transform: translateX(-50%) rotate(45deg); }
 
-.pull-lip {
-  width: 65px; height: 14px; background: linear-gradient(180deg, #3a3c3e 0%, #0c0d0e 100%);
-  border-radius: 0 0 18px 18px; margin-top: 8px; border: 1px solid #000;
-}
+    /* --- PLACED ITEMS & TOOLTIP --- */
+    .placed-furniture { position: absolute; cursor: move; z-index: 60; transition: filter 0.3s; }
+    .shop-tooltip {
+        position: absolute; background: rgba(0,0,0,0.9); border: 1px solid #fff; padding: 10px;
+        color: white; border-radius: 4px; display: none; z-index: 1000; pointer-events: auto;
+    }
+    .shop-tooltip a { color: #8e9196; text-decoration: none; font-weight: bold; display: block; margin-top: 5px; }
 
-.active-glow { transform: translateY(-4px); filter: drop-shadow(0 0 15px rgba(100, 150, 255, 0.8)) brightness(1.2); }
-
-.workspace { display: flex; padding: 20px; gap: 40px; justify-content: center; align-items: flex-start; }
-.cabinet-container { width: 550px; position: relative; opacity: 0; transform: translateX(-100px); transition: 1.2s; z-index: 20; }
-.cabinet-container.show { opacity: 1; transform: translateX(0); }
-.cabinet-img { width: 100%; height: auto; display: block; }
-.cabinet-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; padding: 0; pointer-events: none; }
-.inner-btn { position: absolute; left: 50%; transform: translateX(-50%); width: 200px; height: 85px; pointer-events: auto; }
-.inner-btn.active-glow { transform: translateX(-50%) translateY(-4px); }
-.drw-1 { top: 110px; } .drw-2 { top: 215px; } .drw-3 { top: 320px; } .drw-4 { top: 425px; } 
-
-.stage { flex-grow: 1; max-width: 850px; background: rgba(0,0,0,0.5); border: 10px solid #1a1a1a; display: flex; justify-content: center; align-items: center; min-height: 550px; position: relative; z-index: 10; }
-.room-img { width: 100%; height: auto; display: block; opacity: 0; transition: 0.8s; position: relative; z-index: 15; }
+    /* --- SIDE PANEL (SAVE/LOAD) --- */
+    .side-panel {
+        position: fixed; right: -300px; top: 0; width: 300px; height: 100%;
+        background: #161719; border-left: 2px solid #3a3d40; padding: 20px;
+        transition: 0.5s; z-index: 2000; color: white;
+    }
+    .side-panel.open { right: 0; }
+</style>
