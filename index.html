@@ -13,7 +13,7 @@
     body {
         background: #0f1011 url("background_color.jpg") center / cover fixed;
         min-height: 100vh; font-family: 'Special Elite', cursive; 
-        overflow-x: hidden; /* Lock side-to-side movement */
+        overflow-x: hidden;
         display: flex; flex-direction: column;
     }
 
@@ -59,14 +59,14 @@
     .stage { 
         width: 1000px; height: 650px; 
         background: #1a1b1d; 
-        border: 12px solid #2c2e30; /* Gunmetal casing */
-        border-right: 25px solid #161719; /* THE HARD STOP: This closes the box */
+        border: 12px solid #2c2e30;
+        border-right: 25px solid #161719;
         position: relative; 
         box-shadow: 0 0 60px rgba(0,0,0,1); 
         z-index: 10;
         transition: transform 1.2s cubic-bezier(0.19, 1, 0.22, 1);
         border-radius: 12px;
-        overflow: hidden; /* Keeps furniture inside the box */
+        overflow: hidden;
     }
     .workspace.active-glide .stage { transform: translateX(80px); }
     .room-img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: none; }
@@ -117,7 +117,7 @@
     .drawer-tab.opened { transform: translateX(-40%) scale(1.05); border-color: #8e9196; }
 
     /* --- FAN SYSTEMS --- */
-    .fan-container { position: fixed; width: 300px; height: 300px; display: none; z-index: 9999; pointer-events: none; }
+    .fan-container { position: absolute; width: 300px; height: 300px; display: none; z-index: 9999; pointer-events: none; }
     .fan-container.active { display: block; }
     .fan-blade {
         position: absolute; left: 50px; top: 110px; width: 150px; height: 40px; 
@@ -156,7 +156,7 @@
 <nav class="vintage-tabs">
     <div class="top-nav-tab" onclick="handleRoomsClick()"><div class="plate-style">Rooms</div></div>
     <div class="top-nav-tab"><div class="plate-style">Furniture</div></div>
-    <div class="top-nav-tab"><div class="plate-style">Decor</div></div>
+    <div class="top-nav-tab" onclick="handleDecorClick()"><div class="plate-style">Decor</div></div>
     <div class="top-nav-tab"><div class="plate-style">Inspiration</div></div>
 </nav>
 
@@ -168,11 +168,19 @@
     <div class="stage" id="drop-zone"><img id="main-room" class="room-img"></div>
 </div>
 
+<!-- FAN ATTACHED TO DRAWERS -->
 <div id="global-fan" class="fan-container">
     <div class="fan-blade blade-1"><img src="iconseating.png" class="category-icon-img" onclick="openSubFan('seating')"></div>
     <div class="fan-blade blade-2"><img src="iconbeds.png" class="category-icon-img" onclick="openSubFan('beds')"></div>
     <div class="fan-blade blade-3"><img src="iconstorage.png" class="category-icon-img" onclick="openSubFan('storage')"></div>
-    <div class="fan-blade blade-4"><img src="icontables.png" class="category-icon-img" onclick="openSubFan('tables')" onerror="this.src='iconseating.png'; this.style.filter='hue-rotate(90deg)'"></div>
+    <div class="fan-blade blade-4"><img src="icontables.png" class="category-icon-img" onclick="openSubFan('tables')"></div>
+</div>
+
+<div id="decor-fan" class="fan-container">
+    <div class="fan-blade blade-1"><img src="icondecor1.png" class="category-icon-img"></div>
+    <div class="fan-blade blade-2"><img src="icondecor2.png" class="category-icon-img"></div>
+    <div class="fan-blade blade-3"><img src="icondecor3.png" class="category-icon-img"></div>
+    <div class="fan-blade blade-4"><img src="icondecor4.png" class="category-icon-img"></div>
 </div>
 
 <div id="sub-fan" class="fan-container">
@@ -189,6 +197,7 @@ const workspace = document.getElementById('main-workspace');
 const cabContent = document.getElementById('cab-content');
 const mainRoom = document.getElementById('main-room');
 const fan = document.getElementById('global-fan');
+const decorFan = document.getElementById('decor-fan');
 const subFan = document.getElementById('sub-fan');
 const dropZone = document.getElementById('drop-zone');
 const uploadInput = document.getElementById('room-upload-input');
@@ -203,16 +212,29 @@ function handleRoomsClick() {
     `;
 }
 
+function handleDecorClick() {
+    decorFan.style.display = 'block';
+    const drawer = document.querySelector('.drw-1'); 
+    if(drawer){
+        const r = drawer.getBoundingClientRect();
+        const scrollTop = window.scrollY || document.documentElement.scrollTop;
+        decorFan.style.top = (r.top + scrollTop) + 'px';
+        decorFan.style.left = (r.right) + 'px';
+    }
+}
+
 function loadRoom(src, el) {
     if(src) mainRoom.src = src;
     mainRoom.style.display = 'block';
     document.querySelectorAll('.drawer-tab').forEach(d => d.classList.remove('opened'));
     if(el) el.classList.add('opened');
     fan.classList.remove('active', 'sub-active');
+    decorFan.classList.remove('active');
     subFan.classList.remove('active');
     
     const r = el.getBoundingClientRect();
-    fan.style.top = (r.top + r.height / 2 - 120) + 'px';
+    const scrollTop = window.scrollY || document.documentElement.scrollTop;
+    fan.style.top = (r.top + scrollTop + r.height / 2 - 120) + 'px';
     fan.style.left = (r.right - 100) + 'px';
     setTimeout(() => { fan.classList.add('active'); }, 50);
 }
@@ -221,7 +243,8 @@ function openSubFan(cat) {
     fan.classList.add('sub-active');
     subFan.classList.remove('active');
     const r = fan.getBoundingClientRect();
-    subFan.style.top = r.top + 'px';
+    const scrollTop = window.scrollY || document.documentElement.scrollTop;
+    subFan.style.top = (r.top + scrollTop) + 'px';
     subFan.style.left = (r.left + 100) + 'px'; 
 
     const blades = document.querySelectorAll('.sub-blade');
