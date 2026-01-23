@@ -30,7 +30,7 @@
     }
 
     /* --- NAVIGATION --- */
-    .vintage-tabs { display: flex; justify-content: center; gap: 20px; padding: 10px 0 40px; position: relative; z-index: 2000; }
+    .vintage-tabs { display: flex; justify-content: center; gap: 20px; padding: 10px 0 40px; position: relative; z-index: 5000; }
     .top-nav-tab {
         width: 170px; height: 85px; background: linear-gradient(135deg, #2c2e30, #0f1011);
         display: flex; align-items: center; justify-content: center; cursor: pointer;
@@ -72,13 +72,13 @@
     /* --- CABINET --- */
     .cabinet-container { 
         width: 0; opacity: 0; transform: translateX(-150px); 
-        transition: 1.2s cubic-bezier(0.19,1,0.22,1); position: relative; z-index: 200;
+        transition: 1.2s cubic-bezier(0.19,1,0.22,1); position: relative; z-index: 500;
     }
     .workspace.active-glide .cabinet-container { width: 600px; opacity: 1; transform: translateX(0); }
     .cabinet-img { width: 600px; display: block; }
     #cab-content { position: absolute; inset: 0; pointer-events: none; overflow-y: auto; overflow-x: visible; }
 
-    /* --- DRAWERS (Fans nested inside to scroll together) --- */
+    /* --- DRAWERS --- */
     .drawer-tab {
         position: absolute; left: 50%; transform: translateX(-50%); 
         width: 200px; height: 100px; 
@@ -87,6 +87,7 @@
         cursor: pointer; pointer-events: auto;
         border: 2px solid #3a3d40; box-shadow: 0 4px 10px rgba(0,0,0,0.8);
         transition: 0.4s cubic-bezier(0.19, 1, 0.22, 1);
+        z-index: 1000;
     }
     .drawer-tab:hover { transform: translateX(-48%) translateY(-5px); border-color: #fff; }
     .plate-style { width: 80%; height: 45%; background: #000 url("background_color.jpg") center/cover;
@@ -104,36 +105,47 @@
     .drw-1 { top: 130px; } .drw-2 { top: 270px; } .drw-3 { top: 410px; } .drw-upload { top: 550px; }
     .drawer-tab.opened { transform: translateX(-40%) scale(1.05); border-color: #8e9196; }
 
-    /* --- FAN SYSTEMS --- */
+    /* --- FAN MOTION SYSTEM --- */
     .fan-container { 
         position: absolute; width: 300px; height: 300px; display: none; z-index: 9999; pointer-events: none;
     }
     .fan-container.active { display: block; }
     
     .side-fan { left: 180px; top: -100px; }
-    .top-fan { left: -65px; top: 85px; }
+    .top-fan { left: 50%; transform: translateX(-50%); top: 85px; }
 
     .fan-blade {
         position: absolute; left: 50px; top: 110px; width: 150px; height: 40px; 
         background: linear-gradient(to right, #161719, #2c2e30, #8e9196);
         border: 1px solid rgba(255,255,255,0.4); border-left: none;
-        transform-origin: left center; opacity: 0; transition: 0.6s cubic-bezier(0.19, 1, 0.22, 1);
+        transform-origin: left center; opacity: 0; 
+        transform: rotate(0deg); /* Start Stacked */
+        transition: transform 0.6s cubic-bezier(0.19, 1, 0.22, 1), opacity 0.4s ease;
         display: flex; align-items: center; justify-content: flex-end; padding-right: 12px;
     }
     .fan-container.active .fan-blade { opacity: 1; pointer-events: auto; }
-    .fan-container.sub-active .fan-blade { opacity: 0.4; width: 120px; }
 
-    .blade-1 { transform: rotate(-30deg); } .blade-2 { transform: rotate(-10deg); }
-    .blade-3 { transform: rotate(10deg); } .blade-4 { transform: rotate(30deg); }
+    /* Side Fan Final Positions */
+    .side-fan.active .blade-1 { transform: rotate(-30deg); }
+    .side-fan.active .blade-2 { transform: rotate(-10deg); }
+    .side-fan.active .blade-3 { transform: rotate(10deg); }
+    .side-fan.active .blade-4 { transform: rotate(30deg); }
 
-    .top-fan .blade-1 { transform: rotate(60deg); }
-    .top-fan .blade-2 { transform: rotate(80deg); }
-    .top-fan .blade-3 { transform: rotate(100deg); }
-    .top-fan .blade-4 { transform: rotate(120deg); }
+    /* Top Fan Final Positions (Downward Fan) */
+    .top-fan .fan-blade { transform-origin: top center; left: 50%; top: 0; transform: translateX(-50%) rotate(0deg); }
+    .top-fan.active .blade-1 { transform: translateX(-50%) rotate(70deg); }
+    .top-fan.active .blade-2 { transform: translateX(-50%) rotate(85deg); }
+    .top-fan.active .blade-3 { transform: translateX(-50%) rotate(100deg); }
+    .top-fan.active .blade-4 { transform: translateX(-50%) rotate(115deg); }
 
+    /* Sub-Fan Motion */
     .sub-fan-inner { position: absolute; left: 280px; width: 450px; }
-    .sub-blade { width: 280px; justify-content: space-evenly; background: linear-gradient(to right, #161719, #2c2e30, #8e9196); border-radius: 0 40px 40px 0; }
-    
+    .sub-blade { 
+        width: 280px; justify-content: space-evenly; 
+        background: linear-gradient(to right, #161719, #2c2e30, #8e9196); 
+        border-radius: 0 40px 40px 0; border: 1px solid rgba(255,255,255,0.4);
+        transform: rotate(0deg);
+    }
     .sub-fan-inner.active .s-1 { transform: rotate(-55deg); } .sub-fan-inner.active .s-2 { transform: rotate(-40deg); }
     .sub-fan-inner.active .s-3 { transform: rotate(-25deg); } .sub-fan-inner.active .s-4 { transform: rotate(-10deg); }
     .sub-fan-inner.active .s-5 { transform: rotate(5deg); }  .sub-fan-inner.active .s-6 { transform: rotate(20deg); }
@@ -224,7 +236,7 @@ function handleDecorClick(el) {
     const fan = el.querySelector('#decor-fan');
     const isActive = fan.classList.contains('active');
     document.querySelectorAll('.fan-container').forEach(f => f.classList.remove('active'));
-    if (!isActive) fan.classList.add('active');
+    if (!isActive) setTimeout(() => fan.classList.add('active'), 10);
 }
 
 function loadRoom(src, el) {
