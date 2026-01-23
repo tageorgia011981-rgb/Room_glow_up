@@ -55,7 +55,6 @@
         flex: 1; position: relative; padding: 20px; 
     }
     
-    /* THE STAGE: CLOSED BOX */
     .stage { 
         width: 800px; height: 500px; 
         background: #1a1b1d; 
@@ -72,14 +71,14 @@
     .room-img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: none; }
     .placed-furniture { position: absolute; cursor: move; z-index: 60; max-width: 200px; filter: drop-shadow(0 10px 15px rgba(0,0,0,0.5)); }
 
-    /* --- MASSIVE CABINET --- */
+    /* --- CABINET --- */
     .cabinet-container { 
         width: 0; opacity: 0; transform: translateX(-150px); 
         transition: 1.2s cubic-bezier(0.19,1,0.22,1); position: absolute; left: 50px; z-index: 200;
     }
     .workspace.active-glide .cabinet-container { width: 450px; opacity: 1; transform: translateX(0); }
-    .cabinet-img { width: 450px; display: block; filter: drop-shadow(10px 0 20px black); }
-    #cab-content { position: absolute; inset: 0; pointer-events: none; }
+    .cabinet-img { width: 450px; display: block; filter: drop-shadow(10px 0 20px black); position: relative; z-index: 50; }
+    #cab-content { position: absolute; inset: 0; z-index: 100; pointer-events: none; }
 
     /* --- DRAWERS --- */
     .drawer-tab {
@@ -91,8 +90,10 @@
         border: 2px solid #3a3d40; box-shadow: 0 4px 10px rgba(0,0,0,0.8);
         transition: 0.4s cubic-bezier(0.19, 1, 0.22, 1);
     }
-    .drawer-tab:hover {
-        transform: translateX(-48%) translateY(-5px); border-color: #fff;
+    .drawer-tab:hover { 
+        transform: translateX(-48%) translateY(-5px); 
+        border-color: #fff;
+        box-shadow: 0 0 15px rgba(255,255,255,0.4), 0 4px 10px rgba(0,0,0,0.8);
     }
     .plate-style {
         width: 85%; height: 45%; background: #000 url("background_color.jpg") center/cover;
@@ -102,28 +103,43 @@
     }
 
     .drw-1 { top: 80px; } .drw-2 { top: 180px; } .drw-3 { top: 280px; } .drw-upload { top: 380px; }
-    .drawer-tab.opened { transform: translateX(-40%) scale(1.05); border-color: #8e9196; }
+    .drawer-tab.opened { 
+        transform: translateX(-40%) scale(1.05); 
+        border-color: #8e9196;
+        box-shadow: 0 0 20px rgba(255, 255, 255, 0.6);
+    }
 
     /* --- FAN SYSTEMS --- */
-    .fan-container { position: fixed; width: 300px; height: 300px; display: none; z-index: 9999; pointer-events: none; }
+    .fan-container { 
+        position: absolute;
+        width: 300px; height: 300px; display: none; z-index: 10; pointer-events: none; 
+    }
     .fan-container.active { display: block; }
     .fan-blade {
-        position: absolute; left: 50px; top: 110px; width: 150px; height: 40px; 
+        position: absolute; left: 0px; top: 130px; width: 0px; height: 40px; 
         background: linear-gradient(to right, #161719, #2c2e30, #8e9196);
         border: 1px solid rgba(255,255,255,0.4); border-left: none;
-        transform-origin: left center; opacity: 0; transition: 0.6s cubic-bezier(0.19, 1, 0.22, 1);
+        transform-origin: left center; opacity: 0; 
+        transition: width 0.6s cubic-bezier(0.19, 1, 0.22, 1), transform 0.6s cubic-bezier(0.19, 1, 0.22, 1), opacity 0.3s;
         display: flex; align-items: center; justify-content: flex-end; padding-right: 12px;
     }
-    .fan-container.active .fan-blade { opacity: 1; pointer-events: auto; }
+    .fan-container.active .fan-blade { opacity: 1; pointer-events: auto; width: 150px; }
     .fan-container.sub-active .fan-blade { opacity: 0.4; width: 120px; }
     
-    .blade-1 { transform: rotate(-30deg); } .blade-2 { transform: rotate(-10deg); }
-    .blade-3 { transform: rotate(10deg); } .blade-4 { transform: rotate(30deg); }
+    .blade-1 { transform: rotate(0deg); } .blade-2 { transform: rotate(0deg); }
+    .blade-3 { transform: rotate(0deg); } .blade-4 { transform: rotate(0deg); }
 
-    /* --- 8-BLADE SUB-FAN --- */
-    #sub-fan { width: 450px; }
-    .sub-blade { width: 280px; justify-content: space-evenly; background: linear-gradient(to right, #2c2e30, #ffffff); border-radius: 0 40px 40px 0; }
+    .fan-container.active .blade-1 { transform: rotate(-30deg); } 
+    .fan-container.active .blade-2 { transform: rotate(-10deg); }
+    .fan-container.active .blade-3 { transform: rotate(10deg); } 
+    .fan-container.active .blade-4 { transform: rotate(30deg); }
+
+    #sub-fan { width: 450px; z-index: 5; }
+    .sub-blade { width: 0; justify-content: space-evenly; background: linear-gradient(to right, #2c2e30, #ffffff); border-radius: 0 40px 40px 0; }
+    #sub-fan.active .sub-blade { width: 280px; }
     
+    .s-1, .s-2, .s-3, .s-4, .s-5, .s-6, .s-7, .s-8 { transform: rotate(0deg); }
+
     #sub-fan.active .s-1 { transform: rotate(-55deg); } #sub-fan.active .s-2 { transform: rotate(-40deg); }
     #sub-fan.active .s-3 { transform: rotate(-25deg); } #sub-fan.active .s-4 { transform: rotate(-10deg); }
     #sub-fan.active .s-5 { transform: rotate(5deg); }  #sub-fan.active .s-6 { transform: rotate(20deg); }
@@ -149,27 +165,28 @@
 </nav>
 
 <div class="workspace" id="main-workspace">
-    <div class="cabinet-container">
+    <div class="cabinet-container" id="cab-anchor">
         <img src="cabinet.png" class="cabinet-img">
         <div id="cab-content"></div>
+        
+        <div id="global-fan" class="fan-container">
+            <div class="fan-blade blade-1"><img src="iconseating.png" class="category-icon-img" onclick="openSubFan('seating')"></div>
+            <div class="fan-blade blade-2"><img src="iconbeds.png" class="category-icon-img" onclick="openSubFan('beds')"></div>
+            <div class="fan-blade blade-3"><img src="iconstorage.png" class="category-icon-img" onclick="openSubFan('storage')"></div>
+            <div class="fan-blade blade-4"><img src="icontable.png" class="category-icon-img" onclick="openSubFan('tables')"></div>
+        </div>
+
+        <div id="sub-fan" class="fan-container">
+            <div class="fan-blade sub-blade s-1"></div><div class="fan-blade sub-blade s-2"></div>
+            <div class="fan-blade sub-blade s-3"></div><div class="fan-blade sub-blade s-4"></div>
+            <div class="fan-blade sub-blade s-5"></div><div class="fan-blade sub-blade s-6"></div>
+            <div class="fan-blade sub-blade s-7"></div><div class="fan-blade sub-blade s-8"></div>
+        </div>
     </div>
+
     <div class="stage" id="drop-zone">
         <img id="main-room" class="room-img">
     </div>
-</div>
-
-<div id="global-fan" class="fan-container">
-    <div class="fan-blade blade-1"><img src="iconseating.png" class="category-icon-img" onclick="openSubFan('seating')"></div>
-    <div class="fan-blade blade-2"><img src="iconbeds.png" class="category-icon-img" onclick="openSubFan('beds')"></div>
-    <div class="fan-blade blade-3"><img src="iconstorage.png" class="category-icon-img" onclick="openSubFan('storage')"></div>
-    <div class="fan-blade blade-4"><img src="icontable.png" class="category-icon-img" onclick="openSubFan('tables')"></div>
-</div>
-
-<div id="sub-fan" class="fan-container">
-    <div class="fan-blade sub-blade s-1"></div><div class="fan-blade sub-blade s-2"></div>
-    <div class="fan-blade sub-blade s-3"></div><div class="fan-blade sub-blade s-4"></div>
-    <div class="fan-blade sub-blade s-5"></div><div class="fan-blade sub-blade s-6"></div>
-    <div class="fan-blade sub-blade s-7"></div><div class="fan-blade sub-blade s-8"></div>
 </div>
 
 <input type="file" id="room-upload-input" accept="image/*" style="display:none">
@@ -183,37 +200,46 @@ const subFan = document.getElementById('sub-fan');
 const dropZone = document.getElementById('drop-zone');
 const uploadInput = document.getElementById('room-upload-input');
 
+let roomSelected = false;
+
 function handleRoomsClick() {
     workspace.classList.add('active-glide');
     cabContent.innerHTML = `
-        <div class="drawer-tab drw-1" onclick="loadRoom('livingroom.jpg', this)"><div class="plate-style">Living Room</div></div>
-        <div class="drawer-tab drw-2" onclick="loadRoom('bedroom.jpg', this)"><div class="plate-style">Bedroom</div></div>
-        <div class="drawer-tab drw-3" onclick="loadRoom('diningroom.jpg', this)"><div class="plate-style">Dining Room</div></div>
+        <div class="drawer-tab drw-1" onclick="selectRoom('livingroom.jpg', this)"><div class="plate-style">Living Room</div></div>
+        <div class="drawer-tab drw-2" onclick="selectRoom('bedroom.jpg', this)"><div class="plate-style">Bedroom</div></div>
+        <div class="drawer-tab drw-3" onclick="selectRoom('diningroom.jpg', this)"><div class="plate-style">Dining Room</div></div>
         <div class="drawer-tab drw-upload" onclick="triggerUpload()"><div class="plate-style">Upload Your Room</div></div>
     `;
 }
 
-function loadRoom(src, el) {
+function selectRoom(src, el) {
     if(src) mainRoom.src = src;
     mainRoom.style.display = 'block';
+    roomSelected = true;
+    
     document.querySelectorAll('.drawer-tab').forEach(d => d.classList.remove('opened'));
     if(el) el.classList.add('opened');
     
+    // Reset fans on new room choice
     fan.classList.remove('active', 'sub-active');
     subFan.classList.remove('active');
     
-    const r = el.getBoundingClientRect();
-    fan.style.top = (r.top + r.height / 2 - 120) + 'px';
-    fan.style.left = (r.right - 50) + 'px';
+    const rect = el.getBoundingClientRect();
+    const anchorRect = document.getElementById('cab-anchor').getBoundingClientRect();
+    
+    fan.style.top = (rect.top - anchorRect.top + (rect.height / 2) - 150) + 'px';
+    fan.style.left = (rect.right - anchorRect.left - 40) + 'px';
+    
     setTimeout(() => { fan.classList.add('active'); }, 50);
 }
 
 function openSubFan(cat) {
+    if(!roomSelected) return;
     fan.classList.add('sub-active');
     subFan.classList.remove('active');
-    const r = fan.getBoundingClientRect();
-    subFan.style.top = r.top + 'px';
-    subFan.style.left = (r.left + 80) + 'px'; 
+    
+    subFan.style.top = fan.style.top;
+    subFan.style.left = (parseInt(fan.style.left) + 80) + 'px'; 
 
     const blades = document.querySelectorAll('.sub-blade');
     blades.forEach((b, i) => {
@@ -260,7 +286,7 @@ uploadInput.onchange = e => {
     const file = e.target.files[0];
     if (file) {
         const reader = new FileReader();
-        reader.onload = event => loadRoom(event.target.result, document.querySelector('.drw-upload'));
+        reader.onload = event => selectRoom(event.target.result, document.querySelector('.drw-upload'));
         reader.readAsDataURL(file);
     }
 };
@@ -268,4 +294,3 @@ uploadInput.onchange = e => {
 
 </body>
 </html>
-
