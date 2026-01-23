@@ -13,35 +13,35 @@
     body {
         background: #0f1011 url("background_color.jpg") center / cover fixed;
         min-height: 100vh; font-family: 'Special Elite', cursive; 
-        overflow-x: hidden; /* Lock side-to-side movement */
+        overflow-x: hidden;
         display: flex; flex-direction: column;
     }
 
     /* --- HEADER --- */
-    .site-header { text-align: center; padding: 50px 0 20px; position: relative; z-index: 1000; }
+    .site-header { text-align: center; padding: 30px 0 10px; position: relative; z-index: 1000; }
     .brand-title {
-        font-family: 'Limelight', cursive; font-size: clamp(55px, 10vw, 85px); text-transform: uppercase;
+        font-family: 'Limelight', cursive; font-size: clamp(45px, 8vw, 75px); text-transform: uppercase;
         background: linear-gradient(to bottom, #2c2e30 0%, #ffffff 45%, #ffffff 55%, #8e9196 70%, #161719 100%);
         -webkit-background-clip: text; -webkit-text-fill-color: transparent;
         filter: drop-shadow(0 0 15px rgba(255,255,255,0.4)); letter-spacing: 6px; line-height: 0.9;
     }
     .sub-title { 
-        font-family: 'Limelight', cursive; font-size: 22px; letter-spacing: 16px; 
-        color: #ffffff; opacity: 0.7; text-transform: uppercase; margin-top: 25px;
+        font-family: 'Limelight', cursive; font-size: 18px; letter-spacing: 12px; 
+        color: #ffffff; opacity: 0.7; text-transform: uppercase; margin-top: 15px;
         text-shadow: 0 0 15px rgba(255,255,255,0.6);
     }
 
     /* --- NAVIGATION --- */
-    .vintage-tabs { display: flex; justify-content: center; gap: 20px; padding: 10px 0 40px; }
+    .vintage-tabs { display: flex; justify-content: center; gap: 20px; padding: 10px 0 30px; }
     .top-nav-tab {
-        width: 170px; height: 85px; background: linear-gradient(135deg, #2c2e30, #0f1011);
+        width: 150px; height: 75px; background: linear-gradient(135deg, #2c2e30, #0f1011);
         display: flex; align-items: center; justify-content: center; cursor: pointer;
         border: 2px solid #3a3d40; box-shadow: 0 6px 15px rgba(0,0,0,0.8);
         transition: all 0.4s cubic-bezier(0.19, 1, 0.22, 1); position: relative; border-radius: 4px;
     }
     .top-nav-tab:hover {
-        transform: translateY(-12px); border-color: #8e9196;
-        box-shadow: 0 15px 30px rgba(0,0,0,0.9), 0 0 20px rgba(255,255,255,0.2);
+        transform: translateY(-8px); border-color: #8e9196;
+        box-shadow: 0 12px 25px rgba(0,0,0,0.9), 0 0 15px rgba(255,255,255,0.2);
     }
     .top-nav-tab::after {
         content: ''; position: absolute; bottom: -8px; left: 50%; transform: translateX(-50%);
@@ -51,40 +51,40 @@
 
     /* --- WORKSPACE --- */
     .workspace { 
-        display: flex; justify-content: center; align-items: flex-start; 
-        flex: 1; position: relative; padding: 20px 40px 100px; 
+        display: flex; justify-content: center; align-items: center; 
+        flex: 1; position: relative; padding: 20px; 
     }
     
     /* THE STAGE: CLOSED BOX */
     .stage { 
-        width: 1000px; height: 650px; 
+        width: 800px; height: 500px; 
         background: #1a1b1d; 
-        border: 12px solid #2c2e30; /* Gunmetal casing */
-        border-right: 25px solid #161719; /* THE HARD STOP: This closes the box */
+        border: 12px solid #2c2e30;
+        border-right: 25px solid #161719;
         position: relative; 
         box-shadow: 0 0 60px rgba(0,0,0,1); 
         z-index: 10;
         transition: transform 1.2s cubic-bezier(0.19, 1, 0.22, 1);
         border-radius: 12px;
-        overflow: hidden; /* Keeps furniture inside the box */
+        overflow: hidden;
     }
-    .workspace.active-glide .stage { transform: translateX(80px); }
+    .workspace.active-glide .stage { transform: translateX(200px); }
     .room-img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: none; }
-    .placed-furniture { position: absolute; cursor: move; z-index: 60; max-width: 250px; filter: drop-shadow(0 10px 15px rgba(0,0,0,0.5)); }
+    .placed-furniture { position: absolute; cursor: move; z-index: 60; max-width: 200px; filter: drop-shadow(0 10px 15px rgba(0,0,0,0.5)); }
 
     /* --- MASSIVE CABINET --- */
     .cabinet-container { 
         width: 0; opacity: 0; transform: translateX(-150px); 
-        transition: 1.2s cubic-bezier(0.19,1,0.22,1); position: relative; z-index: 200;
+        transition: 1.2s cubic-bezier(0.19,1,0.22,1); position: absolute; left: 50px; z-index: 200;
     }
-    .workspace.active-glide .cabinet-container { width: 600px; opacity: 1; transform: translateX(0); }
-    .cabinet-img { width: 600px; display: block; }
+    .workspace.active-glide .cabinet-container { width: 450px; opacity: 1; transform: translateX(0); }
+    .cabinet-img { width: 450px; display: block; filter: drop-shadow(10px 0 20px black); }
     #cab-content { position: absolute; inset: 0; pointer-events: none; }
 
     /* --- DRAWERS --- */
     .drawer-tab {
         position: absolute; left: 50%; transform: translateX(-50%); 
-        width: 200px; height: 100px; 
+        width: 160px; height: 80px; 
         background: linear-gradient(135deg, #2c2e30, #0f1011);
         display: flex; align-items: center; justify-content: center;
         cursor: pointer; pointer-events: auto;
@@ -93,27 +93,15 @@
     }
     .drawer-tab:hover {
         transform: translateX(-48%) translateY(-5px); border-color: #fff;
-        box-shadow: 0 10px 20px rgba(0,0,0,0.9), 0 0 15px rgba(255,255,255,0.1);
-    }
-    .drawer-tab::after {
-        content: ''; position: absolute; bottom: -10px; left: 50%; transform: translateX(-50%);
-        width: 130px; height: 16px; background: linear-gradient(to bottom, #555, #000);
-        border: 1px solid #111; border-radius: 0 0 12px 12px;
     }
     .plate-style {
-        width: 80%; height: 45%; background: #000 url("background_color.jpg") center/cover;
+        width: 85%; height: 45%; background: #000 url("background_color.jpg") center/cover;
         box-shadow: inset 0 0 0 1000px rgba(0,0,0,0.85);
         color: #fff; display: flex; align-items: center; justify-content: center;
-        font-size: 13px; letter-spacing: 2px; border: 1px solid #444; position: relative;
+        font-size: 11px; letter-spacing: 2px; border: 1px solid #444; position: relative;
     }
-    .plate-style::before, .plate-style::after {
-        content: ''; position: absolute; width: 6px; height: 6px; background: #0f1011; 
-        border-radius: 50%; top: 50%; transform: translateY(-50%);
-        box-shadow: inset 1px 1px 2px #000, 0.5px 0.5px 0px rgba(255,255,255,0.1);
-    }
-    .plate-style::before { left: -12px; } .plate-style::after { right: -12px; }
 
-    .drw-1 { top: 130px; } .drw-2 { top: 270px; } .drw-3 { top: 410px; } .drw-upload { top: 550px; }
+    .drw-1 { top: 80px; } .drw-2 { top: 180px; } .drw-3 { top: 280px; } .drw-upload { top: 380px; }
     .drawer-tab.opened { transform: translateX(-40%) scale(1.05); border-color: #8e9196; }
 
     /* --- FAN SYSTEMS --- */
@@ -165,14 +153,16 @@
         <img src="cabinet.png" class="cabinet-img">
         <div id="cab-content"></div>
     </div>
-    <div class="stage" id="drop-zone"><img id="main-room" class="room-img"></div>
+    <div class="stage" id="drop-zone">
+        <img id="main-room" class="room-img">
+    </div>
 </div>
 
 <div id="global-fan" class="fan-container">
     <div class="fan-blade blade-1"><img src="iconseating.png" class="category-icon-img" onclick="openSubFan('seating')"></div>
     <div class="fan-blade blade-2"><img src="iconbeds.png" class="category-icon-img" onclick="openSubFan('beds')"></div>
     <div class="fan-blade blade-3"><img src="iconstorage.png" class="category-icon-img" onclick="openSubFan('storage')"></div>
-    <div class="fan-blade blade-4"><img src="icontables.png" class="category-icon-img" onclick="openSubFan('tables')" onerror="this.src='iconseating.png'; this.style.filter='hue-rotate(90deg)'"></div>
+    <div class="fan-blade blade-4"><img src="icontables.png" class="category-icon-img" onclick="openSubFan('tables')"></div>
 </div>
 
 <div id="sub-fan" class="fan-container">
@@ -208,12 +198,13 @@ function loadRoom(src, el) {
     mainRoom.style.display = 'block';
     document.querySelectorAll('.drawer-tab').forEach(d => d.classList.remove('opened'));
     if(el) el.classList.add('opened');
+    
     fan.classList.remove('active', 'sub-active');
     subFan.classList.remove('active');
     
     const r = el.getBoundingClientRect();
     fan.style.top = (r.top + r.height / 2 - 120) + 'px';
-    fan.style.left = (r.right - 100) + 'px';
+    fan.style.left = (r.right - 50) + 'px';
     setTimeout(() => { fan.classList.add('active'); }, 50);
 }
 
@@ -222,7 +213,7 @@ function openSubFan(cat) {
     subFan.classList.remove('active');
     const r = fan.getBoundingClientRect();
     subFan.style.top = r.top + 'px';
-    subFan.style.left = (r.left + 100) + 'px'; 
+    subFan.style.left = (r.left + 80) + 'px'; 
 
     const blades = document.querySelectorAll('.sub-blade');
     blades.forEach((b, i) => {
