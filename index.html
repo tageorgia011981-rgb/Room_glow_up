@@ -60,10 +60,10 @@
         z-index: 10;
         transition: transform 1.2s cubic-bezier(0.19, 1, 0.22, 1);
         border-radius: 12px;
-        overflow: hidden;
+        overflow: visible; /* Changed to allow decor fan visibility */
     }
     .workspace.active-glide .stage { transform: translateX(200px); }
-    .room-img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: none; }
+    .room-img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: none; border-radius: 2px; }
     .placed-furniture { position: absolute; cursor: move; z-index: 60; max-width: 200px; filter: drop-shadow(0 10px 15px rgba(0,0,0,0.5)); }
 
     /* --- CABINET --- */
@@ -88,7 +88,7 @@
     .drawer-tab:hover { 
         transform: translateX(-48%) translateY(-5px); 
         border-color: #fff;
-        box-shadow: 0 0 15px rgba(255,255,255,0.4);
+        box-shadow: 0 0 20px rgba(255,255,255,0.6);
     }
     .plate-style {
         width: 85%; height: 45%; background: #000 url("background_color.jpg") center/cover;
@@ -101,7 +101,7 @@
     .drawer-tab.opened { 
         transform: translateX(-40%) scale(1.05); 
         border-color: #8e9196;
-        box-shadow: 0 0 20px rgba(255, 255, 255, 0.6);
+        box-shadow: 0 0 20px rgba(255, 255, 255, 0.8);
     }
 
     /* --- FAN SYSTEMS --- */
@@ -120,15 +120,34 @@
                     transform 0.8s cubic-bezier(0.17, 0.67, 0.36, 1), 
                     opacity 0.4s;
         display: flex; align-items: center; justify-content: flex-end; padding-right: 12px;
-        transform: rotate(0deg); /* Initial state for animation */
+        transform: rotate(0deg);
     }
 
     .fan-container.active .fan-blade { opacity: 1; pointer-events: auto; width: 160px; }
-    
     .fan-container.active .blade-1 { transform: rotate(-40deg); } 
     .fan-container.active .blade-2 { transform: rotate(-15deg); }
     .fan-container.active .blade-3 { transform: rotate(15deg); } 
     .fan-container.active .blade-4 { transform: rotate(40deg); }
+
+    /* Decor Fan (Top of stage fanning down) */
+    .decor-fan-container {
+        position: absolute; top: 0; left: 50%; transform: translateX(-50%);
+        width: 400px; height: 200px; z-index: 5; display: none; pointer-events: none;
+    }
+    .decor-fan-container.active { display: block; }
+    .decor-blade {
+        position: absolute; top: 0; left: 50%; transform: translateX(-50%) rotate(0deg);
+        width: 45px; height: 0; background: linear-gradient(to bottom, #161719, #2c2e30, #8e9196);
+        border: 1px solid rgba(255,255,255,0.4); border-top: none;
+        transform-origin: top center; opacity: 0;
+        transition: height 0.8s cubic-bezier(0.17, 0.67, 0.36, 1), transform 0.8s cubic-bezier(0.17, 0.67, 0.36, 1), opacity 0.4s;
+        display: flex; align-items: flex-end; justify-content: center; padding-bottom: 10px;
+    }
+    .decor-fan-container.active .decor-blade { opacity: 1; pointer-events: auto; height: 160px; }
+    .decor-fan-container.active .d-1 { transform: translateX(-50%) rotate(-45deg); }
+    .decor-fan-container.active .d-2 { transform: translateX(-50%) rotate(-15deg); }
+    .decor-fan-container.active .d-3 { transform: translateX(-50%) rotate(15deg); }
+    .decor-fan-container.active .d-4 { transform: translateX(-50%) rotate(45deg); }
 
     .fan-container.sub-active .fan-blade { opacity: 0.4; filter: blur(1px); }
 
@@ -145,7 +164,6 @@
     }
 
     #sub-fan.active .sub-blade { width: 320px; opacity: 1; pointer-events: auto; }
-    
     #sub-fan.active .s-1 { transform: rotate(-60deg); } 
     #sub-fan.active .s-2 { transform: rotate(-45deg); } 
     #sub-fan.active .s-3 { transform: rotate(-30deg); } 
@@ -170,7 +188,7 @@
 <nav class="vintage-tabs">
     <div class="top-nav-tab" onclick="handleRoomsClick()"><div class="plate-style">Rooms</div></div>
     <div class="top-nav-tab"><div class="plate-style">Furniture</div></div>
-    <div class="top-nav-tab"><div class="plate-style">Decor</div></div>
+    <div class="top-nav-tab" onclick="toggleDecorFan()"><div class="plate-style">Decor</div></div>
     <div class="top-nav-tab"><div class="plate-style">Inspiration</div></div>
 </nav>
 
@@ -194,7 +212,13 @@
         </div>
     </div>
 
-    <div class="stage" id="drop-zone"><img id="main-room" class="room-img"></div>
+    <div class="stage" id="drop-zone">
+        <div id="decor-fan" class="decor-fan-container">
+            <div class="decor-blade d-1"></div><div class="decor-blade d-2"></div>
+            <div class="decor-blade d-3"></div><div class="decor-blade d-4"></div>
+        </div>
+        <img id="main-room" class="room-img">
+    </div>
 </div>
 
 <input type="file" id="room-upload-input" accept="image/*" style="display:none">
@@ -205,6 +229,7 @@ const cabContent = document.getElementById('cab-content');
 const mainRoom = document.getElementById('main-room');
 const fan = document.getElementById('global-fan');
 const subFan = document.getElementById('sub-fan');
+const decorFan = document.getElementById('decor-fan');
 const dropZone = document.getElementById('drop-zone');
 const uploadInput = document.getElementById('room-upload-input');
 
@@ -221,35 +246,37 @@ function handleRoomsClick() {
 function selectRoom(src, el) {
     if(src) mainRoom.src = src;
     mainRoom.style.display = 'block';
-    
     document.querySelectorAll('.drawer-tab').forEach(d => d.classList.remove('opened'));
     el.classList.add('opened');
-    
     fan.classList.remove('active', 'sub-active');
     subFan.classList.remove('active');
-    
     const rect = el.getBoundingClientRect();
     const anchorRect = document.getElementById('cab-anchor').getBoundingClientRect();
-    
     fan.style.top = (rect.top - anchorRect.top + (rect.height / 2) - 150) + 'px';
     fan.style.left = (rect.right - anchorRect.left - 45) + 'px';
-    
     setTimeout(() => { fan.classList.add('active'); }, 50);
+}
+
+function toggleDecorFan() {
+    decorFan.classList.toggle('active');
 }
 
 function openSubFan(cat) {
     fan.classList.add('sub-active');
     subFan.classList.remove('active');
-    
     subFan.style.top = fan.style.top;
     subFan.style.left = (parseInt(fan.style.left) + 60) + 'px'; 
 
     const blades = document.querySelectorAll('.sub-blade');
     blades.forEach((b, i) => {
-        b.innerHTML = `
-            <img src="furn_${cat}_${i}a.png" class="furn-item-img" draggable="true" ondragstart="drag(event)" onerror="this.style.opacity='0.2'">
-            <img src="furn_${cat}_${i}b.png" class="furn-item-img" draggable="true" ondragstart="drag(event)" onerror="this.style.opacity='0.2'">
-        `;
+        let content = '';
+        if (cat === 'storage') {
+            const stor = ['storage_shelf.png', 'storage_grnshelf.png', 'storage_dresser_drkbrn.png'];
+            if(stor[i]) content = `<img src="${stor[i]}" class="furn-item-img" draggable="true" ondragstart="drag(event)">`;
+        } else {
+            content = `<img src="furn_${cat}_${i}a.png" class="furn-item-img" draggable="true" ondragstart="drag(event)" onerror="this.style.opacity='0.2'"><img src="furn_${cat}_${i}b.png" class="furn-item-img" draggable="true" ondragstart="drag(event)" onerror="this.style.opacity='0.2'">`;
+        }
+        b.innerHTML = content;
     });
     setTimeout(() => { subFan.classList.add('active'); }, 50);
 }
