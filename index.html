@@ -3,227 +3,169 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Room Glow Up | Industrial Master</title>
+    <title>Room Glow Up | Church Fan Mechanical</title>
     <link href="https://fonts.googleapis.com/css2?family=Limelight&family=Special+Elite&display=swap" rel="stylesheet">
     <style>
-        /* --- CORE THEME --- */
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
-            background: #0f1011;
+            background: #0f1011 url("background_color.jpg") center / cover fixed;
             min-height: 100vh; font-family: 'Special Elite', cursive; 
             overflow: hidden; display: flex; flex-direction: column; color: #fff;
         }
 
         /* --- HEADER --- */
-        .site-header { text-align: center; padding: 20px 0 5px; z-index: 2000; }
-        .brand-title {
-            font-family: 'Limelight', cursive; font-size: 55px; text-transform: uppercase;
-            background: linear-gradient(to bottom, #ffffff, #8e9196, #2c2e30);
-            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-            letter-spacing: 4px;
-        }
+        .site-header { text-align: center; padding: 15px 0; z-index: 2000; }
+        .brand-title { font-family: 'Limelight', cursive; font-size: 50px; text-transform: uppercase; background: linear-gradient(to bottom, #fff, #8e9196, #2c2e30); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .sub-title { font-family: 'Limelight', cursive; font-size: 16px; letter-spacing: 5px; color: #fff; opacity: 0.8; }
+        
+        .vintage-tabs { display: flex; justify-content: center; gap: 15px; padding: 10px 0; z-index: 1500; }
 
-        /* --- INDUSTRIAL HARDWARE DRAWERS (TABS) --- */
+        /* --- HARDWARE DRAWERS --- */
         .drawer-hardware {
-            position: relative; width: 185px; height: 75px;
-            background: linear-gradient(135deg, #2c2e30 0%, #000000 100%); 
-            border: 2px solid #1a1a1a;
+            position: relative; width: 180px; height: 75px;
+            background: linear-gradient(135deg, #2c2e30, #000); border: 2px solid #1a1a1a;
             box-shadow: inset 0 0 10px rgba(255,255,255,0.1), 0 5px 15px rgba(0,0,0,0.8);
-            display: flex; align-items: center; justify-content: center;
-            cursor: pointer; transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            z-index: 100;
+            display: flex; align-items: center; justify-content: center; cursor: pointer;
+            transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); z-index: 100;
         }
-        
-        .drawer-hardware::before, .drawer-hardware::after {
-            content: ''; position: absolute; top: 50%; transform: translateY(-50%);
-            width: 7px; height: 7px; background: #111; border-radius: 50%;
-            box-shadow: inset -1px -1px 2px rgba(255,255,255,0.1), 1px 1px 1px rgba(0,0,0,0.8);
-        }
-        .drawer-hardware::before { left: 10px; }
-        .drawer-hardware::after { right: 10px; }
-        
-        .lip-pull {
-            position: absolute; bottom: -6px; left: 50%; transform: translateX(-50%);
-            width: 85px; height: 14px; background: linear-gradient(to bottom, #333, #000);
-            border-radius: 0 0 8px 8px; border: 1px solid #111;
-        }
-
-        .plate-style {
-            width: 140px; height: 35px;
-            background: linear-gradient(145deg, #bdc3c7, #8e9196, #bdc3c7); 
-            color: #111; display: flex; align-items: center; justify-content: center;
-            font-size: 14px; font-weight: bold; text-transform: uppercase;
-            border: 1px solid #777; box-shadow: inset 0 2px 5px rgba(0,0,0,0.4);
-            pointer-events: none;
-        }
-
-        /* MECHANICAL LIFT EFFECT */
-        .drawer-hardware:hover { transform: translateY(-2px); box-shadow: 0 8px 25px rgba(0,0,0,0.9); }
-        .active-lift { 
-            transform: translateY(8px) scale(1.05) !important; 
-            border-color: #bdc3c7; 
-            box-shadow: 0 0 30px rgba(255,255,255,0.1), 0 10px 30px rgba(0,0,0,1); 
-        }
-
-        /* --- NAVIGATION --- */
-        .vintage-tabs { display: flex; justify-content: center; gap: 15px; padding: 15px 0; z-index: 1500; }
+        .active-lift { transform: translateY(10px) scale(1.05) !important; border-color: #bdc3c7; }
+        .plate-style { width: 135px; height: 35px; background: linear-gradient(145deg, #bdc3c7, #8e9196); color: #111; display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: bold; text-transform: uppercase; border: 1px solid #777; }
+        .lip-pull { position: absolute; bottom: -5px; left: 50%; transform: translateX(-50%); width: 80px; height: 12px; background: linear-gradient(#333, #000); border-radius: 0 0 6px 6px; border: 1px solid #111; }
 
         /* --- WORKSPACE --- */
         .workspace { display: flex; justify-content: center; align-items: center; flex: 1; position: relative; }
-        .stage { 
-            width: 850px; height: 500px; background: #050505; border: 12px solid #2c2e30;
-            position: relative; box-shadow: 0 0 80px black; z-index: 5;
-            transition: transform 0.8s cubic-bezier(0.19, 1, 0.22, 1);
-        }
+        .stage { width: 850px; height: 500px; background: #000; border: 10px solid #2c2e30; position: relative; box-shadow: 0 0 60px #000; transition: 0.8s; z-index: 5; }
         .workspace.active-glide .stage { transform: translateX(200px); }
+        .room-img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: none; }
+        .preview-mode { display: block !important; filter: sepia(0.6) brightness(0.4); }
 
-        /* --- CABINET & SPACED DRAWERS --- */
-        .cabinet-container { 
-            position: absolute; left: 30px; width: 420px; opacity: 0; z-index: 200;
-            transition: 0.8s cubic-bezier(0.19, 1, 0.22, 1); pointer-events: none;
-        }
+        .cabinet-container { position: absolute; left: 20px; width: 420px; opacity: 0; transition: 0.8s; pointer-events: none; }
         .workspace.active-glide .cabinet-container { opacity: 1; pointer-events: auto; }
         .drawer-stack { position: absolute; top: 70px; left: 50%; transform: translateX(-50%); width: 100%; display: flex; flex-direction: column; align-items: center; gap: 35px; }
 
-        /* --- MECHANICAL FAN-WITHIN-FAN --- */
-        .fan-pivot { position: absolute; z-index: 40; pointer-events: none; transition: top 0.5s; }
+        /* --- TRIPLE STAGE FAN ENGINE --- */
+        .fan-system { position: absolute; z-index: 40; pointer-events: none; left: 310px; }
         
-        /* The Mother Arm (Gunmetal) */
-        .mother-arm {
-            position: absolute; left: 0; top: 0; width: 0; height: 6px;
-            background: #1a1a1a; border: 1px solid #333; transform-origin: left center;
-            transition: width 0.6s ease, transform 1.2s cubic-bezier(0.25, 0.1, 0.25, 1), opacity 0.4s;
-            opacity: 0; display: flex; align-items: center; justify-content: flex-end;
-            filter: drop-shadow(0 10px 10px rgba(0,0,0,0.5));
-        }
-        .active-mother .mother-arm { width: 160px; opacity: 1; pointer-events: auto; }
-
-        .arm-1 { transform: rotate(-40deg); } .arm-2 { transform: rotate(-15deg); }
-        .arm-3 { transform: rotate(15deg); } .arm-4 { transform: rotate(40deg); }
-
-        .paddle {
-            width: 50px; height: 50px; background: #000; border: 2px solid #444;
-            border-radius: 50%; margin-right: -25px; display: flex; align-items: center; justify-content: center;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.9); cursor: pointer;
+        /* The Hand Fan Blade Base */
+        .fan-blade {
+            position: absolute; left: 0; top: -40px; width: 0; height: 100px;
+            background: linear-gradient(to right, #1a1a1a, #333);
+            border: 1px solid #444; border-radius: 0 50px 50px 0;
+            transform-origin: left center; transition: all 1s cubic-bezier(0.19, 1, 0.22, 1);
+            opacity: 0; display: flex; align-items: center; justify-content: flex-end; padding-right: 20px;
+            box-shadow: 5px 5px 15px rgba(0,0,0,0.5);
         }
 
-        /* Retraction */
-        .mother-arm.hide-arm { width: 0 !important; opacity: 0 !important; transform: rotate(0deg) !important; }
+        /* Stage Opacities */
+        .stage-faded { opacity: 0.2 !important; filter: grayscale(1); pointer-events: none; }
 
-        /* The Nested Fan (Silver Blades) */
-        .nested-fan-blade {
-            position: absolute; left: 160px; top: 0; width: 0; height: 45px;
-            background: linear-gradient(to right, #bdc3c7, #8e9196);
-            border: 2px solid #555; border-radius: 0 25px 25px 0;
-            transform-origin: left center; transition: 0.8s cubic-bezier(0.19, 1, 0.22, 1);
-            opacity: 0; display: flex; align-items: center; justify-content: flex-end; padding-right: 15px;
-            filter: drop-shadow(5px 15px 15px rgba(0,0,0,0.6));
-        }
-        .active-nested .nested-fan-blade { width: 280px; opacity: 1; pointer-events: auto; }
-        
-        /* Nested Rotations */
-        .n-1 { transform: rotate(-35deg); } .n-2 { transform: rotate(-12deg); }
-        .n-3 { transform: rotate(12deg); } .n-4 { transform: rotate(35deg); }
+        /* Stage 1: Gunmetal */
+        .s1-active .fan-blade { width: 220px; opacity: 1; pointer-events: auto; }
+        .s1-1 { transform: rotate(-60deg); } .s1-2 { transform: rotate(-20deg); }
+        .s1-3 { transform: rotate(20deg); } .s1-4 { transform: rotate(60deg); }
+
+        /* Stage 2: Silver */
+        .s2-active .fan-blade { width: 280px; opacity: 1; background: linear-gradient(to right, #8e9196, #bdc3c7); color: #000; pointer-events: auto; }
+        .s2-1 { transform: rotate(-50deg); } .s2-2 { transform: rotate(-15deg); }
+        .s2-3 { transform: rotate(15deg); } .s2-4 { transform: rotate(50deg); }
+
+        /* Stage 3: Chrome Item Fan */
+        .s3-active .fan-blade { width: 340px; opacity: 1; background: linear-gradient(to right, #fff, #bdc3c7); pointer-events: auto; }
+
+        .fan-icon { width: 60px; height: 60px; cursor: pointer; transition: 0.3s; }
+        .fan-icon:hover { transform: scale(1.2) rotate(-5deg); }
+
+        .placed-item { position: absolute; cursor: move; z-index: 100; max-width: 150px; filter: drop-shadow(0 10px 20px black); }
     </style>
 </head>
-
 <body>
 
 <header class="site-header">
     <h1 class="brand-title">Room Glow Up</h1>
+    <p class="sub-title">Your Dream Space Come To Life</p>
 </header>
 
 <nav class="vintage-tabs">
-    <div class="drawer-hardware" onclick="toggleLift(this); openCabinet('rooms')">
-        <div class="plate-style">Rooms</div><div class="lip-pull"></div>
-    </div>
-    <div class="drawer-hardware" onclick="toggleLift(this); openCabinet('furniture')">
-        <div class="plate-style">Furniture</div><div class="lip-pull"></div>
-    </div>
-    <div class="drawer-hardware" onclick="toggleLift(this); openTopDrawer('decor')">
-        <div class="plate-style">Decor</div><div class="lip-pull"></div>
-    </div>
-    <div class="drawer-hardware" onclick="toggleLift(this)">
-        <div class="plate-style">Inspiration</div><div class="lip-pull"></div>
-    </div>
-    <div class="drawer-hardware" onclick="toggleLift(this)">
-        <div class="plate-style">Save</div><div class="lip-pull"></div>
-    </div>
+    <div class="drawer-hardware" onclick="lift(this); openCab('rooms')"><div class="plate-style">Rooms</div><div class="lip-pull"></div></div>
+    <div class="drawer-hardware" onclick="lift(this); openCab('furniture')"><div class="plate-style">Furniture</div><div class="lip-pull"></div></div>
+    <div class="drawer-hardware" onclick="lift(this)"><div class="plate-style">Decor</div><div class="lip-pull"></div></div>
+    <div class="drawer-hardware" onclick="lift(this)"><div class="plate-style">Inspiration</div><div class="lip-pull"></div></div>
+    <div class="drawer-hardware" onclick="lift(this)"><div class="plate-style">Save</div><div class="lip-pull"></div></div>
 </nav>
 
 <div class="workspace" id="main-ws">
     <div class="cabinet-container" id="cab-container">
-        <img src="cabinet.png" style="width:100%; filter: drop-shadow(15px 0 30px #000);">
+        <img src="cabinet.png" style="width:100%;">
         <div class="drawer-stack" id="drawer-anchor"></div>
         
-        <div id="fan-engine" class="fan-pivot" style="left: 310px;">
-            <div class="mother-arm arm-1" id="m-arm-1"><div class="paddle" onclick="unfoldNested(0, this)"><img src="icon1.png" style="width:25px; filter:invert(1);"></div></div>
-            <div class="mother-arm arm-2" id="m-arm-2"><div class="paddle" onclick="unfoldNested(1, this)"><img src="icon2.png" style="width:25px; filter:invert(1);"></div></div>
-            <div class="mother-arm arm-3" id="m-arm-3"><div class="paddle" onclick="unfoldNested(2, this)"><img src="icon3.png" style="width:25px; filter:invert(1);"></div></div>
-            <div class="mother-arm arm-4" id="m-arm-4"><div class="paddle" onclick="unfoldNested(3, this)"><img src="icon4.png" style="width:25px; filter:invert(1);"></div></div>
-            
-            <div id="nested-blades-container">
-                <div class="nested-fan-blade n-1"></div>
-                <div class="nested-fan-blade n-2"></div>
-                <div class="nested-fan-blade n-3"></div>
-                <div class="nested-fan-blade n-4"></div>
-            </div>
+        <div id="fan-stage-1" class="fan-system">
+            <div class="fan-blade s1-1"><img src="icon_furn.png" class="fan-icon" onclick="triggerStage2()"></div>
+            <div class="fan-blade s1-2"><img src="icon_decor.png" class="fan-icon"></div>
+            <div class="fan-blade s1-3"><img src="icon_light.png" class="fan-icon"></div>
+            <div class="fan-blade s1-4"><img src="icon_rug.png" class="fan-icon"></div>
+        </div>
+
+        <div id="fan-stage-2" class="fan-system">
+            <div class="fan-blade s2-1"><img src="icon_couch.png" class="fan-icon" onclick="triggerStage3()"></div>
+            <div class="fan-blade s2-2"><img src="icon_chair.png" class="fan-icon"></div>
+            <div class="fan-blade s2-3"><img src="icon_table.png" class="fan-icon"></div>
+            <div class="fan-blade s2-4"><img src="icon_bed.png" class="fan-icon"></div>
+        </div>
+
+        <div id="fan-stage-3" class="fan-system">
+            <div class="fan-blade s2-1"><img src="couch_item_1.png" class="fan-icon" ondragstart="drag(event)"></div>
+            <div class="fan-blade s2-2"><img src="couch_item_2.png" class="fan-icon" ondragstart="drag(event)"></div>
+            <div class="fan-blade s2-3"><img src="couch_item_3.png" class="fan-icon" ondragstart="drag(event)"></div>
+            <div class="fan-blade s2-4"><img src="couch_item_4.png" class="fan-icon" ondragstart="drag(event)"></div>
         </div>
     </div>
-
-    <div class="stage" id="stage-zone"></div>
+    <div class="stage" id="stage-zone"><img id="room-display" class="room-img"></div>
 </div>
 
 <script>
     const ws = document.getElementById('main-ws');
+    const roomImg = document.getElementById('room-display');
     const drawerAnchor = document.getElementById('drawer-anchor');
-    const fanEngine = document.getElementById('fan-engine');
-    const nestedContainer = document.getElementById('nested-blades-container');
+    const f1 = document.getElementById('fan-stage-1');
+    const f2 = document.getElementById('fan-stage-2');
+    const f3 = document.getElementById('fan-stage-3');
 
-    function toggleLift(el) {
-        document.querySelectorAll('.drawer-hardware').forEach(d => d.classList.remove('active-lift'));
-        el.classList.add('active-lift');
+    function lift(el) { document.querySelectorAll('.drawer-hardware').forEach(d => d.classList.remove('active-lift')); el.classList.add('active-lift'); }
+    
+    function resetFans() {
+        [f1, f2, f3].forEach(f => { f.className = 'fan-system'; });
     }
 
-    function openCabinet(type) {
-        ws.classList.add('active-glide');
-        resetFans();
+    function openCab(type) {
+        ws.classList.add('active-glide'); resetFans();
         if(type === 'rooms') {
             drawerAnchor.innerHTML = `
-                <div class="drawer-row" onclick="triggerMotherFan(this)"><div class="drawer-hardware"><div class="plate-style">Living Room</div><div class="lip-pull"></div></div></div>
-                <div class="drawer-row" onclick="triggerMotherFan(this)"><div class="drawer-hardware"><div class="plate-style">Bedroom</div><div class="lip-pull"></div></div></div>
-                <div class="drawer-row" onclick="triggerMotherFan(this)"><div class="drawer-hardware"><div class="plate-style">Dining Room</div><div class="lip-pull"></div></div></div>
-            `;
+                <div class="drawer-row" onmouseover="pre('living.jpg')" onmouseout="post()" onclick="set('living.jpg', this)"><div class="drawer-hardware"><div class="plate-style">Living Room</div><div class="lip-pull"></div></div></div>
+                <div class="drawer-row" onmouseover="pre('bedroom.jpg')" onmouseout="post()" onclick="set('bedroom.jpg', this)"><div class="drawer-hardware"><div class="plate-style">Bedroom</div><div class="lip-pull"></div></div></div>
+                <div class="drawer-row"><div class="drawer-hardware" style="background:#1a1a1a"><div class="plate-style" style="background:#bfc9ca">Upload / Load</div><div class="lip-pull"></div></div></div>`;
         }
     }
 
-    function triggerMotherFan(el) {
-        resetFans();
-        const rect = el.getBoundingClientRect();
-        const cabRect = document.getElementById('cab-container').getBoundingClientRect();
-        fanEngine.style.top = (rect.top - cabRect.top + 35) + "px";
-        
-        setTimeout(() => fanEngine.classList.add('active-mother'), 100);
+    function set(s, el) {
+        roomImg.src=s; roomImg.style.display='block'; roomImg.dataset.set="true"; resetFans();
+        const rect = el.getBoundingClientRect(); const cabRect = document.getElementById('cab-container').getBoundingClientRect();
+        [f1, f2, f3].forEach(f => f.style.top = (rect.top - cabRect.top + 40) + "px");
+        f1.classList.add('s1-active');
     }
 
-    function unfoldNested(index, paddle) {
-        // Hide other arms
-        document.querySelectorAll('.mother-arm').forEach((arm, i) => {
-            if(i !== index) arm.classList.add('hide-arm');
-        });
-
-        // Reposition nested container to the active arm's pivot
-        const activeArm = document.getElementById(`m-arm-${index + 1}`);
-        nestedContainer.style.transform = activeArm.style.transform;
-        
-        // Fan out nested blades
-        setTimeout(() => fanEngine.classList.add('active-nested'), 300);
+    function triggerStage2() {
+        f1.classList.add('stage-faded');
+        f2.classList.add('s2-active');
     }
 
-    function resetFans() {
-        fanEngine.classList.remove('active-mother', 'active-nested');
-        document.querySelectorAll('.mother-arm').forEach(arm => arm.classList.remove('hide-arm'));
+    function triggerStage3() {
+        f2.classList.add('stage-faded');
+        f3.classList.add('s3-active');
     }
+
+    function pre(s) { if(!roomImg.dataset.set){ roomImg.src=s; roomImg.classList.add('preview-mode'); }}
+    function post() { if(!roomImg.dataset.set){ roomImg.classList.remove('preview-mode'); roomImg.style.display='none'; }}
+    function drag(ev) { ev.dataTransfer.setData("src", ev.target.src); }
 </script>
 </body>
 </html>
