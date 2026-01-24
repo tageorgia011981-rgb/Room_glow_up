@@ -4,97 +4,281 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Room Glow Up | Studio</title>
+
 <link href="https://fonts.googleapis.com/css2?family=Limelight&family=Special+Elite&display=swap" rel="stylesheet">
 
 <style>
-/* --- GLOBAL SETUP --- */
+/* =========================
+   GLOBAL RESET
+========================= */
 * { margin: 0; padding: 0; box-sizing: border-box; }
-body { background: #0f1011 url("background_color.jpg") center/cover fixed; min-height: 100vh; font-family: 'Special Elite', cursive; color: #fff; overflow-x: hidden; }
 
-/* --- HEADER --- */
-.site-header { text-align: center; padding: 30px 0 5px; position: relative; z-index: 1000; }
-.brand-title { font-family: 'Limelight', cursive; font-size: clamp(45px, 8vw, 75px); text-transform: uppercase; background: linear-gradient(to bottom, #ffffff 0%, #dcdcdc 50%, #8e9196 51%, #a8a8a8 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; filter: drop-shadow(0 0 15px rgba(255,255,255,0.4)); letter-spacing: 6px; line-height: 0.9; }
-.sub-title { font-family: 'Limelight', cursive; font-size: 18px; letter-spacing: 12px; color: #fff; opacity: 0.7; text-transform: uppercase; margin-top: 10px; text-shadow: 0 0 15px rgba(255,255,255,0.6); }
-
-/* --- NAV TABS --- */
-.vintage-tabs { display: flex; justify-content: center; gap: 20px; padding: 10px 0 30px; }
-.drawer-hardware {
-    position: relative; width: 160px; height: 75px; background: linear-gradient(135deg,#2c2e30,#0f1011); border:2px solid #3a3d40; box-shadow:0 6px 15px rgba(0,0,0,0.8); display:flex; align-items:center; justify-content:center; cursor:pointer; border-radius:4px; transition: all 0.3s ease;
+body {
+    background: #0f1011 url("background_color.jpg") center / cover fixed;
+    min-height: 100vh;
+    font-family: 'Special Elite', cursive;
+    color: #fff;
+    overflow-x: hidden;
+    display: flex;
+    flex-direction: column;
 }
-.drawer-hardware:hover { transform: translateY(-6px); border-color:#8e9196; box-shadow:0 12px 25px rgba(0,0,0,0.9),0 0 15px rgba(255,255,255,0.2);}
-.drawer-hardware.active-tab { box-shadow: 0 0 25px rgba(255,255,255,0.6); border-color:#fff; }
-.plate-style { width: 85%; height: 45%; background: linear-gradient(to bottom,#dcdcdc 0%,#8e9196 50%,#b0b0b0 100%); color:#000; display:flex; align-items:center; justify-content:center; font-size:13px; font-weight:bold; text-transform:uppercase; border:1px solid #666; box-shadow: inset 0 2px 5px rgba(0,0,0,0.2); border-radius:2px; }
 
-/* --- WORKSPACE & CABINET --- */
-.workspace { display: flex; justify-content: flex-start; padding: 40px; position: relative; min-height: 700px; }
-.cabinet-container { position: absolute; left: -500px; top: 0; width: 500px; transition: left 1.2s cubic-bezier(0.19,1,0.22,1); z-index: 200; }
-.cabinet-container.visible { left: 40px; }
-.cabinet-img { width: 100%; filter: drop-shadow(10px 10px 30px rgba(0,0,0,0.8)); }
-.drawer-stack { position: absolute; top: 120px; left: 50%; transform: translateX(-50%); display:flex; flex-direction:column; gap:40px; }
-.drawer-tab { width: 140px; height: 60px; background: linear-gradient(135deg,#2c2e30,#0f1011); border:2px solid #3a3d40; display:flex; align-items:center; justify-content:center; cursor:pointer; transition: all 0.3s ease; border-radius:4px; }
-.drawer-tab:hover { transform: translateY(-6px); box-shadow:0 12px 25px rgba(0,0,0,0.8); border-color:#8e9196; }
-.drawer-tab.upload-tab { margin-top:20px; background:linear-gradient(135deg,#444,#222); }
-.drawer-tab span { color:#fff; font-size:12px; text-transform:uppercase; font-weight:bold; }
+/* =========================
+   HEADER – BOLDER & IMPACT
+========================= */
+.site-header {
+    text-align: center;
+    padding: 80px 0 40px;
+    position: relative;
+    z-index: 1000;
+}
 
-/* --- STAGE --- */
-.stage { width: 900px; height: 550px; background:#050505; border:15px solid #2c2e30; margin-left:600px; position:relative; overflow:hidden; box-shadow: inset 0 0 50px #000; transition: margin-left 1.2s cubic-bezier(0.19,1,0.22,1);}
-#room-display { width:100%; height:100%; object-fit:cover; display:none; }
-.placed-item { position:absolute; width:200px; cursor:move; z-index:1500; filter: drop-shadow(5px 10px 10px rgba(0,0,0,0.5)); }
+.brand-title {
+    font-family: 'Limelight', cursive;
+    font-size: clamp(64px, 10vw, 120px);
+    letter-spacing: 8px;
+    text-transform: uppercase;
 
-/* --- FAN --- */
-.fan-container { position:absolute; width:300px; height:300px; pointer-events:none; z-index:100; opacity:0; transition: all 0.6s ease; }
-.fan-container.active { opacity:1; }
-.fan-blade { position:absolute; width:0px; height:40px; background: linear-gradient(to right,#161719,#2c2e30,#8e9196); border:1px solid rgba(255,255,255,0.4); border-left:none; transform-origin:left center; opacity:0; transition:width 0.8s, transform 0.8s, opacity 0.4s; display:flex; align-items:center; justify-content:flex-end; padding-right:12px; }
-.fan-container.active .fan-blade { opacity:1; width:160px; }
-.fan-container.active .blade-1 { transform: rotate(-40deg); } 
-.fan-container.active .blade-2 { transform: rotate(-15deg); }
-.fan-container.active .blade-3 { transform: rotate(15deg); } 
-.fan-container.active .blade-4 { transform: rotate(40deg); }
+    background: linear-gradient(
+        45deg,
+        #ffffff 0%,
+        #f0f0f0 35%,
+        #c0c0c0 55%,
+        #e0e0e0 75%,
+        #ffffff 100%
+    );
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
 
-/* --- CATALOG OVERLAY --- */
-#catalog-overlay { position:fixed; inset:0; background:rgba(10,11,12,0.85); display:none; padding:60px; backdrop-filter:blur(8px); z-index:5000; }
-.catalog-container { display:flex; height:80vh; background:#000; border:2px solid #333; box-shadow:0 0 50px rgba(0,0,0,1);}
-.index-column { flex:1; border-right:1px solid #333; padding:20px; overflow-y:auto; }
-.index-item { padding:15px; margin-bottom:10px; border:1px solid #333; background:#111; cursor:pointer; text-transform:uppercase; color:#888; transition:0.2s; }
-.index-item:hover, .index-item.selected { background:#8e9196; color:#000; border-color:#fff; }
-.asset-view { flex:3; display:flex; flex-direction:column; }
-.asset-grid { flex:1; display:grid; grid-template-columns:repeat(auto-fill,minmax(200px,1fr)); gap:20px; padding:20px; overflow-y:auto; }
-.asset-card { background:#1a1a1a; padding:15px; text-align:center; border:1px solid #222; }
-.asset-card img { width:100%; height:120px; object-fit:contain; margin-bottom:10px; }
-.buy-btn { width:100%; background:#8e9196; border:none; padding:8px; cursor:pointer; font-family:inherit; font-weight:bold; text-transform:uppercase; }
-.buy-btn:hover { background:#fff; }
-.close-btn { position:absolute; top:20px; right:40px; font-size:40px; color:#fff; cursor:pointer; }
+    filter: drop-shadow(0 6px 12px rgba(0,0,0,0.85))
+            drop-shadow(0 0 30px rgba(255,255,255,0.25));
+    line-height: 1;
+}
+
+.sub-title {
+    margin-top: 18px;
+    font-family: 'Limelight', cursive;
+    font-size: 22px;
+    letter-spacing: 14px;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.9);
+    text-shadow: 0 3px 8px rgba(0,0,0,0.9), 0 0 15px rgba(255,255,255,0.3);
+    opacity: 0.98;
+}
+
+/* Soft Divider Glow */
+.site-header::after {
+    content: '';
+    display: block;
+    width: 520px;
+    height: 2px;
+    margin: 24px auto 0;
+    background: linear-gradient(to right, transparent, rgba(255,255,255,0.65), transparent);
+    box-shadow: 0 0 18px rgba(255,255,255,0.4);
+}
+
+/* =========================
+   NAVIGATION / TABS
+========================= */
+.vintage-tabs {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    padding: 10px 0 30px;
+}
+
+.top-nav-tab {
+    width: 150px;
+    height: 75px;
+    background: linear-gradient(135deg, #2c2e30, #0f1011);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    border: 2px solid #3a3d40;
+    box-shadow: 0 6px 15px rgba(0,0,0,0.8);
+    transition: all 0.35s cubic-bezier(0.19, 1, 0.22, 1);
+    position: relative;
+    border-radius: 4px;
+}
+
+.top-nav-tab:hover {
+    transform: translateY(-6px);
+    border-color: #bfc2c6;
+    box-shadow: 0 12px 25px rgba(0,0,0,0.95), 0 0 20px rgba(255,255,255,0.35);
+}
+
+/* Label Plate inside tabs */
+.plate-style {
+    width: 85%;
+    height: 45%;
+    background: #000 url("background_color.jpg") center/cover;
+    box-shadow: inset 0 0 0 1000px rgba(0,0,0,0.85);
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 11px;
+    letter-spacing: 2px;
+    border: 1px solid #444;
+}
+
+/* =========================
+   WORKSPACE / CABINET / DRAWERS
+========================= */
+.workspace { 
+    display: flex;
+    position: relative;
+    padding: 40px;
+    flex: 1;
+    justify-content: center;
+    align-items: flex-start;
+}
+
+/* Cabinet */
+.cabinet-container {
+    position: absolute;
+    left: -600px; /* starts hidden */
+    top: 0;
+    width: 500px;
+    transition: left 0.8s cubic-bezier(0.19, 1, 0.22, 1);
+    z-index: 100;
+}
+
+.cabinet-visible { left: 40px !important; }
+
+.drawer-stack {
+    position: absolute;
+    top: 120px;
+    left: 50px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 45px;
+}
+
+/* Stage / Room Display */
+.stage { 
+    width: 900px;
+    height: 550px;
+    background: #050505;
+    border: 15px solid #2c2e30;
+    margin-left: 600px; 
+    position: relative;
+    overflow: hidden;
+    box-shadow: inset 0 0 50px #000;
+}
+
+#room-display { 
+    width: 100%; 
+    height: 100%; 
+    object-fit: cover; 
+    display: none; 
+}
+
+.placed-item { 
+    position: absolute; 
+    width: 200px; 
+    cursor: move; 
+    z-index: 1500; 
+    filter: drop-shadow(5px 10px 10px rgba(0,0,0,0.5));
+}
+
+/* =========================
+   FAN ASSEMBLY
+========================= */
+#fan-assembly {
+    position: absolute;
+    left: 550px;
+    top: -400px;
+    width: 100px;
+    height: 100px;
+    z-index: 50;
+    transition: top 0.5s ease-out;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.active-fan { top: 250px !important; }
+
+.fan-blade {
+    position: absolute;
+    width: 240px;
+    height: 60px;
+    background: #1a1a1a;
+    border: 2px solid #444;
+    border-radius: 10px;
+    transform-origin: -20px 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 5px 5px 15px rgba(0,0,0,0.5);
+    transition: transform 0.5s ease-out;
+}
+
+.blade-label { color: #fff; font-size: 14px; text-transform: uppercase; cursor: pointer; }
+
+/* =========================
+   CATALOG OVERLAY
+========================= */
+#catalog-overlay { 
+    position: fixed; 
+    inset: 0; 
+    background: rgba(10, 11, 12, 0.85); 
+    z-index: 4000; 
+    display: none; 
+    padding: 60px; 
+    backdrop-filter: blur(8px); 
+}
+
+.catalog-container { 
+    display: flex; 
+    height: 80vh; 
+    background: #000; 
+    border: 2px solid #333; 
+    box-shadow: 0 0 50px rgba(0,0,0,1);
+}
+
+.index-column { flex: 1; border-right: 1px solid #333; padding: 20px; overflow-y: auto; }
+.index-item { padding: 15px; margin-bottom: 10px; border: 1px solid #333; background: #111; cursor: pointer; text-transform: uppercase; color: #888; transition: 0.2s; }
+.index-item:hover, .selected { background: #8e9196; color: #000; border-color: #fff; }
+
+.asset-view { flex: 3; display: flex; flex-direction: column; }
+.asset-grid { flex: 1; display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 20px; padding: 20px; overflow-y: auto; }
+.asset-card { background: #1a1a1a; padding: 15px; text-align: center; border: 1px solid #222; }
+.asset-card img { width: 100%; height: 120px; object-fit: contain; margin-bottom: 10px; }
+.buy-btn { width: 100%; background: #8e9196; border: none; padding: 8px; cursor: pointer; font-family: inherit; font-weight: bold; text-transform: uppercase; }
+.buy-btn:hover { background: #fff; }
+
+.close-btn { position: absolute; top: 20px; right: 40px; font-size: 40px; color: #fff; cursor: pointer; }
+
 </style>
 </head>
 
 <body>
+
 <header class="site-header">
     <h1 class="brand-title">Room Glow Up</h1>
     <div class="sub-title">Your Dream Space Come To Life</div>
 </header>
 
 <nav class="vintage-tabs">
-    <div class="drawer-hardware" onclick="openMode('rooms')"><div class="plate-style">Rooms</div></div>
-    <div class="drawer-hardware" onclick="openMode('furniture')"><div class="plate-style">Furniture</div></div>
-    <div class="drawer-hardware" onclick="openMode('decor')"><div class="plate-style">Decor</div></div>
-    <div class="drawer-hardware" onclick="openMode('inspiration')"><div class="plate-style">Inspiration</div></div>
+    <div class="top-nav-tab"><div class="plate-style">Rooms</div></div>
+    <div class="top-nav-tab"><div class="plate-style">Furniture</div></div>
+    <div class="top-nav-tab"><div class="plate-style">Decor</div></div>
+    <div class="top-nav-tab"><div class="plate-style">Inspiration</div></div>
 </nav>
 
 <div class="workspace">
     <div class="cabinet-container" id="cab-container">
-        <img src="cabinet.png" class="cabinet-img">
+        <img src="cabinet.png" style="width:100%;">
         <div class="drawer-stack" id="drawer-anchor"></div>
-
-        <!-- FAN SYSTEMS -->
-        <div id="global-fan" class="fan-container">
-            <div class="fan-blade blade-1"></div>
-            <div class="fan-blade blade-2"></div>
-            <div class="fan-blade blade-3"></div>
-            <div class="fan-blade blade-4"></div>
-        </div>
     </div>
-
-    <div class="stage" id="stage-zone"><img id="room-display"></div>
+    <div class="stage" id="stage-zone">
+        <img id="room-display">
+    </div>
+    <div id="fan-assembly"></div>
 </div>
 
 <div id="catalog-overlay">
@@ -104,9 +288,11 @@ body { background: #0f1011 url("background_color.jpg") center/cover fixed; min-h
             <h3>Index</h3>
             <div class="index-item" onclick="selectCat('furniture', this)">Furniture</div>
             <div class="index-item" onclick="selectCat('decor', this)">Decor</div>
-            <div class="index-item" onclick="selectCat('inspiration', this)">Inspiration</div>
         </div>
-        <div class="index-column" id="type-col"><h3>Classification</h3><div id="type-list"></div></div>
+        <div class="index-column" id="type-col">
+            <h3>Classification</h3>
+            <div id="type-list"></div>
+        </div>
         <div class="asset-view">
             <h3>Inventory</h3>
             <div class="asset-grid" id="asset-list"></div>
@@ -114,82 +300,6 @@ body { background: #0f1011 url("background_color.jpg") center/cover fixed; min-h
     </div>
 </div>
 
-<script>
-const roomImg = document.getElementById('room-display');
-const cab = document.getElementById('cab-container');
-const drawerStack = document.getElementById('drawer-anchor');
-const fan = document.getElementById('global-fan');
-
-// Sample registry
-const registry = {
-    furniture: { seating:[{name:'Sofa',img:'couch1.png'}], tables:[{name:'Desk',img:'table1.png'}], storage:[{name:'Cabinet',img:'cabinet1.png'}] },
-    decor: { lighting:[{name:'Lamp',img:'lamp1.png'}], rugs:[{name:'Rug',img:'rug1.png'}], carpets:[{name:'Carpet',img:'carpet1.png'}], plants:[{name:'Plant',img:'plant1.png'}], pictures:[{name:'Picture',img:'pic1.png'}] },
-    inspiration: { insp1:[{name:'Inspiration 1',img:'insp1.jpg'}], insp2:[{name:'Inspiration 2',img:'insp2.jpg'}], insp3:[{name:'Inspiration 3',img:'insp3.jpg'}], insp4:[{name:'Inspiration 4',img:'insp4.jpg'}], insp5:[{name:'Inspiration 5',img:'insp5.jpg'}], insp6:[{name:'Inspiration 6',img:'insp6.jpg'}], insp7:[{name:'Inspiration 7',img:'insp7.jpg'}] }
-};
-
-function openMode(mode){
-    cab.classList.add('visible');
-    document.querySelector('.stage').style.marginLeft='600px';
-    drawerStack.innerHTML='';
-
-    if(mode==='rooms'){
-        ['Living Room','Bedroom','Dining Room','Upload'].forEach((r,i)=>{
-            const tab = document.createElement('div');
-            tab.className='drawer-tab'+(r==='Upload'?' upload-tab':'');
-            tab.innerHTML=`<span>${r}</span>`;
-            tab.onmouseover=()=>{ if(r!=='Upload') roomImg.src=r.toLowerCase().replace(' ','')+'.jpg'; roomImg.style.display='block'; };
-            tab.onclick=()=>{ if(r==='Upload'){ uploadInput.click(); } else{ roomImg.src=r.toLowerCase().replace(' ','')+'.jpg'; roomImg.style.display='block'; } };
-            drawerStack.appendChild(tab);
-        });
-    } else {
-        // furniture or decor fan
-        ['1','2','3','4'].forEach((_,i)=>{
-            const blade = fan.querySelector(`.blade-${i+1}`);
-            blade.style.transform=`rotate(${i*25-40}deg) translateX(140px)`;
-            blade.innerHTML=`<span>${mode} ${i+1}</span>`;
-        });
-        fan.classList.add('active');
-    }
-}
-
-function selectCat(cat, el){
-    document.querySelectorAll('#cat-col .index-item').forEach(i=>i.classList.remove('selected'));
-    el.classList.add('selected');
-    const list=document.getElementById('type-list'); list.innerHTML='';
-    if(registry[cat]) Object.keys(registry[cat]).forEach(type=>{ list.innerHTML+=`<div class="index-item" onclick="selectType('${cat}','${type}',this)">${type}</div>`; });
-}
-
-function selectType(cat,type,el){
-    document.querySelectorAll('#type-col .index-item').forEach(i=>i.classList.remove('selected'));
-    el.classList.add('selected');
-    const grid=document.getElementById('asset-list'); grid.innerHTML='';
-    if(registry[cat]&&registry[cat][type]) registry[cat][type].forEach(item=>{
-        grid.innerHTML+=`<div class="asset-card"><img src="${item.img}"><p>${item.name}</p><button class="buy-btn" onclick="addToRoom('${item.img}')">ADD</button></div>`;
-    });
-}
-
-function addToRoom(src){
-    const img=document.createElement('img'); img.src=src; img.className='placed-item'; img.style.left='100px'; img.style.top='100px';
-    img.onmousedown=function(e){
-        let shiftX=e.clientX-img.getBoundingClientRect().left;
-        let shiftY=e.clientY-img.getBoundingClientRect().top;
-        function moveAt(pageX,pageY){
-            const stage=document.getElementById('stage-zone').getBoundingClientRect();
-            img.style.left=(pageX-stage.left-shiftX)+'px'; img.style.top=(pageY-stage.top-shiftY)+'px';
-        }
-        function onMouseMove(event){ moveAt(event.pageX,event.pageY);}
-        document.addEventListener('mousemove',onMouseMove);
-        img.onmouseup=function(){ document.removeEventListener('mousemove',onMouseMove); };
-    };
-    img.ondragstart=()=>false;
-    document.getElementById('stage-zone').appendChild(img);
-}
-
-const uploadInput=document.createElement('input'); uploadInput.type='file'; uploadInput.accept='image/*';
-uploadInput.onchange=e=>{ const file=e.target.files[0]; if(file){ const reader=new FileReader(); reader.onload=ev=>{ roomImg.src=ev.target.result; roomImg.style.display='block'; }; reader.readAsDataURL(file); } };
-document.body.appendChild(uploadInput);
-
-function hideCatalog(){ document.getElementById('catalog-overlay').style.display='none'; }
-</script>
+<script src="script.js"></script>
 </body>
 </html>
