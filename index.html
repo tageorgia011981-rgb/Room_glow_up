@@ -6,28 +6,46 @@
     <title>Room Glow Up | Industrial Master</title>
     <link href="https://fonts.googleapis.com/css2?family=Limelight&family=Special+Elite&display=swap" rel="stylesheet">
     <style>
-        /* --- CORE --- */
+        /* --- FOUNDATION --- */
         * { margin: 0; padding: 0; box-sizing: border-box; }
+        
         body {
-            background: #0f1011;
-            min-height: 100vh; font-family: 'Special Elite', cursive; 
-            overflow: hidden; display: flex; flex-direction: column; color: #fff;
+            background: #0f1011 url("background_color.jpg") center / cover fixed;
+            min-height: 100vh;
+            font-family: 'Special Elite', cursive;
+            color: #fff;
+            overflow-y: auto; /* Fixed scrolling */
+            overflow-x: hidden;
         }
 
         /* --- MASSIVE ORIGINAL HEADER --- */
-        .site-header { text-align: center; padding: 50px 0 20px; z-index: 2000; }
+        .site-header { 
+            text-align: center; 
+            padding: 50px 0 20px; 
+            z-index: 2000;
+        }
         .brand-title { 
-            font-family: 'Limelight', cursive; font-size: 95px; text-transform: uppercase; 
+            font-family: 'Limelight', cursive; 
+            font-size: 95px; 
+            text-transform: uppercase; 
             background: linear-gradient(to bottom, #ffffff, #8e9196, #2c2e30);
-            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            -webkit-background-clip: text; 
+            -webkit-text-fill-color: transparent;
             letter-spacing: 6px;
         }
-        .sub-title { font-family: 'Limelight', cursive; font-size: 20px; letter-spacing: 10px; color: #ffffff; opacity: 0.9; margin-top: 10px; text-transform: uppercase; }
+        .sub-title { 
+            font-family: 'Limelight', cursive; 
+            font-size: 20px; 
+            letter-spacing: 10px; 
+            color: #ffffff; 
+            opacity: 0.9; 
+            margin-top: 10px; 
+            text-transform: uppercase;
+        }
 
         /* --- NAVIGATION TABS --- */
         .vintage-tabs { display: flex; justify-content: center; gap: 15px; padding: 20px 0; z-index: 1500; }
 
-        /* --- DRAWER HARDWARE (LOCKER LIFT) --- */
         .drawer-hardware {
             position: relative; width: 210px; height: 85px;
             background: linear-gradient(135deg, #2c2e30, #000); border: 2px solid #1a1a1a;
@@ -42,41 +60,55 @@
         .lip-pull { position: absolute; bottom: -5px; left: 50%; transform: translateX(-50%); width: 100px; height: 15px; background: linear-gradient(#333, #000); border-radius: 0 0 8px 8px; border: 1px solid #111; }
 
         /* --- WORKSPACE --- */
-        .workspace { display: flex; justify-content: center; align-items: center; flex: 1; position: relative; padding-bottom: 40px; }
-        .stage { width: 950px; height: 550px; background: #050505; border: 15px solid #2c2e30; position: relative; box-shadow: 0 0 100px black; transition: 0.8s; z-index: 5; }
+        .workspace { display: flex; justify-content: center; align-items: flex-start; min-height: 800px; position: relative; padding: 40px 0; }
+        
+        .stage { 
+            width: 950px; height: 550px; background: #050505; border: 15px solid #2c2e30; 
+            position: relative; box-shadow: 0 0 100px black; transition: 0.8s; z-index: 5;
+            margin-top: 20px;
+        }
         .workspace.active-glide .stage { transform: translateX(250px); }
         
         #room-display { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: none; }
         .preview-mode { display: block !important; filter: sepia(0.8) brightness(0.3) contrast(1.2); }
 
-        /* --- CABINET --- */
-        .cabinet-container { position: absolute; left: 30px; width: 480px; opacity: 0; transition: 0.8s; pointer-events: none; }
+        /* --- CABINET & SPACED DRAWERS --- */
+        .cabinet-container { position: absolute; left: 30px; top: 40px; width: 480px; opacity: 0; transition: 0.8s; pointer-events: none; }
         .workspace.active-glide .cabinet-container { opacity: 1; pointer-events: auto; }
-        .drawer-stack { position: absolute; top: 90px; left: 50%; transform: translateX(-50%); width: 100%; display: flex; flex-direction: column; align-items: center; gap: 55px; }
+        .drawer-stack { width: 100%; display: flex; flex-direction: column; align-items: center; gap: 55px; margin-top: 50px; }
 
-        /* --- THE DRAWER-FAN ENGINE --- */
-        .fan-system { position: absolute; left: 360px; z-index: 40; pointer-events: none; transition: top 0.3s ease; }
+        /* --- TELESCOPIC SLIDE ENGINE --- */
+        .slide-system { 
+            position: absolute; left: 380px; z-index: 40; pointer-events: none; 
+            display: flex; align-items: center; gap: 0; transition: top 0.3s ease;
+        }
         
-        .slat-blade {
-            position: absolute; left: 0; top: -65px; width: 0; height: 140px;
-            background: linear-gradient(to right, #2c2e30 0%, #3e4144 50%, #1a1a1a 100%);
-            border: 1px solid #444; border-radius: 0 6px 6px 0;
-            transform-origin: left center; transition: all 1.2s cubic-bezier(0.19, 1, 0.22, 1);
-            opacity: 0; display: flex; align-items: center; justify-content: flex-end; padding-right: 25px;
-            box-shadow: 10px 0 25px rgba(0,0,0,0.8);
+        .metal-beam {
+            height: 12px; width: 0; background: linear-gradient(to bottom, #444, #111, #444);
+            border: 1px solid #000; transition: width 0.8s cubic-bezier(0.19, 1, 0.22, 1);
+            position: relative;
+        }
+        
+        .item-plate {
+            width: 90px; height: 90px; background: #222; border: 3px solid #444;
+            margin-left: -10px; opacity: 0; transform: scale(0);
+            transition: 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            display: flex; align-items: center; justify-content: center;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.5);
         }
 
-        .s1-active .slat-blade { width: 320px; opacity: 1; pointer-events: auto; }
-        /* Specific Z-stacking for metal plate feel */
-        .s1-1 { transform: rotate(-55deg); z-index: 41; }
-        .s1-2 { transform: rotate(-18deg); z-index: 42; }
-        .s1-3 { transform: rotate(18deg); z-index: 43; }
-        .s1-4 { transform: rotate(55deg); z-index: 44; }
+        .active-slide .metal-beam { width: 450px; pointer-events: auto; }
+        .active-slide .item-plate { opacity: 1; transform: scale(1); pointer-events: auto; }
+        
+        /* Staggered entry for plates */
+        .active-slide .item-plate:nth-child(2) { transition-delay: 0.2s; }
+        .active-slide .item-plate:nth-child(3) { transition-delay: 0.3s; }
+        .active-slide .item-plate:nth-child(4) { transition-delay: 0.4s; }
+        .active-slide .item-plate:nth-child(5) { transition-delay: 0.5s; }
 
-        .fan-icon { width: 85px; height: 85px; cursor: pointer; filter: drop-shadow(0 5px 15px black); transition: 0.3s; }
-        .fan-icon:hover { transform: scale(1.15); }
+        .slide-icon { width: 70px; height: 70px; cursor: pointer; transition: 0.3s; }
+        .slide-icon:hover { transform: translateY(-5px) scale(1.1); filter: brightness(1.2); }
 
-        .faded { opacity: 0.1 !important; filter: grayscale(1); }
     </style>
 </head>
 
@@ -100,11 +132,12 @@
         <img src="cabinet.png" style="width:100%; filter: drop-shadow(15px 0 50px #000);">
         <div class="drawer-stack" id="drawer-anchor"></div>
         
-        <div id="fan-stage-1" class="fan-system">
-            <div class="slat-blade s1-1"><img src="icon_furn.png" class="fan-icon" onclick="triggerNext(1)"></div>
-            <div class="slat-blade s1-2"><img src="icon_decor.png" class="fan-icon" onclick="triggerNext(1)"></div>
-            <div class="slat-blade s1-3"><img src="icon_light.png" class="fan-icon" onclick="triggerNext(1)"></div>
-            <div class="slat-blade s1-4"><img src="icon_rug.png" class="fan-icon" onclick="triggerNext(1)"></div>
+        <div id="slide-engine" class="slide-system">
+            <div class="metal-beam"></div>
+            <div class="item-plate"><img src="icon1.png" class="slide-icon" onclick="nextStage()"></div>
+            <div class="item-plate"><img src="icon2.png" class="slide-icon"></div>
+            <div class="item-plate"><img src="icon3.png" class="slide-icon"></div>
+            <div class="item-plate"><img src="icon4.png" class="slide-icon"></div>
         </div>
     </div>
 
@@ -117,7 +150,7 @@
     const ws = document.getElementById('main-ws');
     const roomImg = document.getElementById('room-display');
     const drawerAnchor = document.getElementById('drawer-anchor');
-    const f1 = document.getElementById('fan-stage-1');
+    const engine = document.getElementById('slide-engine');
 
     function lift(el) {
         document.querySelectorAll('.drawer-hardware').forEach(d => d.classList.remove('active-lift'));
@@ -126,7 +159,7 @@
 
     function openCab(type) {
         ws.classList.add('active-glide');
-        f1.classList.remove('s1-active', 'faded');
+        engine.classList.remove('active-slide');
         if(type === 'rooms') {
             drawerAnchor.innerHTML = `
                 <div class="drawer-row" onmouseover="preView('livingroom.jpg')" onmouseout="clearView()" onclick="lockRoom('livingroom.jpg', this)">
@@ -161,18 +194,12 @@
         roomImg.src = src; roomImg.style.display = 'block';
         roomImg.classList.remove('preview-mode'); roomImg.classList.add('locked');
         
-        f1.classList.remove('s1-active', 'faded');
+        engine.classList.remove('active-slide');
         const rect = el.getBoundingClientRect();
         const cabRect = document.getElementById('cab-container').getBoundingClientRect();
         
-        // This anchors the fan to the clicked drawer's Y position
-        f1.style.top = (rect.top - cabRect.top + 45) + "px";
-        
-        setTimeout(() => f1.classList.add('s1-active'), 150);
-    }
-
-    function triggerNext(stage) {
-        if(stage === 1) f1.classList.add('faded');
+        engine.style.top = (rect.top - cabRect.top + 38) + "px";
+        setTimeout(() => engine.classList.add('active-slide'), 150);
     }
 </script>
 </body>
