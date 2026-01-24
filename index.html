@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Room Glow Up | Telescopic Master</title>
+    <title>Room Glow Up | Industrial Master</title>
     <link href="https://fonts.googleapis.com/css2?family=Limelight&family=Special+Elite&display=swap" rel="stylesheet">
     <style>
         /* --- FOUNDATION --- */
@@ -24,55 +24,117 @@
         }
         .sub-title { font-family: 'Limelight', cursive; font-size: 20px; letter-spacing: 10px; color: #ffffff; opacity: 0.9; margin-top: 10px; text-transform: uppercase; }
 
-        /* --- NAVIGATION TABS --- */
-        .vintage-tabs { display: flex; justify-content: center; gap: 15px; padding: 20px 0; z-index: 1500; }
+        /* --- VINTAGE INDUSTRIAL HARDWARE --- */
+        .vintage-tabs { display: flex; justify-content: center; gap: 20px; padding: 20px 0; z-index: 1500; }
 
-        /* --- DRAWER HARDWARE (LOCKER LIFT) --- */
         .drawer-hardware {
-            position: relative; width: 210px; height: 85px;
-            background: linear-gradient(135deg, #2c2e30, #000); border: 2px solid #1a1a1a;
-            box-shadow: inset 0 0 10px rgba(255,255,255,0.1), 0 5px 15px rgba(0,0,0,0.8);
+            position: relative; width: 220px; height: 90px;
+            background: linear-gradient(135deg, #2c2e30 0%, #000 100%); 
+            border: 3px solid #1a1a1a;
+            box-shadow: inset 0 0 15px rgba(255,255,255,0.05), 0 10px 20px rgba(0,0,0,0.8);
             display: flex; align-items: center; justify-content: center; cursor: pointer;
             transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
-        .drawer-hardware:hover { transform: translateY(10px); box-shadow: 0 0 25px rgba(255,255,255,0.2); }
-        .active-lift { transform: translateY(15px) !important; border-color: #bdc3c7; z-index: 110; }
-        .plate-style { width: 160px; height: 42px; background: linear-gradient(145deg, #bdc3c7, #8e9196); color: #111; display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: bold; text-transform: uppercase; border: 1px solid #777; pointer-events: none; }
-        .lip-pull { position: absolute; bottom: -5px; left: 50%; transform: translateX(-50%); width: 100px; height: 15px; background: linear-gradient(#333, #000); border-radius: 0 0 8px 8px; border: 1px solid #111; }
 
-        /* --- WORKSPACE --- */
-        .workspace { display: flex; justify-content: flex-start; align-items: flex-start; min-height: 900px; position: relative; padding: 40px 100px; }
-        .stage { width: 900px; height: 520px; background: #050505; border: 15px solid #2c2e30; position: relative; box-shadow: 0 0 100px black; transition: 0.8s; z-index: 5; margin-left: 550px; }
+        /* THE SCREWS */
+        .drawer-hardware::before, .drawer-hardware::after {
+            content: ''; position: absolute; width: 8px; height: 8px;
+            background: #111; border-radius: 50%;
+            box-shadow: inset -1px -1px 2px rgba(255,255,255,0.2), 1px 1px 2px rgba(0,0,0,0.8);
+        }
+        .drawer-hardware::before { top: 8px; left: 8px; box-shadow: 196px 66px 0 #111; }
+        .drawer-hardware::after { top: 8px; right: 8px; box-shadow: -196px 66px 0 #111; }
+
+        .drawer-hardware:hover { transform: translateY(10px); box-shadow: 0 0 30px rgba(255, 255, 255, 0.1); }
+        .active-lift { transform: translateY(15px) !important; border-color: #8e9196; z-index: 110; }
+
+        .plate-style { 
+            width: 170px; height: 45px; 
+            background: linear-gradient(145deg, #bdc3c7, #7f8c8d, #bdc3c7); 
+            color: #000; display: flex; align-items: center; justify-content: center; 
+            font-size: 16px; font-weight: bold; text-transform: uppercase; 
+            border: 2px solid #555; 
+            box-shadow: inset 0 2px 8px rgba(0,0,0,0.5);
+            pointer-events: none;
+        }
+
+        .lip-pull { 
+            position: absolute; bottom: -7px; left: 50%; transform: translateX(-50%); 
+            width: 110px; height: 16px; 
+            background: linear-gradient(#444, #111, #000); 
+            border-radius: 0 0 10px 10px; border: 1px solid #111; 
+        }
+
+        /* --- WORKSPACE LAYOUT --- */
+        .workspace { 
+            display: flex; 
+            justify-content: flex-start; 
+            align-items: flex-start; 
+            min-height: 1000px; 
+            padding: 40px 60px; 
+            position: relative;
+        }
+
+        /* --- CABINET CONTAINER (ANCHOR) --- */
+        .cabinet-container { 
+            position: relative; 
+            width: 450px; 
+            z-index: 200; 
+            flex-shrink: 0;
+        }
+        .cabinet-image { width: 100%; filter: drop-shadow(15px 0 50px #000); }
+
+        /* DRAWERS POSITIONED ON CABINET */
+        .drawer-stack { 
+            position: absolute; 
+            top: 100px; 
+            left: 50%; 
+            transform: translateX(-50%); 
+            width: 100%; 
+            display: flex; 
+            flex-direction: column; 
+            align-items: center; 
+            gap: 50px; 
+        }
+
+        /* --- STAGE --- */
+        .stage { 
+            width: 900px; height: 550px; 
+            background: #050505; border: 15px solid #2c2e30; 
+            box-shadow: 0 0 100px black; 
+            margin-left: 150px; 
+            margin-top: 40px;
+            z-index: 5;
+            position: relative;
+        }
         
         #room-display { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: none; }
-        .preview-mode { display: block !important; filter: sepia(0.8) brightness(0.3) contrast(1.2); }
+        .preview-mode { display: block !important; filter: sepia(0.8) brightness(0.3); }
 
-        /* --- STATIONARY CABINET & SPACED DRAWERS --- */
-        .cabinet-container { position: absolute; left: 50px; top: 40px; width: 480px; z-index: 200; }
-        .drawer-stack { width: 100%; display: flex; flex-direction: column; align-items: center; gap: 55px; margin-top: 50px; }
-
-        /* --- TELESCOPIC LINE & BOX SYSTEM --- */
-        .rail-system { position: absolute; left: 370px; z-index: 40; pointer-events: none; display: flex; align-items: center; transition: top 0.3s ease; }
+        /* --- TELESCOPIC RAIL --- */
+        .rail-system { position: absolute; left: 350px; z-index: 40; pointer-events: none; display: flex; align-items: center; transition: top 0.3s ease; }
         .rail-line { height: 4px; width: 0; background: #8e9196; box-shadow: 0 0 10px rgba(255,255,255,0.2); transition: width 0.6s cubic-bezier(0.19, 1, 0.22, 1); }
         .box-container { display: flex; gap: 15px; opacity: 0; transform: translateX(-20px); transition: 0.5s 0.4s; }
         
         .item-box { 
-            width: 90px; height: 90px; background: #1a1a1a; border: 2px solid #444; 
+            width: 95px; height: 95px; background: #1a1a1a; border: 2px solid #444; 
             display: flex; align-items: center; justify-content: center; cursor: pointer;
             box-shadow: 5px 5px 15px rgba(0,0,0,0.8); transition: 0.3s;
         }
         .item-box:hover { border-color: #fff; transform: scale(1.1); }
-        .item-box img { width: 70px; }
+        .item-box img { width: 75px; }
 
-        /* Animation States */
-        .active-rail .rail-line { width: 120px; }
+        .active-rail .rail-line { width: 130px; }
         .active-rail .box-container { opacity: 1; transform: translateX(0); pointer-events: auto; }
-        .retracting .rail-line { width: 0 !important; transition: width 0.4s ease-in; }
-        .retracting .box-container { opacity: 0 !important; transform: translateX(-20px); }
+        .retracting .rail-line { width: 0 !important; transition: width 0.3s; }
+        .retracting .box-container { opacity: 0 !important; }
     </style>
 </head>
 
 <body>
+
+<audio id="snd-slide" src="slide.mp3" preload="auto"></audio>
+<audio id="snd-retract" src="retract.mp3" preload="auto"></audio>
 
 <header class="site-header">
     <h1 class="brand-title">Room Glow Up</h1>
@@ -89,13 +151,26 @@
 
 <div class="workspace" id="main-ws">
     <div class="cabinet-container" id="cab-container">
-        <img src="cabinet.png" style="width:100%; filter: drop-shadow(15px 0 50px #000);">
-        <div class="drawer-stack" id="drawer-anchor"></div>
+        <img src="cabinet.png" class="cabinet-image">
+        
+        <div class="drawer-stack" id="drawer-anchor">
+            <div class="drawer-row" onmouseover="preView('livingroom.jpg')" onmouseout="clearView()" onclick="lockRoom('livingroom.jpg', this)">
+                <div class="drawer-hardware"><div class="plate-style">Living Room</div><div class="lip-pull"></div></div>
+            </div>
+            <div class="drawer-row" onmouseover="preView('bedroom.jpg')" onmouseout="clearView()" onclick="lockRoom('bedroom.jpg', this)">
+                <div class="drawer-hardware"><div class="plate-style">Bedroom</div><div class="lip-pull"></div></div>
+            </div>
+            <div class="drawer-row" onmouseover="preView('diningroom.jpg')" onmouseout="clearView()" onclick="lockRoom('diningroom.jpg', this)">
+                <div class="drawer-hardware"><div class="plate-style">Dining Room</div><div class="lip-pull"></div></div>
+            </div>
+            <div class="drawer-row">
+                <div class="drawer-hardware" style="background:#1a1a1a;"><div class="plate-style" style="background:#444; color:#fff;">Upload / Load</div><div class="lip-pull"></div></div>
+            </div>
+        </div>
         
         <div id="telescopic-rail" class="rail-system">
             <div class="rail-line"></div>
-            <div class="box-container" id="box-shelf">
-                </div>
+            <div class="box-container" id="box-shelf"></div>
         </div>
     </div>
 
@@ -104,32 +179,19 @@
 
 <script>
     const roomImg = document.getElementById('room-display');
-    const drawerAnchor = document.getElementById('drawer-anchor');
     const rail = document.getElementById('telescopic-rail');
     const shelf = document.getElementById('box-shelf');
+    const sndSlide = document.getElementById('snd-slide');
+    const sndRetract = document.getElementById('snd-retract');
+
+    function playSound(type) {
+        if(type === 'slide') { sndSlide.currentTime = 0; sndSlide.play().catch(()=>{}); }
+        if(type === 'retract') { sndRetract.currentTime = 0; sndRetract.play().catch(()=>{}); }
+    }
 
     function lift(el) {
         document.querySelectorAll('.drawer-hardware').forEach(d => d.classList.remove('active-lift'));
         el.classList.add('active-lift');
-    }
-
-    function openCab(type) {
-        rail.classList.remove('active-rail');
-        if(type === 'rooms') {
-            drawerAnchor.innerHTML = `
-                <div class="drawer-row" onmouseover="preView('livingroom.jpg')" onmouseout="clearView()" onclick="lockRoom('livingroom.jpg', this)">
-                    <div class="drawer-hardware"><div class="plate-style">Living Room</div><div class="lip-pull"></div></div>
-                </div>
-                <div class="drawer-row" onmouseover="preView('bedroom.jpg')" onmouseout="clearView()" onclick="lockRoom('bedroom.jpg', this)">
-                    <div class="drawer-hardware"><div class="plate-style">Bedroom</div><div class="lip-pull"></div></div>
-                </div>
-                <div class="drawer-row" onmouseover="preView('diningroom.jpg')" onmouseout="clearView()" onclick="lockRoom('diningroom.jpg', this)">
-                    <div class="drawer-hardware"><div class="plate-style">Dining Room</div><div class="lip-pull"></div></div>
-                </div>
-                <div class="drawer-row">
-                    <div class="drawer-hardware" style="background:#1a1a1a;"><div class="plate-style" style="background:#8e9196; color:#000;">Upload / Load</div><div class="lip-pull"></div></div>
-                </div>`;
-        }
     }
 
     function lockRoom(src, el) {
@@ -137,29 +199,29 @@
         rail.classList.remove('active-rail');
         const rect = el.getBoundingClientRect();
         const cabRect = document.getElementById('cab-container').getBoundingClientRect();
-        rail.style.top = (rect.top - cabRect.top + 42) + "px";
+        rail.style.top = (rect.top - cabRect.top + 45) + "px";
         
-        // Load Stage 1 Boxes
         shelf.innerHTML = `
-            <div class="item-box" onclick="swapRail('furn')"><img src="icon_furn.png"></div>
+            <div class="item-box" onclick="swapRail('furniture')"><img src="icon_furn.png"></div>
             <div class="item-box" onclick="swapRail('decor')"><img src="icon_decor.png"></div>
-            <div class="item-box"><img src="icon_light.png"></div>
+            <div class="item-box" onclick="swapRail('lighting')"><img src="icon_light.png"></div>
         `;
-        setTimeout(() => rail.classList.add('active-rail'), 150);
+        
+        setTimeout(() => { playSound('slide'); rail.classList.add('active-rail'); }, 150);
     }
 
     function swapRail(type) {
+        playSound('retract');
         rail.classList.add('retracting');
         setTimeout(() => {
             rail.classList.remove('retracting', 'active-rail');
-            // Inject Stage 2 Boxes
             shelf.innerHTML = `
                 <div class="item-box"><img src="${type}_1.png"></div>
                 <div class="item-box"><img src="${type}_2.png"></div>
                 <div class="item-box"><img src="${type}_3.png"></div>
             `;
-            setTimeout(() => rail.classList.add('active-rail'), 100);
-        }, 500);
+            setTimeout(() => { playSound('slide'); rail.classList.add('active-rail'); }, 100);
+        }, 400);
     }
 
     function preView(s) { if(!roomImg.classList.contains('locked')){ roomImg.src=s; roomImg.style.display='block'; roomImg.classList.add('preview-mode'); }}
