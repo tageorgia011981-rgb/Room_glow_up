@@ -3,138 +3,122 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Room Glow Up | Industrial Master</title>
+    <title>Room Glow Up | Industrial Mechanical</title>
     <link href="https://fonts.googleapis.com/css2?family=Limelight&family=Special+Elite&display=swap" rel="stylesheet">
     <style>
         /* --- CORE THEME --- */
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        
         body {
             background: #0f1011 url("background_color.jpg") center / cover fixed;
             min-height: 100vh; font-family: 'Special Elite', cursive; 
-            overflow-x: hidden; display: flex; flex-direction: column; color: #fff;
+            overflow: hidden; display: flex; flex-direction: column; color: #fff;
         }
 
         /* --- HEADER --- */
-        .site-header { text-align: center; padding: 30px 0 10px; z-index: 1000; }
+        .site-header { text-align: center; padding: 20px 0 10px; z-index: 1000; }
         .brand-title {
-            font-family: 'Limelight', cursive; font-size: 60px; text-transform: uppercase;
+            font-family: 'Limelight', cursive; font-size: 55px; text-transform: uppercase;
             background: linear-gradient(to bottom, #ffffff, #8e9196, #2c2e30);
             -webkit-background-clip: text; -webkit-text-fill-color: transparent;
             letter-spacing: 4px;
         }
         .sub-title { 
-            font-family: 'Limelight', cursive; font-size: 20px; letter-spacing: 8px; 
-            color: #ffffff; opacity: 0.9; text-transform: uppercase; margin-top: 10px;
+            font-family: 'Limelight', cursive; font-size: 18px; letter-spacing: 6px; 
+            color: #ffffff; opacity: 0.9; text-transform: uppercase; margin-top: 5px;
         }
 
-        /* --- GUNMETAL LABEL HOLDER --- */
+        /* --- INDUSTRIAL HARDWARE LABELS --- */
         .label-holder {
-            position: relative;
-            width: 180px; height: 75px;
+            position: relative; width: 180px; height: 70px;
             background: linear-gradient(135deg, #2c2e30 0%, #000000 100%); 
             border: 2px solid #1a1a1a;
-            box-shadow: inset 0 0 12px rgba(255,255,255,0.05), 0 8px 15px rgba(0,0,0,0.9);
+            box-shadow: inset 0 0 10px rgba(255,255,255,0.05), 0 5px 15px rgba(0,0,0,0.8);
             display: flex; align-items: center; justify-content: center;
-            cursor: pointer; transition: 0.3s;
+            cursor: pointer; transition: 0.3s; z-index: 10;
         }
-        
         .label-holder::before, .label-holder::after {
             content: ''; position: absolute; top: 50%; transform: translateY(-50%);
-            width: 7px; height: 7px; background: #111; border-radius: 50%;
-            box-shadow: inset -1px -1px 2px rgba(255,255,255,0.1), 1px 1px 2px rgba(0,0,0,0.8);
+            width: 6px; height: 6px; background: #111; border-radius: 50%;
+            box-shadow: inset -1px -1px 2px rgba(255,255,255,0.1), 1px 1px 1px rgba(0,0,0,0.8);
         }
-        .label-holder::before { left: 10px; }
-        .label-holder::after { right: 10px; }
-
+        .label-holder::before { left: 8px; }
+        .label-holder::after { right: 8px; }
         .lip-pull {
-            position: absolute; bottom: -6px; left: 50%; transform: translateX(-50%);
-            width: 95px; height: 14px;
-            background: linear-gradient(to bottom, #333, #000);
-            border-radius: 0 0 8px 8px;
-            border: 1px solid #111;
+            position: absolute; bottom: -5px; left: 50%; transform: translateX(-50%);
+            width: 80px; height: 12px; background: linear-gradient(to bottom, #333, #000);
+            border-radius: 0 0 6px 6px; border: 1px solid #111;
         }
-
         .plate-style {
-            width: 135px; height: 35px;
+            width: 130px; height: 32px;
             background: linear-gradient(to bottom, #bdc3c7, #8e9196); 
             color: #111; display: flex; align-items: center; justify-content: center;
-            font-size: 13px; font-weight: bold; letter-spacing: 0.5px;
-            text-transform: uppercase; border: 1px solid #777;
-            box-shadow: inset 0 2px 4px rgba(0,0,0,0.3);
-            font-family: 'Special Elite', cursive;
+            font-size: 14px; font-weight: bold; text-transform: uppercase;
+            border: 1px solid #777; box-shadow: inset 0 2px 4px rgba(0,0,0,0.3);
         }
 
-        .label-holder:hover { transform: translateY(-2px); box-shadow: 0 0 20px rgba(255,255,255,0.2); }
-
         /* --- NAVIGATION --- */
-        .vintage-tabs { display: flex; justify-content: center; gap: 15px; padding: 20px 0; z-index: 1000; }
+        .vintage-tabs { display: flex; justify-content: center; gap: 12px; padding: 15px 0; z-index: 1000; position: relative; }
 
         /* --- WORKSPACE --- */
         .workspace { display: flex; justify-content: center; align-items: center; flex: 1; position: relative; }
-        
         .stage { 
-            width: 800px; height: 500px; background: #111; border: 12px solid #2c2e30;
-            position: relative; box-shadow: 0 0 60px black; z-index: 10;
+            width: 850px; height: 500px; background: #000; border: 10px solid #2c2e30;
+            position: relative; box-shadow: 0 0 50px black; z-index: 5;
             transition: transform 0.8s cubic-bezier(0.19, 1, 0.22, 1);
-            overflow: visible;
         }
-        .workspace.active-glide .stage { transform: translateX(200px) !important; }
+        .workspace.active-glide .stage { transform: translateX(180px); }
+        .room-img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: none; }
 
-        .room-img { 
-            position: absolute; inset: 0; width: 100%; height: 100%; 
-            object-fit: cover; display: none; z-index: 1; 
-            transition: filter 0.3s;
-        }
-        .room-preview { filter: sepia(0.5) brightness(0.7); }
-
-        /* --- CABINET --- */
+        /* --- CABINET & SPACED DRAWERS --- */
         .cabinet-container { 
-            position: absolute; left: 50px; width: 0; opacity: 0; z-index: 200;
-            transition: 1s cubic-bezier(0.19, 1, 0.22, 1);
+            position: absolute; left: 20px; width: 400px; opacity: 0; z-index: 200;
+            transition: 0.8s cubic-bezier(0.19, 1, 0.22, 1); pointer-events: none;
         }
-        .workspace.active-glide .cabinet-container { width: 450px; opacity: 1; }
-        .cabinet-img { width: 450px; display: block; filter: drop-shadow(10px 0 20px #000); }
+        .workspace.active-glide .cabinet-container { opacity: 1; pointer-events: auto; }
+        .cabinet-img { width: 100%; filter: drop-shadow(10px 0 20px #000); }
+        .drawer-stack { position: absolute; top: 60px; left: 50%; transform: translateX(-50%); width: 100%; display: flex; flex-direction: column; align-items: center; gap: 25px; }
 
-        #cab-content { position: absolute; inset: 0; z-index: 210; pointer-events: none; }
-        .drawer-row { position: absolute; left: 50%; transform: translateX(-50%); pointer-events: auto; }
-
-        /* --- FAN PHYSICS --- */
-        .fan-container { position: absolute; width: 300px; height: 300px; display: none; z-index: 400; pointer-events: none; }
-        .fan-container.active { display: block; }
+        /* --- TELESCOPING FAN ENGINE --- */
+        .fan-pivot { position: absolute; left: 200px; width: 0; height: 0; z-index: 50; pointer-events: none; }
         
-        .fan-blade {
-            position: absolute; left: 0; top: 125px; width: 0; height: 50px; 
-            background: linear-gradient(to right, #1a1a1a, #444, #777); border: 1px solid #000;
-            transform-origin: left center; transition: 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275); 
+        /* The Thin Arm */
+        .mechanical-arm {
+            position: absolute; left: 0; top: 0; width: 0; height: 4px;
+            background: #222; border: 1px solid #444; transform-origin: left center;
+            transition: 0.6s cubic-bezier(0.17, 0.67, 0.2, 1); opacity: 0;
+            display: flex; align-items: center; justify-content: flex-end;
+        }
+        .active-fan .mechanical-arm { width: 140px; opacity: 1; pointer-events: auto; }
+
+        /* The Paddle (Icon) */
+        .paddle {
+            width: 45px; height: 45px; background: #000; border: 2px solid #555;
+            border-radius: 50%; margin-right: -22px; display: flex; align-items: center; justify-content: center;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.8); cursor: pointer; transition: 0.3s;
+        }
+        .paddle:hover { transform: scale(1.1); border-color: #bdc3c7; }
+        .paddle img { width: 24px; height: 24px; }
+
+        /* Retraction State */
+        .retracting .mechanical-arm { width: 0 !important; opacity: 0 !important; }
+
+        /* Silver Item Fan (Secondary) */
+        .silver-fan-blade {
+            position: absolute; left: 0; top: 0; width: 0; height: 45px;
+            background: linear-gradient(to right, #bdc3c7, #8e9196);
+            border: 1px solid #555; border-radius: 0 25px 25px 0;
+            transform-origin: left center; transition: 0.7s cubic-bezier(0.19, 1, 0.22, 1);
             opacity: 0; display: flex; align-items: center; justify-content: flex-end; padding-right: 15px;
         }
-        .fan-container.active .fan-blade { width: 160px; opacity: 1; pointer-events: auto; }
-        
-        .fan-container.active .blade-1 { transform: rotate(-45deg); }
-        .fan-container.active .blade-2 { transform: rotate(-15deg); }
-        .fan-container.active .blade-3 { transform: rotate(15deg); }
-        .fan-container.active .blade-4 { transform: rotate(45deg); }
+        .active-sub .silver-fan-blade { width: 280px; opacity: 1; pointer-events: auto; }
 
-        .category-icon { width: 32px; height: 32px; cursor: pointer; z-index: 500; position: relative; pointer-events: auto; }
+        /* Rotations */
+        .arm-1 { transform: rotate(-40deg); } .arm-2 { transform: rotate(-15deg); }
+        .arm-3 { transform: rotate(15deg); } .arm-4 { transform: rotate(40deg); }
+        .s-1 { transform: rotate(-55deg); } .s-2 { transform: rotate(-25deg); }
+        .s-3 { transform: rotate(5deg); } .s-4 { transform: rotate(35deg); }
 
-        /* Sub Fan (Items) */
-        #sub-fan { z-index: 450; display: none; }
-        #sub-fan.active { display: block; }
-        .sub-blade { 
-            position: absolute; left: 0; top: 125px;
-            background: linear-gradient(to bottom, #bdc3c7, #8e9196); 
-            border: 2px solid #777; border-radius: 0 40px 40px 0; 
-            width: 0; opacity: 0; transition: 0.6s; transform-origin: left center;
-        }
-        #sub-fan.active .sub-blade { width: 320px; opacity: 1; pointer-events: auto; }
-        #sub-fan.active .s-1 { transform: rotate(-60deg); }
-        #sub-fan.active .s-2 { transform: rotate(-35deg); }
-        #sub-fan.active .s-3 { transform: rotate(-10deg); }
-        #sub-fan.active .s-4 { transform: rotate(15deg); }
-
-        .furn-item-img { width: 80px; max-height: 50px; cursor: grab; object-fit: contain; }
-        .placed-item { position: absolute; cursor: move; z-index: 50; max-width: 180px; filter: drop-shadow(0 10px 15px black); }
+        .placed-item { position: absolute; cursor: move; z-index: 100; max-width: 150px; }
     </style>
 </head>
 
@@ -146,13 +130,13 @@
 </header>
 
 <nav class="vintage-tabs">
-    <div class="label-holder" onclick="openRooms()">
+    <div class="label-holder" onclick="openCabinet('rooms')">
         <div class="plate-style">Rooms</div><div class="lip-pull"></div>
     </div>
-    <div class="label-holder">
+    <div class="label-holder" onclick="openCabinet('furniture')">
         <div class="plate-style">Furniture</div><div class="lip-pull"></div>
     </div>
-    <div class="label-holder">
+    <div class="label-holder" onclick="toggleTopFan('decor')">
         <div class="plate-style">Decor</div><div class="lip-pull"></div>
     </div>
     <div class="label-holder">
@@ -164,22 +148,21 @@
 </nav>
 
 <div class="workspace" id="main-ws">
-    <div class="cabinet-container" id="cab-anchor">
+    <div class="cabinet-container" id="cab-container">
         <img src="cabinet.png" class="cabinet-img" alt="cabinet">
-        <div id="cab-content"></div>
+        <div class="drawer-stack" id="drawer-anchor">
+            </div>
         
-        <div id="furn-fan" class="fan-container">
-            <div class="fan-blade blade-1"><img src="iconseating.png" class="category-icon" onclick="openSubFan('seating')"></div>
-            <div class="fan-blade blade-2"><img src="iconbeds.png" class="category-icon" onclick="openSubFan('beds')"></div>
-            <div class="fan-blade blade-3"><img src="iconstorage.png" class="category-icon" onclick="openSubFan('storage')"></div>
-            <div class="fan-blade blade-4"><img src="icontable.png" class="category-icon" onclick="openSubFan('tables')"></div>
+        <div id="cat-fan" class="fan-pivot">
+            <div class="mechanical-arm arm-1"><div class="paddle" onclick="triggerSub('seating')"><img src="iconseating.png"></div></div>
+            <div class="mechanical-arm arm-2"><div class="paddle" onclick="triggerSub('beds')"><img src="iconbeds.png"></div></div>
+            <div class="mechanical-arm arm-3"><div class="paddle" onclick="triggerSub('storage')"><img src="iconstorage.png"></div></div>
+            <div class="mechanical-arm arm-4"><div class="paddle" onclick="triggerSub('tables')"><img src="icontables.png"></div></div>
         </div>
 
-        <div id="sub-fan" class="fan-container">
-            <div class="fan-blade sub-blade s-1"></div>
-            <div class="fan-blade sub-blade s-2"></div>
-            <div class="fan-blade sub-blade s-3"></div>
-            <div class="fan-blade sub-blade s-4"></div>
+        <div id="item-fan" class="fan-pivot">
+            <div class="silver-fan-blade s-1"></div><div class="silver-fan-blade s-2"></div>
+            <div class="silver-fan-blade s-3"></div><div class="silver-fan-blade s-4"></div>
         </div>
     </div>
 
@@ -190,86 +173,73 @@
 
 <script>
     const ws = document.getElementById('main-ws');
-    const cab = document.getElementById('cab-content');
-    const room = document.getElementById('room-display');
-    const fFan = document.getElementById('furn-fan');
-    const sFan = document.getElementById('sub-fan');
-    const zone = document.getElementById('stage-zone');
+    const stage = document.getElementById('stage-zone');
+    const roomImg = document.getElementById('room-display');
+    const drawerAnchor = document.getElementById('drawer-anchor');
+    const catFan = document.getElementById('cat-fan');
+    const itemFan = document.getElementById('item-fan');
 
-    function openRooms() {
+    function openCabinet(type) {
         ws.classList.add('active-glide');
-        cab.innerHTML = `
-            <div class="drawer-row" style="top:70px" onmouseover="preview('on')" onmouseout="preview('off')" onclick="setRoom('livingroom.jpg', this)">
-                <div class="label-holder"><div class="plate-style">Living Rooms</div><div class="lip-pull"></div></div>
-            </div>
-            <div class="drawer-row" style="top:150px" onmouseover="preview('on')" onmouseout="preview('off')" onclick="setRoom('bedroom.jpg', this)">
-                <div class="label-holder"><div class="plate-style">Bedrooms</div><div class="lip-pull"></div></div>
-            </div>
-            <div class="drawer-row" style="top:230px" onmouseover="preview('on')" onmouseout="preview('off')" onclick="setRoom('diningroom.jpg', this)">
-                <div class="label-holder"><div class="plate-style">Dining Room</div><div class="lip-pull"></div></div>
-            </div>
-            <div class="drawer-row" style="top:330px">
-                <div class="label-holder" style="background: linear-gradient(135deg, #1a1a1a, #444);">
-                    <div class="plate-style" style="background:#bfc9ca">Upload / Load</div><div class="lip-pull"></div>
-                </div>
-            </div>
-        `;
+        catFan.classList.remove('active-fan', 'retracting');
+        itemFan.classList.remove('active-sub');
+
+        if(type === 'rooms') {
+            drawerAnchor.innerHTML = `
+                <div class="drawer-row" onclick="setRoom('living.jpg', this)"><div class="label-holder"><div class="plate-style">Living Rooms</div><div class="lip-pull"></div></div></div>
+                <div class="drawer-row" onclick="setRoom('bedroom.jpg', this)"><div class="label-holder"><div class="plate-style">Bedrooms</div><div class="lip-pull"></div></div></div>
+                <div class="drawer-row" onclick="setRoom('dining.jpg', this)"><div class="label-holder"><div class="plate-style">Dining Room</div><div class="lip-pull"></div></div></div>
+                <div class="drawer-row"><div class="label-holder" style="background: #1a1a1a;"><div class="plate-style" style="background:#bfc9ca">Upload / Load</div><div class="lip-pull"></div></div></div>
+            `;
+        }
     }
 
-    function preview(state) {
-        if(state === 'on') room.classList.add('room-preview');
-        else room.classList.remove('room-preview');
-    }
-
-    function setRoom(src, el) {
-        room.src = src; room.style.display = 'block';
-        sFan.classList.remove('active');
-        fFan.classList.remove('active');
+    function setRoom(img, el) {
+        roomImg.src = img; roomImg.style.display = 'block';
         
+        // Position Pivot at the gap of selected drawer
         const rect = el.getBoundingClientRect();
-        const anchor = document.getElementById('cab-anchor').getBoundingClientRect();
-        fFan.style.top = (rect.top - anchor.top + 37 - 150) + "px";
-        fFan.style.left = (rect.right - anchor.left - 40) + "px";
+        const cabRect = document.getElementById('cab-container').getBoundingClientRect();
+        catFan.style.top = (rect.top - cabRect.top + 35) + "px";
+        itemFan.style.top = catFan.style.top;
         
-        setTimeout(() => fFan.classList.add('active'), 100);
+        // Swing Out Arms
+        catFan.classList.remove('retracting');
+        setTimeout(() => catFan.classList.add('active-fan'), 100);
     }
 
-    function openSubFan(cat) {
-        sFan.classList.remove('active');
-        sFan.style.top = fFan.style.top;
-        sFan.style.left = (parseInt(fFan.style.left) + 80) + "px";
+    function triggerSub(cat) {
+        // Retract Category Arms
+        catFan.classList.add('retracting');
         
-        const blades = document.querySelectorAll('.sub-blade');
+        // Deploy Item Blades
+        const blades = document.querySelectorAll('.silver-fan-blade');
         blades.forEach((b, i) => {
             b.innerHTML = `<img src="furn_${cat}_${i}.png" class="furn-item-img" draggable="true" ondragstart="drag(event)">`;
         });
         
-        setTimeout(() => sFan.classList.add('active'), 50);
+        setTimeout(() => itemFan.classList.add('active-sub'), 300);
     }
 
+    // Drag Logic
     function drag(ev) { ev.dataTransfer.setData("src", ev.target.src); }
-    zone.ondragover = ev => ev.preventDefault();
-    zone.ondrop = ev => {
+    stage.ondragover = ev => ev.preventDefault();
+    stage.ondrop = ev => {
         ev.preventDefault();
         const src = ev.dataTransfer.getData("src");
-        const rect = zone.getBoundingClientRect();
         const img = document.createElement('img');
-        img.src = src;
-        img.className = "placed-item";
+        img.src = src; img.className = "placed-item";
+        const rect = stage.getBoundingClientRect();
         img.style.left = (ev.clientX - rect.left - 50) + "px";
         img.style.top = (ev.clientY - rect.top - 50) + "px";
         
         img.onmousedown = e => {
-            let offsetX = e.clientX - img.offsetLeft;
-            let offsetY = e.clientY - img.offsetTop;
-            document.onmousemove = move => {
-                img.style.left = (move.clientX - offsetX) + 'px';
-                img.style.top = (move.clientY - offsetY) + 'px';
-            };
-            document.onmouseup = () => { document.onmousemove = null; };
+            let ox = e.clientX - img.offsetLeft; let oy = e.clientY - img.offsetTop;
+            document.onmousemove = m => { img.style.left = (m.clientX - ox) + 'px'; img.style.top = (m.clientY - oy) + 'px'; };
+            document.onmouseup = () => document.onmousemove = null;
         };
         img.ondblclick = () => img.remove();
-        zone.appendChild(img);
+        stage.appendChild(img);
     };
 </script>
 </body>
