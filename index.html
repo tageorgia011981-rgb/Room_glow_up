@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Room Glow Up | Icon Alignment Fix</title>
+    <title>Room Glow Up | Industrial Upscale</title>
     <link href="https://fonts.googleapis.com/css2?family=Limelight&family=Special+Elite&display=swap" rel="stylesheet">
     <style>
         /* --- FOUNDATION --- */
@@ -14,45 +14,68 @@
             overflow-y: auto; overflow-x: hidden; 
         }
 
-        /* --- HEADER & NAVIGATION --- */
+        /* --- HEADER (The Wow Factor) --- */
         .site-header { text-align: center; padding: 50px 0 20px; z-index: 2000; position: relative; }
         .brand-title { 
             font-family: 'Limelight', cursive; font-size: 95px; text-transform: uppercase; 
-            background: linear-gradient(to bottom, #ffffff, #8e9196, #2c2e30);
+            background: linear-gradient(to bottom, #ffffff 0%, #8e9196 50%, #2c2e30 100%);
             -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-            letter-spacing: 6px;
+            letter-spacing: 6px; filter: drop-shadow(0 5px 15px rgba(0,0,0,0.8));
+        }
+        .sub-title { 
+            font-family: 'Limelight', cursive; font-size: 20px; letter-spacing: 10px; 
+            color: #ffffff; opacity: 0.9; margin-top: 15px; text-transform: uppercase; 
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
         }
 
-        .vintage-tabs { display: flex; justify-content: center; gap: 20px; padding: 20px 0; z-index: 2000; position: relative; }
+        /* --- VINTAGE TABS --- */
+        .vintage-tabs { display: flex; justify-content: center; gap: 20px; padding: 30px 0; z-index: 2000; position: relative; }
         .drawer-hardware {
-            position: relative; width: 220px; height: 90px;
+            position: relative; width: 300px; height: 100px; /* Upscaled */
             background: linear-gradient(135deg, #2c2e30 0%, #000 100%); 
             border: 3px solid #1a1a1a;
             box-shadow: inset 0 0 15px rgba(255,255,255,0.05), 0 10px 20px rgba(0,0,0,0.8);
             display: flex; align-items: center; justify-content: center; cursor: pointer;
             transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
-        .active-lift { transform: translateY(15px) !important; border-color: #8e9196; }
+        .active-lift { transform: translateY(15px) !important; border-color: #8e9196; box-shadow: 0 0 20px rgba(142,145,150,0.4); }
+        
         .plate-style { 
-            width: 170px; height: 45px; background: linear-gradient(145deg, #e0e0e0, #8e9196, #e0e0e0); 
+            width: 240px; height: 50px; /* Upscaled */
+            background: linear-gradient(145deg, #e0e0e0 0%, #8e9196 45%, #ffffff 50%, #8e9196 55%, #444 100%); 
             color: #000; display: flex; align-items: center; justify-content: center; 
-            font-size: 14px; font-weight: bold; text-transform: uppercase; border: 2px solid #444; pointer-events: none;
+            font-size: 16px; font-weight: bold; text-transform: uppercase; 
+            border: 2px solid #333; pointer-events: none;
+            box-shadow: 2px 2px 5px rgba(0,0,0,0.5);
         }
-        .lip-pull { position: absolute; bottom: -7px; left: 50%; transform: translateX(-50%); width: 110px; height: 16px; background: linear-gradient(#333, #111, #000); border-radius: 0 0 10px 10px; border: 1px solid #111; }
+        .lip-pull { 
+            position: absolute; bottom: -8px; left: 50%; transform: translateX(-50%); 
+            width: 140px; height: 18px; 
+            background: linear-gradient(#333, #111, #000); 
+            border-radius: 0 0 10px 10px; border: 1px solid #111; 
+        }
 
-        /* --- WORKSPACE --- */
+        /* --- WORKSPACE & CABINET --- */
         .workspace { display: flex; justify-content: flex-start; align-items: flex-start; min-height: 1200px; padding: 40px 60px; position: relative; }
-        .cabinet-container { position: absolute; left: -600px; top: 0; width: 480px; z-index: 1000; transition: left 0.8s cubic-bezier(0.19, 1, 0.22, 1); }
+        .cabinet-container { 
+            position: absolute; left: -800px; top: 0; 
+            width: 620px; /* Increased cabinet width */
+            z-index: 1000; transition: left 0.8s cubic-bezier(0.19, 1, 0.22, 1); 
+        }
         .cabinet-visible { left: 40px !important; }
         .cabinet-image { width: 100%; filter: drop-shadow(20px 0 60px #000); }
-        .drawer-stack { position: absolute; top: 120px; left: 50%; transform: translateX(-50%); width: 100%; display: flex; flex-direction: column; align-items: center; gap: 45px; }
+        .drawer-stack { position: absolute; top: 140px; left: 50%; transform: translateX(-50%); width: 100%; display: flex; flex-direction: column; align-items: center; gap: 55px; }
 
         /* --- STAGE --- */
-        .stage { width: 950px; height: 580px; background: #050505; border: 15px solid #2c2e30; box-shadow: 0 0 120px black; margin-left: 520px; margin-top: 40px; z-index: 500; position: relative; }
+        .stage { 
+            width: 950px; height: 580px; background: #050505; border: 15px solid #2c2e30; 
+            box-shadow: 0 0 120px black; margin-left: 680px; margin-top: 40px; 
+            z-index: 500; position: relative; 
+        }
         #room-display { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: none; }
 
         /* --- SWATCH FAN --- */
-        .fan-system { position: absolute; left: 360px; z-index: 1100; pointer-events: none; transition: top 0.4s cubic-bezier(0.19, 1, 0.22, 1); }
+        .fan-system { position: absolute; left: 480px; z-index: 1100; pointer-events: none; transition: top 0.4s cubic-bezier(0.19, 1, 0.22, 1); }
         .swatch-blade {
             position: absolute; left: 0; top: -32px; width: 0; height: 65px;
             background: linear-gradient(to right, #444, #8e9196, #1a1a1a);
@@ -71,44 +94,58 @@
         .s-1 { transform: rotate(-50deg); } .s-2 { transform: rotate(-25deg); } .s-3 { transform: rotate(0deg); } .s-4 { transform: rotate(25deg); } .s-5 { transform: rotate(50deg); }
         .fan-icon { width: 55px; height: 55px; cursor: pointer; transition: 0.2s; }
 
-        /* --- CATALOG OVERLAY --- */
-        #catalog-overlay {
+        /* --- OVERLAYS --- */
+        #catalog-overlay, #insp-overlay {
             position: fixed; inset: 0; background: rgba(10, 11, 12, 0.98); 
             z-index: 3000; display: none; overflow-y: auto; padding: 60px;
             border: 15px solid #2c2e30; box-shadow: inset 0 0 100px #000;
         }
-        .catalog-nav-header { display: flex; align-items: center; gap: 20px; margin-bottom: 40px; border-bottom: 2px solid #2c2e30; padding-bottom: 20px; }
-        .breadcrumb { font-size: 20px; color: #8e9196; cursor: pointer; text-transform: uppercase; letter-spacing: 3px; }
+        .close-overlay { position: absolute; top: 20px; right: 40px; font-size: 60px; cursor: pointer; color: #8e9196; z-index: 3100; }
+        
         .index-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 30px; margin-top: 30px; }
-        .index-card { background: linear-gradient(145deg, #1a1a1a, #000); height: 320px; display: flex; flex-direction: column; align-items: center; justify-content: center; border: 2px solid #2c2e30; cursor: pointer; transition: 0.4s; }
+        .index-card { 
+            background: linear-gradient(145deg, #1a1a1a, #000); 
+            height: 320px; display: flex; flex-direction: column; align-items: center; justify-content: center;
+            border: 2px solid #2c2e30; cursor: pointer; transition: 0.4s;
+        }
+        .index-card:hover { border-color: #8e9196; transform: translateY(-5px); }
         .index-card img { width: 110px; margin-bottom: 25px; filter: grayscale(1) brightness(2); }
         .index-card h2 { font-family: 'Limelight'; letter-spacing: 4px; }
-        .gallery-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 40px; }
-        .furniture-item { background: #0f1011; padding: 25px; border: 2px solid #2c2e30; text-align: center; }
-        .furniture-item img { width: 100%; height: 220px; object-fit: contain; margin-bottom: 20px; }
-        .furniture-link { color: #000; background: #8e9196; font-size: 11px; text-transform: uppercase; font-weight: bold; text-decoration: none; padding: 10px 20px; display: inline-block; }
-        .close-catalog { position: absolute; top: 20px; right: 40px; font-size: 60px; cursor: pointer; color: #8e9196; }
+
+        .insp-masonry { column-count: 3; column-gap: 20px; width: 100%; margin-top: 20px; }
+        .insp-item { break-inside: avoid; margin-bottom: 20px; border: 2px solid #2c2e30; transition: 0.3s; cursor: pointer; }
+        .insp-item img { width: 100%; display: block; }
+
         .placed-item { position: absolute; width: 220px; cursor: move; filter: drop-shadow(0 15px 30px black); z-index: 1500; }
     </style>
 </head>
 <body>
 
-<header class="site-header"><h1 class="brand-title">Room Glow Up</h1></header>
+<header class="site-header">
+    <h1 class="brand-title">Room Glow Up</h1>
+    <div class="sub-title">Your Dream Space Come To Life</div>
+</header>
 
 <nav class="vintage-tabs">
     <div class="drawer-hardware" onclick="lift(this); openCabinet('rooms')"><div class="plate-style">Rooms</div><div class="lip-pull"></div></div>
     <div class="drawer-hardware" onclick="lift(this); openCatalog()"><div class="plate-style">Furniture</div><div class="lip-pull"></div></div>
     <div class="drawer-hardware" onclick="lift(this); openCabinet('decor')"><div class="plate-style">Decor</div><div class="lip-pull"></div></div>
-    <div class="drawer-hardware" onclick="lift(this)"><div class="plate-style">Inspiration</div><div class="lip-pull"></div></div>
+    <div class="drawer-hardware" onclick="lift(this); openInspiration()"><div class="plate-style">Inspiration</div><div class="lip-pull"></div></div>
     <div class="drawer-hardware" onclick="lift(this)"><div class="plate-style">Save</div><div class="lip-pull"></div></div>
 </nav>
 
-<div id="catalog-overlay">
-    <span class="close-catalog" onclick="closeCatalog()">×</span>
-    <div class="catalog-nav-header">
-        <span class="breadcrumb" onclick="showCatalogView('master-index')">Collection Index</span>
-        <span id="sub-crumb" class="breadcrumb" style="display:none; color:#fff;">/ Seating</span>
+<div id="insp-overlay">
+    <span class="close-overlay" onclick="closeOverlay('insp-overlay')">×</span>
+    <h2 style="font-family: 'Limelight'; font-size: 45px; letter-spacing: 5px; margin-bottom: 30px; border-bottom: 2px solid #2c2e30; padding-bottom: 15px;">Inspiration Board</h2>
+    <div class="insp-masonry">
+        <div class="insp-item"><img src="livingroom.jpg"></div>
+        <div class="insp-item"><img src="bedroom.jpg"></div>
+        <div class="insp-item"><img src="diningroom.jpg"></div>
     </div>
+</div>
+
+<div id="catalog-overlay">
+    <span class="close-overlay" onclick="closeOverlay('catalog-overlay')">×</span>
     <div id="master-index" class="catalog-view" style="display:block;">
         <div class="index-grid">
             <div class="index-card" onclick="openSubIndex('Seating')"><img src="iconseating.png"><h2>Seating</h2></div>
@@ -117,24 +154,15 @@
             <div class="index-card" onclick="openSubIndex('Tables')"><img src="iconstable.png"><h2>Tables</h2></div>
         </div>
     </div>
-    <div id="seating-index" class="catalog-view" style="display:none;">
-        <div class="index-grid">
-            <div class="index-card" onclick="showGallery('Couches')"><h2>Couches</h2></div>
-            <div class="index-card" onclick="showGallery('Chairs')"><h2>Chairs</h2></div>
-            <div class="index-card" onclick="showGallery('Dining')"><h2>Dining</h2></div>
-            <div class="index-card" onclick="showGallery('Stools')"><h2>Stools</h2></div>
-        </div>
-    </div>
-    <div id="gallery-view" class="catalog-view" style="display:none;"><div class="gallery-grid" id="gallery-items"></div></div>
 </div>
 
 <div class="workspace">
     <div class="cabinet-container" id="cab-container">
         <img src="cabinet.png" class="cabinet-image">
         <div class="drawer-stack" id="drawer-anchor">
-            <div class="drawer-row" onclick="handleDrawerClick('livingroom.jpg', this)"><div class="drawer-hardware"><div class="plate-style">Living Room</div></div></div>
-            <div class="drawer-row" onclick="handleDrawerClick('bedroom.jpg', this)"><div class="drawer-hardware"><div class="plate-style">Bedroom</div></div></div>
-            <div class="drawer-row" onclick="handleDrawerClick('diningroom.jpg', this)"><div class="drawer-hardware"><div class="plate-style">Dining Room</div></div></div>
+            <div class="drawer-row" onclick="handleDrawerClick('livingroom.jpg', this)"><div class="drawer-hardware"><div class="plate-style">Living Room</div><div class="lip-pull"></div></div></div>
+            <div class="drawer-row" onclick="handleDrawerClick('bedroom.jpg', this)"><div class="drawer-hardware"><div class="plate-style">Bedroom</div><div class="lip-pull"></div></div></div>
+            <div class="drawer-row" onclick="handleDrawerClick('diningroom.jpg', this)"><div class="drawer-hardware"><div class="plate-style">Dining Room</div><div class="lip-pull"></div></div></div>
         </div>
         <div id="fan-engine" class="fan-system">
             <div class="pivot-bolt"></div>
@@ -145,11 +173,9 @@
 </div>
 
 <script>
-    function openCatalog() { document.getElementById('catalog-overlay').style.display = 'block'; showCatalogView('master-index'); }
-    function closeCatalog() { document.getElementById('catalog-overlay').style.display = 'none'; }
-    function showCatalogView(viewId) { document.querySelectorAll('.catalog-view').forEach(v => v.style.display = 'none'); document.getElementById(viewId).style.display = 'block'; if(viewId === 'master-index') document.getElementById('sub-crumb').style.display = 'none'; }
-    function openSubIndex(cat) { document.getElementById('sub-crumb').style.display = 'inline'; document.getElementById('sub-crumb').innerText = "/ " + cat; if(cat === 'Seating') showCatalogView('seating-index'); }
-    function showGallery(type) { showCatalogView('gallery-view'); const container = document.getElementById('gallery-items'); container.innerHTML = ''; for(let i=1; i<=4; i++) { container.innerHTML += `<div class="furniture-item"><img src="${type.toLowerCase()}1.png"><h3>${type.toUpperCase()} MODEL-0${i}</h3><a href="#" class="furniture-link">Catalog Specs</a></div>`; } }
+    function openCatalog() { document.getElementById('catalog-overlay').style.display = 'block'; }
+    function openInspiration() { document.getElementById('insp-overlay').style.display = 'block'; }
+    function closeOverlay(id) { document.getElementById(id).style.display = 'none'; }
 
     const roomImg = document.getElementById('room-display');
     const cab = document.getElementById('cab-container');
@@ -186,21 +212,14 @@
         fan.style.top = (stackTop + drawerCenter) + "px";
         if (currentLevel === 1) {
             if (activeMode === 'decor') { setFan(['iconrugs.png', 'iconlighting.png', 'iconart.png', 'iconplants.png'], ['openInv("rug")', 'openInv("lamp")', 'openInv("art")', 'openInv("plant")'], false); }
-            else { 
-                // FIXED FILENAME HERE
-                setFan(['iconseating.png', 'iconstorage.png', 'iconbeds.png', 'iconstable.png'], ['openSub()', 'openInv("storage")', '', 'openInv("table")'], false); 
-            }
+            else { setFan(['iconseating.png', 'iconstorage.png', 'iconbeds.png', 'iconstable.png'], ['openSub()', 'openInv("storage")', '', 'openInv("table")'], false); }
         } else if (currentLevel === 2) { openSub(); }
     }
 
     function openSub() { currentLevel = 2; setFan(['iconcouches.png', 'iconchairs.png', 'icondining.png', 'iconbenches.png', 'iconstools.png'], ['openInv("couch")', 'openInv("chair")', 'openInv("dining")', 'openInv("bench")', 'openInv("stool")'], false); }
-
     function openInv(type) {
         currentLevel = 3;
-        let inv = (type === "dining") ? ['diningchair1.png', 'diningchair2.png'] : 
-                  (type === "storage") ? ['dresser1.png', 'shelf1.png', 'shelf2.png'] : 
-                  (type === "table") ? ['coffeetable.png'] : 
-                  (type === "rug") ? ['rug1.png', 'rug2.png'] : [`${type}1.png`, `${type}2.png`];
+        let inv = (type === "dining") ? ['diningchair1.png', 'diningchair2.png'] : (type === "storage") ? ['dresser1.png', 'shelf1.png', 'shelf2.png'] : (type === "table") ? ['coffeetable.png'] : (type === "rug") ? ['rug1.png', 'rug2.png'] : [`${type}1.png`, `${type}2.png`];
         setFan(inv, inv.map(() => ''), true);
     }
 
