@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Room Glow Up | Multi-Level Catalog Build</title>
+    <title>Room Glow Up | Industrial Catalog Build</title>
     <link href="https://fonts.googleapis.com/css2?family=Limelight&family=Special+Elite&display=swap" rel="stylesheet">
     <style>
         /* --- FOUNDATION --- */
@@ -22,7 +22,6 @@
             -webkit-background-clip: text; -webkit-text-fill-color: transparent;
             letter-spacing: 6px;
         }
-        .sub-title { font-family: 'Limelight', cursive; font-size: 20px; letter-spacing: 10px; color: #ffffff; opacity: 0.9; margin-top: 10px; text-transform: uppercase; }
 
         .vintage-tabs { display: flex; justify-content: center; gap: 20px; padding: 20px 0; z-index: 2000; position: relative; }
         .drawer-hardware {
@@ -70,40 +69,47 @@
         }
         .active-fan .pivot-bolt { opacity: 1; }
         .s-1 { transform: rotate(-50deg); } .s-2 { transform: rotate(-25deg); } .s-3 { transform: rotate(0deg); } .s-4 { transform: rotate(25deg); } .s-5 { transform: rotate(50deg); }
-        .fan-icon { width: 55px; height: 55px; cursor: pointer; transition: 0.2s; }
 
-        /* --- DRILL-DOWN CATALOG --- */
+        /* --- INDUSTRIAL CATALOG OVERLAY --- */
         #catalog-overlay {
-            position: fixed; inset: 0; background: rgba(15, 16, 17, 0.98); 
-            z-index: 3000; display: none; overflow-y: auto; padding: 50px;
-            border: 15px solid #2c2e30;
+            position: fixed; inset: 0; background: rgba(10, 11, 12, 0.98); 
+            z-index: 3000; display: none; overflow-y: auto; padding: 60px;
+            border: 15px solid #2c2e30; box-shadow: inset 0 0 100px #000;
         }
-        .catalog-nav-header { display: flex; align-items: center; gap: 20px; margin-bottom: 40px; border-bottom: 1px solid #444; padding-bottom: 20px; }
-        .breadcrumb { font-size: 24px; color: #8e9196; cursor: pointer; transition: 0.3s; }
-        .breadcrumb:hover { color: #fff; }
-        .breadcrumb.active { color: #fff; font-family: 'Limelight'; }
+        .catalog-nav-header { display: flex; align-items: center; gap: 20px; margin-bottom: 40px; border-bottom: 2px solid #2c2e30; padding-bottom: 20px; }
+        .breadcrumb { font-size: 20px; color: #8e9196; cursor: pointer; text-transform: uppercase; letter-spacing: 3px; }
+        .breadcrumb:hover { color: #fff; text-shadow: 0 0 10px #fff; }
 
-        .catalog-view { display: none; }
-        .view-active { display: block !important; }
-
-        .index-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 25px; margin-top: 50px; }
+        .index-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 30px; margin-top: 30px; }
         .index-card { 
-            background: linear-gradient(135deg, #2c2e30 0%, #000 100%); 
-            height: 300px; display: flex; flex-direction: column; align-items: center; justify-content: center;
-            border: 2px solid #444; cursor: pointer; transition: 0.4s;
+            background: linear-gradient(145deg, #1a1a1a, #000); 
+            height: 320px; display: flex; flex-direction: column; align-items: center; justify-content: center;
+            border: 2px solid #2c2e30; cursor: pointer; transition: 0.4s;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.5);
         }
-        .index-card:hover { border-color: #fff; transform: translateY(-10px); background: #111; }
-        .index-card img { width: 100px; margin-bottom: 20px; filter: invert(1); }
-        .index-card h2 { font-family: 'Limelight'; letter-spacing: 2px; }
+        .index-card:hover { border-color: #8e9196; transform: translateY(-5px); box-shadow: 0 0 20px rgba(142,145,150,0.3); }
+        .index-card img { width: 110px; margin-bottom: 25px; filter: grayscale(1) brightness(2) contrast(1.2); }
+        .index-card h2 { font-family: 'Limelight'; letter-spacing: 4px; color: #fff; text-transform: uppercase; }
 
-        .gallery-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 30px; }
-        .furniture-item { background: #1a1a1a; padding: 20px; border: 1px solid #444; text-align: center; }
-        .furniture-item img { width: 100%; height: 200px; object-fit: contain; margin-bottom: 15px; }
-        .furniture-item h3 { margin-bottom: 10px; font-size: 18px; }
-        .furniture-link { color: #8e9196; font-size: 12px; text-transform: uppercase; text-decoration: none; border: 1px solid #444; padding: 8px 15px; display: inline-block; }
-        .furniture-link:hover { background: #fff; color: #000; }
+        .gallery-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 40px; }
+        .furniture-item { 
+            background: #0f1011; padding: 25px; border: 2px solid #2c2e30; text-align: center; 
+            transition: 0.3s;
+        }
+        .furniture-item:hover { border-color: #fff; background: #1a1a1a; }
+        .furniture-item img { width: 100%; height: 220px; object-fit: contain; margin-bottom: 20px; filter: drop-shadow(0 5px 15px black); }
+        .furniture-item h3 { font-family: 'Special Elite'; margin-bottom: 15px; color: #8e9196; letter-spacing: 1px; }
+        
+        .furniture-link { 
+            color: #000; background: #8e9196; font-size: 11px; text-transform: uppercase; 
+            font-weight: bold; text-decoration: none; padding: 10px 20px; display: inline-block;
+            letter-spacing: 2px; transition: 0.3s; border: none;
+        }
+        .furniture-link:hover { background: #fff; box-shadow: 0 0 15px #fff; }
 
-        .close-catalog { position: absolute; top: 30px; right: 40px; font-size: 50px; cursor: pointer; }
+        .close-catalog { position: absolute; top: 20px; right: 40px; font-size: 60px; cursor: pointer; color: #8e9196; }
+        .close-catalog:hover { color: #fff; }
+
         .placed-item { position: absolute; width: 220px; cursor: move; filter: drop-shadow(0 15px 30px black); z-index: 1500; }
     </style>
 </head>
@@ -125,11 +131,11 @@
     <span class="close-catalog" onclick="closeCatalog()">×</span>
     
     <div class="catalog-nav-header">
-        <span class="breadcrumb" onclick="showCatalogView('master-index')">All Collections</span>
-        <span id="sub-crumb" class="breadcrumb" style="display:none;">/ Seating</span>
+        <span class="breadcrumb" onclick="showCatalogView('master-index')">Collections Index</span>
+        <span id="sub-crumb" class="breadcrumb" style="display:none; color:#fff;">/ Seating</span>
     </div>
 
-    <div id="master-index" class="catalog-view view-active">
+    <div id="master-index" class="catalog-view" style="display:block;">
         <div class="index-grid">
             <div class="index-card" onclick="openSubIndex('Seating')"><img src="iconseating.png"><h2>Seating</h2></div>
             <div class="index-card" onclick="openSubIndex('Storage')"><img src="iconstorage.png"><h2>Storage</h2></div>
@@ -138,7 +144,7 @@
         </div>
     </div>
 
-    <div id="seating-index" class="catalog-view">
+    <div id="seating-index" class="catalog-view" style="display:none;">
         <div class="index-grid">
             <div class="index-card" onclick="showGallery('Couches')"><h2>Couches</h2></div>
             <div class="index-card" onclick="showGallery('Chairs')"><h2>Chairs</h2></div>
@@ -147,7 +153,7 @@
         </div>
     </div>
 
-    <div id="gallery-view" class="catalog-view">
+    <div id="gallery-view" class="catalog-view" style="display:none;">
         <div class="gallery-grid" id="gallery-items">
             </div>
     </div>
@@ -159,6 +165,7 @@
         <div class="drawer-stack" id="drawer-anchor">
             <div class="drawer-row" onclick="handleDrawerClick('livingroom.jpg', this)"><div class="drawer-hardware"><div class="plate-style">Living Room</div></div></div>
             <div class="drawer-row" onclick="handleDrawerClick('bedroom.jpg', this)"><div class="drawer-hardware"><div class="plate-style">Bedroom</div></div></div>
+            <div class="drawer-row" onclick="handleDrawerClick('diningroom.jpg', this)"><div class="drawer-hardware"><div class="plate-style">Dining Room</div></div></div>
         </div>
         <div id="fan-engine" class="fan-system">
             <div class="pivot-bolt"></div>
@@ -169,13 +176,13 @@
 </div>
 
 <script>
-    /* Catalog Logic */
+    /* Catalog Engine */
     function openCatalog() { document.getElementById('catalog-overlay').style.display = 'block'; showCatalogView('master-index'); }
     function closeCatalog() { document.getElementById('catalog-overlay').style.display = 'none'; }
 
     function showCatalogView(viewId) {
-        document.querySelectorAll('.catalog-view').forEach(v => v.classList.remove('view-active'));
-        document.getElementById(viewId).classList.add('view-active');
+        document.querySelectorAll('.catalog-view').forEach(v => v.style.display = 'none');
+        document.getElementById(viewId).style.display = 'block';
         if(viewId === 'master-index') document.getElementById('sub-crumb').style.display = 'none';
     }
 
@@ -189,19 +196,19 @@
         showCatalogView('gallery-view');
         const container = document.getElementById('gallery-items');
         container.innerHTML = '';
-        // Mock data for demo
-        for(let i=1; i<=3; i++) {
+        // Mock data injection
+        for(let i=1; i<=4; i++) {
             container.innerHTML += `
                 <div class="furniture-item">
                     <img src="${type.toLowerCase()}1.png">
-                    <h3>Premium ${type} Style ${i}</h3>
-                    <a href="#" class="furniture-link">Full Details</a>
+                    <h3>${type.toUpperCase()} MODEL-0${i}</h3>
+                    <a href="#" class="furniture-link">Catalog Specs</a>
                 </div>
             `;
         }
     }
 
-    /* Core Swatch Engine (Retained from previous build) */
+    /* Standard Swatch Engine */
     const roomImg = document.getElementById('room-display');
     const cab = document.getElementById('cab-container');
     const fan = document.getElementById('fan-engine');
