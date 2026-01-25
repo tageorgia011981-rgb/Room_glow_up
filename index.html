@@ -158,17 +158,40 @@
     const fileInput = document.getElementById('file-upload');
 
     /* --- INVENTORY DATA --- */
-    const registry = {
-        furniture: {
-            seating: [{name: 'Sofa', img: 'couch1.png'}, {name: 'Chair', img: 'chair1.png'}],
-            tables: [{name: 'Desk', img: 'table1.png'}, {name: 'Dining Table', img: 'table2.png'}],
-            storage: [{name: 'Dresser', img: 'dresser1.png'}, {name: 'Cabinet', img: 'cabinet1.png'}]
-        },
-        decor: {
-            lighting: [{name: 'Floor Lamp', img: 'lamp1.png'}, {name: 'Sconce', img: 'sconce1.png'}],
-            rugs: [{name: 'Persian Rug', img: 'rug1.png'}, {name: 'Modern Mat', img: 'rug2.png'}]
-        }
-    };
+  /* --- FAN ANIMATION & LOGIC --- */
+    function openFan(category) {
+        const inventory = {
+            room_toolkit: ['seating', 'tables', 'storage', 'beds', 'lighting', 'rugs', 'art'],
+            seating: ['couch1.png', 'chair1.png', 'couch2.png', 'chair3.png'],
+            tables:  ['coffeetable.png'],
+            storage: ['shelf1.png', 'shelf2.png', 'dresser1.png'],
+            beds:    ['bed1.png', 'bed2.png'], 
+            lighting:['lighting.png', 'lighting1.png'],
+            rugs:    [], 
+            art:     []
+        };
+
+        const items = inventory[category] || []; 
+        fanAssembly.innerHTML = ''; 
+        
+        items.forEach((item, i) => {
+            const blade = document.createElement('div');
+            blade.className = 'fan-blade';
+            blade.style.transform = `rotate(${i * 45}deg) translateX(140px)`;
+            
+            if (category === 'room_toolkit') {
+                blade.innerHTML = `<div class="blade-label" onclick="openFan('${item}')">${item}</div>`;
+            } else {
+                const label = item.split('.')[0];
+                blade.innerHTML = `<div class="blade-label" onclick="addToRoom('${item}')">${label}</div>`;
+            }
+            fanAssembly.appendChild(blade);
+        });
+
+        requestAnimationFrame(() => {
+            requestAnimationFrame(() => { fanAssembly.classList.add('active-fan'); });
+        });
+    }
 
     /* --- MAIN CLICK HANDLER --- */
     function openMode(mode) {
@@ -318,3 +341,4 @@
 </script>
 </body>
 </html>
+
