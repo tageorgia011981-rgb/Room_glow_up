@@ -5,12 +5,14 @@ const fanSystem = document.getElementById('fan-system');
 const fileInput = document.getElementById('file-upload');
 let shoppingList = [];
 
-const iconMap = {
-    'seating': 'iconseating.png', 'tables': 'icontable.png', 
-    'storage': 'iconstorage.png', 'beds': 'iconbeds.png'
+// --- ASSET CONFIGURATION ---
+const iconMap = { 
+    'seating': 'iconseating.png', 
+    'tables': 'icontable.png', 
+    'storage': 'iconstorage.png', 
+    'beds': 'iconbeds.png' 
 };
 
-// --- FURNITURE DATA (4 Depts -> 4 Types -> 5 Items) ---
 const catalogData = {
     seating: { 
         'couches': Array(5).fill({ id: 'SF-X', img: 'couch1.png', price: 1200 }),
@@ -38,139 +40,176 @@ const catalogData = {
     }
 };
 
-// --- DECOR DATA (Now includes Curtains) ---
 const decorData = {
     'Lighting': Array(5).fill({ id: 'LT-X', img: 'lamp1.png', price: 100 }),
     'Rugs': Array(5).fill({ id: 'RG-X', img: 'rug1.png', price: 250 }),
     'Art': Array(5).fill({ id: 'AR-X', img: 'art1.png', price: 300 }),
-    'Curtains': Array(5).fill({ id: 'CT-X', img: 'curtain1.png', price: 80 })
+    'Curtains': Array(5).fill({ id: 'CT-X', img: 'curtain1.png', price: 80 }),
+    'Plants': Array(5).fill({ id: 'PL-X', img: 'plant1.png', price: 50 })
 };
 
+// --- NAVIGATION & MODES ---
 function openMode(mode, el) {
-    fanSystem.classList.remove('active-fan'); fanSystem.innerHTML = ''; hideOverlays();
+    fanSystem.classList.remove('active-fan'); 
+    fanSystem.innerHTML = ''; 
+    hideOverlays();
     if (mode === 'decor') {
         cab.classList.remove('cabinet-visible');
         if(el) {
             const rect = el.getBoundingClientRect();
-            const workspaceRect = document.querySelector('.workspace').getBoundingClientRect();
-            fanSystem.style.left = (rect.left - workspaceRect.left + (rect.width/2)) + 'px'; 
+            const wsRect = document.querySelector('.workspace').getBoundingClientRect();
+            fanSystem.style.left = (rect.left - wsRect.left + (rect.width/2)) + 'px'; 
             fanSystem.style.top = '-60px'; 
         }
         setTimeout(openDecorFan, 100);
     } else if (mode === 'rooms') {
-        cab.classList.add('cabinet-visible'); drawerStack.innerHTML = '';
-        const rooms = [
-            { name: 'Living Room', file: 'livingroom2.jpg' }, { name: 'Bedroom', file: 'bedroom.jpg' },
-            { name: 'Dining Room', file: 'diningroom.jpg' }, { name: 'Upload', file: 'upload' }
-        ];
-        rooms.forEach(data => {
-            let clickAction = data.name === 'Upload' ? "triggerUpload()" : `selectRoom('${data.file}', this)`;
-            drawerStack.innerHTML += `<div class="drawer-zone" onclick="${clickAction}"><div class="drawer-hardware"><div class="plate-style">${data.name}</div><div class="lip-pull"></div></div></div>`;
+        cab.classList.add('cabinet-visible'); 
+        drawerStack.innerHTML = '';
+        ['Living Room', 'Bedroom', 'Dining Room', 'Upload'].forEach(name => {
+            let action = name === 'Upload' ? "triggerUpload()" : `selectRoom('room.jpg', this)`;
+            drawerStack.innerHTML += `<div class="drawer-zone" onclick="${action}"><div class="drawer-hardware"><div class="plate-style">${name}</div><div class="lip-pull"></div></div></div>`;
         });
     }
 }
 
+// --- FAN LOGIC (FURNITURE) ---
 function selectRoom(src, el) {
     roomImg.src = src; roomImg.style.display = 'block'; 
-    fanSystem.classList.remove('fan-down'); fanSystem.innerHTML = '<div class="pivot-bolt"></div>';
+    fanSystem.classList.remove('fan-down'); 
+    fanSystem.innerHTML = '<div class="pivot-bolt"></div>';
     if(el) {
-        const drawerRect = el.getBoundingClientRect();
-        const workspaceRect = document.querySelector('.workspace').getBoundingClientRect();
-        fanSystem.style.top = (drawerRect.top - workspaceRect.top + 25) + 'px';
-        fanSystem.style.left = (drawerRect.right - workspaceRect.left - 140) + 'px';
+        const dRect = el.getBoundingClientRect();
+        const wsRect = document.querySelector('.workspace').getBoundingClientRect();
+        fanSystem.style.top = (dRect.top - wsRect.top + (dRect.height / 2)) + 'px';
+        fanSystem.style.left = (dRect.right - wsRect.left - 40) + 'px';
     }
-    const categories = Object.keys(catalogData);
-    categories.forEach((cat, i) => {
-        const blade = document.createElement('div');
-        blade.className = `swatch-blade s-${i + 1}`;
-        blade.innerHTML = `<img src="${iconMap[cat]}" class="fan-icon" onclick="showSubtypes('${cat}')">`;
-        fanSystem.appendChild(blade);
+    Object.keys(catalogData).forEach((cat, i) => {
+        const b = document.createElement('div'); 
+        b.className = `swatch-blade s-${i + 1}`;
+        b.innerHTML = `<img src="${iconMap[cat]}" class="fan-icon" onclick="showSubtypes('${cat}')">`;
+        fanSystem.appendChild(b);
     });
     setTimeout(() => fanSystem.classList.add('active-fan'), 50);
 }
 
-function showSubtypes(category) {
+function showSubtypes(cat) {
     fanSystem.classList.remove('active-fan');
     setTimeout(() => {
         fanSystem.innerHTML = '<div class="pivot-bolt"></div>';
-        const types = Object.keys(catalogData[category]);
-        types.forEach((type, i) => {
-            const blade = document.createElement('div');
-            blade.className = `swatch-blade s-${i + 1}`;
-            blade.innerHTML = `<div class="fan-text" onclick="showItems('${category}', '${type}')">${type}</div>`;
-            fanSystem.appendChild(blade);
+        Object.keys(catalogData[cat]).forEach((type, i) => {
+            const b = document.createElement('div'); 
+            b.className = `swatch-blade s-${i + 1}`;
+            b.innerHTML = `<div class="fan-text" onclick="showItems('${cat}', '${type}')">${type}</div>`;
+            fanSystem.appendChild(b);
         });
         fanSystem.classList.add('active-fan');
     }, 400);
 }
 
-function showItems(category, type) {
+function showItems(cat, type) {
     fanSystem.classList.remove('active-fan');
     setTimeout(() => {
         fanSystem.innerHTML = '<div class="pivot-bolt"></div>';
-        const items = catalogData[category][type];
-        items.forEach((item, i) => {
-            const blade = document.createElement('div');
-            blade.className = `swatch-blade s-${i + 1}`; 
-            blade.innerHTML = `<img src="${item.img}" class="fan-icon" onclick="addToRoom('${item.img}')">`;
-            fanSystem.appendChild(blade);
+        catalogData[cat][type].forEach((item, i) => {
+            const b = document.createElement('div'); 
+            b.className = `swatch-blade s-${i + 1}`;
+            b.innerHTML = `<img src="${item.img}" class="fan-icon" onclick="addToRoom('${item.img}')">`;
+            fanSystem.appendChild(b);
         });
         fanSystem.classList.add('active-fan');
     }, 400);
 }
 
+// --- FAN LOGIC (DECOR) ---
 function openDecorFan() {
-    fanSystem.classList.add('fan-down'); fanSystem.innerHTML = '<div class="pivot-bolt"></div>';
-    const items = Object.keys(decorData);
-    items.forEach((item, i) => {
-        const blade = document.createElement('div');
-        blade.className = `swatch-blade s-${i + 1}`;
-        blade.innerHTML = `<div class="fan-text" onclick="showDecorItems('${item}')">${item}</div>`;
-        fanSystem.appendChild(blade);
+    fanSystem.classList.add('fan-down'); 
+    fanSystem.innerHTML = '<div class="pivot-bolt"></div>';
+    Object.keys(decorData).forEach((cat, i) => {
+        const b = document.createElement('div'); 
+        b.className = `swatch-blade s-${i + 1}`;
+        b.innerHTML = `<div class="fan-text" onclick="showDecorItems('${cat}')">${cat}</div>`;
+        fanSystem.appendChild(b);
     });
     setTimeout(() => fanSystem.classList.add('active-fan'), 50);
 }
 
-function showDecorItems(category) {
+function showDecorItems(cat) {
     fanSystem.classList.remove('active-fan');
     setTimeout(() => {
         fanSystem.innerHTML = '<div class="pivot-bolt"></div>';
-        const items = decorData[category];
+        const items = decorData[cat]; 
         items.forEach((item, i) => {
-            const blade = document.createElement('div');
-            blade.className = `swatch-blade s-${i + 1}`;
-            blade.innerHTML = `<img src="${item.img}" class="fan-icon" onclick="addToRoom('${item.img}')">`;
-            fanSystem.appendChild(blade);
+            const b = document.createElement('div'); 
+            b.className = `swatch-blade s-${i + 1}`;
+            b.innerHTML = `<img src="${item.img}" class="fan-icon" onclick="addToRoom('${item.img}')">`;
+            fanSystem.appendChild(b);
         });
         fanSystem.classList.add('active-fan');
     }, 400);
 }
 
+// --- DRAG AND DROP & RESET ---
 function addToRoom(src) {
-    const img = document.createElement("img");
-    img.src = src; img.className = "placed-item";
-    img.style.left = "50%"; img.style.top = "50%";
+    const img = document.createElement("img"); 
+    img.src = src; 
+    img.className = "placed-item";
+    img.style.left = "400px"; 
+    img.style.top = "300px";
+
+    // SPECIAL RUG LOGIC: Rugs sit under furniture
+    if (src.toLowerCase().includes('rug')) {
+        img.style.zIndex = "500"; 
+        img.style.width = "400px"; 
+    } else {
+        img.style.zIndex = "1000"; 
+    }
+
     img.onmousedown = function(e) {
-        let shiftX = e.clientX - img.getBoundingClientRect().left;
-        let shiftY = e.clientY - img.getBoundingClientRect().top;
-        function moveAt(pageX, pageY) {
-            const stage = document.getElementById("stage-zone").getBoundingClientRect();
-            img.style.left = (pageX - stage.left - shiftX) + 'px';
-            img.style.top = (pageY - stage.top - shiftY) + 'px';
-        }
-        document.onmousemove = (ev) => moveAt(ev.pageX, ev.pageY);
+        let sx = e.clientX - img.getBoundingClientRect().left;
+        let sy = e.clientY - img.getBoundingClientRect().top;
+        document.onmousemove = (ev) => {
+            const st = document.getElementById("stage-zone").getBoundingClientRect();
+            img.style.left = (ev.pageX - st.left - sx) + 'px';
+            img.style.top = (ev.pageY - st.top - sy) + 'px';
+        };
         img.onmouseup = () => document.onmousemove = null;
     };
     document.getElementById("stage-zone").appendChild(img);
+}
+
+function resetStage() {
+    const stage = document.getElementById("stage-zone");
+    const items = stage.querySelectorAll(".placed-item");
+    items.forEach(item => item.remove());
+}
+
+// --- UI HELPERS ---
+function renderLookbook() {
+    const grid = document.getElementById('look-grid');
+    grid.innerHTML = '';
+    for(let i = 1; i <= 8; i++) {
+        grid.innerHTML += `<div class="look-card"><img src="insp${i}.jpg" onerror="this.src='cabinet.png'"></div>`;
+    }
 }
 
 function lift(el) { 
     document.querySelectorAll('.drawer-hardware').forEach(d => d.classList.remove('active-lift')); 
     el.classList.add('active-lift'); 
 }
+
 function hideOverlays() { 
-    document.getElementById('catalog-overlay').style.display = 'none'; 
-    document.getElementById('lookbook-overlay').style.display = 'none'; 
+    document.querySelectorAll('.overlay-bg').forEach(o => o.style.display = 'none'); 
 }
-function showCatalog() { hideOverlays(); document.getElementById('catalog-overlay').style.display = 'block'; }
-function showLookBook() { hideOverlays(); document.getElementById('lookbook-overlay').style.display = 'block'; }
+
+function showCatalog() { 
+    hideOverlays(); 
+    document.getElementById('catalog-overlay').style.display = 'block'; 
+}
+
+function showLookBook() { 
+    hideOverlays(); 
+    document.getElementById('lookbook-overlay').style.display = 'block'; 
+    renderLookbook(); 
+}
+
+function triggerUpload() { fileInput.click(); }
