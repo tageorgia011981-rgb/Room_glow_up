@@ -6,157 +6,58 @@
 <title>Room Glow Up | Studio</title>
 <link href="https://fonts.googleapis.com/css2?family=Limelight&family=Special+Elite&display=swap" rel="stylesheet">
 <style>
-  /* --- GLOBAL SETUP --- */
+  /* --- FOUNDATION --- */
   * { margin: 0; padding: 0; box-sizing: border-box; }
-  body { 
-    background: #0f1011 url("background_color.jpg") center / cover fixed; 
-    min-height: 100vh; font-family: 'Special Elite', cursive; color: #fff; overflow-x: hidden; 
-  }
+  body { background: #0f1011 url("background_color.jpg") center / cover fixed; min-height: 100vh; font-family: 'Special Elite', cursive; color: #fff; overflow-x: hidden; }
 
-  /* --- HEADER --- */
+  /* --- HEADER & NAV --- */
   .site-header { text-align: center; padding: 50px 0 20px; position: relative; z-index: 10; }
-  .brand-title { 
-    font-family: 'Limelight', cursive; font-size: 85px; text-transform: uppercase; 
-    background: linear-gradient(to bottom, #ffffff 0%, #dcdcdc 50%, #8e9196 51%, #a8a8a8 100%);
-    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-    text-shadow: 0px 4px 10px rgba(0,0,0,0.5); letter-spacing: 2px;
-  }
+  .brand-title { font-family: 'Limelight', cursive; font-size: 85px; text-transform: uppercase; background: linear-gradient(to bottom, #ffffff, #8e9196, #a8a8a8); -webkit-background-clip: text; -webkit-text-fill-color: transparent; text-shadow: 0px 4px 10px rgba(0,0,0,0.5); letter-spacing: 2px; }
   .sub-title { font-size: 22px; color: #8e9196; letter-spacing: 4px; margin-top: -10px; text-transform: uppercase; text-shadow: 0px 2px 4px #000; }
-  
-  /* --- HARDWARE STYLE --- */
   .vintage-tabs { display: flex; justify-content: center; gap: 25px; padding: 30px 0; z-index: 2000; position: relative; }
   
-  .drawer-hardware {
-    position: relative; width: 220px; height: 90px;
-    background: linear-gradient(135deg, #2c2e30 0%, #1a1a1a 100%); 
-    border: 2px solid #000;
-    box-shadow: inset 0 0 0 2px #444, inset 10px 0 20px rgba(0,0,0,0.8), 0 10px 15px rgba(0,0,0,0.8);
-    display: flex; align-items: center; justify-content: center; 
-    cursor: pointer; transition: transform 0.2s, filter 0.2s;
-  }
-  .drawer-hardware:hover { filter: brightness(1.3) contrast(1.1); transform: translateY(-2px); }
-  
-  .drawer-hardware::before, .drawer-hardware::after {
-    content: ''; position: absolute; top: 50%; transform: translateY(-50%);
-    width: 12px; height: 12px; border-radius: 50%;
-    background: radial-gradient(circle, #111 20%, #555 100%); box-shadow: 0 1px 0 rgba(255,255,255,0.1); 
-  }
-  .drawer-hardware::before { left: 12px; }
-  .drawer-hardware::after { right: 12px; }
-  
-  .plate-style { 
-    width: 150px; height: 45px; 
-    background: linear-gradient(to bottom, #dcdcdc 0%, #8e9196 50%, #b0b0b0 100%);
-    color: #000; display: flex; align-items: center; justify-content: center; 
-    font-family: 'Special Elite', cursive; font-size: 15px; font-weight: bold; text-transform: uppercase; 
-    letter-spacing: 1px; border: 1px solid #666; box-shadow: inset 0 2px 5px rgba(0,0,0,0.2);
-    text-align: center; line-height: 1.1;
-  }
-  
-  .lip-pull { 
-    position: absolute; bottom: -12px; left: 50%; transform: translateX(-50%); 
-    width: 100px; height: 20px; background: linear-gradient(to bottom, #2c2e30, #000); 
-    border: 2px solid #111; border-top: none; border-radius: 0 0 15px 15px; box-shadow: 0 5px 10px rgba(0,0,0,0.8);
-  }
-  .active-lift { transform: translateY(15px) !important; filter: brightness(1.4) !important; }
+  /* --- HARDWARE --- */
+  .drawer-hardware { position: relative; width: 220px; height: 90px; background: linear-gradient(135deg, #2c2e30 0%, #1a1a1a 100%); border: 2px solid #000; box-shadow: inset 0 0 0 2px #444, 0 10px 15px rgba(0,0,0,0.8); display: flex; align-items: center; justify-content: center; cursor: pointer; transition: transform 0.2s; }
+  .drawer-hardware:hover { transform: translateY(-2px); }
+  .drawer-hardware::before, .drawer-hardware::after { content: ''; position: absolute; top: 50%; transform: translateY(-50%); width: 12px; height: 12px; border-radius: 50%; background: radial-gradient(circle, #111 20%, #555 100%); }
+  .drawer-hardware::before { left: 12px; } .drawer-hardware::after { right: 12px; }
+  .plate-style { width: 150px; height: 45px; background: linear-gradient(to bottom, #dcdcdc, #8e9196, #b0b0b0); color: #000; display: flex; align-items: center; justify-content: center; font-size: 15px; font-weight: bold; text-transform: uppercase; border: 1px solid #666; }
+  .lip-pull { position: absolute; bottom: -12px; left: 50%; transform: translateX(-50%); width: 100px; height: 20px; background: linear-gradient(to bottom, #2c2e30, #000); border: 2px solid #111; border-radius: 0 0 15px 15px; }
 
-  /* --- WORKSPACE --- */
+  /* --- WORKSPACE & CABINET --- */
   .workspace { display: flex; padding: 40px; position: relative; height: 700px; }
-  .cabinet-container { 
-    position: absolute; left: -600px; top: 0; width: 450px; 
-    transition: left 0.8s cubic-bezier(0.19, 1, 0.22, 1); z-index: 100;
-  }
+  .cabinet-container { position: absolute; left: -600px; top: 0; width: 450px; transition: left 0.8s cubic-bezier(0.19, 1, 0.22, 1); z-index: 100; }
   .cabinet-visible { left: 40px !important; }
   .cabinet-image { width: 100%; filter: drop-shadow(10px 10px 30px rgba(0,0,0,0.8)); }
-  
-  .drawer-stack { 
-    position: absolute; top: 110px; left: 45px; width: 360px; 
-    display: flex; flex-direction: column; align-items: center; gap: 20px; 
-  }
-  
+  .drawer-stack { position: absolute; top: 110px; left: 45px; width: 360px; display: flex; flex-direction: column; align-items: center; gap: 20px; }
   .drawer-zone { width: 100%; height: 110px; cursor: pointer; display: flex; align-items: center; justify-content: center; }
 
   /* --- FAN SYSTEM --- */
   .fan-system { position: absolute; z-index: 40; pointer-events: none; transition: top 0.3s ease, left 0.3s ease; }
-  
-  .swatch-blade {
-    position: absolute; left: 0; top: -32px; width: 0; height: 65px;
-    background: linear-gradient(to right, #444, #8e9196, #1a1a1a);
-    border: 1px solid #000; border-radius: 0 35px 35px 0;
-    transform-origin: left center; 
-    transition: all 0.8s cubic-bezier(0.19, 1, 0.22, 1);
-    opacity: 0; display: flex; align-items: center; justify-content: flex-end; padding-right: 25px;
-    box-shadow: 8px 4px 15px rgba(0,0,0,0.6);
-  }
-  
-  .active-fan .swatch-blade { width: 340px; opacity: 1; pointer-events: auto; }
-  
-  /* PIVOT BOLT */
-  .pivot-bolt {
-    position: absolute; left: -14px; top: -14px; width: 28px; height: 28px;
-    background: radial-gradient(circle at 30% 30%, #4a4d4f, #2a2d2f, #000);
-    border: 2px solid #111; border-radius: 4px; z-index: 50; opacity: 0; transition: 0.3s;
-  }
+  .swatch-blade { position: absolute; left: 0; top: -32px; width: 0; height: 65px; background: linear-gradient(to right, #444, #8e9196, #1a1a1a); border: 1px solid #000; border-radius: 0 35px 35px 0; transform-origin: left center; transition: all 0.6s cubic-bezier(0.19, 1, 0.22, 1); opacity: 0; display: flex; align-items: center; justify-content: flex-end; padding-right: 25px; box-shadow: 8px 4px 15px rgba(0,0,0,0.6); }
+  .active-fan .swatch-blade { width: 380px; opacity: 1; pointer-events: auto; }
+  .pivot-bolt { position: absolute; left: -14px; top: -14px; width: 28px; height: 28px; background: radial-gradient(circle at 30% 30%, #4a4d4f, #2a2d2f, #000); border: 2px solid #111; border-radius: 4px; z-index: 50; opacity: 0; transition: 0.3s; }
   .active-fan .pivot-bolt { opacity: 1; }
   
-  /* ROTATIONS */
-  .s-1 { transform: rotate(-40deg); z-index: 41; }
-  .s-2 { transform: rotate(-14deg); z-index: 42; }
-  .s-3 { transform: rotate(14deg); z-index: 43; }
-  .s-4 { transform: rotate(40deg); z-index: 44; }
-  .s-5 { transform: rotate(66deg); z-index: 45; }
+  /* Furniture Side Fan */
+  .s-1 { transform: rotate(-50deg); z-index: 41; } .s-2 { transform: rotate(-25deg); z-index: 42; } .s-3 { transform: rotate(0deg); z-index: 43; } .s-4 { transform: rotate(25deg); z-index: 44; } .s-5 { transform: rotate(50deg); z-index: 45; }
 
-  /* DOWNWARD FAN */
-  .fan-down .swatch-blade { width: 0; height: 150px; transform-origin: top center; border-radius: 0 0 20px 20px; justify-content: center; padding: 0; top: 0; left: -30px; }
-  .fan-down.active-fan .swatch-blade { width: 65px; height: 150px; opacity: 1; }
-  
-  .fan-down .s-1 { transform: rotate(-15deg) translateY(10px); z-index: 44; }
-  .fan-down .s-2 { transform: rotate(-5deg) translateY(10px); z-index: 43; }
-  .fan-down .s-3 { transform: rotate(5deg) translateY(10px); z-index: 42; }
-  .fan-down .s-4 { transform: rotate(15deg) translateY(10px); z-index: 41; }
+  /* Decor Down Fan */
+  .fan-down .swatch-blade { transform-origin: top center; border-radius: 0 0 20px 20px; justify-content: center; padding: 0; top: 0; left: -32px; width: 65px; height: 0; }
+  .fan-down.active-fan .swatch-blade { height: 180px; width: 65px; }
+  .fan-down .s-1 { transform: rotate(-30deg); } .fan-down .s-2 { transform: rotate(-15deg); } .fan-down .s-3 { transform: rotate(0deg); } .fan-down .s-4 { transform: rotate(15deg); } .fan-down .s-5 { transform: rotate(30deg); }
 
-  /* CONTENT STYLES */
-  .fan-icon { width: 50px; height: 50px; cursor: pointer; transition: 0.3s; filter: drop-shadow(0 2px 5px black) grayscale(0.5); object-fit: contain; }
-  .fan-icon:hover { transform: scale(1.25); filter: grayscale(0); }
-  
-  .fan-typewriter { 
-    font-family: 'Special Elite', cursive; font-size: 20px; font-weight: 900; 
-    color: #fff; text-transform: uppercase; text-shadow: 2px 2px 4px #000; 
-    cursor: pointer; white-space: nowrap;
-  }
-  .fan-typewriter:hover { color: #8e9196; transform: scale(1.05); }
+  /* Icons & Typewriter Label */
+  .fan-icon { width: 50px; height: 50px; cursor: pointer; transition: 0.3s; filter: grayscale(0.5); object-fit: contain; }
+  .fan-icon:hover { transform: scale(1.2); filter: grayscale(0); }
+  .typewriter-label { font-family: 'Special Elite', cursive; font-size: 20px; font-weight: bold; color: #fff; text-transform: uppercase; cursor: pointer; text-shadow: 2px 2px 4px #000; white-space: nowrap; }
+  .typewriter-label:hover { color: #8e9196; }
+  .fan-down .typewriter-label { writing-mode: vertical-rl; transform: rotate(180deg); }
 
   /* --- STAGE --- */
-  .stage { 
-    width: 900px; height: 550px; background: #050505; border: 15px solid #2c2e30; margin-left: 600px; 
-    position: relative; overflow: hidden; box-shadow: inset 0 0 50px #000;
-  }
+  .stage { width: 900px; height: 550px; background: #050505; border: 15px solid #2c2e30; margin-left: 600px; position: relative; overflow: hidden; }
   #room-display { width: 100%; height: 100%; object-fit: cover; display: none; }
-  .placed-item { position: absolute; width: 200px; cursor: move; z-index: 1500; filter: drop-shadow(5px 10px 10px rgba(0,0,0,0.5)); }
-
-  /* --- CATALOG OVERLAY (The Shop) --- */
-  #catalog-overlay { position: fixed; inset: 0; background: rgba(10, 11, 12, 0.95); z-index: 4000; display: none; padding: 40px; backdrop-filter: blur(8px); }
-  .catalog-container { display: flex; height: 85vh; background: #000; border: 2px solid #333; box-shadow: 0 0 50px rgba(0,0,0,1); }
-  
-  .index-column { flex: 1; border-right: 1px solid #333; padding: 20px; overflow-y: auto; background: #080808; }
-  .index-column h3 { color: #8e9196; margin-bottom: 20px; text-transform: uppercase; border-bottom: 1px solid #333; padding-bottom: 10px; }
-  
-  .index-item { padding: 15px; margin-bottom: 10px; border: 1px solid #333; background: #111; cursor: pointer; text-transform: uppercase; color: #888; transition: 0.2s; font-weight: bold; }
-  .index-item:hover, .selected { background: #8e9196; color: #000; border-color: #fff; }
-  
-  .asset-view { flex: 3; display: flex; flex-direction: column; background: #111; }
-  .asset-grid { flex: 1; display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 25px; padding: 30px; overflow-y: auto; }
-  
-  .asset-card { background: #1a1a1a; padding: 20px; text-align: center; border: 1px solid #333; transition: 0.3s; }
-  .asset-card:hover { transform: translateY(-5px); border-color: #8e9196; }
-  .asset-card img { width: 100%; height: 150px; object-fit: contain; margin-bottom: 15px; }
-  .asset-card p { margin-bottom: 15px; font-size: 18px; color: #ddd; }
-  
-  .buy-btn { width: 100%; background: #2c2e30; color:#fff; border: 1px solid #555; padding: 10px; cursor: pointer; font-family: inherit; font-weight: bold; text-transform: uppercase; letter-spacing: 1px; transition:0.2s; }
-  .buy-btn:hover { background: #fff; color: #000; }
-  
-  .close-btn { position: absolute; top: 20px; right: 40px; font-size: 50px; color: #8e9196; cursor: pointer; transition: 0.3s; }
-  .close-btn:hover { color: #fff; transform: rotate(90deg); }
+  .placed-item { position: absolute; width: 180px; cursor: move; z-index: 1500; filter: drop-shadow(5px 10px 10px rgba(0,0,0,0.5)); }
 </style>
 </head>
 <body>
@@ -167,40 +68,17 @@
 </header>
 
 <nav class="vintage-tabs">
-    <div class="drawer-hardware" onclick="lift(this); openMode('rooms', this)"><div class="plate-style">Rooms</div><div class="lip-pull"></div></div>
-    <div class="drawer-hardware" onclick="lift(this); openMode('inspiration', this)"><div class="plate-style">Inspiration</div><div class="lip-pull"></div></div>
-    <div class="drawer-hardware" onclick="lift(this); showCatalog()"><div class="plate-style">Furniture Catalog</div><div class="lip-pull"></div></div>
-    <div class="drawer-hardware" onclick="lift(this); openMode('decor', this)"><div class="plate-style">Decor</div><div class="lip-pull"></div></div>
+    <div class="drawer-hardware" onclick="openMode('rooms')"><div class="plate-style">Rooms</div><div class="lip-pull"></div></div>
+    <div class="drawer-hardware" onclick="openMode('furniture')"><div class="plate-style">Furniture</div><div class="lip-pull"></div></div>
+    <div class="drawer-hardware" onclick="openMode('decor', this)"><div class="plate-style">Decor</div><div class="lip-pull"></div></div>
 </nav>
-
-<input type="file" id="file-upload" accept="image/*" style="display: none;">
-
-<div id="catalog-overlay">
-    <span class="close-btn" onclick="hideCatalog()">×</span>
-    <div class="catalog-container">
-        <div class="index-column" id="cat-col">
-            <h3>Department</h3>
-            <div class="index-item" onclick="selectCat('seating', this)">Seating</div>
-            <div class="index-item" onclick="selectCat('tables', this)">Tables</div>
-            <div class="index-item" onclick="selectCat('storage', this)">Storage</div>
-            <div class="index-item" onclick="selectCat('beds', this)">Beds</div>
-        </div>
-        <div class="index-column" id="type-col"><h3>Type</h3><div id="type-list"></div></div>
-        <div class="asset-view">
-            <h3 style="padding: 20px; border-bottom: 1px solid #333; background: #080808; margin:0; color:#8e9196;">Inventory</h3>
-            <div class="asset-grid" id="asset-list"></div>
-        </div>
-    </div>
-</div>
 
 <div class="workspace">
     <div class="cabinet-container" id="cab-container">
         <img src="cabinet.png" class="cabinet-image">
         <div class="drawer-stack" id="drawer-anchor"></div>
     </div>
-    
     <div id="fan-system" class="fan-system"></div>
-    
     <div class="stage" id="stage-zone">
         <img id="room-display">
     </div>
@@ -210,192 +88,106 @@
     const roomImg = document.getElementById('room-display');
     const cab = document.getElementById('cab-container');
     const drawerStack = document.getElementById('drawer-anchor');
-    const fanSystem = document.getElementById('fan-system'); 
-    const fileInput = document.getElementById('file-upload');
-    
-    let currentLockedRoom = null; 
+    const fanSystem = document.getElementById('fan-system');
 
-    /* --- CATALOG DATA (Used for both Fan and Shop) --- */
-    const catalogData = {
-        seating: {
-            couches: ['couch1.png', 'couch2.png'],
-            chairs:  ['chair1.png', 'chair3.png'],
-            benches: ['bench1.png'],
-            stools:  ['stool1.png']
-        },
-        tables: {
-            coffee: ['coffeetable.png'],
-            dining: ['table2.png'],
-            desks:  ['table1.png']
-        },
-        storage: {
-            shelves:  ['shelf1.png', 'shelf2.png'],
-            dressers: ['dresser1.png'],
-            cabinets: ['cabinet1.png']
-        },
-        beds: {
-            frames: ['bed1.png', 'bed2.png']
-        }
+    /* --- DATA REGISTRY --- */
+    const inventory = {
+        // Furniture: 3 Stages (Icon -> Text -> Item)
+        furniture_main: [
+            { id: 'seating', icon: 'iconseating.png' },
+            { id: 'storage', icon: 'iconstorage.png' },
+            { id: 'beds',    icon: 'iconbeds.png' },
+            { id: 'tables',  icon: 'icontable.png' }
+        ],
+        seating: ['COUCHES', 'STOOLS', 'CHAIRS', 'DINING CHAIRS', 'BENCHES'],
+        storage: ['SHELVES', 'DRESSERS', 'CABINETS'],
+        COUCHES: ['couch1.png', 'couch2.png'],
+        
+        // Decor: 2 Stages (Icon -> Item)
+        decor_main: [
+            { id: 'rugs_all',     icon: 'iconrugs.png' },
+            { id: 'lamps_all',    icon: 'iconlamps.png' },
+            { id: 'curtains_all', icon: 'iconcurtains.png' },
+            { id: 'plants_all',   icon: 'iconplants.png' },
+            { id: 'frames_all',   icon: 'iconframes.png' }
+        ],
+        rugs_all:     ['rug1.png', 'rug2.png', 'rug3.png', 'rug4.png'],
+        lamps_all:    ['lamp1.png', 'lamp2.png'],
+        curtains_all: ['curtain1.png', 'curtain2.png'],
+        plants_all:   ['plant1.png', 'plant2.png'],
+        frames_all:   ['frame1.png']
     };
 
-    /* --- MAIN NAVIGATION HANDLER --- */
     function openMode(mode, el) {
-        
-        // Hide Fan initially
         fanSystem.classList.remove('active-fan');
-        fanSystem.innerHTML = ''; 
-
         if (mode === 'decor') {
-            // DECOR: Top-Down Fan
-            cab.classList.remove('cabinet-visible'); // Close cabinet
-            
-            if(el) {
-                const rect = el.getBoundingClientRect();
-                const workspaceRect = document.querySelector('.workspace').getBoundingClientRect();
-                const leftPos = rect.left - workspaceRect.left + (rect.width / 2);
-                const topPos = -50; 
-                fanSystem.style.left = leftPos + 'px';
-                fanSystem.style.top = topPos + 'px';
-            }
-            setTimeout(() => { openFan('decor_categories', null); }, 100);
-            
+            cab.classList.remove('cabinet-visible');
+            alignFan(el, 'down');
+            triggerFan('decor_main', 'down');
         } else {
-            // ROOMS: Open Cabinet
             cab.classList.add('cabinet-visible');
             drawerStack.innerHTML = '';
-            
             if (mode === 'rooms') {
-                const rooms = [
-                    { name: 'Living Room',  file: 'livingroom2.jpg' }, 
-                    { name: 'Bedroom',      file: 'bedroom.jpg' },
-                    { name: 'Dining Room',  file: 'diningroom.jpg' },
-                    { name: 'Upload',       file: 'upload' }
-                ];
-                rooms.forEach(data => {
-                    let clickAction = data.name === 'Upload' ? "triggerUpload()" : `selectRoom('${data.file}', this)`;
-                    let hoverAction = data.name === 'Upload' ? "" : `onmouseenter="previewRoom('${data.file}')"`;
-                    let leaveAction = data.name === 'Upload' ? "" : `onmouseleave="revertPreview()"`;
-                    let textColor = data.name === 'Upload' ? "color:#d00;" : "";
-                    
-                    drawerStack.innerHTML += `
-                        <div class="drawer-zone" onclick="${clickAction}" ${hoverAction} ${leaveAction}>
-                            <div class="drawer-hardware">
-                                <div class="plate-style" style="${textColor}">${data.name}</div>
-                                <div class="lip-pull"></div>
-                            </div>
-                        </div>`;
+                ['Living Room', 'Bedroom'].forEach(r => {
+                    drawerStack.innerHTML += `<div class="drawer-zone" onclick="selectRoom('${r.toLowerCase()}.jpg', this)"><div class="drawer-hardware"><div class="plate-style">${r}</div><div class="lip-pull"></div></div></div>`;
                 });
-            } 
-            else if (mode === 'inspiration') {
-                ['Modern', 'Industrial', 'Boho'].forEach(style => {
-                    drawerStack.innerHTML += `
-                        <div class="drawer-zone" onclick="alert('Style: ${style}')">
-                            <div class="drawer-hardware">
-                                <div class="plate-style">${style}</div>
-                                <div class="lip-pull"></div>
-                            </div>
-                        </div>`;
+            } else {
+                ['Seating', 'Tables', 'Storage'].forEach(c => {
+                    drawerStack.innerHTML += `<div class="drawer-zone" onclick="alignFan(this, 'side'); triggerFan('${c.toLowerCase()}', 'side')"><div class="drawer-hardware"><div class="plate-style">${c}</div><div class="lip-pull"></div></div></div>`;
                 });
             }
         }
-    }
-
-    /* --- CATALOG / SHOP LOGIC --- */
-    function showCatalog() {
-        cab.classList.remove('cabinet-visible'); // Hide cabinet
-        fanSystem.classList.remove('active-fan'); // Hide fan
-        document.getElementById('catalog-overlay').style.display = 'block';
-    }
-    function hideCatalog() {
-        document.getElementById('catalog-overlay').style.display = 'none';
-    }
-    
-    function selectCat(cat, el) {
-        document.querySelectorAll('#cat-col .index-item').forEach(i => i.classList.remove('selected'));
-        if(el) el.classList.add('selected');
-        
-        const list = document.getElementById('type-list');
-        list.innerHTML = '';
-        
-        if(catalogData[cat]) {
-            Object.keys(catalogData[cat]).forEach(type => {
-                list.innerHTML += `<div class="index-item" onclick="selectType('${cat}', '${type}', this)">${type}</div>`;
-            });
-        }
-    }
-
-    function selectType(cat, type, el) {
-        document.querySelectorAll('#type-col .index-item').forEach(i => i.classList.remove('selected'));
-        if(el) el.classList.add('selected');
-        
-        const grid = document.getElementById('asset-list');
-        grid.innerHTML = '';
-        
-        if(catalogData[cat] && catalogData[cat][type]) {
-            catalogData[cat][type].forEach(img => {
-                grid.innerHTML += `
-                    <div class="asset-card">
-                        <img src="${img}">
-                        <p>${type}</p>
-                        <button class="buy-btn" onclick="alert('Item Purchased!')">BUY</button>
-                    </div>`;
-            });
-        }
-    }
-
-    /* --- PREVIEW LOGIC --- */
-    function previewRoom(src) { roomImg.src = src; roomImg.style.display = 'block'; }
-    function revertPreview() { 
-        if (currentLockedRoom) { roomImg.src = currentLockedRoom; } 
-        else { roomImg.style.display = 'none'; } 
     }
 
     function selectRoom(src, el) {
-        currentLockedRoom = src; 
-        roomImg.src = src; 
-        roomImg.style.display = 'block'; 
-        // Reset Logic if needed
+        roomImg.src = src; roomImg.style.display = 'block';
+        alignFan(el, 'side');
+        triggerFan('furniture_main', 'side');
     }
 
-    function triggerUpload() { fileInput.click(); }
-    fileInput.addEventListener('change', function() {
-        const file = this.files[0];
-        if (file) {
-            const reader = new FileReader();
-            reader.onload = function(e) { selectRoom(e.target.result, null); }
-            reader.readAsDataURL(file);
+    function alignFan(el, dir) {
+        const rect = el.getBoundingClientRect();
+        const wsRect = document.querySelector('.workspace').getBoundingClientRect();
+        if (dir === 'side') {
+            fanSystem.style.top = (rect.top - wsRect.top + 55) + 'px';
+            fanSystem.style.left = '380px';
+        } else {
+            fanSystem.style.top = '-40px';
+            fanSystem.style.left = (rect.left - wsRect.left + (rect.width/2)) + 'px';
         }
-    });
+    }
 
-    /* --- FAN LOGIC (Only for Decor & Furniture Categories in Fan mode if we add it back) --- */
-    function openFan(category, el) {
-        // ... (Logic kept for Decor fan) ...
-        const isDecor = ['decor_categories', 'lighting', 'rugs', 'art'].includes(category);
-        if (isDecor) { fanSystem.classList.add('fan-down'); } 
-        else { fanSystem.classList.remove('fan-down'); }
-
-        // Simple Decor List
-        const items = ['lighting', 'rugs', 'art']; // Just placeholders
-        
-        fanSystem.innerHTML = '<div class="pivot-bolt"></div>';
+    function triggerFan(type, dir) {
         fanSystem.classList.remove('active-fan');
-
         setTimeout(() => {
-            items.forEach((item, i) => {
+            fanSystem.className = 'fan-system ' + (dir === 'down' ? 'fan-down' : '');
+            fanSystem.innerHTML = '<div class="pivot-bolt"></div>';
+            const data = inventory[type] || [];
+            
+            data.forEach((item, i) => {
                 const blade = document.createElement('div');
-                blade.className = `swatch-blade s-${i + 1}`;
-                blade.innerHTML = `<div class="fan-text" onclick="alert('Decor: ${item}')">${item}</div>`;
+                blade.className = `swatch-blade s-${i+1}`;
+                
+                if (typeof item === 'object') {
+                    // Stage 1 (Icons)
+                    blade.innerHTML = `<img src="${item.icon}" class="fan-icon" onclick="triggerFan('${item.id}', '${dir}')">`;
+                } else if (item.endsWith('.png')) {
+                    // Final Stage (Items)
+                    blade.innerHTML = `<img src="${item}" class="fan-icon" onclick="addToRoom('${item}')">`;
+                } else {
+                    // Furniture Stage 2 (Text Labels)
+                    blade.innerHTML = `<div class="typewriter-label" onclick="triggerFan('${item.replace(' ','')}', '${dir}')">${item}</div>`;
+                }
                 fanSystem.appendChild(blade);
             });
-            setTimeout(() => { fanSystem.classList.add('active-fan'); }, 50);
-        }, 100);
+            setTimeout(() => fanSystem.classList.add('active-fan'), 50);
+        }, 500);
     }
 
     function addToRoom(src) {
         const img = document.createElement("img");
-        img.src = src; 
-        img.className = "placed-item";
-        img.style.left = "100px"; img.style.top = "100px";
+        img.src = src; img.className = "placed-item";
+        img.style.left = "200px"; img.style.top = "200px";
         img.onmousedown = function(e) {
             let shiftX = e.clientX - img.getBoundingClientRect().left;
             let shiftY = e.clientY - img.getBoundingClientRect().top;
@@ -404,17 +196,10 @@
                 img.style.left = (pageX - stage.left - shiftX) + 'px';
                 img.style.top = (pageY - stage.top - shiftY) + 'px';
             }
-            function onMouseMove(event) { moveAt(event.pageX, event.pageY); }
-            document.addEventListener('mousemove', onMouseMove);
-            img.onmouseup = function() { document.removeEventListener('mousemove', onMouseMove); };
+            document.onmousemove = (ev) => moveAt(ev.pageX, ev.pageY);
+            img.onmouseup = () => document.onmousemove = null;
         };
-        img.ondragstart = () => false;
         document.getElementById("stage-zone").appendChild(img);
-    }
-
-    function lift(el) { 
-        document.querySelectorAll('.drawer-hardware').forEach(d => d.classList.remove('active-lift')); 
-        el.classList.add('active-lift'); 
     }
 </script>
 </body>
