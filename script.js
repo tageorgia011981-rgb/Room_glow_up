@@ -3,7 +3,6 @@ const cab = document.getElementById('cab-container');
 const drawerStack = document.getElementById('drawer-anchor');
 const fanSystem = document.getElementById('fan-system'); 
 const fileInput = document.getElementById('file-upload');
-let shoppingList = [];
 
 // --- ASSET CONFIGURATION ---
 const iconMap = { 
@@ -48,7 +47,56 @@ const decorData = {
     'Plants': Array(5).fill({ id: 'PL-X', img: 'plant1.png', price: 50 })
 };
 
-// --- NAVIGATION & MODES ---
+// --- CORE INTERACTION & CONTROLS ---
+function addToRoom(src) {
+    const img = document.createElement("img"); 
+    img.src = src; 
+    img.className = "placed-item";
+    img.style.left = "400px"; 
+    img.style.top = "300px";
+    img.dataset.rotation = 0;
+    img.dataset.flip = 1;
+
+    // Special Rug Layering
+    if (src.toLowerCase().includes('rug')) {
+        img.style.zIndex = "500"; 
+        img.style.width = "450px"; 
+    } else {
+        img.style.zIndex = "1000"; 
+    }
+
+    // DOUBLE-CLICK TO ROTATE
+    img.ondblclick = function() {
+        this.dataset.rotation = parseInt(this.dataset.rotation) + 45;
+        applyTransform(this);
+    };
+
+    // RIGHT-CLICK TO FLIP
+    img.oncontextmenu = function(e) {
+        e.preventDefault();
+        this.dataset.flip = this.dataset.flip == 1 ? -1 : 1;
+        applyTransform(this);
+    };
+
+    function applyTransform(el) {
+        el.style.transform = `rotate(${el.dataset.rotation}deg) scaleX(${el.dataset.flip})`;
+    }
+
+    // SMOOTH DRAG LOGIC
+    img.onmousedown = function(e) {
+        let sx = e.clientX - img.getBoundingClientRect().left;
+        let sy = e.clientY - img.getBoundingClientRect().top;
+        document.onmousemove = (ev) => {
+            const st = document.getElementById("stage-zone").getBoundingClientRect();
+            img.style.left = (ev.pageX - st.left - sx) + 'px';
+            img.style.top = (ev.pageY - st.top - sy) + 'px';
+        };
+        img.onmouseup = () => document.onmousemove = null;
+    };
+    document.getElementById("stage-zone").appendChild(img);
+}
+
+// --- CABINET & FAN NAVIGATION ---
 function openMode(mode, el) {
     fanSystem.classList.remove('active-fan'); 
     fanSystem.innerHTML = ''; 
@@ -72,9 +120,9 @@ function openMode(mode, el) {
     }
 }
 
-// --- FAN LOGIC (FURNITURE) ---
 function selectRoom(src, el) {
-    roomImg.src = src; roomImg.style.display = 'block'; 
+    roomImg.src = src; 
+    roomImg.style.display = 'block'; 
     fanSystem.classList.remove('fan-down'); 
     fanSystem.innerHTML = '<div class="pivot-bolt"></div>';
     if(el) {
@@ -120,7 +168,6 @@ function showItems(cat, type) {
     }, 400);
 }
 
-// --- FAN LOGIC (DECOR) ---
 function openDecorFan() {
     fanSystem.classList.add('fan-down'); 
     fanSystem.innerHTML = '<div class="pivot-bolt"></div>';
@@ -148,48 +195,14 @@ function showDecorItems(cat) {
     }, 400);
 }
 
-// --- DRAG AND DROP & RESET ---
-function addToRoom(src) {
-    const img = document.createElement("img"); 
-    img.src = src; 
-    img.className = "placed-item";
-    img.style.left = "400px"; 
-    img.style.top = "300px";
-
-    // SPECIAL RUG LOGIC: Rugs sit under furniture
-    if (src.toLowerCase().includes('rug')) {
-        img.style.zIndex = "500"; 
-        img.style.width = "400px"; 
-    } else {
-        img.style.zIndex = "1000"; 
-    }
-
-    img.onmousedown = function(e) {
-        let sx = e.clientX - img.getBoundingClientRect().left;
-        let sy = e.clientY - img.getBoundingClientRect().top;
-        document.onmousemove = (ev) => {
-            const st = document.getElementById("stage-zone").getBoundingClientRect();
-            img.style.left = (ev.pageX - st.left - sx) + 'px';
-            img.style.top = (ev.pageY - st.top - sy) + 'px';
-        };
-        img.onmouseup = () => document.onmousemove = null;
-    };
-    document.getElementById("stage-zone").appendChild(img);
-}
-
+// --- UI UTILITIES ---
 function resetStage() {
     const stage = document.getElementById("stage-zone");
-    const items = stage.querySelectorAll(".placed-item");
-    items.forEach(item => item.remove());
+    stage.querySelectorAll(".placed-item").forEach(item => item.remove());
 }
 
-// --- UI HELPERS ---
-function renderLookbook() {
-    const grid = document.getElementById('look-grid');
-    grid.innerHTML = '';
-    for(let i = 1; i <= 8; i++) {
-        grid.innerHTML += `<div class="look-card"><img src="insp${i}.jpg" onerror="this.src='cabinet.png'"></div>`;
-    }
+function hideOverlays() { 
+    document.querySelectorAll('.overlay-bg').forEach(o => o.style.display = 'none'); 
 }
 
 function lift(el) { 
@@ -197,8 +210,12 @@ function lift(el) {
     el.classList.add('active-lift'); 
 }
 
-function hideOverlays() { 
-    document.querySelectorAll('.overlay-bg').forEach(o => o.style.display = 'none'); 
+function renderLookbook() {
+    const grid = document.getElementById('look-grid');
+    grid.innerHTML = '';
+    for(let i = 1; i <= 8; i++) {
+        grid.innerHTML += `<div class="look-card"><img src="insp${i}.jpg" onerror="this.src='cabinet.png'"></div>`;
+    }
 }
 
 function showCatalog() { 
