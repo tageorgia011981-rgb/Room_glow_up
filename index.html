@@ -4,14 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Room Glow Up</title>
+    <link href="https://fonts.googleapis.com/css2?family=Special+Elite&display=swap" rel="stylesheet">
     <style>
-        /* CSS STYLING */
         body {
             margin: 0;
             padding: 0;
-            background-color: #080808;
+            background-color: #0a0a0a;
             background-image: url('https://www.transparenttextures.com/patterns/floral-vines.png');
-            color: #ffffff;
+            color: white;
             font-family: 'Times New Roman', serif;
             display: flex;
             flex-direction: column;
@@ -19,61 +19,104 @@
             overflow: hidden;
         }
 
-        /* Top Navigation - Navigation Labels */
+        /* --- HEADER & TOP NAV --- */
         header {
             display: flex;
-            justify-content: flex-end;
-            padding: 30px 50px;
-            gap: 15px;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 40px;
+            background: #000;
         }
 
-        .top-label {
-            background: #ffffff;
-            color: #000000;
-            padding: 8px 18px;
-            font-size: 11px;
-            font-weight: bold;
+        .logo {
+            font-size: 24px;
+            letter-spacing: 3px;
             text-transform: uppercase;
-            letter-spacing: 2px;
-            border: 2px solid #53565a; /* Gunmetal Silver */
-            cursor: pointer;
+            font-family: 'Special Elite', cursive;
         }
 
-        /* Layout Structure */
-        .wrapper {
+        .vintage-tabs { 
+            display: flex; 
+            justify-content: center; 
+            gap: 15px; 
+        }
+
+        /* --- DRAWER LABEL STYLE (Shared) --- */
+        .drawer-label { 
+            background: #e3e3e3; 
+            color: #111; 
+            padding: 6px 15px; 
+            min-width: 110px; 
+            text-align: center; 
+            font-size: 14px; 
+            font-weight: bold; 
+            text-transform: uppercase; 
+            font-family: 'Special Elite', cursive; 
+            box-shadow: 1px 1px 2px rgba(0,0,0,0.3); 
+            border: 1px solid #999; 
+            transform: rotate(-0.5deg); 
+        }
+
+        /* --- DRAWER HARDWARE STYLE --- */
+        .drawer-hardware { 
+            position: relative; 
+            width: 200px; 
+            height: 80px; 
+            background: linear-gradient(135deg, #2c2e30 0%, #000 100%); 
+            border: 3px solid #1a1a1a; 
+            box-shadow: inset 0 0 15px rgba(255,255,255,0.05), 0 10px 20px rgba(0,0,0,0.8); 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            cursor: pointer; 
+            transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); 
+        }
+
+        .drawer-hardware:hover {
+            border-color: #444;
+        }
+
+        .drawer-hardware:hover .drawer-label { 
+            box-shadow: 0 0 15px rgba(255,255,255,0.3); 
+            border-color: #fff; 
+        }
+
+        .lip-pull { 
+            position: absolute; 
+            bottom: -7px; 
+            left: 50%; 
+            transform: translateX(-50%); 
+            width: 100px; 
+            height: 14px; 
+            background: linear-gradient(#333, #111, #000); 
+            border-radius: 0 0 10px 10px; 
+            border: 1px solid #111; 
+        }
+
+        /* --- LAYOUT --- */
+        .container {
             display: flex;
             flex: 1;
+            border-top: 1px solid #1a1a1a;
         }
 
-        /* Side Cabinet - Gunmetal Accents */
         aside {
-            width: 200px;
+            width: 180px;
             padding: 40px 25px;
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
+            border-right: 1px solid #1a1a1a;
         }
 
-        .drawer-box {
-            background: #1a1a1a;
-            border: 1px solid #333;
-            height: 50px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            border-bottom: 3px solid #53565a; /* Gunmetal Silver base */
+        .side-link {
+            display: block;
+            margin-bottom: 35px;
+            font-size: 16px;
+            color: #fff;
+            text-decoration: none;
+            cursor: pointer;
+            font-family: 'Special Elite', cursive;
         }
 
-        .side-label {
-            background: #ffffff;
-            color: #000000;
-            padding: 2px 12px;
-            font-size: 11px;
-            font-weight: bold;
-            text-transform: uppercase;
-        }
-
-        /* Main Cabinet - Flat Black */
+        /* --- CENTER CONTENT (THE CABINET) --- */
         main {
             flex: 1;
             display: flex;
@@ -81,62 +124,70 @@
             align-items: center;
         }
 
-        .cabinet-flat {
-            width: 720px;
-            height: 520px;
-            background-color: #000000; /* Flat Black */
-            border: 2px solid #2a2a2a;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            gap: 15px;
+        .cabinet {
+            width: 700px;
+            height: 500px;
+            background-color: #000;
+            border: 1px solid #222;
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            place-items: center;
+            padding: 20px;
+            box-shadow: inset 0 0 100px rgba(0,0,0,0.5);
         }
 
-        /* Cabinet Labels - White with Gunmetal Borders */
-        .room-label {
-            width: 300px;
-            padding: 15px;
-            background: #ffffff;
-            color: #000000;
-            text-align: center;
-            font-weight: bold;
-            text-transform: uppercase;
-            letter-spacing: 3px;
-            border: 2px solid #53565a; /* Gunmetal Silver frame */
-            cursor: pointer;
-        }
-
-        .upload-dashed {
-            background: transparent;
-            color: #ffffff;
-            border: 2px dashed #53565a; /* Gunmetal Silver dashed */
-            margin-top: 20px;
+        .drawer-zone { 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
         }
     </style>
 </head>
 <body>
 
     <header>
-        <div class="top-label">Rooms</div>
-        <div class="top-label">Furniture</div>
-        <div class="top-label">Decor</div>
-        <div class="top-label">Inspiration</div>
+        <div class="logo">ROOM GLOW UP</div>
+        <div class="vintage-tabs">
+            <div class="drawer-label">Rooms</div>
+            <div class="drawer-label">Furniture</div>
+            <div class="drawer-label">Decor</div>
+            <div class="drawer-label">Inspiration</div>
+        </div>
     </header>
 
-    <div class="wrapper">
+    <div class="container">
         <aside>
-            <div class="drawer-box"><div class="side-label">Seating</div></div>
-            <div class="drawer-box"><div class="side-label">Tables</div></div>
-            <div class="drawer-box"><div class="side-label">Storage</div></div>
+            <div class="side-link">Seating</div>
+            <div class="side-link">Tables</div>
+            <div class="side-link">Storage</div>
         </aside>
 
         <main>
-            <div class="cabinet-flat">
-                <div class="room-label">Livingroom</div>
-                <div class="room-label">Diningroom</div>
-                <div class="room-label">Bedroom</div>
-                <div class="room-label upload-dashed">Upload</div>
+            <div class="cabinet">
+                <div class="drawer-zone">
+                    <div class="drawer-hardware">
+                        <div class="drawer-label">Livingroom</div>
+                        <div class="lip-pull"></div>
+                    </div>
+                </div>
+                <div class="drawer-zone">
+                    <div class="drawer-hardware">
+                        <div class="drawer-label">Diningroom</div>
+                        <div class="lip-pull"></div>
+                    </div>
+                </div>
+                <div class="drawer-zone">
+                    <div class="drawer-hardware">
+                        <div class="drawer-label">Bedroom</div>
+                        <div class="lip-pull"></div>
+                    </div>
+                </div>
+                <div class="drawer-zone">
+                    <div class="drawer-hardware" style="border-style: dashed; border-color: #333;">
+                        <div class="drawer-label" style="background: #222; color: #bbb;">Upload</div>
+                        <div class="lip-pull"></div>
+                    </div>
+                </div>
             </div>
         </main>
     </div>
