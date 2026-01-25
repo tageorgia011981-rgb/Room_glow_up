@@ -6,7 +6,7 @@
 <title>Room Glow Up | Grand Studio</title>
 <link href="https://fonts.googleapis.com/css2?family=Limelight&family=Special+Elite&display=swap" rel="stylesheet">
 <style>
-  /* --- GLOBAL SETUP & ATMOSPHERE --- */
+  /* --- GLOBAL ATMOSPHERE --- */
   * { margin: 0; padding: 0; box-sizing: border-box; }
   
   body { 
@@ -15,40 +15,37 @@
     position: relative;
   }
 
-  /* 1. FILM GRAIN OVERLAY (Texture) */
+  /* FILM GRAIN */
   body::before {
     content: ""; position: fixed; inset: 0; pointer-events: none; z-index: 9000;
     background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.05'/%3E%3C/svg%3E");
-    opacity: 0.4;
+    opacity: 0.3;
   }
 
-  /* 2. VIGNETTE (Focus) */
+  /* LIGHTER VIGNETTE (Right side visible) */
   body::after {
     content: ""; position: fixed; inset: 0; pointer-events: none; z-index: 8000;
-    background: radial-gradient(circle, transparent 50%, #000 100%);
+    background: radial-gradient(circle at 60% 50%, transparent 60%, rgba(0,0,0,0.8) 120%);
   }
 
-  /* --- HEADER (UNTOUCHED FONTS + BREATHING ANIMATION) --- */
+  /* --- HEADER --- */
   .site-header { text-align: center; padding: 60px 0 30px; position: relative; z-index: 10; }
-  
   @keyframes breathe {
     0%, 100% { text-shadow: 0px 5px 15px rgba(0,0,0,0.6); }
     50% { text-shadow: 0px 5px 25px rgba(255,255,255,0.3); }
   }
-  
   .brand-title { 
     font-family: 'Limelight', cursive; font-size: 100px; text-transform: uppercase; 
     background: linear-gradient(to bottom, #ffffff 0%, #dcdcdc 50%, #8e9196 51%, #a8a8a8 100%);
     -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-    letter-spacing: 4px;
-    animation: breathe 5s infinite ease-in-out; 
+    letter-spacing: 4px; animation: breathe 5s infinite ease-in-out; 
   }
   .sub-title { font-size: 24px; color: #8e9196; letter-spacing: 8px; margin-top: -10px; text-transform: uppercase; text-shadow: 0px 2px 4px #000; }
   
   /* --- TABS --- */
   .vintage-tabs { display: flex; justify-content: center; gap: 30px; padding: 30px 0; z-index: 2000; position: relative; }
   
-  /* --- HARDWARE (LOCKED) --- */
+  /* --- HARDWARE --- */
   .drawer-hardware {
     position: relative; width: 280px; height: 100px; 
     background: linear-gradient(135deg, #2c2e30 0%, #1a1a1a 100%); 
@@ -59,14 +56,6 @@
     z-index: 2000;
   }
   .drawer-hardware:hover { filter: brightness(1.3) contrast(1.1); transform: translateY(-4px); }
-  
-  .drawer-hardware::before, .drawer-hardware::after {
-    content: ''; position: absolute; top: 50%; transform: translateY(-50%);
-    width: 16px; height: 16px; border-radius: 50%; 
-    background: radial-gradient(circle, #111 20%, #555 100%); box-shadow: 0 1px 0 rgba(255,255,255,0.1); 
-  }
-  .drawer-hardware::before { left: 15px; }
-  .drawer-hardware::after { right: 15px; }
   
   .plate-style { 
     width: 190px; height: 50px; 
@@ -87,7 +76,6 @@
   /* --- WORKSPACE --- */
   .workspace { display: flex; padding: 40px; position: relative; height: 800px; }
   
-  /* CABINET CONTAINER */
   .cabinet-container { 
     position: absolute; left: -800px; top: 0; width: 700px; 
     transition: left 0.8s cubic-bezier(0.19, 1, 0.22, 1); z-index: 100;
@@ -104,7 +92,7 @@
   /* --- FAN SYSTEM --- */
   .fan-system { position: absolute; z-index: 50; pointer-events: none; transition: top 0.3s ease, left 0.3s ease; }
   
-  /* SIDEWAYS FAN (Cabinet) */
+  /* SIDEWAYS FAN (Cabinet) - FIXED LENGTH */
   .swatch-blade {
     position: absolute; left: 0; top: -32px; width: 0; height: 75px;
     background: linear-gradient(to right, #444, #8e9196, #1a1a1a);
@@ -114,14 +102,14 @@
     opacity: 0; display: flex; align-items: center; justify-content: flex-end; padding-right: 25px;
     box-shadow: 10px 10px 20px rgba(0,0,0,0.7);
   }
-  .active-fan .swatch-blade { width: 400px; opacity: 1; pointer-events: auto; }
+  .active-fan .swatch-blade { width: 320px; opacity: 1; pointer-events: auto; }
   
   .s-1 { transform: rotate(-40deg); z-index: 41; }
   .s-2 { transform: rotate(-14deg); z-index: 42; }
   .s-3 { transform: rotate(14deg); z-index: 43; }
   .s-4 { transform: rotate(40deg); z-index: 44; }
 
-  /* DOWNWARD FAN (Decor) */
+  /* DOWNWARD FAN (Decor) - FIXED ROTATION */
   .fan-down .swatch-blade { 
     width: 80px; height: 0; top: 60px; left: -40px; 
     transform-origin: top center; border-radius: 0 0 25px 25px; 
@@ -131,22 +119,20 @@
   }
   .fan-down.active-fan .swatch-blade { height: 300px; opacity: 1; }
   
-  .fan-down.active-fan .s-1 { transform: rotate(15deg) translateY(10px); z-index: 44; }
-  .fan-down.active-fan .s-2 { transform: rotate(5deg) translateY(10px); z-index: 43; }
-  .fan-down.active-fan .s-3 { transform: rotate(-5deg) translateY(10px); z-index: 42; }
-  .fan-down.active-fan .s-4 { transform: rotate(-15deg) translateY(10px); z-index: 41; }
+  .fan-down.active-fan .s-1 { transform: rotate(20deg) translateY(10px); z-index: 44; }
+  .fan-down.active-fan .s-2 { transform: rotate(7deg) translateY(10px); z-index: 43; }
+  .fan-down.active-fan .s-3 { transform: rotate(-7deg) translateY(10px); z-index: 42; }
+  .fan-down.active-fan .s-4 { transform: rotate(-20deg) translateY(10px); z-index: 41; }
 
-  /* CONTENT */
+  /* ICONS & TEXT */
   .fan-icon { width: 60px; height: 60px; cursor: pointer; transition: 0.3s; filter: drop-shadow(0 4px 8px black) grayscale(0.5); object-fit: contain; }
   .fan-icon:hover { transform: scale(1.25); filter: grayscale(0); }
 
   .fan-text { 
     color: #000; font-family: 'Special Elite', cursive; font-weight: 900; 
-    font-size: 24px; text-transform: uppercase; writing-mode: vertical-rl; 
-    transform: rotate(180deg); letter-spacing: 3px;
-    text-shadow: 0px 1px 0px rgba(255,255,255,0.4); cursor: pointer;
+    font-size: 18px; text-transform: uppercase; cursor: pointer; 
   }
-  .fan-text:hover { color: #fff; text-shadow: 0 0 5px #000; }
+  .fan-down .fan-text { writing-mode: vertical-rl; transform: rotate(180deg); font-size: 24px; letter-spacing: 3px; }
 
   .pivot-bolt {
     position: absolute; left: -18px; top: -18px; width: 36px; height: 36px;
@@ -155,99 +141,71 @@
   }
   .active-fan .pivot-bolt { opacity: 1; }
 
-  /* --- STAGE (Alive Blueprint) --- */
-  @keyframes gridMove {
-    0% { background-position: 0 0; }
-    100% { background-position: 40px 40px; }
-  }
-
+  /* --- STAGE (Wide) --- */
   .stage { 
-    width: 900px; height: 600px; background: #050505; border: 20px solid #2c2e30; margin-left: 750px; 
+    width: calc(100% - 750px); min-width: 600px;
+    height: 600px; background: #050505; border: 20px solid #2c2e30; 
+    margin-left: 720px; 
     position: relative; overflow: hidden; box-shadow: inset 0 0 80px #000;
   }
-
-  /* Moving Grid Background */
+  
+  @keyframes gridMove { 0% { background-position: 0 0; } 100% { background-position: 40px 40px; } }
   .stage::before {
     content: ''; position: absolute; inset: -50px;
-    background-image: 
-      linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+    background-image: linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
     background-size: 40px 40px;
-    animation: gridMove 20s linear infinite;
-    z-index: 1; pointer-events: none;
+    animation: gridMove 20s linear infinite; z-index: 1; pointer-events: none;
   }
 
   #room-display { width: 100%; height: 100%; object-fit: cover; display: none; position: relative; z-index: 10; }
   .preview-mode { display: block !important; opacity: 1; }
-  .placed-item { position: absolute; width: 220px; cursor: move; z-index: 1500; filter: drop-shadow(10px 15px 20px rgba(0,0,0,0.6)); }
+  .placed-item { position: absolute; width: 200px; cursor: move; z-index: 1500; filter: drop-shadow(10px 15px 20px rgba(0,0,0,0.6)); }
 
   /* --- OVERLAYS --- */
   .overlay-bg { position: fixed; inset: 0; background: rgba(5, 5, 5, 0.96); z-index: 5000; display: none; padding: 50px; }
   .catalog-container { position: relative; display: flex; height: 85vh; background: #000; border: 4px solid #333; box-shadow: 0 0 80px rgba(0,0,0,1); }
-  .close-btn { position: absolute; top: 30px; right: 50px; font-size: 60px; color: #555; cursor: pointer; transition: 0.3s; z-index: 6000; }
-  .close-btn:hover { color: #fff; transform: rotate(90deg); }
-
-  /* --- MANIFEST (Shopping List) --- */
-  #manifest-btn {
-    position: fixed; bottom: 30px; right: 30px; 
-    background: #dcdcdc; color: #000; border: 2px solid #222;
-    padding: 15px 30px; font-size: 20px; font-weight: bold; font-family: 'Special Elite', cursive;
-    cursor: pointer; z-index: 4000; transform: rotate(-2deg); box-shadow: 5px 5px 15px #000;
-    transition: 0.3s;
+  
+  /* FIXED CLOSE BUTTON (Top Right) */
+  .close-btn { 
+    position: fixed; top: 40px; right: 60px; width: 80px; height: 80px;
+    font-size: 80px; color: #fff; background: #000; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer; transition: 0.3s; z-index: 9999; border: 2px solid #555;
   }
-  #manifest-btn:hover { transform: rotate(0deg) scale(1.1); background: #fff; }
+  .close-btn:hover { color: #f00; transform: rotate(90deg); border-color: #f00; }
 
-  #manifest-overlay {
-    position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%);
-    width: 500px; max-height: 80vh; background: #f0f0f0; 
-    border: 1px dashed #999; padding: 40px; box-shadow: 0 20px 50px #000;
-    z-index: 6000; overflow-y: auto; display: none;
-    font-family: 'Special Elite', cursive; color: #000;
-  }
-  .receipt-header { text-align: center; border-bottom: 2px dashed #000; padding-bottom: 20px; margin-bottom: 20px; }
-  .receipt-item { display: flex; justify-content: space-between; margin-bottom: 10px; border-bottom: 1px dotted #ccc; padding-bottom: 5px; }
-  .receipt-total { border-top: 2px dashed #000; padding-top: 20px; margin-top: 20px; font-size: 24px; font-weight: bold; text-align: right; }
-  .receipt-link { font-size: 12px; text-decoration: underline; cursor: pointer; color: blue; }
-
-  /* CATALOG STYLES */
+  /* CATALOG */
   .index-column { flex: 1; border-right: 2px solid #222; padding: 30px; overflow-y: auto; background: #0b0b0b; }
   .index-column h3 { color: #8e9196; margin-bottom: 25px; font-size: 24px; text-transform: uppercase; border-bottom: 2px solid #333; padding-bottom: 15px; }
-  
-  .search-box {
-    width: 100%; padding: 12px; margin-bottom: 20px; background: #1a1a1a; 
-    border: 1px solid #444; color: #fff; font-family: 'Special Elite', cursive; font-size: 16px;
-  }
-
+  .search-box { width: 100%; padding: 12px; margin-bottom: 20px; background: #1a1a1a; border: 1px solid #444; color: #fff; font-family: 'Special Elite', cursive; font-size: 16px; }
   .index-item { padding: 20px; margin-bottom: 15px; border: 1px solid #333; background: #161616; cursor: pointer; text-transform: uppercase; color: #777; transition: 0.2s; font-weight: bold; font-size: 18px; }
   .index-item:hover, .selected { background: #8e9196; color: #000; border-color: #fff; transform: translateX(10px); }
-  
   .asset-view { flex: 3; display: flex; flex-direction: column; background: #111; }
   .asset-grid { flex: 1; display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 30px; padding: 40px; overflow-y: auto; }
-  
   .asset-card { background: #1a1a1a; padding: 20px; text-align: center; border: 1px solid #333; transition: 0.3s; position: relative; }
-  .asset-card:hover { transform: translateY(-8px); border-color: #fff; box-shadow: 0 10px 20px rgba(0,0,0,0.5); }
   .asset-card img { width: 100%; height: 150px; object-fit: contain; margin-bottom: 10px; }
-  
   .item-code { position: absolute; top: 10px; right: 10px; font-size: 12px; color: #666; font-weight: bold; border: 1px solid #333; padding: 2px 5px; }
-  .item-price { font-size: 20px; color: #fff; margin-bottom: 10px; }
-  
   .btn-row { display: flex; gap: 10px; margin-top: 15px; }
-  .shop-btn { flex: 1; background: #333; color:#aaa; border: 1px solid #555; padding: 8px; cursor: pointer; font-family: inherit; font-weight: bold; text-transform: uppercase; font-size: 14px; transition:0.2s; }
-  .shop-btn:hover { background: #fff; color: #000; }
-  .add-btn { flex: 1; background: #8e9196; color:#000; border: 1px solid #fff; padding: 8px; cursor: pointer; font-family: inherit; font-weight: bold; text-transform: uppercase; font-size: 14px; transition:0.2s; }
-  .add-btn:hover { background: #fff; }
+  .shop-btn, .add-btn { flex: 1; padding: 8px; cursor: pointer; font-family: inherit; font-weight: bold; text-transform: uppercase; font-size: 14px; border: 1px solid #fff; }
+  .shop-btn { background: #333; color:#aaa; border-color: #555; }
+  .add-btn { background: #8e9196; color:#000; }
 
-  /* LOOKBOOK STYLES */
+  /* LOOKBOOK */
   .lookbook-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 40px; padding: 50px; overflow-y: auto; width: 100%; }
   .look-card { background: #fff; padding: 15px 15px 50px 15px; transform: rotate(2deg); transition: 0.3s; box-shadow: 0 10px 30px rgba(0,0,0,0.5); height: 350px; }
-  .look-card:nth-child(even) { transform: rotate(-1deg); }
   .look-card:hover { transform: scale(1.05) rotate(0deg); z-index: 10; }
   .look-card img { width: 100%; height: 100%; object-fit: cover; filter: sepia(0.2); }
-  
   .nav-arrow { position: absolute; top: 50%; transform: translateY(-50%); font-size: 80px; color: #444; cursor: pointer; z-index: 5500; transition: 0.3s; text-shadow: 0 5px 10px #000; }
   .nav-arrow:hover { color: #fff; transform: translateY(-50%) scale(1.1); }
-  .prev-arrow { left: -70px; }
-  .next-arrow { right: -70px; }
+  .prev-arrow { left: 20px; }
+  .next-arrow { right: 20px; }
+
+  /* MANIFEST */
+  #manifest-btn { position: fixed; bottom: 30px; right: 30px; background: #dcdcdc; color: #000; border: 2px solid #222; padding: 15px 30px; font-size: 20px; font-weight: bold; font-family: 'Special Elite', cursive; cursor: pointer; z-index: 4000; transform: rotate(-2deg); box-shadow: 5px 5px 15px #000; transition: 0.3s; }
+  #manifest-btn:hover { transform: rotate(0deg) scale(1.1); background: #fff; }
+  #manifest-overlay { position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 500px; max-height: 80vh; background: #f0f0f0; border: 1px dashed #999; padding: 40px; box-shadow: 0 20px 50px #000; z-index: 6000; overflow-y: auto; display: none; font-family: 'Special Elite', cursive; color: #000; }
+  .receipt-item { display: flex; justify-content: space-between; margin-bottom: 10px; border-bottom: 1px dotted #ccc; padding-bottom: 5px; }
+  .receipt-total { border-top: 2px dashed #000; padding-top: 20px; margin-top: 20px; font-size: 24px; font-weight: bold; text-align: right; }
 </style>
 </head>
 <body>
@@ -264,26 +222,18 @@
     <div class="drawer-hardware" onclick="lift(this); openMode('decor', this)"><div class="plate-style">Decor</div><div class="lip-pull"></div></div>
 </nav>
 
-<div id="manifest-btn" onclick="toggleManifest()">📋 Project Manifest (0)</div>
-
+<div id="manifest-btn" onclick="toggleManifest()">📋 Manifest (0)</div>
 <div id="manifest-overlay">
-    <div class="receipt-header">
-        <h2>PROJECT MANIFEST</h2>
-        <p>Studio Order #90210</p>
-    </div>
-    <div id="manifest-items">
-        </div>
+    <div style="text-align: center; border-bottom: 2px dashed #000; margin-bottom: 20px;"><h2>PROJECT MANIFEST</h2></div>
+    <div id="manifest-items"></div>
     <div class="receipt-total" id="manifest-total">Total: $0.00</div>
-    <div style="text-align: center; margin-top:20px;">
-        <button class="shop-btn" onclick="toggleManifest()">Close Receipt</button>
-        <button class="shop-btn" style="background:#000; color:#fff;" onclick="alert('Printing Manifest...')">Print List</button>
-    </div>
+    <div style="text-align: center; margin-top:20px;"><button class="shop-btn" style="background:#000; color:#fff;" onclick="toggleManifest()">Close</button></div>
 </div>
 
 <input type="file" id="file-upload" accept="image/*" style="display: none;">
 
 <div id="catalog-overlay" class="overlay-bg">
-    <span class="close-btn" onclick="hideOverlays()">×</span>
+    <div class="close-btn" onclick="hideOverlays()">×</div>
     <div class="catalog-container">
         <div class="index-column" id="cat-col">
             <input type="text" class="search-box" placeholder="Search SKU..." onkeyup="searchCatalog(this.value)">
@@ -291,7 +241,6 @@
             <div class="index-item" onclick="selectCat('seating', this)">Seating</div>
             <div class="index-item" onclick="selectCat('tables', this)">Tables</div>
             <div class="index-item" onclick="selectCat('storage', this)">Storage</div>
-            <div class="index-item" onclick="selectCat('beds', this)">Beds</div>
         </div>
         <div class="index-column" id="type-col"><h3>Type</h3><div id="type-list"></div></div>
         <div class="asset-view">
@@ -302,7 +251,7 @@
 </div>
 
 <div id="lookbook-overlay" class="overlay-bg">
-    <span class="close-btn" onclick="hideOverlays()">×</span>
+    <div class="close-btn" onclick="hideOverlays()">×</div>
     <div class="catalog-container" style="background: #111; overflow:visible;">
         <div class="nav-arrow prev-arrow" onclick="changeLookPage(-1)">&#10094;</div>
         <div class="nav-arrow next-arrow" onclick="changeLookPage(1)">&#10095;</div>
@@ -316,9 +265,7 @@
         <div class="drawer-stack" id="drawer-anchor"></div>
     </div>
     <div id="fan-system" class="fan-system"></div>
-    <div class="stage" id="stage-zone">
-        <img id="room-display">
-    </div>
+    <div class="stage" id="stage-zone"><img id="room-display"></div>
 </div>
 
 <script>
@@ -327,193 +274,116 @@
     const drawerStack = document.getElementById('drawer-anchor');
     const fanSystem = document.getElementById('fan-system'); 
     const fileInput = document.getElementById('file-upload');
-    
     let currentLockedRoom = null; 
     let shoppingList = [];
 
-    /* --- ICONS MAP --- */
     const iconMap = {
-        'seating': 'iconseating.png',
-        'tables': 'icontable.png',
-        'storage': 'iconstorage.png',
-        'beds': 'iconbeds.png'
+        'seating': 'iconseating.png', 'tables': 'icontable.png', 'storage': 'iconstorage.png', 'beds': 'iconbeds.png'
     };
 
-    /* --- CATALOG DATA (Expanded with Price, ID, Link) --- */
     const catalogData = {
         seating: { 
             couches: [
-                { id: 'SF-001', img: 'couch1.png', price: 1200, link: 'https://www.google.com/search?q=buy+vintage+couch' },
-                { id: 'SF-002', img: 'couch2.png', price: 950, link: 'https://www.google.com/search?q=buy+leather+sofa' }
+                { id: 'SF-001', img: 'couch1.png', price: 1200, link: 'https://google.com' },
+                { id: 'SF-002', img: 'couch2.png', price: 950, link: 'https://google.com' }
             ],
             chairs: [
-                { id: 'CH-101', img: 'chair1.png', price: 300, link: 'https://www.google.com/search?q=buy+armchair' },
-                { id: 'CH-102', img: 'chair3.png', price: 250, link: 'https://www.google.com/search?q=buy+stool' }
+                { id: 'CH-101', img: 'chair1.png', price: 300, link: 'https://google.com' },
+                { id: 'CH-102', img: 'chair3.png', price: 250, link: 'https://google.com' }
             ]
         },
         tables: { 
-            coffee: [{ id: 'TB-200', img: 'coffeetable.png', price: 450, link: 'https://www.google.com/search?q=buy+coffee+table' }],
-            dining: [{ id: 'TB-300', img: 'table2.png', price: 800, link: 'https://www.google.com/search?q=buy+dining+table' }]
+            coffee: [{ id: 'TB-200', img: 'coffeetable.png', price: 450, link: 'https://google.com' }],
+            dining: [{ id: 'TB-300', img: 'table2.png', price: 800, link: 'https://google.com' }]
         },
         storage: { 
-            shelves: [{ id: 'ST-500', img: 'shelf1.png', price: 150, link: 'https://www.google.com/search?q=buy+industrial+shelf' }],
-            dressers: [{ id: 'ST-600', img: 'dresser1.png', price: 600, link: 'https://www.google.com/search?q=buy+dresser' }]
-        },
-        beds: { 
-            frames: [{ id: 'BD-900', img: 'bed1.png', price: 1100, link: 'https://www.google.com/search?q=buy+bed+frame' }]
+            shelves: [{ id: 'ST-500', img: 'shelf1.png', price: 150, link: 'https://google.com' }]
         }
     };
 
-    /* --- SHOPPING LIST LOGIC --- */
-    function addToManifest(id, price, link) {
-        shoppingList.push({ id: id, price: price, link: link });
-        updateManifestBtn();
-        alert("Item added to Project Manifest!");
-    }
-
-    function updateManifestBtn() {
-        document.getElementById('manifest-btn').innerText = `📋 Project Manifest (${shoppingList.length})`;
-    }
-
-    function toggleManifest() {
-        const modal = document.getElementById('manifest-overlay');
-        if (modal.style.display === 'block') {
-            modal.style.display = 'none';
-        } else {
-            renderManifest();
-            modal.style.display = 'block';
-        }
-    }
-
-    function renderManifest() {
-        const container = document.getElementById('manifest-items');
-        container.innerHTML = '';
-        let total = 0;
-
-        shoppingList.forEach(item => {
-            total += item.price;
-            container.innerHTML += `
-                <div class="receipt-item">
-                    <span>${item.id}</span>
-                    <span>$${item.price}</span>
-                    <a href="${item.link}" target="_blank" class="receipt-link">BUY LINK</a>
-                </div>
-            `;
-        });
-        document.getElementById('manifest-total').innerText = `Total: $${total}`;
-    }
-
-    /* --- CATALOG SEARCH LOGIC --- */
-    function searchCatalog(query) {
-        const grid = document.getElementById('asset-list');
-        grid.innerHTML = '';
-        query = query.toLowerCase();
-
-        Object.keys(catalogData).forEach(cat => {
-            Object.keys(catalogData[cat]).forEach(type => {
-                catalogData[cat][type].forEach(item => {
-                    if(item.id.toLowerCase().includes(query) || type.includes(query)) {
-                        renderCard(grid, item, type);
-                    }
-                });
-            });
-        });
-    }
-
-    /* --- RENDER CARD HELPER --- */
-    function renderCard(container, item, type) {
-        container.innerHTML += `
-            <div class="asset-card">
-                <span class="item-code">${item.id}</span>
-                <img src="${item.img}">
-                <div class="item-price">$${item.price}</div>
-                <div class="btn-row">
-                    <button class="shop-btn" onclick="addToManifest('${item.id}', ${item.price}, '${item.link}')">ADD TO LIST</button>
-                    <button class="add-btn" onclick="addToRoom('${item.img}')">ADD TO ROOM</button>
-                </div>
-            </div>`;
-    }
-
-    /* --- NAVIGATION --- */
     function openMode(mode, el) {
-        fanSystem.classList.remove('active-fan');
-        fanSystem.innerHTML = ''; 
-        hideOverlays();
-
+        fanSystem.classList.remove('active-fan'); fanSystem.innerHTML = ''; hideOverlays();
         if (mode === 'decor') {
             cab.classList.remove('cabinet-visible');
             if(el) {
                 const rect = el.getBoundingClientRect();
                 const workspaceRect = document.querySelector('.workspace').getBoundingClientRect();
-                const leftPos = rect.left - workspaceRect.left + (rect.width / 2);
-                fanSystem.style.left = leftPos + 'px';
-                fanSystem.style.top = '-80px'; 
+                const leftPos = (rect.left - workspaceRect.left) + (rect.width/2);
+                fanSystem.style.left = leftPos + 'px'; fanSystem.style.top = '-60px'; 
             }
             setTimeout(() => { openDecorFan(); }, 100);
-            
         } else if (mode === 'rooms') {
-            cab.classList.add('cabinet-visible');
-            drawerStack.innerHTML = '';
-            fanSystem.classList.remove('fan-down');
-            
+            cab.classList.add('cabinet-visible'); drawerStack.innerHTML = ''; fanSystem.classList.remove('fan-down');
             const rooms = [
-                { name: 'Living Room',  file: 'livingroom2.jpg' }, 
-                { name: 'Bedroom',      file: 'bedroom.jpg' },
-                { name: 'Dining Room',  file: 'diningroom.jpg' },
-                { name: 'Upload',       file: 'upload' }
+                { name: 'Living Room',  file: 'livingroom2.jpg' }, { name: 'Bedroom', file: 'bedroom.jpg' },
+                { name: 'Dining Room',  file: 'diningroom.jpg' }, { name: 'Upload', file: 'upload' }
             ];
             rooms.forEach(data => {
-                let clickAction, hoverAction, leaveAction;
-                let textColor = "";
-
-                if(data.name === 'Upload') {
-                    clickAction = "triggerUpload()";
-                    hoverAction = ""; leaveAction = "";
-                    textColor = "color:#d00;";
-                } else {
-                    clickAction = `selectRoom('${data.file}', this)`; 
-                    hoverAction = `onmouseenter="previewRoom('${data.file}')"`;
-                    leaveAction = `onmouseleave="revertPreview()"`;
-                }
-                
-                drawerStack.innerHTML += `
-                    <div class="drawer-zone" onclick="${clickAction}" ${hoverAction} ${leaveAction}>
-                        <div class="drawer-hardware">
-                            <div class="plate-style" style="${textColor}">${data.name}</div>
-                            <div class="lip-pull"></div>
-                        </div>
-                    </div>`;
+                let clickAction = data.name === 'Upload' ? "triggerUpload()" : `selectRoom('${data.file}', this)`;
+                let textColor = data.name === 'Upload' ? "color:#d00;" : "";
+                drawerStack.innerHTML += `<div class="drawer-zone" onclick="${clickAction}"><div class="drawer-hardware"><div class="plate-style" style="${textColor}">${data.name}</div><div class="lip-pull"></div></div></div>`;
             });
         }
     }
 
-    /* --- FANS --- */
-    function openCabinetFan(el) {
-        fanSystem.classList.remove('fan-down');
-        fanSystem.innerHTML = '<div class="pivot-bolt"></div>';
+    /* --- STAGE 1: ICONS --- */
+    function selectRoom(src, el) {
+        currentLockedRoom = src; roomImg.src = src; roomImg.style.display = 'block'; 
+        fanSystem.classList.remove('fan-down'); fanSystem.innerHTML = '<div class="pivot-bolt"></div>';
         if(el) {
             const drawerRect = el.getBoundingClientRect();
             const workspaceRect = document.querySelector('.workspace').getBoundingClientRect();
-            fanSystem.style.top = (drawerRect.top - workspaceRect.top + 30) + 'px';
-            fanSystem.style.left = (drawerRect.right - workspaceRect.left - 20) + 'px';
+            fanSystem.style.top = (drawerRect.top - workspaceRect.top + 25) + 'px';
+            fanSystem.style.left = (drawerRect.right - workspaceRect.left - 40) + 'px';
         }
-        const items = ['seating', 'tables', 'storage', 'beds']; 
+        const categories = Object.keys(catalogData); 
         fanSystem.classList.remove('active-fan');
         setTimeout(() => {
-            items.forEach((item, i) => {
+            categories.forEach((cat, i) => {
                 const blade = document.createElement('div');
                 blade.className = `swatch-blade s-${i + 1}`;
-                const icon = iconMap[item] || 'couch1.png';
-                blade.innerHTML = `<img src="${icon}" class="fan-icon" onclick="showCatalog()">`; 
+                const icon = iconMap[cat] || 'couch1.png';
+                blade.innerHTML = `<img src="${icon}" class="fan-icon" onclick="showSubtypes('${cat}')">`;
                 fanSystem.appendChild(blade);
             });
             setTimeout(() => { fanSystem.classList.add('active-fan'); }, 50);
         }, 50);
     }
 
+    /* --- STAGE 2: TEXT --- */
+    function showSubtypes(category) {
+        fanSystem.classList.remove('active-fan');
+        const types = Object.keys(catalogData[category]);
+        setTimeout(() => {
+            fanSystem.innerHTML = '<div class="pivot-bolt"></div>';
+            types.forEach((type, i) => {
+                const blade = document.createElement('div');
+                blade.className = `swatch-blade s-${i + 1}`;
+                blade.innerHTML = `<div class="fan-text" onclick="showItems('${category}', '${type}')">${type}</div>`;
+                fanSystem.appendChild(blade);
+            });
+            setTimeout(() => { fanSystem.classList.add('active-fan'); }, 50);
+        }, 600);
+    }
+
+    /* --- STAGE 3: FURNITURE --- */
+    function showItems(category, type) {
+        fanSystem.classList.remove('active-fan');
+        const items = catalogData[category][type].slice(0, 4);
+        setTimeout(() => {
+            fanSystem.innerHTML = '<div class="pivot-bolt"></div>';
+            items.forEach((item, i) => {
+                const blade = document.createElement('div');
+                blade.className = `swatch-blade s-${i + 1}`;
+                blade.innerHTML = `<img src="${item.img}" class="fan-icon" onclick="addToRoom('${item.img}')">`;
+                fanSystem.appendChild(blade);
+            });
+            setTimeout(() => { fanSystem.classList.add('active-fan'); }, 50);
+        }, 600);
+    }
+
     function openDecorFan() {
-        fanSystem.classList.add('fan-down');
-        fanSystem.innerHTML = '<div class="pivot-bolt"></div>';
+        fanSystem.classList.add('fan-down'); fanSystem.innerHTML = '<div class="pivot-bolt"></div>';
         const items = ['Lighting', 'Rugs', 'Art', 'Decor']; 
         fanSystem.classList.remove('active-fan');
         setTimeout(() => {
@@ -527,78 +397,38 @@
         }, 50);
     }
 
-    /* --- FUNCTIONS --- */
-    function previewRoom(src) { roomImg.src = src; roomImg.style.display = 'block'; roomImg.classList.add('preview-mode'); }
-    function revertPreview() { 
-        if (!currentLockedRoom) { roomImg.style.display = 'none'; } 
-        else { roomImg.src = currentLockedRoom; }
-        roomImg.classList.remove('preview-mode');
+    function addToManifest(id, price, link) {
+        shoppingList.push({ id: id, price: price, link: link });
+        document.getElementById('manifest-btn').innerText = `📋 Manifest (${shoppingList.length})`;
+        alert("Item added to Manifest!");
     }
-    function selectRoom(src, el) {
-        currentLockedRoom = src; roomImg.src = src; roomImg.style.display = 'block'; 
-        openCabinetFan(el);
-    }
-    function triggerUpload() { fileInput.click(); }
-    fileInput.addEventListener('change', function() {
-        const file = this.files[0];
-        if (file) {
-            const reader = new FileReader();
-            reader.onload = function(e) { selectRoom(e.target.result, null); }
-            reader.readAsDataURL(file);
+    function toggleManifest() {
+        const modal = document.getElementById('manifest-overlay');
+        if (modal.style.display === 'block') { modal.style.display = 'none'; } 
+        else {
+            const container = document.getElementById('manifest-items'); container.innerHTML = '';
+            let total = 0;
+            shoppingList.forEach(item => {
+                total += item.price;
+                container.innerHTML += `<div class="receipt-item"><span>${item.id}</span><span>$${item.price}</span></div>`;
+            });
+            document.getElementById('manifest-total').innerText = `Total: $${total}`;
+            modal.style.display = 'block';
         }
-    });
-
-    let lookPage = 1;
-    function showLookBook() {
-        cab.classList.remove('cabinet-visible'); fanSystem.classList.remove('active-fan'); hideOverlays();
-        document.getElementById('lookbook-overlay').style.display = 'block';
-        renderLookbook();
-    }
-    function changeLookPage(dir) {
-        lookPage += dir; if(lookPage < 1) lookPage = 1; if(lookPage > 2) lookPage = 2;
-        renderLookbook();
-    }
-    function renderLookbook() {
-        const grid = document.getElementById('look-grid'); grid.innerHTML = '';
-        const start = (lookPage - 1) * 8 + 1; const end = start + 7;
-        for(let i=start; i<=end; i++) { grid.innerHTML += `<div class="look-card"><img src="insp${i}.jpg" onerror="this.src='cabinet.png'"></div>`; }
     }
 
-    function showCatalog() {
-        cab.classList.remove('cabinet-visible'); fanSystem.classList.remove('active-fan'); hideOverlays();
-        document.getElementById('catalog-overlay').style.display = 'block';
-    }
-    function hideOverlays() {
-        document.getElementById('catalog-overlay').style.display = 'none';
+    function showCatalog() { hideOverlays(); document.getElementById('catalog-overlay').style.display = 'block'; }
+    function showLookBook() { hideOverlays(); document.getElementById('lookbook-overlay').style.display = 'block'; renderLookbook(); }
+    function hideOverlays() { 
+        document.getElementById('catalog-overlay').style.display = 'none'; 
         document.getElementById('lookbook-overlay').style.display = 'none';
         document.getElementById('manifest-overlay').style.display = 'none';
     }
-
-    function selectCat(cat, el) {
-        document.querySelectorAll('#cat-col .index-item').forEach(i => i.classList.remove('selected'));
-        if(el) el.classList.add('selected');
-        const list = document.getElementById('type-list'); list.innerHTML = '';
-        if(catalogData[cat]) {
-            Object.keys(catalogData[cat]).forEach(type => {
-                list.innerHTML += `<div class="index-item" onclick="selectType('${cat}', '${type}', this)">${type}</div>`;
-            });
-        }
-    }
-    function selectType(cat, type, el) {
-        document.querySelectorAll('#type-col .index-item').forEach(i => i.classList.remove('selected'));
-        if(el) el.classList.add('selected');
-        const grid = document.getElementById('asset-list'); grid.innerHTML = '';
-        if(catalogData[cat] && catalogData[cat][type]) {
-            catalogData[cat][type].forEach(item => { renderCard(grid, item, type); });
-        }
-    }
-
+    
     function addToRoom(src) {
         hideOverlays(); 
         const img = document.createElement("img");
-        img.src = src; 
-        img.className = "placed-item";
-        img.style.left = "100px"; img.style.top = "100px";
+        img.src = src; img.className = "placed-item"; img.style.left = "200px"; img.style.top = "200px";
         img.onmousedown = function(e) {
             let shiftX = e.clientX - img.getBoundingClientRect().left;
             let shiftY = e.clientY - img.getBoundingClientRect().top;
@@ -615,9 +445,56 @@
         document.getElementById("stage-zone").appendChild(img);
     }
     
-    function lift(el) { 
-        document.querySelectorAll('.drawer-hardware').forEach(d => d.classList.remove('active-lift')); 
-        el.classList.add('active-lift'); 
+    function lift(el) { document.querySelectorAll('.drawer-hardware').forEach(d => d.classList.remove('active-lift')); el.classList.add('active-lift'); }
+    function triggerUpload() { fileInput.click(); }
+    fileInput.addEventListener('change', function() {
+        const file = this.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = function(e) { selectRoom(e.target.result, null); }
+            reader.readAsDataURL(file);
+        }
+    });
+
+    let lookPage = 1;
+    function changeLookPage(dir) { lookPage += dir; if(lookPage < 1) lookPage = 1; if(lookPage > 2) lookPage = 2; renderLookbook(); }
+    function renderLookbook() {
+        const grid = document.getElementById('look-grid'); grid.innerHTML = '';
+        const start = (lookPage - 1) * 8 + 1; const end = start + 7;
+        for(let i=start; i<=end; i++) { grid.innerHTML += `<div class="look-card"><img src="insp${i}.jpg" onerror="this.src='cabinet.png'"></div>`; }
+    }
+    
+    function selectCat(cat, el) {
+        document.querySelectorAll('#cat-col .index-item').forEach(i => i.classList.remove('selected'));
+        if(el) el.classList.add('selected');
+        const list = document.getElementById('type-list'); list.innerHTML = '';
+        if(catalogData[cat]) {
+            Object.keys(catalogData[cat]).forEach(type => {
+                list.innerHTML += `<div class="index-item" onclick="selectType('${cat}', '${type}', this)">${type}</div>`;
+            });
+        }
+    }
+    function selectType(cat, type, el) {
+        document.querySelectorAll('#type-col .index-item').forEach(i => i.classList.remove('selected'));
+        if(el) el.classList.add('selected');
+        const grid = document.getElementById('asset-list'); grid.innerHTML = '';
+        if(catalogData[cat] && catalogData[cat][type]) {
+            catalogData[cat][type].forEach(item => {
+                grid.innerHTML += `<div class="asset-card"><span class="item-code">${item.id}</span><img src="${item.img}"><div class="item-price">$${item.price}</div><div class="btn-row"><button class="shop-btn" onclick="addToManifest('${item.id}', ${item.price}, '${item.link}')">Add List</button><button class="add-btn" onclick="addToRoom('${item.img}')">Add Room</button></div></div>`;
+            });
+        }
+    }
+    function searchCatalog(query) {
+        const grid = document.getElementById('asset-list'); grid.innerHTML = ''; query = query.toLowerCase();
+        Object.keys(catalogData).forEach(cat => {
+            Object.keys(catalogData[cat]).forEach(type => {
+                catalogData[cat][type].forEach(item => {
+                    if(item.id.toLowerCase().includes(query) || type.includes(query)) {
+                        grid.innerHTML += `<div class="asset-card"><span class="item-code">${item.id}</span><img src="${item.img}"><div class="item-price">$${item.price}</div><div class="btn-row"><button class="shop-btn" onclick="addToManifest('${item.id}', ${item.price}, '${item.link}')">Add List</button><button class="add-btn" onclick="addToRoom('${item.img}')">Add Room</button></div></div>`;
+                    }
+                });
+            });
+        });
     }
 </script>
 </body>
