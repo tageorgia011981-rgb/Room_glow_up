@@ -3,68 +3,59 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Room Glow Up | Grand Studio</title>
+    <title>Room Glow Up | Studio</title>
     <link href="https://fonts.googleapis.com/css2?family=Limelight&family=Special+Elite&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-<header class="site-header">
-    <h1 class="brand-title">Room Glow Up</h1>
-    <div class="sub-title">Your Dream Space Come To Life</div>
-</header>
+    <header class="site-header">
+        <h1 class="brand-title">Room Glow Up</h1>
+        <p class="sub-title">Interior Design Studio</p>
+    </header>
 
-<nav class="vintage-tabs">
-    <div class="drawer-hardware" onclick="lift(this); openMode('rooms', this)"><div class="plate-style">Rooms</div><div class="lip-pull"></div></div>
-    <div class="drawer-hardware" onclick="lift(this); showLookBook()"><div class="plate-style">Inspiration</div><div class="lip-pull"></div></div>
-    <div class="drawer-hardware" onclick="lift(this); showCatalog()"><div class="plate-style">Furniture Catalog</div><div class="lip-pull"></div></div>
-    <div class="drawer-hardware" onclick="lift(this); openMode('decor', this)"><div class="plate-style">Decor</div><div class="lip-pull"></div></div>
-</nav>
-
-<input type="file" id="file-upload" accept="image/*" style="display: none;">
-
-<div id="catalog-overlay" class="overlay-bg">
-    <div class="close-btn" onclick="hideOverlays()">×</div>
-    <div class="catalog-container">
-        <div class="index-column" id="cat-col">
-            <button class="manifest-toggle" onclick="toggleManifestView()">[ View Manifest ]</button>
-            <input type="text" class="search-box" placeholder="Search SKU..." onkeyup="searchCatalog(this.value)">
-            <h3>Department</h3>
-            <div class="index-item" onclick="selectCat('seating', this)">Seating</div>
-            <div class="index-item" onclick="selectCat('tables', this)">Tables</div>
-            <div class="index-item" onclick="selectCat('storage', this)">Storage</div>
+    <nav class="vintage-tabs">
+        <div class="drawer-hardware" onclick="openMode('rooms', this)">
+            <div class="plate-style">Rooms</div>
+            <div class="lip-pull"></div>
         </div>
-        <div class="index-column" id="type-col"><h3>Type</h3><div id="type-list"></div></div>
-        <div class="asset-view" id="shop-view">
-            <h3 style="padding: 28px; border-bottom: 2px solid #222; background: #080808; margin:0; color:#8e9196;">Inventory</h3>
-            <div class="asset-grid" id="asset-list"></div>
+        <div class="drawer-hardware" onclick="openMode('decor', this)">
+            <div class="plate-style">Decor</div>
+            <div class="lip-pull"></div>
         </div>
-        <div class="asset-view" id="manifest-view">
-             <h3 style="padding: 28px; border-bottom: 2px solid #444; margin:0; color:#fff;">PROJECT MANIFEST</h3>
-             <div id="manifest-list-container" style="padding: 30px;"></div>
-             <div class="receipt-total" id="manifest-total">Total: $0.00</div>
+        <div class="drawer-hardware" onclick="showLookBook()">
+            <div class="plate-style">Inspiration</div>
+            <div class="lip-pull"></div>
         </div>
-    </div>
-</div>
+        <div class="drawer-hardware" onclick="resetStage()">
+            <div class="plate-style">Save</div>
+            <div class="lip-pull"></div>
+        </div>
+    </nav>
 
-<div id="lookbook-overlay" class="overlay-bg">
-    <div class="close-btn" onclick="hideOverlays()">×</div>
-    <div class="catalog-container" style="background: #111; overflow:visible;">
-        <div class="nav-arrow prev-arrow" onclick="changeLookPage(-1)">&#10094;</div>
-        <div class="nav-arrow next-arrow" onclick="changeLookPage(1)">&#10095;</div>
+    <main class="workspace">
+        <div class="cabinet-container" id="cab-container">
+            <img src="cabinet.png" alt="Cabinet" class="cabinet-image">
+            <div class="drawer-stack" id="drawer-anchor">
+                </div>
+        </div>
+
+        <div class="stage" id="stage-zone">
+            <button class="reset-btn" onclick="resetStage()">Clear Room</button>
+            <div class="design-hint">Double-click to Rotate | Right-click to Flip</div>
+            <img id="room-display" src="room.jpg" alt="Room Background">
+            </div>
+
+        <div id="fan-system" class="fan-system"></div>
+    </main>
+
+    <div id="lookbook-overlay" class="overlay-bg">
+        <div class="close-btn" onclick="hideOverlays()">×</div>
         <div class="lookbook-grid" id="look-grid"></div>
     </div>
-</div>
 
-<div class="workspace">
-    <div class="cabinet-container" id="cab-container">
-        <img src="cabinet.png" class="cabinet-image">
-        <div class="drawer-stack" id="drawer-anchor"></div>
-    </div>
-    <div id="fan-system" class="fan-system"></div>
-    <div class="stage" id="stage-zone"><img id="room-display"></div>
-</div>
+    <input type="file" id="file-upload" style="display:none" accept="image/*">
 
-<script src="script.js"></script>
+    <script src="script.js"></script>
 </body>
 </html>
