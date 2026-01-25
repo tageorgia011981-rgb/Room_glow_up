@@ -4,12 +4,12 @@ const drawerStack = document.getElementById('drawer-anchor');
 const fanSystem = document.getElementById('fan-system'); 
 const fileInput = document.getElementById('file-upload');
 
-// --- ASSET CONFIGURATION ---
 const iconMap = { 
     'seating': 'iconseating.png', 
     'tables': 'icontable.png', 
     'storage': 'iconstorage.png', 
-    'beds': 'iconbeds.png' 
+    'beds': 'iconbeds.png',
+    'kitchen': 'iconkitchen.png' 
 };
 
 const catalogData = {
@@ -36,6 +36,13 @@ const catalogData = {
         'queen': Array(5).fill({ id: 'BD-Q', img: 'bed1.png', price: 1000 }),
         'twin': Array(5).fill({ id: 'BD-T', img: 'bed1.png', price: 600 }),
         'frames': Array(5).fill({ id: 'BD-F', img: 'bed1.png', price: 400 })
+    },
+    kitchen: {
+        'stools': Array(5).fill({ id: 'KS-X', img: 'chair1.png', price: 180 }),
+        'lighting': Array(5).fill({ id: 'KL-X', img: 'lamp1.png', price: 220 }),
+        'runners': Array(5).fill({ id: 'KR-X', img: 'rug1.png', price: 110 }),
+        'decor': Array(5).fill({ id: 'KD-X', img: 'plant1.png', price: 45 }),
+        'islands': Array(5).fill({ id: 'KI-X', img: 'table2.png', price: 900 })
     }
 };
 
@@ -47,7 +54,6 @@ const decorData = {
     'Plants': Array(5).fill({ id: 'PL-X', img: 'plant1.png', price: 50 })
 };
 
-// --- CORE INTERACTION & CONTROLS ---
 function addToRoom(src) {
     const img = document.createElement("img"); 
     img.src = src; 
@@ -57,32 +63,23 @@ function addToRoom(src) {
     img.dataset.rotation = 0;
     img.dataset.flip = 1;
 
-    // Special Rug Layering
-    if (src.toLowerCase().includes('rug')) {
+    if (src.toLowerCase().includes('rug') || src.toLowerCase().includes('runner')) {
         img.style.zIndex = "500"; 
         img.style.width = "450px"; 
     } else {
         img.style.zIndex = "1000"; 
     }
 
-    // DOUBLE-CLICK TO ROTATE
     img.ondblclick = function() {
         this.dataset.rotation = parseInt(this.dataset.rotation) + 45;
-        applyTransform(this);
+        this.style.transform = `rotate(${this.dataset.rotation}deg) scaleX(${this.dataset.flip})`;
     };
-
-    // RIGHT-CLICK TO FLIP
     img.oncontextmenu = function(e) {
         e.preventDefault();
         this.dataset.flip = this.dataset.flip == 1 ? -1 : 1;
-        applyTransform(this);
+        this.style.transform = `rotate(${this.dataset.rotation}deg) scaleX(${this.dataset.flip})`;
     };
 
-    function applyTransform(el) {
-        el.style.transform = `rotate(${el.dataset.rotation}deg) scaleX(${el.dataset.flip})`;
-    }
-
-    // SMOOTH DRAG LOGIC
     img.onmousedown = function(e) {
         let sx = e.clientX - img.getBoundingClientRect().left;
         let sy = e.clientY - img.getBoundingClientRect().top;
@@ -96,11 +93,8 @@ function addToRoom(src) {
     document.getElementById("stage-zone").appendChild(img);
 }
 
-// --- CABINET & FAN NAVIGATION ---
 function openMode(mode, el) {
-    fanSystem.classList.remove('active-fan'); 
-    fanSystem.innerHTML = ''; 
-    hideOverlays();
+    fanSystem.classList.remove('active-fan'); fanSystem.innerHTML = ''; hideOverlays();
     if (mode === 'decor') {
         cab.classList.remove('cabinet-visible');
         if(el) {
@@ -111,20 +105,19 @@ function openMode(mode, el) {
         }
         setTimeout(openDecorFan, 100);
     } else if (mode === 'rooms') {
-        cab.classList.add('cabinet-visible'); 
-        drawerStack.innerHTML = '';
-        ['Living Room', 'Bedroom', 'Dining Room', 'Upload'].forEach(name => {
-            let action = name === 'Upload' ? "triggerUpload()" : `selectRoom('room.jpg', this)`;
+        cab.classList.add('cabinet-visible'); drawerStack.innerHTML = '';
+        const roomNames = ['Living Room', 'Bedroom', 'Dining Room', 'Kitchen', 'Upload'];
+        roomNames.forEach(name => {
+            let file = name.toLowerCase().replace(" ", "") + ".jpg";
+            let action = name === 'Upload' ? "triggerUpload()" : `selectRoom('${file}', this)`;
             drawerStack.innerHTML += `<div class="drawer-zone" onclick="${action}"><div class="drawer-hardware"><div class="plate-style">${name}</div><div class="lip-pull"></div></div></div>`;
         });
     }
 }
 
 function selectRoom(src, el) {
-    roomImg.src = src; 
-    roomImg.style.display = 'block'; 
-    fanSystem.classList.remove('fan-down'); 
-    fanSystem.innerHTML = '<div class="pivot-bolt"></div>';
+    roomImg.src = src; roomImg.style.display = 'block'; 
+    fanSystem.classList.remove('fan-down'); fanSystem.innerHTML = '<div class="pivot-bolt"></div>';
     if(el) {
         const dRect = el.getBoundingClientRect();
         const wsRect = document.querySelector('.workspace').getBoundingClientRect();
@@ -132,8 +125,7 @@ function selectRoom(src, el) {
         fanSystem.style.left = (dRect.right - wsRect.left - 40) + 'px';
     }
     Object.keys(catalogData).forEach((cat, i) => {
-        const b = document.createElement('div'); 
-        b.className = `swatch-blade s-${i + 1}`;
+        const b = document.createElement('div'); b.className = `swatch-blade s-${i + 1}`;
         b.innerHTML = `<img src="${iconMap[cat]}" class="fan-icon" onclick="showSubtypes('${cat}')">`;
         fanSystem.appendChild(b);
     });
@@ -145,8 +137,7 @@ function showSubtypes(cat) {
     setTimeout(() => {
         fanSystem.innerHTML = '<div class="pivot-bolt"></div>';
         Object.keys(catalogData[cat]).forEach((type, i) => {
-            const b = document.createElement('div'); 
-            b.className = `swatch-blade s-${i + 1}`;
+            const b = document.createElement('div'); b.className = `swatch-blade s-${i + 1}`;
             b.innerHTML = `<div class="fan-text" onclick="showItems('${cat}', '${type}')">${type}</div>`;
             fanSystem.appendChild(b);
         });
@@ -159,8 +150,7 @@ function showItems(cat, type) {
     setTimeout(() => {
         fanSystem.innerHTML = '<div class="pivot-bolt"></div>';
         catalogData[cat][type].forEach((item, i) => {
-            const b = document.createElement('div'); 
-            b.className = `swatch-blade s-${i + 1}`;
+            const b = document.createElement('div'); b.className = `swatch-blade s-${i + 1}`;
             b.innerHTML = `<img src="${item.img}" class="fan-icon" onclick="addToRoom('${item.img}')">`;
             fanSystem.appendChild(b);
         });
@@ -169,11 +159,9 @@ function showItems(cat, type) {
 }
 
 function openDecorFan() {
-    fanSystem.classList.add('fan-down'); 
-    fanSystem.innerHTML = '<div class="pivot-bolt"></div>';
+    fanSystem.classList.add('fan-down'); fanSystem.innerHTML = '<div class="pivot-bolt"></div>';
     Object.keys(decorData).forEach((cat, i) => {
-        const b = document.createElement('div'); 
-        b.className = `swatch-blade s-${i + 1}`;
+        const b = document.createElement('div'); b.className = `swatch-blade s-${i + 1}`;
         b.innerHTML = `<div class="fan-text" onclick="showDecorItems('${cat}')">${cat}</div>`;
         fanSystem.appendChild(b);
     });
@@ -184,10 +172,8 @@ function showDecorItems(cat) {
     fanSystem.classList.remove('active-fan');
     setTimeout(() => {
         fanSystem.innerHTML = '<div class="pivot-bolt"></div>';
-        const items = decorData[cat]; 
-        items.forEach((item, i) => {
-            const b = document.createElement('div'); 
-            b.className = `swatch-blade s-${i + 1}`;
+        decorData[cat].forEach((item, i) => {
+            const b = document.createElement('div'); b.className = `swatch-blade s-${i + 1}`;
             b.innerHTML = `<img src="${item.img}" class="fan-icon" onclick="addToRoom('${item.img}')">`;
             fanSystem.appendChild(b);
         });
@@ -195,38 +181,17 @@ function showDecorItems(cat) {
     }, 400);
 }
 
-// --- UI UTILITIES ---
 function resetStage() {
     const stage = document.getElementById("stage-zone");
     stage.querySelectorAll(".placed-item").forEach(item => item.remove());
 }
 
-function hideOverlays() { 
-    document.querySelectorAll('.overlay-bg').forEach(o => o.style.display = 'none'); 
-}
-
-function lift(el) { 
-    document.querySelectorAll('.drawer-hardware').forEach(d => d.classList.remove('active-lift')); 
-    el.classList.add('active-lift'); 
-}
+function hideOverlays() { document.querySelectorAll('.overlay-bg').forEach(o => o.style.display = 'none'); }
 
 function renderLookbook() {
-    const grid = document.getElementById('look-grid');
-    grid.innerHTML = '';
-    for(let i = 1; i <= 8; i++) {
-        grid.innerHTML += `<div class="look-card"><img src="insp${i}.jpg" onerror="this.src='cabinet.png'"></div>`;
-    }
+    const grid = document.getElementById('look-grid'); grid.innerHTML = '';
+    for(let i = 1; i <= 8; i++) { grid.innerHTML += `<div class="look-card"><img src="insp${i}.jpg" onerror="this.src='cabinet.png'"></div>`; }
 }
 
-function showCatalog() { 
-    hideOverlays(); 
-    document.getElementById('catalog-overlay').style.display = 'block'; 
-}
-
-function showLookBook() { 
-    hideOverlays(); 
-    document.getElementById('lookbook-overlay').style.display = 'block'; 
-    renderLookbook(); 
-}
-
+function showLookBook() { hideOverlays(); document.getElementById('lookbook-overlay').style.display = 'block'; renderLookbook(); }
 function triggerUpload() { fileInput.click(); }
