@@ -8,93 +8,138 @@
         body {
             margin: 0;
             padding: 0;
-            font-family: Arial, sans-serif;
-            background-color: #1a1a1a;
-            background-image: url('https://images.unsplash.com/photo-1533090161767-e6ffed986c88?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80');
-            background-size: cover;
-            background-attachment: fixed;
+            background-color: #121212;
+            background-image: url('https://www.transparenttextures.com/patterns/dark-matter.png');
+            font-family: 'Playfair Display', serif;
             color: white;
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
         }
 
+        /* Top Navigation */
         header {
-            background-color: rgba(0, 0, 0, 0.8);
-            padding: 20px;
             display: flex;
             justify-content: space-between;
             align-items: center;
+            padding: 20px 50px;
+            background: rgba(0, 0, 0, 0.8);
             border-bottom: 1px solid #333;
         }
 
         .logo {
             font-size: 24px;
-            font-weight: bold;
-            color: #fff;
+            letter-spacing: 2px;
+            text-transform: uppercase;
         }
 
         nav ul {
             list-style: none;
+            display: flex;
+            gap: 30px;
             margin: 0;
             padding: 0;
-            display: flex;
         }
 
         nav ul li {
-            margin-left: 25px;
-        }
-
-        nav ul li a {
-            color: #ccc;
-            text-decoration: none;
+            cursor: pointer;
             font-size: 16px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
             transition: color 0.3s;
         }
 
-        nav ul li a:hover {
-            color: #fff;
+        nav ul li:hover {
+            color: #d4af37; /* Gold accent */
         }
 
+        /* Main Layout */
         .container {
             display: flex;
-            height: calc(100vh - 80px);
+            flex: 1;
         }
 
+        /* Sidebar */
         aside {
             width: 200px;
-            background-color: rgba(0, 0, 0, 0.7);
-            padding: 30px 20px;
+            background: rgba(0, 0, 0, 0.6);
+            padding: 40px 20px;
             border-right: 1px solid #333;
         }
 
-        aside h3 {
-            font-size: 14px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            color: #888;
-            margin-bottom: 20px;
-        }
-
-        .side-menu {
+        aside ul {
             list-style: none;
             padding: 0;
         }
 
-        .side-menu li {
-            margin-bottom: 15px;
+        aside ul li {
+            padding: 15px 0;
+            cursor: pointer;
+            border-bottom: 1px solid #222;
+            transition: padding-left 0.3s;
         }
 
-        .side-menu li a {
-            color: #fff;
-            text-decoration: none;
-            font-size: 18px;
-            display: block;
+        aside ul li:hover {
+            padding-left: 10px;
+            color: #d4af37;
         }
 
+        /* Content Area & Cabinet Labels */
         main {
-            flex-grow: 1;
-            background-color: rgba(0, 0, 0, 0.6);
-            margin: 40px;
-            border-radius: 8px;
-            padding: 40px;
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 50px;
+        }
+
+        .cabinet {
+            width: 100%;
+            max-width: 800px;
+            background: #000;
+            border: 2px solid #333;
+            height: 500px;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            padding-top: 40px;
+        }
+
+        /* Styled Labels */
+        .label-container {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .custom-label {
+            background-color: #1a1a1a;
+            color: white;
+            padding: 12px 40px;
+            border: 1px solid #d4af37; /* Gold border */
+            border-radius: 4px;
+            font-size: 18px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            width: 250px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+        }
+
+        .custom-label:hover {
+            background-color: #d4af37;
+            color: black;
+            transform: scale(1.05);
+        }
+
+        .upload-label {
+            margin-top: 30px;
+            border-style: dashed;
+            background-color: #0a0a0a;
         }
     </style>
 </head>
@@ -104,26 +149,33 @@
         <div class="logo">Room Glow Up</div>
         <nav>
             <ul>
-                <li><a href="#">Rooms</a></li>
-                <li><a href="#">Inspiration</a></li>
-                <li><a href="#">Furniture</a></li>
-                <li><a href="#">Catalog</a></li>
-                <li><a href="#">Decor</a></li>
+                <li>Rooms</li>
+                <li>Furniture</li>
+                <li>Decor</li>
+                <li>Inspiration</li>
             </ul>
         </nav>
     </header>
 
     <div class="container">
         <aside>
-            <ul class="side-menu">
-                <li><a href="#">Seating</a></li>
-                <li><a href="#">Tables</a></li>
-                <li><a href="#">Storage</a></li>
+            <ul>
+                <li>Seating</li>
+                <li>Tables</li>
+                <li>Storage</li>
             </ul>
         </aside>
 
         <main>
-            </main>
+            <div class="cabinet">
+                <div class="label-container">
+                    <div class="custom-label">Livingroom</div>
+                    <div class="custom-label">Diningroom</div>
+                    <div class="custom-label">Bedroom</div>
+                    <div class="custom-label upload-label">Upload</div>
+                </div>
+            </div>
+        </main>
     </div>
 
 </body>
