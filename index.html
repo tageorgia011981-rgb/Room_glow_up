@@ -16,19 +16,27 @@
 
     <nav class="vintage-tabs">
         <div class="drawer-hardware" onclick="openMode('rooms', this)">
+            <div class="screw s-tl"></div><div class="screw s-tr"></div>
+            <div class="screw s-bl"></div><div class="screw s-br"></div>
             <div class="plate-style">Rooms</div>
             <div class="lip-pull"></div>
         </div>
+        <div class="drawer-hardware" onclick="openMode('furniture', this)">
+            <div class="screw s-tl"></div><div class="screw s-tr"></div>
+            <div class="screw s-bl"></div><div class="screw s-br"></div>
+            <div class="plate-style">Furniture</div>
+            <div class="lip-pull"></div>
+        </div>
         <div class="drawer-hardware" onclick="openMode('decor', this)">
+            <div class="screw s-tl"></div><div class="screw s-tr"></div>
+            <div class="screw s-bl"></div><div class="screw s-br"></div>
             <div class="plate-style">Decor</div>
             <div class="lip-pull"></div>
         </div>
         <div class="drawer-hardware" onclick="showLookBook()">
+            <div class="screw s-tl"></div><div class="screw s-tr"></div>
+            <div class="screw s-bl"></div><div class="screw s-br"></div>
             <div class="plate-style">Inspiration</div>
-            <div class="lip-pull"></div>
-        </div>
-        <div class="drawer-hardware" onclick="resetStage()">
-            <div class="plate-style">Save</div>
             <div class="lip-pull"></div>
         </div>
     </nav>
@@ -36,15 +44,14 @@
     <main class="workspace">
         <div class="cabinet-container" id="cab-container">
             <img src="cabinet.png" alt="Cabinet" class="cabinet-image">
-            <div class="drawer-stack" id="drawer-anchor">
-                </div>
+            <div class="drawer-stack" id="drawer-anchor"></div>
         </div>
 
         <div class="stage" id="stage-zone">
             <button class="reset-btn" onclick="resetStage()">Clear Room</button>
             <div class="design-hint">Double-click to Rotate | Right-click to Flip</div>
             <img id="room-display" src="room.jpg" alt="Room Background">
-            </div>
+        </div>
 
         <div id="fan-system" class="fan-system"></div>
     </main>
