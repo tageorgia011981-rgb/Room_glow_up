@@ -8,21 +8,16 @@
 <style>
   /* --- GLOBAL ATMOSPHERE --- */
   * { margin: 0; padding: 0; box-sizing: border-box; }
-  
   body { 
     background: #0f1011 url("background_color.jpg") center / cover fixed; 
-    min-height: 100vh; font-family: 'Special Elite', cursive; color: #fff; overflow-x: hidden; 
-    position: relative;
+    min-height: 100vh; font-family: 'Special Elite', cursive; color: #fff; overflow-x: hidden; position: relative;
   }
-
-  /* FILM GRAIN */
+  /* FILM GRAIN & VIGNETTE */
   body::before {
     content: ""; position: fixed; inset: 0; pointer-events: none; z-index: 9000;
     background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.05'/%3E%3C/svg%3E");
     opacity: 0.3;
   }
-
-  /* LIGHTER VIGNETTE */
   body::after {
     content: ""; position: fixed; inset: 0; pointer-events: none; z-index: 8000;
     background: radial-gradient(circle at 60% 50%, transparent 60%, rgba(0,0,0,0.8) 120%);
@@ -30,10 +25,7 @@
 
   /* --- HEADER --- */
   .site-header { text-align: center; padding: 60px 0 30px; position: relative; z-index: 10; }
-  @keyframes breathe {
-    0%, 100% { text-shadow: 0px 5px 15px rgba(0,0,0,0.6); }
-    50% { text-shadow: 0px 5px 25px rgba(255,255,255,0.3); }
-  }
+  @keyframes breathe { 0%, 100% { text-shadow: 0px 5px 15px rgba(0,0,0,0.6); } 50% { text-shadow: 0px 5px 25px rgba(255,255,255,0.3); } }
   .brand-title { 
     font-family: 'Limelight', cursive; font-size: 100px; text-transform: uppercase; 
     background: linear-gradient(to bottom, #ffffff 0%, #dcdcdc 50%, #8e9196 51%, #a8a8a8 100%);
@@ -42,66 +34,54 @@
   }
   .sub-title { font-size: 24px; color: #8e9196; letter-spacing: 8px; margin-top: -10px; text-transform: uppercase; text-shadow: 0px 2px 4px #000; }
   
-  /* --- TABS --- */
+  /* --- TABS & HARDWARE --- */
   .vintage-tabs { display: flex; justify-content: center; gap: 30px; padding: 30px 0; z-index: 2000; position: relative; }
-  
-  /* --- HARDWARE --- */
   .drawer-hardware {
     position: relative; width: 280px; height: 100px; 
-    background: linear-gradient(135deg, #2c2e30 0%, #1a1a1a 100%); 
-    border: 3px solid #000;
+    background: linear-gradient(135deg, #2c2e30 0%, #1a1a1a 100%); border: 3px solid #000;
     box-shadow: inset 0 0 0 2px #444, inset 10px 0 20px rgba(0,0,0,0.8), 0 15px 25px rgba(0,0,0,0.8);
     display: flex; align-items: center; justify-content: center; 
-    cursor: pointer; transition: transform 0.2s, filter 0.2s;
-    z-index: 2000;
+    cursor: pointer; transition: transform 0.2s, filter 0.2s; z-index: 2000;
   }
   .drawer-hardware:hover { filter: brightness(1.3) contrast(1.1); transform: translateY(-4px); }
-  
   .plate-style { 
-    width: 190px; height: 50px; 
-    background: linear-gradient(to bottom, #dcdcdc 0%, #8e9196 50%, #b0b0b0 100%);
+    width: 190px; height: 50px; background: linear-gradient(to bottom, #dcdcdc 0%, #8e9196 50%, #b0b0b0 100%);
     color: #000; display: flex; align-items: center; justify-content: center; 
     font-family: 'Special Elite', cursive; font-size: 18px; font-weight: 900; text-transform: uppercase; 
-    letter-spacing: 1px; border: 1px solid #666; box-shadow: inset 0 2px 5px rgba(0,0,0,0.2);
-    text-align: center; line-height: 1; pointer-events: none;
+    letter-spacing: 1px; border: 1px solid #666; box-shadow: inset 0 2px 5px rgba(0,0,0,0.2); pointer-events: none;
   }
-  
   .lip-pull { 
-    position: absolute; bottom: -14px; left: 50%; transform: translateX(-50%); 
-    width: 140px; height: 24px; background: linear-gradient(to bottom, #2c2e30, #000); 
-    border: 2px solid #111; border-top: none; border-radius: 0 0 15px 15px; box-shadow: 0 5px 10px rgba(0,0,0,0.8);
+    position: absolute; bottom: -14px; left: 50%; transform: translateX(-50%); width: 140px; height: 24px; 
+    background: linear-gradient(to bottom, #2c2e30, #000); border: 2px solid #111; border-top: none; 
+    border-radius: 0 0 15px 15px; box-shadow: 0 5px 10px rgba(0,0,0,0.8);
   }
   .active-lift { transform: translateY(15px) !important; filter: brightness(1.4) !important; }
 
-  /* --- WORKSPACE --- */
-  .workspace { display: flex; padding: 40px; position: relative; height: 800px; }
-  
+  /* --- WORKSPACE & CABINET --- */
+  .workspace { display: flex; padding: 40px; position: relative; height: 900px; }
   .cabinet-container { 
-    position: absolute; left: -800px; top: 0; width: 700px; 
-    transition: left 0.8s cubic-bezier(0.19, 1, 0.22, 1); z-index: 100;
+    position: absolute; left: -800px; top: 0; width: 700px; transition: left 0.8s cubic-bezier(0.19, 1, 0.22, 1); z-index: 100;
   }
   .cabinet-visible { left: 20px !important; } 
   .cabinet-image { width: 100%; filter: drop-shadow(15px 15px 40px rgba(0,0,0,0.9)); }
-  
-  .drawer-stack { 
-    position: absolute; top: 140px; left: 0; width: 100%; 
-    display: flex; flex-direction: column; align-items: center; gap: 30px; 
-  }
+  .drawer-stack { position: absolute; top: 140px; left: 0; width: 100%; display: flex; flex-direction: column; align-items: center; gap: 30px; }
   .drawer-zone { width: 100%; height: 120px; cursor: pointer; display: flex; align-items: center; justify-content: center; }
 
   /* --- FAN SYSTEM --- */
   .fan-system { position: absolute; z-index: 50; pointer-events: none; transition: top 0.3s ease, left 0.3s ease; }
   
-  /* SIDEWAYS FAN (Cabinet) - FIXED LENGTH */
+  /* CABINET FAN (Sideways) */
   .swatch-blade {
     position: absolute; left: 0; top: -32px; width: 0; height: 75px;
     background: linear-gradient(to right, #444, #8e9196, #1a1a1a);
-    border: 2px solid #000; border-radius: 0 40px 40px 0;
-    transform-origin: left center; 
-    transition: all 0.6s cubic-bezier(0.19, 1, 0.22, 1);
-    opacity: 0; display: flex; align-items: center; justify-content: flex-end; padding-right: 25px;
+    border: 2px solid #000; border-radius: 0 40px 40px 0; transform-origin: left center; 
+    transition: all 0.4s cubic-bezier(0.19, 1, 0.22, 1); opacity: 0; 
+    display: flex; align-items: center; justify-content: flex-end; padding-right: 25px;
     box-shadow: 10px 10px 20px rgba(0,0,0,0.7);
   }
+  /* Light Up Effect */
+  .swatch-blade:hover { background: #fff; border-color: #fff; z-index: 100 !important; box-shadow: 0 0 20px rgba(255,255,255,0.6); }
+  .swatch-blade:hover .fan-text { color: #000; text-shadow: none; }
   .active-fan .swatch-blade { width: 320px; opacity: 1; pointer-events: auto; }
   
   .s-1 { transform: rotate(-40deg); z-index: 41; }
@@ -109,32 +89,24 @@
   .s-3 { transform: rotate(14deg); z-index: 43; }
   .s-4 { transform: rotate(40deg); z-index: 44; }
 
-  /* DOWNWARD FAN (Decor) - WIDE SPREAD */
+  /* DECOR FAN (Downward) */
   .fan-down .swatch-blade { 
-    width: 80px; height: 0; top: 60px; left: -40px; 
-    transform-origin: top center; border-radius: 0 0 25px 25px; 
-    justify-content: center; padding: 0; 
-    background: linear-gradient(to bottom, #dcdcdc, #999, #666);
+    width: 80px; height: 0; top: 60px; left: -40px; transform-origin: top center; border-radius: 0 0 25px 25px; 
+    justify-content: center; padding: 0; background: linear-gradient(to bottom, #dcdcdc, #999, #666);
     border: 2px solid #222; transform: rotate(0deg); 
   }
-  .fan-down.active-fan .swatch-blade { height: 320px; opacity: 1; }
-  
-  /* Wide Angles so you can read text */
+  .fan-down.active-fan .swatch-blade { height: 180px; opacity: 1; }
+  /* Wide Angles */
   .fan-down.active-fan .s-1 { transform: rotate(45deg) translateY(10px); z-index: 44; }
   .fan-down.active-fan .s-2 { transform: rotate(15deg) translateY(10px); z-index: 43; }
   .fan-down.active-fan .s-3 { transform: rotate(-15deg) translateY(10px); z-index: 42; }
   .fan-down.active-fan .s-4 { transform: rotate(-45deg) translateY(10px); z-index: 41; }
 
-  /* ICONS & TEXT */
+  /* CONTENT */
   .fan-icon { width: 60px; height: 60px; cursor: pointer; transition: 0.3s; filter: drop-shadow(0 4px 8px black) grayscale(0.5); object-fit: contain; }
   .fan-icon:hover { transform: scale(1.25); filter: grayscale(0); }
-
-  .fan-text { 
-    color: #000; font-family: 'Special Elite', cursive; font-weight: 900; 
-    font-size: 18px; text-transform: uppercase; cursor: pointer; 
-  }
-  .fan-down .fan-text { writing-mode: vertical-rl; transform: rotate(180deg); font-size: 24px; letter-spacing: 3px; }
-
+  .fan-text { color: #000; font-family: 'Special Elite', cursive; font-weight: 900; font-size: 18px; text-transform: uppercase; cursor: pointer; transition: 0.2s; }
+  .fan-down .fan-text { writing-mode: vertical-rl; transform: rotate(180deg); font-size: 20px; letter-spacing: 3px; }
   .pivot-bolt {
     position: absolute; left: -18px; top: -18px; width: 36px; height: 36px;
     background: radial-gradient(circle at 30% 30%, #4a4d4f, #2a2d2f, #000);
@@ -142,31 +114,24 @@
   }
   .active-fan .pivot-bolt { opacity: 1; }
 
-  /* --- STAGE (Wide) --- */
+  /* --- STAGE --- */
   .stage { 
-    width: calc(100% - 750px); min-width: 600px;
-    height: 600px; background: #050505; border: 20px solid #2c2e30; 
-    margin-left: 720px; 
+    width: calc(100% - 750px); min-width: 600px; height: 750px; 
+    background: #050505; border: 20px solid #2c2e30; margin-left: 720px; margin-top: 50px; 
     position: relative; overflow: hidden; box-shadow: inset 0 0 80px #000;
   }
-  
   @keyframes gridMove { 0% { background-position: 0 0; } 100% { background-position: 40px 40px; } }
   .stage::before {
     content: ''; position: absolute; inset: -50px;
     background-image: linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
-    background-size: 40px 40px;
-    animation: gridMove 20s linear infinite; z-index: 1; pointer-events: none;
+    background-size: 40px 40px; animation: gridMove 20s linear infinite; z-index: 1; pointer-events: none;
   }
-
   #room-display { width: 100%; height: 100%; object-fit: cover; display: none; position: relative; z-index: 10; }
-  .preview-mode { display: block !important; opacity: 1; }
   .placed-item { position: absolute; width: 200px; cursor: move; z-index: 1500; filter: drop-shadow(10px 15px 20px rgba(0,0,0,0.6)); }
 
   /* --- OVERLAYS --- */
   .overlay-bg { position: fixed; inset: 0; background: rgba(5, 5, 5, 0.96); z-index: 5000; display: none; padding: 50px; }
   .catalog-container { position: relative; display: flex; height: 85vh; background: #000; border: 4px solid #333; box-shadow: 0 0 80px rgba(0,0,0,1); }
-  
-  /* FIXED CLOSE BUTTON */
   .close-btn { 
     position: fixed; top: 40px; right: 60px; width: 80px; height: 80px;
     font-size: 80px; color: #fff; background: #000; border-radius: 50%;
@@ -175,7 +140,7 @@
   }
   .close-btn:hover { color: #f00; transform: rotate(90deg); border-color: #f00; }
 
-  /* CATALOG */
+  /* CATALOG & MANIFEST */
   .index-column { flex: 1; border-right: 2px solid #222; padding: 30px; overflow-y: auto; background: #0b0b0b; }
   .index-column h3 { color: #8e9196; margin-bottom: 25px; font-size: 24px; text-transform: uppercase; border-bottom: 2px solid #333; padding-bottom: 15px; }
   .search-box { width: 100%; padding: 12px; margin-bottom: 20px; background: #1a1a1a; border: 1px solid #444; color: #fff; font-family: 'Special Elite', cursive; font-size: 16px; }
@@ -190,13 +155,7 @@
   .shop-btn, .add-btn { flex: 1; padding: 8px; cursor: pointer; font-family: inherit; font-weight: bold; text-transform: uppercase; font-size: 14px; border: 1px solid #fff; }
   .shop-btn { background: #333; color:#aaa; border-color: #555; }
   .add-btn { background: #8e9196; color:#000; }
-
-  /* MANIFEST IN CATALOG */
-  .manifest-toggle { 
-    background: #000; color: #fff; border: 1px solid #444; padding: 10px; width: 100%; 
-    margin-bottom: 20px; cursor: pointer; font-weight: bold; text-transform: uppercase;
-  }
-  .manifest-toggle:hover { background: #8e9196; color: #000; }
+  .manifest-toggle { background: #000; color: #fff; border: 1px solid #444; padding: 10px; width: 100%; margin-bottom: 20px; cursor: pointer; font-weight: bold; text-transform: uppercase; }
   #manifest-view { display: none; padding: 40px; }
   .receipt-item { display: flex; justify-content: space-between; margin-bottom: 10px; border-bottom: 1px dotted #ccc; padding-bottom: 5px; color: #ccc; }
   .receipt-total { border-top: 2px dashed #444; padding-top: 20px; margin-top: 20px; font-size: 24px; font-weight: bold; text-align: right; color: #8e9196; }
@@ -208,9 +167,7 @@
   .look-card img { width: 100%; height: 100%; object-fit: cover; filter: sepia(0.2); }
   .nav-arrow { position: absolute; top: 50%; transform: translateY(-50%); font-size: 80px; color: #444; cursor: pointer; z-index: 5500; transition: 0.3s; text-shadow: 0 5px 10px #000; }
   .nav-arrow:hover { color: #fff; transform: translateY(-50%) scale(1.1); }
-  .prev-arrow { left: 20px; }
-  .next-arrow { right: 20px; }
-
+  .prev-arrow { left: 20px; } .next-arrow { right: 20px; }
 </style>
 </head>
 <body>
@@ -232,7 +189,6 @@
 <div id="catalog-overlay" class="overlay-bg">
     <div class="close-btn" onclick="hideOverlays()">×</div>
     <div class="catalog-container">
-        
         <div class="index-column" id="cat-col">
             <button class="manifest-toggle" onclick="toggleManifestView()">[ View Manifest ]</button>
             <input type="text" class="search-box" placeholder="Search SKU..." onkeyup="searchCatalog(this.value)">
@@ -241,19 +197,16 @@
             <div class="index-item" onclick="selectCat('tables', this)">Tables</div>
             <div class="index-item" onclick="selectCat('storage', this)">Storage</div>
         </div>
-        
         <div class="index-column" id="type-col"><h3>Type</h3><div id="type-list"></div></div>
         <div class="asset-view" id="shop-view">
             <h3 style="padding: 28px; border-bottom: 2px solid #222; background: #080808; margin:0; color:#8e9196;">Inventory</h3>
             <div class="asset-grid" id="asset-list"></div>
         </div>
-
         <div class="asset-view" id="manifest-view">
              <h3 style="padding: 28px; border-bottom: 2px solid #444; margin:0; color:#fff;">PROJECT MANIFEST</h3>
              <div id="manifest-list-container" style="padding: 30px;"></div>
              <div class="receipt-total" id="manifest-total">Total: $0.00</div>
         </div>
-
     </div>
 </div>
 
@@ -290,22 +243,24 @@
 
     const catalogData = {
         seating: { 
-            couches: [
-                { id: 'SF-001', img: 'couch1.png', price: 1200, link: 'https://google.com' },
-                { id: 'SF-002', img: 'couch2.png', price: 950, link: 'https://google.com' }
-            ],
-            chairs: [
-                { id: 'CH-101', img: 'chair1.png', price: 300, link: 'https://google.com' },
-                { id: 'CH-102', img: 'chair3.png', price: 250, link: 'https://google.com' }
-            ]
+            couches: [ { id: 'SF-001', img: 'couch1.png', price: 1200, link: 'https://google.com' }, { id: 'SF-002', img: 'couch2.png', price: 950, link: 'https://google.com' } ],
+            chairs: [ { id: 'CH-101', img: 'chair1.png', price: 300, link: 'https://google.com' }, { id: 'CH-102', img: 'chair3.png', price: 250, link: 'https://google.com' } ]
         },
         tables: { 
-            coffee: [{ id: 'TB-200', img: 'coffeetable.png', price: 450, link: 'https://google.com' }],
-            dining: [{ id: 'TB-300', img: 'table2.png', price: 800, link: 'https://google.com' }]
+            coffee: [ { id: 'TB-200', img: 'coffeetable.png', price: 450, link: 'https://google.com' } ],
+            dining: [ { id: 'TB-300', img: 'table2.png', price: 800, link: 'https://google.com' } ]
         },
         storage: { 
-            shelves: [{ id: 'ST-500', img: 'shelf1.png', price: 150, link: 'https://google.com' }]
+            shelves: [ { id: 'ST-500', img: 'shelf1.png', price: 150, link: 'https://google.com' } ]
         }
+    };
+    
+    // NEW DECOR DATA FOR FAN DRILL-DOWN
+    const decorData = {
+        'Lighting': [ { id: 'LT-01', img: 'lamp1.png', price: 120, link: '' }, { id: 'LT-02', img: 'lamp2.png', price: 90, link: '' } ],
+        'Rugs': [ { id: 'RG-01', img: 'rug1.png', price: 200, link: '' } ],
+        'Art': [ { id: 'AR-01', img: 'art1.png', price: 500, link: '' } ],
+        'Decor': [ { id: 'DC-01', img: 'plant.png', price: 40, link: '' } ]
     };
 
     function openMode(mode, el) {
@@ -340,9 +295,9 @@
         if(el) {
             const drawerRect = el.getBoundingClientRect();
             const workspaceRect = document.querySelector('.workspace').getBoundingClientRect();
-            // TUCKED IN FURTHER: -100px instead of -40px
+            // TUCKED IN FURTHER (-140px)
             fanSystem.style.top = (drawerRect.top - workspaceRect.top + 25) + 'px';
-            fanSystem.style.left = (drawerRect.right - workspaceRect.left - 100) + 'px';
+            fanSystem.style.left = (drawerRect.right - workspaceRect.left - 140) + 'px';
         }
         const categories = Object.keys(catalogData); 
         fanSystem.classList.remove('active-fan');
@@ -390,19 +345,37 @@
         }, 600);
     }
 
+    /* --- DECOR FAN (FIXED DRILL DOWN) --- */
     function openDecorFan() {
         fanSystem.classList.add('fan-down'); fanSystem.innerHTML = '<div class="pivot-bolt"></div>';
-        const items = ['Lighting', 'Rugs', 'Art', 'Decor']; 
+        const items = Object.keys(decorData); 
         fanSystem.classList.remove('active-fan');
         setTimeout(() => {
             items.forEach((item, i) => {
                 const blade = document.createElement('div');
                 blade.className = `swatch-blade s-${i + 1}`;
-                blade.innerHTML = `<div class="fan-text" onclick="showCatalog()">${item}</div>`;
+                // Now drills down to showDecorItems instead of catalog
+                blade.innerHTML = `<div class="fan-text" onclick="showDecorItems('${item}')">${item}</div>`;
                 fanSystem.appendChild(blade);
             });
             setTimeout(() => { fanSystem.classList.add('active-fan'); }, 50);
         }, 50);
+    }
+    
+    function showDecorItems(category) {
+        fanSystem.classList.remove('active-fan');
+        // Simple 2-stage for decor (Category -> Items)
+        const items = decorData[category] || [];
+        setTimeout(() => {
+            fanSystem.innerHTML = '<div class="pivot-bolt"></div>';
+            items.forEach((item, i) => {
+                const blade = document.createElement('div');
+                blade.className = `swatch-blade s-${i + 1}`;
+                blade.innerHTML = `<img src="${item.img}" class="fan-icon" onclick="addToRoom('${item.img}')">`;
+                fanSystem.appendChild(blade);
+            });
+            setTimeout(() => { fanSystem.classList.add('active-fan'); }, 50);
+        }, 600);
     }
 
     /* --- MANIFEST LOGIC --- */
@@ -411,25 +384,16 @@
         alert("Item added to Manifest!");
         renderManifest();
     }
-    
     function toggleManifestView() {
         const shop = document.getElementById('shop-view');
         const manifest = document.getElementById('manifest-view');
         const btn = document.querySelector('.manifest-toggle');
-        
         if (shop.style.display === 'none') {
-            shop.style.display = 'flex';
-            manifest.style.display = 'none';
-            btn.innerText = "[ View Manifest ]";
+            shop.style.display = 'flex'; manifest.style.display = 'none'; btn.innerText = "[ View Manifest ]";
         } else {
-            shop.style.display = 'none';
-            manifest.style.display = 'flex';
-            manifest.style.flexDirection = 'column';
-            btn.innerText = "[ Back to Shop ]";
-            renderManifest();
+            shop.style.display = 'none'; manifest.style.display = 'flex'; manifest.style.flexDirection = 'column'; btn.innerText = "[ Back to Shop ]"; renderManifest();
         }
     }
-
     function renderManifest() {
         const container = document.getElementById('manifest-list-container'); container.innerHTML = '';
         let total = 0;
@@ -443,8 +407,7 @@
     function showCatalog() { hideOverlays(); document.getElementById('catalog-overlay').style.display = 'block'; }
     function showLookBook() { hideOverlays(); document.getElementById('lookbook-overlay').style.display = 'block'; renderLookbook(); }
     function hideOverlays() { 
-        document.getElementById('catalog-overlay').style.display = 'none'; 
-        document.getElementById('lookbook-overlay').style.display = 'none';
+        document.getElementById('catalog-overlay').style.display = 'none'; document.getElementById('lookbook-overlay').style.display = 'none';
     }
     
     function addToRoom(src) {
