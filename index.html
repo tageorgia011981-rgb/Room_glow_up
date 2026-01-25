@@ -5,90 +5,87 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Room Glow Up</title>
     <style>
+        /* CSS STYLING */
         body {
             margin: 0;
             padding: 0;
-            background-color: #0a0a0a;
-            color: white;
-            font-family: 'Times New Roman', Times, serif;
+            background-color: #080808;
+            background-image: url('https://www.transparenttextures.com/patterns/floral-vines.png');
+            color: #ffffff;
+            font-family: 'Times New Roman', serif;
             display: flex;
             flex-direction: column;
             height: 100vh;
             overflow: hidden;
         }
 
-        /* Top Header Navigation */
+        /* Top Navigation - Navigation Labels */
         header {
             display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 20px 40px;
-            background: #000;
+            justify-content: flex-end;
+            padding: 30px 50px;
+            gap: 15px;
         }
 
-        .logo {
-            font-size: 24px;
-            letter-spacing: 3px;
+        .top-label {
+            background: #ffffff;
+            color: #000000;
+            padding: 8px 18px;
+            font-size: 11px;
+            font-weight: bold;
             text-transform: uppercase;
-        }
-
-        .top-nav {
-            display: flex;
-            gap: 25px;
-        }
-
-        .top-nav-item {
-            font-size: 14px;
             letter-spacing: 2px;
-            text-transform: uppercase;
+            border: 2px solid #53565a; /* Gunmetal Silver */
             cursor: pointer;
-            color: #fff;
         }
 
-        /* Main Container */
-        .container {
+        /* Layout Structure */
+        .wrapper {
             display: flex;
             flex: 1;
-            border-top: 1px solid #1a1a1a;
         }
 
-        /* Sidebar */
+        /* Side Cabinet - Gunmetal Accents */
         aside {
-            width: 180px;
+            width: 200px;
             padding: 40px 25px;
-            border-right: 1px solid #1a1a1a;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
         }
 
-        .side-link {
-            display: block;
-            margin-bottom: 35px;
-            font-size: 16px;
-            color: #fff;
-            text-decoration: none;
-            cursor: pointer;
+        .drawer-box {
+            background: #1a1a1a;
+            border: 1px solid #333;
+            height: 50px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-bottom: 3px solid #53565a; /* Gunmetal Silver base */
         }
 
-        .side-divider {
-            height: 1px;
-            background-color: #1a1a1a;
-            margin: 10px 0;
-            width: 100%;
+        .side-label {
+            background: #ffffff;
+            color: #000000;
+            padding: 2px 12px;
+            font-size: 11px;
+            font-weight: bold;
+            text-transform: uppercase;
         }
 
-        /* Center Content - The Cabinet */
+        /* Main Cabinet - Flat Black */
         main {
             flex: 1;
             display: flex;
             justify-content: center;
             align-items: center;
-            background-color: #0a0a0a;
         }
 
-        .cabinet {
-            width: 700px;
-            height: 480px;
-            background-color: #000;
-            border: 1px solid #222;
+        .cabinet-flat {
+            width: 720px;
+            height: 520px;
+            background-color: #000000; /* Flat Black */
+            border: 2px solid #2a2a2a;
             display: flex;
             flex-direction: column;
             justify-content: center;
@@ -96,55 +93,50 @@
             gap: 15px;
         }
 
-        /* Specific Label Styling from your screenshot */
+        /* Cabinet Labels - White with Gunmetal Borders */
         .room-label {
-            width: 280px;
-            padding: 12px;
-            background: transparent;
-            border: 1px solid #5a4a2a; /* Gold/Bronze outline */
-            color: #fff;
-            text-transform: uppercase;
-            letter-spacing: 4px;
-            font-size: 14px;
+            width: 300px;
+            padding: 15px;
+            background: #ffffff;
+            color: #000000;
             text-align: center;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            border: 2px solid #53565a; /* Gunmetal Silver frame */
             cursor: pointer;
         }
 
-        .upload-label {
-            margin-top: 30px;
-            border: 1px dashed #5a4a2a;
-            color: #fff;
+        .upload-dashed {
+            background: transparent;
+            color: #ffffff;
+            border: 2px dashed #53565a; /* Gunmetal Silver dashed */
+            margin-top: 20px;
         }
     </style>
 </head>
 <body>
 
     <header>
-        <div class="logo">ROOM GLOW UP</div>
-        <div class="top-nav">
-            <div class="top-nav-item">Rooms</div>
-            <div class="top-nav-item">Furniture</div>
-            <div class="top-nav-item">Decor</div>
-            <div class="top-nav-item">Inspiration</div>
-        </div>
+        <div class="top-label">Rooms</div>
+        <div class="top-label">Furniture</div>
+        <div class="top-label">Decor</div>
+        <div class="top-label">Inspiration</div>
     </header>
 
-    <div class="container">
+    <div class="wrapper">
         <aside>
-            <div class="side-link">Seating</div>
-            <div class="side-divider"></div>
-            <div class="side-link">Tables</div>
-            <div class="side-divider"></div>
-            <div class="side-link">Storage</div>
-            <div class="side-divider"></div>
+            <div class="drawer-box"><div class="side-label">Seating</div></div>
+            <div class="drawer-box"><div class="side-label">Tables</div></div>
+            <div class="drawer-box"><div class="side-label">Storage</div></div>
         </aside>
 
         <main>
-            <div class="cabinet">
+            <div class="cabinet-flat">
                 <div class="room-label">Livingroom</div>
                 <div class="room-label">Diningroom</div>
                 <div class="room-label">Bedroom</div>
-                <div class="room-label upload-label">Upload</div>
+                <div class="room-label upload-dashed">Upload</div>
             </div>
         </main>
     </div>
