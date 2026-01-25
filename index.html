@@ -8,172 +8,143 @@
         body {
             margin: 0;
             padding: 0;
-            background-color: #121212;
-            background-image: url('https://www.transparenttextures.com/patterns/dark-matter.png');
-            font-family: 'Playfair Display', serif;
+            background-color: #0a0a0a;
             color: white;
+            font-family: 'Times New Roman', Times, serif;
             display: flex;
             flex-direction: column;
             height: 100vh;
+            overflow: hidden;
         }
 
-        /* Top Navigation */
+        /* Top Header Navigation */
         header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 20px 50px;
-            background: rgba(0, 0, 0, 0.8);
-            border-bottom: 1px solid #333;
+            padding: 20px 40px;
+            background: #000;
         }
 
         .logo {
             font-size: 24px;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+        }
+
+        .top-nav {
+            display: flex;
+            gap: 25px;
+        }
+
+        .top-nav-item {
+            font-size: 14px;
             letter-spacing: 2px;
             text-transform: uppercase;
-        }
-
-        nav ul {
-            list-style: none;
-            display: flex;
-            gap: 30px;
-            margin: 0;
-            padding: 0;
-        }
-
-        nav ul li {
             cursor: pointer;
-            font-size: 16px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            transition: color 0.3s;
+            color: #fff;
         }
 
-        nav ul li:hover {
-            color: #d4af37; /* Gold accent */
-        }
-
-        /* Main Layout */
+        /* Main Container */
         .container {
             display: flex;
             flex: 1;
+            border-top: 1px solid #1a1a1a;
         }
 
         /* Sidebar */
         aside {
-            width: 200px;
-            background: rgba(0, 0, 0, 0.6);
-            padding: 40px 20px;
-            border-right: 1px solid #333;
+            width: 180px;
+            padding: 40px 25px;
+            border-right: 1px solid #1a1a1a;
         }
 
-        aside ul {
-            list-style: none;
-            padding: 0;
-        }
-
-        aside ul li {
-            padding: 15px 0;
+        .side-link {
+            display: block;
+            margin-bottom: 35px;
+            font-size: 16px;
+            color: #fff;
+            text-decoration: none;
             cursor: pointer;
-            border-bottom: 1px solid #222;
-            transition: padding-left 0.3s;
         }
 
-        aside ul li:hover {
-            padding-left: 10px;
-            color: #d4af37;
+        .side-divider {
+            height: 1px;
+            background-color: #1a1a1a;
+            margin: 10px 0;
+            width: 100%;
         }
 
-        /* Content Area & Cabinet Labels */
+        /* Center Content - The Cabinet */
         main {
             flex: 1;
             display: flex;
             justify-content: center;
             align-items: center;
-            padding: 50px;
+            background-color: #0a0a0a;
         }
 
         .cabinet {
-            width: 100%;
-            max-width: 800px;
-            background: #000;
-            border: 2px solid #333;
-            height: 500px;
-            position: relative;
+            width: 700px;
+            height: 480px;
+            background-color: #000;
+            border: 1px solid #222;
             display: flex;
             flex-direction: column;
-            justify-content: flex-start;
-            padding-top: 40px;
-        }
-
-        /* Styled Labels */
-        .label-container {
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
+            justify-content: center;
             align-items: center;
+            gap: 15px;
         }
 
-        .custom-label {
-            background-color: #1a1a1a;
-            color: white;
-            padding: 12px 40px;
-            border: 1px solid #d4af37; /* Gold border */
-            border-radius: 4px;
-            font-size: 18px;
+        /* Specific Label Styling from your screenshot */
+        .room-label {
+            width: 280px;
+            padding: 12px;
+            background: transparent;
+            border: 1px solid #5a4a2a; /* Gold/Bronze outline */
+            color: #fff;
             text-transform: uppercase;
-            letter-spacing: 2px;
-            width: 250px;
+            letter-spacing: 4px;
+            font-size: 14px;
             text-align: center;
             cursor: pointer;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.5);
-        }
-
-        .custom-label:hover {
-            background-color: #d4af37;
-            color: black;
-            transform: scale(1.05);
         }
 
         .upload-label {
             margin-top: 30px;
-            border-style: dashed;
-            background-color: #0a0a0a;
+            border: 1px dashed #5a4a2a;
+            color: #fff;
         }
     </style>
 </head>
 <body>
 
     <header>
-        <div class="logo">Room Glow Up</div>
-        <nav>
-            <ul>
-                <li>Rooms</li>
-                <li>Furniture</li>
-                <li>Decor</li>
-                <li>Inspiration</li>
-            </ul>
-        </nav>
+        <div class="logo">ROOM GLOW UP</div>
+        <div class="top-nav">
+            <div class="top-nav-item">Rooms</div>
+            <div class="top-nav-item">Furniture</div>
+            <div class="top-nav-item">Decor</div>
+            <div class="top-nav-item">Inspiration</div>
+        </div>
     </header>
 
     <div class="container">
         <aside>
-            <ul>
-                <li>Seating</li>
-                <li>Tables</li>
-                <li>Storage</li>
-            </ul>
+            <div class="side-link">Seating</div>
+            <div class="side-divider"></div>
+            <div class="side-link">Tables</div>
+            <div class="side-divider"></div>
+            <div class="side-link">Storage</div>
+            <div class="side-divider"></div>
         </aside>
 
         <main>
             <div class="cabinet">
-                <div class="label-container">
-                    <div class="custom-label">Livingroom</div>
-                    <div class="custom-label">Diningroom</div>
-                    <div class="custom-label">Bedroom</div>
-                    <div class="custom-label upload-label">Upload</div>
-                </div>
+                <div class="room-label">Livingroom</div>
+                <div class="room-label">Diningroom</div>
+                <div class="room-label">Bedroom</div>
+                <div class="room-label upload-label">Upload</div>
             </div>
         </main>
     </div>
