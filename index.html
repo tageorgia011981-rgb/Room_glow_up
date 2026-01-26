@@ -2,7 +2,6 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Room Glow Up | Studio</title>
     <link href="https://fonts.googleapis.com/css2?family=Limelight&family=Special+Elite&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
@@ -11,54 +10,45 @@
 
     <header class="site-header">
         <h1 class="brand-title">Room Glow Up</h1>
-        <p class="sub-title">your dream space come to life</p>
+        <p class="sub-title">Your Dream Space Come To Life</p>
     </header>
 
     <nav class="vintage-tabs">
         <div class="drawer-hardware" onclick="openMode('rooms', this)">
             <div class="screw s-tl"></div><div class="screw s-tr"></div>
             <div class="screw s-bl"></div><div class="screw s-br"></div>
-            <div class="plate-style">Rooms</div>
+            <div class="plate-style"><span class="label-text">Rooms</span></div>
             <div class="lip-pull"></div>
         </div>
         <div class="drawer-hardware" onclick="openMode('furniture', this)">
             <div class="screw s-tl"></div><div class="screw s-tr"></div>
             <div class="screw s-bl"></div><div class="screw s-br"></div>
-            <div class="plate-style">Furniture</div>
+            <div class="plate-style"><span class="label-text">Furniture</span></div>
             <div class="lip-pull"></div>
         </div>
-        <div class="drawer-hardware" onclick="showLookBook()">
+        <div class="drawer-hardware" onclick="openDecorFan(this)">
             <div class="screw s-tl"></div><div class="screw s-tr"></div>
             <div class="screw s-bl"></div><div class="screw s-br"></div>
-            <div class="plate-style">Inspiration</div>
+            <div class="plate-style"><span class="label-text">Decor</span></div>
             <div class="lip-pull"></div>
         </div>
     </nav>
 
     <main class="workspace">
         <div class="cabinet-container" id="cab-container">
-            <img src="cabinet.png" alt="Cabinet" class="cabinet-image">
+            <img src="cabinet.png" class="cabinet-image">
             <div class="drawer-stack" id="drawer-anchor"></div>
         </div>
-
         <div class="stage" id="stage-zone">
-            <img id="room-display" src="room.jpg" alt="Room Background">
+            <img id="room-display" src="room.jpg">
         </div>
-
         <div id="fan-system" class="fan-system"></div>
     </main>
 
     <div id="hover-preview" class="hover-preview-box">
-        <img id="preview-img" src="" alt="Preview">
+        <img id="preview-img" src="">
         <div id="preview-label"></div>
         <div class="preview-hint">Double-click to Rotate | Right-click to Flip</div>
-    </div>
-
-    <div id="lookbook-overlay" class="overlay-bg">
-        <div class="close-btn" onclick="hideOverlays()">×</div>
-        <button class="nav-arrow prev-arrow" onclick="changeLookPage(-1)">&#10094;</button>
-        <button class="nav-arrow next-arrow" onclick="changeLookPage(1)">&#10095;</button>
-        <div class="lookbook-grid" id="look-grid"></div>
     </div>
 
     <script src="script.js"></script>
