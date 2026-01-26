@@ -101,7 +101,7 @@
             pointer-events: none;
         }
 
-        /* RESET BUTTON (CENTER PIVOT) */
+        /* RESET BUTTON (CENTER PIVOT BOLT) */
         .pivot-bolt {
             position: absolute; left: -22px; top: -22px; width: 44px; height: 44px;
             background: radial-gradient(circle at 30% 30%, #4a4d4f, #2a2d2f, #000);
@@ -136,7 +136,7 @@
             position: relative; overflow: hidden;
         }
         #room-display { width: 100%; height: 100%; object-fit: cover; display: none; }
-        .placed-item { position: absolute; width: 220px; cursor: move; z-index: 1500; }
+        .placed-item { position: absolute; width: 220px; cursor: move; z-index: 1500; filter: drop-shadow(10px 15px 20px rgba(0,0,0,0.6)); }
     </style>
 </head>
 <body>
@@ -259,18 +259,36 @@
         const img = document.createElement("img");
         img.src = src;
         img.className = "placed-item";
-        img.style.left = "100px"; img.style.top = "100px";
+        img.style.left = "100px"; 
+        img.style.top = "100px";
+        
+        // FIX FOR STICKY MOUSE:
         img.onmousedown = function(e) {
+            e.preventDefault(); // Prevents "ghost" image drag
             let shiftX = e.clientX - img.getBoundingClientRect().left;
             let shiftY = e.clientY - img.getBoundingClientRect().top;
+
             function moveAt(pageX, pageY) {
                 const stage = document.getElementById("stage-zone").getBoundingClientRect();
                 img.style.left = (pageX - stage.left - shiftX) + 'px';
                 img.style.top = (pageY - stage.top - shiftY) + 'px';
             }
-            document.onmousemove = (ev) => moveAt(ev.pageX, ev.pageY);
-            img.onmouseup = () => document.onmousemove = null;
+
+            function onMouseMove(event) {
+                moveAt(event.pageX, event.pageY);
+            }
+
+            // Bind to document so you can't "lose" the object if you move fast
+            document.addEventListener('mousemove', onMouseMove);
+
+            // Global mouseup to drop the item safely
+            document.onmouseup = function() {
+                document.removeEventListener('mousemove', onMouseMove);
+                document.onmouseup = null;
+            };
         };
+
+        img.ondragstart = function() { return false; };
         document.getElementById("stage-zone").appendChild(img);
     }
 
