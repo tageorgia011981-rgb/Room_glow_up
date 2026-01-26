@@ -1,110 +1,161 @@
 const roomImg = document.getElementById('room-display');
 const cab = document.getElementById('cab-container');
 const drawerStack = document.getElementById('drawer-anchor');
-const fanSystem = document.getElementById('fan-system'); 
-const previewBox = document.getElementById('hover-preview');
-const previewImg = document.getElementById('preview-img');
-const previewLabel = document.getElementById('preview-label');
+const fanSystem = document.getElementById('fan-system');
+const fileInput = document.getElementById('file-upload');
+
+let currentLockedRoom = null;
 
 const catalogData = {
-    seating: { 'Couches': [{ img: 'couch1.png' }], 'Chairs': [{ img: 'chair1.png' }] },
-    tables: { 'Dining': [{ img: 'table1.png' }] }
-};
-
-const decorData = { 
-    'RUGS': [{ img: 'rug1.png' }, { img: 'rug2.png' }, { img: 'rug3.png' }, { img: 'rug4.png' }, { img: 'rug5.png' }, { img: 'rug6.png' }],
-    'PLANTS': [{ img: 'plant1.png' }],
-    'CURTAINS': [{ img: 'curtain1.png' }],
-    'MISC': [{ img: 'candle1.png' }, { img: 'frame1.png' }]
+    seating: { couches: ['couch1.png'], chairs: ['chair1.png'] },
+    tables: { coffee: ['coffeetable.png'], dining: ['table2.png'] },
+    storage: { shelves: ['shelf1.png'], dressers: ['dresser1.png'] },
+    beds: { frames: ['bed1.png'] }
 };
 
 function openMode(mode, el) {
-    cab.classList.add('cabinet-visible');
-    drawerStack.innerHTML = '';
-    const items = mode === 'rooms' ? ['Living Room', 'Bedroom', 'Kitchen'] : Object.keys(catalogData);
-    
-    items.forEach(name => {
-        let action = mode === 'rooms' ? `selectRoom('room.jpg', this)` : `selectRoom('room.jpg', this); showSubtypes('${name}')`;
-        drawerStack.innerHTML += `
-            <div class="drawer-zone" onclick="${action}">
-                <div class="drawer-hardware">
-                    <div class="plate-style"><span class="label-text">${name}</span></div>
-                    <div class="lip-pull"></div>
-                </div>
-            </div>`;
-    });
+    fanSystem.classList.remove('active-fan');
+    fanSystem.innerHTML = '';
+    hideOverlays();
+
+    if (mode === 'decor') {
+        cab.classList.remove('cabinet-visible');
+        if(el) {
+            const rect = el.getBoundingClientRect();
+            const workspaceRect = document.querySelector('.workspace').getBoundingClientRect();
+            const leftPos = rect.left - workspaceRect.left + (rect.width / 2);
+            fanSystem.style.left = leftPos + 'px';
+            fanSystem.style.top = '-80px';
+        }
+        setTimeout(() => { openDecorFan(); }, 100);
+    } else if (mode === 'rooms') {
+        cab.classList.add('cabinet-visible');
+        drawerStack.innerHTML = '';
+        fanSystem.classList.remove('fan-down');
+        const rooms = [
+            { name: 'Living Room',  file: 'livingroom2.jpg' },
+            { name: 'Bedroom',      file: 'bedroom.jpg' },
+            { name: 'Dining Room',  file: 'diningroom.jpg' },
+            { name: 'Upload',       file: 'upload' }
+        ];
+        rooms.forEach(data => {
+            let clickAction = data.name === 'Upload' ? "triggerUpload()" : `selectRoom('${data.file}')`;
+            let textColor = data.name === 'Upload' ? "color:#d00;" : "";
+            drawerStack.innerHTML += `
+                <div class="drawer-zone" onclick="${clickAction}">
+                    <div class="drawer-hardware">
+                        <div class="plate-style" style="${textColor}">${data.name}</div>
+                        <div class="lip-pull"></div>
+                    </div>
+                </div>`;
+        });
+    }
 }
 
-function openDecorFan(el) {
-    fanSystem.classList.remove('active-fan');
+function openDecorFan() {
+    fanSystem.classList.add('fan-down');
     fanSystem.innerHTML = '<div class="pivot-bolt"></div>';
-    
-    setTimeout(() => {
-        const dRect = el.getBoundingClientRect();
-        fanSystem.style.top = dRect.bottom + 'px';
-        fanSystem.style.left = dRect.left + 'px';
-
-        Object.keys(decorData).forEach((cat, i) => {
-            const b = document.createElement('div');
-            b.className = `swatch-blade s-${i + 1}`;
-            b.innerHTML = `<div class="fan-text" onclick="showDecorItems('${cat}')">${cat}</div>`;
-            fanSystem.appendChild(b);
-        });
-        fanSystem.classList.add('active-fan');
-    }, 100);
-}
-
-function showDecorItems(cat) {
+    const items = ['Lighting', 'Rugs', 'Art', 'Decor'];
     fanSystem.classList.remove('active-fan');
     setTimeout(() => {
-        fanSystem.innerHTML = '<div class="pivot-bolt"></div>';
-        decorData[cat].forEach((item, i) => {
-            const b = document.createElement('div');
-            b.className = `swatch-blade s-${i + 1}`;
-            const imgEl = document.createElement('img');
-            imgEl.src = item.img;
-            imgEl.className = "fan-img-fill";
-
-            imgEl.onmouseenter = () => {
-                previewBox.style.display = 'block';
-                previewImg.src = item.img;
-                previewLabel.innerText = `${cat} Selection #${i+1}`;
-            };
-            imgEl.onmousemove = (e) => {
-                previewBox.style.left = (e.clientX + 20) + 'px';
-                previewBox.style.top = (e.clientY - 120) + 'px';
-            };
-            imgEl.onmouseleave = () => previewBox.style.display = 'none';
-            imgEl.onclick = () => addToRoom(item.img);
-
-            b.appendChild(imgEl);
-            fanSystem.appendChild(b);
+        items.forEach((item, i) => {
+            const blade = document.createElement('div');
+            blade.className = `swatch-blade s-${i + 1}`;
+            blade.innerHTML = `<div class="fan-text" onclick="alert('Decor: ${item}')">${item}</div>`;
+            fanSystem.appendChild(blade);
         });
-        fanSystem.classList.add('active-fan');
-    }, 400);
+        setTimeout(() => { fanSystem.classList.add('active-fan'); }, 50);
+    }, 50);
 }
+
+function showCatalog() {
+    cab.classList.remove('cabinet-visible');
+    fanSystem.classList.remove('active-fan');
+    document.getElementById('lookbook-overlay').style.display = 'none';
+    document.getElementById('catalog-overlay').style.display = 'block';
+}
+
+function showLookBook() {
+    cab.classList.remove('cabinet-visible');
+    fanSystem.classList.remove('active-fan');
+    document.getElementById('catalog-overlay').style.display = 'none';
+    document.getElementById('lookbook-overlay').style.display = 'block';
+}
+
+function hideOverlays() {
+    document.getElementById('catalog-overlay').style.display = 'none';
+    document.getElementById('lookbook-overlay').style.display = 'none';
+}
+
+function selectCat(cat, el) {
+    document.querySelectorAll('#cat-col .index-item').forEach(i => i.classList.remove('selected'));
+    if(el) el.classList.add('selected');
+    const list = document.getElementById('type-list');
+    list.innerHTML = '';
+    if(catalogData[cat]) {
+        Object.keys(catalogData[cat]).forEach(type => {
+            list.innerHTML += `<div class="index-item" onclick="selectType('${cat}', '${type}', this)">${type}</div>`;
+        });
+    }
+}
+
+function selectType(cat, type, el) {
+    document.querySelectorAll('#type-col .index-item').forEach(i => i.classList.remove('selected'));
+    if(el) el.classList.add('selected');
+    const grid = document.getElementById('asset-list');
+    grid.innerHTML = '';
+    if(catalogData[cat] && catalogData[cat][type]) {
+        catalogData[cat][type].forEach(img => {
+            grid.innerHTML += `
+                <div class="asset-card">
+                    <img src="${img}">
+                    <p>${type}</p>
+                    <button class="buy-btn" onclick="addToRoom('${img}')">BUY & ADD</button>
+                </div>`;
+        });
+    }
+}
+
+function selectRoom(src) {
+    currentLockedRoom = src;
+    roomImg.src = src;
+    roomImg.style.display = 'block';
+}
+
+function triggerUpload() { fileInput.click(); }
+
+fileInput.addEventListener('change', function() {
+    const file = this.files[0];
+    if (file) {
+        const reader = new FileReader();
+        reader.onload = function(e) { selectRoom(e.target.result); }
+        reader.readAsDataURL(file);
+    }
+});
 
 function addToRoom(src) {
-    const wrapper = document.createElement("div");
-    wrapper.style.position = "absolute";
-    wrapper.style.left = "50%"; wrapper.style.top = "50%";
-    
+    hideOverlays();
     const img = document.createElement("img");
     img.src = src;
-    img.style.width = src.includes('rug') ? "400px" : "200px";
-    img.style.zIndex = src.includes('rug') ? "1" : "10";
-
-    wrapper.onmousedown = (e) => {
-        let sx = e.clientX - wrapper.getBoundingClientRect().left;
-        let sy = e.clientY - wrapper.getBoundingClientRect().top;
-        document.onmousemove = (ev) => {
-            const st = document.getElementById("stage-zone").getBoundingClientRect();
-            wrapper.style.left = (ev.pageX - st.left - sx) + 'px';
-            wrapper.style.top = (ev.pageY - st.top - sy) + 'px';
-        };
-        document.onmouseup = () => document.onmousemove = null;
+    img.className = "placed-item";
+    img.style.left = "100px"; img.style.top = "100px";
+    img.onmousedown = function(e) {
+        let shiftX = e.clientX - img.getBoundingClientRect().left;
+        let shiftY = e.clientY - img.getBoundingClientRect().top;
+        function moveAt(pageX, pageY) {
+            const stage = document.getElementById("stage-zone").getBoundingClientRect();
+            img.style.left = (pageX - stage.left - shiftX) + 'px';
+            img.style.top = (pageY - stage.top - shiftY) + 'px';
+        }
+        function onMouseMove(event) { moveAt(event.pageX, event.pageY); }
+        document.addEventListener('mousemove', onMouseMove);
+        img.onmouseup = function() { document.removeEventListener('mousemove', onMouseMove); };
     };
+    img.ondragstart = () => false;
+    document.getElementById("stage-zone").appendChild(img);
+}
 
-    wrapper.appendChild(img);
-    document.getElementById("stage-zone").appendChild(wrapper);
+function lift(el) {
+    document.querySelectorAll('.drawer-hardware').forEach(d => d.classList.remove('active-lift'));
+    el.classList.add('active-lift');
 }
