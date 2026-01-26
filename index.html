@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
+
     <header class="site-header">
         <h1 class="brand-title">Room Glow Up</h1>
         <p class="sub-title">your dream space come to life</p>
@@ -26,12 +27,6 @@
             <div class="plate-style">Furniture</div>
             <div class="lip-pull"></div>
         </div>
-        <div class="drawer-hardware" onclick="openMode('decor', this)">
-            <div class="screw s-tl"></div><div class="screw s-tr"></div>
-            <div class="screw s-bl"></div><div class="screw s-br"></div>
-            <div class="plate-style">Decor</div>
-            <div class="lip-pull"></div>
-        </div>
         <div class="drawer-hardware" onclick="showLookBook()">
             <div class="screw s-tl"></div><div class="screw s-tr"></div>
             <div class="screw s-bl"></div><div class="screw s-br"></div>
@@ -45,20 +40,27 @@
             <img src="cabinet.png" alt="Cabinet" class="cabinet-image">
             <div class="drawer-stack" id="drawer-anchor"></div>
         </div>
+
         <div class="stage" id="stage-zone">
-            <button class="reset-btn" onclick="resetStage()">Clear Room</button>
-            <div class="design-hint">Double-click to Rotate | Right-click to Flip</div>
             <img id="room-display" src="room.jpg" alt="Room Background">
         </div>
+
         <div id="fan-system" class="fan-system"></div>
     </main>
 
+    <div id="hover-preview" class="hover-preview-box">
+        <img id="preview-img" src="" alt="Preview">
+        <div id="preview-label"></div>
+        <div class="preview-hint">Double-click to Rotate | Right-click to Flip</div>
+    </div>
+
     <div id="lookbook-overlay" class="overlay-bg">
         <div class="close-btn" onclick="hideOverlays()">×</div>
+        <button class="nav-arrow prev-arrow" onclick="changeLookPage(-1)">&#10094;</button>
+        <button class="nav-arrow next-arrow" onclick="changeLookPage(1)">&#10095;</button>
         <div class="lookbook-grid" id="look-grid"></div>
     </div>
 
-    <input type="file" id="file-upload" style="display:none" accept="image/*">
     <script src="script.js"></script>
 </body>
 </html>
