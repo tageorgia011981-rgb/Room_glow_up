@@ -24,7 +24,7 @@
         }
         .sub-title { font-size: 24px; color: #8e9196; letter-spacing: 8px; margin-top: -10px; text-transform: uppercase; text-shadow: 0px 2px 4px #000; }
 
-        /* --- HARDWARE --- */
+        /* --- HARDWARE (LOCKED) --- */
         .vintage-tabs { display: flex; justify-content: center; gap: 30px; padding: 30px 0; z-index: 2000; position: relative; }
         .drawer-hardware {
             position: relative; width: 280px; height: 100px;
@@ -32,10 +32,19 @@
             border: 3px solid #000;
             box-shadow: inset 0 0 0 2px #444, inset 10px 0 20px rgba(0,0,0,0.8), 0 15px 25px rgba(0,0,0,0.8);
             display: flex; align-items: center; justify-content: center;
-            cursor: pointer; transition: transform 0.2s;
+            cursor: pointer; transition: transform 0.2s, filter 0.2s;
             z-index: 2000;
         }
-        .drawer-hardware:hover { transform: translateY(-4px); }
+        .drawer-hardware:hover { filter: brightness(1.3) contrast(1.1); transform: translateY(-4px); }
+        .drawer-hardware::before, .drawer-hardware::after {
+            content: ''; position: absolute; top: 50%; transform: translateY(-50%);
+            width: 16px; height: 16px; border-radius: 50%;
+            background: radial-gradient(circle at 30% 30%, #444, #111); 
+            box-shadow: 0 1px 0 rgba(255,255,255,0.1);
+        }
+        .drawer-hardware::before { left: 15px; }
+        .drawer-hardware::after { right: 15px; }
+
         .plate-style {
             width: 190px; height: 50px;
             background: linear-gradient(to bottom, #dcdcdc 0%, #8e9196 50%, #b0b0b0 100%);
@@ -49,7 +58,7 @@
             width: 140px; height: 24px; background: linear-gradient(to bottom, #2c2e30, #000);
             border: 2px solid #111; border-top: none; border-radius: 0 0 15px 15px; box-shadow: 0 5px 10px rgba(0,0,0,0.8);
         }
-        .active-lift { transform: translateY(15px) !important; }
+        .active-lift { transform: translateY(15px) !important; filter: brightness(1.4) !important; }
 
         /* --- WORKSPACE --- */
         .workspace { display: flex; padding: 40px; position: relative; height: 800px; }
@@ -60,9 +69,8 @@
         .cabinet-visible { left: 50px !important; }
         .cabinet-image { width: 100%; filter: drop-shadow(15px 15px 40px rgba(0,0,0,0.9)); }
         .drawer-stack { position: absolute; top: 130px; left: 55px; width: 400px; display: flex; flex-direction: column; align-items: center; gap: 30px; }
-        .drawer-zone { width: 100%; height: 120px; cursor: pointer; display: flex; align-items: center; justify-content: center; }
 
-        /* --- FAN SYSTEM --- */
+        /* --- DECOR FAN --- */
         .fan-system { position: absolute; z-index: 4000; pointer-events: none; transform: translateZ(0); }
         .swatch-blade {
             position: absolute; left: -25px; top: 50px; width: 55px; height: 0px;
@@ -81,7 +89,7 @@
         .active-fan .s-5 { transform: rotate(-70deg) translateY(5px); }
 
         .swatch-blade:hover { filter: brightness(1.2); box-shadow: 0 0 30px #fff; z-index: 5000 !important; height: 320px !important; }
-        .fan-text { color: #000; font-family: 'Special Elite', cursive; font-weight: 900; font-size: 20px; text-transform: uppercase; writing-mode: vertical-rl; transform: rotate(180deg); letter-spacing: 2px; text-shadow: 1px 0px 0px rgba(0,0,0,0.3); pointer-events: none; }
+        .fan-text { color: #000; font-family: 'Special Elite', cursive; font-weight: 900; font-size: 20px; text-transform: uppercase; writing-mode: vertical-rl; transform: rotate(180deg); letter-spacing: 2px; text-shadow: 1px 0px 0px rgba(255,255,255,0.3); pointer-events: none; }
 
         .pivot-bolt {
             position: absolute; left: -22px; top: -22px; width: 44px; height: 44px;
@@ -103,9 +111,9 @@
         .guide-text { font-size: 11px; color: #fff; margin-top: 10px; text-align: center; line-height: 1.5; font-weight: bold; background: #333; width: 100%; padding: 5px 0; }
 
         /* --- STAGE --- */
-        .stage { width: 1000px; height: 600px; background: #050505; border: 20px solid #2c2e30; margin-left: 650px; position: relative; overflow: hidden; }
+        .stage { width: 1000px; height: 600px; background: #050505; border: 20px solid #2c2e30; margin-left: 650px; position: relative; overflow: hidden; box-shadow: inset 0 0 80px #000; }
         #room-display { width: 100%; height: 100%; object-fit: cover; display: none; }
-        .placed-item { position: absolute; width: 220px; cursor: move; z-index: 1500; filter: drop-shadow(10px 10px 20px rgba(0,0,0,0.7)); transition: transform 0.3s ease; }
+        .placed-item { position: absolute; cursor: move; z-index: 1500; filter: drop-shadow(10px 10px 20px rgba(0,0,0,0.7)); }
     </style>
 </head>
 <body>
@@ -116,16 +124,34 @@
 </header>
 
 <nav class="vintage-tabs">
-    <div class="drawer-hardware" onclick="lift(this); openMode('rooms', this)"><div class="plate-style">Rooms</div><div class="lip-pull"></div></div>
-    <div class="drawer-hardware" onclick="lift(this); openMode('inspiration', this)"><div class="plate-style">Inspiration</div><div class="lip-pull"></div></div>
-    <div class="drawer-hardware" onclick="lift(this); openMode('catalog', this)"><div class="plate-style">Catalog</div><div class="lip-pull"></div></div>
-    <div class="drawer-hardware" onclick="lift(this); openMode('decor', this)"><div class="plate-style">Decor</div><div class="lip-pull"></div></div>
+    <div class="drawer-hardware" onclick="lift(this); openMode('rooms', this)">
+        <div class="plate-style">Rooms</div><div class="lip-pull"></div>
+    </div>
+    <div class="drawer-hardware" onclick="lift(this); showLookBook()">
+        <div class="plate-style">Inspiration</div><div class="lip-pull"></div>
+    </div>
+    <div class="drawer-hardware" onclick="lift(this); showCatalog()">
+        <div class="plate-style">Furniture Catalog</div><div class="lip-pull"></div>
+    </div>
+    <div class="drawer-hardware" onclick="lift(this); openMode('decor', this)">
+        <div class="plate-style">Decor</div><div class="lip-pull"></div>
+    </div>
 </nav>
 
 <div class="workspace">
     <div id="cab" class="cabinet-container">
         <img src="cabinet.png" class="cabinet-image">
-        <div id="drawers" class="drawer-stack"></div>
+        <div id="drawers" class="drawer-stack">
+            <div class="drawer-zone" onclick="setRoom('livingroom2.jpg')">
+                <div class="drawer-hardware"><div class="plate-style">Living Room</div><div class="lip-pull"></div></div>
+            </div>
+            <div class="drawer-zone" onclick="setRoom('bedroom.jpg')">
+                <div class="drawer-hardware"><div class="plate-style">Bedroom</div><div class="lip-pull"></div></div>
+            </div>
+            <div class="drawer-zone" onclick="setRoom('diningroom.jpg')">
+                <div class="drawer-hardware"><div class="plate-style">Dining Room</div><div class="lip-pull"></div></div>
+            </div>
+        </div>
     </div>
     <div id="fan-system" class="fan-system"></div>
     <div class="stage" id="stage"><img id="room-display"></div>
@@ -143,33 +169,35 @@
     const pImg = document.getElementById('preview-img');
     const pLabel = document.getElementById('preview-label');
     const pGuide = document.getElementById('helpful-guide');
+    const roomImg = document.getElementById('room-display');
+    const cab = document.getElementById('cab');
 
     const inventory = {
         'Rugs': ['rug1.png','rug2.png','rug3.png','rug4.png','rug5.png','rug6.png'],
         'Plants': ['plant1.png','plant2.png','plant3.png','plant4.png','plant5.png'],
-        'Curtains': ['curtains1.png','curtains2.png','curtains3.png','curtains4.png','curtains5.png']
+        'Curtains': ['curtain.png','curtain2.png','curtain3.png']
     };
 
+    function closeFan() {
+        fan.classList.remove('active-fan');
+        setTimeout(() => { fan.innerHTML = ''; }, 500);
+    }
+
     function openMode(mode, el) {
-        fan.classList.remove('active-fan'); fan.innerHTML = '';
+        closeFan();
         if (mode === 'decor') {
-            document.getElementById('cab').classList.remove('cabinet-visible');
-            const r = el.getBoundingClientRect();
+            cab.classList.remove('cabinet-visible');
+            const rect = el.getBoundingClientRect();
             const w = document.querySelector('.workspace').getBoundingClientRect();
-            fan.style.left = (r.left - w.left + r.width/2) + 'px'; fan.style.top = '-80px';
+            fan.style.left = (rect.left - w.left + rect.width/2) + 'px'; fan.style.top = '-80px';
             setTimeout(openDecorFan, 100);
         } else if (mode === 'rooms') {
-            document.getElementById('cab').classList.add('cabinet-visible');
-            const rooms = ['Living Room', 'Bedroom', 'Dining Room'];
-            document.getElementById('drawers').innerHTML = rooms.map(n => `
-                <div class="drawer-zone" onclick="setRoom('${n.toLowerCase().replace(' ','')}.jpg')">
-                    <div class="drawer-hardware"><div class="plate-style">${n}</div><div class="lip-pull"></div></div>
-                </div>`).join('');
+            cab.classList.add('cabinet-visible');
         }
     }
 
     function openDecorFan() {
-        fan.innerHTML = '<div class="pivot-bolt" onclick="openDecorFan()"></div>';
+        fan.innerHTML = '<div class="pivot-bolt" onclick="closeFan()"></div>';
         ['Lighting','Rugs','Curtains','Plants','Extras'].forEach((c, i) => {
             const b = document.createElement('div'); b.className = `swatch-blade s-${i+1}`;
             b.innerHTML = `<div class="fan-text">${c}</div>`;
@@ -188,12 +216,9 @@
                 const ang = (i - (items.length-1)/2) * 28;
                 b.style.transform = `rotate(${ang}deg) translateY(${Math.abs(ang)*0.6 + 30}px)`;
                 b.innerHTML = `<div class="fan-text">${src.split('.')[0]}</div>`;
-                b.onmouseenter = () => {
-                    pImg.src = src; pLabel.innerText = src.toUpperCase();
-                    pGuide.style.display = 'none'; preview.style.display = 'flex';
-                };
+                b.onmouseenter = () => { pImg.src = src; pLabel.innerText = src.toUpperCase(); pGuide.style.display = 'none'; preview.style.display = 'flex'; };
                 b.onmouseleave = () => preview.style.display = 'none';
-                b.onclick = () => addItem(src, cat);
+                b.onclick = () => { addItem(src, cat); closeFan(); };
                 fan.appendChild(b);
             });
             fan.classList.add('active-fan');
@@ -202,55 +227,55 @@
 
     function addItem(src, cat) {
         const img = document.createElement('img'); img.src = src; img.className = 'placed-item';
-        img.style.left = '100px'; img.style.top = '100px';
         
-        // Rugs start flat by default
-        let flip = 1;
         let isRug = (cat === 'Rugs' || src.toLowerCase().includes('rug'));
-        let flat = isRug ? true : false;
+        
+        // Starting size logic
+        let baseWidth = isRug ? 450 : 280;
+        img.style.width = baseWidth + "px";
+        img.style.left = "50px"; 
+        img.style.top = "50px";
+        
+        let flip = 1, currentScale = 1;
+        let flat = isRug;
 
         const update = () => {
-            let t = `scaleX(${flip})`;
+            let t = `scaleX(${flip * currentScale}) scaleY(${currentScale})`;
             if(flat) t += ` rotateX(65deg)`;
             img.style.transform = t;
         };
 
         img.onmouseenter = () => {
             pImg.src = src; pLabel.innerText = "SELECTED ITEM";
-            let instructions = "DBL-CLICK: DELETE<br>RIGHT-CLICK: FLIP";
-            if(isRug) instructions += "<br>SHIFT+CLICK: TILT";
-            pGuide.innerHTML = instructions;
+            pGuide.innerHTML = "SCROLL: RESIZE<br>DBL-CLICK: DELETE<br>RIGHT-CLICK: FLIP" + (isRug?"<br>SHIFT+CLICK: TILT":"");
             pGuide.style.display = 'block'; preview.style.display = 'flex';
         };
         img.onmouseleave = () => preview.style.display = 'none';
-        
-        img.ondblclick = () => { img.remove(); preview.style.display = 'none'; };
-        img.oncontextmenu = (e) => { e.preventDefault(); flip *= -1; update(); };
-        
-        img.onclick = (e) => { 
-            if(e.shiftKey && isRug) { 
-                flat = !flat; 
-                update(); 
-            } 
+
+        img.onwheel = (e) => {
+            e.preventDefault();
+            if (e.deltaY < 0) currentScale += 0.05;
+            else currentScale = Math.max(0.1, currentScale - 0.05);
+            update();
         };
 
+        img.ondblclick = () => { img.remove(); preview.style.display = 'none'; };
+        img.oncontextmenu = (e) => { e.preventDefault(); flip *= -1; update(); };
+        img.onclick = (e) => { if(e.shiftKey && isRug) { flat = !flat; update(); } };
+
         img.onmousedown = (e) => {
-            if (e.button === 2) return; 
-            e.preventDefault();
-            let sx = e.clientX - img.offsetLeft, sy = e.clientY - img.offsetTop;
-            const move = (m) => { 
-                img.style.left = (m.clientX - sx) + 'px'; 
-                img.style.top = (m.clientY - sy) + 'px'; 
-            };
-            document.addEventListener('mousemove', move);
-            document.onmouseup = () => document.removeEventListener('mousemove', move);
+            if(e.button===2) return; e.preventDefault();
+            let sx=e.clientX-img.offsetLeft, sy=e.clientY-img.offsetTop;
+            const move=(m)=>{img.style.left=(m.clientX-sx)+'px';img.style.top=(m.clientY-sy)+'px';};
+            document.addEventListener('mousemove',move);
+            document.onmouseup=()=>{document.removeEventListener('mousemove',move);};
         };
-        
+
         document.getElementById('stage').appendChild(img);
         update();
     }
 
-    function setRoom(s) { const r = document.getElementById('room-display'); r.src = s; r.style.display = 'block'; }
+    function setRoom(s) { roomImg.src = s; roomImg.style.display = 'block'; }
     function lift(el) { document.querySelectorAll('.drawer-hardware').forEach(d => d.classList.remove('active-lift')); el.classList.add('active-lift'); }
 </script>
 </body>
