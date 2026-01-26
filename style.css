@@ -1,65 +1,168 @@
-/* --- CABINET DRAWER LABELS --- */
-.plate-style {
-    width: 170px;
-    height: 45px;
-    background: #fdf5e6; /* Aged Paper */
-    color: #222;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+/* --- GLOBAL & BRANDING --- */
+body {
+    margin: 0;
+    background: #111;
+    color: white;
     font-family: 'Special Elite', cursive;
-    font-size: 17px;
-    font-weight: 900;
+    overflow-x: hidden;
+}
+
+.header {
+    padding: 40px;
+    text-align: center;
+}
+
+.brand-title {
+    font-family: 'Limelight', cursive;
+    font-size: 100px;
     text-transform: uppercase;
-    border: 1px solid #444;
-    box-shadow: inset 2px 2px 5px rgba(0,0,0,0.3);
-    transition: all 0.3s ease;
+    color: #ffffff;
+    mask-image: linear-gradient(to right, rgba(255,255,255,0.3), rgba(255,255,255,1));
+    -webkit-mask-image: linear-gradient(to right, rgba(255,255,255,0.3), rgba(255,255,255,1));
+    letter-spacing: 4px;
+    margin: 0;
 }
 
-/* Glow for Cabinet Drawers */
-.drawer-hardware:hover .plate-style {
-    background: #fff;
-    box-shadow: 0 0 20px rgba(255, 255, 255, 0.7), inset 0 0 5px rgba(0,0,0,0.1);
-    color: #000;
+/* --- WORKSPACE & STAGE GLIDE REVISION --- */
+.workspace {
+    display: flex;
+    align-items: flex-start;
+    padding: 20px;
+    position: relative;
 }
 
-/* --- THE 5-BLADE DECOR FAN --- */
-.fan-down .swatch-blade {
+.cabinet {
+    width: 400px;
+    height: 600px;
+    background: #222;
+    border: 10px solid #333;
     position: absolute;
-    left: -40px;
-    top: 0;
-    width: 80px;
-    height: 0; 
-    background: linear-gradient(to bottom, #dcdcdc, #999, #666);
-    border: 2px solid #222;
-    border-radius: 0 0 25px 25px;
-    transform-origin: top center; /* Pivot point */
-    opacity: 0;
-    transition: all 0.6s cubic-bezier(0.19, 1, 0.22, 1);
+    left: -450px; 
+    transition: left 0.8s cubic-bezier(0.19, 1, 0.22, 1);
+    z-index: 10;
 }
 
-.fan-down.active-fan .swatch-blade {
-    height: 280px;
-    opacity: 1;
+.cabinet-visible {
+    left: 20px;
+}
+
+.stage {
+    width: 1000px;
+    height: 600px;
+    background: #050505;
+    border: 20px solid #2c2e30;
+    margin-left: 650px; /* Base starting point */
+    position: relative;
+    overflow: hidden;
+    transition: margin-left 0.8s cubic-bezier(0.19, 1, 0.22, 1);
+}
+
+/* The Glide: Shifts stage right when cabinet is active */
+.cabinet-visible ~ .stage {
+    margin-left: 750px;
+}
+
+/* --- TABS --- */
+.tabs-container {
+    display: flex;
+    gap: 10px;
+    padding: 20px;
+    justify-content: center;
+}
+
+.drawer-tab {
+    padding: 15px 30px;
+    background: #333;
+    border: 2px solid #555;
+    color: white;
+    cursor: pointer;
+    font-family: 'Special Elite', monospace;
+}
+
+/* --- THE FAN SYSTEM --- */
+#fan-system {
+    position: absolute;
+    pointer-events: none;
+    z-index: 1000;
+}
+
+.fan-down {
+    position: relative;
     pointer-events: auto;
 }
 
-/* Symmetrical 5-Blade Spread */
-.fan-down.active-fan .s-1 { transform: rotate(44deg);  z-index: 45; }
-.fan-down.active-fan .s-2 { transform: rotate(22deg);  z-index: 44; }
-.fan-down.active-fan .s-3 { transform: rotate(0deg);   z-index: 43; } /* Center: Plants */
-.fan-down.active-fan .s-4 { transform: rotate(-22deg); z-index: 42; }
-.fan-down.active-fan .s-5 { transform: rotate(-44deg); z-index: 41; }
+.pivot-bolt {
+    width: 16px;
+    height: 16px;
+    background: #444;
+    border: 2px solid #000;
+    border-radius: 50%;
+    position: absolute;
+    top: -8px;
+    left: -8px;
+    z-index: 2100;
+}
 
-/* Fan Blade Glow */
+/* --- BLADES & GLOW REVISION --- */
+.swatch-blade {
+    position: absolute;
+    width: 100px;
+    height: 180px;
+    background: #e0e0e0;
+    border: 2px solid #222;
+    border-radius: 0 0 50px 50px;
+    transform-origin: top center;
+    transition: transform 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275), filter 0.3s;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 20px;
+}
+
+/* The Glow Effect */
 .swatch-blade:hover {
-    background: #fff !important; 
-    box-shadow: 0 0 30px rgba(255, 255, 255, 0.9), inset 0 0 10px rgba(0,0,0,0.1);
-    transform: scale(1.1);
-    z-index: 1000 !important;
+    filter: brightness(1.4) drop-shadow(0 0 15px rgba(255, 255, 255, 0.7));
+    z-index: 2000 !important;
     cursor: pointer;
 }
 
-.swatch-blade:hover .fan-text {
+.fan-text {
     color: #000;
+    font-size: 14px;
+    text-align: center;
+    font-weight: bold;
+    pointer-events: none;
 }
+
+/* --- PREVIEW BOX REVISION --- */
+.decor-preview {
+    position: absolute;
+    left: 115%; 
+    top: 50%;
+    transform: translateY(-50%) rotate(0deg); /* Stays upright */
+    width: 180px;
+    height: 180px;
+    background: #111;
+    border: 2px solid #8e9196;
+    display: none;
+    z-index: 2500;
+    box-shadow: 0 10px 40px rgba(0,0,0,1);
+}
+
+.swatch-blade:hover .decor-preview {
+    display: block;
+}
+
+.decor-preview img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    padding: 10px;
+}
+
+/* --- 5-BLADE ROTATION MATH --- */
+.fan-down.active-fan .s-1 { transform: rotate(40deg) translateY(10px); }
+.fan-down.active-fan .s-2 { transform: rotate(20deg) translateY(10px); }
+.fan-down.active-fan .s-3 { transform: rotate(0deg) translateY(10px); }
+.fan-down.active-fan .s-4 { transform: rotate(-20deg) translateY(10px); }
+.fan-down.active-fan .s-5 { transform: rotate(-40deg) translateY(10px); }
