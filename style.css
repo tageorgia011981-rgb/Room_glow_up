@@ -1,35 +1,110 @@
-/* --- DECOR FAN FIX --- */
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body { 
+  background: #0f1011; 
+  min-height: 100vh; font-family: 'Special Elite', cursive; color: #fff; overflow-x: hidden; 
+  position: relative;
+}
+
+/* --- HEADER --- */
+.site-header { text-align: center; padding: 60px 0 30px; position: relative; z-index: 10; }
+.brand-title { 
+  font-family: 'Limelight', cursive; font-size: 100px; text-transform: uppercase; 
+  background: linear-gradient(to bottom, #ffffff 0%, #dcdcdc 50%, #8e9196 51%, #a8a8a8 100%);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  letter-spacing: 4px;
+}
+.sub-title { font-size: 24px; color: #8e9196; letter-spacing: 8px; margin-top: -10px; text-transform: uppercase; }
+
+/* --- HARDWARE & SCREWS --- */
+.vintage-tabs { display: flex; justify-content: center; gap: 30px; padding: 30px 0; z-index: 2000; position: relative; }
+
+.drawer-hardware {
+  position: relative; width: 280px; height: 100px; 
+  background: linear-gradient(135deg, #2c2e30 0%, #1a1a1a 100%); 
+  border: 3px solid #000;
+  box-shadow: inset 0 0 0 2px #444, inset 10px 0 20px rgba(0,0,0,0.8), 0 15px 25px rgba(0,0,0,0.8);
+  display: flex; align-items: center; justify-content: center; 
+  cursor: pointer; transition: transform 0.2s;
+}
+
+.screw {
+  position: absolute; width: 6px; height: 6px;
+  background: radial-gradient(circle at 30% 30%, #555, #111);
+  border-radius: 50%; border: 1px solid #000;
+}
+.s-tl { top: 8px; left: 8px; }
+.s-tr { top: 8px; right: 8px; }
+.s-bl { bottom: 8px; left: 8px; }
+.s-br { bottom: 8px; right: 8px; }
+
+.plate-style { 
+  width: 190px; height: 50px; 
+  background: linear-gradient(to bottom, #dcdcdc 0%, #8e9196 50%, #b0b0b0 100%);
+  color: #000; display: flex; align-items: center; justify-content: center; 
+  font-size: 18px; font-weight: 900; text-transform: uppercase; 
+}
+
+.lip-pull { 
+  position: absolute; bottom: -14px; left: 50%; transform: translateX(-50%); 
+  width: 140px; height: 24px; background: linear-gradient(to bottom, #2c2e30, #000); 
+  border: 2px solid #111; border-top: none; border-radius: 0 0 15px 15px;
+}
+
+/* --- CABINET GLIDE & STAGE --- */
+.workspace { display: flex; padding: 0 40px; position: relative; height: 950px; }
+.cabinet-container { 
+  width: 500px; flex-shrink: 0; position: relative; left: -600px; 
+  transition: left 0.8s cubic-bezier(0.16, 1, 0.3, 1); z-index: 100; 
+}
+.cabinet-visible { left: 0 !important; }
+.cabinet-image { width: 100%; filter: drop-shadow(10px 10px 30px #000); }
+.drawer-stack { position: absolute; top: 100px; width: 100%; display: flex; flex-direction: column; align-items: center; gap: 15px; }
+
+.stage { flex-grow: 1; height: 800px; background: #050505; border: 20px solid #2c2e30; position: relative; overflow: hidden; }
+#room-display { width: 100%; height: 100%; object-fit: cover; }
+
+.placed-item { 
+    position: absolute; width: 200px; cursor: grab; z-index: 1500; 
+    transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.design-hint { position: absolute; bottom: 20px; left: 20px; font-size: 12px; color: #8e9196; opacity: 0.6; }
+
+/* --- FAN SYSTEM --- */
+.fan-system { position: absolute; z-index: 5000; pointer-events: none; }
+.pivot-bolt { 
+    position: absolute; left: -15px; top: -15px; width: 30px; height: 30px; 
+    background: radial-gradient(circle at 30% 30%, #8e9196, #2c2e30); 
+    border: 3px solid #000; border-radius: 4px; z-index: 6000; 
+}
+
+.swatch-blade {
+  position: absolute; left: 0; top: -37px; width: 0; height: 75px;
+  background: linear-gradient(to right, #2c2e30, #8e9196, #1a1a1a);
+  border: 2px solid #000; border-radius: 0 40px 40px 0;
+  transform-origin: left center; transition: width 0.4s ease, opacity 0.3s;
+  opacity: 0; display: flex; align-items: center; justify-content: flex-end; padding-right: 20px;
+}
+.active-fan .swatch-blade { width: 260px; opacity: 1; pointer-events: auto; }
+
+/* Blade Rotations */
+.active-fan .s-1 { transform: rotate(-50deg); }
+.active-fan .s-2 { transform: rotate(-25deg); }
+.active-fan .s-3 { transform: rotate(0deg); }
+.active-fan .s-4 { transform: rotate(25deg); }
+.active-fan .s-5 { transform: rotate(50deg); }
+
+/* --- DECOR FAN (FIX YOU SENT) --- */
 .fan-down.active-fan .swatch-blade { 
-    height: 180px; 
-    width: 80px; 
-    transform-origin: top center; 
-    border-radius: 0 0 20px 20px; 
-    justify-content: center; 
-    padding-right: 0; 
-    padding-bottom: 20px;
-    align-items: flex-end;
+    height: 180px; width: 80px; transform-origin: top center; 
+    border-radius: 0 0 20px 20px; justify-content: center; 
+    padding-right: 0; padding-bottom: 20px; align-items: flex-end;
 }
 
-/* --- LOOKBOOK SIZE FIX --- */
-.lookbook-grid { 
-    display: grid; 
-    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); 
-    gap: 30px; 
-    padding: 40px; 
-}
-
-.look-card { 
-    background: #fff; 
-    padding: 12px 12px 45px 12px; 
-    box-shadow: 0 10px 25px rgba(0,0,0,0.5);
-    height: 350px; /* Forces a uniform height */
-    display: flex;
-    flex-direction: column;
-}
-
-.look-card img { 
-    width: 100%; 
-    height: 100%; 
-    object-fit: cover; /* This forces big images to fit perfectly without stretching */
-    border: 1px solid #ddd;
-}
+/* --- LOOKBOOK (FIX YOU SENT) --- */
+.overlay-bg { position: fixed; inset: 0; background: rgba(5, 5, 5, 0.96); z-index: 5000; display: none; }
+.lookbook-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 30px; padding: 40px; }
+.look-card { background: #fff; padding: 12px 12px 45px 12px; box-shadow: 0 10px 25px rgba(0,0,0,0.5); height: 350px; display: flex; flex-direction: column; }
+.look-card img { width: 100%; height: 100%; object-fit: cover; border: 1px solid #ddd; }
+.close-btn { position: fixed; top: 40px; right: 60px; font-size: 80px; color: #fff; cursor: pointer; z-index: 9999; }
