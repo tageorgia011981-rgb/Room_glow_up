@@ -70,29 +70,31 @@
         .cabinet-image { width: 100%; filter: drop-shadow(15px 15px 40px rgba(0,0,0,0.9)); }
         .drawer-stack { position: absolute; top: 130px; left: 55px; width: 400px; display: flex; flex-direction: column; align-items: center; gap: 30px; }
 
-        /* --- DECOR FAN --- */
+        /* --- RESIZED DECOR FAN (SLEEKER & HIGHER) --- */
         .fan-system { position: absolute; z-index: 4000; pointer-events: none; transform: translateZ(0); }
         .swatch-blade {
-            position: absolute; left: -25px; top: 50px; width: 55px; height: 0px;
+            position: absolute; left: -22px; top: 50px; width: 45px; height: 0px; /* Narrower width */
             background: linear-gradient(to bottom, #dcdcdc, #999, #666);
-            border: 2px solid #222; border-radius: 0 0 25px 25px;
+            border: 2px solid #222; border-radius: 0 0 20px 20px;
             transform-origin: top center; opacity: 0; display: flex; 
             align-items: center; justify-content: center; cursor: pointer;
-            transition: height 0.5s ease, transform 0.5s cubic-bezier(0.165, 0.84, 0.44, 1), opacity 0.3s;
+            transition: height 0.4s ease, transform 0.4s cubic-bezier(0.165, 0.84, 0.44, 1), opacity 0.3s;
             box-shadow: 5px 5px 15px rgba(0,0,0,0.5);
         }
-        .active-fan .swatch-blade { height: 300px; opacity: 1; pointer-events: auto; }
-        .active-fan .s-1 { transform: rotate(70deg) translateY(5px); }
-        .active-fan .s-2 { transform: rotate(35deg) translateY(35px); }
-        .active-fan .s-3 { transform: rotate(0deg) translateY(50px); }
-        .active-fan .s-4 { transform: rotate(-35deg) translateY(35px); }
-        .active-fan .s-5 { transform: rotate(-70deg) translateY(5px); }
+        .active-fan .swatch-blade { height: 200px; opacity: 1; pointer-events: auto; } /* Shorter height */
+        
+        /* Sweep logic moved higher to avoid stage coverage */
+        .active-fan .s-1 { transform: rotate(60deg) translateY(-20px); }
+        .active-fan .s-2 { transform: rotate(30deg) translateY(-10px); }
+        .active-fan .s-3 { transform: rotate(0deg) translateY(0px); }
+        .active-fan .s-4 { transform: rotate(-30deg) translateY(-10px); }
+        .active-fan .s-5 { transform: rotate(-60deg) translateY(-20px); }
 
-        .swatch-blade:hover { filter: brightness(1.2); box-shadow: 0 0 30px #fff; z-index: 5000 !important; height: 320px !important; }
-        .fan-text { color: #000; font-family: 'Special Elite', cursive; font-weight: 900; font-size: 20px; text-transform: uppercase; writing-mode: vertical-rl; transform: rotate(180deg); letter-spacing: 2px; text-shadow: 1px 0px 0px rgba(255,255,255,0.3); pointer-events: none; }
+        .swatch-blade:hover { filter: brightness(1.2); box-shadow: 0 0 30px #fff; z-index: 5000 !important; height: 220px !important; }
+        .fan-text { color: #000; font-family: 'Special Elite', cursive; font-weight: 900; font-size: 16px; text-transform: uppercase; writing-mode: vertical-rl; transform: rotate(180deg); letter-spacing: 1px; pointer-events: none; }
 
         .pivot-bolt {
-            position: absolute; left: -22px; top: -22px; width: 44px; height: 44px;
+            position: absolute; left: -18px; top: -18px; width: 36px; height: 36px;
             background: radial-gradient(circle at 30% 30%, #4a4d4f, #2a2d2f, #000);
             border: 3px solid #fff; border-radius: 50%; z-index: 6000; 
             opacity: 0; transition: 0.3s; cursor: pointer; pointer-events: auto;
@@ -180,7 +182,7 @@
 
     function closeFan() {
         fan.classList.remove('active-fan');
-        setTimeout(() => { fan.innerHTML = ''; }, 500);
+        setTimeout(() => { fan.innerHTML = ''; }, 400);
     }
 
     function openMode(mode, el) {
@@ -213,8 +215,8 @@
             fan.innerHTML = '<div class="pivot-bolt" onclick="openDecorFan()"></div>';
             items.forEach((src, i) => {
                 const b = document.createElement('div'); b.className = 'swatch-blade';
-                const ang = (i - (items.length-1)/2) * 28;
-                b.style.transform = `rotate(${ang}deg) translateY(${Math.abs(ang)*0.6 + 30}px)`;
+                const ang = (i - (items.length-1)/2) * 22;
+                b.style.transform = `rotate(${ang}deg) translateY(${Math.abs(ang)*0.4 + 15}px)`;
                 b.innerHTML = `<div class="fan-text">${src.split('.')[0]}</div>`;
                 b.onmouseenter = () => { pImg.src = src; pLabel.innerText = src.toUpperCase(); pGuide.style.display = 'none'; preview.style.display = 'flex'; };
                 b.onmouseleave = () => preview.style.display = 'none';
@@ -227,17 +229,11 @@
 
     function addItem(src, cat) {
         const img = document.createElement('img'); img.src = src; img.className = 'placed-item';
-        
         let isRug = (cat === 'Rugs' || src.toLowerCase().includes('rug'));
-        
-        // Starting size logic
         let baseWidth = isRug ? 450 : 280;
         img.style.width = baseWidth + "px";
-        img.style.left = "50px"; 
-        img.style.top = "50px";
-        
-        let flip = 1, currentScale = 1;
-        let flat = isRug;
+        img.style.left = "200px"; img.style.top = "150px";
+        let flip = 1, currentScale = 1, flat = isRug;
 
         const update = () => {
             let t = `scaleX(${flip * currentScale}) scaleY(${currentScale})`;
@@ -252,12 +248,12 @@
         };
         img.onmouseleave = () => preview.style.display = 'none';
 
-        img.onwheel = (e) => {
+        img.addEventListener('wheel', (e) => {
             e.preventDefault();
-            if (e.deltaY < 0) currentScale += 0.05;
-            else currentScale = Math.max(0.1, currentScale - 0.05);
+            if (e.deltaY < 0) currentScale += 0.08;
+            else currentScale = Math.max(0.1, currentScale - 0.08);
             update();
-        };
+        }, { passive: false });
 
         img.ondblclick = () => { img.remove(); preview.style.display = 'none'; };
         img.oncontextmenu = (e) => { e.preventDefault(); flip *= -1; update(); };
@@ -277,6 +273,9 @@
 
     function setRoom(s) { roomImg.src = s; roomImg.style.display = 'block'; }
     function lift(el) { document.querySelectorAll('.drawer-hardware').forEach(d => d.classList.remove('active-lift')); el.classList.add('active-lift'); }
+    function showCatalog() { hideOverlays(); document.getElementById('catalog-overlay').style.display = 'block'; cab.classList.remove('cabinet-visible'); }
+    function showLookBook() { hideOverlays(); document.getElementById('lookbook-overlay').style.display = 'block'; cab.classList.remove('cabinet-visible'); }
+    function hideOverlays() { document.getElementById('catalog-overlay').style.display = 'none'; document.getElementById('lookbook-overlay').style.display = 'none'; }
 </script>
 </body>
 </html>
