@@ -1,4 +1,3 @@
-// --- 1. GLOBAL ELEMENTS ---
 const roomImg = document.getElementById('room-display');
 const cab = document.getElementById('cab-container');
 const drawerStack = document.getElementById('drawer-anchor');
@@ -7,24 +6,18 @@ const previewBox = document.getElementById('hover-preview');
 const previewImg = document.getElementById('preview-img');
 const previewLabel = document.getElementById('preview-label');
 
-// --- 2. THE INVENTORY ---
 const catalogData = {
-    seating: { 'couches': [{ img: 'couch1.png' }], 'armchairs': [{ img: 'chair1.png' }] },
-    tables: { 'dining': [{ img: 'table1.png' }] },
-    storage: { 'cabinets': [{ img: 'cab1.png' }] }
+    seating: { 'Couches': [{ img: 'couch1.png' }], 'Chairs': [{ img: 'chair1.png' }] },
+    tables: { 'Dining': [{ img: 'table1.png' }] }
 };
 
 const decorData = { 
-    'LIGHTING': [{ img: 'lamp1.png' }], 
-    'RUGS': [
-        { img: 'rug1.png' }, { img: 'rug2.png' }, { img: 'rug3.png' }, 
-        { img: 'rug4.png' }, { img: 'rug5.png' }, { img: 'rug6.png' }
-    ],
-    'ART': [{ img: 'art1.png' }],
-    'PLANTS': [{ img: 'plant1.png' }]
+    'RUGS': [{ img: 'rug1.png' }, { img: 'rug2.png' }, { img: 'rug3.png' }, { img: 'rug4.png' }, { img: 'rug5.png' }, { img: 'rug6.png' }],
+    'PLANTS': [{ img: 'plant1.png' }],
+    'CURTAINS': [{ img: 'curtain1.png' }],
+    'MISC': [{ img: 'candle1.png' }, { img: 'frame1.png' }]
 };
 
-// --- 3. CABINET / FURNITURE LOGIC ---
 function openMode(mode, el) {
     cab.classList.add('cabinet-visible');
     drawerStack.innerHTML = '';
@@ -35,92 +28,51 @@ function openMode(mode, el) {
         drawerStack.innerHTML += `
             <div class="drawer-zone" onclick="${action}">
                 <div class="drawer-hardware">
-                    <div class="plate-style">${name}</div>
+                    <div class="plate-style"><span class="label-text">${name}</span></div>
+                    <div class="lip-pull"></div>
                 </div>
             </div>`;
     });
 }
 
-function selectRoom(src, el) {
-    roomImg.src = src;
+function openDecorFan(el) {
     fanSystem.classList.remove('active-fan');
     fanSystem.innerHTML = '<div class="pivot-bolt"></div>';
     
     setTimeout(() => {
         const dRect = el.getBoundingClientRect();
-        const wsRect = document.querySelector('.workspace').getBoundingClientRect();
-        fanSystem.style.top = (dRect.top - wsRect.top + 50) + 'px';
-        fanSystem.style.left = (dRect.right - wsRect.left - 30) + 'px';
-        fanSystem.style.transform = "none"; // Reset from center
+        fanSystem.style.top = dRect.bottom + 'px';
+        fanSystem.style.left = dRect.left + 'px';
 
-        Object.keys(catalogData).forEach((cat, i) => {
+        Object.keys(decorData).forEach((cat, i) => {
             const b = document.createElement('div');
             b.className = `swatch-blade s-${i + 1}`;
-            b.innerHTML = `<div class="fan-text" onclick="showSubtypes('${cat}')">${cat}</div>`;
+            b.innerHTML = `<div class="fan-text" onclick="showDecorItems('${cat}')">${cat}</div>`;
             fanSystem.appendChild(b);
         });
         fanSystem.classList.add('active-fan');
     }, 100);
 }
 
-function showSubtypes(cat) {
+function showDecorItems(cat) {
     fanSystem.classList.remove('active-fan');
     setTimeout(() => {
         fanSystem.innerHTML = '<div class="pivot-bolt"></div>';
-        Object.keys(catalogData[cat]).forEach((type, i) => {
+        decorData[cat].forEach((item, i) => {
             const b = document.createElement('div');
             b.className = `swatch-blade s-${i + 1}`;
-            b.innerHTML = `<div class="fan-text" onclick="showItems('${cat}', '${type}', 'furniture')">${type}</div>`;
-            fanSystem.appendChild(b);
-        });
-        fanSystem.classList.add('active-fan');
-    }, 400);
-}
-
-// --- 4. DECOR FAN LOGIC (CENTERED) ---
-function openDecorFan() {
-    fanSystem.classList.remove('active-fan');
-    fanSystem.innerHTML = '<div class="pivot-bolt"></div>';
-    
-    // Position in center of stage
-    fanSystem.style.top = "50%";
-    fanSystem.style.left = "50%";
-    fanSystem.style.transform = "translate(-50%, -50%)";
-
-    Object.keys(decorData).forEach((cat, i) => {
-        const b = document.createElement('div');
-        b.className = `swatch-blade s-${i + 1}`;
-        b.innerHTML = `<div class="fan-text" onclick="showItems('${cat}', null, 'decor')">${cat}</div>`;
-        fanSystem.appendChild(b);
-    });
-    
-    setTimeout(() => fanSystem.classList.add('active-fan'), 50);
-}
-
-// --- 5. UNIVERSAL ITEM DISPLAY & HOVER ---
-function showItems(cat, type, source) {
-    fanSystem.classList.remove('active-fan');
-    const dataSet = (source === 'decor') ? decorData[cat] : catalogData[cat][type];
-
-    setTimeout(() => {
-        fanSystem.innerHTML = '<div class="pivot-bolt"></div>';
-        dataSet.forEach((item, i) => {
-            const b = document.createElement('div');
-            b.className = `swatch-blade s-${i + 1}`;
-            
             const imgEl = document.createElement('img');
             imgEl.src = item.img;
             imgEl.className = "fan-img-fill";
 
-            // Picture Box Trigger
-            imgEl.onmouseenter = (e) => {
+            imgEl.onmouseenter = () => {
                 previewBox.style.display = 'block';
                 previewImg.src = item.img;
-                previewLabel.innerText = `${cat} #${i + 1}`;
+                previewLabel.innerText = `${cat} Selection #${i+1}`;
             };
             imgEl.onmousemove = (e) => {
-                previewBox.style.left = (e.clientX + 25) + 'px';
-                previewBox.style.top = (e.clientY - 150) + 'px';
+                previewBox.style.left = (e.clientX + 20) + 'px';
+                previewBox.style.top = (e.clientY - 120) + 'px';
             };
             imgEl.onmouseleave = () => previewBox.style.display = 'none';
             imgEl.onclick = () => addToRoom(item.img);
@@ -132,19 +84,15 @@ function showItems(cat, type, source) {
     }, 400);
 }
 
-// --- 6. ADD TO ROOM ---
 function addToRoom(src) {
     const wrapper = document.createElement("div");
     wrapper.style.position = "absolute";
     wrapper.style.left = "50%"; wrapper.style.top = "50%";
-    wrapper.style.cursor = "grab";
     
     const img = document.createElement("img");
     img.src = src;
-    img.style.width = src.includes('rug') ? "450px" : "250px"; 
-    
-    // Layering: Rugs go to the back
-    wrapper.style.zIndex = src.includes('rug') ? "5" : "100";
+    img.style.width = src.includes('rug') ? "400px" : "200px";
+    img.style.zIndex = src.includes('rug') ? "1" : "10";
 
     wrapper.onmousedown = (e) => {
         let sx = e.clientX - wrapper.getBoundingClientRect().left;
