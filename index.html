@@ -13,7 +13,7 @@
             min-height: 100vh; font-family: 'Special Elite', cursive; color: #fff; overflow-x: hidden;
         }
 
-        /* --- MASSIVE HEADER --- */
+        /* --- HEADER --- */
         .site-header { text-align: center; padding: 60px 0 30px; position: relative; z-index: 10; }
         .brand-title {
             font-family: 'Limelight', cursive; font-size: 100px;
@@ -32,17 +32,10 @@
             border: 3px solid #000;
             box-shadow: inset 0 0 0 2px #444, inset 10px 0 20px rgba(0,0,0,0.8), 0 15px 25px rgba(0,0,0,0.8);
             display: flex; align-items: center; justify-content: center;
-            cursor: pointer; transition: transform 0.2s, filter 0.2s;
+            cursor: pointer; transition: transform 0.2s;
             z-index: 2000;
         }
-        .drawer-hardware:hover { filter: brightness(1.3) contrast(1.1); transform: translateY(-4px); }
-        .drawer-hardware::before, .drawer-hardware::after {
-            content: ''; position: absolute; top: 50%; transform: translateY(-50%);
-            width: 16px; height: 16px; border-radius: 50%;
-            background: radial-gradient(circle, #111 20%, #555 100%); box-shadow: 0 1px 0 rgba(255,255,255,0.1);
-        }
-        .drawer-hardware::before { left: 15px; }
-        .drawer-hardware::after { right: 15px; }
+        .drawer-hardware:hover { transform: translateY(-4px); }
         .plate-style {
             width: 190px; height: 50px;
             background: linear-gradient(to bottom, #dcdcdc 0%, #8e9196 50%, #b0b0b0 100%);
@@ -54,9 +47,9 @@
         .lip-pull {
             position: absolute; bottom: -14px; left: 50%; transform: translateX(-50%);
             width: 140px; height: 24px; background: linear-gradient(to bottom, #2c2e30, #000);
-            border: 2px solid #111; border-top: none; border-radius: 0 0 15px 15px; box-shadow: 0 5px 10px rgba(0,0,0,0.8);
+            border: 2px solid #111; border-top: none; border-radius: 0 0 15px 15px;
         }
-        .active-lift { transform: translateY(15px) !important; filter: brightness(1.4) !important; }
+        .active-lift { transform: translateY(15px) !important; }
 
         /* --- WORKSPACE --- */
         .workspace { display: flex; padding: 40px; position: relative; height: 800px; }
@@ -69,35 +62,54 @@
         .drawer-stack { position: absolute; top: 130px; left: 55px; width: 400px; display: flex; flex-direction: column; align-items: center; gap: 30px; }
         .drawer-zone { width: 100%; height: 120px; cursor: pointer; display: flex; align-items: center; justify-content: center; }
 
-        /* --- DECOR FAN SYSTEM --- */
-        .fan-system { position: absolute; z-index: 500; pointer-events: none; transition: top 0.3s, left 0.3s; }
+        /* --- THE FAN SYSTEM (GLITCH-FREE) --- */
+        .fan-system { 
+            position: absolute; 
+            z-index: 3000; 
+            pointer-events: none; 
+            backface-visibility: hidden;
+            transform: translateZ(0); /* Force GPU acceleration */
+        }
         
         .swatch-blade {
-            position: absolute; left: -40px; top: 50px; width: 85px; height: 0px;
+            position: absolute; 
+            left: -42px; 
+            top: 50px; 
+            width: 85px; 
+            height: 0px;
             background: linear-gradient(to bottom, #dcdcdc, #999, #666);
-            border: 2px solid #222; border-radius: 0 0 30px 30px;
+            border: 2px solid #222; 
+            border-radius: 0 0 30px 30px;
             transform-origin: top center;
-            transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.1);
-            opacity: 0; display: flex; align-items: center; justify-content: center;
-            box-shadow: 5px 10px 15px rgba(0,0,0,0.5);
+            opacity: 0; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center;
             cursor: pointer;
+            transition: height 0.4s ease, transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94), opacity 0.3s;
+            box-shadow: 5px 5px 15px rgba(0,0,0,0.5);
         }
         
-        .active-fan .swatch-blade { height: 280px; opacity: 1; pointer-events: auto; }
-
-        .swatch-blade:hover {
-            filter: brightness(1.2);
-            box-shadow: 0 0 30px #fff;
-            z-index: 1000 !important;
-            transform: scale(1.08) !important;
+        .active-fan .swatch-blade { 
+            height: 280px; 
+            opacity: 1; 
+            pointer-events: auto; 
         }
 
-        /* Wide Category Spread */
-        .active-fan .s-1 { transform: rotate(50deg) translateY(10px); }
-        .active-fan .s-2 { transform: rotate(25deg) translateY(40px); }
-        .active-fan .s-3 { transform: rotate(0deg) translateY(60px); }
-        .active-fan .s-4 { transform: rotate(-25deg) translateY(40px); }
-        .active-fan .s-5 { transform: rotate(-50deg) translateY(10px); }
+        .swatch-blade:hover {
+            filter: brightness(1.15);
+            box-shadow: 0 0 25px rgba(255,255,255,0.8);
+            z-index: 5000 !important;
+            /* Keep the rotation while adding scale to prevent jumping */
+            transform: scale(1.05) rotate(inherit) !important;
+        }
+
+        /* Fixed Spread Logic to prevent snap-back */
+        .active-fan .s-1 { transform: rotate(50deg); }
+        .active-fan .s-2 { transform: rotate(25deg); }
+        .active-fan .s-3 { transform: rotate(0deg); }
+        .active-fan .s-4 { transform: rotate(-25deg); }
+        .active-fan .s-5 { transform: rotate(-50deg); }
 
         .fan-text {
             color: #000; font-family: 'Special Elite', cursive; font-weight: 900;
@@ -109,7 +121,7 @@
         .pivot-bolt {
             position: absolute; left: -18px; top: -18px; width: 36px; height: 36px;
             background: radial-gradient(circle at 30% 30%, #4a4d4f, #2a2d2f, #000);
-            border: 3px solid #000; border-radius: 5px; z-index: 600; opacity: 0; transition: 0.3s;
+            border: 3px solid #000; border-radius: 5px; z-index: 4000; opacity: 0; transition: 0.3s;
         }
         .active-fan .pivot-bolt { opacity: 1; }
 
@@ -118,19 +130,17 @@
             position: fixed; bottom: 40px; right: 40px; width: 220px; height: 220px;
             background: rgba(10, 10, 10, 0.95); border: 2px solid #fff;
             display: none; flex-direction: column; align-items: center; justify-content: center;
-            box-shadow: 0 0 30px rgba(255, 255, 255, 0.2); z-index: 5000;
+            z-index: 9999;
         }
         #preview-box img { max-width: 90%; max-height: 160px; object-fit: contain; }
-        #preview-label { font-size: 14px; margin-top: 10px; color: #fff; text-align: center; }
 
         /* --- STAGE --- */
         .stage {
             width: 1000px; height: 600px; background: #050505; border: 20px solid #2c2e30; margin-left: 650px;
-            position: relative; overflow: hidden; box-shadow: inset 0 0 80px #000;
+            position: relative; overflow: hidden;
         }
         #room-display { width: 100%; height: 100%; object-fit: cover; display: none; }
-        .placed-item { position: absolute; width: 220px; cursor: move; z-index: 1500; filter: drop-shadow(10px 15px 20px rgba(0,0,0,0.6)); }
-
+        .placed-item { position: absolute; width: 220px; cursor: move; z-index: 1500; }
     </style>
 </head>
 <body>
@@ -142,8 +152,8 @@
 
 <nav class="vintage-tabs">
     <div class="drawer-hardware" onclick="lift(this); openMode('rooms', this)"><div class="plate-style">Rooms</div><div class="lip-pull"></div></div>
-    <div class="drawer-hardware" onclick="lift(this); showLookBook()"><div class="plate-style">Inspiration</div><div class="lip-pull"></div></div>
-    <div class="drawer-hardware" onclick="lift(this); showCatalog()"><div class="plate-style">Furniture Catalog</div><div class="lip-pull"></div></div>
+    <div class="drawer-hardware" onclick="lift(this); openMode('inspiration', this)"><div class="plate-style">Inspiration</div><div class="lip-pull"></div></div>
+    <div class="drawer-hardware" onclick="lift(this); openMode('catalog', this)"><div class="plate-style">Catalog</div><div class="lip-pull"></div></div>
     <div class="drawer-hardware" onclick="lift(this); openMode('decor', this)"><div class="plate-style">Decor</div><div class="lip-pull"></div></div>
 </nav>
 
@@ -160,14 +170,13 @@
 
 <div id="preview-box">
     <img id="preview-img" src="">
-    <div id="preview-label"></div>
+    <div id="preview-label" style="margin-top:10px; text-transform:uppercase;"></div>
 </div>
 
 <script>
-    const roomImg = document.getElementById('room-display');
+    const fanSystem = document.getElementById('fan-system');
     const cab = document.getElementById('cab-container');
     const drawerStack = document.getElementById('drawer-anchor');
-    const fanSystem = document.getElementById('fan-system');
     const previewBox = document.getElementById('preview-box');
     const previewImg = document.getElementById('preview-img');
     const previewLabel = document.getElementById('preview-label');
@@ -180,24 +189,24 @@
 
     function openMode(mode, el) {
         fanSystem.classList.remove('active-fan');
-        setTimeout(() => {
-            fanSystem.innerHTML = '';
-            if (mode === 'decor') {
-                cab.classList.remove('cabinet-visible');
-                const rect = el.getBoundingClientRect();
-                const workspaceRect = document.querySelector('.workspace').getBoundingClientRect();
-                fanSystem.style.left = (rect.left - workspaceRect.left + (rect.width / 2)) + 'px';
-                fanSystem.style.top = '-80px';
-                setTimeout(openDecorFan, 50);
-            } else if (mode === 'rooms') {
-                cab.classList.add('cabinet-visible');
-                drawerStack.innerHTML = '';
-                const rooms = [{name:'Living Room', file:'livingroom2.jpg'}, {name:'Bedroom', file:'bedroom.jpg'}, {name:'Dining Room', file:'diningroom.jpg'}];
-                rooms.forEach(data => {
-                    drawerStack.innerHTML += `<div class="drawer-zone" onclick="selectRoom('${data.file}')"><div class="drawer-hardware"><div class="plate-style">${data.name}</div><div class="lip-pull"></div></div></div>`;
-                });
-            }
-        }, 300);
+        // Clear immediately to prevent overlapping DOM
+        fanSystem.innerHTML = ''; 
+        
+        if (mode === 'decor') {
+            cab.classList.remove('cabinet-visible');
+            const rect = el.getBoundingClientRect();
+            const workspaceRect = document.querySelector('.workspace').getBoundingClientRect();
+            fanSystem.style.left = (rect.left - workspaceRect.left + (rect.width / 2)) + 'px';
+            fanSystem.style.top = '-80px';
+            setTimeout(openDecorFan, 50);
+        } else if (mode === 'rooms') {
+            cab.classList.add('cabinet-visible');
+            drawerStack.innerHTML = '';
+            const rooms = [{name:'Living Room', file:'livingroom2.jpg'}, {name:'Bedroom', file:'bedroom.jpg'}, {name:'Dining Room', file:'diningroom.jpg'}];
+            rooms.forEach(data => {
+                drawerStack.innerHTML += `<div class="drawer-zone" onclick="selectRoom('${data.file}')"><div class="drawer-hardware"><div class="plate-style">${data.name}</div><div class="lip-pull"></div></div></div>`;
+            });
+        }
     }
 
     function openDecorFan() {
@@ -208,29 +217,25 @@
             blade.className = `swatch-blade s-${i + 1}`;
             blade.innerHTML = `<div class="fan-text">${cat}</div>`;
             blade.onclick = () => { 
-                if(inventory[cat]) openItemFan(inventory[cat]); 
-                else if(cat === 'Extras') openExtrasMenu();
-                else alert(cat + ' coming soon');
+                if(inventory[cat]) openItemFan(inventory[cat], cat); 
+                else alert(cat + " items coming soon!");
             };
             fanSystem.appendChild(blade);
         });
-        setTimeout(() => fanSystem.classList.add('active-fan'), 50);
+        // Tiny delay ensures CSS transitions trigger correctly
+        requestAnimationFrame(() => fanSystem.classList.add('active-fan'));
     }
 
-    function openItemFan(items) {
+    function openItemFan(items, catName) {
         fanSystem.classList.remove('active-fan');
         setTimeout(() => {
             fanSystem.innerHTML = '<div class="pivot-bolt"></div>';
             items.forEach((imgSrc, i) => {
                 const blade = document.createElement('div');
                 blade.className = 'swatch-blade';
+                const angle = (i - (items.length - 1) / 2) * 15;
                 
-                // Wide spread for items: total arc of ~120 degrees
-                const arcWidth = 120;
-                const angle = (i - (items.length - 1) / 2) * (arcWidth / (items.length - 1 || 1));
-                const verticalDrop = Math.abs(angle) * 1.2 + 20; // Lower drop for center items
-                
-                blade.style.transform = `rotate(${angle}deg) translateY(${verticalDrop}px)`;
+                blade.style.transform = `rotate(${angle}deg)`;
                 blade.innerHTML = `<div class="fan-text">${imgSrc.split('.')[0]}</div>`;
                 
                 blade.onmouseenter = () => {
@@ -243,24 +248,25 @@
                 fanSystem.appendChild(blade);
             });
             
+            // Back Button
             const back = document.createElement('div');
             back.className = 'swatch-blade';
             back.style.background = 'linear-gradient(to bottom, #422, #211)';
-            back.style.transform = 'translateY(360px)'; // Moved further down to clear the items
+            back.style.transform = 'translateY(340px)';
             back.innerHTML = '<div class="fan-text" style="color:white">BACK</div>';
             back.onclick = openDecorFan;
             fanSystem.appendChild(back);
             
-            setTimeout(() => fanSystem.classList.add('active-fan'), 50);
-        }, 500);
+            requestAnimationFrame(() => fanSystem.classList.add('active-fan'));
+        }, 400);
     }
 
-    function openExtrasMenu() {
-        alert("Extras engaged.");
+    function selectRoom(src) { 
+        const display = document.getElementById('room-display');
+        display.src = src; 
+        display.style.display = 'block'; 
     }
 
-    function selectRoom(src) { roomImg.src = src; roomImg.style.display = 'block'; }
-    
     function addToRoom(src) {
         const img = document.createElement("img");
         img.src = src;
