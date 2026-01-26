@@ -1,20 +1,4 @@
-const roomImg = document.getElementById('room-display');
-const cab = document.getElementById('cab-container');
-const drawerStack = document.getElementById('drawer-anchor');
-const fanSystem = document.getElementById('fan-system');
-const fileInput = document.getElementById('file-upload');
-
-let currentLockedRoom = null;
-
-const catalogData = {
-    seating: { couches: ['couch1.png'], chairs: ['chair1.png'] },
-    tables: { coffee: ['coffeetable.png'], dining: ['table2.png'] },
-    storage: { shelves: ['shelf1.png'], dressers: ['dresser1.png'] },
-    beds: { frames: ['bed1.png'] }
-};
-
 function openMode(mode, el) {
-    // Reset any active fans first
     fanSystem.classList.remove('active-fan');
     fanSystem.innerHTML = ''; 
     hideOverlays();
@@ -22,15 +6,12 @@ function openMode(mode, el) {
     if (mode === 'decor') {
         cab.classList.remove('cabinet-visible');
         if(el) {
-            // Anchor the fan directly under the Decor tab
             const rect = el.getBoundingClientRect();
             const workspaceRect = document.querySelector('.workspace').getBoundingClientRect();
             const leftPos = rect.left - workspaceRect.left + (rect.width / 2);
-            
             fanSystem.style.left = leftPos + 'px';
-            fanSystem.style.top = '60px'; // Positions it just under the nav hardware
+            fanSystem.style.top = '60px'; 
         }
-        // Small delay to let the DOM settle before fanning out
         setTimeout(openDecorFan, 50);
 
     } else if (mode === 'rooms') {
@@ -49,14 +30,13 @@ function openMode(mode, el) {
             const drawer = document.createElement('div');
             drawer.className = 'drawer-zone';
             
-            // --- INSTANT PREVIEW & GLOW ---
+            // Hover Preview Logic
             if (data.name !== 'Upload') {
                 drawer.onmouseenter = () => {
                     roomImg.src = data.file;
                     roomImg.style.display = 'block';
                 };
                 drawer.onmouseleave = () => {
-                    // Reverts to the clicked room, or hides if none selected
                     if (currentLockedRoom) {
                         roomImg.src = currentLockedRoom;
                     } else {
@@ -70,9 +50,6 @@ function openMode(mode, el) {
                     triggerUpload();
                 } else {
                     selectRoom(data.file); 
-                    // Add active lift state
-                    document.querySelectorAll('.drawer-hardware').forEach(d => d.classList.remove('active-lift'));
-                    drawer.querySelector('.drawer-hardware').classList.add('active-lift');
                 }
             };
 
@@ -92,61 +69,29 @@ function openMode(mode, el) {
 function openDecorFan() {
     fanSystem.classList.add('fan-down');
     fanSystem.innerHTML = '<div class="pivot-bolt"></div>';
-    const items = ['Lighting', 'Rugs', 'Art', 'Decor']; 
+    
+    // The Big 5
+    const items = ['Lighting', 'Rugs', 'Plants', 'Curtains', 'Extras']; 
 
     items.forEach((item, i) => {
         const blade = document.createElement('div');
         blade.className = `swatch-blade s-${i + 1}`;
-        blade.innerHTML = `<div class="fan-text" onclick="alert('${item} clicked!')">${item}</div>`;
+        
+        blade.onclick = () => {
+            const catKey = item.toLowerCase();
+            // Try to open the catalog for this category
+            showCatalog();
+            const catItems = document.querySelectorAll('#cat-col .index-item');
+            catItems.forEach(el => {
+                if(el.innerText.toLowerCase() === catKey) selectCat(catKey, el);
+            });
+        };
+
+        blade.innerHTML = `<div class="fan-text">${item}</div>`;
         fanSystem.appendChild(blade);
     });
 
-    // The "Kickstart": ensures the browser animates the rotation
     setTimeout(() => {
         fanSystem.classList.add('active-fan');
     }, 100);
-}
-
-/* --- THE REST OF YOUR UTILITIES (Kept exactly as they were) --- */
-
-function showCatalog() {
-    cab.classList.remove('cabinet-visible');
-    fanSystem.classList.remove('active-fan');
-    document.getElementById('lookbook-overlay').style.display = 'none';
-    document.getElementById('catalog-overlay').style.display = 'block';
-}
-
-function showLookBook() {
-    cab.classList.remove('cabinet-visible');
-    fanSystem.classList.remove('active-fan');
-    document.getElementById('catalog-overlay').style.display = 'none';
-    document.getElementById('lookbook-overlay').style.display = 'block';
-}
-
-function hideOverlays() {
-    document.getElementById('catalog-overlay').style.display = 'none';
-    document.getElementById('lookbook-overlay').style.display = 'none';
-}
-
-function selectRoom(src) {
-    currentLockedRoom = src;
-    roomImg.src = src;
-    roomImg.style.display = 'block';
-}
-
-function triggerUpload() { fileInput.click(); }
-
-fileInput.addEventListener('change', function() {
-    const file = this.files[0];
-    if (file) {
-        const reader = new FileReader();
-        reader.onload = function(e) { selectRoom(e.target.result); }
-        reader.readAsDataURL(file);
-    }
-});
-
-// Reuse your existing lift function for the top nav
-function lift(el) {
-    document.querySelectorAll('.drawer-hardware').forEach(d => d.classList.remove('active-lift'));
-    el.classList.add('active-lift');
 }
