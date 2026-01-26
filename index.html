@@ -6,296 +6,159 @@
     <title>Room Glow Up | Grand Studio</title>
     <link href="https://fonts.googleapis.com/css2?family=Limelight&family=Special+Elite&display=swap" rel="stylesheet">
     <style>
-        /* --- GLOBAL SETUP --- */
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body {
-            background: #0f1011 url("background_color.jpg") center / cover fixed;
-            min-height: 100vh; font-family: 'Special Elite', cursive; color: #fff; overflow-x: hidden;
-        }
-
-        /* --- HEADER & NAV --- */
-        .site-header { text-align: center; padding: 60px 0 30px; position: relative; z-index: 10; }
-        .brand-title {
-            font-family: 'Limelight', cursive; font-size: 100px;
-            text-transform: uppercase;
-            background: linear-gradient(to bottom, #ffffff 0%, #dcdcdc 50%, #8e9196 51%, #a8a8a8 100%);
-            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-            text-shadow: 0px 5px 15px rgba(0,0,0,0.6); letter-spacing: 4px;
-        }
-        .sub-title { font-size: 24px; color: #8e9196; letter-spacing: 8px; margin-top: -10px; text-transform: uppercase; }
-
-        .vintage-tabs { display: flex; justify-content: center; gap: 30px; padding: 30px 0; z-index: 2000; position: relative; }
-        .drawer-hardware {
-            position: relative; width: 280px; height: 100px;
-            background: linear-gradient(135deg, #2c2e30 0%, #1a1a1a 100%);
-            border: 3px solid #000;
-            display: flex; align-items: center; justify-content: center;
-            cursor: pointer; transition: transform 0.2s;
-        }
-        .plate-style {
-            width: 190px; height: 50px;
-            background: linear-gradient(to bottom, #dcdcdc 0%, #8e9196 50%, #b0b0b0 100%);
-            color: #000; display: flex; align-items: center; justify-content: center;
-            font-family: 'Special Elite', cursive; font-size: 18px; font-weight: 900; text-transform: uppercase;
-        }
-        .active-lift { transform: translateY(15px) !important; }
-
-        /* --- STABLE FAN SYSTEM --- */
-        .fan-system { 
-            position: absolute; 
-            z-index: 4000; 
-            pointer-events: none; 
-            transform: translateZ(0); 
-        }
+        body { background: #0f1011; font-family: 'Special Elite', cursive; color: #fff; overflow: hidden; }
         
-        .swatch-blade {
-            position: absolute; 
-            left: -25px; 
-            top: 50px; 
-            width: 50px; 
-            height: 0px;
-            background: linear-gradient(to bottom, #dcdcdc, #999, #666);
-            border: 2px solid #222; 
-            border-radius: 0 0 25px 25px;
-            transform-origin: top center;
-            opacity: 0; 
-            display: flex; 
-            align-items: center; 
-            justify-content: center;
-            cursor: pointer;
-            transition: height 0.5s ease, transform 0.5s cubic-bezier(0.165, 0.84, 0.44, 1), opacity 0.3s;
-            box-shadow: 5px 5px 15px rgba(0,0,0,0.5);
-        }
-        
-        .active-fan .swatch-blade { 
-            height: 300px; 
-            opacity: 1; 
-            pointer-events: auto; 
-        }
+        /* HEADER & TABS */
+        .site-header { text-align: center; padding: 40px 0 20px; }
+        .brand-title { font-family: 'Limelight', cursive; font-size: 80px; text-transform: uppercase; background: linear-gradient(#fff, #8e9196); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .vintage-tabs { display: flex; justify-content: center; gap: 20px; z-index: 2000; position: relative; }
+        .drawer-hardware { width: 220px; height: 80px; background: #1a1a1a; border: 2px solid #000; display: flex; align-items: center; justify-content: center; cursor: pointer; }
+        .plate-style { width: 160px; height: 40px; background: #8e9196; color: #000; display: flex; align-items: center; justify-content: center; font-weight: 900; }
 
-        /* WIDER SPREAD */
-        .active-fan .s-1 { transform: rotate(75deg) translateY(5px); }
-        .active-fan .s-2 { transform: rotate(38deg) translateY(35px); }
-        .active-fan .s-3 { transform: rotate(0deg) translateY(55px); }
-        .active-fan .s-4 { transform: rotate(-38deg) translateY(35px); }
-        .active-fan .s-5 { transform: rotate(-75deg) translateY(5px); }
+        /* FAN SYSTEM */
+        .fan-system { position: absolute; z-index: 4000; pointer-events: none; }
+        .swatch-blade { position: absolute; left: -25px; top: 50px; width: 50px; height: 0; background: linear-gradient(#dcdcdc, #666); border: 2px solid #222; border-radius: 0 0 25px 25px; transform-origin: top center; opacity: 0; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: all 0.5s cubic-bezier(0.165, 0.84, 0.44, 1); }
+        .active-fan .swatch-blade { height: 280px; opacity: 1; pointer-events: auto; }
+        .active-fan .s-1 { transform: rotate(70deg); } .active-fan .s-2 { transform: rotate(35deg); } .active-fan .s-3 { transform: rotate(0deg); } .active-fan .s-4 { transform: rotate(-35deg); } .active-fan .s-5 { transform: rotate(-70deg); }
+        .swatch-blade:hover { filter: brightness(1.2); box-shadow: 0 0 20px #fff; z-index: 5000 !important; }
+        .fan-text { color: #000; font-weight: 900; font-size: 18px; writing-mode: vertical-rl; transform: rotate(180deg); }
 
-        .swatch-blade:hover {
-            filter: brightness(1.2);
-            box-shadow: 0 0 30px rgba(255,255,255,1);
-            z-index: 5000 !important;
-            height: 320px !important;
-        }
-
-        /* BOLDER TYPEWRITER TEXT */
-        .fan-text {
-            color: #000; 
-            font-family: 'Special Elite', cursive; 
-            font-weight: 900; 
-            font-size: 20px; 
-            text-transform: uppercase; 
-            writing-mode: vertical-rl;
-            transform: rotate(180deg); 
-            letter-spacing: 2px;
-            text-shadow: 1px 0px 0px rgba(0,0,0,0.3);
-            pointer-events: none;
-        }
-
-        /* RESET BUTTON (CENTER PIVOT BOLT) */
-        .pivot-bolt {
-            position: absolute; left: -22px; top: -22px; width: 44px; height: 44px;
-            background: radial-gradient(circle at 30% 30%, #4a4d4f, #2a2d2f, #000);
-            border: 3px solid #fff; border-radius: 50%; z-index: 6000; 
-            opacity: 0; transition: 0.3s; cursor: pointer; pointer-events: auto;
-            box-shadow: 0 0 10px rgba(255,255,255,0.5);
-        }
-        .pivot-bolt:hover { transform: scale(1.1); box-shadow: 0 0 20px #fff; }
+        .pivot-bolt { position: absolute; left: -20px; top: -20px; width: 40px; height: 40px; background: #000; border: 2px solid #fff; border-radius: 50%; z-index: 6000; opacity: 0; cursor: pointer; pointer-events: auto; transition: 0.3s; }
         .active-fan .pivot-bolt { opacity: 1; }
 
-        /* --- PREVIEW BOX --- */
-        #preview-box {
-            position: fixed; bottom: 40px; right: 40px; width: 220px; height: 220px;
-            background: rgba(10, 10, 10, 0.95); border: 2px solid #fff;
-            display: none; flex-direction: column; align-items: center; justify-content: center;
-            z-index: 9999; pointer-events: none;
-        }
-        #preview-box img { max-width: 90%; max-height: 160px; object-fit: contain; }
-        .preview-label { margin-top:10px; text-transform:uppercase; font-weight: 900; font-size: 14px; color: #fff; }
+        /* PREVIEW BOX */
+        #preview-box { position: fixed; bottom: 30px; right: 30px; width: 220px; height: 250px; background: rgba(0,0,0,0.95); border: 2px solid #fff; display: none; flex-direction: column; align-items: center; justify-content: center; z-index: 9999; pointer-events: none; }
+        #preview-box img { max-width: 80%; max-height: 140px; object-fit: contain; }
+        .guide-text { font-size: 11px; color: #fff; margin-top: 10px; text-align: center; line-height: 1.5; font-weight: bold; background: #333; width: 100%; padding: 5px 0; }
 
-        /* --- WORKSPACE --- */
-        .workspace { display: flex; padding: 40px; position: relative; height: 800px; }
-        .cabinet-container {
-            position: absolute; left: -650px; top: 0; width: 500px;
-            transition: left 0.8s cubic-bezier(0.19, 1, 0.22, 1); z-index: 100;
-        }
-        .cabinet-visible { left: 50px !important; }
-        .cabinet-image { width: 100%; filter: drop-shadow(15px 15px 40px rgba(0,0,0,0.9)); }
-        .drawer-stack { position: absolute; top: 130px; left: 55px; width: 400px; display: flex; flex-direction: column; align-items: center; gap: 30px; }
-        .stage {
-            width: 1000px; height: 600px; background: #050505; border: 20px solid #2c2e30; margin-left: 650px;
-            position: relative; overflow: hidden;
-        }
+        /* STAGE */
+        .workspace { display: flex; height: 700px; padding: 20px; position: relative; perspective: 1200px; }
+        .cabinet-container { position: absolute; left: -500px; width: 400px; transition: 0.8s; }
+        .cabinet-visible { left: 40px !important; }
+        .stage { width: 950px; height: 550px; background: #050505; border: 15px solid #222; margin-left: auto; position: relative; overflow: hidden; box-shadow: inset 0 0 50px #000; }
         #room-display { width: 100%; height: 100%; object-fit: cover; display: none; }
-        .placed-item { position: absolute; width: 220px; cursor: move; z-index: 1500; filter: drop-shadow(10px 15px 20px rgba(0,0,0,0.6)); }
+        .placed-item { position: absolute; width: 220px; cursor: move; z-index: 1500; filter: drop-shadow(10px 10px 20px rgba(0,0,0,0.7)); transition: transform 0.2s ease; }
     </style>
 </head>
 <body>
 
-<header class="site-header">
-    <h1 class="brand-title">Room Glow Up</h1>
-    <div class="sub-title">Your Dream Space Come To Life</div>
-</header>
+<header class="site-header"><h1 class="brand-title">Room Glow Up</h1></header>
 
 <nav class="vintage-tabs">
-    <div class="drawer-hardware" onclick="lift(this); openMode('rooms', this)"><div class="plate-style">Rooms</div></div>
-    <div class="drawer-hardware" onclick="lift(this); openMode('inspiration', this)"><div class="plate-style">Inspiration</div></div>
-    <div class="drawer-hardware" onclick="lift(this); openMode('catalog', this)"><div class="plate-style">Catalog</div></div>
-    <div class="drawer-hardware" onclick="lift(this); openMode('decor', this)"><div class="plate-style">Decor</div></div>
+    <div class="drawer-hardware" onclick="openMode('rooms', this)"><div class="plate-style">Rooms</div></div>
+    <div class="drawer-hardware" onclick="openMode('decor', this)"><div class="plate-style">Decor</div></div>
 </nav>
 
 <div class="workspace">
-    <div class="cabinet-container" id="cab-container">
-        <img src="cabinet.png" class="cabinet-image">
-        <div class="drawer-stack" id="drawer-anchor"></div>
-    </div>
+    <div id="cab" class="cabinet-container"><div id="drawers" style="display:flex; flex-direction:column; gap:20px; padding-left:40px;"></div></div>
     <div id="fan-system" class="fan-system"></div>
-    <div class="stage" id="stage-zone">
-        <img id="room-display">
-    </div>
+    <div class="stage" id="stage"><img id="room-display"></div>
 </div>
 
 <div id="preview-box">
-    <img id="preview-img" src="">
-    <div id="preview-label" class="preview-label"></div>
+    <img id="preview-img">
+    <div id="preview-label" style="font-weight:900; margin-top:5px; color:#fff;"></div>
+    <div id="helpful-guide" class="guide-text" style="display:none;"></div>
 </div>
 
 <script>
-    const fanSystem = document.getElementById('fan-system');
-    const cab = document.getElementById('cab-container');
-    const drawerStack = document.getElementById('drawer-anchor');
-    const previewBox = document.getElementById('preview-box');
-    const previewImg = document.getElementById('preview-img');
-    const previewLabel = document.getElementById('preview-label');
+    const fan = document.getElementById('fan-system');
+    const preview = document.getElementById('preview-box');
+    const pImg = document.getElementById('preview-img');
+    const pLabel = document.getElementById('preview-label');
+    const pGuide = document.getElementById('helpful-guide');
 
     const inventory = {
-        'Rugs': ['rug1.png', 'rug2.png', 'rug3.png', 'rug4.png', 'rug5.png', 'rug6.png'],
-        'Plants': ['plant1.png', 'plant2.png', 'plant3.png', 'plant4.png', 'plant5.png'],
-        'Curtains': ['curtains1.png', 'curtains2.png', 'curtains3.png', 'curtains4.png', 'curtains5.png']
+        'Rugs': ['rug1.png','rug2.png','rug3.png','rug4.png','rug5.png','rug6.png'],
+        'Plants': ['plant1.png','plant2.png','plant3.png','plant4.png','plant5.png'],
+        'Curtains': ['curtains1.png','curtains2.png','curtains3.png','curtains4.png','curtains5.png']
     };
 
     function openMode(mode, el) {
-        fanSystem.classList.remove('active-fan');
-        fanSystem.innerHTML = ''; 
-        
+        fan.classList.remove('active-fan'); fan.innerHTML = '';
         if (mode === 'decor') {
-            cab.classList.remove('cabinet-visible');
-            const rect = el.getBoundingClientRect();
-            const workspaceRect = document.querySelector('.workspace').getBoundingClientRect();
-            fanSystem.style.left = (rect.left - workspaceRect.left + (rect.width / 2)) + 'px';
-            fanSystem.style.top = '-80px';
-            setTimeout(openDecorFan, 50);
-        } else if (mode === 'rooms') {
-            cab.classList.add('cabinet-visible');
-            drawerStack.innerHTML = '';
-            const rooms = [{name:'Living Room', file:'livingroom2.jpg'}, {name:'Bedroom', file:'bedroom.jpg'}, {name:'Dining Room', file:'diningroom.jpg'}];
-            rooms.forEach(data => {
-                drawerStack.innerHTML += `<div class="drawer-zone" onclick="selectRoom('${data.file}')"><div class="drawer-hardware"><div class="plate-style">${data.name}</div></div></div>`;
-            });
+            document.getElementById('cab').classList.remove('cabinet-visible');
+            const r = el.getBoundingClientRect();
+            fan.style.left = (r.left + r.width/2) + 'px'; fan.style.top = '100px';
+            setTimeout(openDecorFan, 100);
+        } else {
+            document.getElementById('cab').classList.add('cabinet-visible');
+            const rooms = ['Living Room', 'Bedroom', 'Dining Room'];
+            document.getElementById('drawers').innerHTML = rooms.map(n => `<div class="drawer-hardware" onclick="setRoom('${n.toLowerCase().replace(' ','')}.jpg')"><div class="plate-style">${n}</div></div>`).join('');
         }
     }
 
     function openDecorFan() {
-        fanSystem.classList.remove('active-fan');
+        fan.innerHTML = '<div class="pivot-bolt" onclick="openDecorFan()"></div>';
+        ['Lighting','Rugs','Curtains','Plants','Extras'].forEach((c, i) => {
+            const b = document.createElement('div'); b.className = `swatch-blade s-${i+1}`;
+            b.innerHTML = `<div class="fan-text">${c}</div>`;
+            b.onclick = () => inventory[c] ? openItemFan(inventory[c], c) : alert(c + ' soon');
+            fan.appendChild(b);
+        });
+        setTimeout(() => fan.classList.add('active-fan'), 50);
+    }
+
+    function openItemFan(items, cat) {
+        fan.classList.remove('active-fan');
         setTimeout(() => {
-            fanSystem.innerHTML = '<div class="pivot-bolt" onclick="openDecorFan()"></div>';
-            const cats = ['Lighting', 'Rugs', 'Curtains', 'Plants', 'Extras'];
-            cats.forEach((cat, i) => {
-                const blade = document.createElement('div');
-                blade.className = `swatch-blade s-${i + 1}`;
-                blade.innerHTML = `<div class="fan-text">${cat}</div>`;
-                blade.onclick = () => { 
-                    if(inventory[cat]) openItemFan(inventory[cat]); 
-                    else alert(cat + " items coming soon!");
+            fan.innerHTML = '<div class="pivot-bolt" onclick="openDecorFan()"></div>';
+            items.forEach((src, i) => {
+                const b = document.createElement('div'); b.className = 'swatch-blade';
+                const ang = (i - (items.length-1)/2) * 25;
+                b.style.transform = `rotate(${ang}deg) translateY(${Math.abs(ang)*0.5 + 20}px)`;
+                b.innerHTML = `<div class="fan-text">${src.split('.')[0]}</div>`;
+                b.onmouseenter = () => {
+                    pImg.src = src; pLabel.innerText = src.toUpperCase();
+                    pGuide.style.display = 'none'; preview.style.display = 'flex';
                 };
-                fanSystem.appendChild(blade);
+                b.onmouseleave = () => preview.style.display = 'none';
+                b.onclick = () => addItem(src, cat);
+                fan.appendChild(b);
             });
-            requestAnimationFrame(() => fanSystem.classList.add('active-fan'));
-        }, 100);
+            fan.classList.add('active-fan');
+        }, 300);
     }
 
-    function openItemFan(items) {
-        fanSystem.classList.remove('active-fan');
-        setTimeout(() => {
-            fanSystem.innerHTML = '<div class="pivot-bolt" onclick="openDecorFan()"></div>';
-            items.forEach((imgSrc, i) => {
-                const blade = document.createElement('div');
-                blade.className = 'swatch-blade';
-                const angle = (i - (items.length - 1) / 2) * 28; 
-                const yOffset = Math.abs(angle) * 0.6 + 30;
-                
-                blade.style.transform = `rotate(${angle}deg) translateY(${yOffset}px)`;
-                blade.innerHTML = `<div class="fan-text">${imgSrc.split('.')[0]}</div>`;
-                
-                blade.onmouseenter = () => {
-                    previewImg.src = imgSrc;
-                    previewLabel.innerText = imgSrc.replace('.png', '');
-                    previewBox.style.display = 'flex';
-                };
-                blade.onmouseleave = () => previewBox.style.display = 'none';
-                blade.onclick = () => addToRoom(imgSrc);
-                fanSystem.appendChild(blade);
-            });
-            requestAnimationFrame(() => fanSystem.classList.add('active-fan'));
-        }, 400);
-    }
-
-    function selectRoom(src) { 
-        const roomImg = document.getElementById('room-display');
-        roomImg.src = src; 
-        roomImg.style.display = 'block'; 
-    }
-
-    function addToRoom(src) {
-        const img = document.createElement("img");
-        img.src = src;
-        img.className = "placed-item";
-        img.style.left = "100px"; 
-        img.style.top = "100px";
+    function addItem(src, cat) {
+        const img = document.createElement('img'); img.src = src; img.className = 'placed-item';
+        img.style.left = '100px'; img.style.top = '100px';
+        let flip = 1, flat = (cat === 'Rugs');
         
-        // FIX FOR STICKY MOUSE:
-        img.onmousedown = function(e) {
-            e.preventDefault(); // Prevents "ghost" image drag
-            let shiftX = e.clientX - img.getBoundingClientRect().left;
-            let shiftY = e.clientY - img.getBoundingClientRect().top;
-
-            function moveAt(pageX, pageY) {
-                const stage = document.getElementById("stage-zone").getBoundingClientRect();
-                img.style.left = (pageX - stage.left - shiftX) + 'px';
-                img.style.top = (pageY - stage.top - shiftY) + 'px';
-            }
-
-            function onMouseMove(event) {
-                moveAt(event.pageX, event.pageY);
-            }
-
-            // Bind to document so you can't "lose" the object if you move fast
-            document.addEventListener('mousemove', onMouseMove);
-
-            // Global mouseup to drop the item safely
-            document.onmouseup = function() {
-                document.removeEventListener('mousemove', onMouseMove);
-                document.onmouseup = null;
-            };
+        const update = () => {
+            let t = `scaleX(${flip})`;
+            if(flat) t += ` rotateX(65deg)`;
+            img.style.transform = t;
         };
 
-        img.ondragstart = function() { return false; };
-        document.getElementById("stage-zone").appendChild(img);
+        img.onmouseenter = () => {
+            pImg.src = src; pLabel.innerText = "SELECTED ITEM";
+            pGuide.innerHTML = "DBL-CLICK: DELETE<br>RIGHT-CLICK: FLIP" + (cat === 'Rugs' ? "<br>SHIFT+CLICK: TILT" : "");
+            pGuide.style.display = 'block'; preview.style.display = 'flex';
+        };
+        img.onmouseleave = () => preview.style.display = 'none';
+        
+        img.ondblclick = () => { img.remove(); preview.style.display = 'none'; };
+        img.oncontextmenu = (e) => { e.preventDefault(); flip *= -1; update(); };
+        img.onclick = (e) => { if(e.shiftKey && cat==='Rugs') { flat = !flat; update(); } };
+
+        img.onmousedown = (e) => {
+            if(e.button === 2) return; e.preventDefault();
+            let sx = e.clientX - img.offsetLeft, sy = e.clientY - img.offsetTop;
+            const move = (m) => { 
+                img.style.left = (m.clientX - sx) + 'px'; 
+                img.style.top = (m.clientY - sy) + 'px'; 
+            };
+            document.addEventListener('mousemove', move);
+            document.onmouseup = () => document.removeEventListener('mousemove', move);
+        };
+        
+        document.getElementById('stage').appendChild(img);
+        update();
     }
 
-    function lift(el) {
-        document.querySelectorAll('.drawer-hardware').forEach(d => d.classList.remove('active-lift'));
-        el.classList.add('active-lift');
-    }
+    function setRoom(s) { const r = document.getElementById('room-display'); r.src = s; r.style.display = 'block'; }
 </script>
 </body>
 </html>
