@@ -3,245 +3,219 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Room Glow Up</title>
-
-<link href="https://fonts.googleapis.com/css2?family=Special+Elite&display=swap" rel="stylesheet">
-
+<title>Room Glow Up | Grand Studio</title>
+<link href="https://fonts.googleapis.com/css2?family=Limelight&family=Special+Elite&display=swap" rel="stylesheet">
 <style>
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
+  /* --- GLOBAL SETUP --- */
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { 
+    background: #0f1011 url("background_color.jpg") center / cover fixed; 
+    min-height: 100vh; font-family: 'Special Elite', cursive; color: #fff; overflow-x: hidden; 
+  }
 
-body {
-    background-color: #121212;
-    color: #ffffff;
-    font-family: 'Special Elite', monospace;
-    overflow: hidden;
-}
-
-/* ===============================
-   FAN ANCHOR
-================================ */
-#fan-anchor {
-    position: absolute;
-    top: 0;
-    left: 50%;
-    transform: translateX(-50%);
-    z-index: 1000;
-}
-
-.fan-container {
-    position: relative;
-    width: 0;
-    height: 0;
-}
-
-/* ===============================
-   FAN BLADES
-================================ */
-.blade {
-    position: absolute;
-    width: 170px;
-    height: 46px;
-    background: rgba(20, 20, 20, 0.95);
-    border: 1px solid #555;
-    border-radius: 0 0 10px 10px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transform-origin: top center;
-    cursor: pointer;
-    color: #cfcfcf;
-    font-size: 0.75rem;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    transition: all 0.3s ease;
-}
-
-.blade:hover {
-    color: #ffffff;
-    border-color: #ffffff;
-    box-shadow:
-        0 0 15px rgba(255,255,255,0.9),
-        0 0 30px rgba(255,255,255,0.5);
-    background: #1f1f1f;
-    z-index: 10;
-}
-
-/* ===============================
-   CATEGORY FAN POSITIONS (5)
-================================ */
-.category .blade[data-index="0"] { transform: rotate(-40deg) translateY(35px); }
-.category .blade[data-index="1"] { transform: rotate(-20deg) translateY(55px); }
-.category .blade[data-index="2"] { transform: rotate(0deg) translateY(65px); }
-.category .blade[data-index="3"] { transform: rotate(20deg) translateY(55px); }
-.category .blade[data-index="4"] { transform: rotate(40deg) translateY(35px); }
-
-/* ===============================
-   PREVIEW BOX
-================================ */
-#preview-box {
-    position: fixed;
-    bottom: 40px;
-    right: 40px;
-    width: 240px;
-    height: 240px;
-    background: rgba(10,10,10,0.95);
-    border: 1px solid #ffffff;
-    display: none;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
+  /* --- MASSIVE HEADER --- */
+  .site-header { text-align: center; padding: 60px 0 30px; position: relative; z-index: 10; }
+  .brand-title { 
+    font-family: 'Limelight', cursive; font-size: 100px; 
+    text-transform: uppercase; 
+    background: linear-gradient(to bottom, #ffffff 0%, #dcdcdc 50%, #8e9196 51%, #a8a8a8 100%);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    text-shadow: 0px 5px 15px rgba(0,0,0,0.6); letter-spacing: 4px;
+  }
+  .sub-title { font-size: 24px; color: #8e9196; letter-spacing: 8px; margin-top: -10px; text-transform: uppercase; text-shadow: 0px 2px 4px #000; }
+  
+  /* --- HARDWARE (LOCKED) --- */
+  .vintage-tabs { display: flex; justify-content: center; gap: 30px; padding: 30px 0; z-index: 2000; position: relative; }
+  
+  .drawer-hardware {
+    position: relative; width: 280px; height: 100px; 
+    background: linear-gradient(135deg, #2c2e30 0%, #1a1a1a 100%); 
+    border: 3px solid #000;
+    box-shadow: inset 0 0 0 2px #444, inset 10px 0 20px rgba(0,0,0,0.8), 0 15px 25px rgba(0,0,0,0.8);
+    display: flex; align-items: center; justify-content: center; 
+    cursor: pointer; transition: transform 0.2s, filter 0.2s;
     z-index: 2000;
-    box-shadow: 0 0 30px rgba(255,255,255,0.2);
-}
+  }
+  .drawer-hardware:hover { filter: brightness(1.3) contrast(1.1); transform: translateY(-4px); }
+  
+  .drawer-hardware::before, .drawer-hardware::after {
+    content: ''; position: absolute; top: 50%; transform: translateY(-50%);
+    width: 16px; height: 16px; border-radius: 50%; 
+    background: radial-gradient(circle, #111 20%, #555 100%); box-shadow: 0 1px 0 rgba(255,255,255,0.1); 
+  }
+  .drawer-hardware::before { left: 15px; }
+  .drawer-hardware::after { right: 15px; }
+  
+  .plate-style { 
+    width: 190px; height: 50px; 
+    background: linear-gradient(to bottom, #dcdcdc 0%, #8e9196 50%, #b0b0b0 100%);
+    color: #000; display: flex; align-items: center; justify-content: center; 
+    font-family: 'Special Elite', cursive; font-size: 18px; font-weight: 900; text-transform: uppercase; 
+    letter-spacing: 1px; border: 1px solid #666; box-shadow: inset 0 2px 5px rgba(0,0,0,0.2);
+    text-align: center; line-height: 1;
+  }
+  
+  .lip-pull { 
+    position: absolute; bottom: -14px; left: 50%; transform: translateX(-50%); 
+    width: 140px; height: 24px; background: linear-gradient(to bottom, #2c2e30, #000); 
+    border: 2px solid #111; border-top: none; border-radius: 0 0 15px 15px; box-shadow: 0 5px 10px rgba(0,0,0,0.8);
+  }
+  .active-lift { transform: translateY(15px) !important; filter: brightness(1.4) !important; }
 
-#preview-box img {
-    max-width: 85%;
-    max-height: 170px;
-    object-fit: contain;
-    margin-bottom: 12px;
-}
+  /* --- WORKSPACE --- */
+  .workspace { display: flex; padding: 40px; position: relative; height: 800px; }
+  .cabinet-container { 
+    position: absolute; left: -650px; top: 0; width: 500px; 
+    transition: left 0.8s cubic-bezier(0.19, 1, 0.22, 1); z-index: 100;
+  }
+  .cabinet-visible { left: 50px !important; }
+  .cabinet-image { width: 100%; filter: drop-shadow(15px 15px 40px rgba(0,0,0,0.9)); }
+  .drawer-stack { position: absolute; top: 130px; left: 55px; width: 400px; display: flex; flex-direction: column; align-items: center; gap: 30px; }
+  .drawer-zone { width: 100%; height: 120px; cursor: pointer; display: flex; align-items: center; justify-content: center; }
 
-#preview-label {
-    font-size: 0.7rem;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-}
+  /* --- FAN SYSTEM --- */
+  #fan-anchor { position: absolute; top: 0; left: 50%; transform: translateX(-50%); z-index: 50; pointer-events: none; }
+  .fan-container { position: relative; width: 0; height: 0; }
 
-.hidden {
-    display: none !important;
-}
+  .blade {
+      position: absolute;
+      width: 160px;
+      height: 45px;
+      background: rgba(30,30,30,0.9);
+      border: 1px solid #444;
+      border-radius: 0 0 10px 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Special Elite', cursive;
+      color: #fff;
+      font-size: 18px;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: all 0.3s;
+      transform-origin: top center;
+      pointer-events: auto;
+    }
+  .blade:hover { 
+      color: #0f0; 
+      text-shadow: 0 0 10px #0f0, 0 0 20px #0f0;
+      transform: scale(1.05);
+  }
+
+  #preview-box {
+      position: fixed;
+      bottom: 40px;
+      right: 40px;
+      width: 220px;
+      height: 220px;
+      background: rgba(10,10,10,0.95);
+      border: 1px solid #fff;
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      z-index: 2000;
+      box-shadow: 0 0 30px rgba(255,255,255,0.15);
+  }
+  #preview-box img { max-width: 85%; max-height: 160px; object-fit: contain; margin-bottom:10px; }
+  #preview-label { font-size:0.7rem; letter-spacing:2px; text-transform: uppercase; color:#fff; }
+
 </style>
 </head>
-
 <body>
 
-<div id="fan-anchor">
+<header class="site-header">
+    <h1 class="brand-title">Room Glow Up</h1>
+    <div class="sub-title">Your Dream Space Come To Life</div>
+</header>
 
-    <!-- CATEGORY FAN -->
-    <div id="category-fan" class="fan-container category">
-        <div class="blade" data-index="0" onclick="selectCategory('Lighting')">Lighting</div>
-        <div class="blade" data-index="1" onclick="selectCategory('Curtains')">Curtains</div>
-        <div class="blade" data-index="2" onclick="selectCategory('Rugs')">Rugs</div>
-        <div class="blade" data-index="3" onclick="selectCategory('Plants')">Plants</div>
-        <div class="blade" data-index="4" onclick="selectCategory('Extras')">Extras</div>
+<nav class="vintage-tabs">
+    <div class="drawer-hardware" onclick="lift(this); openMode('rooms', this)"><div class="plate-style">Rooms</div><div class="lip-pull"></div></div>
+    <div class="drawer-hardware" onclick="lift(this); showLookBook()"><div class="plate-style">Inspiration</div><div class="lip-pull"></div></div>
+    <div class="drawer-hardware" onclick="lift(this); showCatalog()"><div class="plate-style">Furniture Catalog</div><div class="lip-pull"></div></div>
+    <div class="drawer-hardware" onclick="lift(this); openMode('decor', this)"><div class="plate-style">Decor</div><div class="lip-pull"></div></div>
+</nav>
+
+<div class="workspace">
+    <div class="cabinet-container" id="cab-container">
+        <img src="cabinet.png" class="cabinet-image">
+        <div class="drawer-stack" id="drawer-anchor"></div>
     </div>
 
-    <!-- ITEM FAN -->
-    <div id="item-fan" class="fan-container hidden"></div>
+    <!-- FAN SYSTEM -->
+    <div id="fan-anchor"></div>
 
+    <div class="stage" id="stage-zone">
+        <img id="room-display">
+    </div>
 </div>
 
-<!-- PREVIEW -->
+<!-- PREVIEW BOX -->
 <div id="preview-box">
     <img id="preview-img" src="" alt="">
     <div id="preview-label"></div>
 </div>
 
 <script>
-const categoryFan = document.getElementById("category-fan");
-const itemFan = document.getElementById("item-fan");
-const previewBox = document.getElementById("preview-box");
-const previewImg = document.getElementById("preview-img");
-const previewLabel = document.getElementById("preview-label");
+const fanAnchor = document.getElementById('fan-anchor');
+const previewBox = document.getElementById('preview-box');
+const previewImg = document.getElementById('preview-img');
+const previewLabel = document.getElementById('preview-label');
 
-/* ===============================
-   DECOR DATA (6 ITEMS EACH)
-================================ */
 const decorItems = {
-    Lighting: [
-        { label: "Pendant", img: "lighting1.png" },
-        { label: "Sconce", img: "lighting2.png" },
-        { label: "Lamp", img: "lighting3.png" },
-        { label: "Chandelier", img: "lighting4.png" },
-        { label: "LED Strip", img: "lighting5.png" },
-        { label: "Accent Light", img: "lighting6.png" }
-    ],
-    Curtains: [
-        { label: "Velvet", img: "curtain1.png" },
-        { label: "Sheer", img: "curtain2.png" },
-        { label: "Blackout", img: "curtain3.png" },
-        { label: "Linen", img: "curtain4.png" },
-        { label: "Patterned", img: "curtain5.png" },
-        { label: "Roman", img: "curtain6.png" }
-    ],
-    Rugs: [
-        { label: "Rug 1", img: "rug1.png" },
-        { label: "Rug 2", img: "rug2.png" },
-        { label: "Rug 3", img: "rug3.png" },
-        { label: "Rug 4", img: "rug4.png" },
-        { label: "Rug 5", img: "rug5.png" },
-        { label: "Rug 6", img: "rug6.png" }
-    ],
-    Plants: [
-        { label: "Monstera", img: "plant1.png" },
-        { label: "Pothos", img: "plant2.png" },
-        { label: "Snake", img: "plant3.png" },
-        { label: "Palm", img: "plant4.png" },
-        { label: "Fiddle", img: "plant5.png" },
-        { label: "Fern", img: "plant6.png" }
-    ],
-    Extras: [
-        { label: "Mirror", img: "extra1.png" },
-        { label: "Art", img: "extra2.png" },
-        { label: "Vase", img: "extra3.png" },
-        { label: "Clock", img: "extra4.png" },
-        { label: "Tray", img: "extra5.png" },
-        { label: "Books", img: "extra6.png" }
-    ]
+  Lighting: [{label:'Gold Pendant', img:'rug1.png'}, {label:'Glass Sconce', img:'rug2.png'}, {label:'Floor Lamp', img:'rug3.png'}],
+  Rugs: [{label:'Rug 1', img:'rug1.png'}, {label:'Rug 2', img:'rug2.png'}, {label:'Rug 3', img:'rug3.png'}, {label:'Rug 4', img:'rug4.png'}, {label:'Rug 5', img:'rug5.png'}, {label:'Rug 6', img:'rug6.png'}],
+  Curtains: [{label:'Velvet Panels'}, {label:'Linen Sheers'}],
+  Plants: [{label:'Monstera'}, {label:'Pothos'}, {label:'Snake Plant'}],
+  Extras: [{label:'Wall Mirror'}, {label:'Art Frame'}, {label:'Vase'}]
 };
 
-/* ===============================
-   CATEGORY SELECT
-================================ */
-function selectCategory(category) {
-    categoryFan.classList.add("hidden");
-    itemFan.innerHTML = "";
-    itemFan.classList.remove("hidden");
-    previewBox.style.display = "none";
-
-    const items = decorItems[category];
-    const angleStep = 16;
-    const startAngle = -((items.length - 1) * angleStep) / 2;
-
-    items.forEach((item, index) => {
-        const blade = document.createElement("div");
-        blade.className = "blade";
-        blade.innerText = item.label;
-
-        const angle = startAngle + index * angleStep;
-        blade.style.transform =
-            `rotate(${angle}deg) translateY(${70 + Math.abs(angle)}px)`;
-
-        blade.onmouseenter = () => {
-            previewImg.src = item.img;
-            previewLabel.innerText = item.label;
-            previewBox.style.display = "flex";
-        };
-
-        blade.onmouseleave = () => {
-            previewBox.style.display = "none";
-        };
-
-        itemFan.appendChild(blade);
+function openMode(mode, el){
+  // Clear existing fan
+  fanAnchor.innerHTML = '';
+  if(mode==='decor'){
+    const categories = ['Lighting','Rugs','Curtains','Plants','Extras'];
+    const angleStep = 22.5;
+    const startAngle = -angleStep*2;
+    categories.forEach((cat,i)=>{
+      const blade = document.createElement('div');
+      blade.className='blade';
+      blade.innerText=cat;
+      blade.style.transform=`rotate(${startAngle+i*angleStep}deg) translateY(80px)`;
+      blade.onclick=()=>openItemFan(cat);
+      fanAnchor.appendChild(blade);
     });
+  }
+}
 
-    const closeBlade = document.createElement("div");
-    closeBlade.className = "blade";
-    closeBlade.innerText = "Close";
-    closeBlade.style.transform = "rotate(0deg) translateY(190px)";
-    closeBlade.style.background = "#330000";
-
-    closeBlade.onclick = () => {
-        itemFan.classList.add("hidden");
-        categoryFan.classList.remove("hidden");
-        previewBox.style.display = "none";
-    };
-
-    itemFan.appendChild(closeBlade);
+function openItemFan(cat){
+  fanAnchor.innerHTML='';
+  const items = decorItems[cat]||[];
+  const angleStep = 18;
+  const startAngle = -((items.length-1)*angleStep)/2;
+  items.forEach((item,i)=>{
+    const blade=document.createElement('div');
+    blade.className='blade';
+    blade.innerText=item.label;
+    blade.style.transform=`rotate(${startAngle+i*angleStep}deg) translateY(100px)`;
+    if(item.img){
+      blade.onmouseenter=()=>{
+        previewImg.src=item.img;
+        previewLabel.innerText=item.label;
+        previewBox.style.display='flex';
+      };
+      blade.onmouseleave=()=>{previewBox.style.display='none';};
+    }
+    fanAnchor.appendChild(blade);
+  });
+  // Close blade
+  const closeBlade = document.createElement('div');
+  closeBlade.className='blade';
+  closeBlade.innerText='Close';
+  closeBlade.style.transform='rotate(0deg) translateY(150px)';
+  closeBlade.style.background='#330000';
+  closeBlade.onclick=()=>openMode('decor');
+  fanAnchor.appendChild(closeBlade);
 }
 </script>
 
