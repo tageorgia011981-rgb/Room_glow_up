@@ -24,7 +24,7 @@
         }
         .sub-title { font-size: 24px; color: #8e9196; letter-spacing: 8px; margin-top: -10px; text-transform: uppercase; text-shadow: 0px 2px 4px #000; }
 
-        /* --- HARDWARE (LOCKED) --- */
+        /* --- HARDWARE --- */
         .vintage-tabs { display: flex; justify-content: center; gap: 30px; padding: 30px 0; z-index: 2000; position: relative; }
         .drawer-hardware {
             position: relative; width: 280px; height: 100px;
@@ -69,48 +69,47 @@
         .drawer-stack { position: absolute; top: 130px; left: 55px; width: 400px; display: flex; flex-direction: column; align-items: center; gap: 30px; }
         .drawer-zone { width: 100%; height: 120px; cursor: pointer; display: flex; align-items: center; justify-content: center; }
 
-        /* --- FAN SYSTEM --- */
-        .fan-system { position: absolute; z-index: 50; pointer-events: none; transition: top 0.3s ease, left 0.3s ease; }
+        /* --- DECOR FAN SYSTEM --- */
+        .fan-system { position: absolute; z-index: 500; pointer-events: none; transition: top 0.3s, left 0.3s; }
+        
         .swatch-blade {
-            position: absolute; left: -40px; top: 50px; width: 80px; height: 0px;
+            position: absolute; left: -40px; top: 50px; width: 85px; height: 0px;
             background: linear-gradient(to bottom, #dcdcdc, #999, #666);
-            border: 2px solid #222; border-radius: 0 0 25px 25px;
+            border: 2px solid #222; border-radius: 0 0 30px 30px;
             transform-origin: top center;
-            transition: all 0.6s cubic-bezier(0.19, 1, 0.22, 1);
+            transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.1);
             opacity: 0; display: flex; align-items: center; justify-content: center;
-            box-shadow: 10px 10px 20px rgba(0,0,0,0.7);
+            box-shadow: 5px 10px 15px rgba(0,0,0,0.5);
             cursor: pointer;
         }
-        .active-fan .swatch-blade { height: 300px; opacity: 1; pointer-events: auto; }
+        
+        .active-fan .swatch-blade { height: 280px; opacity: 1; pointer-events: auto; }
 
-        /* WHITE GLOW ON HOVER */
         .swatch-blade:hover {
             filter: brightness(1.2);
-            box-shadow: 0 0 20px #fff, 0 10px 20px rgba(0,0,0,0.8);
-            z-index: 100 !important;
+            box-shadow: 0 0 30px #fff;
+            z-index: 1000 !important;
+            transform: scale(1.08) !important;
         }
 
-        /* Spread Positions */
-        .active-fan .s-1 { transform: rotate(30deg) translateY(10px); }
-        .active-fan .s-2 { transform: rotate(15deg) translateY(10px); }
-        .active-fan .s-3 { transform: rotate(0deg) translateY(15px); }
-        .active-fan .s-4 { transform: rotate(-15deg) translateY(10px); }
-        .active-fan .s-5 { transform: rotate(-30deg) translateY(10px); }
+        /* Wide Category Spread */
+        .active-fan .s-1 { transform: rotate(50deg) translateY(10px); }
+        .active-fan .s-2 { transform: rotate(25deg) translateY(40px); }
+        .active-fan .s-3 { transform: rotate(0deg) translateY(60px); }
+        .active-fan .s-4 { transform: rotate(-25deg) translateY(40px); }
+        .active-fan .s-5 { transform: rotate(-50deg) translateY(10px); }
 
-        /* BLACK TYPEWRITER TEXT */
         .fan-text {
             color: #000; font-family: 'Special Elite', cursive; font-weight: 900;
-            font-size: 20px; text-transform: uppercase; writing-mode: vertical-rl;
-            transform: rotate(180deg); letter-spacing: 3px;
-            text-shadow: 0px 1px 0px rgba(255,255,255,0.4);
+            font-size: 18px; text-transform: uppercase; writing-mode: vertical-rl;
+            transform: rotate(180deg); letter-spacing: 2px;
             pointer-events: none;
         }
 
-        /* PIVOT BOLT */
         .pivot-bolt {
             position: absolute; left: -18px; top: -18px; width: 36px; height: 36px;
             background: radial-gradient(circle at 30% 30%, #4a4d4f, #2a2d2f, #000);
-            border: 3px solid #000; border-radius: 5px; z-index: 100; opacity: 0; transition: 0.3s;
+            border: 3px solid #000; border-radius: 5px; z-index: 600; opacity: 0; transition: 0.3s;
         }
         .active-fan .pivot-bolt { opacity: 1; }
 
@@ -122,7 +121,7 @@
             box-shadow: 0 0 30px rgba(255, 255, 255, 0.2); z-index: 5000;
         }
         #preview-box img { max-width: 90%; max-height: 160px; object-fit: contain; }
-        #preview-label { font-size: 14px; margin-top: 10px; text-transform: uppercase; color: #fff; }
+        #preview-label { font-size: 14px; margin-top: 10px; color: #fff; text-align: center; }
 
         /* --- STAGE --- */
         .stage {
@@ -131,6 +130,7 @@
         }
         #room-display { width: 100%; height: 100%; object-fit: cover; display: none; }
         .placed-item { position: absolute; width: 220px; cursor: move; z-index: 1500; filter: drop-shadow(10px 15px 20px rgba(0,0,0,0.6)); }
+
     </style>
 </head>
 <body>
@@ -174,35 +174,30 @@
 
     const inventory = {
         'Rugs': ['rug1.png', 'rug2.png', 'rug3.png', 'rug4.png', 'rug5.png', 'rug6.png'],
-        'Plants': ['plant1.png', 'plant2.png', 'plant3.png', 'plant4.png', 'plant5.png']
+        'Plants': ['plant1.png', 'plant2.png', 'plant3.png', 'plant4.png', 'plant5.png'],
+        'Curtains': ['curtains1.png', 'curtains2.png', 'curtains3.png', 'curtains4.png', 'curtains5.png']
     };
 
     function openMode(mode, el) {
         fanSystem.classList.remove('active-fan');
-        fanSystem.innerHTML = '';
-        if (mode === 'decor') {
-            cab.classList.remove('cabinet-visible');
-            if(el) {
+        setTimeout(() => {
+            fanSystem.innerHTML = '';
+            if (mode === 'decor') {
+                cab.classList.remove('cabinet-visible');
                 const rect = el.getBoundingClientRect();
                 const workspaceRect = document.querySelector('.workspace').getBoundingClientRect();
                 fanSystem.style.left = (rect.left - workspaceRect.left + (rect.width / 2)) + 'px';
                 fanSystem.style.top = '-80px';
+                setTimeout(openDecorFan, 50);
+            } else if (mode === 'rooms') {
+                cab.classList.add('cabinet-visible');
+                drawerStack.innerHTML = '';
+                const rooms = [{name:'Living Room', file:'livingroom2.jpg'}, {name:'Bedroom', file:'bedroom.jpg'}, {name:'Dining Room', file:'diningroom.jpg'}];
+                rooms.forEach(data => {
+                    drawerStack.innerHTML += `<div class="drawer-zone" onclick="selectRoom('${data.file}')"><div class="drawer-hardware"><div class="plate-style">${data.name}</div><div class="lip-pull"></div></div></div>`;
+                });
             }
-            setTimeout(openDecorFan, 100);
-        } else if (mode === 'rooms') {
-            cab.classList.add('cabinet-visible');
-            drawerStack.innerHTML = '';
-            const rooms = [{name:'Living Room', file:'livingroom2.jpg'}, {name:'Bedroom', file:'bedroom.jpg'}, {name:'Dining Room', file:'diningroom.jpg'}];
-            rooms.forEach(data => {
-                drawerStack.innerHTML += `
-                    <div class="drawer-zone" onclick="selectRoom('${data.file}')">
-                        <div class="drawer-hardware">
-                            <div class="plate-style">${data.name}</div>
-                            <div class="lip-pull"></div>
-                        </div>
-                    </div>`;
-            });
-        }
+        }, 300);
     }
 
     function openDecorFan() {
@@ -214,7 +209,8 @@
             blade.innerHTML = `<div class="fan-text">${cat}</div>`;
             blade.onclick = () => { 
                 if(inventory[cat]) openItemFan(inventory[cat]); 
-                else alert(cat + ' items coming soon'); 
+                else if(cat === 'Extras') openExtrasMenu();
+                else alert(cat + ' coming soon');
             };
             fanSystem.appendChild(blade);
         });
@@ -227,11 +223,14 @@
             fanSystem.innerHTML = '<div class="pivot-bolt"></div>';
             items.forEach((imgSrc, i) => {
                 const blade = document.createElement('div');
-                blade.className = `swatch-blade`;
-                blade.style.zIndex = 50 - i;
+                blade.className = 'swatch-blade';
                 
-                const angle = (i - (items.length - 1) / 2) * (items.length > 5 ? 12 : 15);
-                blade.style.transform = `rotate(${angle}deg) translateY(15px)`;
+                // Wide spread for items: total arc of ~120 degrees
+                const arcWidth = 120;
+                const angle = (i - (items.length - 1) / 2) * (arcWidth / (items.length - 1 || 1));
+                const verticalDrop = Math.abs(angle) * 1.2 + 20; // Lower drop for center items
+                
+                blade.style.transform = `rotate(${angle}deg) translateY(${verticalDrop}px)`;
                 blade.innerHTML = `<div class="fan-text">${imgSrc.split('.')[0]}</div>`;
                 
                 blade.onmouseenter = () => {
@@ -240,21 +239,24 @@
                     previewBox.style.display = 'flex';
                 };
                 blade.onmouseleave = () => previewBox.style.display = 'none';
-                blade.onclick = () => { addToRoom(imgSrc); previewBox.style.display = 'none'; };
-                
+                blade.onclick = () => addToRoom(imgSrc);
                 fanSystem.appendChild(blade);
             });
             
-            const close = document.createElement('div');
-            close.className = 'swatch-blade';
-            close.style.background = 'linear-gradient(to bottom, #400, #200)';
-            close.style.transform = 'translateY(320px)';
-            close.innerHTML = '<div class="fan-text" style="color:white">BACK</div>';
-            close.onclick = openDecorFan;
-            fanSystem.appendChild(close);
-
+            const back = document.createElement('div');
+            back.className = 'swatch-blade';
+            back.style.background = 'linear-gradient(to bottom, #422, #211)';
+            back.style.transform = 'translateY(360px)'; // Moved further down to clear the items
+            back.innerHTML = '<div class="fan-text" style="color:white">BACK</div>';
+            back.onclick = openDecorFan;
+            fanSystem.appendChild(back);
+            
             setTimeout(() => fanSystem.classList.add('active-fan'), 50);
-        }, 600);
+        }, 500);
+    }
+
+    function openExtrasMenu() {
+        alert("Extras engaged.");
     }
 
     function selectRoom(src) { roomImg.src = src; roomImg.style.display = 'block'; }
@@ -282,9 +284,6 @@
         document.querySelectorAll('.drawer-hardware').forEach(d => d.classList.remove('active-lift'));
         el.classList.add('active-lift');
     }
-    
-    function showCatalog() { alert('Catalog Opening'); }
-    function showLookBook() { alert('Inspiration Opening'); }
 </script>
 </body>
 </html>
