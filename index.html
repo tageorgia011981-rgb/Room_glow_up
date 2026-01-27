@@ -141,8 +141,9 @@
 
     function openFurnitureFan(el) {
         const rect = el.getBoundingClientRect();
-        fan.style.left = (rect.right + 20) + 'px';
-        fan.style.top = (rect.top + rect.height / 2) + 'px';
+        const wRect = document.querySelector('.workspace').getBoundingClientRect();
+        fan.style.left = (rect.right - wRect.left + 50) + 'px';
+        fan.style.top = (rect.top - wRect.top + rect.height / 2) + 'px';
         fan.innerHTML = '<div class="pivot-bolt" onclick="this.parentElement.classList.remove(\'fan-visible\')"></div>';
         ['SEAT','TABL','STOR','BEDS'].forEach((n, i) => {
             const b = document.createElement('div'); b.className = `swatch-blade s-${i+1}`;
@@ -154,6 +155,8 @@
 
     function openDecorFan(el) {
         const rect = el.getBoundingClientRect();
+        const wRect = document.querySelector('.workspace').getBoundingClientRect();
+        // Fixed positioning relative to nav button
         fan.style.left = (rect.left + rect.width / 2) + 'px';
         fan.style.top = (rect.bottom + 20) + 'px';
         fan.innerHTML = '<div class="pivot-bolt" onclick="this.parentElement.classList.remove(\'fan-visible\')"></div>';
