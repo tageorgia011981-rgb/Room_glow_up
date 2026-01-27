@@ -1,21 +1,43 @@
-function renderArchiveTier(tier, parent = null) {
-    const box = document.getElementById('archive-box');
-    let html = `<div onclick="document.getElementById('archive-box').style.bottom='-550px'" style="position:absolute; top:20px; right:30px; color:#8e9196; cursor:pointer; font-family:'Special Elite'; z-index:2000;">[ CLOSE ARCHIVE ]</div>`;
-    
-    let items = [];
-    if (tier === 1) items = Object.keys(archiveData);
-    else if (tier === 2) items = archiveData[parent];
-    else if (tier === 3) items = [1,2,3,4,5];
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Room Glow Up | Grand Studio</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Limelight&family=Special+Elite&family=Courier+Prime:wght@700&family=Caveat:wght@700&display=swap" rel="stylesheet">
+</head>
+<body>
 
-    html += `<div style="display:flex; width:100%; height:100%; align-items:flex-end; padding-left:50px; position:relative;">`;
+<header class="site-header">
+    <h1 class="brand-title">Room Glow Up</h1>
+    <div class="sub-header">Your Dream Space Come To Life</div>
+</header>
 
-    items.forEach((item, i) => {
-        const labelName = (tier === 3) ? `REF: ${parent.substring(0,3)}-${item}` : item;
-        const clickAction = (tier === 1) ? 
-            (archiveData[item] === 'DIRECT' ? `renderArchiveTier(3, '${item}')` : `renderArchiveTier(2, '${item}')`) :
-            (tier === 2 ? `renderArchiveTier(3, '${item}')` : `alert('Placing ${parent} ${item}')`);
+<nav class="vintage-tabs">
+    <div class="drawer-hardware" onclick="toggleCabinet()"><div class="plate-style">Rooms</div><div class="lip-pull"></div></div>
+    <div class="drawer-hardware" onclick="openArchiveBox()"><div class="plate-style">Catalog</div><div class="lip-pull"></div></div>
+    <div class="drawer-hardware" onclick="openInspirationBook()"><div class="plate-style">Inspiration</div><div class="lip-pull"></div></div>
+    <div class="drawer-hardware" onclick="openArchiveBox()"><div class="plate-style">Decor</div><div class="lip-pull"></div></div>
+</nav>
 
-        html += `
-            <div class="archive-folder-wrapper" style="z-index:${i}; position:relative; margin-left: -60px;">
-                <div class="folder-label" onclick="${clickAction}" style="cursor:pointer;">
-                    <div class="label-text">${labelName}</div>
+<div class="workspace">
+    <div id="main-stage" class="stage" onclick="stageCycle()">
+        <img id="room-display" style="width:100%; display:none;">
+    </div>
+
+    <div id="cab" class="cabinet-container">
+        <img src="cabinet.png" style="width:100%;">
+        <div class="drawer-stack">
+            <div class="drawer-hardware" onclick="cycleRoom('living')"><div class="plate-style" id="living-label">Living Room 1</div><div class="lip-pull"></div></div>
+            <div class="drawer-hardware" onclick="cycleRoom('dining')"><div class="plate-style" id="dining-label">Dining Room 1</div><div class="lip-pull"></div></div>
+            <div class="drawer-hardware" onclick="cycleRoom('kitchen')"><div class="plate-style" id="kitchen-label">Kitchen 1</div><div class="lip-pull"></div></div>
+            <div class="drawer-hardware" onclick="cycleRoom('bedroom')"><div class="plate-style" id="bedroom-label">Bedroom 1</div><div class="lip-pull"></div></div>
+            <div class="drawer-hardware"><div class="plate-style" style="color:#d00;">Upload</div><div class="lip-pull"></div></div>
+        </div>
+    </div>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
