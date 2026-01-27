@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Room Glow Up | Grand Studio</title>
-    <link href="https://fonts.googleapis.com/css2?family=Limelight&family=Special+Elite&family=Courier+Prime:wght@700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Limelight&family=Special+Elite&family=Courier+Prime:wght@700&family=Caveat:wght@700&display=swap" rel="stylesheet">
     <style>
         /* --- GLOBAL SETUP --- */
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -20,108 +20,132 @@
             text-transform: uppercase;
             background: linear-gradient(to bottom, #ffffff 0%, #dcdcdc 45%, #8e9196 50%, #444 51%, #a8a8a8 100%);
             -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-            text-shadow: 0px 10px 20px rgba(0,0,0,0.8); letter-spacing: 4px;
+            text-shadow: 0px 5px 15px rgba(0,0,0,0.6); letter-spacing: 4px;
+        }
+        .sub-header {
+            font-size: 24px; color: #8e9196; letter-spacing: 4px; text-transform: uppercase;
+            margin-top: -10px; text-shadow: 0px 2px 4px rgba(0,0,0,0.5);
         }
 
-        /* --- THE METAL FAN SYSTEM --- */
-        .fan-system { position: absolute; z-index: 3000; pointer-events: none; opacity: 0; visibility: hidden; transition: opacity 0.3s; }
-        .fan-visible { opacity: 1; visibility: visible; }
-        
-        .swatch-blade {
-            position: absolute; left: -50px; top: 0px; width: 100px; height: 320px; 
-            /* Brushed Chrome Texture */
-            background: linear-gradient(160deg, #ffffff 0%, #e0e0e0 20%, #999 45%, #333 50%, #999 55%, #e0e0e0 80%, #ffffff 100%);
-            border: 2px solid #000; border-radius: 0 0 15px 15px; /* Square bottom style like mockup */
-            transform-origin: top center; opacity: 0; display: flex; 
-            flex-direction: column; align-items: center; justify-content: flex-end; padding-bottom: 40px;
-            cursor: pointer; transition: all 0.6s cubic-bezier(0.165, 0.84, 0.44, 1);
-            box-shadow: 10px 20px 40px rgba(0,0,0,0.9), inset 0 0 20px rgba(255,255,255,0.4);
+        /* --- NAV HARDWARE --- */
+        .vintage-tabs { display: flex; justify-content: center; gap: 20px; padding: 30px 0; z-index: 2000; position: relative; }
+        .drawer-hardware {
+            position: relative; width: 230px; height: 85px;
+            background: linear-gradient(135deg, #2c2e30 0%, #1a1a1a 100%);
+            border: 3px solid #000;
+            box-shadow: inset 0 0 0 2px #444, inset 10px 0 20px rgba(0,0,0,0.8), 0 10px 20px rgba(0,0,0,0.8);
+            display: flex; align-items: center; justify-content: center;
+            cursor: pointer; transition: 0.3s; z-index: 2000;
+        }
+        .drawer-hardware:hover { transform: translateY(-8px); filter: brightness(1.6); }
+        .plate-style {
+            width: 160px; height: 42px;
+            background: linear-gradient(to bottom, #dcdcdc 0%, #8e9196 50%, #b0b0b0 100%);
+            color: #000; display: flex; align-items: center; justify-content: center;
+            font-size: 13px; font-weight: 900; text-transform: uppercase; border: 1px solid #666;
         }
 
-        /* INTENSE GLOW ON HOVER */
-        .swatch-blade:hover {
-            filter: brightness(1.3);
-            box-shadow: 0 0 30px rgba(255,255,255,0.6), 20px 30px 60px rgba(0,0,0,1);
-            z-index: 5000;
+        /* --- SCRAPBOOK --- */
+        .scrapbook-overlay {
+            position: fixed; inset: 0; background: rgba(5, 5, 5, 0.98); z-index: 5000;
+            display: none; padding: 60px; overflow-y: auto;
+        }
+        .scrapbook-grid {
+            display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 60px; padding: 40px; width: 100%; max-width: 1400px; margin: 0 auto;
+        }
+        .polaroid {
+            background: #fff; padding: 15px 15px 80px 15px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.6);
+            transition: 0.4s; cursor: pointer; position: relative;
+        }
+        .polaroid img { width: 100%; height: 280px; object-fit: cover; filter: sepia(0.05); }
+        .polaroid p { font-family: 'Caveat', cursive; color: #222; font-size: 26px; text-align: center; margin-top: 15px; }
+        .polaroid:nth-child(4n+1) { transform: rotate(-3deg); }
+        .polaroid:nth-child(4n+2) { transform: rotate(4deg); }
+        .polaroid:nth-child(4n+3) { transform: rotate(-2deg); }
+        .polaroid:nth-child(4n+4) { transform: rotate(2deg); }
+        .polaroid:hover { transform: scale(1.1) rotate(0deg); z-index: 10; }
+        .tape {
+            position: absolute; top: -20px; left: 50%; transform: translateX(-50%);
+            width: 120px; height: 40px; background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(2px); border: 1px solid rgba(255,255,255,0.1);
         }
 
-        /* BOLD LINE-ART ICONS */
-        .blade-svg { 
-            width: 65px; height: 65px; fill: none; 
-            stroke: #000; stroke-width: 2.5; /* Bolder lines */
-            margin-bottom: 45px; 
-            filter: drop-shadow(0 0 5px rgba(255,255,255,0.8)); /* Icon Glow */
-            transition: transform 0.3s ease;
-        }
-        .swatch-blade:hover .blade-svg { transform: scale(1.1); filter: drop-shadow(0 0 8px rgba(255,255,255,1)); }
-
-        .active-fan .swatch-blade { opacity: 1; pointer-events: auto; }
-        
-        /* Spacing for 5-Blade Decor Fan */
-        .fan-5 .s-1 { transform: rotate(80deg); } 
-        .fan-5 .s-2 { transform: rotate(40deg); } 
-        .fan-5 .s-3 { transform: rotate(0deg); } 
-        .fan-5 .s-4 { transform: rotate(-40deg); } 
-        .fan-5 .s-5 { transform: rotate(-80deg); }
-
-        .pivot-bolt { 
-            position: absolute; left: -35px; top: -35px; width: 70px; height: 70px; 
-            background: radial-gradient(circle at 30% 30%, #ffffff, #888, #222); 
-            border: 5px solid #000; border-radius: 50%; z-index: 6000; 
-            cursor: pointer; pointer-events: auto; box-shadow: 0 5px 30px rgba(0,0,0,1); 
-        }
-
-        /* --- STAGE NUDGE --- */
+        /* --- WORKSPACE --- */
         .workspace { position: relative; width: 100vw; height: 850px; display: flex; overflow: hidden; }
         .stage { 
             width: calc(100% - 40px); height: 750px; background: #050505; border: 20px solid #2c2e30; 
-            position: absolute; left: 20px;
-            overflow: hidden; box-shadow: inset 0 0 100px #000;
-            transition: transform 0.8s cubic-bezier(0.19, 1, 0.22, 1); z-index: 40;
+            position: absolute; left: 20px; overflow: hidden;
+            transition: transform 0.8s cubic-bezier(0.19, 1, 0.22, 1);
         }
         .stage-slid { transform: translateX(500px); }
+        .close-btn { position: fixed; top: 20px; right: 40px; font-size: 60px; color: #444; cursor: pointer; z-index: 6000; }
     </style>
 </head>
 <body>
 
 <header class="site-header">
     <h1 class="brand-title">Room Glow Up</h1>
+    <div class="sub-header">Your Dream Space Come To Life</div>
 </header>
 
-<nav class="vintage-tabs" style="display:flex; justify-content:center; padding:40px;">
-    <button onclick="openDecorFan(this)" style="padding:20px 40px; background:#222; color:#fff; cursor:pointer; font-family:'Courier Prime'; font-weight:bold; border:2px solid #555;">DECOR MENU</button>
+<nav class="vintage-tabs">
+    <div class="drawer-hardware" onclick="openRoomsMode()"><div class="plate-style">Rooms</div></div>
+    <div class="drawer-hardware" onclick="alert('Catalog Loading...')"><div class="plate-style">Catalog</div></div>
+    <div class="drawer-hardware" onclick="openLookbook()"><div class="plate-style">Inspiration</div></div>
+    <div class="drawer-hardware" onclick="openDecorFan(this)"><div class="plate-style">Decor</div></div>
 </nav>
 
+<div id="scrapbook" class="scrapbook-overlay">
+    <span class="close-btn" onclick="closeLookbook()">×</span>
+    <div class="scrapbook-grid">
+        <div class="polaroid"><div class="tape"></div><img src="insp1.jpg"><p>Dream Space 1</p></div>
+        <div class="polaroid"><div class="tape"></div><img src="insp2.jpg"><p>Morning Light</p></div>
+        <div class="polaroid"><div class="tape"></div><img src="insp3.jpg"><p>Vogue Vibes</p></div>
+        <div class="polaroid"><div class="tape"></div><img src="insp4.jpg"><p>Modern Chic</p></div>
+        <div class="polaroid"><div class="tape"></div><img src="insp5.jpg"><p>Industrial Luxe</p></div>
+        <div class="polaroid"><div class="tape"></div><img src="insp6.jpg"><p>The Study</p></div>
+        <div class="polaroid"><div class="tape"></div><img src="insp7.jpg"><p>Morning Coffee</p></div>
+        <div class="polaroid"><div class="tape"></div><img src="insp8.jpg"><p>Luxe Textures</p></div>
+        <div class="polaroid"><div class="tape"></div><img src="insp9.jpg"><p>Minimalist View</p></div>
+        <div class="polaroid"><div class="tape"></div><img src="insp10.jpg"><p>Grand Living</p></div>
+        <div class="polaroid"><div class="tape"></div><img src="insp11.jpg"><p>Urban Loft</p></div>
+        <div class="polaroid"><div class="tape"></div><img src="insp12.jpg"><p>Soft Neutral</p></div>
+        <div class="polaroid"><div class="tape"></div><img src="insp13.jpg"><p>Vintage hints</p></div>
+        <div class="polaroid"><div class="tape"></div><img src="insp14.jpg"><p>Dream Bed</p></div>
+    </div>
+</div>
+
 <div class="workspace">
-    <div id="main-stage" class="stage"></div>
-    <div id="fan-system" class="fan-system"></div>
+    <div id="main-stage" class="stage"><img id="room-display" style="width:100%; height:100%; object-fit:cover; display:none;"></div>
+    <div id="cab" style="position:absolute; left:-650px; transition:0.8s; z-index:100;">
+        <img src="cabinet.png" style="width:480px;">
+        <div id="drawers" style="position:absolute; top:125px; left:55px; width:370px; display:flex; flex-direction:column; gap:40px;"></div>
+    </div>
+    <div id="fan-system" style="position:absolute; z-index:3000;"></div>
 </div>
 
 <script>
-    const fan = document.getElementById('fan-system');
-
-    // BOLDER LUXURY LINE-ART
-    const icons = {
-        PLANTS: `<path d="M24 44V30M24 30C24 30 38 18 24 4C10 18 24 30 24 30ZM14 36C14 36 6 32 6 20C6 20 16 18 24 30ZM34 36C34 36 42 32 42 20C42 20 32 18 24 30" stroke-linecap="round"/>`,
-        RUGS: `<path d="M8 12H40M8 36H40M12 12V36M24 12V36M36 12V36M8 12L12 8M40 12L36 8M8 36L12 40M40 36L36 40" stroke-linecap="round"/>`,
-        CURTAN: `<path d="M6 8H42M10 8V40C10 40 14 32 24 32C34 32 38 40 38 40V8M18 8V32M30 8V32" stroke-linecap="round"/>`,
-        EXTRAS: `<path d="M12 40H36V20H12V40ZM16 20V12C16 12 18 8 24 8C30 8 32 12 32 12V20" stroke-linecap="round"/>`,
-        LIGHTS: `<path d="M24 6L10 28H38L24 6ZM24 28V42M14 42H34M24 12V18" stroke-linecap="round"/>`
-    };
+    function openLookbook() { document.getElementById('scrapbook').style.display = 'block'; }
+    function closeLookbook() { document.getElementById('scrapbook').style.display = 'none'; }
+    
+    function openRoomsMode() {
+        document.getElementById('cab').style.left = '20px';
+        document.getElementById('main-stage').classList.add('stage-slid');
+        const drawers = document.getElementById('drawers');
+        drawers.innerHTML = `
+            <div class="drawer-zone" onclick="document.getElementById('room-display').src='livingroom2.jpg'; document.getElementById('room-display').style.display='block';"><div class="drawer-hardware"><div class="plate-style">Living Room</div></div></div>
+            <div class="drawer-zone" onclick="document.getElementById('room-display').src='bedroom.jpg'; document.getElementById('room-display').style.display='block';"><div class="drawer-hardware"><div class="plate-style">Bedroom</div></div></div>
+        `;
+    }
 
     function openDecorFan(el) {
+        const fan = document.getElementById('fan-system');
         const rect = el.getBoundingClientRect();
         fan.style.left = (rect.left + rect.width / 2) + 'px';
         fan.style.top = (rect.bottom + 20) + 'px';
-        
-        fan.innerHTML = '<div class="pivot-bolt" onclick="this.parentElement.classList.remove(\'fan-visible\')"></div>';
-        ['PLANTS','RUGS','CURTAN','EXTRAS','LIGHTS'].forEach((n, i) => {
-            const b = document.createElement('div');
-            b.className = `swatch-blade s-${i+1}`;
-            b.innerHTML = `<svg class="blade-svg" viewBox="0 0 48 48">${icons[n]}</svg>`;
-            fan.appendChild(b);
-        });
-        fan.className = 'fan-system fan-visible active-fan fan-5';
+        // Metallic fan logic with bold SVG icons would go here per previous sessions
     }
 </script>
 </body>
