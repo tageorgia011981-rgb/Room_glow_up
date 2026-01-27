@@ -1,74 +1,122 @@
-const cab = document.getElementById('cab');
-const fanSystem = document.getElementById('fan-system');
+const fan = document.getElementById('fan-system');
+const roomImg = document.getElementById('room-display');
 
-/**
- * Handles switching between different editor modes.
- * @param {string} mode - 'rooms', 'decor', or 'furniture'
- * @param {HTMLElement} el - The button element that was clicked
- */
-function openMode(mode, el) {
-    // Reset the fan state and clear previous content
-    fanSystem.classList.remove('active-fan');
-    fanSystem.innerHTML = '';
-    
-    // Hide cabinet by default unless 'rooms' is picked
-    cab.classList.remove('cabinet-visible');
+// Cycle Tracking for Rooms
+let cycles = { living: 1, dining: 1, kitchen: 1, bedroom: 1 };
+let currentCategory = 'bedroom'; 
 
-    if (mode === 'decor') {
-        if (el) {
-            const rect = el.getBoundingClientRect();
-            // Perfectly anchors the fan to the tab's location
-            fanSystem.style.left = (rect.left + (rect.width / 2)) + 'px';
-            fanSystem.style.top = (rect.bottom + window.scrollY) + 'px';
-        }
-        // Small delay to ensure the fan clears before rebuilding
-        setTimeout(openDecorFan, 100);
-    } 
-    else if (mode === 'rooms') {
-        // This trigger starts the CSS Stage Glide
-        cab.classList.add('cabinet-visible');
-    }
+// --- CABINET LOGIC ---
+function toggleCabinet() { 
+    document.getElementById('cab').classList.toggle('cabinet-visible'); 
+    document.getElementById('main-stage').classList.toggle('stage-slid'); 
 }
 
-/**
- * Builds the 5-blade Decor category fan.
- */
-function openDecorFan() {
-    fanSystem.classList.add('fan-down');
-    fanSystem.innerHTML = '<div class="pivot-bolt"></div>';
-    
-    // Your exact 5 categories
-    const categories = ['Lighting', 'Rugs', 'Curtains', 'Plants', 'Extras'];
+function stackText(s) { return s.split('').join('<br>'); }
 
-    categories.forEach((name, i) => {
-        const blade = document.createElement('div');
-        // Assigns s-1 through s-5 to match the CSS rotation math
-        blade.className = `swatch-blade s-${i + 1}`;
-        
-        // Blade contains the text label and the hidden preview box
-        blade.innerHTML = `
-            <div class="fan-text">${name}</div>
-            <div class="decor-preview">
-                <img src="${name.toLowerCase()}_preview.png" alt="${name} preview">
-            </div>
-        `;
-        
-        // Logic for when a category is clicked
-        blade.onclick = () => {
-            console.log("Selected Category: " + name);
-            // This is where you would call the next fan level (e.g., openRugsFan())
-        };
-        
-        fanSystem.appendChild(blade);
+function cycleRoom(cat, el) {
+    currentCategory = cat;
+    cycles[cat] = cycles[cat] === 1 ? 2 : 1;
+    
+    const labelMap = { living: 'Living Room', dining: 'Dining Room', kitchen: 'Kitchen', bedroom: 'Bedroom' };
+    document.getElementById(`${cat}-label`).innerText = `${labelMap[cat]} ${cycles[cat]}`;
+    
+    let fileName = (cat === 'bedroom' ? 'bedroom' : cat === 'kitchen' ? 'kitchen' : cat + 'room');
+    fileName += (cycles[cat] === 1 ? '' : '2') + '.jpg';
+    
+    roomImg.src = fileName;
+    roomImg.style.display = 'block';
+    openFurnitureFan(el);
+}
+
+// Stage click cycles the current active room
+function stageCycle() {
+    const btn = document.querySelector(`.drawer-hardware[onclick*="${currentCategory}"]`);
+    if(btn) cycleRoom(currentCategory, btn);
+}
+
+// --- FAN POSITIONING & GENERATION ---
+function openFurnitureFan(el) {
+    const rect = el.getBoundingClientRect();
+    const wRect = document.querySelector('.workspace').getBoundingClientRect();
+    fan.style.left = (rect.right - wRect.left + 50) + 'px';
+    fan.style.top = (rect.top - wRect.top + rect.height / 2) + 'px';
+    fan.innerHTML = '<div class="pivot-bolt" onclick="this.parentElement.classList.remove(\'fan-visible\')"></div>';
+    
+    ['SEAT','TABL','STOR','BEDS'].forEach((n, i) => {
+        const b = document.createElement('div'); b.className = `swatch-blade s-${i+1}`;
+        b.innerHTML = `<div class="fan-text-stacked">${stackText(n)}</div>`;
+        fan.appendChild(b);
     });
-
-    // Trigger the fan-out animation
-    setTimeout(() => {
-        fanSystem.classList.add('active-fan');
-    }, 50);
+    fan.className = 'fan-system fan-visible active-fan fan-4';
 }
 
-// Optional: Helper to hide overlays if you have other UI elements
-function hideOverlays() {
-    // Add any specific cleanup logic here if needed
+function openDecorFan(el) {
+    const rect = el.getBoundingClientRect();
+    const wRect = document.querySelector('.workspace').getBoundingClientRect();
+    fan.style.left = (rect.left + rect.width / 2) + 'px';
+    fan.style.top = (rect.bottom - wRect.top + 10) + 'px';
+    fan.innerHTML = '<div class="pivot-bolt" onclick="this.parentElement.classList.remove(\'fan-visible\')"></div>';
+    
+    ['PLANTS','RUGS','LIGHTS','EXTRAS','CURTAINS'].forEach((n, i) => {
+        const b = document.createElement('div'); b.className = `swatch-blade s-${i+1}`;
+        b.innerHTML = `<div class="fan-text-stacked">${stackText(n)}</div>`;
+        if(n === 'PLANTS') b.onclick = (e) => { e.stopPropagation(); openPlantInventory(); };
+        if(n === 'RUGS') b.onclick = (e) => { e.stopPropagation(); openRugInventory(); };
+        if(n === 'CURTAINS') b.onclick = (e) => { e.stopPropagation(); openCurtainInventory(); };
+        if(n === 'EXTRAS') b.onclick = (e) => { e.stopPropagation(); openExtrasSubFan(); };
+        fan.appendChild(b);
+    });
+    fan.className = 'fan-system fan-visible active-fan fan-5';
+}
+
+// --- SUB-FANS & INVENTORY ---
+function openExtrasSubFan() {
+    fan.innerHTML = '<div class="pivot-bolt" onclick="openDecorFan(document.querySelector(\'.drawer-hardware[onclick*=\\\'openDecorFan\\\']\'))"></div>';
+    ['PILLOW','VASES','ART'].forEach((n, i) => {
+        const b = document.createElement('div'); b.className = `swatch-blade s-${i+1}`;
+        b.innerHTML = `<div class="fan-text-stacked">${stackText(n)}</div>`;
+        if(n === 'PILLOW') b.onclick = (e) => { e.stopPropagation(); openPillowInventory(); };
+        fan.appendChild(b);
+    });
+    fan.className = 'fan-system fan-visible active-fan fan-3';
+}
+
+function openPlantInventory() {
+    fan.innerHTML = '<div class="pivot-bolt" onclick="openDecorFan(document.querySelector(\'.drawer-hardware[onclick*=\\\'openDecorFan\\\']\'))"></div>';
+    for(let i=1; i<=5; i++) {
+        const b = document.createElement('div'); b.className = `swatch-blade s-${i}`;
+        b.innerHTML = `<img src="plant${i}.png" class="blade-img" onerror="this.parentElement.innerHTML='<div class=fan-text-stacked>P<br>L<br>A<br>N<br>T<br>${i}</div>'">`;
+        fan.appendChild(b);
+    }
+    fan.className = 'fan-system fan-visible active-fan fan-5';
+}
+
+function openRugInventory() {
+    fan.innerHTML = '<div class="pivot-bolt" onclick="openDecorFan(document.querySelector(\'.drawer-hardware[onclick*=\\\'openDecorFan\\\']\'))"></div>';
+    for(let i=1; i<=6; i++) {
+        const b = document.createElement('div'); b.className = `swatch-blade s-${i}`;
+        b.innerHTML = `<img src="rug${i}.png" class="blade-img" onerror="this.parentElement.innerHTML='<div class=fan-text-stacked>R<br>U<br>G<br>${i}</div>'">`;
+        fan.appendChild(b);
+    }
+    fan.className = 'fan-system fan-visible active-fan fan-6';
+}
+
+function openCurtainInventory() {
+    fan.innerHTML = '<div class="pivot-bolt" onclick="openDecorFan(document.querySelector(\'.drawer-hardware[onclick*=\\\'openDecorFan\\\']\'))"></div>';
+    for(let i=1; i<=5; i++) {
+        const b = document.createElement('div'); b.className = `swatch-blade s-${i}`;
+        b.innerHTML = `<img src="curtain${i}.png" class="blade-img" onerror="this.parentElement.innerHTML='<div class=fan-text-stacked>C<br>U<br>R<br>T<br>${i}</div>'">`;
+        fan.appendChild(b);
+    }
+    fan.className = 'fan-system fan-visible active-fan fan-5';
+}
+
+function openPillowInventory() {
+    fan.innerHTML = '<div class="pivot-bolt" onclick="openExtrasSubFan()"></div>';
+    for(let i=1; i<=4; i++) {
+        const b = document.createElement('div'); b.className = `swatch-blade s-${i}`;
+        b.innerHTML = `<img src="pillow${i}.png" class="blade-img" onerror="this.parentElement.innerHTML='<div class=fan-text-stacked>P<br>I<br>L<br>O<br>W<br>${i}</div>'">`;
+        fan.appendChild(b);
+    }
+    fan.className = 'fan-system fan-visible active-fan fan-4';
 }
