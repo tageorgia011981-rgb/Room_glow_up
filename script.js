@@ -1,90 +1,68 @@
-const fan = document.getElementById('fan-system');
 const roomImg = document.getElementById('room-display');
 
-// FORCE HIDE ON LOAD
-fan.style.opacity = "0";
-fan.style.visibility = "hidden";
-
-// Room Cycles
+// Room Cycles tracking
 let cycles = { living: 1, dining: 1, kitchen: 1, bedroom: 1 };
 let currentCategory = 'bedroom'; 
 
-// --- CABINET LOGIC ---
+// --- CABINET & ROOM LOGIC ---
 function toggleCabinet() { 
     document.getElementById('cab').classList.toggle('cabinet-visible'); 
     document.getElementById('main-stage').classList.toggle('stage-slid'); 
 }
 
-function stackText(s) { return s.split('').join('<br>'); }
-
-function cycleRoom(cat, el) {
+function cycleRoom(cat) {
     currentCategory = cat;
     const maxRooms = { living: 3, dining: 2, kitchen: 2, bedroom: 2 };
+    
+    // Cycle room number
     cycles[cat] = (cycles[cat] % maxRooms[cat]) + 1;
     
     const labelMap = { living: 'Living Room', dining: 'Dining Room', kitchen: 'Kitchen', bedroom: 'Bedroom' };
     document.getElementById(`${cat}-label`).innerText = `${labelMap[cat]} ${cycles[cat]}`;
     
+    // Set Image Path
     let fileName = (cat === 'bedroom' ? 'bedroom' : cat === 'kitchen' ? 'kitchen' : cat + 'room');
     fileName += (cycles[cat] === 1 ? '' : cycles[cat]) + '.jpg';
     
     roomImg.src = fileName;
     roomImg.style.display = 'block';
-    openCabinetFurnitureFan(el);
+
+    // NOTE: Archive Box no longer triggers here. 
+    // It waits for the click on the room image.
 }
 
+// Triggered by clicking the room image on the stage
 function stageCycle() {
-    const btn = document.querySelector(`.drawer-hardware[onclick*="${currentCategory}"]`);
-    if(btn) cycleRoom(currentCategory, btn);
-}
-
-// --- CABINET FAN (TRIGGERS ARCHIVE) ---
-function openCabinetFurnitureFan(el) {
-    const rect = el.getBoundingClientRect();
-    const wRect = document.querySelector('.workspace').getBoundingClientRect();
-    fan.style.left = (rect.right - wRect.left + 50) + 'px';
-    fan.style.top = (rect.top - wRect.top + rect.height / 2) + 'px';
-    fan.innerHTML = '<div class="pivot-bolt" onclick="this.parentElement.classList.remove(\'fan-visible\')"></div>';
-    
-    ['SEAT','TABL','STOR','BEDS'].forEach((n, i) => {
-        const b = document.createElement('div'); b.className = `swatch-blade s-${i+1}`;
-        b.innerHTML = `<div class="fan-text-stacked">${stackText(n)}</div>`;
-        b.onclick = () => {
-            openArchiveBox();
-            setTimeout(() => pullFolderToFront(n), 100); 
-        };
-        fan.appendChild(b);
-    });
-    fan.className = 'fan-system fan-visible active-fan fan-4';
+    // If a room is already displayed, open the files
+    if (roomImg.style.display === 'block') {
+        openArchiveBox();
+    }
 }
 
 // --- THE ARCHIVAL BOX SYSTEM ---
 function openArchiveBox() {
-    const existing = document.getElementById('archive-box');
-    if (existing) {
-        existing.style.bottom = "0px";
-        return;
+    let box = document.getElementById('archive-box');
+    
+    if (!box) {
+        box = document.createElement('div');
+        box.id = "archive-box";
+        box.style = `
+            position: fixed; bottom: -550px; left: 50%; transform: translateX(-50%);
+            width: 1000px; height: 480px; background: #2c2e30; 
+            border: 4px solid #8e9196; border-bottom: none;
+            box-shadow: 0 -25px 60px rgba(0,0,0,0.9); z-index: 9999;
+            transition: bottom 0.6s cubic-bezier(0.19, 1, 0.22, 1);
+            padding: 70px 30px 20px 30px; display: flex; justify-content: center;
+        `;
+        box.innerHTML = `
+            <div onclick="document.getElementById('archive-box').style.bottom='-550px'" style="position:absolute; top:20px; right:30px; color:silver; cursor:pointer; font-family:'Special Elite'; font-size:20px; z-index:10000;">[ CLOSE ARCHIVE ]</div>
+            <div id="folder-rail" style="position:relative; width:100%; height:100%; display:flex; justify-content:center; perspective: 1200px;">
+                ${createDividers()}
+            </div>
+        `;
+        document.body.appendChild(box);
     }
-
-    const box = document.createElement('div');
-    box.id = "archive-box";
-    box.style = `
-        position: fixed; bottom: -550px; left: 50%; transform: translateX(-50%);
-        width: 1000px; height: 480px; background: #2c2e30; 
-        border: 4px solid #8e9196; border-bottom: none;
-        box-shadow: 0 -25px 60px rgba(0,0,0,0.9); z-index: 8000;
-        transition: bottom 0.7s cubic-bezier(0.19, 1, 0.22, 1);
-        padding: 70px 30px 20px 30px; display: flex; justify-content: center;
-    `;
-
-    box.innerHTML = `
-        <div onclick="this.parentElement.style.bottom='-550px'" style="position:absolute; top:20px; right:30px; color:silver; cursor:pointer; font-family:'Special Elite'; font-size:20px; z-index:9000;">[ CLOSE ARCHIVE ]</div>
-        <div id="folder-rail" style="position:relative; width:100%; height:100%; display:flex; justify-content:center; perspective: 1200px;">
-            ${createDividers()}
-        </div>
-    `;
-
-    document.body.appendChild(box);
+    
     setTimeout(() => { box.style.bottom = "0px"; }, 10);
 }
 
@@ -120,29 +98,34 @@ function pullFolderToFront(cat) {
     all.forEach((div, i) => {
         div.style.transform = "translateX(0) scale(1)";
         div.style.zIndex = 10 - i;
-        div.querySelector('.folder-content').style.opacity = "0";
-        div.querySelector('.folder-content').style.visibility = "hidden";
+        const content = div.querySelector('.folder-content');
+        content.style.opacity = "0";
+        content.style.visibility = "hidden";
     });
 
     const selected = document.getElementById(`div-card-${cat}`);
-    selected.style.zIndex = "500";
-    selected.style.transform = "translateY(-40px) scale(1.02)";
-    selected.style.left = "175px"; 
-    
-    const content = selected.querySelector('.folder-content');
-    content.style.opacity = "1";
-    content.style.visibility = "visible";
+    if (selected) {
+        selected.style.zIndex = "500";
+        selected.style.transform = "translateY(-40px) scale(1.02)";
+        selected.style.left = "175px"; 
+        const content = selected.querySelector('.folder-content');
+        content.style.opacity = "1";
+        content.style.visibility = "visible";
+    }
 }
 
 function generateInventoryItems(cat) {
     let items = '';
-    for(let i=1; i<=6; i++) {
+    const itemCounts = { SEAT: 10, TABL: 8, STOR: 6, BEDS: 5 };
+    const count = itemCounts[cat] || 6;
+
+    for(let i=1; i<=count; i++) {
         items += `
-            <div style="min-width:200px; height:280px; text-align:center; background:rgba(255,255,255,0.4); border:1px solid #999; padding:15px;">
-                <img src="${cat.toLowerCase()}${i}.png" style="width:160px; height:180px; object-fit:contain;" onerror="this.src='https://via.placeholder.com/160x180?text=${cat}+${i}'">
-                <div style="margin-top:15px; border-top:1px solid #000; padding-top:10px;">
-                    <p style="font-family:'Special Elite'; font-size:11px; color:#000; font-weight:bold;">REF NO: ${cat.substring(0,3)}-${i}00</p>
-                    <button style="margin-top:5px; font-family:'Courier Prime'; background:black; color:white; border:none; padding:3px 10px; cursor:pointer; font-size:10px;">PLACE PIECE</button>
+            <div style="min-width:220px; height:300px; text-align:center; background:rgba(255,255,255,0.5); border:1px solid #999; padding:15px; box-shadow: 2px 2px 5px rgba(0,0,0,0.1);">
+                <img src="${cat.toLowerCase()}${i}.png" style="width:180px; height:200px; object-fit:contain;" onerror="this.src='https://via.placeholder.com/180x200?text=${cat}+${i}'">
+                <div style="margin-top:10px; border-top:1px solid #000; padding-top:10px;">
+                    <p style="font-family:'Special Elite'; font-size:12px; color:#000; font-weight:bold;">ARCHIVE REF: ${cat}-${i}</p>
+                    <button style="margin-top:5px; font-family:'Courier Prime'; background:black; color:white; border:none; padding:5px 15px; cursor:pointer; font-size:10px; font-weight:bold;">PLACE PIECE</button>
                 </div>
             </div>
         `;
@@ -150,34 +133,15 @@ function generateInventoryItems(cat) {
     return items;
 }
 
-// --- TOP NAV: CATALOG ---
-function openCatalogFan(el) {
-    const rect = el.getBoundingClientRect();
-    const wRect = document.querySelector('.workspace').getBoundingClientRect();
-    fan.style.left = (rect.left + rect.width / 2) + 'px';
-    fan.style.top = (rect.bottom - wRect.top + 10) + 'px';
-    fan.innerHTML = '<div class="pivot-bolt" onclick="this.parentElement.classList.remove(\'fan-visible\')"></div>';
-    
-    const shops = [
-        { name: 'CHIC', url: 'https://www.google.com' },
-        { name: 'VOGUE', url: 'https://www.vogue.com/living' },
-        { name: 'MODERN', url: 'https://www.archdigest.com/' }
-    ];
-
-    shops.forEach((shop, i) => {
-        const b = document.createElement('div'); b.className = `swatch-blade s-${i+1}`;
-        b.innerHTML = `<div class="fan-text-stacked">${stackText(shop.name)}</div>`;
-        b.onclick = () => window.open(shop.url, '_blank'); 
-        fan.appendChild(b);
-    });
-    fan.className = 'fan-system fan-visible active-fan fan-3';
+// --- TOP NAV FUNCTIONS ---
+function openCatalogFan() {
+    window.open('https://vogue.com/living', '_blank');
 }
 
-// --- TOP NAV: LOOK BOOK ---
 function openInspirationBook() {
     const book = document.createElement('div');
     book.id = "inspiration-overlay";
-    book.style = "position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(15,16,17,0.98); z-index:9000; display:flex; align-items:center; justify-content:center; backdrop-filter:blur(12px); overflow:hidden;";
+    book.style = "position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(15,16,17,0.98); z-index:9999; display:flex; align-items:center; justify-content:center; backdrop-filter:blur(12px); overflow:hidden;";
     
     let polaroidsHTML = '';
     const inspData = [
@@ -211,60 +175,4 @@ function openInspirationBook() {
         </div>
     `;
     document.body.appendChild(book);
-}
-
-// --- DECOR & INVENTORY ---
-function openDecorFan(el) {
-    const rect = el.getBoundingClientRect();
-    const wRect = document.querySelector('.workspace').getBoundingClientRect();
-    fan.style.left = (rect.left + rect.width / 2) + 'px';
-    fan.style.top = (rect.bottom - wRect.top + 10) + 'px';
-    fan.innerHTML = '<div class="pivot-bolt" onclick="this.parentElement.classList.remove(\'fan-visible\')"></div>';
-    ['PLANTS','RUGS','LIGHTS','EXTRAS','CURTAINS'].forEach((n, i) => {
-        const b = document.createElement('div'); b.className = `swatch-blade s-${i+1}`;
-        b.innerHTML = `<div class="fan-text-stacked">${stackText(n)}</div>`;
-        if(n === 'PLANTS') b.onclick = (e) => { e.stopPropagation(); openPlantInventory(); };
-        if(n === 'CURTAINS') b.onclick = (e) => { e.stopPropagation(); openCurtainInventory(); };
-        if(n === 'EXTRAS') b.onclick = (e) => { e.stopPropagation(); openExtrasSubFan(); };
-        fan.appendChild(b);
-    });
-    fan.className = 'fan-system fan-visible active-fan fan-5';
-}
-
-function openPlantInventory() {
-    fan.innerHTML = '<div class="pivot-bolt" onclick="openDecorFan(document.querySelector(\'.drawer-hardware[onclick*=\\\'openDecorFan\\\']\'))"></div>';
-    for(let i=1; i<=5; i++) {
-        const b = document.createElement('div'); b.className = `swatch-blade s-${i}`;
-        b.innerHTML = `<img src="plant${i}.png" class="blade-img" onerror="this.parentElement.innerHTML='<div class=fan-text-stacked>P<br>L<br>A<br>N<br>T<br>${i}</div>'">`;
-        fan.appendChild(b);
-    }
-}
-
-function openCurtainInventory() {
-    fan.innerHTML = '<div class="pivot-bolt" onclick="openDecorFan(document.querySelector(\'.drawer-hardware[onclick*=\\\'openDecorFan\\\']\'))"></div>';
-    for(let i=1; i<=5; i++) {
-        const b = document.createElement('div'); b.className = `swatch-blade s-${i}`;
-        b.innerHTML = `<img src="curtain${i}.png" class="blade-img" onerror="this.parentElement.innerHTML='<div class=fan-text-stacked>C<br>U<br>R<br>T<br>${i}</div>'">`;
-        fan.appendChild(b);
-    }
-}
-
-function openExtrasSubFan() {
-    fan.innerHTML = '<div class="pivot-bolt" onclick="openDecorFan(document.querySelector(\'.drawer-hardware[onclick*=\\\'openDecorFan\\\']\'))"></div>';
-    ['PILLOW','VASES','ART'].forEach((n, i) => {
-        const b = document.createElement('div'); b.className = `swatch-blade s-${i+1}`;
-        b.innerHTML = `<div class="fan-text-stacked">${stackText(n)}</div>`;
-        if(n === 'PILLOW') b.onclick = (e) => { e.stopPropagation(); openPillowInventory(); };
-        fan.appendChild(b);
-    });
-    fan.className = 'fan-system fan-visible active-fan fan-3';
-}
-
-function openPillowInventory() {
-    fan.innerHTML = '<div class="pivot-bolt" onclick="openExtrasSubFan()"></div>';
-    for(let i=1; i<=4; i++) {
-        const b = document.createElement('div'); b.className = `swatch-blade s-${i}`;
-        b.innerHTML = `<img src="pillow${i}.png" class="blade-img" onerror="this.parentElement.innerHTML='<div class=fan-text-stacked>P<br>I<br>L<br>O<br>W<br>${i}</div>'">`;
-        fan.appendChild(b);
-    }
 }
