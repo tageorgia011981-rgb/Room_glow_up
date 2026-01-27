@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Room Glow Up | Grand Studio</title>
-    <link href="https://fonts.googleapis.com/css2?family=Limelight&family=Special+Elite&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Limelight&family=Special+Elite&family=Courier+Prime:wght@700&display=swap" rel="stylesheet">
     <style>
         /* --- GLOBAL SETUP --- */
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -37,7 +37,6 @@
             display: flex; align-items: center; justify-content: center;
             cursor: pointer; transition: transform 0.2s; z-index: 2000;
         }
-
         .plate-style {
             width: 140px; height: 38px;
             background: linear-gradient(to bottom, #dcdcdc 0%, #8e9196 50%, #b0b0b0 100%);
@@ -73,61 +72,59 @@
         .placed-item { position: absolute; cursor: move; z-index: 1500; filter: drop-shadow(10px 10px 20px rgba(0,0,0,0.7)); }
 
         /* --- FAN SYSTEM --- */
-        .fan-system { position: absolute; z-index: 150; pointer-events: none; opacity: 0; visibility: hidden; transition: opacity 0.3s; }
+        .fan-system { position: absolute; z-index: 3000; pointer-events: none; opacity: 0; visibility: hidden; transition: opacity 0.3s; }
         .fan-visible { opacity: 1; visibility: visible; }
         
         .swatch-blade {
-            position: absolute; left: -25px; top: 0px; width: 55px; height: 220px; 
-            background: linear-gradient(to bottom, #dcdcdc 0%, #8e9196 50%, #222 100%);
-            border: 2px solid #111; border-radius: 0 0 28px 28px;
+            position: absolute; left: -30px; top: 0px; width: 65px; height: 240px; 
+            background: linear-gradient(to bottom, #dcdcdc 0%, #8e9196 50%, #111 100%);
+            border: 2px solid #000; border-radius: 0 0 32px 32px;
             transform-origin: top center; opacity: 0; display: flex; 
             flex-direction: column; align-items: center; justify-content: flex-end; padding-bottom: 25px;
             cursor: pointer;
             transition: transform 0.6s cubic-bezier(0.165, 0.84, 0.44, 1), opacity 0.3s;
-            box-shadow: 5px 5px 10px rgba(0,0,0,0.5);
+            box-shadow: 8px 8px 15px rgba(0,0,0,0.6);
             transform: rotate(0deg); 
         }
         .active-fan .swatch-blade { opacity: 1; pointer-events: auto; }
         
-        /* Cabinet Fan Rotation */
-        .cabinet-fan.fan-4 .s-1 { transform: rotate(-15deg); }
-        .cabinet-fan.fan-4 .s-2 { transform: rotate(-45deg); }
-        .cabinet-fan.fan-4 .s-3 { transform: rotate(-75deg); }
-        .cabinet-fan.fan-4 .s-4 { transform: rotate(-105deg); }
+        /* CONSISTENT 6 BLADE ROTATIONS */
+        .fan-6 .s-1 { transform: rotate(-140deg); }
+        .fan-6 .s-2 { transform: rotate(-115deg); }
+        .fan-6 .s-3 { transform: rotate(-90deg); }
+        .fan-6 .s-4 { transform: rotate(-65deg); }
+        .fan-6 .s-5 { transform: rotate(-40deg); }
+        .fan-6 .s-6 { transform: rotate(-15deg); }
 
-        .cabinet-fan.fan-5 .s-1 { transform: rotate(-10deg); }
-        .cabinet-fan.fan-5 .s-2 { transform: rotate(-40deg); }
-        .cabinet-fan.fan-5 .s-3 { transform: rotate(-70deg); }
-        .cabinet-fan.fan-5 .s-4 { transform: rotate(-100deg); }
-        .cabinet-fan.fan-5 .s-5 { transform: rotate(-130deg); }
+        /* DECOR FAN: HANGING DOWN SPREAD */
+        .decor-fan.fan-6 .s-1 { transform: rotate(75deg); }
+        .decor-fan.fan-6 .s-2 { transform: rotate(45deg); }
+        .decor-fan.fan-6 .s-3 { transform: rotate(15deg); }
+        .decor-fan.fan-6 .s-4 { transform: rotate(-15deg); }
+        .decor-fan.fan-6 .s-5 { transform: rotate(-45deg); }
+        .decor-fan.fan-6 .s-6 { transform: rotate(-75deg); }
 
-        /* Decor Fan Rotation */
-        .decor-fan.fan-3 .s-1 { transform: rotate(40deg); }
-        .decor-fan.fan-3 .s-2 { transform: rotate(0deg); }
-        .decor-fan.fan-3 .s-3 { transform: rotate(-40deg); }
-
-        /* BIG STACKED TEXT */
+        /* CLEANER, BOLDER STACKED TYPEWRITER FONT */
         .fan-text-bold { 
-            color: #000; font-family: 'Special Elite', cursive; font-weight: 900; 
-            font-size: 22px; /* MUCH BIGGER */
-            text-transform: uppercase; 
+            color: #000; font-family: 'Courier Prime', monospace; font-weight: 700; 
+            font-size: 26px; text-transform: uppercase; 
             display: flex; flex-direction: column; align-items: center; 
-            line-height: 0.75; letter-spacing: 0px; pointer-events: none;
-            width: 100%; text-align: center;
+            line-height: 0.8; letter-spacing: 0px; pointer-events: none; width: 100%;
+            text-shadow: 1px 1px 1px rgba(255,255,255,0.3);
         }
-        .blade-icon { width: 38px; height: 38px; object-fit: contain; margin-bottom: 30px; }
-        .inventory-img-blade { width: 48px; height: 48px; object-fit: contain; margin-bottom: 20px; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.8)); }
+        .blade-icon { width: 40px; height: 40px; object-fit: contain; margin-bottom: 35px; }
+        .inventory-img-blade { width: 55px; height: 55px; object-fit: contain; margin-bottom: 25px; filter: drop-shadow(0 4px 6px rgba(0,0,0,0.9)); }
 
         .pivot-bolt { 
-            position: absolute; left: -20px; top: -20px; width: 40px; height: 40px; 
-            background: radial-gradient(circle at 30% 30%, #666, #222, #000); 
-            border: 3px solid #fff; border-radius: 50%; z-index: 6000; 
-            cursor: pointer; pointer-events: auto; box-shadow: 0 5px 15px rgba(0,0,0,0.8); 
+            position: absolute; left: -25px; top: -25px; width: 50px; height: 50px; 
+            background: radial-gradient(circle at 30% 30%, #777, #222, #000); 
+            border: 4px solid #fff; border-radius: 50%; z-index: 6000; 
+            cursor: pointer; pointer-events: auto; box-shadow: 0 5px 20px rgba(0,0,0,1); 
         }
 
         /* --- PREVIEW BOX --- */
-        #preview-box { position: fixed; bottom: 30px; right: 30px; width: 240px; height: 280px; background: rgba(0, 0, 0, 0.95); border: 2px solid #fff; display: none; flex-direction: column; align-items: center; justify-content: center; z-index: 9999; pointer-events: none; }
-        #preview-box img { max-width: 85%; max-height: 160px; object-fit: contain; }
+        #preview-box { position: fixed; bottom: 30px; right: 30px; width: 260px; height: 300px; background: rgba(0, 0, 0, 0.98); border: 2px solid #fff; display: none; flex-direction: column; align-items: center; justify-content: center; z-index: 9999; pointer-events: none; }
+        #preview-box img { max-width: 90%; max-height: 180px; object-fit: contain; }
     </style>
 </head>
 <body>
@@ -176,7 +173,7 @@
 
 <div id="preview-box">
     <img id="preview-img">
-    <div id="preview-label" style="font-weight:900; margin-top:5px; color:#fff; text-transform:uppercase; text-align:center; font-size:12px;"></div>
+    <div id="preview-label" style="font-weight:900; margin-top:10px; color:#fff; text-transform:uppercase; text-align:center; font-size:14px;"></div>
 </div>
 
 <input type="file" id="file-upload" accept="image/*" style="display: none;">
@@ -192,19 +189,19 @@
     let lockedRoom = "";
 
     const inventory = {
-        'Rugs': ['rug1.png','rug2.png','rug3.png'], 
-        'Plants': ['plant1.png','plant2.png'],
-        'Couches': ['couch1.png', 'couch2.png', 'couch3.png'], 
-        'Stools': ['stool1.png'], 
-        'Chairs': ['chair1.png'], 
-        'Benches': ['bench1.png'], 
-        'Dining Chairs': ['dchair1.png'],
-        'Storage': ['storage1.png','storage2.png'], 
-        'Beds': ['bed1.png','bed2.png'], 
-        'Tables': ['table1.png','table2.png']
+        'Rugs': ['rug1.png','rug2.png','rug3.png','rug4.png','rug5.png','rug6.png'], 
+        'Plants': ['plant1.png','plant2.png','plant3.png','plant4.png','plant5.png','plant6.png'],
+        'Couches': ['couch1.png', 'couch2.png', 'couch3.png','couch4.png','couch5.png','couch6.png'], 
+        'Stools': ['stool1.png','stool2.png','stool3.png','stool4.png','stool5.png','stool6.png'], 
+        'Chairs': ['chair1.png','chair2.png','chair3.png','chair4.png','chair5.png','chair6.png'], 
+        'Benches': ['bench1.png','bench2.png','bench3.png','bench4.png','bench5.png','bench6.png'], 
+        'Dining Chairs': ['dchair1.png','dchair2.png','dchair3.png','dchair4.png','dchair5.png','dchair6.png'],
+        'Storage': ['storage1.png','storage2.png','storage3.png','storage4.png','storage5.png','storage6.png'], 
+        'Beds': ['bed1.png','bed2.png','bed3.png','bed4.png','bed5.png','bed6.png'], 
+        'Tables': ['table1.png','table2.png','table3.png','table4.png','table5.png','table6.png']
     };
 
-    function closeFan() { fan.classList.remove('fan-visible', 'active-fan', 'fan-3', 'fan-4', 'fan-5', 'cabinet-fan', 'decor-fan'); }
+    function closeFan() { fan.classList.remove('fan-visible', 'active-fan', 'fan-6', 'cabinet-fan', 'decor-fan'); }
 
     function openRoomsMode() { closeFan(); cab.classList.add('cabinet-visible'); stage.classList.add('stage-slid'); }
     function setRoom(src, el) { lockedRoom = src; roomImg.src = src; roomImg.style.display = 'block'; openIconFan(el); }
@@ -214,12 +211,12 @@
         const w = document.querySelector('.workspace').getBoundingClientRect();
         if (isDecor) {
             fan.style.left = (rect.left - w.left + rect.width / 2) + 'px';
-            fan.style.top = (rect.bottom - w.top + 15) + 'px';
-            fan.className = 'fan-system decor-fan';
+            fan.style.top = (rect.bottom - w.top + 20) + 'px';
+            fan.className = 'fan-system decor-fan fan-6';
         } else {
-            fan.style.left = (rect.right - w.left - 15) + 'px'; 
+            fan.style.left = (rect.right - w.left - 20) + 'px'; 
             fan.style.top = (rect.top - w.top + rect.height/2) + 'px';
-            fan.className = 'fan-system cabinet-fan';
+            fan.className = 'fan-system cabinet-fan fan-6';
         }
     }
 
@@ -231,10 +228,9 @@
         setupFanPos(el, false);
         fan.innerHTML = '<div class="pivot-bolt" onclick="closeFan()"></div>';
         const cats = [
-            {n:'Seating', i:'iconseating.png'}, 
-            {n:'Storage', i:'iconstorage.png'}, 
-            {n:'Beds', i:'iconbeds.png'}, 
-            {n:'Tables', i:'iconstable.png'}
+            {n:'Seating', i:'iconseating.png'}, {n:'Storage', i:'iconstorage.png'}, 
+            {n:'Beds', i:'iconbeds.png'}, {n:'Tables', i:'iconstable.png'},
+            {n:'Rugs', i:'iconrugs.png'}, {n:'Decor', i:'icondecor.png'}
         ];
         cats.forEach((c, i) => {
             const b = document.createElement('div'); b.className = `swatch-blade s-${i+1}`;
@@ -242,50 +238,53 @@
             b.onclick = (e) => { e.stopPropagation(); openTypewriterFan(el, c.n); };
             fan.appendChild(b);
         });
-        fan.classList.add('fan-visible', 'active-fan', 'fan-4');
+        fan.classList.add('fan-visible', 'active-fan');
     }
 
     function openTypewriterFan(el, category) {
         const bolt = fan.querySelector('.pivot-bolt');
         fan.innerHTML = ''; fan.appendChild(bolt);
         bolt.onclick = () => openIconFan(el);
-        let subcats = category === 'Seating' ? ['Couches','Stools','Chairs','Benches','Dining Chairs'] : [category];
-        subcats.forEach((c, i) => {
+        let items = (category === 'Seating') ? ['COUCHS','STOOLS','CHAIRS','BENCHS','D-CHAIR','LOUNGE'] : [category, category, category, category, category, category];
+        items.forEach((c, i) => {
             const b = document.createElement('div'); b.className = `swatch-blade s-${i+1}`;
             b.innerHTML = `<div class="fan-text-bold">${stackText(c)}</div>`;
             b.onclick = (e) => { e.stopPropagation(); openInventoryFan(inventory[c] || [], c, el, false, category); };
             fan.appendChild(b);
         });
-        fan.classList.add('fan-visible', 'active-fan', subcats.length > 4 ? 'fan-5' : 'fan-4');
+        fan.classList.add('fan-visible', 'active-fan');
     }
 
     function openInventoryFan(items, cat, el, isDecorChain = false, parentCat = "") {
         const bolt = fan.querySelector('.pivot-bolt');
         fan.innerHTML = ''; fan.appendChild(bolt);
         bolt.onclick = () => isDecorChain ? openDecorFan(el) : openTypewriterFan(el, parentCat);
-        items.forEach((src, i) => {
+        for(let i=0; i<6; i++) {
+            const src = items[i] || "";
             const b = document.createElement('div'); b.className = `swatch-blade s-${i+1}`;
-            b.innerHTML = `<img src="${src}" class="inventory-img-blade">`;
-            b.onmouseenter = () => { pImg.src = src; pLabel.innerText = cat.toUpperCase(); preview.style.display = 'flex'; };
-            b.onmouseleave = () => preview.style.display = 'none';
-            b.onclick = () => { addItem(src, cat); closeFan(); };
+            if(src) {
+                b.innerHTML = `<img src="${src}" class="inventory-img-blade">`;
+                b.onmouseenter = () => { pImg.src = src; pLabel.innerText = cat.toUpperCase(); preview.style.display = 'flex'; };
+                b.onmouseleave = () => preview.style.display = 'none';
+                b.onclick = () => { addItem(src, cat); closeFan(); };
+            }
             fan.appendChild(b);
-        });
-        fan.classList.add('fan-visible', 'active-fan', items.length > 4 ? 'fan-5' : 'fan-4');
+        }
+        fan.classList.add('fan-visible', 'active-fan');
     }
 
     function openDecorFan(el) {
         closeFan(); cab.classList.remove('cabinet-visible'); stage.classList.remove('stage-slid');
         setupFanPos(el, true);
         fan.innerHTML = '<div class="pivot-bolt" onclick="closeFan()"></div>';
-        const dCats = ['Rugs','Plants','Art'];
+        const dCats = ['RUGS','PLANTS','ART','MIRROR','LAMPS','CURTAN'];
         dCats.forEach((c, i) => {
             const b = document.createElement('div'); b.className = `swatch-blade s-${i+1}`;
             b.innerHTML = `<div class="fan-text-bold">${stackText(c)}</div>`;
-            b.onclick = () => openInventoryFan(inventory[c] || [], c, el, true, "Decor");
+            b.onclick = (e) => { e.stopPropagation(); openInventoryFan(inventory[c] || [], c, el, true, "Decor"); };
             fan.appendChild(b);
         });
-        setTimeout(() => { fan.classList.add('fan-visible', 'active-fan', 'fan-3'); }, 30);
+        setTimeout(() => { fan.classList.add('fan-visible', 'active-fan'); }, 30);
     }
 
     function addItem(src, cat) {
