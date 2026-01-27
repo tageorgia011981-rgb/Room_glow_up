@@ -1,6 +1,10 @@
 const fan = document.getElementById('fan-system');
 const roomImg = document.getElementById('room-display');
 
+// FORCE HIDE ON LOAD
+fan.style.opacity = "0";
+fan.style.visibility = "hidden";
+
 // Cycle Tracking for Rooms
 let cycles = { living: 1, dining: 1, kitchen: 1, bedroom: 1 };
 let currentCategory = 'bedroom'; 
@@ -28,13 +32,12 @@ function cycleRoom(cat, el) {
     openFurnitureFan(el);
 }
 
-// Stage click cycles the current active room
 function stageCycle() {
     const btn = document.querySelector(`.drawer-hardware[onclick*="${currentCategory}"]`);
     if(btn) cycleRoom(currentCategory, btn);
 }
 
-// --- FAN POSITIONING & GENERATION ---
+// --- FAN POSITIONING ---
 function openFurnitureFan(el) {
     const rect = el.getBoundingClientRect();
     const wRect = document.querySelector('.workspace').getBoundingClientRect();
