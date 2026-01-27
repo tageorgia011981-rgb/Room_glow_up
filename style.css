@@ -1,168 +1,244 @@
-/* --- GLOBAL & BRANDING --- */
-body {
-    margin: 0;
-    background: #111;
-    color: white;
-    font-family: 'Special Elite', cursive;
-    overflow-x: hidden;
+/* --- GLOBAL SETUP --- */
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body { 
+    background: #0f1011 url("background_color.jpg") center / cover fixed; 
+    min-height: 100vh; 
+    font-family: 'Special Elite', cursive; 
+    color: #fff; 
+    overflow-x: hidden; 
 }
 
-.header {
-    padding: 40px;
-    text-align: center;
-}
+/* --- HEADER & TAGLINE --- */
+.site-header { text-align: center; padding: 40px 0 10px; z-index: 1000; position: relative; }
 
 .brand-title {
-    font-family: 'Limelight', cursive;
-    font-size: 100px;
+    font-family: 'Limelight', cursive; 
+    font-size: 90px; 
     text-transform: uppercase;
-    color: #ffffff;
-    mask-image: linear-gradient(to right, rgba(255,255,255,0.3), rgba(255,255,255,1));
-    -webkit-mask-image: linear-gradient(to right, rgba(255,255,255,0.3), rgba(255,255,255,1));
-    letter-spacing: 4px;
-    margin: 0;
+    background: linear-gradient(to bottom, #ffffff 0%, #f0f0f0 40%, #8e9196 45%, #444444 50%, #222222 52%, #8e9196 60%, #ffffff 100%);
+    -webkit-background-clip: text; 
+    -webkit-text-fill-color: transparent;
+    filter: drop-shadow(0px 5px 15px rgba(0,0,0,0.8));
+    letter-spacing: 6px;
 }
 
-/* --- WORKSPACE & STAGE GLIDE REVISION --- */
-.workspace {
-    display: flex;
-    align-items: flex-start;
-    padding: 20px;
-    position: relative;
+.sub-header { 
+    font-family: 'Caveat', cursive; 
+    font-size: 42px; 
+    color: #dcdcdc; 
+    margin-top: -5px; 
+    text-shadow: 0px 0px 15px rgba(255,255,255,0.3), 0px 2px 5px rgba(0,0,0,0.9);
+    letter-spacing: 2px;
 }
 
-.cabinet {
-    width: 400px;
-    height: 600px;
-    background: #222;
-    border: 10px solid #333;
-    position: absolute;
-    left: -450px; 
-    transition: left 0.8s cubic-bezier(0.19, 1, 0.22, 1);
-    z-index: 10;
-}
-
-.cabinet-visible {
-    left: 20px;
-}
-
-.stage {
-    width: 1000px;
-    height: 600px;
-    background: #050505;
-    border: 20px solid #2c2e30;
-    margin-left: 650px; /* Base starting point */
-    position: relative;
-    overflow: hidden;
-    transition: margin-left 0.8s cubic-bezier(0.19, 1, 0.22, 1);
-}
-
-/* The Glide: Shifts stage right when cabinet is active */
-.cabinet-visible ~ .stage {
-    margin-left: 750px;
-}
-
-/* --- TABS --- */
-.tabs-container {
-    display: flex;
-    gap: 10px;
-    padding: 20px;
+/* --- HARDWARE: HANDLES & DEPTH --- */
+.drawer-hardware {
+    position: relative; 
+    width: 220px; 
+    height: 85px;
+    background: linear-gradient(135deg, #2c2e30 0%, #1a1a1a 100%);
+    border: 3px solid #000;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.8), inset 0 4px 4px rgba(255,255,255,0.1), inset 0 -4px 4px rgba(0,0,0,0.5), inset 0 0 0 2px #444;
+    display: flex; 
+    align-items: center; 
     justify-content: center;
+    cursor: pointer; 
+    transition: 0.3s;
 }
 
-.drawer-tab {
-    padding: 15px 30px;
-    background: #333;
-    border: 2px solid #555;
-    color: white;
-    cursor: pointer;
-    font-family: 'Special Elite', monospace;
+.drawer-hardware:hover { 
+    box-shadow: 0 0 25px rgba(255,255,255,0.4), inset 0 0 10px rgba(255,255,255,0.1); 
+    transform: translateY(-3px); 
 }
 
-/* --- THE FAN SYSTEM --- */
-#fan-system {
-    position: absolute;
-    pointer-events: none;
-    z-index: 1000;
+.lip-pull {
+    position: absolute; 
+    bottom: -5px; 
+    width: 110px; 
+    height: 14px;
+    background: linear-gradient(to bottom, #444, #111);
+    border: 1px solid #000; 
+    border-radius: 0 0 8px 8px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.9);
 }
 
-.fan-down {
-    position: relative;
-    pointer-events: auto;
-}
-
-.pivot-bolt {
-    width: 16px;
-    height: 16px;
-    background: #444;
-    border: 2px solid #000;
+.drawer-hardware::before, .drawer-hardware::after {
+    content: ''; 
+    position: absolute; 
+    top: 50%; 
+    transform: translateY(-50%);
+    width: 14px; 
+    height: 14px; 
     border-radius: 50%;
-    position: absolute;
-    top: -8px;
-    left: -8px;
-    z-index: 2100;
+    background: radial-gradient(circle at 30% 30%, #ffffff, #888, #222);
+    border: 1px solid #000; 
+    box-shadow: 0 1px 2px rgba(255,255,255,0.4);
 }
 
-/* --- BLADES & GLOW REVISION --- */
-.swatch-blade {
-    position: absolute;
-    width: 100px;
-    height: 180px;
-    background: #e0e0e0;
-    border: 2px solid #222;
-    border-radius: 0 0 50px 50px;
-    transform-origin: top center;
-    transition: transform 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275), filter 0.3s;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding-top: 20px;
+.drawer-hardware::before { left: 10px; } 
+.drawer-hardware::after { right: 10px; }
+
+.plate-style {
+    width: 170px; 
+    height: 45px;
+    background: linear-gradient(to bottom, #dcdcdc 0%, #8e9196 50%, #b0b0b0 100%);
+    color: #000; 
+    display: flex; 
+    align-items: center; 
+    justify-content: center;
+    font-size: 15px; 
+    font-weight: 900; 
+    text-transform: uppercase; 
+    border: 1px solid #666; 
+    letter-spacing: 1px;
+    box-shadow: inset 0 2px 5px rgba(0,0,0,0.5), 0 1px 0 rgba(255,255,255,0.2);
 }
 
-/* The Glow Effect */
-.swatch-blade:hover {
-    filter: brightness(1.4) drop-shadow(0 0 15px rgba(255, 255, 255, 0.7));
-    z-index: 2000 !important;
+/* --- TOP NAVIGATION --- */
+.vintage-tabs { 
+    display: flex; 
+    justify-content: center; 
+    gap: 20px; 
+    padding: 25px 0; 
+    z-index: 2000; 
+    position: relative; 
+}
+
+/* --- WORKSPACE --- */
+.workspace { 
+    position: relative; 
+    width: 100vw; 
+    height: 850px; 
+    display: flex; 
+    align-items: flex-start; 
+    justify-content: center; 
+    padding-top: 20px; 
+}
+
+.stage { 
+    width: 1100px; 
+    height: 700px; 
+    background: rgba(5,5,5,0.8); 
+    border: 20px solid #2c2e30; 
+    overflow: hidden; 
+    box-shadow: inset 0 0 100px #000;
+    transition: transform 0.8s cubic-bezier(0.19, 1, 0.22, 1); 
+    z-index: 40;
     cursor: pointer;
 }
 
-.fan-text {
-    color: #000;
-    font-size: 14px;
-    text-align: center;
-    font-weight: bold;
-    pointer-events: none;
+.stage-slid { transform: translateX(250px); }
+
+/* --- CABINET --- */
+.cabinet-container { 
+    position: absolute; 
+    left: -650px; 
+    width: 550px; 
+    transition: left 0.8s ease; 
+    z-index: 100; 
+    top: 10px; 
 }
 
-/* --- PREVIEW BOX REVISION --- */
-.decor-preview {
-    position: absolute;
-    left: 115%; 
-    top: 50%;
-    transform: translateY(-50%) rotate(0deg); /* Stays upright */
-    width: 180px;
-    height: 180px;
-    background: #111;
-    border: 2px solid #8e9196;
-    display: none;
-    z-index: 2500;
-    box-shadow: 0 10px 40px rgba(0,0,0,1);
+.cabinet-visible { left: 40px !important; }
+
+.drawer-stack { 
+    position: absolute; 
+    top: 130px; 
+    left: 70px; 
+    width: 410px; 
+    display: flex; 
+    flex-direction: column; 
+    align-items: center; 
+    gap: 20px; 
 }
 
-.swatch-blade:hover .decor-preview {
-    display: block;
+/* --- SLIM FAN SYSTEM --- */
+.fan-system { 
+    position: absolute; 
+    z-index: 3000; 
+    pointer-events: none; 
+    opacity: 0; 
+    visibility: hidden; 
+    transition: 0.3s; 
 }
 
-.decor-preview img {
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
-    padding: 10px;
+.fan-visible { opacity: 1; visibility: visible; }
+
+.swatch-blade {
+    position: absolute; 
+    left: -25px; 
+    top: 0px; 
+    width: 50px; 
+    height: 280px; 
+    background: linear-gradient(160deg, #ffffff 0%, #8e9196 40%, #222 50%, #8e9196 60%, #ffffff 100%);
+    border: 2px solid #000; 
+    border-radius: 0 0 8px 8px; 
+    transform-origin: top center; 
+    opacity: 0; 
+    display: flex; 
+    flex-direction: column; 
+    align-items: center; 
+    justify-content: center; 
+    transition: 0.6s; 
+    cursor: pointer;
 }
 
-/* --- 5-BLADE ROTATION MATH --- */
-.fan-down.active-fan .s-1 { transform: rotate(40deg) translateY(10px); }
-.fan-down.active-fan .s-2 { transform: rotate(20deg) translateY(10px); }
-.fan-down.active-fan .s-3 { transform: rotate(0deg) translateY(10px); }
-.fan-down.active-fan .s-4 { transform: rotate(-20deg) translateY(10px); }
-.fan-down.active-fan .s-5 { transform: rotate(-40deg) translateY(10px); }
+.swatch-blade:hover { 
+    filter: brightness(1.2); 
+    box-shadow: 0 0 30px rgba(255, 255, 255, 0.6); 
+    z-index: 5000; 
+}
+
+.active-fan .swatch-blade { opacity: 1; pointer-events: auto; }
+
+.pivot-bolt { 
+    position: absolute; 
+    left: -32px; 
+    top: -32px; 
+    width: 64px; 
+    height: 64px; 
+    background: radial-gradient(circle at 30% 30%, #ffffff, #888, #222); 
+    border: 5px solid #000; 
+    border-radius: 50%; 
+    z-index: 6000; 
+    cursor: pointer; 
+}
+
+.fan-text-stacked { 
+    font-family: 'Courier Prime', monospace; 
+    color: #000; 
+    font-size: 18px; 
+    line-height: 0.95; 
+    text-align: center; 
+    font-weight: 900; 
+}
+
+.blade-img { 
+    width: 45px; 
+    margin-bottom: 10px; 
+    filter: drop-shadow(0 2px 5px rgba(0,0,0,0.5)); 
+}
+
+/* FAN ANGLES */
+.fan-3 .s-1 { transform: rotate(-35deg); } 
+.fan-3 .s-2 { transform: rotate(0deg); } 
+.fan-3 .s-3 { transform: rotate(35deg); }
+
+.fan-4 .s-1 { transform: rotate(-105deg); } 
+.fan-4 .s-2 { transform: rotate(-75deg); } 
+.fan-4 .s-3 { transform: rotate(-45deg); } 
+.fan-4 .s-4 { transform: rotate(-15deg); }
+
+.fan-5 .s-1 { transform: rotate(70deg); } 
+.fan-5 .s-2 { transform: rotate(35deg); } 
+.fan-5 .s-3 { transform: rotate(0deg); } 
+.fan-5 .s-4 { transform: rotate(-35deg); } 
+.fan-5 .s-5 { transform: rotate(-70deg); }
+
+.fan-6 .s-1 { transform: rotate(85deg); } 
+.fan-6 .s-2 { transform: rotate(51deg); } 
+.fan-6 .s-3 { transform: rotate(17deg); } 
+.fan-6 .s-4 { transform: rotate(-17deg); } 
+.fan-6 .s-5 { transform: rotate(-51deg); } 
+.fan-6 .s-6 { transform: rotate(-85deg); }
