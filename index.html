@@ -18,9 +18,12 @@
 
 <nav class="vintage-tabs">
     <div class="drawer-hardware" onclick="toggleCabinet()"><div class="plate-style">Rooms</div><div class="lip-pull"></div></div>
-    <div class="drawer-hardware"><div class="plate-style">Catalog</div><div class="lip-pull"></div></div>
-    <div class="drawer-hardware"><div class="plate-style">Inspiration</div><div class="lip-pull"></div></div>
-    <div class="drawer-hardware" onclick="openDecorFan(this)"><div class="plate-style">Decor</div><div class="lip-pull"></div></div>
+    
+    <div class="drawer-hardware" onclick="openArchiveBox()"><div class="plate-style">Catalog</div><div class="lip-pull"></div></div>
+    
+    <div class="drawer-hardware" onclick="openInspirationBook()"><div class="plate-style">Inspiration</div><div class="lip-pull"></div></div>
+    
+    <div class="drawer-hardware" onclick="openArchiveBox()"><div class="plate-style">Decor</div><div class="lip-pull"></div></div>
 </nav>
 
 <div class="workspace">
@@ -31,10 +34,10 @@
     <div id="cab" class="cabinet-container">
         <img src="cabinet.png" style="width:100%;">
         <div class="drawer-stack">
-            <div class="drawer-hardware" onclick="cycleRoom('living', this)"><div class="plate-style" id="living-label">Living Room 1</div><div class="lip-pull"></div></div>
-            <div class="drawer-hardware" onclick="cycleRoom('dining', this)"><div class="plate-style" id="dining-label">Dining Room 1</div><div class="lip-pull"></div></div>
-            <div class="drawer-hardware" onclick="cycleRoom('kitchen', this)"><div class="plate-style" id="kitchen-label">Kitchen 1</div><div class="lip-pull"></div></div>
-            <div class="drawer-hardware" onclick="cycleRoom('bedroom', this)"><div class="plate-style" id="bedroom-label">Bedroom 1</div><div class="lip-pull"></div></div>
+            <div class="drawer-hardware" onclick="cycleRoom('living')"><div class="plate-style" id="living-label">Living Room 1</div><div class="lip-pull"></div></div>
+            <div class="drawer-hardware" onclick="cycleRoom('dining')"><div class="plate-style" id="dining-label">Dining Room 1</div><div class="lip-pull"></div></div>
+            <div class="drawer-hardware" onclick="cycleRoom('kitchen')"><div class="plate-style" id="kitchen-label">Kitchen 1</div><div class="lip-pull"></div></div>
+            <div class="drawer-hardware" onclick="cycleRoom('bedroom')"><div class="plate-style" id="bedroom-label">Bedroom 1</div><div class="lip-pull"></div></div>
             <div class="drawer-hardware"><div class="plate-style" style="color:#d00;">Upload</div><div class="lip-pull"></div></div>
         </div>
     </div>
