@@ -11,9 +11,10 @@
   body { 
     background: #0f1011 url("background.jpg") center / cover fixed; 
     min-height: 100vh; font-family: 'Special Elite', cursive; color: #fff; overflow-x: hidden; 
+    transition: background 0.8s ease-in-out; /* Cinematic transition between pages */
   }
 
-  /* --- HEADER (OLD HOLLYWOOD STYLE) --- */
+  /* --- HEADER (OLD HOLLYWOOD) --- */
   .site-header { text-align: center; padding: 30px 0 10px; z-index: 10; position: relative; }
   .brand-title { 
     font-family: 'Limelight', cursive; font-size: 85px; text-transform: uppercase; 
@@ -26,7 +27,7 @@
     text-transform: uppercase; text-shadow: 0px 2px 4px #000; 
   }
   
-  /* --- NAVIGATION TABS --- */
+  /* --- NAVIGATION --- */
   .vintage-tabs { display: flex; justify-content: center; gap: 15px; padding: 15px 0; z-index: 2000; position: relative; }
   .drawer-hardware {
     position: relative; width: 220px; height: 80px; 
@@ -49,15 +50,8 @@
     border: 1px solid #666; box-shadow: inset 0 2px 5px rgba(0,0,0,0.2); text-align: center;
   }
 
-  .drawer-hardware:hover, .drawer-zone:hover .drawer-hardware { 
-    filter: brightness(1.2) drop-shadow(0 0 25px rgba(255,255,255,0.5));
-    transform: translateY(-5px);
-  }
-
-  /* --- WORKSPACE --- */
+  /* --- WORKSPACE & STAGE --- */
   .workspace { position: relative; width: 100%; height: 850px; display: flex; flex-direction: column; align-items: center; }
-
-  /* Cabinet Glide-in */
   .cabinet-container { 
     position: absolute; left: -600px; top: 20px; width: 450px; z-index: 50;
     transition: left 0.8s cubic-bezier(0.19, 1, 0.22, 1);
@@ -66,7 +60,6 @@
   .cabinet-image { width: 100%; filter: drop-shadow(15px 15px 30px rgba(0,0,0,0.9)); }
   .drawer-stack { position: absolute; top: 110px; left: 45px; width: 360px; display: flex; flex-direction: column; align-items: center; gap: 40px; } 
 
-  /* STAGE */
   .stage { 
     width: 80%; height: 500px; background: #000; border: 20px solid #2c2e30; 
     position: relative; z-index: 100; margin-top: 10px;
@@ -77,15 +70,24 @@
   .stage-pushed { transform: translateX(380px); }
   #room-display { width: 100%; height: 100%; object-fit: contain; display: none; cursor: pointer; }
 
-  /* --- LOOKBOOK OVERLAY --- */
+  /* --- LOOKBOOK GALLERY --- */
   #lookbook-overlay {
     position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-    background: rgba(0,0,0,0.92); z-index: 5000;
-    display: none; justify-content: center; align-items: center;
-    cursor: zoom-out;
+    background: rgba(0,0,0,0.85); z-index: 5000;
+    display: none; flex-direction: column; align-items: center; overflow-y: auto; padding: 40px 0;
   }
-  .lookbook-content { position: relative; width: 90%; max-width: 800px; }
-  .lookbook-image { width: 100%; filter: drop-shadow(0 0 30px #000); }
+  .gallery-wall { 
+    position: relative; width: 900px; height: 1200px; 
+    background: url('lookbook.jpg') no-repeat center center; background-size: contain;
+  }
+  .insp-frame { position: absolute; overflow: hidden; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: 0.3s; }
+  .insp-frame img { width: 100%; height: 100%; object-fit: cover; }
+
+  .f1 { top: 7%; left: 9%; width: 32%; height: 26%; }
+  .f2 { top: 7%; left: 58%; width: 32%; height: 21%; }
+  .f3 { top: 32%; left: 58%; width: 34%; height: 19%; }
+  .f4 { top: 56%; left: 9%; width: 38%; height: 36%; }
+  .f5 { top: 56%; left: 58%; width: 34%; height: 26%; }
 
   /* --- ORNATE FILE BOX --- */
   .filebox-outer {
@@ -95,24 +97,10 @@
   .filebox-visible { bottom: -120px !important; } 
   .filebox-image-back { width: 100%; z-index: 10; position: absolute; bottom: 0; pointer-events: none; }
   .filebox-image-front { width: 100%; z-index: 30; position: absolute; bottom: 0; pointer-events: none; clip-path: inset(45% 0 0 0); }
-
-  .folder-row { 
-    display: flex; justify-content: center; width: 62%; gap: 6px; 
-    position: absolute; bottom: 250px; left: 50%; transform: translateX(-50%);
-    z-index: 20;
-  }
-  .archive-folder {
-    flex: 1; height: 140px; background: linear-gradient(to bottom, #2c2e30, #000);
-    border: 1px solid #444; border-radius: 4px 4px 0 0;
-    position: relative; transition: 0.3s ease-in-out; box-shadow: -5px 0 15px rgba(0,0,0,0.5); cursor: pointer;
-  }
+  .folder-row { display: flex; justify-content: center; width: 62%; gap: 6px; position: absolute; bottom: 250px; left: 50%; transform: translateX(-50%); z-index: 20; }
+  .archive-folder { flex: 1; height: 140px; background: linear-gradient(to bottom, #2c2e30, #000); border: 1px solid #444; border-radius: 4px 4px 0 0; position: relative; transition: 0.3s; cursor: pointer; }
   .archive-folder:hover { transform: translateY(-45px); border-color: #fff; z-index: 40; }
-  
-  .folder-label-top {
-    position: absolute; top: -18px; left: 5px; background: #dcdcdc; color: #000;
-    font-size: 10px; font-weight: bold; padding: 2px 6px; border: 1px solid #000;
-    text-transform: uppercase; font-family: 'Courier Prime', monospace;
-  }
+  .folder-label-top { position: absolute; top: -18px; left: 5px; background: #dcdcdc; color: #000; font-size: 10px; font-weight: bold; padding: 2px 6px; border: 1px solid #000; text-transform: uppercase; }
 </style>
 </head>
 <body>
@@ -123,9 +111,9 @@
 </header>
 
 <nav class="vintage-tabs">
-    <div class="drawer-hardware" onclick="toggleCabinet()"><div class="plate-style">Rooms</div></div>
-    <div class="drawer-hardware" onclick="openLookbook()"><div class="plate-style">Look Book</div></div>
-    <div class="drawer-hardware" onclick="alert('Catalog Overlay')"><div class="plate-style">Catalog</div></div>
+    <div class="drawer-hardware" onclick="switchStudio('background.jpg', 'cabinet')"><div class="plate-style">Rooms</div></div>
+    <div class="drawer-hardware" onclick="switchStudio('lookbook1.jpg', 'lookbook')"><div class="plate-style">Look Book</div></div>
+    <div class="drawer-hardware" onclick="switchStudio('lookbook2.jpg', 'catalog')"><div class="plate-style">Catalog</div></div>
     <div class="drawer-hardware"><div class="plate-style">Decor</div></div>
 </nav>
 
@@ -133,17 +121,12 @@
     <div class="cabinet-container" id="cab-container">
         <img src="cabinet.png" class="cabinet-image">
         <div class="drawer-stack">
-            <div class="drawer-zone" onclick="cycleRoom(['livingroom1.jpg'])"><div class="drawer-hardware"><div class="plate-style">Living Room</div></div></div>
-            <div class="drawer-zone" onclick="cycleRoom(['bedroom1.jpg'])"><div class="drawer-hardware"><div class="plate-style">Bedroom</div></div></div>
-            <div class="drawer-zone" onclick="cycleRoom(['diningroom1.jpg'])"><div class="drawer-hardware"><div class="plate-style">Dining Room</div></div></div>
-            <div class="drawer-zone" onclick="triggerUpload()"><div class="drawer-hardware"><div class="plate-style" style="color: #d00;">Upload</div></div></div>
+            <div class="drawer-zone" onclick="cycleRoom('livingroom1.jpg')"><div class="drawer-hardware"><div class="plate-style">Living Room</div></div></div>
+            <div class="drawer-zone" onclick="cycleRoom('bedroom1.jpg')"><div class="drawer-hardware"><div class="plate-style">Bedroom</div></div></div>
+            <div class="drawer-zone" onclick="cycleRoom('diningroom1.jpg')"><div class="drawer-hardware"><div class="plate-style">Dining Room</div></div></div>
         </div>
     </div>
-    
-    <div class="stage" id="stage-zone" onclick="summonFileBox()">
-        <img id="room-display">
-    </div>
-
+    <div class="stage" id="stage-zone" onclick="summonFileBox()"><img id="room-display"></div>
     <div class="filebox-outer" id="filebox-wrap">
         <img src="filebox.jpg" class="filebox-image-back">
         <div class="folder-row" id="folder-container"></div>
@@ -152,8 +135,13 @@
 </div>
 
 <div id="lookbook-overlay" onclick="this.style.display='none'">
-    <div class="lookbook-content">
-        <img src="lookbook.jpg" class="lookbook-image">
+    <h2 style="margin-bottom:20px; letter-spacing:10px; color:#dcdcdc;">GALLERY EXHIBITION</h2>
+    <div class="gallery-wall" onclick="event.stopPropagation()">
+        <div class="insp-frame f1" onclick="previewInsp('insp1.jpg')"><img src="insp1.jpg"></div>
+        <div class="insp-frame f2" onclick="previewInsp('insp2.jpg')"><img src="insp2.jpg"></div>
+        <div class="insp-frame f3" onclick="previewInsp('insp3.jpg')"><img src="insp3.jpg"></div>
+        <div class="insp-frame f4" onclick="previewInsp('insp4.jpg')"><img src="insp4.jpg"></div>
+        <div class="insp-frame f5" onclick="previewInsp('insp5.jpg')"><img src="insp5.jpg"></div>
     </div>
 </div>
 
@@ -163,39 +151,28 @@
     const cab = document.getElementById('cab-container');
     const fileboxWrap = document.getElementById('filebox-wrap');
     const folderContainer = document.getElementById('folder-container');
-    
-    function toggleCabinet() { 
-        cab.classList.toggle('cabinet-visible'); 
-        stage.classList.toggle('stage-pushed'); 
+
+    // DYNAMIC BACKGROUND SWITCHER
+    function switchStudio(bgFile, feature) {
+        document.body.style.background = `#0f1011 url('${bgFile}') center / cover fixed`;
+        
+        // Feature Logic
+        if(feature === 'cabinet') { cab.classList.add('cabinet-visible'); stage.classList.add('stage-pushed'); }
+        else { cab.classList.remove('cabinet-visible'); stage.classList.remove('stage-pushed'); }
+        
+        if(feature === 'lookbook') { document.getElementById('lookbook-overlay').style.display = 'flex'; }
     }
 
-    function openLookbook() {
-        document.getElementById('lookbook-overlay').style.display = 'flex';
-    }
-
-    function cycleRoom(images) {
-        roomImg.src = images[0];
-        roomImg.style.display = 'block';
-        roomImg.style.opacity = '1';
-    }
-
-    function summonFileBox() {
-        if (!roomImg.src || roomImg.src === "") return;
-        fileboxWrap.classList.add('filebox-visible');
-        renderFolders();
-    }
+    function cycleRoom(src) { roomImg.src = src; roomImg.style.display = 'block'; }
+    function summonFileBox() { if(roomImg.src) { fileboxWrap.classList.add('filebox-visible'); renderFolders(); } }
+    function previewInsp(src) { roomImg.src = src; roomImg.style.display = 'block'; document.getElementById('lookbook-overlay').style.display = 'none'; }
 
     function renderFolders() {
         folderContainer.innerHTML = '';
         ['Beds', 'Seating', 'Storage', 'Tables'].forEach(item => {
-            folderContainer.innerHTML += `
-                <div class="archive-folder" onclick="alert('Opening ${item}')">
-                    <div class="folder-label-top">${item}</div>
-                </div>`;
+            folderContainer.innerHTML += `<div class="archive-folder"><div class="folder-label-top">${item}</div></div>`;
         });
     }
-
-    function triggerUpload() { /* upload logic */ }
 </script>
 </body>
 </html>
