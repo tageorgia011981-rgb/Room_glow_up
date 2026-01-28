@@ -10,14 +10,12 @@
   * { margin: 0; padding: 0; box-sizing: border-box; }
   
   body { 
-    background: #0f1011 url("image_8a43c6.jpg") no-repeat center center / cover fixed; 
-    min-height: 100vh; 
-    font-family: 'Special Elite', cursive; 
-    color: #fff; 
-    overflow-x: hidden; 
+    /* Raindrop background set to fill screen without distortion */
+    background: #0f1011 url("image_8a26cf.jpg") no-repeat center center / cover fixed; 
+    min-height: 100vh; font-family: 'Special Elite', cursive; color: #fff; overflow-x: hidden; 
   }
 
-  /* --- BRANDING UNIT (HOLLYWOOD SIGN STYLE) --- */
+  /* --- BRANDING UNIT --- */
   .site-header { text-align: center; padding: 40px 0 20px; z-index: 10; position: relative; }
   .brand-title { 
     font-family: 'Limelight', cursive; font-size: 100px; text-transform: uppercase; 
@@ -31,7 +29,7 @@
     text-transform: uppercase; text-shadow: 0px 2px 4px #000; font-weight: 300;
   }
   
-  /* --- NAVIGATION --- */
+  /* --- TOP NAV DRAWERS --- */
   .vintage-tabs { display: flex; justify-content: center; gap: 15px; padding: 20px 0; z-index: 2000; position: relative; }
   .drawer-hardware {
     position: relative; width: 220px; height: 80px; 
@@ -49,28 +47,26 @@
   /* --- WORKSPACE --- */
   .workspace { position: relative; width: 100%; height: 850px; display: flex; flex-direction: column; align-items: center; }
   
-  /* Cabinet Placeholder */
   .cabinet-container { 
-    position: absolute; left: -600px; top: 20px; width: 450px; z-index: 50;
-    transition: left 0.8s cubic-bezier(0.19, 1, 0.22, 1);
-    min-height: 600px; /* Space for your armoire image */
+    position: absolute; left: -600px; top: 20px; width: 450px; z-index: 50; 
+    transition: left 0.8s cubic-bezier(0.19, 1, 0.22, 1); 
   }
   .cabinet-visible { left: 20px !important; }
   .cabinet-image { width: 100%; filter: drop-shadow(15px 15px 30px rgba(0,0,0,0.9)); }
+  
   .drawer-stack { position: absolute; top: 110px; left: 45px; width: 360px; display: flex; flex-direction: column; align-items: center; gap: 40px; } 
 
-  /* STAGE */
+  /* Stage Area */
   .stage { 
     width: 80%; height: 500px; background: rgba(0,0,0,0.4); border: 20px solid #2c2e30; 
-    position: relative; z-index: 100; margin-top: 10px;
-    transition: transform 0.8s cubic-bezier(0.19, 1, 0.22, 1);
+    position: relative; z-index: 100; margin-top: 10px; transition: transform 0.8s;
     box-shadow: inset 0 0 80px #000, 0 20px 50px rgba(0,0,0,0.8);
     display: flex; align-items: center; justify-content: center; overflow: hidden;
   }
   .stage-pushed { transform: translateX(380px); }
   #room-display { width: 100%; height: 100%; object-fit: contain; display: none; }
 
-  /* --- TRUNK STORAGE PLACEHOLDERS --- */
+  /* --- FILEBOX1 (3D LAYERED) --- */
   .storage-outer {
     position: fixed; bottom: -800px; left: 50%; transform: translateX(-50%);
     width: 650px; height: 600px; z-index: 1000; transition: bottom 0.8s;
@@ -105,42 +101,50 @@
 
 <nav class="vintage-tabs">
     <div class="drawer-hardware" onclick="toggleCabinet()"><div class="plate-style">Rooms</div></div>
-    <div class="drawer-hardware" onclick="alert('Opening Look Book')"><div class="plate-style">Look Book</div></div>
+    <div class="drawer-hardware" onclick="alert('Look Book Opening')"><div class="plate-style">Look Book</div></div>
+    <div class="drawer-hardware" onclick="alert('Catalog Opening')"><div class="plate-style">Catalog</div></div>
+    <div class="drawer-hardware" onclick="alert('Decor Opening')"><div class="plate-style">Decor</div></div>
 </nav>
 
 <div class="workspace">
     <div class="cabinet-container" id="cab-container">
-        <img src="armoire.png" class="cabinet-image" alt="">
+        <img src="cabinet.png" class="cabinet-image" alt="Cabinet">
         <div class="drawer-stack">
-            <div class="drawer-zone" onclick="cycleRoom('livingroom1.jpg')"><div class="drawer-hardware"><div class="plate-style">Living Room</div></div></div>
-            <div class="drawer-zone" onclick="cycleRoom('bedroom1.jpg')"><div class="drawer-hardware"><div class="plate-style">Bedroom</div></div></div>
+            <div onclick="cycleRoom('livingroom1.jpg')"><div class="drawer-hardware"><div class="plate-style">Living Room</div></div></div>
+            <div onclick="cycleRoom('bedroom1.jpg')"><div class="drawer-hardware"><div class="plate-style">Bedroom</div></div></div>
         </div>
     </div>
     
     <div class="stage" id="stage-zone" onclick="summonStorage()"><img id="room-display"></div>
 
     <div class="storage-outer" id="storage-wrap">
-        <img src="vanity_trunk.png" class="storage-image-back" alt="">
+        <img src="filebox1.png" class="storage-image-back">
         <div class="folder-row" id="folder-container"></div>
-        <img src="vanity_trunk.png" class="storage-image-front" alt="">
+        <img src="filebox1.png" class="storage-image-front">
     </div>
 </div>
 
 <script>
-    const roomImg = document.getElementById('room-display');
-    const stage = document.getElementById('stage-zone');
-    const cab = document.getElementById('cab-container');
-    const storageWrap = document.getElementById('storage-wrap');
-    const folderContainer = document.getElementById('folder-container');
-
-    function toggleCabinet() { cab.classList.toggle('cabinet-visible'); stage.classList.toggle('stage-pushed'); }
-    function cycleRoom(src) { roomImg.src = src; roomImg.style.display = 'block'; }
-    function summonStorage() { if(roomImg.src) { storageWrap.classList.add('storage-visible'); renderFolders(); } }
-
+    function toggleCabinet() { 
+        document.getElementById('cab-container').classList.toggle('cabinet-visible'); 
+        document.getElementById('stage-zone').classList.toggle('stage-pushed'); 
+    }
+    function cycleRoom(src) { 
+        const img = document.getElementById('room-display');
+        img.src = src; 
+        img.style.display = 'block'; 
+    }
+    function summonStorage() { 
+        if(document.getElementById('room-display').src) { 
+            document.getElementById('storage-wrap').classList.add('storage-visible'); 
+            renderFolders(); 
+        } 
+    }
     function renderFolders() {
-        folderContainer.innerHTML = '';
+        const container = document.getElementById('folder-container');
+        container.innerHTML = '';
         ['Plants', 'Pillows', 'Rugs', 'Lighting'].forEach(item => {
-            folderContainer.innerHTML += `<div class="archive-folder"><div class="folder-label-top">${item}</div></div>`;
+            container.innerHTML += `<div class="archive-folder"><div class="folder-label-top">${item}</div></div>`;
         });
     }
 </script>
