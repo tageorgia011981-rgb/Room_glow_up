@@ -1,11 +1,107 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Room Glow Up | Grand Studio</title>
-    <link rel="stylesheet" href="style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Limelight&family=Special+Elite&family=Courier+Prime:wght@700&display=swap" rel="stylesheet">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Room Glow Up | Grand Studio</title>
+<link href="https://fonts.googleapis.com/css2?family=Limelight&family=Special+Elite&display=swap" rel="stylesheet">
+<style>
+  /* --- GLOBAL SETUP --- */
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { 
+    background: #0f1011 url("background_color.jpg") center / cover fixed; 
+    min-height: 100vh; font-family: 'Special Elite', cursive; color: #fff; overflow-x: hidden; 
+  }
+
+  /* --- HEADER --- */
+  .site-header { text-align: center; padding: 60px 0 30px; position: relative; z-index: 10; }
+  .brand-title { 
+    font-family: 'Limelight', cursive; font-size: 100px; text-transform: uppercase; 
+    background: linear-gradient(to bottom, #ffffff 0%, #dcdcdc 50%, #8e9196 51%, #a8a8a8 100%);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    text-shadow: 0px 5px 15px rgba(0,0,0,0.6); letter-spacing: 4px;
+  }
+  .sub-title { font-size: 24px; color: #8e9196; letter-spacing: 8px; margin-top: -10px; text-transform: uppercase; text-shadow: 0px 2px 4px #000; }
+  
+  /* --- NAVIGATION TABS --- */
+  .vintage-tabs { display: flex; justify-content: center; gap: 15px; padding: 30px 0; z-index: 2000; position: relative; }
+
+  /* --- HARDWARE (Screw Holes & Larger Font) --- */
+  .drawer-hardware {
+    position: relative; width: 230px; height: 85px; 
+    background: linear-gradient(135deg, #2c2e30 0%, #1a1a1a 100%); border: 3px solid #000;
+    box-shadow: inset 0 0 0 2px #444, inset 10px 0 20px rgba(0,0,0,0.8), 0 10px 20px rgba(0,0,0,0.8);
+    display: flex; align-items: center; justify-content: center; cursor: pointer; transition: 0.3s;
+  }
+  .drawer-hardware::before, .drawer-hardware::after {
+    content: ''; position: absolute; top: 50%; transform: translateY(-50%);
+    width: 14px; height: 14px; border-radius: 50%; 
+    background: radial-gradient(circle, #111 20%, #555 100%); box-shadow: 0 1px 0 rgba(255,255,255,0.1); 
+  }
+  .drawer-hardware::before { left: 12px; }
+  .drawer-hardware::after { right: 12px; }
+  
+  .plate-style { 
+    width: 155px; height: 42px; background: linear-gradient(to bottom, #dcdcdc 0%, #8e9196 50%, #b0b0b0 100%);
+    color: #000; display: flex; align-items: center; justify-content: center; 
+    font-family: 'Special Elite', cursive; font-size: 16px; font-weight: 900; text-transform: uppercase; 
+    border: 1px solid #666; box-shadow: inset 0 2px 5px rgba(0,0,0,0.2); text-align: center;
+  }
+  .lip-pull { position: absolute; bottom: -8px; left: 50%; transform: translateX(-50%); width: 110px; height: 16px; background: linear-gradient(to bottom, #2c2e30, #000); border: 2px solid #111; border-radius: 0 0 10px 10px; }
+
+  /* --- WORKSPACE --- */
+  .workspace { display: flex; padding: 20px; position: relative; height: 850px; }
+
+  /* Cabinet Gliding (Starts Hidden) */
+  .cabinet-container { 
+    position: absolute; left: -600px; top: 0; width: 480px; z-index: 50;
+    transition: left 0.8s cubic-bezier(0.19, 1, 0.22, 1);
+  }
+  .cabinet-visible { left: 50px !important; }
+  .cabinet-image { width: 100%; filter: drop-shadow(15px 15px 40px rgba(0,0,0,0.9)); }
+  .drawer-stack { position: absolute; top: 120px; left: 45px; width: 380px; display: flex; flex-direction: column; align-items: center; gap: 45px; } 
+
+  /* Glow Hover effect */
+  .drawer-zone:hover .drawer-hardware { 
+    filter: brightness(1.2) drop-shadow(0 0 25px rgba(255,255,255,0.5));
+    transform: scale(1.05);
+  }
+
+  /* Massive Stage */
+  .stage { 
+    width: 75%; height: 620px; background: #050505; border: 20px solid #2c2e30; 
+    position: absolute; left: 10%; top: 0; z-index: 100;
+    transition: transform 0.8s cubic-bezier(0.19, 1, 0.22, 1);
+    box-shadow: inset 0 0 80px #000, 20px 0 50px rgba(0,0,0,0.9);
+  }
+  .stage-pushed { transform: translateX(450px); }
+  #room-display { width: 100%; height: 100%; object-fit: cover; display: none; cursor: crosshair; }
+
+  /* --- FILE BOX (Sit Higher Up) --- */
+  .filebox-outer {
+    position: absolute; right: 50px; bottom: -600px; width: 550px; height: 500px;
+    z-index: 1000; transition: bottom 0.8s;
+  }
+  .filebox-visible { bottom: 80px !important; } 
+  .filebox-image { width: 100%; z-index: 10; position: absolute; bottom: 0; pointer-events: none; }
+
+  .folder-row { 
+    display: flex; justify-content: center; width: 90%; gap: 15px; 
+    position: absolute; bottom: 260px; left: 50%; transform: translateX(-50%);
+    z-index: 5;
+  }
+  .archive-folder {
+    width: 100px; height: 140px; background: linear-gradient(to bottom, #333, #111, #000);
+    border: 2px solid #8e9196; border-radius: 4px 10px 0 0;
+    position: relative; transition: 0.3s; box-shadow: -5px 0 15px rgba(0,0,0,0.8); cursor: pointer;
+  }
+  .archive-folder:hover { transform: translateY(-30px); border-color: #fff; }
+  .folder-label-top {
+    position: absolute; top: -20px; left: 5px; background: #dcdcdc; color: #000;
+    font-size: 10px; font-weight: bold; padding: 2px 6px; border: 1px solid #000;
+    text-transform: uppercase; font-family: 'Courier Prime', monospace;
+  }
+</style>
 </head>
 <body>
 
@@ -15,22 +111,84 @@
 </header>
 
 <nav class="vintage-tabs">
-    <div class="drawer-hardware" onclick="openMode('rooms')"><div class="plate-style">Rooms</div><div class="lip-pull"></div></div>
-    <div class="drawer-hardware" onclick="openArchiveBox()"><div class="plate-style">Catalog</div><div class="lip-pull"></div></div>
-    <div class="drawer-hardware" onclick="openArchiveBox()"><div class="plate-style">Inspiration</div><div class="lip-pull"></div></div>
+    <div class="drawer-hardware" onclick="glideInCabinet()"><div class="plate-style">Rooms</div><div class="lip-pull"></div></div>
+    <div class="drawer-hardware" onclick="alert('Look Book Overlay')"><div class="plate-style">Look Book</div><div class="lip-pull"></div></div>
+    <div class="drawer-hardware" onclick="alert('Catalog Overlay')"><div class="plate-style">Catalog</div><div class="lip-pull"></div></div>
+    <div class="drawer-hardware"><div class="plate-style">Decor</div><div class="lip-pull"></div></div>
 </nav>
 
 <div class="workspace">
     <div class="cabinet-container" id="cab-container">
-        <img src="cabinet.png" class="cabinet-image" style="width:100%;">
-        <div class="drawer-stack" id="drawer-anchor"></div>
+        <img src="cabinet.png" class="cabinet-image">
+        <div class="drawer-stack">
+            <div class="drawer-zone" onmouseover="preview('livingroom.jpg')" onclick="cycle('livingroom1.jpg', 'livingroom3.jpg')"><div class="drawer-hardware"><div class="plate-style">Living Room</div><div class="lip-pull"></div></div></div>
+            <div class="drawer-zone" onmouseover="preview('bedroom.jpg')" onclick="cycle('bedroom1.jpg')"><div class="drawer-hardware"><div class="plate-style">Bedroom</div><div class="lip-pull"></div></div></div>
+            <div class="drawer-zone" onmouseover="preview('diningroom.jpg')" onclick="cycle('diningroom.jpg')"><div class="drawer-hardware"><div class="plate-style">Dining Room</div><div class="lip-pull"></div></div></div>
+            <div class="drawer-zone" onclick="triggerUpload()"><div class="drawer-hardware"><div class="plate-style" style="color: #d00;">Upload</div><div class="lip-pull"></div></div></div>
+        </div>
     </div>
     
-    <div class="stage" id="stage-zone" onclick="openArchiveBox()">
-        <img id="room-display">
+    <div class="stage" id="stage-zone">
+        <img id="room-display" onclick="summonFileBox()">
+    </div>
+
+    <div class="filebox-outer" id="filebox-wrap">
+        <div class="folder-row">
+            <div class="archive-folder" onclick="alert('Opening Seating Catalog')"><div class="folder-label-top">Seating</div></div>
+            <div class="archive-folder" onclick="alert('Opening Tables Catalog')"><div class="folder-label-top">Tables</div></div>
+            <div class="archive-folder" onclick="alert('Opening Storage Catalog')"><div class="folder-label-top">Storage</div></div>
+        </div>
+        <img src="filebox.png" class="filebox-image">
     </div>
 </div>
 
-<script src="script.js"></script>
+<script>
+    const roomImg = document.getElementById('room-display');
+    const stage = document.getElementById('stage-zone');
+    const cab = document.getElementById('cab-container');
+    const fileboxWrap = document.getElementById('filebox-wrap');
+    
+    let currentCycle = 0;
+
+    function glideInCabinet() {
+        cab.classList.add('cabinet-visible');
+        stage.classList.add('stage-pushed');
+    }
+
+    // Hover: Show first image
+    function preview(src) {
+        roomImg.src = src;
+        roomImg.style.display = 'block';
+        roomImg.style.opacity = '0.5';
+    }
+
+    // Click Drawer: Cycle through images
+    function cycle(...images) {
+        currentCycle = (currentCycle + 1) % images.length;
+        roomImg.src = images[currentCycle];
+        roomImg.style.opacity = '0.9';
+    }
+
+    // Click Image: Summon File Box
+    function summonFileBox() {
+        roomImg.style.opacity = '1';
+        fileboxWrap.classList.add('filebox-visible');
+    }
+
+    function triggerUpload() {
+        const input = document.createElement('input');
+        input.type = 'file';
+        input.onchange = e => {
+            const reader = new FileReader();
+            reader.onload = ev => {
+                roomImg.src = ev.target.result;
+                roomImg.style.display = 'block';
+                summonFileBox();
+            };
+            reader.readAsDataURL(e.target.files[0]);
+        };
+        input.click();
+    }
+</script>
 </body>
 </html>
