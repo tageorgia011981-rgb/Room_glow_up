@@ -6,27 +6,15 @@ body {
 }
 
 /* --- BRANDING --- */
-.site-header { text-align: center; padding: 60px 0 30px; position: relative; z-index: 10; }
+.site-header { text-align: center; padding: 60px 0 30px; }
 .brand-title { 
     font-family: 'Limelight', cursive; font-size: 100px; text-transform: uppercase; 
-    background: linear-gradient(to bottom, #ffffff, #8e9196 45%, #222222 52%, #ffffff);
+    background: linear-gradient(to bottom, #ffffff, #dcdcdc 50%, #8e9196 51%, #a8a8a8 100%);
     -webkit-background-clip: text; -webkit-text-fill-color: transparent;
     text-shadow: 0px 5px 15px rgba(0,0,0,0.6);
 }
 
-/* --- CABINET HARDWARE --- */
-.drawer-hardware {
-    position: relative; width: 280px; height: 100px; 
-    background: linear-gradient(135deg, #2c2e30, #1a1a1a); 
-    border: 3px solid #000; display: flex; align-items: center; justify-content: center; 
-    cursor: pointer; transition: 0.2s; z-index: 2000;
-}
-.plate-style { 
-    width: 190px; height: 50px; background: linear-gradient(to bottom, #dcdcdc, #8e9196); 
-    color: #000; font-weight: 900; border: 1px solid #666; display: flex; align-items: center; justify-content: center; 
-}
-
-/* --- SLIDING STAGE & SHADOW --- */
+/* --- CABINET & STAGE SLIDE --- */
 .workspace { display: flex; padding: 40px; position: relative; height: 800px; }
 .cabinet-container { 
     position: absolute; left: -650px; top: 0; width: 500px; 
@@ -37,34 +25,29 @@ body {
 
 .stage { 
     width: 1000px; height: 600px; background: #050505; border: 20px solid #2c2e30; 
-    margin: 0 auto; position: relative; overflow: hidden; 
-    cursor: pointer; z-index: 40; transition: transform 0.8s cubic-bezier(0.19, 1, 0.22, 1), box-shadow 0.8s;
+    margin: 0 auto; position: relative; overflow: hidden; cursor: pointer; z-index: 40; 
+    transition: transform 0.8s cubic-bezier(0.19, 1, 0.22, 1), box-shadow 0.8s;
 }
-.stage-slid { 
-    transform: translateX(280px); 
-    box-shadow: -35px 0 50px rgba(0,0,0,0.9); /* The physical shadow over the cabinet */
-}
+.stage-slid { transform: translateX(280px); box-shadow: -35px 0 60px rgba(0,0,0,0.9); }
 #room-display { width: 100%; height: 100%; object-fit: cover; display: none; }
 
-/* --- THE ACCORDION FILE SYSTEM --- */
+/* --- FILE BOX (filebox.png) --- */
 #archive-box {
-    position: fixed; bottom: -600px; left: 50%; transform: translateX(-50%);
+    position: fixed; bottom: -650px; left: 50%; transform: translateX(-50%);
     width: 1100px; height: 550px; 
-    background: url("filebox.png") no-repeat center bottom / contain;
-    z-index: 9999; transition: bottom 0.6s cubic-bezier(0.19, 1, 0.22, 1);
-    display: flex; align-items: flex-end; padding: 0 60px 45px 60px;
+    background: #1a1a1a url("filebox.png") no-repeat center bottom / contain;
+    z-index: 99999; transition: bottom 0.6s cubic-bezier(0.19, 1, 0.22, 1);
+    display: flex; align-items: flex-end; padding: 0 60px 50px 60px;
 }
 
 .archive-folder-wrapper { position: relative; transition: 0.4s; margin-left: -90px; }
-.archive-folder-wrapper:hover { transform: translateY(-70px); z-index: 10000 !important; }
+.archive-folder-wrapper:hover { transform: translateY(-80px); z-index: 100000 !important; }
 
-/* Metallic Label Plates */
 .folder-label {
     position: absolute; top: -52px; left: 20px; width: 160px; height: 52px;
-    background: linear-gradient(135deg, #dcdcdc, #8e9196, #555);
+    background: linear-gradient(135deg, #dcdcdc, #8e9196, #444);
     border: 2px solid #000; border-bottom: none; border-radius: 6px 6px 0 0;
     display: flex; align-items: center; justify-content: center; cursor: pointer;
-    box-shadow: inset 0 1px 0 rgba(255,255,255,0.4);
 }
 .label-text { 
     width: 88%; height: 75%; background: #fff; color: #000; border: 1px solid #000; 
@@ -72,10 +55,17 @@ body {
     display: flex; align-items: center; justify-content: center; text-transform: uppercase; 
 }
 
-/* Weathered Cardstock Folder Body */
 .folder-body { 
     width: 280px; height: 400px; 
-    background: linear-gradient(to bottom, #a8a8a8, #777); 
-    border: 2px solid #000; border-radius: 4px; 
-    box-shadow: -15px 0 30px rgba(0,0,0,0.7); padding: 20px; 
+    background: linear-gradient(to bottom, #a8a8a8, #666); 
+    border: 2px solid #000; border-radius: 4px; box-shadow: -20px 0 40px rgba(0,0,0,0.8); padding: 20px; 
 }
+
+/* HARDWARE BUTTONS */
+.drawer-hardware {
+    position: relative; width: 280px; height: 100px; 
+    background: linear-gradient(135deg, #2c2e30, #1a1a1a); border: 3px solid #000;
+    display: flex; align-items: center; justify-content: center; cursor: pointer;
+}
+.plate-style { width: 190px; height: 50px; background: linear-gradient(to bottom, #dcdcdc, #8e9196); color: #000; font-weight: 900; border: 1px solid #666; display: flex; align-items: center; justify-content: center; }
+.lip-pull { position: absolute; bottom: -14px; width: 140px; height: 24px; background: #000; border-radius: 0 0 15px 15px; }
