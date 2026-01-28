@@ -1,102 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Room Glow Up | Grand Studio</title>
-<link href="https://fonts.googleapis.com/css2?family=Limelight&family=Special+Elite&family=Courier+Prime:wght@700&display=swap" rel="stylesheet">
-<style>
-  /* --- GLOBAL SETUP --- */
-  * { margin: 0; padding: 0; box-sizing: border-box; }
-  body { 
-    background: #0f1011 url("background_color.jpg") center / cover fixed; 
-    min-height: 100vh; font-family: 'Special Elite', cursive; color: #fff; overflow-x: hidden; 
-  }
-
-  /* --- HEADER & NAVIGATION --- */
-  .site-header { text-align: center; padding: 60px 0 30px; position: relative; z-index: 10; }
-  .brand-title { 
-    font-family: 'Limelight', cursive; font-size: 100px; text-transform: uppercase; 
-    background: linear-gradient(to bottom, #ffffff 0%, #dcdcdc 50%, #8e9196 51%, #a8a8a8 100%);
-    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-    text-shadow: 0px 5px 15px rgba(0,0,0,0.6); letter-spacing: 4px;
-  }
-  .sub-title { font-size: 24px; color: #8e9196; letter-spacing: 8px; margin-top: -10px; text-transform: uppercase; }
-  
-  .vintage-tabs { display: flex; justify-content: center; gap: 30px; padding: 30px 0; z-index: 2000; position: relative; }
-  .drawer-hardware {
-    position: relative; width: 280px; height: 100px; 
-    background: linear-gradient(135deg, #2c2e30, #1a1a1a); 
-    border: 3px solid #000; display: flex; align-items: center; justify-content: center; 
-    cursor: pointer; transition: 0.2s; z-index: 2000;
-  }
-  .plate-style { 
-    width: 190px; height: 50px; background: linear-gradient(to bottom, #dcdcdc, #8e9196); 
-    color: #000; font-weight: 900; border: 1px solid #666; display: flex; align-items: center; justify-content: center; 
-  }
-
-  /* --- WORKSPACE & SLIDING STAGE --- */
-  .workspace { display: flex; padding: 40px; position: relative; height: 800px; overflow: visible; }
-  .cabinet-container { 
-    position: absolute; left: -650px; top: 0; width: 500px; 
-    transition: left 0.8s cubic-bezier(0.19, 1, 0.22, 1); z-index: 100;
-  }
-  .cabinet-visible { left: 50px !important; }
-  .drawer-stack { position: absolute; top: 130px; left: 55px; width: 400px; display: flex; flex-direction: column; align-items: center; gap: 30px; }
-
-  .stage { 
-    width: 1000px; height: 600px; background: #050505; border: 20px solid #2c2e30; 
-    margin: 0 auto; position: relative; overflow: hidden; 
-    box-shadow: inset 0 0 80px #000; /* Interior glow */
-    cursor: pointer; z-index: 40; transition: transform 0.8s cubic-bezier(0.19, 1, 0.22, 1), box-shadow 0.8s;
-  }
-  
-  /* ADDED SHADOW ON SLIDE */
-  .stage-slid { 
-    transform: translateX(280px); 
-    box-shadow: -30px 0 50px rgba(0,0,0,0.9), inset 0 0 80px #000; /* Deep external shadow on the left */
-  }
-
-  #room-display { width: 100%; height: 100%; object-fit: cover; display: none; }
-
-  /* --- THE PHYSICAL FILE BOX (filebox.png) --- */
-  #archive-box {
-    position: fixed; bottom: -600px; left: 50%; transform: translateX(-50%);
-    width: 1100px; height: 550px; 
-    background: url("filebox.png") no-repeat center bottom / contain;
-    z-index: 9999; transition: bottom 0.6s cubic-bezier(0.19, 1, 0.22, 1);
-    display: flex; align-items: flex-end; padding: 0 60px 45px 60px;
-  }
-
-  .archive-folder-wrapper { position: relative; transition: 0.4s; margin-left: -90px; }
-  .archive-folder-wrapper:first-child { margin-left: 0; }
-  .archive-folder-wrapper:hover { transform: translateY(-70px); z-index: 10000 !important; }
-
-  .folder-label {
-    position: absolute; top: -48px; left: 25px; width: 150px; height: 48px;
-    background: #c2c2c2; border: 2px solid #000; border-bottom: none;
-    border-radius: 6px 6px 0 0; display: flex; align-items: center; justify-content: center; cursor: pointer;
-  }
-  .label-text { 
-    width: 85%; height: 70%; background: #fff; color: #000; border: 1px solid #000; 
-    font-family: 'Courier Prime'; font-size: 11px; font-weight: bold; 
-    display: flex; align-items: center; justify-content: center; text-transform: uppercase; 
-  }
-
-  .folder-body { 
-    width: 280px; height: 380px; 
-    background: linear-gradient(to bottom, #999, #777); 
-    border: 2px solid #000; border-radius: 4px; 
-    box-shadow: -15px 0 30px rgba(0,0,0,0.7); padding: 20px; 
-  }
-  
-  button.place-btn {
-    width: 100%; height: 45px; margin-top: 30px;
-    background: linear-gradient(135deg, #2c2e30, #1a1a1a);
-    border: 2px solid #000; color: #fff; font-family: 'Courier Prime'; cursor: pointer;
-    box-shadow: 0 5px 10px rgba(0,0,0,0.5);
-  }
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Room Glow Up | Grand Studio</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Limelight&family=Special+Elite&family=Courier+Prime:wght@700&display=swap" rel="stylesheet">
 </head>
 <body>
 
@@ -106,10 +15,10 @@
 </header>
 
 <nav class="vintage-tabs">
-    <div class="drawer-hardware" onclick="lift(this); openMode('rooms')"><div class="plate-style">Rooms</div></div>
-    <div class="drawer-hardware" onclick="lift(this); openMode('insp')"><div class="plate-style">Inspiration</div></div>
-    <div class="drawer-hardware" onclick="lift(this); openArchiveBox()"><div class="plate-style">Catalog</div></div>
-    <div class="drawer-hardware" onclick="lift(this); openMode('decor')"><div class="plate-style">Decor</div></div>
+    <div class="drawer-hardware" onclick="openMode('rooms')"><div class="plate-style">Rooms</div></div>
+    <div class="drawer-hardware" onclick="openMode('insp')"><div class="plate-style">Inspiration</div></div>
+    <div class="drawer-hardware" onclick="openArchiveBox()"><div class="plate-style">Catalog</div></div>
+    <div class="drawer-hardware" onclick="openMode('decor')"><div class="plate-style">Decor</div></div>
 </nav>
 
 <div class="workspace">
@@ -123,62 +32,6 @@
     </div>
 </div>
 
-<script>
-    const roomImg = document.getElementById('room-display');
-    const cab = document.getElementById('cab-container');
-    const stage = document.getElementById('stage-zone');
-    const drawerStack = document.getElementById('drawer-anchor');
-
-    const archiveData = {
-        'SEATING': ['COUCH', 'CHAIR', 'BENCH', 'STOOL'],
-        'TABLES': ['COFFEE', 'END', 'DINING'],
-        'STORAGE': ['DRESSERS', 'NIGHTSTANDS', 'CABINET', 'BUFFETT'],
-        'BEDS': 'DIRECT'
-    };
-
-    function openMode(mode) {
-        cab.classList.remove('cabinet-visible');
-        stage.classList.remove('stage-slid');
-        document.getElementById('archive-box')?.style.setProperty('bottom', '-600px');
-
-        if (mode === 'rooms') {
-            cab.classList.add('cabinet-visible');
-            stage.classList.add('stage-slid');
-            drawerStack.innerHTML = '';
-            const rooms = [{ name: 'Living Room', file: 'livingroom2.jpg' }, { name: 'Bedroom', file: 'bedroom.jpg' }, { name: 'Dining Room', file: 'diningroom.jpg' }];
-            rooms.forEach(data => {
-                drawerStack.innerHTML += `<div class="drawer-zone" onclick="selectRoom('${data.file}')"><div class="drawer-hardware"><div class="plate-style">${data.name}</div></div></div>`;
-            });
-        }
-    }
-
-    function selectRoom(src) { roomImg.src = src; roomImg.style.display = 'block'; }
-    function lift(el) { document.querySelectorAll('.drawer-hardware').forEach(d => d.classList.remove('active-lift')); el.classList.add('active-lift'); }
-
-    function openArchiveBox() {
-        if (roomImg.style.display !== 'block') return;
-        let box = document.getElementById('archive-box');
-        if (!box) { box = document.createElement('div'); box.id = "archive-box"; document.body.appendChild(box); }
-        renderArchiveTier(1);
-        setTimeout(() => { box.style.bottom = "0px"; }, 10);
-    }
-
-    function renderArchiveTier(tier, parent = null) {
-        const box = document.getElementById('archive-box');
-        let items = (tier === 1) ? Object.keys(archiveData) : (tier === 2) ? archiveData[parent] : [1, 2, 3, 4, 5];
-        let html = `<div onclick="document.getElementById('archive-box').style.bottom='-600px'" style="position:absolute; top:20px; right:40px; color:#8e9196; cursor:pointer;">[ CLOSE ]</div>`;
-        if (tier > 1) html += `<div onclick="renderArchiveTier(1)" style="position:absolute; top:20px; left:40px; color:white; cursor:pointer;">← BACK</div>`;
-        html += `<div style="display:flex; width:100%; height:100%; align-items:flex-end; padding-left:40px;">`;
-        items.forEach((item, i) => {
-            const labelName = (tier === 3) ? `REF: ${parent.substring(0,3)}-${item}` : item;
-            const clickAction = (tier === 1) ? (archiveData[item] === 'DIRECT' ? `renderArchiveTier(3, '${item}')` : `renderArchiveTier(2, '${item}')`) : (tier === 2 ? `renderArchiveTier(3, '${item}')` : `console.log('Placed')`);
-            html += `<div class="archive-folder-wrapper" style="z-index:${i};">
-                <div class="folder-label" onclick="${clickAction}"><div class="label-text">${labelName}</div></div>
-                <div class="folder-body">${tier === 3 ? `<div style="width:100%; height:160px; background:rgba(255,255,255,0.2); border:1px dashed #000; margin-top:50px; display:flex; align-items:center; justify-content:center;"><img src="${parent.toLowerCase().replace('s','')}${item}.png" style="max-width:80%;"></div><button class="place-btn">PLACE PIECE</button>` : ''}</div>
-            </div>`;
-        });
-        box.innerHTML = html;
-    }
-</script>
+<script src="script.js"></script>
 </body>
 </html>
