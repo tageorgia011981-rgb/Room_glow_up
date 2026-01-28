@@ -1,60 +1,81 @@
+/* --- GLOBAL SETUP --- */
 * { margin: 0; padding: 0; box-sizing: border-box; }
-body { background: #0f1011; font-family: 'Special Elite', cursive; color: #fff; overflow-x: hidden; }
+body { 
+    background: #0f1011 url("background_color.jpg") center / cover fixed; 
+    min-height: 100vh; font-family: 'Special Elite', cursive; color: #fff; overflow-x: hidden; 
+}
 
 /* --- BRANDING --- */
-.site-header { text-align: center; padding: 40px 0 10px; }
-.brand-title {
-    font-family: 'Limelight', cursive; font-size: 85px; text-transform: uppercase;
+.site-header { text-align: center; padding: 60px 0 30px; position: relative; z-index: 10; }
+.brand-title { 
+    font-family: 'Limelight', cursive; font-size: 100px; text-transform: uppercase; 
     background: linear-gradient(to bottom, #ffffff, #8e9196 45%, #222222 52%, #ffffff);
     -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-    filter: drop-shadow(0px 5px 15px rgba(0,0,0,0.8));
+    text-shadow: 0px 5px 15px rgba(0,0,0,0.6);
 }
 
-/* --- CABINET & STAGE --- */
-.workspace { position: relative; width: 100vw; height: 800px; display: flex; justify-content: center; padding-top: 20px; }
-.stage { width: 1050px; height: 650px; background: #000; border: 15px solid #2c2e30; box-shadow: inset 0 0 100px #000; cursor: pointer; transition: transform 0.8s; }
-.stage-slid { transform: translateX(200px); }
-.cabinet-container { position: absolute; left: -600px; width: 500px; transition: left 0.8s; z-index: 100; top: 10px; }
-.cabinet-visible { left: 30px !important; }
-.drawer-stack { position: absolute; top: 120px; left: 60px; display: flex; flex-direction: column; gap: 15px; }
-
-/* --- HARDWARE STYLE --- */
+/* --- CABINET HARDWARE --- */
 .drawer-hardware {
-    position: relative; width: 220px; height: 80px;
-    background: linear-gradient(135deg, #2c2e30, #1a1a1a);
-    border: 2px solid #000; display: flex; align-items: center; justify-content: center; cursor: pointer;
+    position: relative; width: 280px; height: 100px; 
+    background: linear-gradient(135deg, #2c2e30, #1a1a1a); 
+    border: 3px solid #000; display: flex; align-items: center; justify-content: center; 
+    cursor: pointer; transition: 0.2s; z-index: 2000;
 }
-.plate-style { width: 170px; height: 45px; background: linear-gradient(to bottom, #dcdcdc, #8e9196); color: #000; font-weight: bold; border: 1px solid #666; display: flex; align-items: center; justify-content: center; }
+.plate-style { 
+    width: 190px; height: 50px; background: linear-gradient(to bottom, #dcdcdc, #8e9196); 
+    color: #000; font-weight: 900; border: 1px solid #666; display: flex; align-items: center; justify-content: center; 
+}
 
-/* --- ACCORDION ARCHIVE --- */
+/* --- SLIDING STAGE & SHADOW --- */
+.workspace { display: flex; padding: 40px; position: relative; height: 800px; }
+.cabinet-container { 
+    position: absolute; left: -650px; top: 0; width: 500px; 
+    transition: left 0.8s cubic-bezier(0.19, 1, 0.22, 1); z-index: 100;
+}
+.cabinet-visible { left: 50px !important; }
+.drawer-stack { position: absolute; top: 130px; left: 55px; width: 400px; display: flex; flex-direction: column; align-items: center; gap: 30px; }
+
+.stage { 
+    width: 1000px; height: 600px; background: #050505; border: 20px solid #2c2e30; 
+    margin: 0 auto; position: relative; overflow: hidden; 
+    cursor: pointer; z-index: 40; transition: transform 0.8s cubic-bezier(0.19, 1, 0.22, 1), box-shadow 0.8s;
+}
+.stage-slid { 
+    transform: translateX(280px); 
+    box-shadow: -35px 0 50px rgba(0,0,0,0.9); /* The physical shadow over the cabinet */
+}
+#room-display { width: 100%; height: 100%; object-fit: cover; display: none; }
+
+/* --- THE ACCORDION FILE SYSTEM --- */
 #archive-box {
-    position: fixed; bottom: -550px; left: 50%; transform: translateX(-50%);
-    width: 1050px; height: 500px; background: #1a1a1a;
-    border: 4px solid #8e9196; border-bottom: none;
-    box-shadow: 0 -25px 60px rgba(0,0,0,0.9); z-index: 9999;
-    transition: bottom 0.6s cubic-bezier(0.19, 1, 0.22, 1);
-    display: flex; align-items: flex-end; padding: 0 40px;
+    position: fixed; bottom: -600px; left: 50%; transform: translateX(-50%);
+    width: 1100px; height: 550px; 
+    background: url("filebox.png") no-repeat center bottom / contain;
+    z-index: 9999; transition: bottom 0.6s cubic-bezier(0.19, 1, 0.22, 1);
+    display: flex; align-items: flex-end; padding: 0 60px 45px 60px;
 }
 
-.archive-folder-wrapper { position: relative; transition: 0.4s; margin-left: -80px; }
-.archive-folder-wrapper:first-child { margin-left: 0; }
-.archive-folder-wrapper:hover { transform: translateY(-40px); z-index: 10000 !important; }
+.archive-folder-wrapper { position: relative; transition: 0.4s; margin-left: -90px; }
+.archive-folder-wrapper:hover { transform: translateY(-70px); z-index: 10000 !important; }
 
+/* Metallic Label Plates */
 .folder-label {
-    position: absolute; top: -45px; left: 20px; width: 160px; height: 45px;
-    background: #c2c2c2; border: 2px solid #000; border-bottom: none;
-    border-radius: 8px 8px 0 0; display: flex; align-items: center; justify-content: center; cursor: pointer;
+    position: absolute; top: -52px; left: 20px; width: 160px; height: 52px;
+    background: linear-gradient(135deg, #dcdcdc, #8e9196, #555);
+    border: 2px solid #000; border-bottom: none; border-radius: 6px 6px 0 0;
+    display: flex; align-items: center; justify-content: center; cursor: pointer;
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.4);
 }
-.label-text { width: 90%; height: 75%; background: #fff; color: #000; border: 1px solid #000; font-family: 'Courier Prime'; font-size: 11px; font-weight: bold; display: flex; align-items: center; justify-content: center; text-transform: uppercase; }
-
-.folder-body { width: 280px; height: 400px; background: #8e9196; border: 2px solid #000; border-radius: 5px 5px 0 0; box-shadow: -10px 0 20px rgba(0,0,0,0.5); padding: 20px; }
-
-.preview-box { width: 100%; height: 180px; background: rgba(255,255,255,0.3); border: 1px dashed #000; margin-top: 40px; display: flex; align-items: center; justify-content: center; }
-
-button.place-btn {
-    width: 100%; height: 45px; margin-top: 30px;
-    background: linear-gradient(135deg, #2c2e30, #1a1a1a);
-    border: 2px solid #000; color: #fff; font-family: 'Courier Prime'; cursor: pointer;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.5);
+.label-text { 
+    width: 88%; height: 75%; background: #fff; color: #000; border: 1px solid #000; 
+    font-family: 'Courier Prime'; font-size: 11px; font-weight: bold; 
+    display: flex; align-items: center; justify-content: center; text-transform: uppercase; 
 }
-button.place-btn:hover { color: #8e9196; border-color: #8e9196; }
+
+/* Weathered Cardstock Folder Body */
+.folder-body { 
+    width: 280px; height: 400px; 
+    background: linear-gradient(to bottom, #a8a8a8, #777); 
+    border: 2px solid #000; border-radius: 4px; 
+    box-shadow: -15px 0 30px rgba(0,0,0,0.7); padding: 20px; 
+}
