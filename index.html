@@ -1,54 +1,50 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <link href="https://fonts.googleapis.com/css2?family=Neonderthaw&family=Zen+Tokyo+Zoo&display=swap" rel="stylesheet">
-    <style>
-        body {
-            margin: 0;
-            background-image: url('background.jpg');
-            background-size: cover;
-            background-position: center;
-            background-attachment: fixed;
-            background-color: #1a1a1a;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            min-height: 100vh;
-            text-align: center;
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Room Glow Up</title>
+<link href="https://fonts.googleapis.com/css2?family=Limelight&family=Bad+Script&display=swap" rel="stylesheet">
+<style>
+  body {
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+    width: 100vw;
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* Vertically center headers */
+    align-items: center;     /* Horizontally center headers */
+    background: url('background.jpg') no-repeat center center fixed;
+    background-size: cover;
+    color: white;
+    text-align: center;
+  }
 
-        .main-title {
-            font-family: 'Zen Tokyo Zoo', cursive;
-            font-size: 130px;
-            margin: 0;
-            background: linear-gradient(to bottom, #bdc3c7 0%, #ffffff 50%, #7f8c8d 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            filter: drop-shadow(10px 15px 15px rgba(0,0,0,0.9));
-        }
+  /* Main Header */
+  h1 {
+    font-family: 'Limelight', cursive;
+    font-size: 8vw; /* Scales with viewport width */
+    text-shadow: 3px 3px 10px rgba(0,0,0,0.7), -2px -2px 8px rgba(0,0,0,0.5);
+    margin-bottom: 1rem;
+  }
 
-        .sub-title {
-            font-family: 'Neonderthaw', cursive;
-            font-size: 85px;
-            margin: 5px 0 0 0;
-            /* Vintage Champagne Gold Gradient */
-            background: linear-gradient(to bottom, #c5a059 0%, #f1e1c0 50%, #c5a059 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            filter: drop-shadow(4px 8px 12px rgba(0,0,0,0.9));
-            letter-spacing: 1px;
-        }
+  /* Sub Header */
+  h2 {
+    font-family: 'Bad Script', cursive;
+    font-size: 4vw; /* Smaller but still responsive */
+    max-width: 90vw; /* Stretches across page */
+    text-shadow: 2px 2px 8px rgba(0,0,0,0.6);
+  }
 
-        @media (max-width: 900px) {
-            .main-title { font-size: 70px; }
-            .sub-title { font-size: 45px; }
-        }
-    </style>
+  @media (max-width: 600px) {
+    h1 { font-size: 12vw; }
+    h2 { font-size: 6vw; }
+  }
+</style>
 </head>
 <body>
-    <h1 class="main-title">Room Glow Up</h1>
-    <p class="sub-title">Your Dream Space Come To Life</p>
+  <h1>Room Glow Up</h1>
+  <h2>Your Dream Space Come To Life</h2>
 </body>
 </html>
