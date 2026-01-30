@@ -50,35 +50,42 @@ h2 {
   text-shadow: 2px 2px 8px rgba(0,0,0,0.6);
 }
 
-/* ---------------- PULL TABS (SHARED STYLE) ---------------- */
-.drawer-hardware {
+/* ---------------- TOP NAV TABS ---------------- */
+.tabs {
+  display: flex;
+  justify-content: center;
+  gap: 1.4rem;
+  flex-wrap: wrap;
+  width: 100%;
+  padding: 1rem 2rem;
+  position: relative;
+  z-index: 30;
+}
+
+/* SHARED HARDWARE STYLE (For Top Tabs & Pop-out Labels) */
+.drawer-hardware, .pop-out-label {
   position: relative;
   width: 220px;
   height: 90px;
   background: linear-gradient(135deg, #2c2e30 0%, #1a1a1a 100%);
   border: 3px solid #000;
-  box-shadow:
-    inset 0 0 0 2px #444,
-    inset 10px 0 20px rgba(0,0,0,0.8),
-    0 10px 15px rgba(0,0,0,0.7);
+  box-shadow: inset 0 0 0 2px #444, inset 10px 0 20px rgba(0,0,0,0.8), 0 10px 15px rgba(0,0,0,0.7);
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  transition: transform 0.25s ease, filter 0.25s ease, box-shadow 0.25s ease;
+  transition: all 0.3s ease;
   user-select: none;
 }
 
 .drawer-hardware:hover {
   filter: brightness(1.25) contrast(1.1);
-  transform: scale(1.05) translateY(-2px); 
-  box-shadow: 0 15px 25px rgba(255, 255, 255, 0.1); 
-  z-index: 10;
+  transform: translateY(-4px);
 }
 
-/* screw heads */
-.drawer-hardware::before,
-.drawer-hardware::after {
+/* Screw heads & Lip Pull (Common elements) */
+.drawer-hardware::before, .drawer-hardware::after,
+.pop-out-label::before, .pop-out-label::after {
   content: '';
   position: absolute;
   top: 50%;
@@ -89,11 +96,9 @@ h2 {
   background: radial-gradient(circle, #111 20%, #555 100%);
   box-shadow: inset 1px 1px 2px #000;
 }
+.drawer-hardware::before, .pop-out-label::before { left: 12px; }
+.drawer-hardware::after, .pop-out-label::after  { right: 12px; }
 
-.drawer-hardware::before { left: 12px; }
-.drawer-hardware::after  { right: 12px; }
-
-/* label plate */
 .plate-style {
   width: 160px;
   height: 50px;
@@ -112,7 +117,6 @@ h2 {
   line-height: 1;
 }
 
-/* pull lip */
 .lip-pull {
   position: absolute;
   bottom: -14px;
@@ -127,25 +131,14 @@ h2 {
   box-shadow: 0 5px 10px rgba(0,0,0,0.8);
 }
 
-/* ---------------- TOP NAV TABS SPECIFIC ---------------- */
-.tabs {
-  display: flex;
-  justify-content: center;
-  gap: 1.4rem;
-  flex-wrap: wrap;
-  width: 100%;
-  padding: 1rem 2rem;
-  position: relative;
-  z-index: 30;
-}
-
 /* ---------------- WORKSPACE AREA ---------------- */
 .workspace-area {
   position: relative;
   width: 100%;
   max-width: 1400px;
   margin-top: 20px;
-  min-height: 1000px; 
+  /* Reduced height to match content */
+  min-height: 800px; 
   display: flex;
   justify-content: center; 
 }
@@ -154,24 +147,65 @@ h2 {
 #cabinet-container {
   position: absolute;
   top: 0;
-  left: -400px; 
-  width: 300px; 
-  display: flex;
-  flex-direction: column; 
-  gap: 15px; 
-  padding: 20px;
-  background-color: #111; 
-  border: 4px solid #333;
-  border-radius: 0 10px 10px 0;
+  left: -400px; /* Hidden initially */
+  /* Dimensions of your cabinet.png - Adjust if needed */
+  width: 350px; 
+  height: 600px; /* Fixed height to match image */
   z-index: 20;
   transition: left 1s ease-in-out; 
 }
 
+#cabinet-img {
+  width: 100%;
+  height: 100%;
+  object-fit: fill; /* Stretches to fill container */
+  filter: drop-shadow(5px 5px 10px rgba(0,0,0,0.5));
+}
+
+/* CABINET DRAWERS (Hit Zones) */
+/* These are invisible areas over the image that trigger the label pop-up */
+.cabinet-drawer-zone {
+  position: absolute;
+  left: 10%;
+  width: 80%;
+  height: 16%; /* Roughly 1/6th of height */
+  /* border: 1px solid red;  Uncomment to debug positions */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 25;
+}
+
+/* Positioning the zones vertically */
+#zone-living { top: 5%; }
+#zone-bed    { top: 23%; }
+#zone-dining { top: 41%; }
+#zone-extra  { top: 59%; }
+#zone-upload { top: 77%; }
+
+/* THE POP-OUT LABEL (Magnifying Glass Effect) */
+.pop-out-label {
+  /* Inherits drawer-hardware styles but modified for the effect */
+  opacity: 0; /* Invisible by default */
+  transform: scale(0.5); /* Small by default */
+  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); /* Bouncy pop */
+  pointer-events: none; /* Let clicks pass through to the zone */
+}
+
+/* On Hover of the ZONE, the LABEL pops out */
+.cabinet-drawer-zone:hover .pop-out-label {
+  opacity: 1;
+  transform: scale(1.1); /* Gets bigger (Magnified) */
+  box-shadow: 0 20px 30px rgba(0,0,0,0.5); /* Deep shadow */
+}
+
 /* MAIN STAGE */
 #main-stage {
-  width: 70%;
-  max-width: 900px;
-  min-height: 600px; 
+  /* Rectangular Shape */
+  width: 800px; 
+  height: 600px; /* Matches cabinet height */
+  
   border: 2px dashed rgba(255, 255, 255, 0.3);
   background-color: rgba(0, 0, 0, 0.6); 
   position: relative;
@@ -194,9 +228,12 @@ h2 {
 }
 
 #room-display.locked {
-  border-color: #D4AF37; /* Gold border */
+  border-color: #D4AF37; 
   box-shadow: 0 0 20px rgba(212, 175, 55, 0.5);
 }
+
+/* Upload Input (Hidden) */
+#file-upload { display: none; }
 
 /* ---------------- ACTIVE STATES ---------------- */
 body.rooms-active #cabinet-container {
@@ -204,28 +241,18 @@ body.rooms-active #cabinet-container {
 }
 
 body.rooms-active #main-stage {
-  transform: translateX(160px); 
+  /* Moves right to sit next to cabinet */
+  transform: translateX(180px); 
 }
 
 /* ---------------- RESPONSIVE ---------------- */
-@media (max-width: 800px) {
-  .drawer-hardware { width: 170px; height: 75px; }
-  .plate-style { width: 120px; font-size: 14px; }
+@media (max-width: 900px) {
+  #cabinet-container { width: 250px; left: -280px; }
+  body.rooms-active #cabinet-container { left: 0px; }
+  body.rooms-active #main-stage { transform: translateX(130px); width: 60%; }
   
-  #cabinet-container { 
-    width: 200px; 
-    left: -250px; 
-    padding: 10px;
-  }
-  
-  body.rooms-active #cabinet-container {
-    left: 0px;
-  }
-  
-  body.rooms-active #main-stage {
-    transform: translateX(100px);
-    width: 55%;
-  }
+  .pop-out-label { width: 180px; height: 70px; } /* Smaller labels for mobile */
+  .plate-style { width: 130px; font-size: 12px; }
 }
 </style>
 </head>
@@ -261,36 +288,50 @@ body.rooms-active #main-stage {
 <div class="workspace-area">
     
     <div id="cabinet-container">
-        <div class="drawer-hardware" onmouseenter="hoverRoom('livingroom')" onclick="nextVariation('livingroom')">
-            <div class="plate-style">Living Room</div>
-            <div class="lip-pull"></div>
-        </div>
+        <img id="cabinet-img" src="cabinet.png" alt="Storage Cabinet">
         
-        <div class="drawer-hardware" onmouseenter="hoverRoom('bedroom')" onclick="nextVariation('bedroom')">
-            <div class="plate-style">Bedroom</div>
-            <div class="lip-pull"></div>
+        <div id="zone-living" class="cabinet-drawer-zone" onmouseenter="hoverRoom('livingroom')" onclick="nextVariation('livingroom')">
+            <div class="pop-out-label">
+                <div class="plate-style">Living Room</div>
+                <div class="lip-pull"></div>
+            </div>
         </div>
-        
-        <div class="drawer-hardware" onmouseenter="hoverRoom('diningroom')" onclick="nextVariation('diningroom')">
-            <div class="plate-style">Dining Room</div>
-            <div class="lip-pull"></div>
+
+        <div id="zone-bed" class="cabinet-drawer-zone" onmouseenter="hoverRoom('bedroom')" onclick="nextVariation('bedroom')">
+            <div class="pop-out-label">
+                <div class="plate-style">Bedroom</div>
+                <div class="lip-pull"></div>
+            </div>
         </div>
-        
-        <div class="drawer-hardware" onmouseenter="hoverRoom('extrarooms')" onclick="nextVariation('extrarooms')">
-            <div class="plate-style">Extra Rooms</div>
-            <div class="lip-pull"></div>
+
+        <div id="zone-dining" class="cabinet-drawer-zone" onmouseenter="hoverRoom('diningroom')" onclick="nextVariation('diningroom')">
+            <div class="pop-out-label">
+                <div class="plate-style">Dining Room</div>
+                <div class="lip-pull"></div>
+            </div>
         </div>
-        
-        <div class="drawer-hardware" onclick="alert('Upload feature coming soon!')">
-            <div class="plate-style">Upload</div>
-            <div class="lip-pull"></div>
+
+        <div id="zone-extra" class="cabinet-drawer-zone" onmouseenter="hoverRoom('extrarooms')" onclick="nextVariation('extrarooms')">
+            <div class="pop-out-label">
+                <div class="plate-style">Extra Rooms</div>
+                <div class="lip-pull"></div>
+            </div>
+        </div>
+
+        <div id="zone-upload" class="cabinet-drawer-zone" onclick="triggerUpload()">
+            <div class="pop-out-label">
+                <div class="plate-style">Upload</div>
+                <div class="lip-pull"></div>
+            </div>
         </div>
     </div>
 
     <div id="main-stage">
-        <p id="stage-text" style="color:#ccc;">Hover over a drawer to see rooms</p>
+        <p id="stage-text" style="color:#ccc;">Hover over cabinet drawers to preview rooms</p>
         <img id="room-display" src="" alt="Room Design" onclick="lockRoom()">
     </div>
+
+    <input type="file" id="file-upload" accept="image/*" onchange="handleFileUpload(event)">
 
 </div>
 
@@ -300,25 +341,14 @@ body.rooms-active #main-stage {
     document.body.classList.toggle('rooms-active');
   }
 
-  // 2. Room Data (Placeholders)
+  // 2. Room Data (Actual filenames)
+  // Note: Since we only have one filename per category (e.g., livingroom.jpg), 
+  // clicking will just reload the same image unless you add livingroom2.jpg, etc.
   const roomData = {
-    livingroom: [
-      'https://via.placeholder.com/800x600/333333/FFFFFF?text=Modern+Living+Room',
-      'https://via.placeholder.com/800x600/550000/FFFFFF?text=Rustic+Living+Room',
-      'https://via.placeholder.com/800x600/005500/FFFFFF?text=Boho+Living+Room'
-    ],
-    bedroom: [
-      'https://via.placeholder.com/800x600/000055/FFFFFF?text=Cozy+Bedroom',
-      'https://via.placeholder.com/800x600/550055/FFFFFF?text=Luxury+Bedroom'
-    ],
-    diningroom: [
-      'https://via.placeholder.com/800x600/555500/FFFFFF?text=Dining+Room+1',
-      'https://via.placeholder.com/800x600/005555/FFFFFF?text=Dining+Room+2'
-    ],
-    extrarooms: [
-      'https://via.placeholder.com/800x600/333333/FFFFFF?text=Bathroom',
-      'https://via.placeholder.com/800x600/666666/FFFFFF?text=Office'
-    ]
+    livingroom: ['livingroom.jpg'],
+    bedroom: ['bedroom.jpg'],
+    diningroom: ['diningroom.jpg'],
+    extrarooms: ['extrarooms.jpg']
   };
 
   // State Tracking
@@ -326,16 +356,16 @@ body.rooms-active #main-stage {
   let currentIndex = 0;
   let isLocked = false;
 
-  // 3. Hover Logic: Shows the first image of that category immediately
+  // 3. Hover Logic
   function hoverRoom(category) {
-    if (isLocked) return; // Don't change if locked
+    if (isLocked) return; 
     
     currentCategory = category;
-    currentIndex = 0; // Reset to start of list
+    currentIndex = 0; 
     updateStage();
   }
 
-  // 4. Click Logic: Cycles to the next image in the same category
+  // 4. Click Logic (Cycle)
   function nextVariation(category) {
     if (isLocked) {
         if(confirm("Unlock current design to switch rooms?")) {
@@ -345,29 +375,59 @@ body.rooms-active #main-stage {
         }
     }
     
-    // Ensure we are cycling the correct category
     if (currentCategory !== category) {
         currentCategory = category;
         currentIndex = 0;
     } else {
-        currentIndex = (currentIndex + 1) % roomData[category].length;
+        // Safe check for length
+        if(roomData[category].length > 1) {
+            currentIndex = (currentIndex + 1) % roomData[category].length;
+        }
     }
     updateStage();
   }
 
-  // Helper to update the image source
+  // Helper to update image
   function updateStage() {
     const imgElement = document.getElementById('room-display');
     const textElement = document.getElementById('stage-text');
     
-    if(roomData[currentCategory]) {
+    if(roomData[currentCategory] && roomData[currentCategory].length > 0) {
         imgElement.src = roomData[currentCategory][currentIndex];
         imgElement.style.display = 'block';
         textElement.style.display = 'none';
     }
   }
 
-  // 5. Lock Functionality
+  // 5. Upload Functionality
+  function triggerUpload() {
+    document.getElementById('file-upload').click();
+  }
+
+  function handleFileUpload(event) {
+    const file = event.target.files[0];
+    if (file) {
+        // Unlock if needed
+        if(isLocked) unlockRoom();
+
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            const imgElement = document.getElementById('room-display');
+            const textElement = document.getElementById('stage-text');
+            
+            imgElement.src = e.target.result;
+            imgElement.style.display = 'block';
+            textElement.style.display = 'none';
+            
+            // Auto lock uploaded image? Optional.
+            // isLocked = true;
+            // imgElement.classList.add('locked');
+        }
+        reader.readAsDataURL(file);
+    }
+  }
+
+  // 6. Lock Functionality
   function lockRoom() {
     const imgElement = document.getElementById('room-display');
     if (!imgElement.src || imgElement.style.display === 'none') return; 
