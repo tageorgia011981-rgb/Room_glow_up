@@ -1,13 +1,10 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Room Glow Up</title>
-
 <link href="https://fonts.googleapis.com/css2?family=Limelight&family=Bad+Script&family=Special+Elite&display=swap" rel="stylesheet">
-
 <style>
 /* ---------------- BASE ---------------- */
 * { box-sizing: border-box; }
@@ -20,6 +17,7 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
+  /* Assuming background1.jpg is your file */
   background: url('background1.jpg') no-repeat center center fixed;
   background-size: cover;
   font-family: 'Special Elite', cursive;
@@ -31,25 +29,25 @@ body {
 .header-wrap {
   width: 100%;
   text-align: center;
-  margin-top: 1.2rem;        /* pulled UP */
-  margin-bottom: 1.2rem;     /* tightened */
+  margin-top: 1.2rem;
+  margin-bottom: 1.2rem;
+  position: relative;
+  z-index: 20; /* Keeps header on top */
 }
 
 h1 {
   font-family: 'Limelight', cursive;
   font-size: clamp(3.5rem, 7vw, 5.5rem);
-  line-height: 0.9;          /* tighter vertical footprint */
+  line-height: 0.9;
   margin: 0;
-  text-shadow:
-    3px 3px 10px rgba(0,0,0,0.7),
-   -2px -2px 8px rgba(0,0,0,0.5);
+  text-shadow: 3px 3px 10px rgba(0,0,0,0.7), -2px -2px 8px rgba(0,0,0,0.5);
 }
 
 h2 {
   font-family: 'Bad Script', cursive;
   font-size: clamp(1.6rem, 3.5vw, 2.4rem);
   margin-top: 0.6rem;
-  margin-bottom: 0;          /* no extra push */
+  margin-bottom: 0;
   text-shadow: 2px 2px 8px rgba(0,0,0,0.6);
 }
 
@@ -60,7 +58,9 @@ h2 {
   gap: 1.4rem;
   flex-wrap: wrap;
   width: 100%;
-  padding: 1.2rem 2rem 1.6rem;   /* compressed vertically */
+  padding: 1.2rem 2rem 1.6rem;
+  position: relative;
+  z-index: 20;
 }
 
 /* LABEL HOLDER (UNCHANGED DESIGN) */
@@ -137,15 +137,63 @@ h2 {
   box-shadow: 0 5px 10px rgba(0,0,0,0.8);
 }
 
+/* ---------------- CABINET & MAIN STAGE ---------------- */
+
+/* The Cabinet Image Container */
+#cabinet-container {
+  position: fixed;
+  top: 250px; /* Adjust based on where you want it vertically */
+  left: -320px; /* Start off-screen (width of cabinet + buffer) */
+  width: 300px;
+  height: auto;
+  z-index: 10;
+  /* THE GLIDE: Slow transition */
+  transition: left 1s ease-in-out; 
+}
+
+#cabinet-container img {
+  width: 100%;
+  display: block;
+  /* Optional: Drop shadow for the cabinet png so it pops */
+  filter: drop-shadow(5px 5px 10px rgba(0,0,0,0.5));
+}
+
+/* The Main Stage Area */
+#main-stage {
+  width: 80%;
+  max-width: 1000px;
+  height: 500px; /* Temporary height to see it */
+  border: 2px dashed rgba(255, 255, 255, 0.3); /* Temporary visual border */
+  background-color: rgba(0, 0, 0, 0.2); /* Slight dark tint */
+  margin-top: 20px;
+  position: relative;
+  /* THE SLIDE: Smooth movement for the stage */
+  transition: transform 1s ease-in-out, margin-left 1s ease-in-out;
+}
+
+/* CLASSES TO TRIGGER MOVEMENT (Added by JS) */
+body.rooms-active #cabinet-container {
+  left: 20px; /* Slides in to visible spot */
+}
+
+body.rooms-active #main-stage {
+  /* Moves stage to the right to make room for cabinet */
+  transform: translateX(150px); 
+  width: 60%; /* Shrink slightly to fit? Optional */
+}
+
 /* ---------------- RESPONSIVE ---------------- */
 @media (max-width: 700px) {
   .drawer-hardware { width: 170px; height: 75px; }
   .plate-style { width: 120px; font-size: 14px; }
   .lip-pull { width: 110px; height: 18px; }
+  
+  /* Mobile adjustments for cabinet */
+  #cabinet-container { width: 200px; left: -220px; }
+  body.rooms-active #main-stage { transform: translateX(0); margin-top: 300px; } /* On mobile, maybe push down instead of right */
 }
 </style>
 </head>
-
 <body>
 
 <div class="header-wrap">
@@ -154,23 +202,41 @@ h2 {
 </div>
 
 <div class="tabs">
-  <div class="drawer-hardware">
+  <div class="drawer-hardware" onclick="toggleRooms()">
     <div class="plate-style">Rooms</div>
     <div class="lip-pull"></div>
   </div>
+  
   <div class="drawer-hardware">
     <div class="plate-style">Furniture</div>
     <div class="lip-pull"></div>
   </div>
+  
   <div class="drawer-hardware">
     <div class="plate-style">Decor</div>
     <div class="lip-pull"></div>
   </div>
+  
   <div class="drawer-hardware">
     <div class="plate-style">Inspiration</div>
     <div class="lip-pull"></div>
   </div>
 </div>
+
+<div id="cabinet-container">
+    <img src="cabinet.png" alt="Cabinet">
+</div>
+
+<div id="main-stage">
+    <p style="text-align:center; padding-top:200px;">Main Stage Area</p>
+</div>
+
+<script>
+  function toggleRooms() {
+    // We toggle a class on the BODY, allowing CSS to handle all animations
+    document.body.classList.toggle('rooms-active');
+  }
+</script>
 
 </body>
 </html>
