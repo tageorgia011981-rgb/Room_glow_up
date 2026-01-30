@@ -1,23 +1,119 @@
-<header class="site-header" style="transform: scale(0.88); transform-origin: top center; margin-bottom: -40px;">
-    <h1 class="brand-title">Room Glow Up</h1>
-    <div class="sub-title">Your Dream Space Come To Life</div>
-</header>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Room Glow Up</title>
+<link href="https://fonts.googleapis.com/css2?family=Limelight&family=Bad+Script&family=Special+Elite&display=swap" rel="stylesheet">
+<style>
+  body {
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+    width: 100vw;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: url('background1.jpg') no-repeat center center fixed;
+    background-size: cover;
+    color: white;
+    font-family: 'Special Elite', monospace; /* typewriter font for tabs */
+  }
 
-<nav class="vintage-tabs" style="transform: scale(0.88); transform-origin: top center; margin-bottom: -30px;">
-    <div class="drawer-hardware" onclick="lift(this); openMode('rooms', this)">
-        <div class="plate-style">Rooms</div>
-        <div class="lip-pull"></div>
-    </div>
-    <div class="drawer-hardware" onclick="lift(this); showLookBook()">
-        <div class="plate-style">Inspiration</div>
-        <div class="lip-pull"></div>
-    </div>
-    <div class="drawer-hardware" onclick="lift(this); showCatalog()">
-        <div class="plate-style">Furniture Catalog</div>
-        <div class="lip-pull"></div>
-    </div>
-    <div class="drawer-hardware" onclick="lift(this); openMode('decor', this)">
-        <div class="plate-style">Decor</div>
-        <div class="lip-pull"></div>
-    </div>
-</nav>
+  /* --- Header --- */
+  h1 {
+    font-family: 'Limelight', cursive;
+    font-size: 8vw;
+    text-shadow: 3px 3px 10px rgba(0,0,0,0.7), -2px -2px 8px rgba(0,0,0,0.5);
+    margin-top: 2rem;
+    margin-bottom: 0.5rem;
+    text-align: center;
+  }
+
+  h2 {
+    font-family: 'Bad Script', cursive;
+    font-size: 4vw;
+    max-width: 90vw;
+    text-shadow: 2px 2px 8px rgba(0,0,0,0.6);
+    margin-bottom: 2rem;
+    text-align: center;
+  }
+
+  /* --- Tabs / Nav --- */
+  .tabs {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-bottom: 3rem;
+  }
+
+  .tab {
+    position: relative;
+    font-family: 'Special Elite', monospace;
+    font-size: 1.5rem; /* Big enough to see clearly */
+    font-weight: bold;
+    color: white;
+    text-align: center;
+    padding: 0.7rem 1.2rem;
+    background: linear-gradient(145deg, #2a2a2a, #1a1a1a); /* aged gunmetal look */
+    border: 2px solid #111;
+    border-radius: 0.3rem;
+    box-shadow: inset 2px 2px 5px rgba(255,255,255,0.1), inset -2px -2px 5px rgba(0,0,0,0.7),
+                3px 3px 5px rgba(0,0,0,0.5); /* depth / inset effect */
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+
+  /* Soft white glow on hover */
+  .tab:hover {
+    box-shadow: inset 2px 2px 5px rgba(255,255,255,0.2), inset -2px -2px 5px rgba(0,0,0,0.7),
+                0 0 15px rgba(255,255,255,0.7);
+  }
+
+  /* Lip pull on bottom */
+  .tab::after {
+    content: '';
+    position: absolute;
+    bottom: -6px;
+    left: 10%;
+    width: 80%;
+    height: 6px;
+    background: #1a1a1a;
+    border-radius: 2px;
+    box-shadow: inset 0 2px 3px rgba(255,255,255,0.1), inset 0 -2px 3px rgba(0,0,0,0.7);
+  }
+
+  /* Screw holes (decorative) */
+  .tab::before {
+    content: '';
+    position: absolute;
+    top: 4px;
+    left: 6px;
+    width: 6px;
+    height: 6px;
+    background: #555;
+    border-radius: 50%;
+    box-shadow: 0 0 0 1px #222, 80px 0 0 0 #555, 80px 0 0 1px #222; /* replicate two screw holes */
+  }
+
+  @media (max-width: 600px) {
+    h1 { font-size: 12vw; }
+    h2 { font-size: 6vw; }
+    .tab { font-size: 1.2rem; padding: 0.5rem 0.8rem; }
+  }
+</style>
+</head>
+<body>
+  <h1>Room Glow Up</h1>
+  <h2>Your Dream Space Come To Life</h2>
+
+  <div class="tabs">
+    <div class="tab">Rooms</div>
+    <div class="tab">Furniture Catalog</div>
+    <div class="tab">Decor</div>
+    <div class="tab">Inspirational Look Book</div>
+    <div class="tab">Save</div>
+  </div>
+</body>
+</html>
