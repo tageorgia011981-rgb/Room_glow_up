@@ -50,7 +50,7 @@ h2 {
   text-shadow: 2px 2px 8px rgba(0,0,0,0.6);
 }
 
-/* ---------------- TOP NAV TABS ---------------- */
+/* ---------------- TOP NAV TABS (DARK METAL) ---------------- */
 .tabs {
   display: flex;
   justify-content: center;
@@ -62,8 +62,8 @@ h2 {
   z-index: 30;
 }
 
-/* SHARED HARDWARE STYLE (For Top Tabs & Pop-out Labels) */
-.drawer-hardware, .pop-out-label {
+/* Standard Dark Hardware (For Top Tabs) */
+.drawer-hardware {
   position: relative;
   width: 220px;
   height: 90px;
@@ -83,7 +83,54 @@ h2 {
   transform: translateY(-4px);
 }
 
-/* Screw heads & Lip Pull (Common elements) */
+/* ---------------- POP-OUT LABELS (BRUSHED BRONZE) ---------------- */
+.pop-out-label {
+  position: relative;
+  width: 220px;
+  height: 90px;
+  /* BRUSHED BRONZE GRADIENT */
+  background: linear-gradient(135deg, #8a6e4b 0%, #59442e 50%, #3e2b19 100%);
+  border: 3px solid #2a1d12;
+  box-shadow: inset 0 0 0 2px #a88860, inset 10px 0 20px rgba(0,0,0,0.8), 0 10px 15px rgba(0,0,0,0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  user-select: none;
+  
+  /* Hidden/Small initially */
+  opacity: 0; 
+  transform: scale(0.5); 
+  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); 
+  pointer-events: none; 
+}
+
+/* Inner Plate for Bronze Labels */
+.pop-out-label .plate-style {
+  /* Warmer/Gold tone for the inner plate */
+  background: linear-gradient(to bottom, #e6d3b3 0%, #c4a476 50%, #9e7e52 100%);
+  border: 1px solid #5e4326;
+  color: #2a1d12; /* Dark Brown Text */
+}
+
+/* Lip Pull for Bronze Labels */
+.pop-out-label .lip-pull {
+  background: linear-gradient(to bottom, #59442e, #2a1d12);
+  border: 2px solid #1a1008;
+  border-top: none;
+}
+
+/* On Hover of the ZONE, the LABEL pops out */
+.cabinet-drawer-zone:hover .pop-out-label {
+  opacity: 1;
+  transform: scale(1.1); 
+  box-shadow: 0 20px 30px rgba(0,0,0,0.6); 
+}
+
+
+/* ---------------- SHARED PARTS (Screws, Plates) ---------------- */
+
+/* Screw heads */
 .drawer-hardware::before, .drawer-hardware::after,
 .pop-out-label::before, .pop-out-label::after {
   content: '';
@@ -99,6 +146,7 @@ h2 {
 .drawer-hardware::before, .pop-out-label::before { left: 12px; }
 .drawer-hardware::after, .pop-out-label::after  { right: 12px; }
 
+/* Standard Plate (Grey/Silver) */
 .plate-style {
   width: 160px;
   height: 50px;
@@ -117,6 +165,7 @@ h2 {
   line-height: 1;
 }
 
+/* Standard Lip Pull (Dark Grey) */
 .lip-pull {
   position: absolute;
   bottom: -14px;
@@ -137,7 +186,6 @@ h2 {
   width: 100%;
   max-width: 1400px;
   margin-top: 20px;
-  /* Reduced height to match content */
   min-height: 800px; 
   display: flex;
   justify-content: center; 
@@ -147,10 +195,9 @@ h2 {
 #cabinet-container {
   position: absolute;
   top: 0;
-  left: -400px; /* Hidden initially */
-  /* Dimensions of your cabinet.png - Adjust if needed */
+  left: -400px; 
   width: 350px; 
-  height: 600px; /* Fixed height to match image */
+  height: 600px; 
   z-index: 20;
   transition: left 1s ease-in-out; 
 }
@@ -158,18 +205,17 @@ h2 {
 #cabinet-img {
   width: 100%;
   height: 100%;
-  object-fit: fill; /* Stretches to fill container */
+  object-fit: fill; 
   filter: drop-shadow(5px 5px 10px rgba(0,0,0,0.5));
 }
 
 /* CABINET DRAWERS (Hit Zones) */
-/* These are invisible areas over the image that trigger the label pop-up */
+/* MOVED UP by decreasing 'top' percentages */
 .cabinet-drawer-zone {
   position: absolute;
   left: 10%;
   width: 80%;
-  height: 16%; /* Roughly 1/6th of height */
-  /* border: 1px solid red;  Uncomment to debug positions */
+  height: 16%; 
   display: flex;
   align-items: center;
   justify-content: center;
@@ -177,35 +223,17 @@ h2 {
   z-index: 25;
 }
 
-/* Positioning the zones vertically */
-#zone-living { top: 5%; }
-#zone-bed    { top: 23%; }
-#zone-dining { top: 41%; }
-#zone-extra  { top: 59%; }
-#zone-upload { top: 77%; }
-
-/* THE POP-OUT LABEL (Magnifying Glass Effect) */
-.pop-out-label {
-  /* Inherits drawer-hardware styles but modified for the effect */
-  opacity: 0; /* Invisible by default */
-  transform: scale(0.5); /* Small by default */
-  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); /* Bouncy pop */
-  pointer-events: none; /* Let clicks pass through to the zone */
-}
-
-/* On Hover of the ZONE, the LABEL pops out */
-.cabinet-drawer-zone:hover .pop-out-label {
-  opacity: 1;
-  transform: scale(1.1); /* Gets bigger (Magnified) */
-  box-shadow: 0 20px 30px rgba(0,0,0,0.5); /* Deep shadow */
-}
+/* Adjusted Vertical Positions (Moved Up) */
+#zone-living { top: 3%; }   /* Was 5% */
+#zone-bed    { top: 21%; }  /* Was 23% */
+#zone-dining { top: 39%; }  /* Was 41% */
+#zone-extra  { top: 57%; }  /* Was 59% */
+#zone-upload { top: 75%; }  /* Was 77% */
 
 /* MAIN STAGE */
 #main-stage {
-  /* Rectangular Shape */
   width: 800px; 
-  height: 600px; /* Matches cabinet height */
-  
+  height: 600px; 
   border: 2px dashed rgba(255, 255, 255, 0.3);
   background-color: rgba(0, 0, 0, 0.6); 
   position: relative;
@@ -232,7 +260,6 @@ h2 {
   box-shadow: 0 0 20px rgba(212, 175, 55, 0.5);
 }
 
-/* Upload Input (Hidden) */
 #file-upload { display: none; }
 
 /* ---------------- ACTIVE STATES ---------------- */
@@ -241,7 +268,6 @@ body.rooms-active #cabinet-container {
 }
 
 body.rooms-active #main-stage {
-  /* Moves right to sit next to cabinet */
   transform: translateX(180px); 
 }
 
@@ -251,7 +277,7 @@ body.rooms-active #main-stage {
   body.rooms-active #cabinet-container { left: 0px; }
   body.rooms-active #main-stage { transform: translateX(130px); width: 60%; }
   
-  .pop-out-label { width: 180px; height: 70px; } /* Smaller labels for mobile */
+  .pop-out-label { width: 180px; height: 70px; } 
   .plate-style { width: 130px; font-size: 12px; }
 }
 </style>
@@ -341,9 +367,7 @@ body.rooms-active #main-stage {
     document.body.classList.toggle('rooms-active');
   }
 
-  // 2. Room Data (Actual filenames)
-  // Note: Since we only have one filename per category (e.g., livingroom.jpg), 
-  // clicking will just reload the same image unless you add livingroom2.jpg, etc.
+  // 2. Room Data
   const roomData = {
     livingroom: ['livingroom.jpg'],
     bedroom: ['bedroom.jpg'],
@@ -365,7 +389,7 @@ body.rooms-active #main-stage {
     updateStage();
   }
 
-  // 4. Click Logic (Cycle)
+  // 4. Click Logic
   function nextVariation(category) {
     if (isLocked) {
         if(confirm("Unlock current design to switch rooms?")) {
@@ -379,7 +403,6 @@ body.rooms-active #main-stage {
         currentCategory = category;
         currentIndex = 0;
     } else {
-        // Safe check for length
         if(roomData[category].length > 1) {
             currentIndex = (currentIndex + 1) % roomData[category].length;
         }
@@ -387,7 +410,6 @@ body.rooms-active #main-stage {
     updateStage();
   }
 
-  // Helper to update image
   function updateStage() {
     const imgElement = document.getElementById('room-display');
     const textElement = document.getElementById('stage-text');
@@ -407,7 +429,6 @@ body.rooms-active #main-stage {
   function handleFileUpload(event) {
     const file = event.target.files[0];
     if (file) {
-        // Unlock if needed
         if(isLocked) unlockRoom();
 
         const reader = new FileReader();
@@ -418,10 +439,6 @@ body.rooms-active #main-stage {
             imgElement.src = e.target.result;
             imgElement.style.display = 'block';
             textElement.style.display = 'none';
-            
-            // Auto lock uploaded image? Optional.
-            // isLocked = true;
-            // imgElement.classList.add('locked');
         }
         reader.readAsDataURL(file);
     }
