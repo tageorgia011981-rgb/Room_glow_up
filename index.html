@@ -224,11 +224,11 @@ h2 {
 }
 
 /* Adjusted Vertical Positions (Moved Up) */
-#zone-living { top: 3%; }   /* Was 5% */
-#zone-bed    { top: 21%; }  /* Was 23% */
-#zone-dining { top: 39%; }  /* Was 41% */
-#zone-extra  { top: 57%; }  /* Was 59% */
-#zone-upload { top: 75%; }  /* Was 77% */
+#zone-living { top: 3%; }   
+#zone-bed    { top: 21%; }  
+#zone-dining { top: 39%; }  
+#zone-extra  { top: 57%; }  
+#zone-upload { top: 75%; }  
 
 /* MAIN STAGE */
 #main-stage {
@@ -367,12 +367,12 @@ body.rooms-active #main-stage {
     document.body.classList.toggle('rooms-active');
   }
 
-  // 2. Room Data
+  // 2. Room Data (UPDATED WITH NEW IMAGES)
   const roomData = {
     livingroom: ['livingroom.jpg'],
-    bedroom: ['bedroom.jpg'],
+    bedroom: ['bedroom.jpg', 'bedroom2.jpg'], 
     diningroom: ['diningroom.jpg'],
-    extrarooms: ['extrarooms.jpg']
+    extrarooms: ['extrarooms.jpg', 'kitchen.jpg', 'foyer.jpg']
   };
 
   // State Tracking
@@ -389,7 +389,7 @@ body.rooms-active #main-stage {
     updateStage();
   }
 
-  // 4. Click Logic
+  // 4. Click Logic (Cycles Images)
   function nextVariation(category) {
     if (isLocked) {
         if(confirm("Unlock current design to switch rooms?")) {
