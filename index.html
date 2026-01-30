@@ -10,145 +10,97 @@
 * { box-sizing: border-box; }
 
 body {
-  margin: 0;
-  padding: 0;
-  min-height: 100vh;
-  width: 100vw;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+  margin: 0; padding: 0;
+  min-height: 100vh; width: 100vw;
+  display: flex; flex-direction: column; align-items: center;
   background: url('background1.jpg') no-repeat center center fixed;
   background-size: cover;
   font-family: 'Special Elite', cursive;
   color: white;
-  
-  /* ALLOW SCROLLING */
-  overflow-x: hidden;
-  overflow-y: auto; 
+  overflow-x: hidden; overflow-y: auto; 
+  user-select: none;
 }
 
-/* ---------------- HEADER GROUP ---------------- */
+/* ---------------- HEADER ---------------- */
 .header-wrap {
-  width: 100%;
-  text-align: center;
-  margin-top: 3rem; 
-  margin-bottom: 2rem;
-  position: relative;
-  z-index: 30; 
+  width: 100%; text-align: center; margin-top: 3rem; margin-bottom: 2rem;
+  position: relative; z-index: 30; 
 }
-
 h1 {
-  font-family: 'Limelight', cursive;
-  font-size: clamp(3.5rem, 7vw, 5.5rem);
-  line-height: 0.9;
-  margin: 0;
-  text-shadow: 3px 3px 10px rgba(0,0,0,0.7), -2px -2px 8px rgba(0,0,0,0.5);
+  font-family: 'Limelight', cursive; font-size: clamp(3.5rem, 7vw, 5.5rem);
+  line-height: 0.9; margin: 0;
+  text-shadow: 3px 3px 10px rgba(0,0,0,0.7);
 }
-
 h2 {
-  font-family: 'Bad Script', cursive;
-  font-size: clamp(1.6rem, 3.5vw, 2.4rem);
-  margin-top: 0.8rem;
-  margin-bottom: 0;
+  font-family: 'Bad Script', cursive; font-size: clamp(1.6rem, 3.5vw, 2.4rem);
+  margin-top: 0.8rem; margin-bottom: 0;
   text-shadow: 2px 2px 8px rgba(0,0,0,0.6);
 }
 
-/* ---------------- TOP NAV TABS (Bronze Style) ---------------- */
+/* ---------------- TOP NAV TABS ---------------- */
 .tabs {
-  display: flex;
-  justify-content: center;
-  gap: 2rem;
-  flex-wrap: wrap;
-  width: 100%;
-  padding: 2rem 2rem;
-  position: relative;
-  z-index: 30;
+  display: flex; justify-content: center; gap: 2rem; flex-wrap: wrap;
+  width: 100%; padding: 2rem; position: relative; z-index: 30;
 }
-
 .drawer-hardware {
-  position: relative;
-  width: 260px;
-  height: 90px;
+  position: relative; width: 260px; height: 90px;
   background: linear-gradient(135deg, #8a6e4b 0%, #59442e 50%, #3e2b19 100%);
   border: 3px solid #2a1d12;
   box-shadow: inset 0 0 0 2px #a88860, inset 10px 0 20px rgba(0,0,0,0.8), 0 10px 15px rgba(0,0,0,0.7);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  user-select: none;
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer; transition: all 0.3s ease;
 }
-.drawer-hardware:hover { filter: brightness(1.15) contrast(1.1); transform: translateY(-4px); }
+.drawer-hardware:hover { filter: brightness(1.15); transform: translateY(-4px); }
 
 /* Screws */
-.drawer-hardware::before, .drawer-hardware::after, .pop-out-label::before, .pop-out-label::after {
+.drawer-hardware::before, .drawer-hardware::after {
   content: ''; position: absolute; top: 50%; transform: translateY(-50%);
   width: 14px; height: 14px; border-radius: 50%;
   background: radial-gradient(circle, #111 20%, #555 100%);
   box-shadow: inset 1px 1px 2px #000;
 }
-.drawer-hardware::before, .pop-out-label::before { left: 12px; }
-.drawer-hardware::after, .pop-out-label::after  { right: 12px; }
+.drawer-hardware::before { left: 12px; }
+.drawer-hardware::after { right: 12px; }
 
-/* GOLD/BRASS PLATE STYLE */
 .plate-style {
-  width: 190px;
-  height: 50px;
+  width: 190px; height: 50px;
   background: linear-gradient(to bottom, #e6d3b3 0%, #c4a476 50%, #9e7e52 100%);
-  color: #2a1d12; 
-  display: flex; align-items: center; justify-content: center;
+  color: #2a1d12; display: flex; align-items: center; justify-content: center;
   font-size: 15px; font-weight: 900; text-transform: uppercase; letter-spacing: 1px;
-  border: 1px solid #5e4326; 
-  box-shadow: inset 0 2px 5px rgba(0,0,0,0.25);
-  text-align: center; line-height: 1;
+  border: 1px solid #5e4326; box-shadow: inset 0 2px 5px rgba(0,0,0,0.25);
 }
-
-/* DARK BROWN LIP PULL */
 .lip-pull {
   position: absolute; bottom: -14px; left: 50%; transform: translateX(-50%);
   width: 140px; height: 24px;
   background: linear-gradient(to bottom, #59442e, #2a1d12);
-  border: 2px solid #1a1008; 
-  border-top: none; border-radius: 0 0 15px 15px;
+  border: 2px solid #1a1008; border-top: none; border-radius: 0 0 15px 15px;
   box-shadow: 0 5px 10px rgba(0,0,0,0.8);
 }
 
-/* ---------------- CABINET LABELS ---------------- */
+/* ---------------- CABINET ---------------- */
 .pop-out-label {
   position: relative; width: 220px; height: 90px;
   background: linear-gradient(135deg, #8a6e4b 0%, #59442e 50%, #3e2b19 100%);
   border: 3px solid #2a1d12;
   box-shadow: inset 0 0 0 2px #a88860, inset 10px 0 20px rgba(0,0,0,0.8), 0 10px 15px rgba(0,0,0,0.7);
-  display: flex; align-items: center; justify-content: center; cursor: pointer; user-select: none;
-  opacity: 0; transform: scale(0.5); 
-  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); pointer-events: none;
+  display: flex; align-items: center; justify-content: center; cursor: pointer;
+  opacity: 0; transform: scale(0.5); transition: all 0.3s; pointer-events: none;
 }
 .pop-out-label .plate-style { width: 160px; } 
 .cabinet-drawer-zone:hover .pop-out-label { opacity: 1; transform: scale(1.1); box-shadow: 0 20px 30px rgba(0,0,0,0.6); }
 
-/* ---------------- WORKSPACE AREA ---------------- */
+/* ---------------- WORKSPACE ---------------- */
 .workspace-area {
-  position: relative; 
-  width: 100%; 
-  max-width: 1400px;
-  margin-top: 40vh; /* Pushes content down */
-  min-height: 1200px; 
-  display: flex; 
-  justify-content: center; 
+  position: relative; width: 100%; max-width: 1400px;
+  margin-top: 40vh; min-height: 1200px; display: flex; justify-content: center; 
 }
 
-/* CABINET */
 #cabinet-container {
-  position: absolute; top: 0; 
-  left: -500px; /* Completely Hidden */
-  width: 350px; height: 600px; 
-  z-index: 20; 
+  position: absolute; top: 0; left: -500px; 
+  width: 350px; height: 600px; z-index: 20; 
   transition: left 1.5s ease-in-out; 
 }
 #cabinet-img { width: 100%; height: 100%; object-fit: fill; filter: drop-shadow(5px 5px 10px rgba(0,0,0,0.5)); }
-
-/* CABINET ZONES */
 .cabinet-drawer-zone { position: absolute; left: 10%; width: 80%; height: 18%; display: flex; align-items: center; justify-content: center; cursor: pointer; z-index: 30; }
 #zone-living { top: 2%; }   
 #zone-bed    { top: 20%; }  
@@ -163,120 +115,88 @@ h2 {
   background-color: rgba(0, 0, 0, 0.6); 
   position: relative; z-index: 10;
   transition: transform 1.5s ease-in-out;
-  display: flex; align-items: center; justify-content: center; overflow: hidden;
+  overflow: hidden; 
 }
-#room-display { width: 100%; height: 100%; object-fit: cover; display: none; cursor: pointer; border: 4px solid transparent; transition: border-color 0.3s; }
-#room-display.locked { border-color: #D4AF37; box-shadow: 0 0 20px rgba(212, 175, 55, 0.5); }
+#room-display { width: 100%; height: 100%; object-fit: cover; display: none; pointer-events: none; }
+#room-display.locked { border: 4px solid #D4AF37; box-shadow: 0 0 20px rgba(212, 175, 55, 0.5); }
 
-/* ---------------- FURNITURE TRUNKS (New & Big) ---------------- */
+/* DRAGGABLE FURNITURE ON STAGE */
+.stage-item-wrapper {
+  position: absolute; cursor: move; display: inline-block;
+  border: 2px solid transparent; z-index: 100;
+}
+.stage-item-wrapper img { width: 100%; height: 100%; display: block; pointer-events: none; }
+.stage-item-wrapper.selected { border: 2px dashed #9932CC; }
+.resize-handle {
+  width: 15px; height: 15px; background: #9932CC;
+  position: absolute; bottom: -5px; right: -5px;
+  cursor: se-resize; display: none; border-radius: 50%;
+}
+.stage-item-wrapper.selected .resize-handle { display: block; }
+
+/* ---------------- FURNITURE TRUNK ---------------- */
 #furniture-box {
-  position: fixed;
-  bottom: -600px; /* Hidden initially */
-  left: 50%;
-  transform: translateX(-50%);
-  width: 900px; /* Bigger presence */
-  height: 550px; 
+  position: fixed; bottom: -600px; left: 50%; transform: translateX(-50%);
+  width: 900px; height: 550px; 
   background: url('filebox.png') no-repeat center bottom;
-  background-size: contain;
-  z-index: 40;
+  background-size: contain; z-index: 40;
   transition: bottom 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
-/* THE "TOASTER SLOT" - Invisible Zone */
-/* This sits over the top open trunk mouth. Overflow hidden cuts off the files. */
+/* BACK BUTTON ON TRUNK */
+#trunk-back-btn {
+  position: absolute; right: 80px; top: 180px; /* Positioned on the case */
+  width: 60px; height: 60px;
+  background: radial-gradient(circle, #e6d3b3 0%, #c4a476 100%);
+  border: 3px solid #59442e; border-radius: 50%;
+  box-shadow: 0 5px 10px rgba(0,0,0,0.5);
+  cursor: pointer; display: none; 
+  align-items: center; justify-content: center;
+  color: #2a1d12; font-family: 'Limelight'; font-size: 10px; font-weight: bold;
+  z-index: 60;
+}
+#trunk-back-btn:hover { transform: scale(1.1); background: #fff0d4; }
+
+/* INTERNAL SLOT */
 .trunk-internal-zone {
-  position: absolute;
-  top: 15%;      /* Adjust this based on where the trunk opening is */
-  left: 5%;      /* Adjust side padding */
-  width: 90%;
-  height: 40%;   /* The depth of the opening */
-  overflow: hidden; /* THE MAGIC TRICK */
-  display: flex;
-  justify-content: center;
-  align-items: flex-end; /* Align files to bottom of slot so they rise up */
-  padding-bottom: 0px; 
+  position: absolute; top: 15%; left: 5%; width: 90%; height: 40%;
+  overflow: hidden; display: flex; justify-content: center; align-items: flex-end;
 }
 
-/* THE FILES (Tabs) */
+/* FILES */
 .file-folder {
-  width: 140px;
-  height: 250px; /* Tall enough to look deep */
-  background: #f4e1c1; 
-  border: 1px solid #cbbba2;
+  width: 140px; height: 250px;
+  background: #f4e1c1; border: 1px solid #cbbba2;
   box-shadow: -5px 0 15px rgba(0,0,0,0.3);
-  position: relative;
-  cursor: pointer;
-  transition: transform 0.4s ease;
-  
-  /* Initial State: Pushed down so only tab shows */
-  transform: translateY(180px); 
-  
-  /* OVERLAP - Squeeze them together */
-  margin-left: -40px; 
-  margin-right: -40px;
+  position: relative; cursor: pointer;
+  transition: transform 0.4s ease, opacity 0.3s;
+  transform: translateY(180px); /* Tucked in */
+  margin-left: -40px; margin-right: -40px;
 }
-
-/* Hover Animation: Slide UP out of the trunk */
-.file-folder:hover {
-  transform: translateY(20px); /* Moves up significantly */
-  z-index: 50; /* Bring to front */
-  background: #fff0d4;
-}
-
-/* THE TABS (Left vs Right) */
+.file-folder:hover { transform: translateY(20px); z-index: 50; background: #fff0d4; }
 .folder-tab {
-  position: absolute;
-  top: -35px;
-  width: 90px;
-  height: 35px;
-  background: #f4e1c1;
-  border-radius: 10px 10px 0 0;
-  border: 1px solid #cbbba2;
-  border-bottom: none;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  position: absolute; top: -35px; width: 90px; height: 35px;
+  background: #f4e1c1; border-radius: 10px 10px 0 0;
+  border: 1px solid #cbbba2; border-bottom: none;
+  display: flex; justify-content: center; align-items: center;
 }
 .file-folder:hover .folder-tab { background: #fff0d4; }
-
-/* Left Tab Class */
 .tab-left .folder-tab { left: 0; border-radius: 15px 5px 0 0; }
-
-/* Right Tab Class */
 .tab-right .folder-tab { right: 0; border-radius: 5px 15px 0 0; }
+.file-icon-img { width: 25px; height: 25px; object-fit: contain; }
 
-.file-icon-img {
-  width: 25px; height: 25px; object-fit: contain;
+/* PREVIEW CARD */
+#preview-box {
+  position: absolute; bottom: 500px; left: 50%; transform: translateX(-50%);
+  width: 250px; height: 250px; background: white; border: 5px solid white;
+  box-shadow: 0 10px 20px rgba(0,0,0,0.5); z-index: 70; display: none; pointer-events: none;
 }
+#preview-img { width: 100%; height: 100%; object-fit: contain; }
 
-/* FILE CONTENT (Hidden initially, visible on hover) */
-.file-content {
-  padding: 10px;
-  text-align: center;
-  opacity: 0;
-  transition: opacity 0.3s ease 0.1s;
-}
-.file-folder:hover .file-content { opacity: 1; }
-
-.file-name { font-family: 'Bad Script', cursive; font-weight: bold; color: #444; margin-top: 10px; font-size: 1.2rem; }
-
-.sub-item-label {
-  display: block; font-family: 'Special Elite', cursive; font-size: 12px;
-  color: #222; margin: 4px 0; border-bottom: 1px dashed #ccc;
-}
-.sub-item-label:hover { color: #D4AF37; font-weight: bold; }
-
-/* ---------------- ACTIVE STATES ---------------- */
+/* STATES */
 body.rooms-active #cabinet-container { left: 0px; }
 body.rooms-active #main-stage { transform: translateX(180px); }
-body.furniture-mode #furniture-box { bottom: -50px; /* Slides up to bottom of screen */ }
-
-/* ---------------- RESPONSIVE ---------------- */
-@media (max-width: 900px) {
-  #cabinet-container { width: 250px; left: -280px; }
-  body.rooms-active #cabinet-container { left: 0px; }
-  body.rooms-active #main-stage { transform: translateX(130px); width: 60%; }
-}
+body.furniture-mode #furniture-box { bottom: -50px; }
 </style>
 </head>
 <body>
@@ -287,23 +207,15 @@ body.furniture-mode #furniture-box { bottom: -50px; /* Slides up to bottom of sc
 </div>
 
 <div class="tabs">
-  <div class="drawer-hardware" onclick="toggleRooms()">
-    <div class="plate-style">Rooms</div><div class="lip-pull"></div>
-  </div>
-  <div class="drawer-hardware">
-    <div class="plate-style">Furniture Catalog</div><div class="lip-pull"></div>
-  </div>
-  <div class="drawer-hardware">
-    <div class="plate-style">Inspirational Look Book</div><div class="lip-pull"></div>
-  </div>
-  <div class="drawer-hardware">
-    <div class="plate-style">Save</div><div class="lip-pull"></div>
-  </div>
+  <div class="drawer-hardware" onclick="toggleRooms()"><div class="plate-style">Rooms</div><div class="lip-pull"></div></div>
+  <div class="drawer-hardware"><div class="plate-style">Furniture Catalog</div><div class="lip-pull"></div></div>
+  <div class="drawer-hardware"><div class="plate-style">Inspirational Look Book</div><div class="lip-pull"></div></div>
+  <div class="drawer-hardware"><div class="plate-style">Save</div><div class="lip-pull"></div></div>
 </div>
 
 <div class="workspace-area">
     <div id="cabinet-container">
-        <img id="cabinet-img" src="cabinet.png" alt="Storage Cabinet">
+        <img id="cabinet-img" src="cabinet.png" alt="Cabinet">
         <div id="zone-living" class="cabinet-drawer-zone" onmouseenter="hoverRoom('livingroom')" onclick="nextVariation('livingroom')">
             <div class="pop-out-label"><div class="plate-style">Living Room</div><div class="lip-pull"></div></div>
         </div>
@@ -322,142 +234,271 @@ body.furniture-mode #furniture-box { bottom: -50px; /* Slides up to bottom of sc
     </div>
 
     <div id="main-stage">
-        <p id="stage-text" style="color:#ccc;">Hover over cabinet drawers to preview rooms</p>
         <img id="room-display" src="" alt="Room Design" onclick="lockRoom()">
     </div>
 </div>
 
 <div id="furniture-box">
-    <div class="trunk-internal-zone">
-        
-        <div class="file-folder tab-left">
-            <div class="folder-tab">
-                <img src="iconseating.png" alt="icon" class="file-icon-img">
-            </div>
-            <div class="file-content">
-                <div class="file-name">Seating</div>
-                <span class="sub-item-label">Couches</span>
-                <span class="sub-item-label">Armchairs</span>
-                <span class="sub-item-label">Benches</span>
-                <span class="sub-item-label">Stools</span>
-            </div>
+    <div id="trunk-back-btn" onclick="goBackLevel()">BACK</div>
+    <div id="trunk-internal-zone" class="trunk-internal-zone">
         </div>
-
-        <div class="file-folder tab-right">
-            <div class="folder-tab">
-                <img src="icontables.png" alt="icon" class="file-icon-img">
-            </div>
-            <div class="file-content">
-                <div class="file-name">Tables</div>
-                <span class="sub-item-label">Coffee Tables</span>
-                <span class="sub-item-label">Dining Tables</span>
-                <span class="sub-item-label">Side Tables</span>
-            </div>
-        </div>
-
-        <div class="file-folder tab-left">
-            <div class="folder-tab">
-                <img src="iconstorage.png" alt="icon" class="file-icon-img">
-            </div>
-            <div class="file-content">
-                <div class="file-name">Storage</div>
-                <span class="sub-item-label">Bookshelves</span>
-                <span class="sub-item-label">Cabinets</span>
-                <span class="sub-item-label">Dressers</span>
-            </div>
-        </div>
-
-        <div class="file-folder tab-right">
-            <div class="folder-tab">
-                <img src="iconbeds.png" alt="icon" class="file-icon-img">
-            </div>
-            <div class="file-content">
-                <div class="file-name">Beds</div>
-                <span class="sub-item-label">Frames</span>
-                <span class="sub-item-label">Headboards</span>
-            </div>
-        </div>
-
-    </div>
 </div>
+
+<div id="preview-box"><img id="preview-img" src=""></div>
 
 <input type="file" id="file-upload" accept="image/*" onchange="handleFileUpload(event)" style="display:none">
 
 <script>
-  function toggleRooms() { document.body.classList.toggle('rooms-active'); }
+/* --- DATA STRUCTURE WITH ITEM IDs --- */
+const trunkData = {
+    level1: [
+        { id: 'cat_seat', name: 'Seating', icon: 'iconseating.png', type: 'category', content: 'level2_seating' },
+        { id: 'cat_table', name: 'Tables', icon: 'icontables.png', type: 'category', content: 'level2_tables' },
+        { id: 'cat_store', name: 'Storage', icon: 'iconstorage.png', type: 'category', content: 'level2_storage' },
+        { id: 'cat_bed', name: 'Beds', icon: 'iconbeds.png', type: 'category', content: 'level2_beds' }
+    ],
+    level2_seating: [
+        { id: 'type_couch', name: 'Couches', icon: 'iconcouch.png', type: 'type', content: 'items_couches' },
+        { id: 'type_arm', name: 'Armchairs', icon: 'iconarmchair.png', type: 'type', content: 'items_armchairs' },
+        { id: 'type_bench', name: 'Benches', icon: 'iconbench.png', type: 'type', content: 'items_benches' },
+        { id: 'type_stool', name: 'Stools', icon: 'iconstool.png', type: 'type', content: 'items_stools' }
+    ],
+    level2_tables: [
+        { id: 'type_dtable', name: 'Dining Tables', icon: 'icondiningtable.png', type: 'type', content: 'items_dtables' },
+        { id: 'type_etable', name: 'End Tables', icon: 'iconendtable.png', type: 'type', content: 'items_etables' }
+    ],
+    // LEVEL 3 ITEMS (With Unique IDs)
+    items_couches: [
+        { id: '1001', name: 'Leather Sofa', image: 'couch1.png', type: 'item' },
+        { id: '1002', name: 'Velvet Sofa', image: 'couch2.png', type: 'item' },
+        { id: '1003', name: 'Modern Sofa', image: 'couch3.png', type: 'item' }
+    ],
+    items_armchairs: [
+        { id: '2001', name: 'Wingback', image: 'armchair1.png', type: 'item' },
+        { id: '2002', name: 'Club Chair', image: 'armchair2.png', type: 'item' }
+    ]
+    // Add more arrays for other categories...
+};
 
-  const roomData = {
-    livingroom: ['livingroom.jpg'],
-    bedroom: ['bedroom.jpg', 'bedroom2.jpg'], 
-    diningroom: ['diningroom.jpg', 'diningroom1.jpg'],
-    extrarooms: ['extrarooms.jpg', 'kitchen.jpg', 'foyer.jpg']
-  };
+/* --- STATE MANAGEMENT --- */
+let currentLevel = 'level1';
+let historyStack = [];
 
-  let currentCategory = '';
-  let currentIndex = 0;
-  let isLocked = false;
+/* --- INITIALIZATION --- */
+renderFiles(trunkData.level1);
 
-  function hoverRoom(category) {
-    if (isLocked) return; 
-    currentCategory = category; currentIndex = 0; updateStage();
-  }
+function renderFiles(dataArray) {
+    const zone = document.getElementById('trunk-internal-zone');
+    zone.innerHTML = ''; // Clear existing
+    
+    // Check Back Button Visibility
+    const btn = document.getElementById('trunk-back-btn');
+    btn.style.display = (currentLevel === 'level1') ? 'none' : 'flex';
 
-  function nextVariation(category) {
-    if (isLocked) {
-        if(confirm("Unlock current design to switch rooms?")) { unlockRoom(); } else { return; }
+    dataArray.forEach((item, index) => {
+        const isLeft = index % 2 === 0; // Zig-Zag
+        
+        const folder = document.createElement('div');
+        folder.className = `file-folder ${isLeft ? 'tab-left' : 'tab-right'}`;
+        
+        // If it's an item (Level 3), show thumbnail on tab. If Category, show Icon.
+        const iconSrc = item.type === 'item' ? item.image : item.icon;
+        
+        folder.innerHTML = `
+            <div class="folder-tab">
+                <img src="${iconSrc}" class="file-icon-img">
+            </div>
+            <div class="file-content">
+                <div class="file-name">${item.name}</div>
+            </div>
+        `;
+        
+        // INTERACTION
+        if (item.type === 'item') {
+            // Level 3: Preview Hover & Click to Add
+            folder.onmouseenter = () => showPreview(item.image);
+            folder.onmouseleave = () => hidePreview();
+            folder.onclick = () => addFurnitureToStage(item);
+        } else {
+            // Level 1 & 2: Navigation
+            folder.onclick = () => navigateDown(item.content);
+        }
+        
+        zone.appendChild(folder);
+    });
+}
+
+function navigateDown(targetKey) {
+    if(trunkData[targetKey]) {
+        historyStack.push(currentLevel);
+        currentLevel = targetKey;
+        // Animation effect could go here (drop down/up)
+        renderFiles(trunkData[targetKey]);
     }
-    if (currentCategory !== category) {
-        currentCategory = category; currentIndex = 0;
-    } else {
-        if(roomData[category].length > 1) { currentIndex = (currentIndex + 1) % roomData[category].length; }
+}
+
+function goBackLevel() {
+    if(historyStack.length > 0) {
+        currentLevel = historyStack.pop();
+        renderFiles(trunkData[currentLevel]);
     }
+}
+
+function showPreview(imgSrc) {
+    const box = document.getElementById('preview-box');
+    const img = document.getElementById('preview-img');
+    img.src = imgSrc;
+    box.style.display = 'block';
+}
+function hidePreview() {
+    document.getElementById('preview-box').style.display = 'none';
+}
+
+/* --- STAGE LOGIC --- */
+function addFurnitureToStage(item) {
+    const stage = document.getElementById('main-stage');
+    
+    // Create Wrapper
+    const wrapper = document.createElement('div');
+    wrapper.className = 'stage-item-wrapper';
+    wrapper.style.width = '150px'; // Default size
+    wrapper.style.height = '100px';
+    wrapper.style.left = '50px';
+    wrapper.style.top = '50px';
+    wrapper.dataset.id = item.id; // STORE THE ID
+    
+    // Create Image
+    const img = document.createElement('img');
+    img.src = item.image;
+    
+    // Create Resize Handle
+    const handle = document.createElement('div');
+    handle.className = 'resize-handle';
+    
+    // Assemble
+    wrapper.appendChild(img);
+    wrapper.appendChild(handle);
+    stage.appendChild(wrapper);
+    
+    // Add Logic
+    makeDraggable(wrapper);
+    makeResizable(wrapper, handle);
+    
+    wrapper.onclick = (e) => {
+        e.stopPropagation();
+        document.querySelectorAll('.stage-item-wrapper').forEach(el => el.classList.remove('selected'));
+        wrapper.classList.add('selected');
+    };
+    
+    wrapper.ondblclick = () => wrapper.remove();
+}
+
+/* --- DRAG LOGIC --- */
+function makeDraggable(el) {
+    let isDragging = false;
+    let startX, startY, initialLeft, initialTop;
+
+    el.onmousedown = function(e) {
+        if(e.target.classList.contains('resize-handle')) return; // Ignore drag if clicking resize
+        isDragging = true;
+        startX = e.clientX;
+        startY = e.clientY;
+        initialLeft = el.offsetLeft;
+        initialTop = el.offsetTop;
+        document.addEventListener('mousemove', onMouseMove);
+        document.addEventListener('mouseup', onMouseUp);
+    };
+
+    function onMouseMove(e) {
+        if (!isDragging) return;
+        const dx = e.clientX - startX;
+        const dy = e.clientY - startY;
+        el.style.left = `${initialLeft + dx}px`;
+        el.style.top = `${initialTop + dy}px`;
+    }
+
+    function onMouseUp() {
+        isDragging = false;
+        document.removeEventListener('mousemove', onMouseMove);
+        document.removeEventListener('mouseup', onMouseUp);
+    }
+}
+
+/* --- RESIZE LOGIC --- */
+function makeResizable(el, handle) {
+    let isResizing = false;
+    let startX, startY, startW, startH;
+
+    handle.onmousedown = function(e) {
+        e.stopPropagation();
+        isResizing = true;
+        startX = e.clientX;
+        startY = e.clientY;
+        startW = parseInt(document.defaultView.getComputedStyle(el).width, 10);
+        startH = parseInt(document.defaultView.getComputedStyle(el).height, 10);
+        document.addEventListener('mousemove', onResizeMove);
+        document.addEventListener('mouseup', onResizeUp);
+    };
+
+    function onResizeMove(e) {
+        if (!isResizing) return;
+        const width = startW + (e.clientX - startX);
+        const height = startH + (e.clientY - startY);
+        el.style.width = width + 'px';
+        el.style.height = height + 'px';
+    }
+
+    function onResizeUp() {
+        isResizing = false;
+        document.removeEventListener('mousemove', onResizeMove);
+        document.removeEventListener('mouseup', onResizeUp);
+    }
+}
+
+/* --- EXISTING ROOMS LOGIC --- */
+function toggleRooms() { document.body.classList.toggle('rooms-active'); }
+const roomData = {
+    livingroom: ['livingroom.jpg'], bedroom: ['bedroom.jpg', 'bedroom2.jpg'], 
+    diningroom: ['diningroom.jpg', 'diningroom1.jpg'], extrarooms: ['extrarooms.jpg', 'kitchen.jpg', 'foyer.jpg']
+};
+let currentCategory = ''; let currentIndex = 0; let isLocked = false;
+
+function hoverRoom(category) { if (isLocked) return; currentCategory = category; currentIndex = 0; updateStage(); }
+function nextVariation(category) {
+    if (isLocked) { if(confirm("Unlock current design?")) { unlockRoom(); } else { return; } }
+    if (currentCategory !== category) { currentCategory = category; currentIndex = 0; } 
+    else { if(roomData[category].length > 1) currentIndex = (currentIndex + 1) % roomData[category].length; }
     updateStage();
-  }
-
-  function updateStage() {
+}
+function updateStage() {
     const imgElement = document.getElementById('room-display');
-    const textElement = document.getElementById('stage-text');
-    if(roomData[currentCategory] && roomData[currentCategory].length > 0) {
-        imgElement.src = roomData[currentCategory][currentIndex];
-        imgElement.style.display = 'block';
-        textElement.style.display = 'none';
-    }
-  }
-
-  function triggerUpload() { document.getElementById('file-upload').click(); }
-  function handleFileUpload(event) {
+    if(roomData[currentCategory]) { imgElement.src = roomData[currentCategory][currentIndex]; imgElement.style.display = 'block'; }
+}
+function lockRoom() {
+    const imgElement = document.getElementById('room-display');
+    if (!imgElement.src || imgElement.style.display === 'none') return; 
+    isLocked = !isLocked; 
+    if (isLocked) { imgElement.classList.add('locked'); document.body.classList.add('furniture-mode'); } 
+    else { imgElement.classList.remove('locked'); document.body.classList.remove('furniture-mode'); }
+}
+function unlockRoom() {
+    isLocked = false;
+    document.getElementById('room-display').classList.remove('locked');
+    document.body.classList.remove('furniture-mode');
+}
+function triggerUpload() { document.getElementById('file-upload').click(); }
+function handleFileUpload(event) {
     const file = event.target.files[0];
     if (file) {
         if(isLocked) unlockRoom();
         const reader = new FileReader();
         reader.onload = function(e) {
             const imgElement = document.getElementById('room-display');
-            const textElement = document.getElementById('stage-text');
-            imgElement.src = e.target.result; imgElement.style.display = 'block'; textElement.style.display = 'none';
+            imgElement.src = e.target.result; imgElement.style.display = 'block';
         }
         reader.readAsDataURL(file);
     }
-  }
-
-  function lockRoom() {
-    const imgElement = document.getElementById('room-display');
-    if (!imgElement.src || imgElement.style.display === 'none') return; 
-    isLocked = !isLocked; 
-    if (isLocked) {
-      imgElement.classList.add('locked');
-      document.body.classList.add('furniture-mode'); // Triggers trunk to slide up
-    } else {
-      imgElement.classList.remove('locked');
-      document.body.classList.remove('furniture-mode');
-    }
-  }
-
-  function unlockRoom() {
-    isLocked = false;
-    document.getElementById('room-display').classList.remove('locked');
-    document.body.classList.remove('furniture-mode');
-  }
+}
 </script>
-
 </body>
 </html>
