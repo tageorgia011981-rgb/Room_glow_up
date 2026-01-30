@@ -21,7 +21,7 @@ body {
   background-size: cover;
   font-family: 'Special Elite', cursive;
   color: white;
-  overflow-x: hidden; /* Crucial to hide the cabinet when off-screen */
+  overflow-x: hidden;
 }
 
 /* ---------------- HEADER GROUP ---------------- */
@@ -50,19 +50,7 @@ h2 {
   text-shadow: 2px 2px 8px rgba(0,0,0,0.6);
 }
 
-/* ---------------- PULL TABS ---------------- */
-.tabs {
-  display: flex;
-  justify-content: center;
-  gap: 1.4rem;
-  flex-wrap: wrap;
-  width: 100%;
-  padding: 1rem 2rem;
-  position: relative;
-  z-index: 30;
-}
-
-/* LABEL HOLDER */
+/* ---------------- PULL TABS (SHARED STYLE) ---------------- */
 .drawer-hardware {
   position: relative;
   width: 220px;
@@ -77,12 +65,15 @@ h2 {
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  transition: transform 0.25s ease, filter 0.25s ease;
+  transition: transform 0.25s ease, filter 0.25s ease, box-shadow 0.25s ease;
+  user-select: none;
 }
 
 .drawer-hardware:hover {
   filter: brightness(1.25) contrast(1.1);
-  transform: translateY(-4px);
+  transform: scale(1.05) translateY(-2px); 
+  box-shadow: 0 15px 25px rgba(255, 255, 255, 0.1); 
+  z-index: 10;
 }
 
 /* screw heads */
@@ -111,7 +102,7 @@ h2 {
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 17px;
+  font-size: 16px; 
   font-weight: 900;
   text-transform: uppercase;
   letter-spacing: 1px;
@@ -136,60 +127,84 @@ h2 {
   box-shadow: 0 5px 10px rgba(0,0,0,0.8);
 }
 
-/* ---------------- WORKSPACE AREA ---------------- */
+/* ---------------- TOP NAV TABS SPECIFIC ---------------- */
+.tabs {
+  display: flex;
+  justify-content: center;
+  gap: 1.4rem;
+  flex-wrap: wrap;
+  width: 100%;
+  padding: 1rem 2rem;
+  position: relative;
+  z-index: 30;
+}
 
+/* ---------------- WORKSPACE AREA ---------------- */
 .workspace-area {
   position: relative;
   width: 100%;
   max-width: 1400px;
-  margin-top: 20px; /* Reduced gap so it's visible immediately */
+  margin-top: 20px;
   min-height: 1000px; 
   display: flex;
-  justify-content: center; /* Center the stage initially */
+  justify-content: center; 
 }
 
-/* CABINET */
+/* CABINET CONTAINER */
 #cabinet-container {
   position: absolute;
   top: 0;
-  left: -400px; /* Completely hidden off screen */
-  width: 320px;
-  height: auto;
+  left: -400px; 
+  width: 300px; 
+  display: flex;
+  flex-direction: column; 
+  gap: 15px; 
+  padding: 20px;
+  background-color: #111; 
+  border: 4px solid #333;
+  border-radius: 0 10px 10px 0;
   z-index: 20;
-  /* Smooth Glide Transition */
   transition: left 1s ease-in-out; 
-}
-
-#cabinet-container img {
-  width: 100%;
-  display: block;
-  filter: drop-shadow(5px 5px 10px rgba(0,0,0,0.5));
 }
 
 /* MAIN STAGE */
 #main-stage {
-  width: 70%; /* Slightly smaller width to allow room for slide */
+  width: 70%;
   max-width: 900px;
-  min-height: 900px; 
+  min-height: 600px; 
   border: 2px dashed rgba(255, 255, 255, 0.3);
   background-color: rgba(0, 0, 0, 0.6); 
   position: relative;
   z-index: 10;
-  /* Smooth Glide Transition using Transform */
   transition: transform 1s ease-in-out;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+#room-display {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: none; 
+  cursor: pointer;
+  border: 4px solid transparent;
+  transition: border-color 0.3s;
+}
+
+#room-display.locked {
+  border-color: #D4AF37; /* Gold border */
+  box-shadow: 0 0 20px rgba(212, 175, 55, 0.5);
 }
 
 /* ---------------- ACTIVE STATES ---------------- */
-
-/* Cabinet Glides In */
 body.rooms-active #cabinet-container {
-  left: 20px; /* Stops just inside the left edge */
+  left: 0px; 
 }
 
-/* Stage Glides Right */
 body.rooms-active #main-stage {
-  /* Move right by 180px to make space for the cabinet */
-  transform: translateX(180px); 
+  transform: translateX(160px); 
 }
 
 /* ---------------- RESPONSIVE ---------------- */
@@ -200,6 +215,7 @@ body.rooms-active #main-stage {
   #cabinet-container { 
     width: 200px; 
     left: -250px; 
+    padding: 10px;
   }
   
   body.rooms-active #cabinet-container {
@@ -208,7 +224,7 @@ body.rooms-active #main-stage {
   
   body.rooms-active #main-stage {
     transform: translateX(100px);
-    width: 60%;
+    width: 55%;
   }
 }
 </style>
@@ -245,19 +261,129 @@ body.rooms-active #main-stage {
 <div class="workspace-area">
     
     <div id="cabinet-container">
-        <img src="cabinet.png" alt="Cabinet">
+        <div class="drawer-hardware" onmouseenter="hoverRoom('livingroom')" onclick="nextVariation('livingroom')">
+            <div class="plate-style">Living Room</div>
+            <div class="lip-pull"></div>
+        </div>
+        
+        <div class="drawer-hardware" onmouseenter="hoverRoom('bedroom')" onclick="nextVariation('bedroom')">
+            <div class="plate-style">Bedroom</div>
+            <div class="lip-pull"></div>
+        </div>
+        
+        <div class="drawer-hardware" onmouseenter="hoverRoom('diningroom')" onclick="nextVariation('diningroom')">
+            <div class="plate-style">Dining Room</div>
+            <div class="lip-pull"></div>
+        </div>
+        
+        <div class="drawer-hardware" onmouseenter="hoverRoom('extrarooms')" onclick="nextVariation('extrarooms')">
+            <div class="plate-style">Extra Rooms</div>
+            <div class="lip-pull"></div>
+        </div>
+        
+        <div class="drawer-hardware" onclick="alert('Upload feature coming soon!')">
+            <div class="plate-style">Upload</div>
+            <div class="lip-pull"></div>
+        </div>
     </div>
 
     <div id="main-stage">
-        <p style="text-align:center; padding-top:200px; color:#ccc;">Main Stage Area</p>
+        <p id="stage-text" style="color:#ccc;">Hover over a drawer to see rooms</p>
+        <img id="room-display" src="" alt="Room Design" onclick="lockRoom()">
     </div>
 
 </div>
 
 <script>
+  // 1. Toggle Cabinet Slide
   function toggleRooms() {
     document.body.classList.toggle('rooms-active');
-    // Removed the auto-scroll javascript so it doesn't jump
+  }
+
+  // 2. Room Data (Placeholders)
+  const roomData = {
+    livingroom: [
+      'https://via.placeholder.com/800x600/333333/FFFFFF?text=Modern+Living+Room',
+      'https://via.placeholder.com/800x600/550000/FFFFFF?text=Rustic+Living+Room',
+      'https://via.placeholder.com/800x600/005500/FFFFFF?text=Boho+Living+Room'
+    ],
+    bedroom: [
+      'https://via.placeholder.com/800x600/000055/FFFFFF?text=Cozy+Bedroom',
+      'https://via.placeholder.com/800x600/550055/FFFFFF?text=Luxury+Bedroom'
+    ],
+    diningroom: [
+      'https://via.placeholder.com/800x600/555500/FFFFFF?text=Dining+Room+1',
+      'https://via.placeholder.com/800x600/005555/FFFFFF?text=Dining+Room+2'
+    ],
+    extrarooms: [
+      'https://via.placeholder.com/800x600/333333/FFFFFF?text=Bathroom',
+      'https://via.placeholder.com/800x600/666666/FFFFFF?text=Office'
+    ]
+  };
+
+  // State Tracking
+  let currentCategory = '';
+  let currentIndex = 0;
+  let isLocked = false;
+
+  // 3. Hover Logic: Shows the first image of that category immediately
+  function hoverRoom(category) {
+    if (isLocked) return; // Don't change if locked
+    
+    currentCategory = category;
+    currentIndex = 0; // Reset to start of list
+    updateStage();
+  }
+
+  // 4. Click Logic: Cycles to the next image in the same category
+  function nextVariation(category) {
+    if (isLocked) {
+        if(confirm("Unlock current design to switch rooms?")) {
+            unlockRoom();
+        } else {
+            return; 
+        }
+    }
+    
+    // Ensure we are cycling the correct category
+    if (currentCategory !== category) {
+        currentCategory = category;
+        currentIndex = 0;
+    } else {
+        currentIndex = (currentIndex + 1) % roomData[category].length;
+    }
+    updateStage();
+  }
+
+  // Helper to update the image source
+  function updateStage() {
+    const imgElement = document.getElementById('room-display');
+    const textElement = document.getElementById('stage-text');
+    
+    if(roomData[currentCategory]) {
+        imgElement.src = roomData[currentCategory][currentIndex];
+        imgElement.style.display = 'block';
+        textElement.style.display = 'none';
+    }
+  }
+
+  // 5. Lock Functionality
+  function lockRoom() {
+    const imgElement = document.getElementById('room-display');
+    if (!imgElement.src || imgElement.style.display === 'none') return; 
+
+    isLocked = !isLocked; 
+
+    if (isLocked) {
+      imgElement.classList.add('locked');
+    } else {
+      imgElement.classList.remove('locked');
+    }
+  }
+
+  function unlockRoom() {
+    isLocked = false;
+    document.getElementById('room-display').classList.remove('locked');
   }
 </script>
 
