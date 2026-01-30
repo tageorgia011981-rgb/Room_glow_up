@@ -1,250 +1,176 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Room Glow Up</title>
+
 <link href="https://fonts.googleapis.com/css2?family=Limelight&family=Bad+Script&family=Special+Elite&display=swap" rel="stylesheet">
+
 <style>
-  body {
-    margin: 0;
-    padding: 0;
-    min-height: 150vh; /* allow scroll */
-    width: 100vw;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    background: url('background.jpg') no-repeat center center fixed;
-    background-size: cover;
-    color: white;
-    font-family: 'Special Elite', monospace;
-    overflow-x: hidden;
-  }
+/* ---------------- BASE ---------------- */
+* { box-sizing: border-box; }
 
-  /* --- Header --- */
-  h1 {
-    font-family: 'Limelight', cursive;
-    font-size: 8vw;
-    text-shadow: 3px 3px 10px rgba(0,0,0,0.7), -2px -2px 8px rgba(0,0,0,0.5);
-    margin-top: 2rem;
-    margin-bottom: 0.5rem;
-    text-align: center;
-  }
-  h2 {
-    font-family: 'Bad Script', cursive;
-    font-size: 4vw;
-    max-width: 90vw;
-    text-shadow: 2px 2px 8px rgba(0,0,0,0.6);
-    margin-bottom: 2rem;
-    text-align: center;
-  }
+body {
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+  width: 100vw;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: url('background1.jpg') no-repeat center center fixed;
+  background-size: cover;
+  font-family: 'Special Elite', cursive;
+  color: white;
+  overflow-x: hidden;
+}
 
-  /* --- Top Tabs --- */
-  .tabs {
-    display: flex;
-    gap: 1rem;
-    justify-content: center;
-    flex-wrap: wrap;
-    margin-bottom: 2rem;
-  }
-  .tab {
-    position: relative;
-    font-family: 'Special Elite', monospace;
-    font-size: 1.5rem;
-    font-weight: bold;
-    color: white;
-    text-align: center;
-    padding: 0.7rem 1.2rem;
-    background: linear-gradient(145deg, #2a2a2a, #1a1a1a);
-    border: 2px solid #111;
-    border-radius: 0.3rem;
-    box-shadow: inset 2px 2px 5px rgba(255,255,255,0.1), inset -2px -2px 5px rgba(0,0,0,0.7),
-                3px 3px 5px rgba(0,0,0,0.5);
-    cursor: pointer;
-    transition: all 0.3s ease;
-  }
-  .tab:hover {
-    box-shadow: inset 2px 2px 5px rgba(255,255,255,0.2), inset -2px -2px 5px rgba(0,0,0,0.7),
-                0 0 15px rgba(255,255,255,0.7);
-  }
-  .tab::after {
-    content: '';
-    position: absolute;
-    bottom: -6px;
-    left: 10%;
-    width: 80%;
-    height: 6px;
-    background: #1a1a1a;
-    border-radius: 2px;
-    box-shadow: inset 0 2px 3px rgba(255,255,255,0.1), inset 0 -2px 3px rgba(0,0,0,0.7);
-  }
-  .tab::before {
-    content: '';
-    position: absolute;
-    top: 4px;
-    left: 6px;
-    width: 6px;
-    height: 6px;
-    background: #555;
-    border-radius: 50%;
-    box-shadow: 0 0 0 1px #222, 80px 0 0 0 #555, 80px 0 0 1px #222;
-  }
+/* ---------------- HEADER GROUP ---------------- */
+.header-wrap {
+  width: 100%;
+  text-align: center;
+  margin-top: 1.2rem;        /* pulled UP */
+  margin-bottom: 1.2rem;     /* tightened */
+}
 
-  /* --- Workspace + Stage + Cabinet --- */
-  .workspace {
-    position: relative;
-    display: flex;
-    justify-content: flex-start;
-    align-items: flex-start;
-    width: 100%;
-    padding: 20px 40px 100px;
-    overflow-x: hidden;
-  }
-  .stage {
-    width: 1000px;
-    height: 650px;
-    background: #1a1b1d;
-    border: 12px solid #2c2e30;
-    position: relative;
-    box-shadow: 0 0 60px rgba(0,0,0,1);
-    border-radius: 12px;
-    overflow: hidden;
-    z-index: 10;
-    transition: transform 1.2s cubic-bezier(0.19,1,0.22,1);
-  }
-  .workspace.active-glide .stage {
-    transform: translateX(80px);
-  }
-  .room-img {
-    position: absolute;
-    inset: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    display: none;
-  }
+h1 {
+  font-family: 'Limelight', cursive;
+  font-size: clamp(3.5rem, 7vw, 5.5rem);
+  line-height: 0.9;          /* tighter vertical footprint */
+  margin: 0;
+  text-shadow:
+    3px 3px 10px rgba(0,0,0,0.7),
+   -2px -2px 8px rgba(0,0,0,0.5);
+}
 
-  .cabinet-container {
-    width: 0;
-    opacity: 0;
-    transform: translateX(-150px);
-    transition: 1.2s cubic-bezier(0.19,1,0.22,1);
-    position: relative;
-    z-index: 20;
-  }
-  .workspace.active-glide .cabinet-container {
-    width: 600px;
-    opacity: 1;
-    transform: translateX(0);
-  }
-  .cabinet-img {
-    width: 600px;
-    display: block;
-  }
-  #cab-content {
-    position: absolute;
-    inset: 0;
-    pointer-events: none;
-  }
+h2 {
+  font-family: 'Bad Script', cursive;
+  font-size: clamp(1.6rem, 3.5vw, 2.4rem);
+  margin-top: 0.6rem;
+  margin-bottom: 0;          /* no extra push */
+  text-shadow: 2px 2px 8px rgba(0,0,0,0.6);
+}
 
-  /* --- Drawer Tabs on Cabinet --- */
-  .cab-drawer-tab {
-    position: absolute;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 200px;
-    height: 80px;
-    background: linear-gradient(145deg, #2a2a2a, #1a1a1a);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    border: 2px solid #111;
-    box-shadow: inset 2px 2px 5px rgba(255,255,255,0.1), inset -2px -2px 5px rgba(0,0,0,0.7),
-                0 5px 10px rgba(0,0,0,0.5);
-    transition: all 0.3s ease;
-    pointer-events: auto;
-  }
-  .cab-drawer-tab:hover {
-    transform: translateX(-50%) translateY(-5px);
-    filter: brightness(1.3);
-    box-shadow: inset 2px 2px 5px rgba(255,255,255,0.2), inset -2px -2px 5px rgba(0,0,0,0.7),
-                0 0 15px rgba(255,255,255,0.7);
-  }
+/* ---------------- PULL TABS ---------------- */
+.tabs {
+  display: flex;
+  justify-content: center;
+  gap: 1.4rem;
+  flex-wrap: wrap;
+  width: 100%;
+  padding: 1.2rem 2rem 1.6rem;   /* compressed vertically */
+}
 
-  .cab-drawer-tab::after {
-    content: '';
-    position: absolute;
-    bottom: -6px;
-    left: 10%;
-    width: 80%;
-    height: 6px;
-    background: #1a1a1a;
-    border-radius: 2px;
-    box-shadow: inset 0 2px 3px rgba(255,255,255,0.1), inset 0 -2px 3px rgba(0,0,0,0.7);
-  }
+/* LABEL HOLDER (UNCHANGED DESIGN) */
+.drawer-hardware {
+  position: relative;
+  width: 220px;
+  height: 90px;
+  background: linear-gradient(135deg, #2c2e30 0%, #1a1a1a 100%);
+  border: 3px solid #000;
+  box-shadow:
+    inset 0 0 0 2px #444,
+    inset 10px 0 20px rgba(0,0,0,0.8),
+    0 10px 15px rgba(0,0,0,0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: transform 0.25s ease, filter 0.25s ease;
+}
+
+.drawer-hardware:hover {
+  filter: brightness(1.25) contrast(1.1);
+  transform: translateY(-4px);
+}
+
+/* screw heads */
+.drawer-hardware::before,
+.drawer-hardware::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: radial-gradient(circle, #111 20%, #555 100%);
+  box-shadow: inset 1px 1px 2px #000;
+}
+
+.drawer-hardware::before { left: 12px; }
+.drawer-hardware::after  { right: 12px; }
+
+/* label plate */
+.plate-style {
+  width: 160px;
+  height: 50px;
+  background: linear-gradient(to bottom, #dcdcdc 0%, #8e9196 50%, #b0b0b0 100%);
+  color: #000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 17px;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  border: 1px solid #666;
+  box-shadow: inset 0 2px 5px rgba(0,0,0,0.25);
+  text-align: center;
+  line-height: 1;
+}
+
+/* pull lip */
+.lip-pull {
+  position: absolute;
+  bottom: -14px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 140px;
+  height: 24px;
+  background: linear-gradient(to bottom, #2c2e30, #000);
+  border: 2px solid #111;
+  border-top: none;
+  border-radius: 0 0 15px 15px;
+  box-shadow: 0 5px 10px rgba(0,0,0,0.8);
+}
+
+/* ---------------- RESPONSIVE ---------------- */
+@media (max-width: 700px) {
+  .drawer-hardware { width: 170px; height: 75px; }
+  .plate-style { width: 120px; font-size: 14px; }
+  .lip-pull { width: 110px; height: 18px; }
+}
 </style>
 </head>
+
 <body>
 
-<h1>Room Glow Up</h1>
-<h2>Your Dream Space Come To Life</h2>
+<div class="header-wrap">
+  <h1>Room Glow Up</h1>
+  <h2>Your Dream Space Come To Life</h2>
+</div>
 
 <div class="tabs">
-  <div class="tab">Rooms</div>
-  <div class="tab">Furniture Catalog</div>
-  <div class="tab">Decor</div>
-  <div class="tab">Inspirational Look Book</div>
-  <div class="tab">Save</div>
-</div>
-
-<div class="workspace" id="workspace">
-  <div class="cabinet-container">
-    <img src="cabinet.png" class="cabinet-img">
-    <div id="cab-content">
-      <!-- Cabinet drawer tabs -->
-      <div class="cab-drawer-tab" style="top: 130px;" onclick="loadRoom('livingroom.jpg', this)">Living Room</div>
-      <div class="cab-drawer-tab" style="top: 230px;" onclick="loadRoom('bedroom.jpg', this)">Bedroom</div>
-      <div class="cab-drawer-tab" style="top: 330px;" onclick="loadRoom('diningroom.jpg', this)">Dining Room</div>
-      <div class="cab-drawer-tab" style="top: 430px;" onclick="loadRoom('extraroom.jpg', this)">Extra Room</div>
-      <div class="cab-drawer-tab" style="top: 530px;" onclick="triggerUpload()">Upload</div>
-    </div>
+  <div class="drawer-hardware">
+    <div class="plate-style">Rooms</div>
+    <div class="lip-pull"></div>
   </div>
-  <div class="stage" id="stage"><img id="room-image" class="room-img"></div>
+  <div class="drawer-hardware">
+    <div class="plate-style">Furniture</div>
+    <div class="lip-pull"></div>
+  </div>
+  <div class="drawer-hardware">
+    <div class="plate-style">Decor</div>
+    <div class="lip-pull"></div>
+  </div>
+  <div class="drawer-hardware">
+    <div class="plate-style">Inspiration</div>
+    <div class="lip-pull"></div>
+  </div>
 </div>
-
-<input type="file" id="upload-input" accept="image/*" style="display:none">
-
-<script>
-const workspace = document.getElementById('workspace');
-const cabContent = document.getElementById('cab-content');
-const roomImage = document.getElementById('room-image');
-const uploadInput = document.getElementById('upload-input');
-
-document.querySelector('.tab').addEventListener('click', () => {
-  workspace.classList.add('active-glide');
-});
-
-function loadRoom(src, el) {
-  if(src) roomImage.src = src;
-  roomImage.style.display = 'block';
-  document.querySelectorAll('.cab-drawer-tab').forEach(d => d.classList.remove('active-lift'));
-  if(el) el.classList.add('active-lift');
-}
-
-function triggerUpload() {
-  uploadInput.click();
-}
-
-uploadInput.onchange = e => {
-  const file = e.target.files[0];
-  if(file){
-    const reader = new FileReader();
-    reader.onload = event => loadRoom(event.target.result, document.querySelector('.cab-drawer-tab:last-child'));
-    reader.readAsDataURL(file);
-  }
-};
-</script>
 
 </body>
 </html>
