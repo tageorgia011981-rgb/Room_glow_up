@@ -102,7 +102,7 @@ h2 {
   opacity: 0; 
   transform: scale(0.5); 
   transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); 
-  pointer-events: none; 
+  pointer-events: none; /* Allows click to pass through to the zone */
 }
 
 /* Inner Plate for Bronze Labels */
@@ -210,25 +210,25 @@ h2 {
 }
 
 /* CABINET DRAWERS (Hit Zones) */
-/* MOVED UP by decreasing 'top' percentages */
+/* Expanded height to 18% to ensure easier hovering */
 .cabinet-drawer-zone {
   position: absolute;
   left: 10%;
   width: 80%;
-  height: 16%; 
+  height: 18%; 
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  z-index: 25;
+  z-index: 30; /* Increased Z-index to ensure it captures mouse events */
 }
 
-/* Adjusted Vertical Positions (Moved Up) */
-#zone-living { top: 3%; }   
-#zone-bed    { top: 21%; }  
-#zone-dining { top: 39%; }  
-#zone-extra  { top: 57%; }  
-#zone-upload { top: 75%; }  
+/* Vertical Positions */
+#zone-living { top: 2%; }   
+#zone-bed    { top: 20%; }  
+#zone-dining { top: 38%; }  
+#zone-extra  { top: 56%; }  
+#zone-upload { top: 74%; }  
 
 /* MAIN STAGE */
 #main-stage {
@@ -367,11 +367,12 @@ body.rooms-active #main-stage {
     document.body.classList.toggle('rooms-active');
   }
 
-  // 2. Room Data (UPDATED WITH NEW IMAGES)
+  // 2. Room Data (UPDATED: Added bedroom2, diningroom1, kitchen, foyer)
+  // Ensure these EXACT filenames exist in your folder!
   const roomData = {
     livingroom: ['livingroom.jpg'],
     bedroom: ['bedroom.jpg', 'bedroom2.jpg'], 
-    diningroom: ['diningroom.jpg'],
+    diningroom: ['diningroom.jpg', 'diningroom1.jpg'],
     extrarooms: ['extrarooms.jpg', 'kitchen.jpg', 'foyer.jpg']
   };
 
