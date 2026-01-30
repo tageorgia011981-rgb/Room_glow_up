@@ -155,7 +155,7 @@ h2 {
 #room-display { width: 100%; height: 100%; object-fit: cover; display: none; cursor: pointer; border: 4px solid transparent; transition: border-color 0.3s; }
 #room-display.locked { border-color: #D4AF37; box-shadow: 0 0 20px rgba(212, 175, 55, 0.5); }
 
-/* ---------------- FURNITURE BOX (storagebox.png) ---------------- */
+/* ---------------- FURNITURE BOX (filebox.png) ---------------- */
 #furniture-box {
   position: fixed;
   bottom: -400px; /* Hidden */
@@ -164,8 +164,8 @@ h2 {
   width: 800px;
   height: 300px; /* Adjusted height for the box image */
   
-  /* USING YOUR IMAGE */
-  background: url('storagebox.png') no-repeat center bottom;
+  /* UPDATED IMAGE */
+  background: url('filebox.png') no-repeat center bottom;
   background-size: contain;
   
   z-index: 40;
@@ -173,7 +173,7 @@ h2 {
   display: flex;
   justify-content: center;
   align-items: flex-end; 
-  padding-bottom: 40px; /* Pushes files up so they peek out of the box correctly */
+  padding-bottom: 40px; /* Pushes files up */
   gap: 20px;
 }
 
