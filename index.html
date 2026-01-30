@@ -117,7 +117,11 @@ h2 {
   transition: transform 1.5s ease-in-out;
   overflow: hidden; 
 }
-#room-display { width: 100%; height: 100%; object-fit: cover; display: none; pointer-events: none; }
+/* FIXED ROOM DISPLAY */
+#room-display { 
+  width: 100%; height: 100%; object-fit: cover; display: none; 
+  cursor: pointer; /* Allows Clicking */
+}
 #room-display.locked { border: 4px solid #D4AF37; box-shadow: 0 0 20px rgba(212, 175, 55, 0.5); }
 
 /* DRAGGABLE FURNITURE ON STAGE */
@@ -138,7 +142,6 @@ h2 {
 #furniture-box {
   position: fixed; bottom: -600px; left: 50%; transform: translateX(-50%);
   width: 900px; height: 550px; 
-  /* UPDATED IMAGE NAME BELOW */
   background: url('filefolderbox.png') no-repeat center bottom;
   background-size: contain; z-index: 40;
   transition: bottom 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
@@ -146,7 +149,7 @@ h2 {
 
 /* BACK BUTTON ON TRUNK */
 #trunk-back-btn {
-  position: absolute; right: 80px; top: 180px; /* Positioned on the case */
+  position: absolute; right: 80px; top: 180px; 
   width: 60px; height: 60px;
   background: radial-gradient(circle, #e6d3b3 0%, #c4a476 100%);
   border: 3px solid #59442e; border-radius: 50%;
@@ -250,7 +253,7 @@ body.furniture-mode #furniture-box { bottom: -50px; }
 <input type="file" id="file-upload" accept="image/*" onchange="handleFileUpload(event)" style="display:none">
 
 <script>
-/* --- DATA STRUCTURE WITH ITEM IDs --- */
+/* --- DATA STRUCTURE --- */
 const trunkData = {
     level1: [
         { id: 'cat_seat', name: 'Seating', icon: 'iconseating.png', type: 'category', content: 'level2_seating' },
@@ -268,7 +271,7 @@ const trunkData = {
         { id: 'type_dtable', name: 'Dining Tables', icon: 'icondiningtable.png', type: 'type', content: 'items_dtables' },
         { id: 'type_etable', name: 'End Tables', icon: 'iconendtable.png', type: 'type', content: 'items_etables' }
     ],
-    // LEVEL 3 ITEMS (With Unique IDs)
+    // LEVEL 3 ITEMS
     items_couches: [
         { id: '1001', name: 'Leather Sofa', image: 'couch1.png', type: 'item' },
         { id: '1002', name: 'Velvet Sofa', image: 'couch2.png', type: 'item' },
@@ -278,7 +281,6 @@ const trunkData = {
         { id: '2001', name: 'Wingback', image: 'armchair1.png', type: 'item' },
         { id: '2002', name: 'Club Chair', image: 'armchair2.png', type: 'item' }
     ]
-    // Add more arrays for other categories...
 };
 
 /* --- STATE MANAGEMENT --- */
@@ -290,38 +292,35 @@ renderFiles(trunkData.level1);
 
 function renderFiles(dataArray) {
     const zone = document.getElementById('trunk-internal-zone');
-    zone.innerHTML = ''; // Clear existing
+    zone.innerHTML = ''; 
     
-    // Check Back Button Visibility
+    // Check Back Button
     const btn = document.getElementById('trunk-back-btn');
     btn.style.display = (currentLevel === 'level1') ? 'none' : 'flex';
 
+    if(!dataArray) return; // Guard
+
     dataArray.forEach((item, index) => {
-        const isLeft = index % 2 === 0; // Zig-Zag
-        
+        const isLeft = index % 2 === 0; 
         const folder = document.createElement('div');
         folder.className = `file-folder ${isLeft ? 'tab-left' : 'tab-right'}`;
         
-        // If it's an item (Level 3), show thumbnail on tab. If Category, show Icon.
         const iconSrc = item.type === 'item' ? item.image : item.icon;
         
         folder.innerHTML = `
             <div class="folder-tab">
-                <img src="${iconSrc}" class="file-icon-img">
+                <img src="${iconSrc}" class="file-icon-img" onerror="this.src='iconseating.png'">
             </div>
             <div class="file-content">
                 <div class="file-name">${item.name}</div>
             </div>
         `;
         
-        // INTERACTION
         if (item.type === 'item') {
-            // Level 3: Preview Hover & Click to Add
             folder.onmouseenter = () => showPreview(item.image);
             folder.onmouseleave = () => hidePreview();
             folder.onclick = () => addFurnitureToStage(item);
         } else {
-            // Level 1 & 2: Navigation
             folder.onclick = () => navigateDown(item.content);
         }
         
@@ -333,7 +332,6 @@ function navigateDown(targetKey) {
     if(trunkData[targetKey]) {
         historyStack.push(currentLevel);
         currentLevel = targetKey;
-        // Animation effect could go here (drop down/up)
         renderFiles(trunkData[targetKey]);
     }
 }
@@ -359,29 +357,24 @@ function hidePreview() {
 function addFurnitureToStage(item) {
     const stage = document.getElementById('main-stage');
     
-    // Create Wrapper
     const wrapper = document.createElement('div');
     wrapper.className = 'stage-item-wrapper';
-    wrapper.style.width = '150px'; // Default size
+    wrapper.style.width = '150px'; 
     wrapper.style.height = '100px';
     wrapper.style.left = '50px';
     wrapper.style.top = '50px';
-    wrapper.dataset.id = item.id; // STORE THE ID
+    wrapper.dataset.id = item.id; 
     
-    // Create Image
     const img = document.createElement('img');
     img.src = item.image;
     
-    // Create Resize Handle
     const handle = document.createElement('div');
     handle.className = 'resize-handle';
     
-    // Assemble
     wrapper.appendChild(img);
     wrapper.appendChild(handle);
     stage.appendChild(wrapper);
     
-    // Add Logic
     makeDraggable(wrapper);
     makeResizable(wrapper, handle);
     
@@ -400,7 +393,7 @@ function makeDraggable(el) {
     let startX, startY, initialLeft, initialTop;
 
     el.onmousedown = function(e) {
-        if(e.target.classList.contains('resize-handle')) return; // Ignore drag if clicking resize
+        if(e.target.classList.contains('resize-handle')) return; 
         isDragging = true;
         startX = e.clientX;
         startY = e.clientY;
