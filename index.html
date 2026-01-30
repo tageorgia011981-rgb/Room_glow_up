@@ -53,7 +53,7 @@ h2 {
   text-shadow: 2px 2px 8px rgba(0,0,0,0.6);
 }
 
-/* ---------------- TOP NAV TABS (Now Bronze Style) ---------------- */
+/* ---------------- TOP NAV TABS (Bronze Style) ---------------- */
 .tabs {
   display: flex;
   justify-content: center;
@@ -65,12 +65,10 @@ h2 {
   z-index: 30;
 }
 
-/* MATCHING THE CABINET STYLE (Bronze/Brown) */
 .drawer-hardware {
   position: relative;
-  width: 260px; /* Slightly wider for longer text */
+  width: 260px;
   height: 90px;
-  /* Bronze Gradient Background */
   background: linear-gradient(135deg, #8a6e4b 0%, #59442e 50%, #3e2b19 100%);
   border: 3px solid #2a1d12;
   box-shadow: inset 0 0 0 2px #a88860, inset 10px 0 20px rgba(0,0,0,0.8), 0 10px 15px rgba(0,0,0,0.7);
@@ -95,9 +93,8 @@ h2 {
 
 /* GOLD/BRASS PLATE STYLE */
 .plate-style {
-  width: 190px; /* Wider for text */
+  width: 190px;
   height: 50px;
-  /* Gold/Brass Gradient */
   background: linear-gradient(to bottom, #e6d3b3 0%, #c4a476 50%, #9e7e52 100%);
   color: #2a1d12; 
   display: flex; align-items: center; justify-content: center;
@@ -111,14 +108,13 @@ h2 {
 .lip-pull {
   position: absolute; bottom: -14px; left: 50%; transform: translateX(-50%);
   width: 140px; height: 24px;
-  /* Dark Brown Gradient */
   background: linear-gradient(to bottom, #59442e, #2a1d12);
   border: 2px solid #1a1008; 
   border-top: none; border-radius: 0 0 15px 15px;
   box-shadow: 0 5px 10px rgba(0,0,0,0.8);
 }
 
-/* ---------------- CABINET LABELS (Same Style) ---------------- */
+/* ---------------- CABINET LABELS ---------------- */
 .pop-out-label {
   position: relative; width: 220px; height: 90px;
   background: linear-gradient(135deg, #8a6e4b 0%, #59442e 50%, #3e2b19 100%);
@@ -128,7 +124,6 @@ h2 {
   opacity: 0; transform: scale(0.5); 
   transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); pointer-events: none;
 }
-/* Re-using general plate-style and lip-pull classes, just adjusting width for inner cabinet labels */
 .pop-out-label .plate-style { width: 160px; } 
 .cabinet-drawer-zone:hover .pop-out-label { opacity: 1; transform: scale(1.1); box-shadow: 0 20px 30px rgba(0,0,0,0.6); }
 
@@ -137,10 +132,7 @@ h2 {
   position: relative; 
   width: 100%; 
   max-width: 1400px;
-  
-  /* Pushed down significantly so only top half shows initially */
-  margin-top: 40vh; 
-  
+  margin-top: 40vh; /* Pushes content down */
   min-height: 1200px; 
   display: flex; 
   justify-content: center; 
@@ -149,11 +141,9 @@ h2 {
 /* CABINET */
 #cabinet-container {
   position: absolute; top: 0; 
-  /* Moved completely off screen */
-  left: -500px; 
+  left: -500px; /* Completely Hidden */
   width: 350px; height: 600px; 
   z-index: 20; 
-  /* SLOW GLIDE ANIMATION */
   transition: left 1.5s ease-in-out; 
 }
 #cabinet-img { width: 100%; height: 100%; object-fit: fill; filter: drop-shadow(5px 5px 10px rgba(0,0,0,0.5)); }
@@ -172,95 +162,114 @@ h2 {
   border: 2px dashed rgba(255, 255, 255, 0.3);
   background-color: rgba(0, 0, 0, 0.6); 
   position: relative; z-index: 10;
-  /* SLOW GLIDE ANIMATION */
   transition: transform 1.5s ease-in-out;
   display: flex; align-items: center; justify-content: center; overflow: hidden;
 }
 #room-display { width: 100%; height: 100%; object-fit: cover; display: none; cursor: pointer; border: 4px solid transparent; transition: border-color 0.3s; }
 #room-display.locked { border-color: #D4AF37; box-shadow: 0 0 20px rgba(212, 175, 55, 0.5); }
 
-/* ---------------- FURNITURE BOX (filebox.png) ---------------- */
+/* ---------------- FURNITURE TRUNKS (New & Big) ---------------- */
 #furniture-box {
   position: fixed;
-  bottom: -400px; /* Hidden */
+  bottom: -600px; /* Hidden initially */
   left: 50%;
   transform: translateX(-50%);
-  width: 800px;
-  height: 300px; 
+  width: 900px; /* Bigger presence */
+  height: 550px; 
   background: url('filebox.png') no-repeat center bottom;
   background-size: contain;
   z-index: 40;
   transition: bottom 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+/* THE "TOASTER SLOT" - Invisible Zone */
+/* This sits over the top open trunk mouth. Overflow hidden cuts off the files. */
+.trunk-internal-zone {
+  position: absolute;
+  top: 15%;      /* Adjust this based on where the trunk opening is */
+  left: 5%;      /* Adjust side padding */
+  width: 90%;
+  height: 40%;   /* The depth of the opening */
+  overflow: hidden; /* THE MAGIC TRICK */
   display: flex;
   justify-content: center;
-  align-items: flex-end; 
-  padding-bottom: 40px; 
-  gap: 20px;
+  align-items: flex-end; /* Align files to bottom of slot so they rise up */
+  padding-bottom: 0px; 
 }
 
 /* THE FILES (Tabs) */
 .file-folder {
-  width: 120px;
-  height: 140px;
+  width: 140px;
+  height: 250px; /* Tall enough to look deep */
   background: #f4e1c1; 
-  border-radius: 5px 15px 0 0;
-  box-shadow: -2px 0 5px rgba(0,0,0,0.3);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: flex-start;
-  padding-top: 15px;
-  cursor: pointer;
-  transition: transform 0.3s ease;
+  border: 1px solid #cbbba2;
+  box-shadow: -5px 0 15px rgba(0,0,0,0.3);
   position: relative;
+  cursor: pointer;
+  transition: transform 0.4s ease;
+  
+  /* Initial State: Pushed down so only tab shows */
+  transform: translateY(180px); 
+  
+  /* OVERLAP - Squeeze them together */
+  margin-left: -40px; 
+  margin-right: -40px;
 }
 
+/* Hover Animation: Slide UP out of the trunk */
 .file-folder:hover {
-  transform: translateY(-50px); 
+  transform: translateY(20px); /* Moves up significantly */
+  z-index: 50; /* Bring to front */
   background: #fff0d4;
-  z-index: 50;
 }
+
+/* THE TABS (Left vs Right) */
+.folder-tab {
+  position: absolute;
+  top: -35px;
+  width: 90px;
+  height: 35px;
+  background: #f4e1c1;
+  border-radius: 10px 10px 0 0;
+  border: 1px solid #cbbba2;
+  border-bottom: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.file-folder:hover .folder-tab { background: #fff0d4; }
+
+/* Left Tab Class */
+.tab-left .folder-tab { left: 0; border-radius: 15px 5px 0 0; }
+
+/* Right Tab Class */
+.tab-right .folder-tab { right: 0; border-radius: 5px 15px 0 0; }
 
 .file-icon-img {
-  width: 60px;
-  height: 60px;
-  object-fit: contain;
-  margin-bottom: 5px;
+  width: 25px; height: 25px; object-fit: contain;
 }
 
-.file-name { font-family: 'Bad Script', cursive; font-weight: bold; color: #444; }
-
-/* SUB-FILE MENU */
-.sub-file-menu {
-  position: absolute;
-  bottom: 120px; 
-  left: 50%;
-  transform: translateX(-50%);
-  width: 160px;
-  background: #fff;
-  border: 2px solid #444;
+/* FILE CONTENT (Hidden initially, visible on hover) */
+.file-content {
   padding: 10px;
-  border-radius: 5px;
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity 0.3s ease;
-  box-shadow: 0 5px 15px rgba(0,0,0,0.4);
   text-align: center;
+  opacity: 0;
+  transition: opacity 0.3s ease 0.1s;
 }
+.file-folder:hover .file-content { opacity: 1; }
 
-.file-folder:hover .sub-file-menu { opacity: 1; pointer-events: auto; }
+.file-name { font-family: 'Bad Script', cursive; font-weight: bold; color: #444; margin-top: 10px; font-size: 1.2rem; }
 
 .sub-item-label {
-  display: block; font-family: 'Special Elite', cursive; font-size: 14px;
-  color: #222; margin: 5px 0; padding: 2px;
-  border-bottom: 1px dashed #ccc; cursor: pointer;
+  display: block; font-family: 'Special Elite', cursive; font-size: 12px;
+  color: #222; margin: 4px 0; border-bottom: 1px dashed #ccc;
 }
-.sub-item-label:hover { background-color: #eee; color: #D4AF37; }
+.sub-item-label:hover { color: #D4AF37; font-weight: bold; }
 
 /* ---------------- ACTIVE STATES ---------------- */
 body.rooms-active #cabinet-container { left: 0px; }
 body.rooms-active #main-stage { transform: translateX(180px); }
-body.furniture-mode #furniture-box { bottom: 0; }
+body.furniture-mode #furniture-box { bottom: -50px; /* Slides up to bottom of screen */ }
 
 /* ---------------- RESPONSIVE ---------------- */
 @media (max-width: 900px) {
@@ -319,46 +328,56 @@ body.furniture-mode #furniture-box { bottom: 0; }
 </div>
 
 <div id="furniture-box">
-    
-    <div class="file-folder">
-        <img src="iconseating.png" alt="Seating" class="file-icon-img">
-        <div class="file-name">Seating</div>
-        <div class="sub-file-menu">
-            <span class="sub-item-label">Couches</span>
-            <span class="sub-item-label">Armchairs</span>
-            <span class="sub-item-label">Benches</span>
-            <span class="sub-item-label">Stools</span>
-            <span class="sub-item-label">Dining Chairs</span>
+    <div class="trunk-internal-zone">
+        
+        <div class="file-folder tab-left">
+            <div class="folder-tab">
+                <img src="iconseating.png" alt="icon" class="file-icon-img">
+            </div>
+            <div class="file-content">
+                <div class="file-name">Seating</div>
+                <span class="sub-item-label">Couches</span>
+                <span class="sub-item-label">Armchairs</span>
+                <span class="sub-item-label">Benches</span>
+                <span class="sub-item-label">Stools</span>
+            </div>
         </div>
-    </div>
 
-    <div class="file-folder">
-        <img src="icontables.png" alt="Tables" class="file-icon-img">
-        <div class="file-name">Tables</div>
-        <div class="sub-file-menu">
-            <span class="sub-item-label">Coffee Tables</span>
-            <span class="sub-item-label">Dining Tables</span>
-            <span class="sub-item-label">Side Tables</span>
+        <div class="file-folder tab-right">
+            <div class="folder-tab">
+                <img src="icontables.png" alt="icon" class="file-icon-img">
+            </div>
+            <div class="file-content">
+                <div class="file-name">Tables</div>
+                <span class="sub-item-label">Coffee Tables</span>
+                <span class="sub-item-label">Dining Tables</span>
+                <span class="sub-item-label">Side Tables</span>
+            </div>
         </div>
-    </div>
 
-    <div class="file-folder">
-        <img src="iconstorage.png" alt="Storage" class="file-icon-img">
-        <div class="file-name">Storage</div>
-        <div class="sub-file-menu">
-            <span class="sub-item-label">Bookshelves</span>
-            <span class="sub-item-label">Cabinets</span>
-            <span class="sub-item-label">Dressers</span>
+        <div class="file-folder tab-left">
+            <div class="folder-tab">
+                <img src="iconstorage.png" alt="icon" class="file-icon-img">
+            </div>
+            <div class="file-content">
+                <div class="file-name">Storage</div>
+                <span class="sub-item-label">Bookshelves</span>
+                <span class="sub-item-label">Cabinets</span>
+                <span class="sub-item-label">Dressers</span>
+            </div>
         </div>
-    </div>
 
-    <div class="file-folder">
-        <img src="iconbeds.png" alt="Beds" class="file-icon-img">
-        <div class="file-name">Beds</div>
-        <div class="sub-file-menu">
-            <span class="sub-item-label">Frames</span>
-            <span class="sub-item-label">Headboards</span>
+        <div class="file-folder tab-right">
+            <div class="folder-tab">
+                <img src="iconbeds.png" alt="icon" class="file-icon-img">
+            </div>
+            <div class="file-content">
+                <div class="file-name">Beds</div>
+                <span class="sub-item-label">Frames</span>
+                <span class="sub-item-label">Headboards</span>
+            </div>
         </div>
+
     </div>
 </div>
 
@@ -426,7 +445,7 @@ body.furniture-mode #furniture-box { bottom: 0; }
     isLocked = !isLocked; 
     if (isLocked) {
       imgElement.classList.add('locked');
-      document.body.classList.add('furniture-mode');
+      document.body.classList.add('furniture-mode'); // Triggers trunk to slide up
     } else {
       imgElement.classList.remove('locked');
       document.body.classList.remove('furniture-mode');
