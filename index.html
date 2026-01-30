@@ -21,16 +21,19 @@ body {
   background-size: cover;
   font-family: 'Special Elite', cursive;
   color: white;
+  
+  /* ALLOW SCROLLING */
   overflow-x: hidden;
-  overflow-y: hidden; 
+  overflow-y: auto; 
 }
 
 /* ---------------- HEADER GROUP ---------------- */
 .header-wrap {
   width: 100%;
   text-align: center;
-  margin-top: 1rem;
-  margin-bottom: 0.5rem;
+  /* Added more space here */
+  margin-top: 3rem; 
+  margin-bottom: 2rem;
   position: relative;
   z-index: 30; 
 }
@@ -46,7 +49,7 @@ h1 {
 h2 {
   font-family: 'Bad Script', cursive;
   font-size: clamp(1.6rem, 3.5vw, 2.4rem);
-  margin-top: 0.6rem;
+  margin-top: 0.8rem;
   margin-bottom: 0;
   text-shadow: 2px 2px 8px rgba(0,0,0,0.6);
 }
@@ -55,10 +58,10 @@ h2 {
 .tabs {
   display: flex;
   justify-content: center;
-  gap: 1.4rem;
+  gap: 2rem; /* Spread tabs out more */
   flex-wrap: wrap;
   width: 100%;
-  padding: 1rem 2rem;
+  padding: 2rem 2rem; /* More padding */
   position: relative;
   z-index: 30;
 }
@@ -122,9 +125,15 @@ h2 {
 
 /* ---------------- WORKSPACE AREA ---------------- */
 .workspace-area {
-  position: relative; width: 100%; max-width: 1400px;
-  margin-top: 20px; height: 70vh; 
-  display: flex; justify-content: center; 
+  position: relative; 
+  width: 100%; 
+  max-width: 1400px;
+  /* Added margin top so it's not mashed against tabs */
+  margin-top: 50px; 
+  /* Make it tall enough to require scrolling */
+  min-height: 1200px; 
+  display: flex; 
+  justify-content: center; 
 }
 
 /* CABINET */
@@ -156,15 +165,15 @@ h2 {
 #room-display.locked { border-color: #D4AF37; box-shadow: 0 0 20px rgba(212, 175, 55, 0.5); }
 
 /* ---------------- FURNITURE BOX (filebox.png) ---------------- */
+/* Positioned FIXED so it stays on screen while you scroll the room */
 #furniture-box {
   position: fixed;
   bottom: -400px; /* Hidden */
   left: 50%;
   transform: translateX(-50%);
   width: 800px;
-  height: 300px; /* Adjusted height for the box image */
+  height: 300px; 
   
-  /* UPDATED IMAGE */
   background: url('filebox.png') no-repeat center bottom;
   background-size: contain;
   
@@ -173,7 +182,7 @@ h2 {
   display: flex;
   justify-content: center;
   align-items: flex-end; 
-  padding-bottom: 40px; /* Pushes files up */
+  padding-bottom: 40px; 
   gap: 20px;
 }
 
@@ -181,7 +190,7 @@ h2 {
 .file-folder {
   width: 120px;
   height: 140px;
-  background: #f4e1c1; /* Manila folder color */
+  background: #f4e1c1; 
   border-radius: 5px 15px 0 0;
   box-shadow: -2px 0 5px rgba(0,0,0,0.3);
   display: flex;
@@ -195,12 +204,11 @@ h2 {
 }
 
 .file-folder:hover {
-  transform: translateY(-50px); /* Pops up higher */
+  transform: translateY(-50px); 
   background: #fff0d4;
   z-index: 50;
 }
 
-/* Icons on the files */
 .file-icon-img {
   width: 60px;
   height: 60px;
@@ -210,7 +218,7 @@ h2 {
 
 .file-name { font-family: 'Bad Script', cursive; font-weight: bold; color: #444; }
 
-/* SUB-FILE MENU (The list inside the file) */
+/* SUB-FILE MENU */
 .sub-file-menu {
   position: absolute;
   bottom: 120px; 
