@@ -16,8 +16,9 @@
     align-items: center;
     background: url('background1.jpg') no-repeat center center fixed;
     background-size: cover;
+    font-family: 'Special Elite', cursive;
     color: white;
-    font-family: 'Special Elite', monospace; /* typewriter font for tabs */
+    overflow-x: hidden;
   }
 
   /* --- Header --- */
@@ -35,85 +36,109 @@
     font-size: 4vw;
     max-width: 90vw;
     text-shadow: 2px 2px 8px rgba(0,0,0,0.6);
-    margin-bottom: 2rem;
+    margin-bottom: 5rem; /* extra space for larger label pulls */
     text-align: center;
   }
 
-  /* --- Tabs / Nav --- */
+  /* --- Vintage Label Holders Tabs --- */
   .tabs {
     display: flex;
-    gap: 1rem;
+    gap: 2rem;
     justify-content: center;
     flex-wrap: wrap;
     margin-bottom: 3rem;
   }
 
-  .tab {
+  .drawer-hardware {
     position: relative;
-    font-family: 'Special Elite', monospace;
-    font-size: 1.5rem; /* Big enough to see clearly */
-    font-weight: bold;
-    color: white;
-    text-align: center;
-    padding: 0.7rem 1.2rem;
-    background: linear-gradient(145deg, #2a2a2a, #1a1a1a); /* aged gunmetal look */
-    border: 2px solid #111;
-    border-radius: 0.3rem;
-    box-shadow: inset 2px 2px 5px rgba(255,255,255,0.1), inset -2px -2px 5px rgba(0,0,0,0.7),
-                3px 3px 5px rgba(0,0,0,0.5); /* depth / inset effect */
+    width: 220px;
+    height: 90px;
+    background: linear-gradient(135deg, #2c2e30 0%, #1a1a1a 100%);
+    border: 3px solid #000;
+    box-shadow: inset 0 0 0 2px #444, inset 10px 0 20px rgba(0,0,0,0.8), 0 10px 15px rgba(0,0,0,0.7);
+    display: flex;
+    align-items: center;
+    justify-content: center;
     cursor: pointer;
-    transition: all 0.3s ease;
+    transition: transform 0.2s, filter 0.2s;
   }
 
-  /* Soft white glow on hover */
-  .tab:hover {
-    box-shadow: inset 2px 2px 5px rgba(255,255,255,0.2), inset -2px -2px 5px rgba(0,0,0,0.7),
-                0 0 15px rgba(255,255,255,0.7);
+  .drawer-hardware:hover {
+    filter: brightness(1.3) contrast(1.1);
+    transform: translateY(-4px);
   }
 
-  /* Lip pull on bottom */
-  .tab::after {
+  .drawer-hardware::before, .drawer-hardware::after {
     content: '';
     position: absolute;
-    bottom: -6px;
-    left: 10%;
-    width: 80%;
-    height: 6px;
-    background: #1a1a1a;
-    border-radius: 2px;
-    box-shadow: inset 0 2px 3px rgba(255,255,255,0.1), inset 0 -2px 3px rgba(0,0,0,0.7);
-  }
-
-  /* Screw holes (decorative) */
-  .tab::before {
-    content: '';
-    position: absolute;
-    top: 4px;
-    left: 6px;
-    width: 6px;
-    height: 6px;
-    background: #555;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 16px;
+    height: 16px;
     border-radius: 50%;
-    box-shadow: 0 0 0 1px #222, 80px 0 0 0 #555, 80px 0 0 1px #222; /* replicate two screw holes */
+    background: radial-gradient(circle, #111 20%, #555 100%);
+    box-shadow: 0 1px 0 rgba(255,255,255,0.1);
   }
+
+  .drawer-hardware::before { left: 12px; }
+  .drawer-hardware::after { right: 12px; }
+
+  .plate-style {
+    width: 160px;
+    height: 50px;
+    background: linear-gradient(to bottom, #dcdcdc 0%, #8e9196 50%, #b0b0b0 100%);
+    color: #000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Special Elite', cursive;
+    font-size: 18px;
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    border: 1px solid #666;
+    box-shadow: inset 0 2px 5px rgba(0,0,0,0.2);
+    text-align: center;
+    line-height: 1;
+  }
+
+  .lip-pull {
+    position: absolute;
+    bottom: -14px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 140px;
+    height: 24px;
+    background: linear-gradient(to bottom, #2c2e30, #000);
+    border: 2px solid #111;
+    border-top: none;
+    border-radius: 0 0 15px 15px;
+    box-shadow: 0 5px 10px rgba(0,0,0,0.8);
+  }
+
+  .active-lift { transform: translateY(15px) !important; filter: brightness(1.4) !important; }
 
   @media (max-width: 600px) {
     h1 { font-size: 12vw; }
-    h2 { font-size: 6vw; }
-    .tab { font-size: 1.2rem; padding: 0.5rem 0.8rem; }
+    h2 { font-size: 6vw; margin-bottom: 4rem; }
+    .drawer-hardware { width: 160px; height: 70px; }
+    .plate-style { width: 120px; font-size: 14px; }
+    .lip-pull { width: 100px; height: 18px; }
   }
 </style>
 </head>
 <body>
-  <h1>Room Glow Up</h1>
-  <h2>Your Dream Space Come To Life</h2>
 
-  <div class="tabs">
-    <div class="tab">Rooms</div>
-    <div class="tab">Furniture Catalog</div>
-    <div class="tab">Decor</div>
-    <div class="tab">Inspirational Look Book</div>
-    <div class="tab">Save</div>
-  </div>
+<h1>Room Glow Up</h1>
+<h2>Your Dream Space Come To Life</h2>
+
+<div class="tabs">
+  <div class="drawer-hardware"><div class="plate-style">Rooms</div><div class="lip-pull"></div></div>
+  <div class="drawer-hardware"><div class="plate-style">Furniture Catalog</div><div class="lip-pull"></div></div>
+  <div class="drawer-hardware"><div class="plate-style">Decor</div><div class="lip-pull"></div></div>
+  <div class="drawer-hardware"><div class="plate-style">Inspirational Look Book</div><div class="lip-pull"></div></div>
+  <div class="drawer-hardware"><div class="plate-style">Save</div><div class="lip-pull"></div></div>
+</div>
+
 </body>
 </html>
