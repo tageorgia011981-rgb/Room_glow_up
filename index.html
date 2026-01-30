@@ -31,7 +31,6 @@ body {
 .header-wrap {
   width: 100%;
   text-align: center;
-  /* Added more space here */
   margin-top: 3rem; 
   margin-bottom: 2rem;
   position: relative;
@@ -54,25 +53,27 @@ h2 {
   text-shadow: 2px 2px 8px rgba(0,0,0,0.6);
 }
 
-/* ---------------- TOP NAV TABS ---------------- */
+/* ---------------- TOP NAV TABS (Now Bronze Style) ---------------- */
 .tabs {
   display: flex;
   justify-content: center;
-  gap: 2rem; /* Spread tabs out more */
+  gap: 2rem;
   flex-wrap: wrap;
   width: 100%;
-  padding: 2rem 2rem; /* More padding */
+  padding: 2rem 2rem;
   position: relative;
   z-index: 30;
 }
 
+/* MATCHING THE CABINET STYLE (Bronze/Brown) */
 .drawer-hardware {
   position: relative;
-  width: 220px;
+  width: 260px; /* Slightly wider for longer text */
   height: 90px;
-  background: linear-gradient(135deg, #2c2e30 0%, #1a1a1a 100%);
-  border: 3px solid #000;
-  box-shadow: inset 0 0 0 2px #444, inset 10px 0 20px rgba(0,0,0,0.8), 0 10px 15px rgba(0,0,0,0.7);
+  /* Bronze Gradient Background */
+  background: linear-gradient(135deg, #8a6e4b 0%, #59442e 50%, #3e2b19 100%);
+  border: 3px solid #2a1d12;
+  box-shadow: inset 0 0 0 2px #a88860, inset 10px 0 20px rgba(0,0,0,0.8), 0 10px 15px rgba(0,0,0,0.7);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -80,9 +81,9 @@ h2 {
   transition: all 0.3s ease;
   user-select: none;
 }
-.drawer-hardware:hover { filter: brightness(1.25) contrast(1.1); transform: translateY(-4px); }
+.drawer-hardware:hover { filter: brightness(1.15) contrast(1.1); transform: translateY(-4px); }
 
-/* ---------------- SHARED CSS (Screws, Plates) ---------------- */
+/* Screws */
 .drawer-hardware::before, .drawer-hardware::after, .pop-out-label::before, .pop-out-label::after {
   content: ''; position: absolute; top: 50%; transform: translateY(-50%);
   width: 14px; height: 14px; border-radius: 50%;
@@ -92,24 +93,32 @@ h2 {
 .drawer-hardware::before, .pop-out-label::before { left: 12px; }
 .drawer-hardware::after, .pop-out-label::after  { right: 12px; }
 
+/* GOLD/BRASS PLATE STYLE */
 .plate-style {
-  width: 160px; height: 50px;
-  background: linear-gradient(to bottom, #dcdcdc 0%, #8e9196 50%, #b0b0b0 100%);
-  color: #000; display: flex; align-items: center; justify-content: center;
-  font-size: 16px; font-weight: 900; text-transform: uppercase; letter-spacing: 1px;
-  border: 1px solid #666; box-shadow: inset 0 2px 5px rgba(0,0,0,0.25);
+  width: 190px; /* Wider for text */
+  height: 50px;
+  /* Gold/Brass Gradient */
+  background: linear-gradient(to bottom, #e6d3b3 0%, #c4a476 50%, #9e7e52 100%);
+  color: #2a1d12; 
+  display: flex; align-items: center; justify-content: center;
+  font-size: 15px; font-weight: 900; text-transform: uppercase; letter-spacing: 1px;
+  border: 1px solid #5e4326; 
+  box-shadow: inset 0 2px 5px rgba(0,0,0,0.25);
   text-align: center; line-height: 1;
 }
 
+/* DARK BROWN LIP PULL */
 .lip-pull {
   position: absolute; bottom: -14px; left: 50%; transform: translateX(-50%);
   width: 140px; height: 24px;
-  background: linear-gradient(to bottom, #2c2e30, #000);
-  border: 2px solid #111; border-top: none; border-radius: 0 0 15px 15px;
+  /* Dark Brown Gradient */
+  background: linear-gradient(to bottom, #59442e, #2a1d12);
+  border: 2px solid #1a1008; 
+  border-top: none; border-radius: 0 0 15px 15px;
   box-shadow: 0 5px 10px rgba(0,0,0,0.8);
 }
 
-/* ---------------- POP-OUT LABELS (Bronze) ---------------- */
+/* ---------------- CABINET LABELS (Same Style) ---------------- */
 .pop-out-label {
   position: relative; width: 220px; height: 90px;
   background: linear-gradient(135deg, #8a6e4b 0%, #59442e 50%, #3e2b19 100%);
@@ -119,8 +128,8 @@ h2 {
   opacity: 0; transform: scale(0.5); 
   transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); pointer-events: none;
 }
-.pop-out-label .plate-style { background: linear-gradient(to bottom, #e6d3b3 0%, #c4a476 50%, #9e7e52 100%); border: 1px solid #5e4326; color: #2a1d12; }
-.pop-out-label .lip-pull { background: linear-gradient(to bottom, #59442e, #2a1d12); border: 2px solid #1a1008; border-top: none; }
+/* Re-using general plate-style and lip-pull classes, just adjusting width for inner cabinet labels */
+.pop-out-label .plate-style { width: 160px; } 
 .cabinet-drawer-zone:hover .pop-out-label { opacity: 1; transform: scale(1.1); box-shadow: 0 20px 30px rgba(0,0,0,0.6); }
 
 /* ---------------- WORKSPACE AREA ---------------- */
@@ -128,9 +137,10 @@ h2 {
   position: relative; 
   width: 100%; 
   max-width: 1400px;
-  /* Added margin top so it's not mashed against tabs */
-  margin-top: 50px; 
-  /* Make it tall enough to require scrolling */
+  
+  /* Pushed down significantly so only top half shows initially */
+  margin-top: 40vh; 
+  
   min-height: 1200px; 
   display: flex; 
   justify-content: center; 
@@ -138,9 +148,13 @@ h2 {
 
 /* CABINET */
 #cabinet-container {
-  position: absolute; top: 0; left: -400px; 
+  position: absolute; top: 0; 
+  /* Moved completely off screen */
+  left: -500px; 
   width: 350px; height: 600px; 
-  z-index: 20; transition: left 1s ease-in-out; 
+  z-index: 20; 
+  /* SLOW GLIDE ANIMATION */
+  transition: left 1.5s ease-in-out; 
 }
 #cabinet-img { width: 100%; height: 100%; object-fit: fill; filter: drop-shadow(5px 5px 10px rgba(0,0,0,0.5)); }
 
@@ -158,14 +172,14 @@ h2 {
   border: 2px dashed rgba(255, 255, 255, 0.3);
   background-color: rgba(0, 0, 0, 0.6); 
   position: relative; z-index: 10;
-  transition: transform 1s ease-in-out;
+  /* SLOW GLIDE ANIMATION */
+  transition: transform 1.5s ease-in-out;
   display: flex; align-items: center; justify-content: center; overflow: hidden;
 }
 #room-display { width: 100%; height: 100%; object-fit: cover; display: none; cursor: pointer; border: 4px solid transparent; transition: border-color 0.3s; }
 #room-display.locked { border-color: #D4AF37; box-shadow: 0 0 20px rgba(212, 175, 55, 0.5); }
 
 /* ---------------- FURNITURE BOX (filebox.png) ---------------- */
-/* Positioned FIXED so it stays on screen while you scroll the room */
 #furniture-box {
   position: fixed;
   bottom: -400px; /* Hidden */
@@ -173,10 +187,8 @@ h2 {
   transform: translateX(-50%);
   width: 800px;
   height: 300px; 
-  
   background: url('filebox.png') no-repeat center bottom;
   background-size: contain;
-  
   z-index: 40;
   transition: bottom 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
   display: flex;
@@ -269,9 +281,15 @@ body.furniture-mode #furniture-box { bottom: 0; }
   <div class="drawer-hardware" onclick="toggleRooms()">
     <div class="plate-style">Rooms</div><div class="lip-pull"></div>
   </div>
-  <div class="drawer-hardware"><div class="plate-style">Furniture</div><div class="lip-pull"></div></div>
-  <div class="drawer-hardware"><div class="plate-style">Decor</div><div class="lip-pull"></div></div>
-  <div class="drawer-hardware"><div class="plate-style">Inspiration</div><div class="lip-pull"></div></div>
+  <div class="drawer-hardware">
+    <div class="plate-style">Furniture Catalog</div><div class="lip-pull"></div>
+  </div>
+  <div class="drawer-hardware">
+    <div class="plate-style">Inspirational Look Book</div><div class="lip-pull"></div>
+  </div>
+  <div class="drawer-hardware">
+    <div class="plate-style">Save</div><div class="lip-pull"></div>
+  </div>
 </div>
 
 <div class="workspace-area">
