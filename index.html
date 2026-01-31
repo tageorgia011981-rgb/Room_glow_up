@@ -11,68 +11,86 @@
 
 body {
   margin: 0; padding: 0;
-  height: 100vh; width: 100vw;
-  display: flex; flex-direction: column; /* TOP-DOWN LAYOUT */
-  background: #1a1a1a; /* Dark base */
+  min-height: 100vh;
+  background: url('background1.jpg') no-repeat center center fixed;
+  background-size: cover;
   font-family: 'Special Elite', cursive;
   color: white;
-  overflow: hidden;
+  overflow-y: auto; /* ENABLE MAIN PAGE SCROLL */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
-/* ---------------- HEADER & TOP NAV ---------------- */
-#top-interface {
+/* ---------------- VOGUE HEADER ---------------- */
+#header-container {
   width: 100%;
-  background: linear-gradient(to bottom, #000, #222);
-  padding: 10px 20px;
-  border-bottom: 3px solid #8a6e4b;
-  z-index: 100;
   text-align: center;
+  padding: 40px 0 20px 0;
+  z-index: 100;
 }
 
-h1 { font-family: 'Limelight'; font-size: 2.5rem; margin: 0; color: #d4af37; }
-h2 { font-family: 'Bad Script'; font-size: 1.2rem; margin: 5px 0 15px 0; color: #ccc; }
+h1 { 
+  font-family: 'Limelight'; 
+  font-size: 5rem; /* BIG AND FANCY */
+  margin: 0; 
+  color: #d4af37; 
+  text-shadow: 3px 3px 10px rgba(0,0,0,0.8);
+}
 
+h2 { 
+  font-family: 'Bad Script'; 
+  font-size: 1.8rem; 
+  margin: 10px 0; 
+  color: #f0f0f0;
+  text-shadow: 2px 2px 5px rgba(0,0,0,0.8);
+}
+
+/* ---------------- TOP PLAQUES ---------------- */
 #nav-plaques {
   display: flex;
   justify-content: center;
-  gap: 20px;
-  margin-bottom: 5px;
+  gap: 15px;
+  margin-bottom: 30px;
+  width: 100%;
 }
 
 .plaque {
   background: linear-gradient(135deg, #8a6e4b 0%, #3e2b19 100%);
   border: 2px solid #a88860;
-  padding: 8px 25px;
-  font-size: 1.1rem;
+  padding: 10px 30px;
+  font-size: 1.2rem;
   color: #fff;
   cursor: pointer;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.5);
-  transition: transform 0.2s, background 0.2s;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.6);
+  transition: transform 0.2s;
 }
-.plaque:hover { transform: translateY(-3px); background: #a88860; }
+.plaque:hover { transform: scale(1.05); background: #a88860; }
 
-/* ---------------- MAIN WORKSPACE ---------------- */
+/* ---------------- WORKSPACE ---------------- */
 #workspace {
   display: flex;
-  flex: 1; /* Takes up remaining height */
-  overflow: hidden;
+  width: 95%;
+  max-width: 1600px;
+  margin-top: 20px;
+  gap: 20px;
+  padding-bottom: 50px;
 }
 
-/* ---------------- SIDEBAR (Scrollable) ---------------- */
+/* ---------------- CABINET (Refined Size) ---------------- */
 #sidebar-container {
-  width: 400px; /* Kept the LARGE size you liked */
-  height: 100%;
+  width: 320px; /* Scaled back slightly */
+  min-height: 800px;
+  background: rgba(0,0,0,0.8);
+  border: 3px solid #2a1d12;
   position: relative;
-  background: #000;
-  border-right: 4px solid #2a1d12;
-  overflow-y: auto; /* SCROLL IS BACK */
-  overflow-x: hidden;
+  overflow: hidden;
+  box-shadow: 10px 10px 30px rgba(0,0,0,0.5);
 }
 
-/* CABINET & TRUNK PANELS */
 #cabinet-panel, #trunk-panel {
   width: 100%;
-  min-height: 100%;
+  height: 100%;
   position: absolute;
   top: 0; left: 0;
   transition: transform 0.6s ease-in-out;
@@ -87,64 +105,59 @@ h2 { font-family: 'Bad Script'; font-size: 1.2rem; margin: 5px 0 15px 0; color: 
   display: flex;
   flex-direction: column;
   gap: 15px;
-  align-items: center;
+  overflow-y: auto; /* Sidebar specific scroll */
 }
 
 /* ---------------- STAGE ---------------- */
 #main-stage-area {
   flex: 1;
+  height: 800px;
   position: relative;
-  background: url('background1.jpg') no-repeat center center;
-  background-size: cover;
-  overflow: hidden;
+  background: rgba(255,255,255,0.05);
+  border: 2px dashed rgba(212, 175, 55, 0.3);
 }
 
-#room-display {
-  width: 100%; height: 100%; object-fit: cover;
-  display: none;
-}
-
-/* ---------------- FURNITURE ELEMENTS ---------------- */
+/* ---------------- MENU BUTTONS ---------------- */
 .bronze-plate {
-  width: 280px; height: 80px;
-  background: linear-gradient(135deg, #8a6e4b 0%, #59442e 50%, #3e2b19 100%);
-  border: 3px solid #4a3b2a;
-  display: flex; align-items: center; justify-content: center;
-  cursor: pointer; position: relative;
-  box-shadow: 0 5px 15px rgba(0,0,0,0.5);
+  width: 100%; padding: 15px;
+  background: linear-gradient(135deg, #8a6e4b 0%, #3e2b19 100%);
+  border: 2px solid #4a3b2a;
+  text-align: center;
+  cursor: pointer;
+  font-weight: bold;
 }
 
 .sub-menu {
   display: none;
   flex-direction: column;
-  gap: 10px;
-  width: 100%;
-  padding-left: 20px;
+  gap: 5px;
+  padding: 10px 0 10px 15px;
 }
 
-/* THE RANDOM STACK GALLERY */
+.sub-item {
+  background: #222;
+  padding: 8px;
+  border: 1px solid #d4af37;
+  cursor: pointer;
+  font-size: 0.9rem;
+}
+
 #gallery-overlay {
   position: absolute;
-  top: 0; left: 0;
-  width: 100%; height: 100%;
+  top: 0; left: 0; width: 100%; height: 100%;
   pointer-events: none;
-  z-index: 200;
 }
 
 .scattered-item {
   position: absolute;
-  width: 200px; 
+  width: 150px;
   pointer-events: auto;
   cursor: grab;
-  transition: transform 0.3s ease, z-index 0.1s;
-  filter: drop-shadow(5px 5px 10px rgba(0,0,0,0.7));
+  transition: transform 0.2s;
 }
-.scattered-item:hover {
-  transform: scale(1.5) rotate(0deg) !important; /* HOVER ZOOM */
-  z-index: 1000;
-}
+.scattered-item:hover { transform: scale(1.2) !important; z-index: 500; }
 
-/* Interaction Classes */
+/* STATE TOGGLE */
 body.mode-catalog #cabinet-panel { transform: translateX(-100%); }
 body.mode-catalog #trunk-panel { transform: translateX(0); }
 
@@ -152,108 +165,83 @@ body.mode-catalog #trunk-panel { transform: translateX(0); }
 </head>
 <body class="mode-rooms">
 
-<div id="top-interface">
+<div id="header-container">
     <h1>Room Glow Up</h1>
     <h2>Your Dream Space Come To Life</h2>
-    <div id="nav-plaques">
-        <div class="plaque" onclick="showRooms()">Rooms</div>
-        <div class="plaque" onclick="showCatalog()">Catalog</div>
-        <div class="plaque">Look Book</div>
-        <div class="plaque">Save</div>
-    </div>
+</div>
+
+<div id="nav-plaques">
+    <div class="plaque" onclick="showRooms()">Rooms</div>
+    <div class="plaque" onclick="showCatalog()">Catalog</div>
+    <div class="plaque">Look Book</div>
+    <div class="plaque">Decor</div>
+    <div class="plaque">Save</div>
 </div>
 
 <div id="workspace">
     <div id="sidebar-container">
-        
         <div id="cabinet-panel">
-            <img src="cabinet.png" id="cabinet-img" alt="Cabinet">
-            <div style="position:absolute; top:10%; height:15%; width:100%; cursor:pointer;" onclick="setRoom('livingroom.jpg')"></div>
-            <div style="position:absolute; top:25%; height:15%; width:100%; cursor:pointer;" onclick="setRoom('bedroom.jpg')"></div>
+            <img src="cabinet.png" id="cabinet-img">
         </div>
 
         <div id="trunk-panel">
             <h3 style="color:#d4af37; font-family:Limelight;">Catalog</h3>
             
-            <div class="bronze-plate" onclick="toggleSub('seating-sub')">
-                <span>SEATING</span>
-            </div>
+            <div class="bronze-plate" onclick="toggleSub('seating-sub')">SEATING</div>
             <div id="seating-sub" class="sub-menu">
-                <div class="plaque" onclick="openGallery('couches')">Couches</div>
-                <div class="plaque" onclick="openGallery('armchairs')">Armchairs</div>
-                <div class="plaque" onclick="openGallery('dining')">Dining Chairs</div>
-                <div class="plaque" onclick="openGallery('benches')">Benches</div>
-                <div class="plaque" onclick="openGallery('stools')">Stools</div>
-                <div class="plaque" onclick="openGallery('ottomans')">Ottomans</div>
+                <div class="sub-item" onclick="openGallery('couches')">Couches</div>
+                <div class="sub-item" onclick="openGallery('armchairs')">Armchairs</div>
             </div>
 
-            <div class="bronze-plate"><span>TABLES</span></div>
-            <div class="bronze-plate"><span>STORAGE</span></div>
-            <div class="bronze-plate"><span>BEDS</span></div>
+            <div class="bronze-plate" onclick="toggleSub('tables-sub')">TABLES</div>
+            <div id="tables-sub" class="sub-menu">
+                <div class="sub-item" onclick="openGallery('coffee')">Coffee Tables</div>
+            </div>
+
+            <div class="bronze-plate" onclick="toggleSub('storage-sub')">STORAGE</div>
+            <div id="storage-sub" class="sub-menu">
+                <div class="sub-item" onclick="openGallery('armoires')">Armoires</div>
+                <div class="sub-item" onclick="openGallery('shelving')">Shelving</div>
+            </div>
         </div>
     </div>
 
-    <div id="main-stage-area" id="stage">
-        <img id="room-display" src="">
+    <div id="main-stage-area">
         <div id="gallery-overlay"></div>
     </div>
 </div>
 
 <script>
-/* --- NAVIGATION --- */
 function showRooms() { document.body.classList.remove('mode-catalog'); }
 function showCatalog() { document.body.classList.add('mode-catalog'); }
-
-function setRoom(img) {
-    const rd = document.getElementById('room-display');
-    rd.src = img;
-    rd.style.display = 'block';
-}
 
 function toggleSub(id) {
     const el = document.getElementById(id);
     el.style.display = (el.style.display === 'flex') ? 'none' : 'flex';
 }
 
-/* --- GALLERY LOGIC --- */
 const inventory = {
-    couches: [], // Awaiting your names
-    armchairs: [],
-    dining: [],
-    benches: [],
-    stools: [],
-    ottomans: []
+    couches: ['couch1.png', 'couch2.png'],
+    armchairs: ['armchair.png', 'chair1.png'],
+    coffee: ['coffeetable.png'],
+    armoires: ['dresser1.png', 'dresser2.png'],
+    shelving: ['shelf1.png', 'shelf2.png']
 };
 
 function openGallery(category) {
     const overlay = document.getElementById('gallery-overlay');
-    overlay.innerHTML = ''; // Clear previous
-    
+    overlay.innerHTML = ''; 
     const items = inventory[category];
     
-    items.forEach((item, index) => {
+    items.forEach(item => {
         const img = document.createElement('img');
         img.src = item;
         img.className = 'scattered-item';
-        
-        // Random Position & Tilt
-        const randomX = 50 + Math.random() * 300;
-        const randomY = 50 + Math.random() * 300;
-        const randomRot = (Math.random() - 0.5) * 30; // -15 to +15 deg
-        
-        img.style.left = randomX + 'px';
-        img.style.top = randomY + 'px';
-        img.style.transform = `rotate(${randomRot}deg)`;
-        
-        img.onclick = () => addToStage(item);
+        img.style.left = (Math.random() * 400 + 50) + 'px';
+        img.style.top = (Math.random() * 400 + 50) + 'px';
+        img.style.transform = `rotate(${(Math.random() - 0.5) * 40}deg)`;
         overlay.appendChild(img);
     });
-}
-
-function addToStage(src) {
-    // Logic to drop item onto room stage
-    alert("Added " + src + " to stage!");
-    document.getElementById('gallery-overlay').innerHTML = ''; 
 }
 </script>
 
