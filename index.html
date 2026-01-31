@@ -26,19 +26,19 @@ h2 { font-family: 'Bad Script', cursive; font-size: clamp(1.6rem, 3.5vw, 2.4rem)
 /* WORKSPACE AREA (Scrollable) */
 .workspace-area { position: relative; width: 100%; max-width: 1800px; margin-top: 50px; min-height: 1400px; display: flex; justify-content: center; align-items: flex-start; }
 
-/* CABINET (Left Side) - Height auto to prevent stretching */
+/* CABINET (Left Side) */
 #cabinet-container { 
     position: absolute; 
     top: 350px; 
     left: -500px; 
     width: 350px; 
-    height: auto; /* Changed from fixed 600px to auto */
+    height: auto; 
     z-index: 50; 
     transition: left 0.8s ease; 
 }
 #cabinet-img { 
     width: 100%; 
-    height: auto; /* Changed from 100% to auto */
+    height: auto; 
     display: block;
     filter: drop-shadow(5px 5px 10px rgba(0,0,0,0.5)); 
 }
@@ -48,20 +48,20 @@ h2 { font-family: 'Bad Script', cursive; font-size: clamp(1.6rem, 3.5vw, 2.4rem)
 .pop-out-label { position: relative; width: 220px; height: 90px; background: linear-gradient(135deg, #8a6e4b 0%, #59442e 50%, #3e2b19 100%); border: 3px solid #2a1d12; box-shadow: inset 0 0 0 2px #a88860, inset 10px 0 20px rgba(0,0,0,0.8), 0 10px 15px rgba(0,0,0,0.7); display: flex; align-items: center; justify-content: center; cursor: pointer; opacity: 0; transform: scale(0.5); transition: all 0.3s; pointer-events: none; }
 .pop-out-label .plate-style { width: 160px; } .cabinet-drawer-zone:hover .pop-out-label { opacity: 1; transform: scale(1.1); box-shadow: 0 20px 30px rgba(0,0,0,0.6); }
 
-/* TRUNK CONTAINER - Contain background to prevent stretch */
+/* TRUNK CONTAINER */
 #furniture-box { 
     position: absolute; 
     top: 350px; 
     left: -500px; 
     width: 400px; 
     height: 700px; 
-    background: url('filefolderbox.png') no-repeat bottom center; /* Changed position */
-    background-size: contain; /* Changed from 100% 100% */
+    background: url('filefolderbox.png') no-repeat bottom center; 
+    background-size: contain; 
     z-index: 50; 
     transition: left 0.8s ease; 
 }
 
-/* TAB SYSTEM (Tucked) */
+/* TAB SYSTEM */
 #tab-rack {
     position: absolute;
     top: 0px; 
@@ -85,7 +85,7 @@ h2 { font-family: 'Bad Script', cursive; font-size: clamp(1.6rem, 3.5vw, 2.4rem)
     box-shadow: inset 0 1px 0 rgba(255,255,255,0.4), 0 -2px 4px rgba(0,0,0,0.3);
     transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     transform-origin: bottom center;
-    top: 30px; /* Tucked deep */
+    top: 30px; 
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -127,10 +127,11 @@ h2 { font-family: 'Bad Script', cursive; font-size: clamp(1.6rem, 3.5vw, 2.4rem)
 .catalog-item { width: 110px; height: 110px; background: rgba(30, 20, 10, 0.85); border: 2px solid #c4a476; border-radius: 8px; display: flex; flex-direction: column; align-items: center; justify-content: center; cursor: pointer; box-shadow: 0 4px 8px rgba(0,0,0,0.6); transition: transform 0.3s, box-shadow 0.3s, background 0.3s; opacity: 0; transform: translateY(50px); }
 .catalog-item.active { opacity: 1; transform: translateY(0); }
 .catalog-item:hover { transform: translateY(-5px) !important; box-shadow: 0 0 15px #c4a476; background: rgba(60, 40, 20, 0.95); }
-.catalog-icon-img { width: 80%; height: 80%; object-fit: contain; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.8)); }
+.catalog-icon-img { width: 80%; height: 80%; object-fit: contain; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.8)); cursor: grab; }
+
 .catalog-text { font-family: 'Bad Script', cursive; color: #e6d3b3; font-size: 0.9rem; text-align: center; line-height: 1; margin-top: 5px; }
 
-/* PREVIEW BOX (Next to Trunk) */
+/* PREVIEW BOX */
 #preview-box {
     position: absolute;
     top: 350px;
@@ -148,7 +149,7 @@ h2 { font-family: 'Bad Script', cursive; font-size: clamp(1.6rem, 3.5vw, 2.4rem)
 }
 #preview-img { width: 100%; height: 100%; object-fit: contain; }
 
-/* MAIN STAGE - PUSHED DOWN */
+/* MAIN STAGE */
 #main-stage { 
   width: 1200px; height: 800px; 
   border: 2px dashed rgba(255, 255, 255, 0.3); background-color: rgba(0, 0, 0, 0.6); 
@@ -174,7 +175,7 @@ body.furniture-mode #main-stage { margin-left: 500px; }
 .resize-handle { width: 15px; height: 15px; background: #9932CC; position: absolute; bottom: -5px; right: -5px; cursor: se-resize; display: none; border-radius: 50%; }
 .stage-item-wrapper.selected .resize-handle { display: block; }
 
-/* MINI BACK BUTTON (Inside Trunk) */
+/* MINI BACK BUTTON */
 .mini-back { 
     position: absolute; top: 5px; right: 15px; 
     font-size: 10px; color: #59442e; cursor: pointer; font-weight: bold; 
@@ -206,7 +207,7 @@ body.furniture-mode #main-stage { margin-left: 500px; }
         <div id="zone-upload" class="cabinet-drawer-zone" onclick="triggerUpload()"><div class="pop-out-label"><div class="plate-style">Upload</div><div class="lip-pull"></div></div></div>
     </div>
 
-    <div id="main-stage">
+    <div id="main-stage" ondrop="drop(event)" ondragover="allowDrop(event)">
         <img id="room-display" src="" alt="Room Design" onclick="lockRoom()">
     </div>
 
@@ -279,8 +280,6 @@ renderTabs(categories, 'main');
 // RENDER TABS
 function renderTabs(dataList, type) {
     const rack = document.getElementById('tab-rack');
-    
-    // ANIMATION OUT
     const oldTabs = Array.from(rack.children);
     oldTabs.forEach(t => t.classList.add('tab-hide'));
     
@@ -289,13 +288,8 @@ function renderTabs(dataList, type) {
         dataList.forEach((item, index) => {
             const tab = document.createElement('div');
             tab.className = 'folder-tab tab-show';
-            
-            // Icon Logic: If 'main' use item.icon, else generic
             let iconSrc = item.icon ? item.icon : 'iconseating.png'; 
-            
-            // Tab Content: Icon + Name (Name hidden until hover if CSS allows, or simple layout)
             tab.innerHTML = `<img src="${iconSrc}" class="tab-icon-img"><div class="tab-text">${item.name}</div>`;
-            
             tab.style.animationDelay = (0.1 + (index * 0.1)) + 's';
             
             if (type === 'main') {
@@ -305,7 +299,7 @@ function renderTabs(dataList, type) {
             }
             rack.appendChild(tab);
         });
-    }, 300); // Wait for drop down
+    }, 300); 
 }
 
 function selectCategory(catObj) {
@@ -324,12 +318,12 @@ function showItems(contentKey) {
     items.forEach((item, index) => {
         const card = document.createElement('div');
         card.className = 'catalog-item';
-        // Check if image exists, fallback to icon if needed for testing
         let imgSrc = item.img ? item.img : 'iconseating.png';
-        
-        card.innerHTML = `<img src="${imgSrc}" class="catalog-icon-img"><div class="catalog-text">${item.name}</div>`;
+        // ADD DRAG ATTRIBUTES HERE
+        card.innerHTML = `<img src="${imgSrc}" class="catalog-icon-img" draggable="true" ondragstart="dragStart(event, '${imgSrc}')"><div class="catalog-text">${item.name}</div>`;
         card.onmouseenter = () => showPreview(imgSrc);
         card.onmouseleave = () => hidePreview();
+        // Click still works if drag is hard
         card.onclick = () => addFurnitureToStage(item);
         zone.appendChild(card);
         setTimeout(() => card.classList.add('active'), 50 + (index * 50));
@@ -343,7 +337,6 @@ function resetToCategories() {
     currentView = 'main';
 }
 
-// PREVIEW LOGIC
 function showPreview(src) {
     const box = document.getElementById('preview-box');
     const img = document.getElementById('preview-img');
@@ -354,7 +347,6 @@ function hidePreview() {
     document.getElementById('preview-box').style.display = 'none';
 }
 
-// ROOM & STAGE LOGIC
 const roomData = { 
     livingroom: ['livingroom.jpg', 'livingroom2.jpg', 'livingroom3.jpg'], 
     bedroom: ['bedroom.jpg', 'bedroom2.jpg'], 
@@ -394,8 +386,48 @@ function lockRoom() {
 }
 function triggerUpload() { document.getElementById('file-upload').click(); }
 
-// DRAG & DROP
+// --- DRAG AND DROP LOGIC (Trunk -> Stage) ---
+function dragStart(ev, imgSrc) {
+    ev.dataTransfer.setData("text/plain", imgSrc);
+}
+
+function allowDrop(ev) {
+    ev.preventDefault();
+}
+
+function drop(ev) {
+    ev.preventDefault();
+    const imgSrc = ev.dataTransfer.getData("text/plain");
+    const stage = document.getElementById('main-stage');
+    
+    // Calculate relative position
+    const rect = stage.getBoundingClientRect();
+    const x = ev.clientX - rect.left - 75; // Center the 150px wide item
+    const y = ev.clientY - rect.top - 50;  // Center the 100px high item
+
+    const wrapper = document.createElement('div'); 
+    wrapper.className = 'stage-item-wrapper';
+    wrapper.style.width = '150px'; 
+    wrapper.style.height = '100px'; 
+    wrapper.style.left = x + 'px'; 
+    wrapper.style.top = y + 'px';
+    wrapper.innerHTML = `<img src="${imgSrc}"><div class="resize-handle"></div>`;
+    
+    stage.appendChild(wrapper);
+    makeDraggable(wrapper); 
+    makeResizable(wrapper, wrapper.querySelector('.resize-handle'));
+    
+    wrapper.onclick = (e) => { 
+        e.stopPropagation(); 
+        document.querySelectorAll('.stage-item-wrapper').forEach(el => el.classList.remove('selected')); 
+        wrapper.classList.add('selected'); 
+    };
+    wrapper.ondblclick = () => wrapper.remove();
+}
+
+// EXISTING DRAG (On Stage)
 function addFurnitureToStage(item) {
+    // Fallback for click (add to center)
     const stage = document.getElementById('main-stage');
     const wrapper = document.createElement('div'); wrapper.className = 'stage-item-wrapper';
     wrapper.style.width = '150px'; wrapper.style.height = '100px'; wrapper.style.left = '50px'; wrapper.style.top = '50px';
@@ -405,6 +437,7 @@ function addFurnitureToStage(item) {
     wrapper.onclick = (e) => { e.stopPropagation(); document.querySelectorAll('.stage-item-wrapper').forEach(el => el.classList.remove('selected')); wrapper.classList.add('selected'); };
     wrapper.ondblclick = () => wrapper.remove();
 }
+
 function makeDraggable(el) {
     let isDragging = false; let startX, startY, initialLeft, initialTop;
     el.onmousedown = function(e) {
@@ -415,6 +448,7 @@ function makeDraggable(el) {
     function onMouseMove(e) { if (!isDragging) return; el.style.left = `${initialLeft + (e.clientX - startX)}px`; el.style.top = `${initialTop + (e.clientY - startY)}px`; }
     function onMouseUp() { isDragging = false; document.removeEventListener('mousemove', onMouseMove); document.removeEventListener('mouseup', onMouseUp); }
 }
+
 function makeResizable(el, handle) {
     let isResizing = false; let startX, startY, startW, startH;
     handle.onmousedown = function(e) {
@@ -425,6 +459,7 @@ function makeResizable(el, handle) {
     function onResizeMove(e) { if (!isResizing) return; el.style.width = (startW + (e.clientX - startX)) + 'px'; el.style.height = (startH + (e.clientY - startY)) + 'px'; }
     function onResizeUp() { isResizing = false; document.removeEventListener('mousemove', onResizeMove); document.removeEventListener('mouseup', onResizeUp); }
 }
+
 function handleFileUpload(event) {
     const file = event.target.files[0];
     if (file) {
