@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Room Glow Up</title>
-<link href="https://fonts.googleapis.com/css2?family=Limelight&family=Bad+Script&family=Special+Elite&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Bonheur+Royale&family=Limelight&family=Bad+Script&family=Special+Elite&display=swap" rel="stylesheet">
 <style>
 /* ---------------- BASE ---------------- */
 * { box-sizing: border-box; }
@@ -14,15 +14,13 @@ body {
   min-height: 100vh; width: 100vw;
   display: flex; flex-direction: column; align-items: center;
   
-  /* --- THE TEAL BACKGROUND --- */
-  background-color: #008080; /* Solid Teal for the sides */
-  
-  /* --- THE IMAGE --- */
+  /* BACKGROUND */
+  background-color: #008080; 
   background-image: url('background10.jpg');
   background-repeat: no-repeat;
   background-position: center top; 
   background-attachment: fixed;
-  background-size: contain; /* Fits image perfectly, Teal shows on sides */
+  background-size: contain;
   
   font-family: 'Special Elite', cursive;
   color: white;
@@ -36,13 +34,16 @@ body {
   position: relative; z-index: 30; 
 }
 h1 {
-  font-family: 'Limelight', cursive; font-size: clamp(3.5rem, 7vw, 5.5rem);
-  line-height: 0.9; margin: 0;
+  /* UPDATED FONT HERE */
+  font-family: 'Bonheur Royale', cursive; 
+  font-size: clamp(4.5rem, 9vw, 7rem); /* Made slightly larger for the script font */
+  line-height: 1.1; margin: 0;
   text-shadow: 3px 3px 10px rgba(0,0,0,0.7);
+  font-weight: 400;
 }
 h2 {
   font-family: 'Bad Script', cursive; font-size: clamp(1.6rem, 3.5vw, 2.4rem);
-  margin-top: 0.8rem; margin-bottom: 0;
+  margin-top: 0.5rem; margin-bottom: 0;
   text-shadow: 2px 2px 8px rgba(0,0,0,0.6);
 }
 
@@ -77,6 +78,8 @@ h2 {
   color: #2a1d12; display: flex; align-items: center; justify-content: center;
   font-size: 15px; font-weight: 900; text-transform: uppercase; letter-spacing: 1px;
   border: 1px solid #5e4326; box-shadow: inset 0 2px 5px rgba(0,0,0,0.25);
+  text-align: center; 
+  line-height: 1;
 }
 .lip-pull {
   position: absolute; bottom: -14px; left: 50%; transform: translateX(-50%);
@@ -86,36 +89,15 @@ h2 {
   box-shadow: 0 5px 10px rgba(0,0,0,0.8);
 }
 
-/* ---------------- CABINET ---------------- */
-.pop-out-label {
-  position: relative; width: 220px; height: 90px;
-  background: linear-gradient(135deg, #8a6e4b 0%, #59442e 50%, #3e2b19 100%);
-  border: 3px solid #2a1d12;
-  box-shadow: inset 0 0 0 2px #a88860, inset 10px 0 20px rgba(0,0,0,0.8), 0 10px 15px rgba(0,0,0,0.7);
-  display: flex; align-items: center; justify-content: center; cursor: pointer;
-  opacity: 0; transform: scale(0.5); transition: all 0.3s; pointer-events: none;
-}
-.pop-out-label .plate-style { width: 160px; } 
-.cabinet-drawer-zone:hover .pop-out-label { opacity: 1; transform: scale(1.1); box-shadow: 0 20px 30px rgba(0,0,0,0.6); }
-
 /* ---------------- WORKSPACE ---------------- */
 .workspace-area {
   position: relative; width: 100%; max-width: 1400px;
-  margin-top: 40vh; min-height: 1200px; display: flex; justify-content: center; 
+  margin-top: 20vh; 
+  min-height: 1200px; display: flex; justify-content: center; 
 }
 
-#cabinet-container {
-  position: absolute; top: 0; left: -500px; 
-  width: 350px; height: 600px; z-index: 20; 
-  transition: left 1.5s ease-in-out; 
-}
-#cabinet-img { width: 100%; height: 100%; object-fit: fill; filter: drop-shadow(5px 5px 10px rgba(0,0,0,0.5)); }
-.cabinet-drawer-zone { position: absolute; left: 10%; width: 80%; height: 18%; display: flex; align-items: center; justify-content: center; cursor: pointer; z-index: 30; }
-#zone-living { top: 2%; }   
-#zone-bed    { top: 20%; }  
-#zone-dining { top: 38%; }  
-#zone-extra  { top: 56%; }  
-#zone-upload { top: 74%; }  
+/* OLD CABINET (Hidden) */
+#cabinet-container { display: none; }
 
 /* MAIN STAGE */
 #main-stage {
@@ -123,6 +105,7 @@ h2 {
   border: 2px dashed rgba(255, 255, 255, 0.3);
   background-color: rgba(0, 0, 0, 0.6); 
   position: relative; z-index: 10;
+  margin-left: 200px; /* Offset for sidebar */
   transition: transform 1.5s ease-in-out;
   overflow: hidden; 
 }
@@ -146,19 +129,26 @@ h2 {
 }
 .stage-item-wrapper.selected .resize-handle { display: block; }
 
-/* ---------------- FURNITURE TRUNK ---------------- */
+/* ---------------- FURNITURE TRUNK (LEFT SIDEBAR) ---------------- */
 #furniture-box {
-  position: fixed; bottom: -600px; left: 50%; transform: translateX(-50%);
-  width: 900px; height: 550px; 
-  background: url('filefolderbox.png') no-repeat center bottom;
-  background-size: contain; z-index: 40;
-  transition: bottom 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  position: fixed; 
+  top: 250px; 
+  left: -500px; /* Hidden off-screen left */
+  width: 400px; 
+  height: 700px; 
+  
+  background: url('filefolderbox.png') no-repeat center center;
+  background-size: 100% 100%; 
+  
+  z-index: 40;
+  transition: left 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
 /* BACK BUTTON ON TRUNK */
 #trunk-back-btn {
-  position: absolute; right: 80px; top: 180px; 
-  width: 60px; height: 60px;
+  position: absolute; 
+  right: 20px; top: 20px; 
+  width: 50px; height: 50px;
   background: radial-gradient(circle, #e6d3b3 0%, #c4a476 100%);
   border: 3px solid #59442e; border-radius: 50%;
   box-shadow: 0 5px 10px rgba(0,0,0,0.5);
@@ -169,46 +159,57 @@ h2 {
 }
 #trunk-back-btn:hover { transform: scale(1.1); background: #fff0d4; }
 
-/* INTERNAL SLOT */
+/* INTERNAL SLOT - VERTICAL GRID */
 .trunk-internal-zone {
-  position: absolute; top: 15%; left: 5%; width: 90%; height: 40%;
-  overflow: hidden; display: flex; justify-content: center; align-items: flex-end;
+  position: absolute; 
+  top: 15%; left: 10%; 
+  width: 80%; height: 70%;
+  overflow-y: auto; overflow-x: hidden;
+  display: flex; flex-wrap: wrap; justify-content: center; align-content: flex-start;
+  gap: 15px; padding: 10px;
 }
+.trunk-internal-zone::-webkit-scrollbar { width: 8px; }
+.trunk-internal-zone::-webkit-scrollbar-thumb { background: #c4a476; border-radius: 4px; }
 
-/* FILES */
-.file-folder {
-  width: 140px; height: 250px;
-  background: #f4e1c1; border: 1px solid #cbbba2;
-  box-shadow: -5px 0 15px rgba(0,0,0,0.3);
-  position: relative; cursor: pointer;
-  transition: transform 0.4s ease, opacity 0.3s;
-  transform: translateY(180px); /* Tucked in */
-  margin-left: -40px; margin-right: -40px;
+/* INVENTORY CARDS */
+.catalog-item {
+  width: 120px; height: 130px;
+  background: rgba(30, 20, 10, 0.85); 
+  border: 2px solid #c4a476; 
+  border-radius: 8px;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.6);
+  transition: transform 0.3s, box-shadow 0.3s, background 0.3s;
+  opacity: 0; transform: translateY(50px);
 }
-.file-folder:hover { transform: translateY(20px); z-index: 50; background: #fff0d4; }
-.folder-tab {
-  position: absolute; top: -35px; width: 90px; height: 35px;
-  background: #f4e1c1; border-radius: 10px 10px 0 0;
-  border: 1px solid #cbbba2; border-bottom: none;
-  display: flex; justify-content: center; align-items: center;
+.catalog-item.active { opacity: 1; transform: translateY(0); }
+.catalog-item:hover {
+  transform: translateY(-5px) scale(1.05) !important;
+  box-shadow: 0 0 15px #c4a476; 
+  background: rgba(60, 40, 20, 0.95);
 }
-.file-folder:hover .folder-tab { background: #fff0d4; }
-.tab-left .folder-tab { left: 0; border-radius: 15px 5px 0 0; }
-.tab-right .folder-tab { right: 0; border-radius: 5px 15px 0 0; }
-.file-icon-img { width: 25px; height: 25px; object-fit: contain; }
+.catalog-icon-img {
+  width: 60px; height: 60px; object-fit: contain;
+  margin-bottom: 8px;
+  filter: drop-shadow(0 2px 4px rgba(0,0,0,0.8));
+}
+.catalog-text {
+  font-family: 'Bad Script', cursive; color: #e6d3b3;
+  font-size: 1rem; text-align: center; line-height: 1;
+}
 
 /* PREVIEW CARD */
 #preview-box {
-  position: absolute; bottom: 500px; left: 50%; transform: translateX(-50%);
+  position: absolute; 
+  top: 300px; left: 450px; 
   width: 250px; height: 250px; background: white; border: 5px solid white;
   box-shadow: 0 10px 20px rgba(0,0,0,0.5); z-index: 70; display: none; pointer-events: none;
 }
 #preview-img { width: 100%; height: 100%; object-fit: contain; }
 
 /* STATES */
-body.rooms-active #cabinet-container { left: 0px; }
-body.rooms-active #main-stage { transform: translateX(180px); }
-body.furniture-mode #furniture-box { bottom: -50px; }
+body.furniture-mode #furniture-box { left: 20px; }
 </style>
 </head>
 <body>
@@ -219,34 +220,15 @@ body.furniture-mode #furniture-box { bottom: -50px; }
 </div>
 
 <div class="tabs">
-  <div class="drawer-hardware" onclick="toggleRooms()"><div class="plate-style">Rooms</div><div class="lip-pull"></div></div>
-  <div class="drawer-hardware"><div class="plate-style">Furniture Catalog</div><div class="lip-pull"></div></div>
-  <div class="drawer-hardware"><div class="plate-style">Inspirational Look Book</div><div class="lip-pull"></div></div>
+  <div class="drawer-hardware" onclick="document.getElementById('file-upload').click()"><div class="plate-style">Upload Room</div><div class="lip-pull"></div></div>
+  <div class="drawer-hardware" onclick="toggleFurnitureMode()"><div class="plate-style">Furniture Catalog</div><div class="lip-pull"></div></div>
+  <div class="drawer-hardware"><div class="plate-style">Inspirational<br>Look Book</div><div class="lip-pull"></div></div>
   <div class="drawer-hardware"><div class="plate-style">Save</div><div class="lip-pull"></div></div>
 </div>
 
 <div class="workspace-area">
-    <div id="cabinet-container">
-        <img id="cabinet-img" src="cabinet.png" alt="Cabinet">
-        <div id="zone-living" class="cabinet-drawer-zone" onmouseenter="hoverRoom('livingroom')" onclick="nextVariation('livingroom')">
-            <div class="pop-out-label"><div class="plate-style">Living Room</div><div class="lip-pull"></div></div>
-        </div>
-        <div id="zone-bed" class="cabinet-drawer-zone" onmouseenter="hoverRoom('bedroom')" onclick="nextVariation('bedroom')">
-            <div class="pop-out-label"><div class="plate-style">Bedroom</div><div class="lip-pull"></div></div>
-        </div>
-        <div id="zone-dining" class="cabinet-drawer-zone" onmouseenter="hoverRoom('diningroom')" onclick="nextVariation('diningroom')">
-            <div class="pop-out-label"><div class="plate-style">Dining Room</div><div class="lip-pull"></div></div>
-        </div>
-        <div id="zone-extra" class="cabinet-drawer-zone" onmouseenter="hoverRoom('extrarooms')" onclick="nextVariation('extrarooms')">
-            <div class="pop-out-label"><div class="plate-style">Extra Rooms</div><div class="lip-pull"></div></div>
-        </div>
-        <div id="zone-upload" class="cabinet-drawer-zone" onclick="triggerUpload()">
-            <div class="pop-out-label"><div class="plate-style">Upload</div><div class="lip-pull"></div></div>
-        </div>
-    </div>
-
     <div id="main-stage">
-        <img id="room-display" src="" alt="Room Design" onclick="lockRoom()">
+        <img id="room-display" src="" alt="Room Design">
     </div>
 </div>
 
@@ -298,6 +280,10 @@ let historyStack = [];
 /* --- INITIALIZATION --- */
 renderFiles(trunkData.level1);
 
+function toggleFurnitureMode() {
+    document.body.classList.toggle('furniture-mode');
+}
+
 function renderFiles(dataArray) {
     const zone = document.getElementById('trunk-internal-zone');
     zone.innerHTML = ''; 
@@ -309,30 +295,30 @@ function renderFiles(dataArray) {
     if(!dataArray) return;
 
     dataArray.forEach((item, index) => {
-        const isLeft = index % 2 === 0; 
-        const folder = document.createElement('div');
-        folder.className = `file-folder ${isLeft ? 'tab-left' : 'tab-right'}`;
+        const card = document.createElement('div');
+        card.className = 'catalog-item';
         
         const iconSrc = item.type === 'item' ? item.image : item.icon;
         
-        folder.innerHTML = `
-            <div class="folder-tab">
-                <img src="${iconSrc}" class="file-icon-img" onerror="this.src='iconseating.png'">
-            </div>
-            <div class="file-content">
-                <div class="file-name">${item.name}</div>
-            </div>
+        card.innerHTML = `
+            <img src="${iconSrc}" class="catalog-icon-img" onerror="this.src='iconseating.png'">
+            <div class="catalog-text">${item.name}</div>
         `;
         
         if (item.type === 'item') {
-            folder.onmouseenter = () => showPreview(item.image);
-            folder.onmouseleave = () => hidePreview();
-            folder.onclick = () => addFurnitureToStage(item);
+            card.onmouseenter = () => showPreview(item.image);
+            card.onmouseleave = () => hidePreview();
+            card.onclick = () => addFurnitureToStage(item);
         } else {
-            folder.onclick = () => navigateDown(item.content);
+            card.onclick = () => navigateDown(item.content);
         }
         
-        zone.appendChild(folder);
+        zone.appendChild(card);
+        
+        // Staggered Animation
+        setTimeout(() => {
+            card.classList.add('active');
+        }, 50 + (index * 50));
     });
 }
 
@@ -457,42 +443,9 @@ function makeResizable(el, handle) {
     }
 }
 
-/* --- EXISTING ROOMS LOGIC --- */
-function toggleRooms() { document.body.classList.toggle('rooms-active'); }
-const roomData = {
-    livingroom: ['livingroom.jpg'], bedroom: ['bedroom.jpg', 'bedroom2.jpg'], 
-    diningroom: ['diningroom.jpg', 'diningroom1.jpg'], extrarooms: ['extrarooms.jpg', 'kitchen.jpg', 'foyer.jpg']
-};
-let currentCategory = ''; let currentIndex = 0; let isLocked = false;
-
-function hoverRoom(category) { if (isLocked) return; currentCategory = category; currentIndex = 0; updateStage(); }
-function nextVariation(category) {
-    if (isLocked) { if(confirm("Unlock current design?")) { unlockRoom(); } else { return; } }
-    if (currentCategory !== category) { currentCategory = category; currentIndex = 0; } 
-    else { if(roomData[category].length > 1) currentIndex = (currentIndex + 1) % roomData[category].length; }
-    updateStage();
-}
-function updateStage() {
-    const imgElement = document.getElementById('room-display');
-    if(roomData[currentCategory]) { imgElement.src = roomData[currentCategory][currentIndex]; imgElement.style.display = 'block'; }
-}
-function lockRoom() {
-    const imgElement = document.getElementById('room-display');
-    if (!imgElement.src || imgElement.style.display === 'none') return; 
-    isLocked = !isLocked; 
-    if (isLocked) { imgElement.classList.add('locked'); document.body.classList.add('furniture-mode'); } 
-    else { imgElement.classList.remove('locked'); document.body.classList.remove('furniture-mode'); }
-}
-function unlockRoom() {
-    isLocked = false;
-    document.getElementById('room-display').classList.remove('locked');
-    document.body.classList.remove('furniture-mode');
-}
-function triggerUpload() { document.getElementById('file-upload').click(); }
 function handleFileUpload(event) {
     const file = event.target.files[0];
     if (file) {
-        if(isLocked) unlockRoom();
         const reader = new FileReader();
         reader.onload = function(e) {
             const imgElement = document.getElementById('room-display');
