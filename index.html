@@ -15,65 +15,84 @@ body { margin: 0; padding: 0; min-height: 100vh; width: 100vw; display: flex; fl
 h1 { font-family: 'Bonheur Royale', cursive; font-size: clamp(4.5rem, 9vw, 7rem); line-height: 1.1; margin: 0; text-shadow: 3px 3px 10px rgba(0,0,0,0.7); font-weight: 400; }
 h2 { font-family: 'Bad Script', cursive; font-size: clamp(1.6rem, 3.5vw, 2.4rem); margin-top: 0.5rem; margin-bottom: 0; text-shadow: 2px 2px 8px rgba(0,0,0,0.6); }
 
-/* TOP TABS (Navigation) */
+/* TOP TABS */
 .tabs { display: flex; justify-content: center; gap: 2rem; flex-wrap: wrap; width: 100%; padding: 2rem; position: relative; z-index: 30; }
 .drawer-hardware { position: relative; width: 260px; height: 90px; background: linear-gradient(135deg, #8a6e4b 0%, #59442e 50%, #3e2b19 100%); border: 3px solid #2a1d12; box-shadow: inset 0 0 0 2px #a88860, inset 10px 0 20px rgba(0,0,0,0.8), 0 10px 15px rgba(0,0,0,0.7); display: flex; align-items: center; justify-content: center; cursor: pointer; transition: all 0.3s ease; }
 .drawer-hardware:hover { filter: brightness(1.15); transform: translateY(-4px); }
-.drawer-hardware::before, .drawer-hardware::after { content: ''; position: absolute; top: 50%; transform: translateY(-50%); width: 14px; height: 14px; border-radius: 50%; background: radial-gradient(circle, #111 20%, #555 100%); box-shadow: inset 1px 1px 2px #000; } .drawer-hardware::before { left: 12px; } .drawer-hardware::after { right: 12px; }
 .plate-style { width: 190px; height: 50px; background: linear-gradient(to bottom, #e6d3b3 0%, #c4a476 50%, #9e7e52 100%); color: #2a1d12; display: flex; align-items: center; justify-content: center; font-size: 15px; font-weight: 900; text-transform: uppercase; letter-spacing: 1px; border: 1px solid #5e4326; box-shadow: inset 0 2px 5px rgba(0,0,0,0.25); text-align: center; line-height: 1; }
 .lip-pull { position: absolute; bottom: -14px; left: 50%; transform: translateX(-50%); width: 140px; height: 24px; background: linear-gradient(to bottom, #59442e, #2a1d12); border: 2px solid #1a1008; border-top: none; border-radius: 0 0 15px 15px; box-shadow: 0 5px 10px rgba(0,0,0,0.8); }
 
+/* CABINET (Left) */
+#cabinet-container { position: absolute; top: 250px; left: -500px; width: 380px; z-index: 50; transition: left 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+#cabinet-img { width: 100%; height: auto; display: block; filter: drop-shadow(10px 10px 15px rgba(0,0,0,0.6)); }
+
 /* MAIN STAGE */
-#main-stage { 
-  width: 1200px; height: 800px; 
-  border: 2px dashed rgba(255, 255, 255, 0.3); background-color: rgba(0, 0, 0, 0.6); 
-  position: relative; z-index: 10; 
-  margin: 0 auto; margin-top: 50px;
-}
+#main-stage { width: 1200px; height: 800px; border: 4px double rgba(255, 255, 255, 0.2); background-color: rgba(0, 0, 0, 0.5); position: relative; z-index: 10; margin: 0 auto; margin-top: 40px; transition: 0.8s ease-in-out; }
 #room-display { width: 100%; height: 100%; object-fit: cover; display: none; }
 
-/* STORAGE BOXES GLIDE LOGIC */
+/* STORAGE BOXES (Bottom - The Charms) */
 .storage-container {
     display: flex;
     justify-content: center;
-    gap: 30px;
+    gap: 60px;
     width: 100%;
     position: fixed;
-    bottom: -350px; /* Hidden */
+    bottom: -500px;
     transition: bottom 1s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     z-index: 100;
 }
 
-body.furniture-mode .storage-container {
-    bottom: 40px; /* Visible under stage */
+.storage-box-item { 
+    position: relative; 
+    width: 320px; /* Bigger boxes */
+    height: 240px; 
+    cursor: pointer; 
+    transition: transform 0.3s; 
 }
-
-.storage-box-item {
-    position: relative;
-    width: 220px;
-    height: 160px;
-    cursor: pointer;
-    transition: transform 0.3s;
-}
-.storage-box-item:hover { transform: translateY(-15px); }
+.storage-box-item:hover { transform: translateY(-10px); }
 
 .box-case-img { width: 100%; height: 100%; object-fit: contain; }
 
-.icon-tag {
+/* THE CHARM TAG */
+.charm-tag {
+    position: absolute;
+    top: 40%;
+    left: 15%;
+    width: 80px;
+    height: 110px;
+    background: #d2b48c; /* Manila tag color */
+    border: 1px solid #8b4513;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px;
+    box-shadow: 2px 5px 10px rgba(0,0,0,0.4);
+    transform: rotate(-5deg);
+    z-index: 110;
+}
+
+/* The string connecting the tag */
+.charm-tag::before {
+    content: '';
     position: absolute;
     top: -25px;
     left: 50%;
+    width: 2px;
+    height: 30px;
+    background: #3e2b19;
     transform: translateX(-50%);
-    width: 55px;
-    height: 55px;
-    background: #fdfdfd;
-    border-radius: 50%;
-    padding: 8px;
-    border: 3px solid #59442e;
-    box-shadow: 0 5px 10px rgba(0,0,0,0.4);
-    z-index: 5;
 }
-.icon-tag img { width: 100%; height: 100%; object-fit: contain; }
+
+.charm-tag img { width: 100%; height: 100%; object-fit: contain; }
+
+/* TRIGGERS */
+body.rooms-active #cabinet-container { left: 40px; }
+body.rooms-active #main-stage { margin-left: 480px; transform: scale(0.9); }
+body.furniture-mode #cabinet-container { left: -500px; }
+body.furniture-mode .storage-container { bottom: 40px; }
+body.furniture-mode #main-stage { margin-left: auto; transform: scale(1); }
+
 </style>
 </head>
 <body>
@@ -84,10 +103,14 @@ body.furniture-mode .storage-container {
 </div>
 
 <div class="tabs">
-  <div class="drawer-hardware" onclick="triggerUpload()"><div class="plate-style">Upload Room</div><div class="lip-pull"></div></div>
+  <div class="drawer-hardware" onclick="toggleRooms()"><div class="plate-style">Rooms</div><div class="lip-pull"></div></div>
   <div class="drawer-hardware" onclick="lockRoom()"><div class="plate-style">Furniture Catalog</div><div class="lip-pull"></div></div>
   <div class="drawer-hardware"><div class="plate-style">Look Book</div><div class="lip-pull"></div></div>
   <div class="drawer-hardware"><div class="plate-style">Save</div><div class="lip-pull"></div></div>
+</div>
+
+<div id="cabinet-container">
+    <img id="cabinet-img" src="cabinet.png" alt="Cabinet">
 </div>
 
 <div id="main-stage">
@@ -96,43 +119,32 @@ body.furniture-mode .storage-container {
 
 <div class="storage-container">
     <div class="storage-box-item">
-        <div class="icon-tag"><img src="iconseating.png"></div>
+        <div class="charm-tag"><img src="iconseating.png"></div>
         <img src="seatingcase.png" class="box-case-img">
     </div>
     <div class="storage-box-item">
-        <div class="icon-tag"><img src="iconbeds.png"></div>
+        <div class="charm-tag"><img src="iconbeds.png"></div>
         <img src="bedscase.png" class="box-case-img">
     </div>
     <div class="storage-box-item">
-        <div class="icon-tag"><img src="iconstorage.png"></div>
+        <div class="charm-tag"><img src="iconstorage.png"></div>
         <img src="storagecase.png" class="box-case-img">
     </div>
     <div class="storage-box-item">
-        <div class="icon-tag"><img src="icontable.png"></div>
+        <div class="charm-tag"><img src="icontable.png"></div>
         <img src="tablescase.png" class="box-case-img">
     </div>
 </div>
 
-<input type="file" id="file-upload" accept="image/*" onchange="handleFileUpload(event)" style="display:none">
-
 <script>
-function triggerUpload() { document.getElementById('file-upload').click(); }
-
-function handleFileUpload(event) {
-    const file = event.target.files[0];
-    if (file) {
-        const reader = new FileReader();
-        reader.onload = (e) => {
-            const img = document.getElementById('room-display'); 
-            img.src = e.target.result; 
-            img.style.display = 'block';
-        };
-        reader.readAsDataURL(file);
-    }
+function toggleRooms() { 
+    document.body.classList.remove('furniture-mode');
+    document.body.classList.toggle('rooms-active'); 
 }
 
-function lockRoom() {
-    document.body.classList.add('furniture-mode');
+function lockRoom() { 
+    document.body.classList.remove('rooms-active');
+    document.body.classList.add('furniture-mode'); 
 }
 </script>
 </body>
