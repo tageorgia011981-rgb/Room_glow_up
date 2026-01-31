@@ -26,17 +26,40 @@ h2 { font-family: 'Bad Script', cursive; font-size: clamp(1.6rem, 3.5vw, 2.4rem)
 /* WORKSPACE AREA (Scrollable) */
 .workspace-area { position: relative; width: 100%; max-width: 1800px; margin-top: 50px; min-height: 1400px; display: flex; justify-content: center; align-items: flex-start; }
 
-/* CABINET (Left Side) - Sits at 350px */
-#cabinet-container { position: absolute; top: 350px; left: -500px; width: 350px; height: 600px; z-index: 50; transition: left 0.8s ease; }
-#cabinet-img { width: 100%; height: 100%; object-fit: fill; filter: drop-shadow(5px 5px 10px rgba(0,0,0,0.5)); }
+/* CABINET (Left Side) - Height auto to prevent stretching */
+#cabinet-container { 
+    position: absolute; 
+    top: 350px; 
+    left: -500px; 
+    width: 350px; 
+    height: auto; /* Changed from fixed 600px to auto */
+    z-index: 50; 
+    transition: left 0.8s ease; 
+}
+#cabinet-img { 
+    width: 100%; 
+    height: auto; /* Changed from 100% to auto */
+    display: block;
+    filter: drop-shadow(5px 5px 10px rgba(0,0,0,0.5)); 
+}
 .cabinet-drawer-zone { position: absolute; left: 10%; width: 80%; height: 18%; display: flex; align-items: center; justify-content: center; cursor: pointer; z-index: 30; transition: transform 0.2s; }
 .cabinet-drawer-zone:hover { transform: translateY(-3px); box-shadow: 0 0 20px rgba(255,215,0,0.3); } 
 #zone-living { top: 2%; } #zone-bed { top: 20%; } #zone-dining { top: 38%; } #zone-extra { top: 56%; } #zone-upload { top: 74%; }
 .pop-out-label { position: relative; width: 220px; height: 90px; background: linear-gradient(135deg, #8a6e4b 0%, #59442e 50%, #3e2b19 100%); border: 3px solid #2a1d12; box-shadow: inset 0 0 0 2px #a88860, inset 10px 0 20px rgba(0,0,0,0.8), 0 10px 15px rgba(0,0,0,0.7); display: flex; align-items: center; justify-content: center; cursor: pointer; opacity: 0; transform: scale(0.5); transition: all 0.3s; pointer-events: none; }
 .pop-out-label .plate-style { width: 160px; } .cabinet-drawer-zone:hover .pop-out-label { opacity: 1; transform: scale(1.1); box-shadow: 0 20px 30px rgba(0,0,0,0.6); }
 
-/* TRUNK CONTAINER - Sits at 350px */
-#furniture-box { position: absolute; top: 350px; left: -500px; width: 400px; height: 700px; background: url('filefolderbox.png') no-repeat center center; background-size: 100% 100%; z-index: 50; transition: left 0.8s ease; }
+/* TRUNK CONTAINER - Contain background to prevent stretch */
+#furniture-box { 
+    position: absolute; 
+    top: 350px; 
+    left: -500px; 
+    width: 400px; 
+    height: 700px; 
+    background: url('filefolderbox.png') no-repeat bottom center; /* Changed position */
+    background-size: contain; /* Changed from 100% 100% */
+    z-index: 50; 
+    transition: left 0.8s ease; 
+}
 
 /* TAB SYSTEM (Tucked) */
 #tab-rack {
@@ -131,7 +154,7 @@ h2 { font-family: 'Bad Script', cursive; font-size: clamp(1.6rem, 3.5vw, 2.4rem)
   border: 2px dashed rgba(255, 255, 255, 0.3); background-color: rgba(0, 0, 0, 0.6); 
   position: relative; z-index: 10; 
   margin: 0 auto; 
-  margin-top: 350px; /* <--- PUSHES STAGE DOWN TO ALIGN WITH CABINET/TRUNK */
+  margin-top: 350px; 
   transition: margin-left 1.0s ease-in-out; 
 }
 #room-display { width: 100%; height: 100%; object-fit: cover; display: none; cursor: pointer; }
