@@ -13,12 +13,26 @@ body {
   margin: 0; padding: 0;
   min-height: 100vh; width: 100vw;
   display: flex; flex-direction: column; align-items: center;
-  background: url('background10.jpg') no-repeat center center fixed;
-  background-size: cover;
   font-family: 'Special Elite', cursive;
   color: white;
   overflow-x: hidden; overflow-y: auto; 
   user-select: none;
+  /* Background is now handled in ::before to fix zoom/color */
+}
+
+/* --- NEW BACKGROUND FIX --- */
+body::before {
+  content: "";
+  position: fixed;
+  top: 0; left: 0; 
+  width: 100%; height: 100%;
+  z-index: -1; /* Puts it behind everything */
+  
+  background: url('background1.jpg') no-repeat center center;
+  
+  /* FIXES: */
+  background-size: 100% 100%; /* Fits whole image - No Zoom/Cropping */
+  filter: contrast(120%) saturate(130%); /* Makes Colors POP */
 }
 
 /* ---------------- HEADER ---------------- */
@@ -117,10 +131,10 @@ h2 {
   transition: transform 1.5s ease-in-out;
   overflow: hidden; 
 }
-/* FIXED ROOM DISPLAY */
+/* FIXED: Added cursor: pointer and REMOVED pointer-events: none */
 #room-display { 
   width: 100%; height: 100%; object-fit: cover; display: none; 
-  cursor: pointer; /* Allows Clicking */
+  cursor: pointer; 
 }
 #room-display.locked { border: 4px solid #D4AF37; box-shadow: 0 0 20px rgba(212, 175, 55, 0.5); }
 
@@ -298,7 +312,7 @@ function renderFiles(dataArray) {
     const btn = document.getElementById('trunk-back-btn');
     btn.style.display = (currentLevel === 'level1') ? 'none' : 'flex';
 
-    if(!dataArray) return; // Guard
+    if(!dataArray) return;
 
     dataArray.forEach((item, index) => {
         const isLeft = index % 2 === 0; 
@@ -496,4 +510,3 @@ function handleFileUpload(event) {
 </script>
 </body>
 </html>
-
