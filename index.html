@@ -6,7 +6,7 @@
 <title>Room Glow Up</title>
 <link href="https://fonts.googleapis.com/css2?family=Bonheur+Royale&family=Limelight&family=Bad+Script&family=Special+Elite&display=swap" rel="stylesheet">
 <style>
-/* --- COMPRESSED STYLES --- */
+/* --- COMPRESSED CSS FOR LENGTH --- */
 * { box-sizing: border-box; }
 body { margin: 0; padding: 0; min-height: 100vh; width: 100vw; display: flex; flex-direction: column; align-items: center; background-color: #008080; background-image: url('background10.jpg'); background-repeat: no-repeat; background-position: center top; background-attachment: fixed; background-size: contain; font-family: 'Special Elite', cursive; color: white; overflow-x: hidden; overflow-y: auto; user-select: none; }
 .header-wrap { width: 100%; text-align: center; margin-top: 3rem; margin-bottom: 2rem; position: relative; z-index: 30; }
@@ -19,18 +19,18 @@ h2 { font-family: 'Bad Script', cursive; font-size: clamp(1.6rem, 3.5vw, 2.4rem)
 .plate-style { width: 190px; height: 50px; background: linear-gradient(to bottom, #e6d3b3 0%, #c4a476 50%, #9e7e52 100%); color: #2a1d12; display: flex; align-items: center; justify-content: center; font-size: 15px; font-weight: 900; text-transform: uppercase; letter-spacing: 1px; border: 1px solid #5e4326; box-shadow: inset 0 2px 5px rgba(0,0,0,0.25); text-align: center; line-height: 1; }
 .lip-pull { position: absolute; bottom: -14px; left: 50%; transform: translateX(-50%); width: 140px; height: 24px; background: linear-gradient(to bottom, #59442e, #2a1d12); border: 2px solid #1a1008; border-top: none; border-radius: 0 0 15px 15px; box-shadow: 0 5px 10px rgba(0,0,0,0.8); }
 
-/* LAYOUT & ANIMATIONS */
-.workspace-area { position: relative; width: 100%; max-width: 1400px; margin-top: 20vh; min-height: 1200px; display: flex; justify-content: center; }
-#cabinet-container { position: fixed; top: 250px; left: -500px; width: 350px; height: 600px; z-index: 20; transition: left 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+/* --- LAYOUT & ANIMATIONS (LOWERED TO 350px) --- */
+.workspace-area { position: relative; width: 100%; max-width: 1400px; margin-top: 10vh; min-height: 1200px; display: flex; justify-content: center; }
+/* Cabinet & Trunk lowered to 350px */
+#cabinet-container { position: fixed; top: 350px; left: -500px; width: 350px; height: 600px; z-index: 20; transition: left 1.2s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
 #cabinet-img { width: 100%; height: 100%; object-fit: fill; filter: drop-shadow(5px 5px 10px rgba(0,0,0,0.5)); }
 .cabinet-drawer-zone { position: absolute; left: 10%; width: 80%; height: 18%; display: flex; align-items: center; justify-content: center; cursor: pointer; z-index: 30; transition: transform 0.2s; }
-.cabinet-drawer-zone:hover { transform: translateY(-3px); box-shadow: 0 0 20px rgba(255,215,0,0.3); } /* GLOW EFFECT */
+.cabinet-drawer-zone:hover { transform: translateY(-3px); box-shadow: 0 0 20px rgba(255,215,0,0.3); } 
 #zone-living { top: 2%; } #zone-bed { top: 20%; } #zone-dining { top: 38%; } #zone-extra { top: 56%; } #zone-upload { top: 74%; }
 .pop-out-label { position: relative; width: 220px; height: 90px; background: linear-gradient(135deg, #8a6e4b 0%, #59442e 50%, #3e2b19 100%); border: 3px solid #2a1d12; box-shadow: inset 0 0 0 2px #a88860, inset 10px 0 20px rgba(0,0,0,0.8), 0 10px 15px rgba(0,0,0,0.7); display: flex; align-items: center; justify-content: center; cursor: pointer; opacity: 0; transform: scale(0.5); transition: all 0.3s; pointer-events: none; }
-.pop-out-label .plate-style { width: 160px; } 
-.cabinet-drawer-zone:hover .pop-out-label { opacity: 1; transform: scale(1.1); box-shadow: 0 20px 30px rgba(0,0,0,0.6); }
+.pop-out-label .plate-style { width: 160px; } .cabinet-drawer-zone:hover .pop-out-label { opacity: 1; transform: scale(1.1); box-shadow: 0 20px 30px rgba(0,0,0,0.6); }
 
-#furniture-box { position: fixed; top: 250px; left: -500px; width: 400px; height: 700px; background: url('filefolderbox.png') no-repeat center center; background-size: 100% 100%; z-index: 40; transition: left 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+#furniture-box { position: fixed; top: 350px; left: -500px; width: 400px; height: 700px; background: url('filefolderbox.png') no-repeat center center; background-size: 100% 100%; z-index: 40; transition: left 1.2s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
 #trunk-back-btn { position: absolute; right: 20px; top: 20px; width: 50px; height: 50px; background: radial-gradient(circle, #e6d3b3 0%, #c4a476 100%); border: 3px solid #59442e; border-radius: 50%; box-shadow: 0 5px 10px rgba(0,0,0,0.5); cursor: pointer; display: flex; align-items: center; justify-content: center; color: #2a1d12; font-family: 'Limelight'; font-size: 10px; font-weight: bold; z-index: 60; }
 .trunk-internal-zone { position: absolute; top: 15%; left: 10%; width: 80%; height: 70%; overflow-y: auto; overflow-x: hidden; display: flex; flex-wrap: wrap; justify-content: center; align-content: flex-start; gap: 15px; padding: 10px; }
 .trunk-internal-zone::-webkit-scrollbar { width: 8px; } .trunk-internal-zone::-webkit-scrollbar-thumb { background: #c4a476; border-radius: 4px; }
@@ -40,28 +40,29 @@ h2 { font-family: 'Bad Script', cursive; font-size: clamp(1.6rem, 3.5vw, 2.4rem)
 .catalog-icon-img { width: 60px; height: 60px; object-fit: contain; margin-bottom: 8px; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.8)); }
 .catalog-text { font-family: 'Bad Script', cursive; color: #e6d3b3; font-size: 1rem; text-align: center; line-height: 1; }
 
-#main-stage { width: 800px; height: 600px; border: 2px dashed rgba(255, 255, 255, 0.3); background-color: rgba(0, 0, 0, 0.6); position: relative; z-index: 10; margin-left: 0; transition: margin-left 0.8s ease-in-out; overflow: hidden; }
+/* STAGE LOGIC */
+#main-stage { width: 800px; height: 600px; border: 2px dashed rgba(255, 255, 255, 0.3); background-color: rgba(0, 0, 0, 0.6); position: relative; z-index: 10; margin-left: 0; transition: margin-left 1.2s ease-in-out; overflow: hidden; margin-top: 150px; /* Aligns with lower cabinet */ }
 #room-display { width: 100%; height: 100%; object-fit: cover; display: none; cursor: pointer; }
 
 /* STATE CONTROLS */
 body.rooms-active #cabinet-container { left: 20px; }
 body.rooms-active #furniture-box { left: -500px; }
-body.rooms-active #main-stage { margin-left: 380px; } /* Pushes stage right */
+body.rooms-active #main-stage { margin-left: 380px; } /* Slides Right */
 
 body.furniture-mode #cabinet-container { left: -500px; }
 body.furniture-mode #furniture-box { left: 20px; }
-body.furniture-mode #main-stage { margin-left: 420px; } /* Adjusts for trunk */
+body.furniture-mode #main-stage { margin-left: 420px; } /* Slides Right for Trunk */
 
 .stage-item-wrapper { position: absolute; cursor: move; display: inline-block; border: 2px solid transparent; z-index: 100; }
 .stage-item-wrapper img { width: 100%; height: 100%; display: block; pointer-events: none; }
 .stage-item-wrapper.selected { border: 2px dashed #9932CC; }
 .resize-handle { width: 15px; height: 15px; background: #9932CC; position: absolute; bottom: -5px; right: -5px; cursor: se-resize; display: none; border-radius: 50%; }
 .stage-item-wrapper.selected .resize-handle { display: block; }
-#preview-box { position: absolute; top: 300px; left: 450px; width: 250px; height: 250px; background: white; border: 5px solid white; box-shadow: 0 10px 20px rgba(0,0,0,0.5); z-index: 70; display: none; pointer-events: none; }
+#preview-box { position: absolute; top: 400px; left: 450px; width: 250px; height: 250px; background: white; border: 5px solid white; box-shadow: 0 10px 20px rgba(0,0,0,0.5); z-index: 70; display: none; pointer-events: none; }
 #preview-img { width: 100%; height: 100%; object-fit: contain; }
 </style>
 </head>
-<body class="rooms-active"> <div class="header-wrap">
+<body> <div class="header-wrap">
   <h1>Room Glow Up</h1>
   <h2>Your Dream Space Come To Life</h2>
 </div>
@@ -138,26 +139,19 @@ renderFiles(trunkData.level1);
 
 // ROOM CYCLE LOGIC
 function hoverRoom(category) {
-    // Only preview if we are still in "Rooms Mode" (Cabinet visible)
     if (!document.body.classList.contains('furniture-mode')) {
-        currentCategory = category; currentIndex = 0;
-        updateStage();
+        currentCategory = category; currentIndex = 0; updateStage();
     }
 }
 function nextVariation(category) {
     if (document.body.classList.contains('furniture-mode')) return;
     if (currentCategory !== category) { currentCategory = category; currentIndex = 0; }
-    else {
-        if(roomData[category] && roomData[category].length > 0) {
-            currentIndex = (currentIndex + 1) % roomData[category].length;
-        }
-    }
+    else { if(roomData[category]) currentIndex = (currentIndex + 1) % roomData[category].length; }
     updateStage();
 }
 function updateStage() {
     const img = document.getElementById('room-display');
     if(roomData[currentCategory]) {
-        // Handle if data is array or string
         let src = Array.isArray(roomData[currentCategory]) ? roomData[currentCategory][currentIndex] : roomData[currentCategory];
         if(!src) src = 'livingroom.jpg';
         img.src = src; img.style.display = 'block';
@@ -165,15 +159,15 @@ function updateStage() {
 }
 
 // SWAP LOGIC
-function lockRoom() {
-    // Cabinet OUT, Trunk IN
-    document.body.classList.remove('rooms-active');
-    document.body.classList.add('furniture-mode');
-}
 function toggleRooms() {
-    // Trunk OUT, Cabinet IN
     document.body.classList.remove('furniture-mode');
-    document.body.classList.add('rooms-active');
+    document.body.classList.toggle('rooms-active'); // Toggles Cabinet ON/OFF
+}
+function lockRoom() {
+    if(document.body.classList.contains('rooms-active')) {
+        document.body.classList.remove('rooms-active');
+        document.body.classList.add('furniture-mode');
+    }
 }
 function triggerUpload() { document.getElementById('file-upload').click(); }
 
@@ -188,14 +182,9 @@ function renderFiles(dataArray) {
         const iconSrc = item.type === 'item' ? item.image : item.icon;
         card.innerHTML = `<img src="${iconSrc}" class="catalog-icon-img" onerror="this.src='iconseating.png'"><div class="catalog-text">${item.name}</div>`;
         if (item.type === 'item') {
-            card.onmouseenter = () => showPreview(item.image);
-            card.onmouseleave = () => hidePreview();
-            card.onclick = () => addFurnitureToStage(item);
-        } else {
-            card.onclick = () => navigateDown(item.content);
-        }
-        zone.appendChild(card);
-        setTimeout(() => { card.classList.add('active'); }, 50 + (index * 50));
+            card.onmouseenter = () => showPreview(item.image); card.onmouseleave = () => hidePreview(); card.onclick = () => addFurnitureToStage(item);
+        } else { card.onclick = () => navigateDown(item.content); }
+        zone.appendChild(card); setTimeout(() => { card.classList.add('active'); }, 50 + (index * 50));
     });
 }
 function navigateDown(targetKey) {
@@ -203,12 +192,11 @@ function navigateDown(targetKey) {
 }
 function goBackLevel() {
     if(historyStack.length > 0) { currentLevel = historyStack.pop(); renderFiles(trunkData[currentLevel]); }
-    else { toggleRooms(); } // If top level, go back to rooms
+    else { toggleRooms(); }
 }
 function showPreview(imgSrc) {
     const box = document.getElementById('preview-box');
-    const img = document.getElementById('preview-img');
-    img.src = imgSrc; box.style.display = 'block';
+    document.getElementById('preview-img').src = imgSrc; box.style.display = 'block';
 }
 function hidePreview() { document.getElementById('preview-box').style.display = 'none'; }
 
@@ -216,12 +204,10 @@ function hidePreview() { document.getElementById('preview-box').style.display = 
 function addFurnitureToStage(item) {
     const stage = document.getElementById('main-stage');
     const wrapper = document.createElement('div'); wrapper.className = 'stage-item-wrapper';
-    wrapper.style.width = '150px'; wrapper.style.height = '100px';
-    wrapper.style.left = '50px'; wrapper.style.top = '50px';
+    wrapper.style.width = '150px'; wrapper.style.height = '100px'; wrapper.style.left = '50px'; wrapper.style.top = '50px';
     wrapper.innerHTML = `<img src="${item.image}"><div class="resize-handle"></div>`;
     stage.appendChild(wrapper);
-    makeDraggable(wrapper);
-    makeResizable(wrapper, wrapper.querySelector('.resize-handle'));
+    makeDraggable(wrapper); makeResizable(wrapper, wrapper.querySelector('.resize-handle'));
     wrapper.onclick = (e) => { e.stopPropagation(); document.querySelectorAll('.stage-item-wrapper').forEach(el => el.classList.remove('selected')); wrapper.classList.add('selected'); };
     wrapper.ondblclick = () => wrapper.remove();
 }
@@ -250,8 +236,7 @@ function handleFileUpload(event) {
     if (file) {
         const reader = new FileReader();
         reader.onload = function(e) {
-            const img = document.getElementById('room-display');
-            img.src = e.target.result; img.style.display = 'block';
+            const img = document.getElementById('room-display'); img.src = e.target.result; img.style.display = 'block';
             lockRoom();
         }
         reader.readAsDataURL(file);
