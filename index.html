@@ -22,36 +22,33 @@ h2 { font-family: 'Bad Script', cursive; font-size: clamp(1.6rem, 3.5vw, 2.4rem)
 .lip-pull { position: absolute; bottom: -14px; left: 50%; transform: translateX(-50%); width: 130px; height: 22px; background: linear-gradient(to bottom, #59442e, #2a1d12); border: 2px solid #1a1008; border-radius: 0 0 15px 15px; }
 
 /* --- WORKSPACE AREA --- */
-.workspace-area { position: relative; width: 100%; max-width: 1700px; margin-top: 100px; display: flex; justify-content: center; align-items: flex-start; gap: 40px; padding-bottom: 200px; }
+.workspace-area { position: relative; width: 100%; max-width: 1700px; margin-top: 120px; display: flex; justify-content: center; align-items: flex-start; gap: 40px; padding-bottom: 350px; }
 
-/* CABINET (Glide Logic) */
-#cabinet-container { position: relative; width: 450px; height: 750px; z-index: 50; flex-shrink: 0; left: -800px; transition: left 1s cubic-bezier(0.19, 1, 0.22, 1); display: block; }
+/* CABINET (GLIDES NICE) */
+#cabinet-container { position: relative; width: 450px; height: 750px; z-index: 50; flex-shrink: 0; left: -1000px; transition: left 1.2s cubic-bezier(0.25, 1, 0.5, 1); }
 body.rooms-active #cabinet-container { left: 0; }
 #cabinet-img { width: 100%; height: 100%; object-fit: fill; filter: drop-shadow(10px 10px 20px rgba(0,0,0,0.7)); }
 
 .cabinet-drawer-zone { position: absolute; left: 10%; width: 80%; height: 16%; display: flex; align-items: center; justify-content: center; cursor: pointer; z-index: 60; }
 #zone-living { top: 4%; } #zone-bed { top: 21%; } #zone-dining { top: 38%; } #zone-extra { top: 55%; } #zone-upload { top: 72%; }
 
-.pop-out-label { position: relative; width: 220px; height: 80px; background: linear-gradient(135deg, #8a6e4b 0%, #59442e 50%, #3e2b19 100%); border: 3px solid #2a1d12; box-shadow: 0 10px 20px rgba(0,0,0,0.5); display: flex; align-items: center; justify-content: center; opacity: 0; transform: scale(0.6); transition: all 0.4s ease; pointer-events: none; }
-.cabinet-drawer-zone:hover .pop-out-label { opacity: 1; transform: scale(1.1); }
-
 /* STAGE */
 #main-stage { width: 1100px; height: 750px; border: 4px double rgba(255, 255, 255, 0.2); background-color: rgba(0, 0, 0, 0.4); position: relative; z-index: 10; flex-shrink: 0; overflow: hidden; box-shadow: 0 0 50px rgba(0,0,0,0.5); }
-#room-display { width: 100%; height: 100%; object-fit: cover; display: none; cursor: cell; }
+#room-display { width: 100%; height: 100%; object-fit: cover; display: none; cursor: pointer; }
 
-/* FURNITURE CASES (Bottom Row) */
-.furniture-dock { position: fixed; bottom: -300px; left: 50%; transform: translateX(-50%); display: flex; gap: 30px; transition: bottom 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275); z-index: 100; }
-body.furniture-active .furniture-dock { bottom: 40px; }
+/* ENLARGED FURNITURE DOCK (FIXED AT BOTTOM) */
+.furniture-dock { position: fixed; bottom: -600px; left: 50%; transform: translateX(-50%); display: flex; gap: 60px; transition: bottom 1.2s cubic-bezier(0.19, 1, 0.22, 1); z-index: 200; width: auto; }
+body.furniture-active .furniture-dock { bottom: 50px; }
 
-.case-wrapper { position: relative; width: 220px; height: 180px; cursor: pointer; transition: transform 0.3s; }
-.case-wrapper:hover { transform: translateY(-10px); }
-.case-img { width: 100%; height: 100%; object-fit: contain; }
+/* ENLARGED CASES */
+.case-wrapper { position: relative; width: 340px; height: 300px; cursor: pointer; transition: transform 0.3s ease; }
+.case-wrapper:hover { transform: translateY(-25px); }
+.case-img { width: 100%; height: 100%; object-fit: contain; filter: drop-shadow(0 20px 25px rgba(0,0,0,0.7)); }
 
-/* CHARMS & TAGS */
-.charm { position: absolute; top: 20%; left: 15%; width: 50px; height: 50px; transform-origin: top center; animation: swing 3s ease-in-out infinite; z-index: 110; pointer-events: none; }
-.tag { position: absolute; top: 15%; right: 15%; width: 45px; height: 65px; transform-origin: top center; animation: swing 3.5s ease-in-out infinite; z-index: 110; pointer-events: none; }
+/* ICON TAG AS THE SOLE CHARM */
+.icon-tag { position: absolute; top: 15%; left: 50%; transform: translateX(-50%); width: 90px; height: 90px; transform-origin: top center; animation: swing 3s ease-in-out infinite; z-index: 210; pointer-events: none; }
 
-@keyframes swing { 0% { transform: rotate(-5deg); } 50% { transform: rotate(5deg); } 100% { transform: rotate(-5deg); } }
+@keyframes swing { 0% { transform: rotate(-8deg); } 50% { transform: rotate(8deg); } 100% { transform: rotate(-8deg); } }
 </style>
 </head>
 <body class="rooms-active">
@@ -71,21 +68,11 @@ body.furniture-active .furniture-dock { bottom: 40px; }
 <div class="workspace-area">
     <div id="cabinet-container">
         <img id="cabinet-img" src="cabinet.png" alt="Cabinet">
-        <div id="zone-living" class="cabinet-drawer-zone" onmouseenter="hoverRoom('livingroom')" onclick="nextVariation('livingroom')">
-            <div class="pop-out-label"><div class="plate-style">Living Room</div></div>
-        </div>
-        <div id="zone-bed" class="cabinet-drawer-zone" onmouseenter="hoverRoom('bedroom')" onclick="nextVariation('bedroom')">
-            <div class="pop-out-label"><div class="plate-style">Bedroom</div></div>
-        </div>
-        <div id="zone-dining" class="cabinet-drawer-zone" onmouseenter="hoverRoom('diningroom')" onclick="nextVariation('diningroom')">
-            <div class="pop-out-label"><div class="plate-style">Dining Room</div></div>
-        </div>
-        <div id="zone-extra" class="cabinet-drawer-zone" onmouseenter="hoverRoom('extrarooms')" onclick="nextVariation('extrarooms')">
-            <div class="pop-out-label"><div class="plate-style">Extra Rooms</div></div>
-        </div>
-        <div id="zone-upload" class="cabinet-drawer-zone" onclick="triggerUpload()">
-            <div class="pop-out-label"><div class="plate-style">Upload</div></div>
-        </div>
+        <div id="zone-living" class="cabinet-drawer-zone" onmouseenter="hoverRoom('livingroom')" onclick="nextVariation('livingroom')"></div>
+        <div id="zone-bed" class="cabinet-drawer-zone" onmouseenter="hoverRoom('bedroom')" onclick="nextVariation('bedroom')"></div>
+        <div id="zone-dining" class="cabinet-drawer-zone" onmouseenter="hoverRoom('diningroom')" onclick="nextVariation('diningroom')"></div>
+        <div id="zone-extra" class="cabinet-drawer-zone" onmouseenter="hoverRoom('extrarooms')" onclick="nextVariation('extrarooms')"></div>
+        <div id="zone-upload" class="cabinet-drawer-zone" onclick="triggerUpload()"></div>
     </div>
 
     <div id="main-stage">
@@ -96,22 +83,19 @@ body.furniture-active .furniture-dock { bottom: 40px; }
 <div class="furniture-dock">
     <div class="case-wrapper">
         <img src="seatingcase.png" class="case-img">
-        <img src="iconseating.png" class="charm"> <img src="tag.png" class="tag">
+        <img src="iconseating.png" class="icon-tag">
     </div>
     <div class="case-wrapper">
         <img src="bedscase.png" class="case-img">
-        <img src="iconbeds.png" class="charm">
-        <img src="tag.png" class="tag">
+        <img src="iconbeds.png" class="icon-tag">
     </div>
     <div class="case-wrapper">
-        <img src="tablecase.png" class="case-img">
-        <img src="icontables.png" class="charm">
-        <img src="tag.png" class="tag">
+        <img src="tablescase.png" class="case-img">
+        <img src="icontables.png" class="icon-tag">
     </div>
     <div class="case-wrapper">
         <img src="storagecase.png" class="case-img">
-        <img src="iconstorage.png" class="charm">
-        <img src="tag.png" class="tag">
+        <img src="iconstorage.png" class="icon-tag">
     </div>
 </div>
 
@@ -134,7 +118,6 @@ function toggleRooms() {
 }
 
 function lockRoom() {
-    // Cabinet glides out, Furniture cases glide up
     document.body.classList.remove('rooms-active');
     document.body.classList.add('furniture-active');
 }
