@@ -61,60 +61,60 @@ h2 { font-family: 'Bad Script', cursive; font-size: clamp(1.6rem, 3.5vw, 2.4rem)
     transition: left 0.8s ease; 
 }
 
-/* TAB SYSTEM (Square Tiles with Text) */
+/* TAB SYSTEM (VERTICAL TEXT) */
 #tab-rack {
     position: absolute;
-    top: 0px; 
-    left: 30px;
-    right: 30px;
-    height: 80px; 
+    top: 310px; /* Deep inside trunk */
+    left: 45px;
+    right: 45px;
+    height: 100px; /* Taller for vertical text */
     display: flex;
-    justify-content: space-around; 
+    justify-content: space-between; 
     z-index: 40; 
 }
 
 .folder-tab {
     position: relative;
-    width: 70px; 
-    height: 70px; 
+    width: 60px; /* Slightly narrower */
+    height: 90px; /* Taller */
     background: linear-gradient(to bottom, #e6d3b3 0%, #c4a476 100%);
-    border: 2px solid #59442e;
-    border-radius: 4px; 
+    border: 3px solid #59442e; 
+    border-radius: 6px; 
     cursor: pointer;
-    box-shadow: inset 0 1px 0 rgba(255,255,255,0.4), 0 -2px 4px rgba(0,0,0,0.3);
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.4), 0 3px 5px rgba(0,0,0,0.5);
     transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-    transform-origin: bottom center;
-    top: 50px; 
     display: flex;
-    flex-direction: column; /* Stack Icon and Text */
+    flex-direction: column; 
     align-items: center;
     justify-content: center;
+    padding: 2px;
 }
 
 .tab-icon-img {
-    width: 35px; /* Slightly smaller to fit text */
-    height: 35px;
+    width: 25px; 
+    height: 25px;
     object-fit: contain;
-    filter: drop-shadow(0 2px 2px rgba(0,0,0,0.4));
-    margin-bottom: 2px;
+    filter: drop-shadow(0 1px 1px rgba(0,0,0,0.4));
+    margin-bottom: 4px;
 }
 
+/* VERTICAL TEXT STYLE */
 .tab-text { 
-    display: block; /* TEXT IS ON */
-    font-family: 'Bad Script', cursive;
-    color: #3e2b19;
-    font-weight: bold;
-    font-size: 10px;
-    text-align: center;
+    display: block; 
+    writing-mode: vertical-rl; /* Vertical writing */
+    text-orientation: upright; /* Letters upright stacked */
+    font-family: 'Special Elite', cursive; /* Typewriter font */
+    color: #000; /* Black */
+    font-weight: 900; /* Bold */
+    font-size: 14px; /* Big */
+    text-transform: uppercase;
+    letter-spacing: -2px; /* Stack tightly */
     line-height: 1;
-    max-width: 100%;
-    overflow: hidden;
-    white-space: nowrap;
 }
 
 /* HOVER: Lift & Glow */
 .folder-tab:hover {
-    transform: translateY(-25px) scale(1.1);
+    transform: translateY(-20px) scale(1.1);
     background: linear-gradient(to bottom, #fff8e8 0%, #ffd700 100%);
     box-shadow: 0 0 15px #ffd700, 0 0 25px rgba(255, 215, 0, 0.6);
     z-index: 100;
@@ -132,7 +132,7 @@ h2 { font-family: 'Bad Script', cursive; font-size: clamp(1.6rem, 3.5vw, 2.4rem)
 }
 
 /* INTERNAL CONTENT */
-.trunk-internal-zone { position: absolute; top: 20%; left: 10%; width: 80%; height: 65%; overflow-y: auto; overflow-x: hidden; display: flex; flex-wrap: wrap; justify-content: center; align-content: flex-start; gap: 15px; padding: 10px; }
+.trunk-internal-zone { position: absolute; top: 28%; left: 10%; width: 80%; height: 57%; overflow-y: auto; overflow-x: hidden; display: flex; flex-wrap: wrap; justify-content: center; align-content: flex-start; gap: 15px; padding: 10px; }
 .trunk-internal-zone::-webkit-scrollbar { width: 8px; } .trunk-internal-zone::-webkit-scrollbar-thumb { background: #c4a476; border-radius: 4px; }
 
 .catalog-item { width: 110px; height: 110px; background: rgba(30, 20, 10, 0.85); border: 2px solid #c4a476; border-radius: 8px; display: flex; flex-direction: column; align-items: center; justify-content: center; cursor: pointer; box-shadow: 0 4px 8px rgba(0,0,0,0.6); transition: transform 0.3s, box-shadow 0.3s, background 0.3s; opacity: 0; transform: translateY(50px); }
@@ -140,7 +140,7 @@ h2 { font-family: 'Bad Script', cursive; font-size: clamp(1.6rem, 3.5vw, 2.4rem)
 .catalog-item:hover { transform: translateY(-5px) !important; box-shadow: 0 0 15px #c4a476; background: rgba(60, 40, 20, 0.95); }
 .catalog-icon-img { width: 80%; height: 80%; object-fit: contain; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.8)); cursor: grab; }
 
-.catalog-text { font-family: 'Bad Script', cursive; color: #e6d3b3; font-size: 0.9rem; text-align: center; line-height: 1; margin-top: 5px; }
+.catalog-text { font-family: 'Special Elite', cursive; color: #e6d3b3; font-weight: bold; font-size: 0.85rem; text-align: center; line-height: 1; margin-top: 5px; }
 
 /* PREVIEW BOX */
 #preview-box {
@@ -234,21 +234,20 @@ body.furniture-mode #main-stage { margin-left: 500px; }
 
 <script>
 // --- DATA STRUCTURE ---
-// Note: 'parentIcon' logic reused to ensure all subs use the main icon.
 const categories = [
     { id: 'cat_seat', name: 'Seating', icon: 'iconseating.png', subs: [
         { id: 'sub_couch', name: 'Couches', parentIcon: 'iconseating.png', content: 'items_couches' },
         { id: 'sub_arm', name: 'Armchairs', parentIcon: 'iconseating.png', content: 'items_armchairs' },
-        { id: 'sub_din_chair', name: 'Dining Chairs', parentIcon: 'iconseating.png', content: 'items_dining_chairs' },
+        { id: 'sub_din_chair', name: 'Dining', parentIcon: 'iconseating.png', content: 'items_dining_chairs' },
         { id: 'sub_bench', name: 'Benches', parentIcon: 'iconseating.png', content: 'items_benches' },
         { id: 'sub_ottoman', name: 'Ottomans', parentIcon: 'iconseating.png', content: 'items_ottomans' },
         { id: 'sub_stool', name: 'Stools', parentIcon: 'iconseating.png', content: 'items_stools' }
     ]},
     { id: 'cat_table', name: 'Tables', icon: 'icontables.png', subs: [
-        { id: 'sub_dine_tab', name: 'Dining Tables', parentIcon: 'icontables.png', content: 'items_tables_dining' },
-        { id: 'sub_end', name: 'End Tables', parentIcon: 'icontables.png', content: 'items_tables_end' },
-        { id: 'sub_coffee', name: 'Coffee Tables', parentIcon: 'icontables.png', content: 'items_tables_coffee' },
-        { id: 'sub_bedside', name: 'Bedside Tables', parentIcon: 'icontables.png', content: 'items_tables_bedside' }
+        { id: 'sub_dine_tab', name: 'Dining', parentIcon: 'icontables.png', content: 'items_tables_dining' },
+        { id: 'sub_end', name: 'End', parentIcon: 'icontables.png', content: 'items_tables_end' },
+        { id: 'sub_coffee', name: 'Coffee', parentIcon: 'icontables.png', content: 'items_tables_coffee' },
+        { id: 'sub_bedside', name: 'Bedside', parentIcon: 'icontables.png', content: 'items_tables_bedside' }
     ]},
     { id: 'cat_store', name: 'Storage', icon: 'iconstorage.png', subs: [
         { id: 'sub_dress', name: 'Dressers', parentIcon: 'iconstorage.png', content: 'items_dressers' },
@@ -257,11 +256,11 @@ const categories = [
         { id: 'sub_console', name: 'Consoles', parentIcon: 'iconstorage.png', content: 'items_consoles' }
     ]},
     { id: 'cat_bed', name: 'Beds', icon: 'iconbeds.png', subs: [
-        { id: 'sub_bed_std', name: 'Standard Beds', parentIcon: 'iconbeds.png', content: 'items_beds_std' }
+        { id: 'sub_bed_std', name: 'Beds', parentIcon: 'iconbeds.png', content: 'items_beds_std' }
     ]}
 ];
 
-// ITEMS DATABASE
+// ITEMS DATABASE - Names here are ignored in favor of Category names
 const itemDB = {
     items_couches: [ {name:'Leather Sofa', img:'couch1.png'}, {name:'Velvet Sofa', img:'couch2.png'}, {name:'Modern Sofa', img:'couch3.png'} ],
     items_armchairs: [ {name:'Wingback', img:'armchair1.png'}, {name:'Club Chair', img:'armchair2.png'} ],
@@ -301,7 +300,7 @@ function renderTabs(dataList, type) {
             const tab = document.createElement('div');
             tab.className = 'folder-tab tab-show';
             
-            // Icon Logic - simplified to use main icons for sub-cats too
+            // Icon Logic
             let iconSrc = item.icon ? item.icon : 'iconseating.png';
             if (type === 'sub' && item.parentIcon) {
                 iconSrc = item.parentIcon;
@@ -309,7 +308,7 @@ function renderTabs(dataList, type) {
             
             // We use onerror to swap to the main category icon if the specific one is missing
             tab.innerHTML = `
-                <img src="${iconSrc}" class="tab-icon-img">
+                <img src="${iconSrc}" class="tab-icon-img" onerror="this.src='${iconSrc}'">
                 <div class="tab-text">${item.name}</div>
             `;
             
@@ -318,7 +317,7 @@ function renderTabs(dataList, type) {
             if (type === 'main') {
                 tab.onclick = () => selectCategory(item);
             } else if (type === 'sub') {
-                tab.onclick = () => showItems(item.content);
+                tab.onclick = () => showItems(item.content, item.name); // Pass the Category Name
             }
             rack.appendChild(tab);
         });
@@ -333,7 +332,8 @@ function selectCategory(catObj) {
     document.getElementById('trunk-internal-zone').innerHTML = '';
 }
 
-function showItems(contentKey) {
+// Updated to accept genericLabel
+function showItems(contentKey, genericLabel) {
     const items = itemDB[contentKey] || [];
     const zone = document.getElementById('trunk-internal-zone');
     zone.innerHTML = '';
@@ -342,7 +342,8 @@ function showItems(contentKey) {
         const card = document.createElement('div');
         card.className = 'catalog-item';
         let imgSrc = item.img ? item.img : 'iconseating.png';
-        card.innerHTML = `<img src="${imgSrc}" class="catalog-icon-img" draggable="true" ondragstart="dragStart(event, '${imgSrc}')"><div class="catalog-text">${item.name}</div>`;
+        // USE genericLabel INSTEAD OF item.name
+        card.innerHTML = `<img src="${imgSrc}" class="catalog-icon-img" draggable="true" ondragstart="dragStart(event, '${imgSrc}')"><div class="catalog-text">${genericLabel}</div>`;
         card.onmouseenter = () => showPreview(imgSrc);
         card.onmouseleave = () => hidePreview();
         card.onclick = () => addFurnitureToStage(item);
