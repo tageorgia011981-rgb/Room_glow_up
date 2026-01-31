@@ -8,9 +8,27 @@
 <style>
 /* --- MAIN SETUP --- */
 * { box-sizing: border-box; }
-body { margin: 0; padding: 0; min-height: 100vh; width: 100vw; display: flex; flex-direction: column; align-items: center; background-color: #008080; background-image: url('background10.jpg'); background-repeat: no-repeat; background-position: center top; background-attachment: fixed; background-size: contain; font-family: 'Special Elite', cursive; color: white; overflow-x: hidden; overflow-y: auto; user-select: none; }
+body { 
+    margin: 0; 
+    padding: 0; 
+    min-height: 200vh; 
+    width: 100vw; 
+    display: flex; 
+    flex-direction: column; 
+    align-items: center; 
+    background-color: #008080; 
+    background-image: url('background10.jpg'); 
+    background-repeat: no-repeat; 
+    background-position: center top; 
+    background-attachment: fixed; 
+    background-size: cover; 
+    font-family: 'Special Elite', cursive; 
+    color: white; 
+    overflow-x: hidden; 
+    user-select: none; 
+}
 
-.header-wrap { width: 100%; text-align: center; margin-top: 3rem; margin-bottom: 1rem; position: relative; z-index: 30; }
+.header-wrap { width: 100%; text-align: center; margin-top: 4rem; margin-bottom: 2rem; position: relative; z-index: 30; }
 h1 { font-family: 'Bonheur Royale', cursive; font-size: clamp(4.5rem, 9vw, 7rem); line-height: 1.1; margin: 0; text-shadow: 3px 3px 10px rgba(0,0,0,0.7); font-weight: 400; }
 h2 { font-family: 'Bad Script', cursive; font-size: clamp(1.6rem, 3.5vw, 2.4rem); margin-top: 0.5rem; text-shadow: 2px 2px 8px rgba(0,0,0,0.6); }
 
@@ -21,32 +39,83 @@ h2 { font-family: 'Bad Script', cursive; font-size: clamp(1.6rem, 3.5vw, 2.4rem)
 .plate-style { width: 180px; height: 45px; background: linear-gradient(to bottom, #e6d3b3 0%, #c4a476 50%, #9e7e52 100%); color: #2a1d12; display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 900; text-transform: uppercase; letter-spacing: 1px; border: 1px solid #5e4326; box-shadow: inset 0 2px 5px rgba(0,0,0,0.25); text-align: center; }
 .lip-pull { position: absolute; bottom: -14px; left: 50%; transform: translateX(-50%); width: 130px; height: 22px; background: linear-gradient(to bottom, #59442e, #2a1d12); border: 2px solid #1a1008; border-radius: 0 0 15px 15px; }
 
-/* --- WORKSPACE AREA --- */
-.workspace-area { position: relative; width: 100%; max-width: 1700px; margin-top: 120px; display: flex; justify-content: center; align-items: flex-start; gap: 40px; padding-bottom: 350px; }
+/* --- SCROLLABLE WORKSPACE AREA --- */
+.workspace-area { 
+    position: relative; 
+    width: 100%; 
+    max-width: 1800px; 
+    margin-top: 15vh; 
+    display: flex; 
+    justify-content: center; 
+    align-items: center; 
+    gap: 60px; 
+    padding-bottom: 50vh; 
+}
 
-/* CABINET (GLIDES NICE) */
-#cabinet-container { position: relative; width: 450px; height: 750px; z-index: 50; flex-shrink: 0; left: -1000px; transition: left 1.2s cubic-bezier(0.25, 1, 0.5, 1); }
+/* CABINET */
+#cabinet-container { 
+    position: relative; 
+    width: 450px; 
+    height: 750px; 
+    z-index: 50; 
+    flex-shrink: 0; 
+    left: -1200px; 
+    transition: left 1.2s cubic-bezier(0.25, 1, 0.5, 1); 
+}
 body.rooms-active #cabinet-container { left: 0; }
-#cabinet-img { width: 100%; height: 100%; object-fit: fill; filter: drop-shadow(10px 10px 20px rgba(0,0,0,0.7)); }
+#cabinet-img { width: 100%; height: 100%; object-fit: fill; filter: drop-shadow(15px 15px 25px rgba(0,0,0,0.8)); }
 
-.cabinet-drawer-zone { position: absolute; left: 10%; width: 80%; height: 16%; display: flex; align-items: center; justify-content: center; cursor: pointer; z-index: 60; }
+.cabinet-drawer-zone { position: absolute; left: 10%; width: 80%; height: 16%; cursor: pointer; z-index: 60; }
 #zone-living { top: 4%; } #zone-bed { top: 21%; } #zone-dining { top: 38%; } #zone-extra { top: 55%; } #zone-upload { top: 72%; }
 
 /* STAGE */
-#main-stage { width: 1100px; height: 750px; border: 4px double rgba(255, 255, 255, 0.2); background-color: rgba(0, 0, 0, 0.4); position: relative; z-index: 10; flex-shrink: 0; overflow: hidden; box-shadow: 0 0 50px rgba(0,0,0,0.5); }
+#main-stage { 
+    width: 1100px; 
+    height: 750px; 
+    border: 6px double rgba(255, 255, 255, 0.3); 
+    background-color: rgba(0, 0, 0, 0.5); 
+    position: relative; 
+    z-index: 10; 
+    flex-shrink: 0; 
+    overflow: hidden; 
+    box-shadow: 0 0 60px rgba(0,0,0,0.6); 
+}
 #room-display { width: 100%; height: 100%; object-fit: cover; display: none; cursor: pointer; }
 
-/* ENLARGED FURNITURE DOCK (FIXED AT BOTTOM) */
-.furniture-dock { position: fixed; bottom: -600px; left: 50%; transform: translateX(-50%); display: flex; gap: 60px; transition: bottom 1.2s cubic-bezier(0.19, 1, 0.22, 1); z-index: 200; width: auto; }
-body.furniture-active .furniture-dock { bottom: 50px; }
+/* TIGHTER FIXED FURNITURE DOCK (UNDER STAGE ONLY) */
+.furniture-dock { 
+    position: fixed; 
+    bottom: -800px; 
+    /* Anchored to the center-right where the stage lives */
+    left: calc(50% + 255px); 
+    transform: translateX(-50%); 
+    display: flex; 
+    gap: 15px; /* Spaced out a little less */
+    transition: bottom 1.2s cubic-bezier(0.19, 1, 0.22, 1); 
+    z-index: 200; 
+    width: 1100px; /* Matches Stage Width */
+    justify-content: center;
+}
+body.furniture-active .furniture-dock { bottom: 20px; }
 
-/* ENLARGED CASES */
-.case-wrapper { position: relative; width: 340px; height: 300px; cursor: pointer; transition: transform 0.3s ease; }
-.case-wrapper:hover { transform: translateY(-25px); }
-.case-img { width: 100%; height: 100%; object-fit: contain; filter: drop-shadow(0 20px 25px rgba(0,0,0,0.7)); }
+/* MASSIVE CASES */
+.case-wrapper { position: relative; width: 260px; height: 220px; cursor: pointer; transition: transform 0.3s ease; flex-shrink: 0; }
+.case-wrapper:hover { transform: translateY(-30px); }
+.case-img { width: 100%; height: 100%; object-fit: contain; filter: drop-shadow(0 20px 30px rgba(0,0,0,0.9)); }
 
-/* ICON TAG AS THE SOLE CHARM */
-.icon-tag { position: absolute; top: 15%; left: 50%; transform: translateX(-50%); width: 90px; height: 90px; transform-origin: top center; animation: swing 3s ease-in-out infinite; z-index: 210; pointer-events: none; }
+/* ICON TAG FASTENED TO FRONT FACE */
+.icon-tag { 
+    position: absolute; 
+    top: 38%; 
+    left: 50%; 
+    transform: translateX(-50%); 
+    width: 85px; 
+    height: 85px; 
+    transform-origin: top center; 
+    animation: swing 3s ease-in-out infinite; 
+    z-index: 210; 
+    pointer-events: none; 
+}
 
 @keyframes swing { 0% { transform: rotate(-8deg); } 50% { transform: rotate(8deg); } 100% { transform: rotate(-8deg); } }
 </style>
