@@ -15,186 +15,76 @@ body { margin: 0; padding: 0; min-height: 100vh; width: 100vw; display: flex; fl
 h1 { font-family: 'Bonheur Royale', cursive; font-size: clamp(4.5rem, 9vw, 7rem); line-height: 1.1; margin: 0; text-shadow: 3px 3px 10px rgba(0,0,0,0.7); font-weight: 400; }
 h2 { font-family: 'Bad Script', cursive; font-size: clamp(1.6rem, 3.5vw, 2.4rem); margin-top: 0.5rem; margin-bottom: 0; text-shadow: 2px 2px 8px rgba(0,0,0,0.6); }
 
-/* TOP TABS (Navigation) */
+/* TOP TABS */
 .tabs { display: flex; justify-content: center; gap: 2rem; flex-wrap: wrap; width: 100%; padding: 2rem; position: relative; z-index: 30; }
 .drawer-hardware { position: relative; width: 260px; height: 90px; background: linear-gradient(135deg, #8a6e4b 0%, #59442e 50%, #3e2b19 100%); border: 3px solid #2a1d12; box-shadow: inset 0 0 0 2px #a88860, inset 10px 0 20px rgba(0,0,0,0.8), 0 10px 15px rgba(0,0,0,0.7); display: flex; align-items: center; justify-content: center; cursor: pointer; transition: all 0.3s ease; }
 .drawer-hardware:hover { filter: brightness(1.15); transform: translateY(-4px); }
-.drawer-hardware::before, .drawer-hardware::after { content: ''; position: absolute; top: 50%; transform: translateY(-50%); width: 14px; height: 14px; border-radius: 50%; background: radial-gradient(circle, #111 20%, #555 100%); box-shadow: inset 1px 1px 2px #000; } .drawer-hardware::before { left: 12px; } .drawer-hardware::after { right: 12px; }
 .plate-style { width: 190px; height: 50px; background: linear-gradient(to bottom, #e6d3b3 0%, #c4a476 50%, #9e7e52 100%); color: #2a1d12; display: flex; align-items: center; justify-content: center; font-size: 15px; font-weight: 900; text-transform: uppercase; letter-spacing: 1px; border: 1px solid #5e4326; box-shadow: inset 0 2px 5px rgba(0,0,0,0.25); text-align: center; line-height: 1; }
 .lip-pull { position: absolute; bottom: -14px; left: 50%; transform: translateX(-50%); width: 140px; height: 24px; background: linear-gradient(to bottom, #59442e, #2a1d12); border: 2px solid #1a1008; border-top: none; border-radius: 0 0 15px 15px; box-shadow: 0 5px 10px rgba(0,0,0,0.8); }
-
-/* WORKSPACE AREA */
-.workspace-area { position: relative; width: 100%; max-width: 1800px; margin-top: 50px; min-height: 1400px; display: flex; justify-content: center; align-items: flex-start; }
-
-/* CABINET */
-#cabinet-container { 
-    position: absolute; 
-    top: 250px; 
-    left: -500px; 
-    width: 350px; 
-    height: auto; 
-    z-index: 50; 
-    transition: left 0.8s ease; 
-}
-#cabinet-img { 
-    width: 100%; 
-    height: auto; 
-    display: block;
-    filter: drop-shadow(5px 5px 10px rgba(0,0,0,0.5)); 
-}
-.cabinet-drawer-zone { position: absolute; left: 10%; width: 80%; height: 18%; display: flex; align-items: center; justify-content: center; cursor: pointer; z-index: 30; transition: transform 0.2s; }
-.cabinet-drawer-zone:hover { transform: translateY(-3px); box-shadow: 0 0 20px rgba(255,215,0,0.3); } 
-#zone-living { top: 2%; } #zone-bed { top: 20%; } #zone-dining { top: 38%; } #zone-extra { top: 56%; } #zone-upload { top: 74%; }
-.pop-out-label { position: relative; width: 220px; height: 90px; background: linear-gradient(135deg, #8a6e4b 0%, #59442e 50%, #3e2b19 100%); border: 3px solid #2a1d12; box-shadow: inset 0 0 0 2px #a88860, inset 10px 0 20px rgba(0,0,0,0.8), 0 10px 15px rgba(0,0,0,0.7); display: flex; align-items: center; justify-content: center; cursor: pointer; opacity: 0; transform: scale(0.5); transition: all 0.3s; pointer-events: none; }
-.pop-out-label .plate-style { width: 160px; } .cabinet-drawer-zone:hover .pop-out-label { opacity: 1; transform: scale(1.1); box-shadow: 0 20px 30px rgba(0,0,0,0.6); }
-
-/* TRUNK CONTAINER */
-#furniture-box { 
-    position: absolute; 
-    top: 250px; 
-    left: -500px; 
-    width: 400px; 
-    height: 700px; 
-    background: url('filefolderbox.png') no-repeat bottom center; 
-    background-size: contain; 
-    z-index: 50; 
-    transition: left 0.8s ease; 
-}
-
-/* TAB SYSTEM (VERTICAL TEXT) */
-#tab-rack {
-    position: absolute;
-    top: 310px; /* Deep inside trunk */
-    left: 45px;
-    right: 45px;
-    height: 100px; /* Taller for vertical text */
-    display: flex;
-    justify-content: space-between; 
-    z-index: 40; 
-}
-
-.folder-tab {
-    position: relative;
-    width: 60px; /* Slightly narrower */
-    height: 90px; /* Taller */
-    background: linear-gradient(to bottom, #e6d3b3 0%, #c4a476 100%);
-    border: 3px solid #59442e; 
-    border-radius: 6px; 
-    cursor: pointer;
-    box-shadow: inset 0 1px 0 rgba(255,255,255,0.4), 0 3px 5px rgba(0,0,0,0.5);
-    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-    display: flex;
-    flex-direction: column; 
-    align-items: center;
-    justify-content: center;
-    padding: 2px;
-}
-
-.tab-icon-img {
-    width: 25px; 
-    height: 25px;
-    object-fit: contain;
-    filter: drop-shadow(0 1px 1px rgba(0,0,0,0.4));
-    margin-bottom: 4px;
-}
-
-/* VERTICAL TEXT STYLE */
-.tab-text { 
-    display: block; 
-    writing-mode: vertical-rl; /* Vertical writing */
-    text-orientation: upright; /* Letters upright stacked */
-    font-family: 'Special Elite', cursive; /* Typewriter font */
-    color: #000; /* Black */
-    font-weight: 900; /* Bold */
-    font-size: 14px; /* Big */
-    text-transform: uppercase;
-    letter-spacing: -2px; /* Stack tightly */
-    line-height: 1;
-}
-
-/* HOVER: Lift & Glow */
-.folder-tab:hover {
-    transform: translateY(-20px) scale(1.1);
-    background: linear-gradient(to bottom, #fff8e8 0%, #ffd700 100%);
-    box-shadow: 0 0 15px #ffd700, 0 0 25px rgba(255, 215, 0, 0.6);
-    z-index: 100;
-    border-color: #ffd700;
-}
-
-/* ANIMATIONS */
-.tab-hide { animation: dropDown 0.3s forwards; }
-.tab-show { animation: popUp 0.5s 0.2s forwards; opacity: 0; }
-
-@keyframes dropDown { to { transform: translateY(100px); opacity: 0; } }
-@keyframes popUp { 
-    from { transform: translateY(100px); opacity: 0; }
-    to { transform: translateY(0); opacity: 1; } 
-}
-
-/* INTERNAL CONTENT */
-.trunk-internal-zone { position: absolute; top: 28%; left: 10%; width: 80%; height: 57%; overflow-y: auto; overflow-x: hidden; display: flex; flex-wrap: wrap; justify-content: center; align-content: flex-start; gap: 15px; padding: 10px; }
-.trunk-internal-zone::-webkit-scrollbar { width: 8px; } .trunk-internal-zone::-webkit-scrollbar-thumb { background: #c4a476; border-radius: 4px; }
-
-.catalog-item { width: 110px; height: 110px; background: rgba(30, 20, 10, 0.85); border: 2px solid #c4a476; border-radius: 8px; display: flex; flex-direction: column; align-items: center; justify-content: center; cursor: pointer; box-shadow: 0 4px 8px rgba(0,0,0,0.6); transition: transform 0.3s, box-shadow 0.3s, background 0.3s; opacity: 0; transform: translateY(50px); }
-.catalog-item.active { opacity: 1; transform: translateY(0); }
-.catalog-item:hover { transform: translateY(-5px) !important; box-shadow: 0 0 15px #c4a476; background: rgba(60, 40, 20, 0.95); }
-.catalog-icon-img { width: 80%; height: 80%; object-fit: contain; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.8)); cursor: grab; }
-
-.catalog-text { font-family: 'Special Elite', cursive; color: #e6d3b3; font-weight: bold; font-size: 0.85rem; text-align: center; line-height: 1; margin-top: 5px; }
-
-/* PREVIEW BOX */
-#preview-box {
-    position: absolute;
-    top: 250px; 
-    left: 440px; 
-    width: 250px; 
-    height: 250px;
-    background: #f0f0f0;
-    border: 5px solid white;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.6);
-    z-index: 200;
-    display: none;
-    pointer-events: none;
-    border-radius: 4px;
-    padding: 10px;
-}
-#preview-img { width: 100%; height: 100%; object-fit: contain; }
 
 /* MAIN STAGE */
 #main-stage { 
   width: 1200px; height: 800px; 
   border: 2px dashed rgba(255, 255, 255, 0.3); background-color: rgba(0, 0, 0, 0.6); 
   position: relative; z-index: 10; 
-  margin: 0 auto; 
-  margin-top: 250px; 
-  transition: margin-left 1.0s ease-in-out; 
+  margin: 0 auto; margin-top: 50px;
 }
-#room-display { width: 100%; height: 100%; object-fit: cover; display: none; cursor: pointer; }
+#room-display { width: 100%; height: 100%; object-fit: cover; display: none; }
 
-/* SLIDE LOGIC */
-body.rooms-active #cabinet-container { left: 20px; }
-body.rooms-active #furniture-box { left: -500px; }
-body.rooms-active #main-stage { margin-left: 450px; }
+/* DECORATIVE STORAGE BOXES (The "Glide Up" Logic) */
+.storage-container {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    width: 100%;
+    position: fixed;
+    bottom: -300px; /* Hidden below screen */
+    transition: bottom 1s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    z-index: 100;
+}
 
-body.furniture-mode #cabinet-container { left: -500px; }
-body.furniture-mode #furniture-box { left: 20px; }
-body.furniture-mode #main-stage { margin-left: 500px; }
+/* When room is chosen, glide up */
+body.furniture-mode .storage-container {
+    bottom: 50px; /* Sits under stage */
+}
 
-.stage-item-wrapper { position: absolute; cursor: move; display: inline-block; border: 2px solid transparent; z-index: 100; }
-.stage-item-wrapper img { width: 100%; height: 100%; display: block; pointer-events: none; }
-.stage-item-wrapper.selected { border: 2px dashed #9932CC; }
-.resize-handle { width: 15px; height: 15px; background: #9932CC; position: absolute; bottom: -5px; right: -5px; cursor: se-resize; display: none; border-radius: 50%; }
-.stage-item-wrapper.selected .resize-handle { display: block; }
+.storage-box-item {
+    position: relative;
+    width: 200px;
+    height: 150px;
+    cursor: pointer;
+    transition: transform 0.3s;
+}
+.storage-box-item:hover { transform: translateY(-20px); }
 
-/* MINI BACK BUTTON */
-.mini-back { 
-    position: absolute; top: 5px; right: 15px; 
-    font-size: 10px; color: #59442e; cursor: pointer; font-weight: bold; 
-    border-bottom: 1px solid #59442e; display: none; z-index: 200;
+.box-case-img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+.icon-tag {
+    position: absolute;
+    top: -20px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 50px;
+    height: 50px;
+    background: white;
+    border-radius: 50%;
+    padding: 5px;
+    border: 3px solid #59442e;
+    box-shadow: 0 5px 10px rgba(0,0,0,0.4);
+}
+
+.icon-tag img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
 }
 </style>
 </head>
-<body>
+<body id="main-body">
 
 <div class="header-wrap">
   <h1>Room Glow Up</h1>
@@ -202,276 +92,55 @@ body.furniture-mode #main-stage { margin-left: 500px; }
 </div>
 
 <div class="tabs">
-  <div class="drawer-hardware" onclick="toggleRooms()"><div class="plate-style">Rooms</div><div class="lip-pull"></div></div>
-  <div class="drawer-hardware" onclick="lockRoom()"><div class="plate-style">Furniture Catalog</div><div class="lip-pull"></div></div>
-  <div class="drawer-hardware"><div class="plate-style">Inspirational<br>Look Book</div><div class="lip-pull"></div></div>
+  <div class="drawer-hardware" onclick="triggerUpload()"><div class="plate-style">Upload Room</div><div class="lip-pull"></div></div>
+  <div class="drawer-hardware" onclick="lockRoom()"><div class="plate-style">Lock & Design</div><div class="lip-pull"></div></div>
   <div class="drawer-hardware"><div class="plate-style">Save</div><div class="lip-pull"></div></div>
 </div>
 
-<div class="workspace-area">
-    <div id="cabinet-container">
-        <img id="cabinet-img" src="cabinet.png" alt="Cabinet">
-        <div id="zone-living" class="cabinet-drawer-zone" onmouseenter="hoverRoom('livingroom')" onclick="nextVariation('livingroom')"><div class="pop-out-label"><div class="plate-style">Living Room</div><div class="lip-pull"></div></div></div>
-        <div id="zone-bed" class="cabinet-drawer-zone" onmouseenter="hoverRoom('bedroom')" onclick="nextVariation('bedroom')"><div class="pop-out-label"><div class="plate-style">Bedroom</div><div class="lip-pull"></div></div></div>
-        <div id="zone-dining" class="cabinet-drawer-zone" onmouseenter="hoverRoom('diningroom')" onclick="nextVariation('diningroom')"><div class="pop-out-label"><div class="plate-style">Dining Room</div><div class="lip-pull"></div></div></div>
-        <div id="zone-extra" class="cabinet-drawer-zone" onmouseenter="hoverRoom('extrarooms')" onclick="nextVariation('extrarooms')"><div class="pop-out-label"><div class="plate-style">Extra Rooms</div><div class="lip-pull"></div></div></div>
-        <div id="zone-upload" class="cabinet-drawer-zone" onclick="triggerUpload()"><div class="pop-out-label"><div class="plate-style">Upload</div><div class="lip-pull"></div></div></div>
-    </div>
+<div id="main-stage">
+    <img id="room-display" src="" alt="Room Design">
+</div>
 
-    <div id="main-stage" ondrop="drop(event)" ondragover="allowDrop(event)">
-        <img id="room-display" src="" alt="Room Design" onclick="lockRoom()">
+<div class="storage-container">
+    <div class="storage-box-item">
+        <div class="icon-tag"><img src="iconseating.png"></div>
+        <img src="seatingcase.png" class="box-case-img">
     </div>
-
-    <div id="furniture-box">
-        <div id="tab-rack"></div> <div class="mini-back" id="trunk-mini-back" onclick="resetToCategories()">BACK TO MAIN</div>
-        <div id="trunk-internal-zone" class="trunk-internal-zone"></div>
+    <div class="storage-box-item">
+        <div class="icon-tag"><img src="iconbeds.png"></div>
+        <img src="bedscase.png" class="box-case-img">
     </div>
-    
-    <div id="preview-box"><img id="preview-img" src=""></div>
+    <div class="storage-box-item">
+        <div class="icon-tag"><img src="iconstorage.png"></div>
+        <img src="storagecase.png" class="box-case-img">
+    </div>
+    <div class="storage-box-item">
+        <div class="icon-tag"><img src="icontable.png"></div>
+        <img src="tablescase.png" class="box-case-img">
+    </div>
 </div>
 
 <input type="file" id="file-upload" accept="image/*" onchange="handleFileUpload(event)" style="display:none">
 
 <script>
-// --- DATA STRUCTURE ---
-const categories = [
-    { id: 'cat_seat', name: 'Seating', icon: 'iconseating.png', subs: [
-        { id: 'sub_couch', name: 'Couches', parentIcon: 'iconseating.png', content: 'items_couches' },
-        { id: 'sub_arm', name: 'Armchairs', parentIcon: 'iconseating.png', content: 'items_armchairs' },
-        { id: 'sub_din_chair', name: 'Dining', parentIcon: 'iconseating.png', content: 'items_dining_chairs' },
-        { id: 'sub_bench', name: 'Benches', parentIcon: 'iconseating.png', content: 'items_benches' },
-        { id: 'sub_ottoman', name: 'Ottomans', parentIcon: 'iconseating.png', content: 'items_ottomans' },
-        { id: 'sub_stool', name: 'Stools', parentIcon: 'iconseating.png', content: 'items_stools' }
-    ]},
-    { id: 'cat_table', name: 'Tables', icon: 'icontables.png', subs: [
-        { id: 'sub_dine_tab', name: 'Dining', parentIcon: 'icontables.png', content: 'items_tables_dining' },
-        { id: 'sub_end', name: 'End', parentIcon: 'icontables.png', content: 'items_tables_end' },
-        { id: 'sub_coffee', name: 'Coffee', parentIcon: 'icontables.png', content: 'items_tables_coffee' },
-        { id: 'sub_bedside', name: 'Bedside', parentIcon: 'icontables.png', content: 'items_tables_bedside' }
-    ]},
-    { id: 'cat_store', name: 'Storage', icon: 'iconstorage.png', subs: [
-        { id: 'sub_dress', name: 'Dressers', parentIcon: 'iconstorage.png', content: 'items_dressers' },
-        { id: 'sub_cab', name: 'Cabinets', parentIcon: 'iconstorage.png', content: 'items_cabinets' },
-        { id: 'sub_buffet', name: 'Buffets', parentIcon: 'iconstorage.png', content: 'items_buffets' },
-        { id: 'sub_console', name: 'Consoles', parentIcon: 'iconstorage.png', content: 'items_consoles' }
-    ]},
-    { id: 'cat_bed', name: 'Beds', icon: 'iconbeds.png', subs: [
-        { id: 'sub_bed_std', name: 'Beds', parentIcon: 'iconbeds.png', content: 'items_beds_std' }
-    ]}
-];
-
-// ITEMS DATABASE - Names here are ignored in favor of Category names
-const itemDB = {
-    items_couches: [ {name:'Leather Sofa', img:'couch1.png'}, {name:'Velvet Sofa', img:'couch2.png'}, {name:'Modern Sofa', img:'couch3.png'} ],
-    items_armchairs: [ {name:'Wingback', img:'armchair1.png'}, {name:'Club Chair', img:'armchair2.png'} ],
-    items_dining_chairs: [], 
-    items_benches: [],
-    items_ottomans: [],
-    items_stools: [ {name:'Bar Stool 1', img:'barstool1.png'}, {name:'Bar Stool 2', img:'barstool2.png'}, {name:'Bar Stool 3', img:'barstool3.png'} ],
-    items_beds_std: [ 
-        {name:'Classic Bed', img:'bed1.png'}, {name:'Modern Bed', img:'bed2.png'}, {name:'Rustic Bed', img:'bed3.png'}, 
-        {name:'Iron Bed', img:'bed4.png'}, {name:'Canopy Bed', img:'bed5.png'}, {name:'Platform Bed', img:'bed2-5.png'} 
-    ],
-    items_tables_dining: [],
-    items_tables_end: [],
-    items_tables_coffee: [],
-    items_tables_bedside: [],
-    items_dressers: [],
-    items_cabinets: [],
-    items_buffets: [],
-    items_consoles: []
-};
-
-let currentView = 'main'; // 'main', 'sub', 'items'
-let activeCategory = null;
-
-// INITIALIZE
-renderTabs(categories, 'main');
-
-// RENDER TABS
-function renderTabs(dataList, type) {
-    const rack = document.getElementById('tab-rack');
-    const oldTabs = Array.from(rack.children);
-    oldTabs.forEach(t => t.classList.add('tab-hide'));
-    
-    setTimeout(() => {
-        rack.innerHTML = '';
-        dataList.forEach((item, index) => {
-            const tab = document.createElement('div');
-            tab.className = 'folder-tab tab-show';
-            
-            // Icon Logic
-            let iconSrc = item.icon ? item.icon : 'iconseating.png';
-            if (type === 'sub' && item.parentIcon) {
-                iconSrc = item.parentIcon;
-            }
-            
-            // We use onerror to swap to the main category icon if the specific one is missing
-            tab.innerHTML = `
-                <img src="${iconSrc}" class="tab-icon-img" onerror="this.src='${iconSrc}'">
-                <div class="tab-text">${item.name}</div>
-            `;
-            
-            tab.style.animationDelay = (0.1 + (index * 0.1)) + 's';
-            
-            if (type === 'main') {
-                tab.onclick = () => selectCategory(item);
-            } else if (type === 'sub') {
-                tab.onclick = () => showItems(item.content, item.name); // Pass the Category Name
-            }
-            rack.appendChild(tab);
-        });
-    }, 300); 
-}
-
-function selectCategory(catObj) {
-    activeCategory = catObj;
-    currentView = 'sub';
-    renderTabs(catObj.subs, 'sub');
-    document.getElementById('trunk-mini-back').style.display = 'block';
-    document.getElementById('trunk-internal-zone').innerHTML = '';
-}
-
-// Updated to accept genericLabel
-function showItems(contentKey, genericLabel) {
-    const items = itemDB[contentKey] || [];
-    const zone = document.getElementById('trunk-internal-zone');
-    zone.innerHTML = '';
-    
-    items.forEach((item, index) => {
-        const card = document.createElement('div');
-        card.className = 'catalog-item';
-        let imgSrc = item.img ? item.img : 'iconseating.png';
-        // USE genericLabel INSTEAD OF item.name
-        card.innerHTML = `<img src="${imgSrc}" class="catalog-icon-img" draggable="true" ondragstart="dragStart(event, '${imgSrc}')"><div class="catalog-text">${genericLabel}</div>`;
-        card.onmouseenter = () => showPreview(imgSrc);
-        card.onmouseleave = () => hidePreview();
-        card.onclick = () => addFurnitureToStage(item);
-        zone.appendChild(card);
-        setTimeout(() => card.classList.add('active'), 50 + (index * 50));
-    });
-}
-
-function resetToCategories() {
-    renderTabs(categories, 'main');
-    document.getElementById('trunk-internal-zone').innerHTML = '';
-    document.getElementById('trunk-mini-back').style.display = 'none';
-    currentView = 'main';
-}
-
-function showPreview(src) {
-    const box = document.getElementById('preview-box');
-    const img = document.getElementById('preview-img');
-    img.src = src;
-    box.style.display = 'block';
-}
-function hidePreview() {
-    document.getElementById('preview-box').style.display = 'none';
-}
-
-const roomData = { 
-    livingroom: ['livingroom.jpg', 'livingroom2.jpg', 'livingroom3.jpg'], 
-    bedroom: ['bedroom.jpg', 'bedroom2.jpg'], 
-    diningroom: ['diningroom.jpg', 'diningroom2.jpg'], 
-    extrarooms: ['extrarooms.jpg', 'kitchen.jpg', 'kitchen2.jpg', 'foyer.jpg'] 
-};
-let currentCategory = 'livingroom'; let currentIndex = 0;
-
-function hoverRoom(category) {
-    if (!document.body.classList.contains('furniture-mode')) {
-        currentCategory = category; currentIndex = 0; updateStage();
-    }
-}
-function nextVariation(category) {
-    if (document.body.classList.contains('furniture-mode')) return;
-    if (currentCategory !== category) { currentCategory = category; currentIndex = 0; }
-    else { if(roomData[category]) currentIndex = (currentIndex + 1) % roomData[category].length; }
-    updateStage();
-}
-function updateStage() {
-    const img = document.getElementById('room-display');
-    if(roomData[currentCategory]) {
-        let src = Array.isArray(roomData[currentCategory]) ? roomData[currentCategory][currentIndex] : roomData[currentCategory];
-        if(!src) src = 'livingroom.jpg';
-        img.src = src; img.style.display = 'block';
-    }
-}
-function toggleRooms() {
-    document.body.classList.remove('furniture-mode');
-    document.body.classList.toggle('rooms-active'); 
-}
-function lockRoom() {
-    if(document.body.classList.contains('rooms-active')) {
-        document.body.classList.remove('rooms-active');
-        document.body.classList.add('furniture-mode');
-    }
-}
 function triggerUpload() { document.getElementById('file-upload').click(); }
-
-// DRAG AND DROP
-function dragStart(ev, imgSrc) {
-    ev.dataTransfer.setData("text/plain", imgSrc);
-}
-function allowDrop(ev) { ev.preventDefault(); }
-function drop(ev) {
-    ev.preventDefault();
-    const imgSrc = ev.dataTransfer.getData("text/plain");
-    const stage = document.getElementById('main-stage');
-    const rect = stage.getBoundingClientRect();
-    const x = ev.clientX - rect.left - 75; 
-    const y = ev.clientY - rect.top - 50; 
-    const wrapper = document.createElement('div'); wrapper.className = 'stage-item-wrapper';
-    wrapper.style.width = '150px'; wrapper.style.height = '100px'; wrapper.style.left = x + 'px'; wrapper.style.top = y + 'px';
-    wrapper.innerHTML = `<img src="${imgSrc}"><div class="resize-handle"></div>`;
-    stage.appendChild(wrapper);
-    makeDraggable(wrapper); makeResizable(wrapper, wrapper.querySelector('.resize-handle'));
-    wrapper.onclick = (e) => { e.stopPropagation(); document.querySelectorAll('.stage-item-wrapper').forEach(el => el.classList.remove('selected')); wrapper.classList.add('selected'); };
-    wrapper.ondblclick = () => wrapper.remove();
-}
-
-function addFurnitureToStage(item) {
-    const stage = document.getElementById('main-stage');
-    const wrapper = document.createElement('div'); wrapper.className = 'stage-item-wrapper';
-    wrapper.style.width = '150px'; wrapper.style.height = '100px'; wrapper.style.left = '50px'; wrapper.style.top = '50px';
-    wrapper.innerHTML = `<img src="${item.img}"><div class="resize-handle"></div>`;
-    stage.appendChild(wrapper);
-    makeDraggable(wrapper); makeResizable(wrapper, wrapper.querySelector('.resize-handle'));
-    wrapper.onclick = (e) => { e.stopPropagation(); document.querySelectorAll('.stage-item-wrapper').forEach(el => el.classList.remove('selected')); wrapper.classList.add('selected'); };
-    wrapper.ondblclick = () => wrapper.remove();
-}
-
-function makeDraggable(el) {
-    let isDragging = false; let startX, startY, initialLeft, initialTop;
-    el.onmousedown = function(e) {
-        if(e.target.classList.contains('resize-handle')) return; 
-        isDragging = true; startX = e.clientX; startY = e.clientY; initialLeft = el.offsetLeft; initialTop = el.offsetTop;
-        document.addEventListener('mousemove', onMouseMove); document.addEventListener('mouseup', onMouseUp);
-    };
-    function onMouseMove(e) { if (!isDragging) return; el.style.left = `${initialLeft + (e.clientX - startX)}px`; el.style.top = `${initialTop + (e.clientY - startY)}px`; }
-    function onMouseUp() { isDragging = false; document.removeEventListener('mousemove', onMouseMove); document.removeEventListener('mouseup', onMouseUp); }
-}
-
-function makeResizable(el, handle) {
-    let isResizing = false; let startX, startY, startW, startH;
-    handle.onmousedown = function(e) {
-        e.stopPropagation(); isResizing = true; startX = e.clientX; startY = e.clientY;
-        startW = parseInt(getComputedStyle(el).width); startH = parseInt(getComputedStyle(el).height);
-        document.addEventListener('mousemove', onResizeMove); document.addEventListener('mouseup', onResizeUp);
-    };
-    function onResizeMove(e) { if (!isResizing) return; el.style.width = (startW + (e.clientX - startX)) + 'px'; el.style.height = (startH + (e.clientY - startY)) + 'px'; }
-    function onResizeUp() { isResizing = false; document.removeEventListener('mousemove', onResizeMove); document.removeEventListener('mouseup', onResizeUp); }
-}
 
 function handleFileUpload(event) {
     const file = event.target.files[0];
     if (file) {
         const reader = new FileReader();
-        reader.onload = function(e) {
-            const img = document.getElementById('room-display'); img.src = e.target.result; img.style.display = 'block';
-            lockRoom();
-        }
+        reader.onload = (e) => {
+            const img = document.getElementById('room-display'); 
+            img.src = e.target.result; 
+            img.style.display = 'block';
+            lockRoom(); // Automatically trigger glide on upload
+        };
         reader.readAsDataURL(file);
     }
+}
+
+function lockRoom() {
+    document.body.classList.add('furniture-mode');
 }
 </script>
 </body>
