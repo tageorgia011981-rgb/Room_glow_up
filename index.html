@@ -6,61 +6,149 @@
 <title>Room Glow Up</title>
 <link href="https://fonts.googleapis.com/css2?family=Bonheur+Royale&family=Limelight&family=Bad+Script&family=Special+Elite&display=swap" rel="stylesheet">
 <style>
-/* --- MAIN SETUP --- */
+/* --- COMPRESSED CSS --- */
 * { box-sizing: border-box; }
 body { margin: 0; padding: 0; min-height: 100vh; width: 100vw; display: flex; flex-direction: column; align-items: center; background-color: #008080; background-image: url('background10.jpg'); background-repeat: no-repeat; background-position: center top; background-attachment: fixed; background-size: contain; font-family: 'Special Elite', cursive; color: white; overflow-x: hidden; overflow-y: auto; user-select: none; }
-
-/* HEADER */
 .header-wrap { width: 100%; text-align: center; margin-top: 3rem; margin-bottom: 2rem; position: relative; z-index: 30; }
 h1 { font-family: 'Bonheur Royale', cursive; font-size: clamp(4.5rem, 9vw, 7rem); line-height: 1.1; margin: 0; text-shadow: 3px 3px 10px rgba(0,0,0,0.7); font-weight: 400; }
 h2 { font-family: 'Bad Script', cursive; font-size: clamp(1.6rem, 3.5vw, 2.4rem); margin-top: 0.5rem; margin-bottom: 0; text-shadow: 2px 2px 8px rgba(0,0,0,0.6); }
-
-/* TOP TABS */
 .tabs { display: flex; justify-content: center; gap: 2rem; flex-wrap: wrap; width: 100%; padding: 2rem; position: relative; z-index: 30; }
 .drawer-hardware { position: relative; width: 260px; height: 90px; background: linear-gradient(135deg, #8a6e4b 0%, #59442e 50%, #3e2b19 100%); border: 3px solid #2a1d12; box-shadow: inset 0 0 0 2px #a88860, inset 10px 0 20px rgba(0,0,0,0.8), 0 10px 15px rgba(0,0,0,0.7); display: flex; align-items: center; justify-content: center; cursor: pointer; transition: all 0.3s ease; }
 .drawer-hardware:hover { filter: brightness(1.15); transform: translateY(-4px); }
+.drawer-hardware::before, .drawer-hardware::after { content: ''; position: absolute; top: 50%; transform: translateY(-50%); width: 14px; height: 14px; border-radius: 50%; background: radial-gradient(circle, #111 20%, #555 100%); box-shadow: inset 1px 1px 2px #000; } .drawer-hardware::before { left: 12px; } .drawer-hardware::after { right: 12px; }
 .plate-style { width: 190px; height: 50px; background: linear-gradient(to bottom, #e6d3b3 0%, #c4a476 50%, #9e7e52 100%); color: #2a1d12; display: flex; align-items: center; justify-content: center; font-size: 15px; font-weight: 900; text-transform: uppercase; letter-spacing: 1px; border: 1px solid #5e4326; box-shadow: inset 0 2px 5px rgba(0,0,0,0.25); text-align: center; line-height: 1; }
 .lip-pull { position: absolute; bottom: -14px; left: 50%; transform: translateX(-50%); width: 140px; height: 24px; background: linear-gradient(to bottom, #59442e, #2a1d12); border: 2px solid #1a1008; border-top: none; border-radius: 0 0 15px 15px; box-shadow: 0 5px 10px rgba(0,0,0,0.8); }
 
-/* CABINET (Lowered & Active) */
-#cabinet-container { position: absolute; bottom: 20px; left: -600px; width: 420px; z-index: 50; transition: left 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
-#cabinet-img { width: 100%; height: auto; display: block; filter: drop-shadow(10px 10px 20px rgba(0,0,0,0.7)); }
-.cabinet-drawer-zone { position: absolute; left: 10%; width: 80%; height: 14%; cursor: pointer; z-index: 60; background: rgba(255,255,255,0); }
-#zone-living { top: 6%; } #zone-bed { top: 24%; } #zone-dining { top: 42%; } #zone-extra { top: 60%; } #zone-upload { top: 78%; }
+/* --- SCROLLABLE LAYOUT --- */
+.workspace-area { position: relative; width: 100%; max-width: 1800px; margin-top: 50px; min-height: 1400px; display: flex; justify-content: center; align-items: flex-start; }
 
-/* MAIN STAGE */
-#main-stage { width: 1200px; height: 800px; border: 4px double rgba(255, 255, 255, 0.2); background-color: rgba(0, 0, 0, 0.5); position: relative; z-index: 10; margin: 0 auto; margin-top: 40px; transition: 0.8s ease-in-out; overflow: hidden; }
-#room-display { width: 100%; height: 100%; object-fit: cover; display: none; }
+/* CABINET */
+#cabinet-container { position: absolute; top: 350px; left: -500px; width: 350px; height: 600px; z-index: 50; transition: left 0.8s ease; }
+#cabinet-img { width: 100%; height: 100%; object-fit: fill; filter: drop-shadow(5px 5px 10px rgba(0,0,0,0.5)); }
+.cabinet-drawer-zone { position: absolute; left: 10%; width: 80%; height: 18%; display: flex; align-items: center; justify-content: center; cursor: pointer; z-index: 30; transition: transform 0.2s; }
+.cabinet-drawer-zone:hover { transform: translateY(-3px); box-shadow: 0 0 20px rgba(255,215,0,0.3); } 
+#zone-living { top: 2%; } #zone-bed { top: 20%; } #zone-dining { top: 38%; } #zone-extra { top: 56%; } #zone-upload { top: 74%; }
+.pop-out-label { position: relative; width: 220px; height: 90px; background: linear-gradient(135deg, #8a6e4b 0%, #59442e 50%, #3e2b19 100%); border: 3px solid #2a1d12; box-shadow: inset 0 0 0 2px #a88860, inset 10px 0 20px rgba(0,0,0,0.8), 0 10px 15px rgba(0,0,0,0.7); display: flex; align-items: center; justify-content: center; cursor: pointer; opacity: 0; transform: scale(0.5); transition: all 0.3s; pointer-events: none; }
+.pop-out-label .plate-style { width: 160px; } .cabinet-drawer-zone:hover .pop-out-label { opacity: 1; transform: scale(1.1); box-shadow: 0 20px 30px rgba(0,0,0,0.6); }
 
-/* DRAGGABLE FURNITURE WRAPPER */
+/* TRUNK CONTAINER */
+#furniture-box { position: absolute; top: 350px; left: -500px; width: 400px; height: 700px; background: url('filefolderbox.png') no-repeat center center; background-size: 100% 100%; z-index: 50; transition: left 0.8s ease; }
+
+/* TAB SYSTEM (Tucked Inside) */
+#tab-rack {
+    position: absolute;
+    top: -5px; 
+    left: 20px;
+    right: 20px;
+    height: 50px;
+    display: flex;
+    justify-content: center;
+    gap: 5px;
+    z-index: 40; 
+}
+
+.folder-tab {
+    position: relative;
+    background: linear-gradient(to bottom, #f0e6d2 0%, #cbbfa9 100%);
+    border: 2px solid #8c7b65;
+    border-bottom: none;
+    border-radius: 8px 8px 0 0;
+    padding: 5px 5px;
+    cursor: pointer;
+    font-family: 'Bad Script', cursive;
+    color: #3e2b19;
+    font-weight: bold;
+    text-align: center;
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.5), 0 -2px 5px rgba(0,0,0,0.2);
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    transform-origin: bottom center;
+    top: 25px; /* Tucked deep inside */
+    width: 80px;
+    height: 60px;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    padding-top: 5px;
+    font-size: 0.85rem;
+    line-height: 1;
+}
+
+/* HOVER: Lift & Glow */
+.folder-tab:hover {
+    transform: translateY(-35px) scale(1.1);
+    background: linear-gradient(to bottom, #fff8e8 0%, #e6d3b3 100%);
+    box-shadow: 0 0 15px #ffd700, 0 0 30px rgba(255, 215, 0, 0.5);
+    z-index: 100;
+    border-color: #ffd700;
+}
+
+/* ANIMATIONS */
+.tab-hide { animation: dropDown 0.3s forwards; }
+.tab-show { animation: popUp 0.5s 0.2s forwards; opacity: 0; }
+
+@keyframes dropDown { to { transform: translateY(100px); opacity: 0; } }
+@keyframes popUp { 
+    from { transform: translateY(100px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; } 
+}
+
+/* INTERNAL CONTENT */
+.trunk-internal-zone { position: absolute; top: 15%; left: 10%; width: 80%; height: 70%; overflow-y: auto; overflow-x: hidden; display: flex; flex-wrap: wrap; justify-content: center; align-content: flex-start; gap: 15px; padding: 10px; }
+.trunk-internal-zone::-webkit-scrollbar { width: 8px; } .trunk-internal-zone::-webkit-scrollbar-thumb { background: #c4a476; border-radius: 4px; }
+.catalog-item { width: 110px; height: 110px; background: rgba(30, 20, 10, 0.85); border: 2px solid #c4a476; border-radius: 8px; display: flex; flex-direction: column; align-items: center; justify-content: center; cursor: pointer; box-shadow: 0 4px 8px rgba(0,0,0,0.6); transition: transform 0.3s, box-shadow 0.3s, background 0.3s; opacity: 0; transform: translateY(50px); }
+.catalog-item.active { opacity: 1; transform: translateY(0); }
+.catalog-item:hover { transform: translateY(-5px) !important; box-shadow: 0 0 15px #c4a476; background: rgba(60, 40, 20, 0.95); }
+.catalog-icon-img { width: 80%; height: 80%; object-fit: contain; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.8)); }
+
+/* PREVIEW BOX (NEXT TO TRUNK) */
+#preview-box {
+    position: absolute;
+    top: 350px;
+    left: 440px; /* Sits to the right of the 400px trunk (20px left + 400px width + 20px gap) */
+    width: 250px; 
+    height: 250px;
+    background: #f0f0f0;
+    border: 5px solid white;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.6);
+    z-index: 200;
+    display: none;
+    pointer-events: none;
+    border-radius: 4px;
+    padding: 10px;
+}
+#preview-img { width: 100%; height: 100%; object-fit: contain; }
+
+/* STAGE */
+#main-stage { 
+  width: 1200px; height: 800px; 
+  border: 2px dashed rgba(255, 255, 255, 0.3); background-color: rgba(0, 0, 0, 0.6); 
+  position: relative; z-index: 10; 
+  margin: 0 auto; 
+  transition: margin-left 1.0s ease-in-out; 
+}
+#room-display { width: 100%; height: 100%; object-fit: cover; display: none; cursor: pointer; }
+
+/* SLIDE LOGIC */
+body.rooms-active #cabinet-container { left: 20px; }
+body.rooms-active #furniture-box { left: -500px; }
+body.rooms-active #main-stage { margin-left: 450px; }
+
+body.furniture-mode #cabinet-container { left: -500px; }
+body.furniture-mode #furniture-box { left: 20px; }
+body.furniture-mode #main-stage { margin-left: 500px; }
+
 .stage-item-wrapper { position: absolute; cursor: move; display: inline-block; border: 2px solid transparent; z-index: 100; }
 .stage-item-wrapper img { width: 100%; height: 100%; display: block; pointer-events: none; }
 .stage-item-wrapper.selected { border: 2px dashed #9932CC; }
-.resize-handle { width: 18px; height: 18px; background: #9932CC; position: absolute; bottom: -5px; right: -5px; cursor: se-resize; display: none; border-radius: 50%; border: 2px solid white; }
+.resize-handle { width: 15px; height: 15px; background: #9932CC; position: absolute; bottom: -5px; right: -5px; cursor: se-resize; display: none; border-radius: 50%; }
 .stage-item-wrapper.selected .resize-handle { display: block; }
 
-/* BIG STORAGE BOXES & CHARMS */
-.storage-container { display: flex; justify-content: center; gap: 60px; width: 100%; position: fixed; bottom: -550px; transition: bottom 1s cubic-bezier(0.175, 0.885, 0.32, 1.275); z-index: 100; }
-.storage-box-item { position: relative; width: 340px; height: 260px; cursor: pointer; transition: transform 0.3s; }
-.storage-box-item:hover { transform: translateY(-15px); }
-.box-case-img { width: 100%; height: 100%; object-fit: contain; }
-.charm-tag { position: absolute; top: 35%; left: 15%; width: 90px; height: 120px; background: #d2b48c; border: 2px solid #59442e; border-radius: 5px; padding: 12px; box-shadow: 4px 6px 12px rgba(0,0,0,0.5); transform: rotate(-7deg); z-index: 110; }
-.charm-tag::before { content: ''; position: absolute; top: -30px; left: 50%; width: 3px; height: 35px; background: #3e2b19; transform: translateX(-50%); }
-.charm-tag img { width: 100%; height: 100%; object-fit: contain; }
-
-/* FURNITURE DRAWER (POPUP) */
-#furniture-drawer { position: fixed; bottom: 320px; left: 50%; transform: translateX(-50%); width: 85%; height: 200px; background: rgba(0,0,0,0.85); border: 3px solid #c4a476; border-radius: 15px; display: none; padding: 20px; z-index: 300; gap: 20px; overflow-x: auto; box-shadow: 0 0 30px rgba(0,0,0,0.9); }
-body.drawer-open #furniture-drawer { display: flex; }
-.drawer-item { width: 140px; height: 140px; flex-shrink: 0; background: rgba(255,255,255,0.05); border: 1px solid rgba(196, 164, 118, 0.3); cursor: pointer; padding: 10px; transition: background 0.2s; }
-.drawer-item:hover { background: rgba(255,255,255,0.15); }
-.drawer-item img { width: 100%; height: 100%; object-fit: contain; }
-
-/* TRIGGERS */
-body.rooms-active #cabinet-container { left: 40px; }
-body.rooms-active #main-stage { margin-left: 500px; transform: scale(0.85); }
-body.furniture-mode #cabinet-container { left: -600px; }
-body.furniture-mode .storage-container { bottom: 50px; }
-body.furniture-mode #main-stage { margin-left: auto; transform: scale(1); }
+/* MINI BACK BUTTON (Inside Trunk) */
+.mini-back { 
+    position: absolute; top: 5px; right: 15px; 
+    font-size: 10px; color: #59442e; cursor: pointer; font-weight: bold; 
+    border-bottom: 1px solid #59442e; display: none; z-index: 200;
+}
 </style>
 </head>
 <body>
@@ -73,139 +161,239 @@ body.furniture-mode #main-stage { margin-left: auto; transform: scale(1); }
 <div class="tabs">
   <div class="drawer-hardware" onclick="toggleRooms()"><div class="plate-style">Rooms</div><div class="lip-pull"></div></div>
   <div class="drawer-hardware" onclick="lockRoom()"><div class="plate-style">Furniture Catalog</div><div class="lip-pull"></div></div>
-  <div class="drawer-hardware"><div class="plate-style">Look Book</div><div class="lip-pull"></div></div>
-  <div class="drawer-hardware" onclick="saveDesign()"><div class="plate-style">Save</div><div class="lip-pull"></div></div>
+  <div class="drawer-hardware"><div class="plate-style">Inspirational<br>Look Book</div><div class="lip-pull"></div></div>
+  <div class="drawer-hardware"><div class="plate-style">Save</div><div class="lip-pull"></div></div>
 </div>
 
-<div id="cabinet-container">
-    <img id="cabinet-img" src="cabinet.png" alt="Cabinet">
-    <div id="zone-living" class="cabinet-drawer-zone" onclick="changeRoom('living')"></div>
-    <div id="zone-bed" class="cabinet-drawer-zone" onclick="changeRoom('bed')"></div>
-    <div id="zone-dining" class="cabinet-drawer-zone" onclick="changeRoom('dining')"></div>
-    <div id="zone-extra" class="cabinet-drawer-zone" onclick="changeRoom('extra')"></div>
-    <div id="zone-upload" class="cabinet-drawer-zone" onclick="triggerUpload()"></div>
-</div>
+<div class="workspace-area">
+    <div id="cabinet-container">
+        <img id="cabinet-img" src="cabinet.png" alt="Cabinet">
+        <div id="zone-living" class="cabinet-drawer-zone" onmouseenter="hoverRoom('livingroom')" onclick="nextVariation('livingroom')"><div class="pop-out-label"><div class="plate-style">Living Room</div><div class="lip-pull"></div></div></div>
+        <div id="zone-bed" class="cabinet-drawer-zone" onmouseenter="hoverRoom('bedroom')" onclick="nextVariation('bedroom')"><div class="pop-out-label"><div class="plate-style">Bedroom</div><div class="lip-pull"></div></div></div>
+        <div id="zone-dining" class="cabinet-drawer-zone" onmouseenter="hoverRoom('diningroom')" onclick="nextVariation('diningroom')"><div class="pop-out-label"><div class="plate-style">Dining Room</div><div class="lip-pull"></div></div></div>
+        <div id="zone-extra" class="cabinet-drawer-zone" onmouseenter="hoverRoom('extrarooms')" onclick="nextVariation('extrarooms')"><div class="pop-out-label"><div class="plate-style">Extra Rooms</div><div class="lip-pull"></div></div></div>
+        <div id="zone-upload" class="cabinet-drawer-zone" onclick="triggerUpload()"><div class="pop-out-label"><div class="plate-style">Upload</div><div class="lip-pull"></div></div></div>
+    </div>
 
-<div id="main-stage" onclick="deselectAll()">
-    <img id="room-display" src="" alt="Room Design">
-</div>
+    <div id="main-stage">
+        <img id="room-display" src="" alt="Room Design" onclick="lockRoom()">
+    </div>
 
-<div id="furniture-drawer"></div>
-
-<div class="storage-container">
-    <div class="storage-box-item" onclick="toggleFurniture('seating')">
-        <div class="charm-tag"><img src="iconseating.png"></div>
-        <img src="seatingcase.png" class="box-case-img">
+    <div id="furniture-box">
+        <div id="tab-rack"></div> <div class="mini-back" id="trunk-mini-back" onclick="resetToCategories()">BACK TO MAIN</div>
+        <div id="trunk-internal-zone" class="trunk-internal-zone"></div>
     </div>
-    <div class="storage-box-item" onclick="toggleFurniture('beds')">
-        <div class="charm-tag"><img src="iconbeds.png"></div>
-        <img src="bedscase.png" class="box-case-img">
-    </div>
-    <div class="storage-box-item" onclick="toggleFurniture('storage')">
-        <div class="charm-tag"><img src="iconstorage.png"></div>
-        <img src="storagecase.png" class="box-case-img">
-    </div>
-    <div class="storage-box-item" onclick="toggleFurniture('tables')">
-        <div class="charm-tag"><img src="icontable.png"></div>
-        <img src="tablescase.png" class="box-case-img">
-    </div>
+    
+    <div id="preview-box"><img id="preview-img" src=""></div>
 </div>
 
 <input type="file" id="file-upload" accept="image/*" onchange="handleFileUpload(event)" style="display:none">
 
 <script>
-const furnitureDB = {
-    seating: [{img:'couch1.png'}, {img:'armchair1.png'}, {img:'bench1.png'}],
-    beds: [{img:'bed-modern.png'}, {img:'bed-vintage.png'}],
-    storage: [{img:'shelf1.png'}, {img:'dresser1.png'}],
-    tables: [{img:'desk1.png'}, {img:'coffee-table1.png'}]
+// --- DATA STRUCTURE ---
+const categories = [
+    { id: 'cat_seat', name: 'Seating', icon: 'iconseating.png', subs: [
+        { id: 'sub_couch', name: 'Couches', content: 'items_couches' },
+        { id: 'sub_arm', name: 'Armchairs', content: 'items_armchairs' },
+        { id: 'sub_din_chair', name: 'Dining Chairs', content: 'items_dining_chairs' },
+        { id: 'sub_bench', name: 'Benches', content: 'items_benches' },
+        { id: 'sub_ottoman', name: 'Ottomans', content: 'items_ottomans' },
+        { id: 'sub_stool', name: 'Stools', content: 'items_stools' }
+    ]},
+    { id: 'cat_table', name: 'Tables', icon: 'icontables.png', subs: [
+        { id: 'sub_dine_tab', name: 'Dining Tables', content: 'items_tables_dining' },
+        { id: 'sub_end', name: 'End Tables', content: 'items_tables_end' },
+        { id: 'sub_coffee', name: 'Coffee Tables', content: 'items_tables_coffee' },
+        { id: 'sub_bedside', name: 'Bedside Tables', content: 'items_tables_bedside' }
+    ]},
+    { id: 'cat_store', name: 'Storage', icon: 'iconstorage.png', subs: [
+        { id: 'sub_dress', name: 'Dressers', content: 'items_dressers' },
+        { id: 'sub_cab', name: 'Cabinets', content: 'items_cabinets' },
+        { id: 'sub_buffet', name: 'Buffets', content: 'items_buffets' },
+        { id: 'sub_console', name: 'Consoles', content: 'items_consoles' }
+    ]},
+    { id: 'cat_bed', name: 'Beds', icon: 'iconbeds.png', subs: [
+        { id: 'sub_bed_std', name: 'Standard Beds', content: 'items_beds_std' }
+    ]}
+];
+
+// ITEMS DATABASE
+const itemDB = {
+    items_couches: [ {name:'Leather Sofa', img:'couch1.png'}, {name:'Velvet Sofa', img:'couch2.png'}, {name:'Modern Sofa', img:'couch3.png'} ],
+    items_armchairs: [ {name:'Wingback', img:'armchair1.png'}, {name:'Club Chair', img:'armchair2.png'} ],
+    items_dining_chairs: [], // Add images later
+    items_benches: [],
+    items_ottomans: [],
+    items_stools: [ {name:'Bar Stool 1', img:'barstool1.png'}, {name:'Bar Stool 2', img:'barstool2.png'}, {name:'Bar Stool 3', img:'barstool3.png'} ],
+    items_beds_std: [ 
+        {name:'Classic Bed', img:'bed1.png'}, {name:'Modern Bed', img:'bed2.png'}, {name:'Rustic Bed', img:'bed3.png'}, 
+        {name:'Iron Bed', img:'bed4.png'}, {name:'Canopy Bed', img:'bed5.png'}, {name:'Platform Bed', img:'bed2-5.png'} 
+    ],
+    items_tables_dining: [],
+    items_tables_end: [],
+    items_tables_coffee: [],
+    items_tables_bedside: []
 };
 
-function toggleRooms() { 
-    document.body.classList.remove('furniture-mode', 'drawer-open'); 
+let currentView = 'main'; // 'main', 'sub', 'items'
+let activeCategory = null;
+
+// INITIALIZE
+renderTabs(categories, 'main');
+
+// RENDER TABS
+function renderTabs(dataList, type) {
+    const rack = document.getElementById('tab-rack');
+    // ANIMATION OUT
+    const oldTabs = Array.from(rack.children);
+    oldTabs.forEach(t => t.classList.add('tab-hide'));
+    
+    setTimeout(() => {
+        rack.innerHTML = '';
+        dataList.forEach((item, index) => {
+            const tab = document.createElement('div');
+            tab.className = 'folder-tab tab-show';
+            tab.innerText = item.name;
+            tab.style.animationDelay = (0.1 + (index * 0.1)) + 's';
+            
+            if (type === 'main') {
+                tab.onclick = () => selectCategory(item);
+            } else if (type === 'sub') {
+                tab.onclick = () => showItems(item.content);
+            }
+            rack.appendChild(tab);
+        });
+    }, 300); // Wait for drop down
+}
+
+function selectCategory(catObj) {
+    activeCategory = catObj;
+    currentView = 'sub';
+    renderTabs(catObj.subs, 'sub');
+    document.getElementById('trunk-mini-back').style.display = 'block';
+    // Clear internal zone just in case
+    document.getElementById('trunk-internal-zone').innerHTML = '';
+}
+
+function showItems(contentKey) {
+    const items = itemDB[contentKey] || [];
+    const zone = document.getElementById('trunk-internal-zone');
+    zone.innerHTML = '';
+    
+    // Hide tabs temporarily to show full box content? Or keep tabs? 
+    // Let's keep sub-tabs visible so they can switch subs easily.
+    
+    items.forEach((item, index) => {
+        const card = document.createElement('div');
+        card.className = 'catalog-item';
+        card.innerHTML = `<img src="${item.img}" class="catalog-icon-img" onerror="this.src='iconseating.png'"><div class="catalog-text">${item.name}</div>`;
+        card.onmouseenter = () => showPreview(item.img);
+        card.onmouseleave = () => hidePreview();
+        card.onclick = () => addFurnitureToStage(item);
+        zone.appendChild(card);
+        setTimeout(() => card.classList.add('active'), 50 + (index * 50));
+    });
+}
+
+function resetToCategories() {
+    renderTabs(categories, 'main');
+    document.getElementById('trunk-internal-zone').innerHTML = '';
+    document.getElementById('trunk-mini-back').style.display = 'none';
+    currentView = 'main';
+}
+
+// PREVIEW LOGIC
+function showPreview(src) {
+    const box = document.getElementById('preview-box');
+    const img = document.getElementById('preview-img');
+    img.src = src;
+    box.style.display = 'block';
+}
+function hidePreview() {
+    document.getElementById('preview-box').style.display = 'none';
+}
+
+// ROOM & STAGE LOGIC
+const roomData = { 
+    livingroom: ['livingroom.jpg', 'livingroom2.jpg', 'livingroom3.jpg'], 
+    bedroom: ['bedroom.jpg', 'bedroom2.jpg'], 
+    diningroom: ['diningroom.jpg', 'diningroom2.jpg'], 
+    extrarooms: ['extrarooms.jpg', 'kitchen.jpg', 'kitchen2.jpg', 'foyer.jpg'] 
+};
+let currentCategory = 'livingroom'; let currentIndex = 0;
+
+function hoverRoom(category) {
+    if (!document.body.classList.contains('furniture-mode')) {
+        currentCategory = category; currentIndex = 0; updateStage();
+    }
+}
+function nextVariation(category) {
+    if (document.body.classList.contains('furniture-mode')) return;
+    if (currentCategory !== category) { currentCategory = category; currentIndex = 0; }
+    else { if(roomData[category]) currentIndex = (currentIndex + 1) % roomData[category].length; }
+    updateStage();
+}
+function updateStage() {
+    const img = document.getElementById('room-display');
+    if(roomData[currentCategory]) {
+        let src = Array.isArray(roomData[currentCategory]) ? roomData[currentCategory][currentIndex] : roomData[currentCategory];
+        if(!src) src = 'livingroom.jpg';
+        img.src = src; img.style.display = 'block';
+    }
+}
+function toggleRooms() {
+    document.body.classList.remove('furniture-mode');
     document.body.classList.toggle('rooms-active'); 
 }
-
-function lockRoom() { 
-    document.body.classList.remove('rooms-active'); 
-    document.body.classList.add('furniture-mode'); 
+function lockRoom() {
+    if(document.body.classList.contains('rooms-active')) {
+        document.body.classList.remove('rooms-active');
+        document.body.classList.add('furniture-mode');
+    }
 }
-
 function triggerUpload() { document.getElementById('file-upload').click(); }
 
+// DRAG & DROP
+function addFurnitureToStage(item) {
+    const stage = document.getElementById('main-stage');
+    const wrapper = document.createElement('div'); wrapper.className = 'stage-item-wrapper';
+    wrapper.style.width = '150px'; wrapper.style.height = '100px'; wrapper.style.left = '50px'; wrapper.style.top = '50px';
+    wrapper.innerHTML = `<img src="${item.img}"><div class="resize-handle"></div>`;
+    stage.appendChild(wrapper);
+    makeDraggable(wrapper); makeResizable(wrapper, wrapper.querySelector('.resize-handle'));
+    wrapper.onclick = (e) => { e.stopPropagation(); document.querySelectorAll('.stage-item-wrapper').forEach(el => el.classList.remove('selected')); wrapper.classList.add('selected'); };
+    wrapper.ondblclick = () => wrapper.remove();
+}
+function makeDraggable(el) {
+    let isDragging = false; let startX, startY, initialLeft, initialTop;
+    el.onmousedown = function(e) {
+        if(e.target.classList.contains('resize-handle')) return; 
+        isDragging = true; startX = e.clientX; startY = e.clientY; initialLeft = el.offsetLeft; initialTop = el.offsetTop;
+        document.addEventListener('mousemove', onMouseMove); document.addEventListener('mouseup', onMouseUp);
+    };
+    function onMouseMove(e) { if (!isDragging) return; el.style.left = `${initialLeft + (e.clientX - startX)}px`; el.style.top = `${initialTop + (e.clientY - startY)}px`; }
+    function onMouseUp() { isDragging = false; document.removeEventListener('mousemove', onMouseMove); document.removeEventListener('mouseup', onMouseUp); }
+}
+function makeResizable(el, handle) {
+    let isResizing = false; let startX, startY, startW, startH;
+    handle.onmousedown = function(e) {
+        e.stopPropagation(); isResizing = true; startX = e.clientX; startY = e.clientY;
+        startW = parseInt(getComputedStyle(el).width); startH = parseInt(getComputedStyle(el).height);
+        document.addEventListener('mousemove', onResizeMove); document.addEventListener('mouseup', onResizeUp);
+    };
+    function onResizeMove(e) { if (!isResizing) return; el.style.width = (startW + (e.clientX - startX)) + 'px'; el.style.height = (startH + (e.clientY - startY)) + 'px'; }
+    function onResizeUp() { isResizing = false; document.removeEventListener('mousemove', onResizeMove); document.removeEventListener('mouseup', onResizeUp); }
+}
 function handleFileUpload(event) {
     const file = event.target.files[0];
     if (file) {
         const reader = new FileReader();
-        reader.onload = (e) => {
-            const img = document.getElementById('room-display'); 
-            img.src = e.target.result; 
-            img.style.display = 'block';
-        };
+        reader.onload = function(e) {
+            const img = document.getElementById('room-display'); img.src = e.target.result; img.style.display = 'block';
+            lockRoom();
+        }
         reader.readAsDataURL(file);
     }
-}
-
-function toggleFurniture(category) {
-    const drawer = document.getElementById('furniture-drawer');
-    if (document.body.classList.contains('drawer-open') && drawer.dataset.cat === category) {
-        document.body.classList.remove('drawer-open');
-    } else {
-        drawer.innerHTML = '';
-        drawer.dataset.cat = category;
-        furnitureDB[category].forEach(item => {
-            const div = document.createElement('div');
-            div.className = 'drawer-item';
-            div.innerHTML = `<img src="${item.img}" onclick="addToStage('${item.img}')">`;
-            drawer.appendChild(div);
-        });
-        document.body.classList.add('drawer-open');
-    }
-}
-
-function addToStage(src) {
-    const stage = document.getElementById('main-stage');
-    const wrapper = document.createElement('div');
-    wrapper.className = 'stage-item-wrapper';
-    wrapper.style.left = '150px'; wrapper.style.top = '150px';
-    wrapper.style.width = '250px';
-    wrapper.innerHTML = `<img src="${src}"><div class="resize-handle"></div>`;
-    stage.appendChild(wrapper);
-    makeDraggable(wrapper);
-    wrapper.onclick = (e) => { e.stopPropagation(); deselectAll(); wrapper.classList.add('selected'); };
-}
-
-function deselectAll() { document.querySelectorAll('.stage-item-wrapper').forEach(el => el.classList.remove('selected')); }
-
-function makeDraggable(el) {
-    let isDragging = false;
-    let isResizing = false;
-    let startX, startY, startW;
-
-    el.onmousedown = (e) => {
-        if(e.target.classList.contains('resize-handle')) { 
-            isResizing = true; 
-            startX = e.clientX;
-            startW = parseInt(document.defaultView.getComputedStyle(el).width, 10);
-            e.preventDefault();
-            return; 
-        }
-        isDragging = true;
-        let shiftX = e.clientX - el.getBoundingClientRect().left;
-        let shiftY = e.clientY - el.getBoundingClientRect().top;
-        
-        document.onmousemove = (e) => {
-            if(isDragging) {
-                el.style.left = e.clientX - shiftX - document.getElementById('main-stage').getBoundingClientRect().left + 'px';
-                el.style.top = e.clientY - shiftY - document.getElementById('main-stage').getBoundingClientRect().top + 'px';
-            }
-            if(isResizing) {
-                let newWidth = startW + (e.clientX - startX);
-                if(newWidth > 50) el.style.width = newWidth + 'px';
-            }
-        };
-        document.onmouseup = () => { isDragging = false; isResizing = false; document.onmousemove = null; };
-    };
 }
 </script>
 </body>
