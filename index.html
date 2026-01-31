@@ -6,12 +6,16 @@
 <title>Room Glow Up</title>
 <link href="https://fonts.googleapis.com/css2?family=Bonheur+Royale&family=Limelight&family=Bad+Script&family=Special+Elite&display=swap" rel="stylesheet">
 <style>
-/* --- COMPRESSED CSS --- */
+/* --- MAIN SETUP --- */
 * { box-sizing: border-box; }
 body { margin: 0; padding: 0; min-height: 100vh; width: 100vw; display: flex; flex-direction: column; align-items: center; background-color: #008080; background-image: url('background10.jpg'); background-repeat: no-repeat; background-position: center top; background-attachment: fixed; background-size: contain; font-family: 'Special Elite', cursive; color: white; overflow-x: hidden; overflow-y: auto; user-select: none; }
+
+/* HEADER */
 .header-wrap { width: 100%; text-align: center; margin-top: 3rem; margin-bottom: 2rem; position: relative; z-index: 30; }
 h1 { font-family: 'Bonheur Royale', cursive; font-size: clamp(4.5rem, 9vw, 7rem); line-height: 1.1; margin: 0; text-shadow: 3px 3px 10px rgba(0,0,0,0.7); font-weight: 400; }
 h2 { font-family: 'Bad Script', cursive; font-size: clamp(1.6rem, 3.5vw, 2.4rem); margin-top: 0.5rem; margin-bottom: 0; text-shadow: 2px 2px 8px rgba(0,0,0,0.6); }
+
+/* TOP TABS (Navigation) */
 .tabs { display: flex; justify-content: center; gap: 2rem; flex-wrap: wrap; width: 100%; padding: 2rem; position: relative; z-index: 30; }
 .drawer-hardware { position: relative; width: 260px; height: 90px; background: linear-gradient(135deg, #8a6e4b 0%, #59442e 50%, #3e2b19 100%); border: 3px solid #2a1d12; box-shadow: inset 0 0 0 2px #a88860, inset 10px 0 20px rgba(0,0,0,0.8), 0 10px 15px rgba(0,0,0,0.7); display: flex; align-items: center; justify-content: center; cursor: pointer; transition: all 0.3s ease; }
 .drawer-hardware:hover { filter: brightness(1.15); transform: translateY(-4px); }
@@ -19,10 +23,10 @@ h2 { font-family: 'Bad Script', cursive; font-size: clamp(1.6rem, 3.5vw, 2.4rem)
 .plate-style { width: 190px; height: 50px; background: linear-gradient(to bottom, #e6d3b3 0%, #c4a476 50%, #9e7e52 100%); color: #2a1d12; display: flex; align-items: center; justify-content: center; font-size: 15px; font-weight: 900; text-transform: uppercase; letter-spacing: 1px; border: 1px solid #5e4326; box-shadow: inset 0 2px 5px rgba(0,0,0,0.25); text-align: center; line-height: 1; }
 .lip-pull { position: absolute; bottom: -14px; left: 50%; transform: translateX(-50%); width: 140px; height: 24px; background: linear-gradient(to bottom, #59442e, #2a1d12); border: 2px solid #1a1008; border-top: none; border-radius: 0 0 15px 15px; box-shadow: 0 5px 10px rgba(0,0,0,0.8); }
 
-/* --- SCROLLABLE LAYOUT --- */
+/* WORKSPACE AREA (Scrollable) */
 .workspace-area { position: relative; width: 100%; max-width: 1800px; margin-top: 50px; min-height: 1400px; display: flex; justify-content: center; align-items: flex-start; }
 
-/* CABINET */
+/* CABINET (Left Side) */
 #cabinet-container { position: absolute; top: 350px; left: -500px; width: 350px; height: 600px; z-index: 50; transition: left 0.8s ease; }
 #cabinet-img { width: 100%; height: 100%; object-fit: fill; filter: drop-shadow(5px 5px 10px rgba(0,0,0,0.5)); }
 .cabinet-drawer-zone { position: absolute; left: 10%; width: 80%; height: 18%; display: flex; align-items: center; justify-content: center; cursor: pointer; z-index: 30; transition: transform 0.2s; }
@@ -34,50 +38,58 @@ h2 { font-family: 'Bad Script', cursive; font-size: clamp(1.6rem, 3.5vw, 2.4rem)
 /* TRUNK CONTAINER */
 #furniture-box { position: absolute; top: 350px; left: -500px; width: 400px; height: 700px; background: url('filefolderbox.png') no-repeat center center; background-size: 100% 100%; z-index: 50; transition: left 0.8s ease; }
 
-/* TAB SYSTEM (Tucked Inside) */
+/* TAB SYSTEM (New "Little Tabs" Style) */
 #tab-rack {
     position: absolute;
-    top: -5px; 
-    left: 20px;
-    right: 20px;
-    height: 50px;
+    top: 0px; 
+    left: 40px;
+    right: 40px;
+    height: 40px;
     display: flex;
-    justify-content: center;
-    gap: 5px;
+    justify-content: space-between;
     z-index: 40; 
 }
 
 .folder-tab {
     position: relative;
-    background: linear-gradient(to bottom, #f0e6d2 0%, #cbbfa9 100%);
-    border: 2px solid #8c7b65;
+    width: 60px; /* Small width */
+    height: 45px; /* Sticks up just a bit */
+    background: linear-gradient(to bottom, #e6d3b3 0%, #c4a476 100%);
+    border: 2px solid #59442e;
     border-bottom: none;
-    border-radius: 8px 8px 0 0;
-    padding: 5px 5px;
+    border-radius: 10px 10px 0 0; /* Rounded tab shape */
     cursor: pointer;
-    font-family: 'Bad Script', cursive;
-    color: #3e2b19;
-    font-weight: bold;
-    text-align: center;
-    box-shadow: inset 0 1px 0 rgba(255,255,255,0.5), 0 -2px 5px rgba(0,0,0,0.2);
-    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    box-shadow: inset 0 1px 0 rgba(255,255,255,0.4), 0 -2px 4px rgba(0,0,0,0.3);
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     transform-origin: bottom center;
-    top: 25px; /* Tucked deep inside */
-    width: 80px;
-    height: 60px;
+    top: 15px; /* Sits low inside the box initially */
     display: flex;
-    align-items: flex-start;
+    flex-direction: column;
+    align-items: center;
     justify-content: center;
-    padding-top: 5px;
-    font-size: 0.85rem;
-    line-height: 1;
+}
+
+.tab-icon-img {
+    width: 32px;
+    height: 32px;
+    object-fit: contain;
+    filter: drop-shadow(0 2px 2px rgba(0,0,0,0.4));
+}
+
+.tab-text {
+    font-size: 9px;
+    color: #3e2b19;
+    font-family: sans-serif;
+    font-weight: bold;
+    margin-top: 2px;
+    display: none; /* Hidden normally, mostly just icon */
 }
 
 /* HOVER: Lift & Glow */
 .folder-tab:hover {
-    transform: translateY(-35px) scale(1.1);
-    background: linear-gradient(to bottom, #fff8e8 0%, #e6d3b3 100%);
-    box-shadow: 0 0 15px #ffd700, 0 0 30px rgba(255, 215, 0, 0.5);
+    transform: translateY(-25px); /* Pops up */
+    background: linear-gradient(to bottom, #fff8e8 0%, #ffd700 100%);
+    box-shadow: 0 0 15px #ffd700, 0 0 25px rgba(255, 215, 0, 0.6);
     z-index: 100;
     border-color: #ffd700;
 }
@@ -92,19 +104,21 @@ h2 { font-family: 'Bad Script', cursive; font-size: clamp(1.6rem, 3.5vw, 2.4rem)
     to { transform: translateY(0); opacity: 1; } 
 }
 
-/* INTERNAL CONTENT */
+/* INTERNAL CONTENT (Grid inside Trunk) */
 .trunk-internal-zone { position: absolute; top: 15%; left: 10%; width: 80%; height: 70%; overflow-y: auto; overflow-x: hidden; display: flex; flex-wrap: wrap; justify-content: center; align-content: flex-start; gap: 15px; padding: 10px; }
 .trunk-internal-zone::-webkit-scrollbar { width: 8px; } .trunk-internal-zone::-webkit-scrollbar-thumb { background: #c4a476; border-radius: 4px; }
+
 .catalog-item { width: 110px; height: 110px; background: rgba(30, 20, 10, 0.85); border: 2px solid #c4a476; border-radius: 8px; display: flex; flex-direction: column; align-items: center; justify-content: center; cursor: pointer; box-shadow: 0 4px 8px rgba(0,0,0,0.6); transition: transform 0.3s, box-shadow 0.3s, background 0.3s; opacity: 0; transform: translateY(50px); }
 .catalog-item.active { opacity: 1; transform: translateY(0); }
 .catalog-item:hover { transform: translateY(-5px) !important; box-shadow: 0 0 15px #c4a476; background: rgba(60, 40, 20, 0.95); }
 .catalog-icon-img { width: 80%; height: 80%; object-fit: contain; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.8)); }
+.catalog-text { font-family: 'Bad Script', cursive; color: #e6d3b3; font-size: 0.9rem; text-align: center; line-height: 1; margin-top: 5px; }
 
-/* PREVIEW BOX (NEXT TO TRUNK) */
+/* PREVIEW BOX (Next to Trunk) */
 #preview-box {
     position: absolute;
     top: 350px;
-    left: 440px; /* Sits to the right of the 400px trunk (20px left + 400px width + 20px gap) */
+    left: 440px; 
     width: 250px; 
     height: 250px;
     background: #f0f0f0;
@@ -118,7 +132,7 @@ h2 { font-family: 'Bad Script', cursive; font-size: clamp(1.6rem, 3.5vw, 2.4rem)
 }
 #preview-img { width: 100%; height: 100%; object-fit: contain; }
 
-/* STAGE */
+/* MAIN STAGE */
 #main-stage { 
   width: 1200px; height: 800px; 
   border: 2px dashed rgba(255, 255, 255, 0.3); background-color: rgba(0, 0, 0, 0.6); 
@@ -221,7 +235,7 @@ const categories = [
 const itemDB = {
     items_couches: [ {name:'Leather Sofa', img:'couch1.png'}, {name:'Velvet Sofa', img:'couch2.png'}, {name:'Modern Sofa', img:'couch3.png'} ],
     items_armchairs: [ {name:'Wingback', img:'armchair1.png'}, {name:'Club Chair', img:'armchair2.png'} ],
-    items_dining_chairs: [], // Add images later
+    items_dining_chairs: [], 
     items_benches: [],
     items_ottomans: [],
     items_stools: [ {name:'Bar Stool 1', img:'barstool1.png'}, {name:'Bar Stool 2', img:'barstool2.png'}, {name:'Bar Stool 3', img:'barstool3.png'} ],
@@ -232,7 +246,11 @@ const itemDB = {
     items_tables_dining: [],
     items_tables_end: [],
     items_tables_coffee: [],
-    items_tables_bedside: []
+    items_tables_bedside: [],
+    items_dressers: [],
+    items_cabinets: [],
+    items_buffets: [],
+    items_consoles: []
 };
 
 let currentView = 'main'; // 'main', 'sub', 'items'
@@ -244,6 +262,7 @@ renderTabs(categories, 'main');
 // RENDER TABS
 function renderTabs(dataList, type) {
     const rack = document.getElementById('tab-rack');
+    
     // ANIMATION OUT
     const oldTabs = Array.from(rack.children);
     oldTabs.forEach(t => t.classList.add('tab-hide'));
@@ -253,7 +272,13 @@ function renderTabs(dataList, type) {
         dataList.forEach((item, index) => {
             const tab = document.createElement('div');
             tab.className = 'folder-tab tab-show';
-            tab.innerText = item.name;
+            
+            // Icon Logic: If 'main' use item.icon, else generic
+            let iconSrc = item.icon ? item.icon : 'iconseating.png'; 
+            
+            // Tab Content: Icon + Name (Name hidden until hover if CSS allows, or simple layout)
+            tab.innerHTML = `<img src="${iconSrc}" class="tab-icon-img"><div class="tab-text">${item.name}</div>`;
+            
             tab.style.animationDelay = (0.1 + (index * 0.1)) + 's';
             
             if (type === 'main') {
@@ -271,7 +296,6 @@ function selectCategory(catObj) {
     currentView = 'sub';
     renderTabs(catObj.subs, 'sub');
     document.getElementById('trunk-mini-back').style.display = 'block';
-    // Clear internal zone just in case
     document.getElementById('trunk-internal-zone').innerHTML = '';
 }
 
@@ -280,14 +304,14 @@ function showItems(contentKey) {
     const zone = document.getElementById('trunk-internal-zone');
     zone.innerHTML = '';
     
-    // Hide tabs temporarily to show full box content? Or keep tabs? 
-    // Let's keep sub-tabs visible so they can switch subs easily.
-    
     items.forEach((item, index) => {
         const card = document.createElement('div');
         card.className = 'catalog-item';
-        card.innerHTML = `<img src="${item.img}" class="catalog-icon-img" onerror="this.src='iconseating.png'"><div class="catalog-text">${item.name}</div>`;
-        card.onmouseenter = () => showPreview(item.img);
+        // Check if image exists, fallback to icon if needed for testing
+        let imgSrc = item.img ? item.img : 'iconseating.png';
+        
+        card.innerHTML = `<img src="${imgSrc}" class="catalog-icon-img"><div class="catalog-text">${item.name}</div>`;
+        card.onmouseenter = () => showPreview(imgSrc);
         card.onmouseleave = () => hidePreview();
         card.onclick = () => addFurnitureToStage(item);
         zone.appendChild(card);
