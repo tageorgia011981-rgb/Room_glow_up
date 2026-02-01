@@ -10,7 +10,6 @@
         body, html {
             width: 100%;
             height: 100%;
-            /* UPDATED BACKGROUND */
             background: url('backgroundb&t.jpg') no-repeat center center fixed;
             background-size: cover;
             overflow-x: hidden;
@@ -19,38 +18,52 @@
         /* HEADER SECTION */
         .header-container {
             text-align: center;
-            padding-top: 50px;
-            color: #fff;
+            padding-top: 60px;
         }
 
         .main-title {
             font-family: 'Limelight', cursive;
-            font-size: 5rem;
-            font-weight: bold;
+            /* BIGGER AND BOLDER */
+            font-size: 7rem; 
+            font-weight: 900;
             text-transform: uppercase;
-            letter-spacing: 8px;
-            margin-bottom: 10px;
-            text-shadow: 3px 3px 15px rgba(0,0,0,0.6);
+            letter-spacing: 12px;
+            margin-bottom: 5px;
+
+            /* SHINY GUNMETAL GRADIENT */
+            background: linear-gradient(
+                to bottom, 
+                #333 0%, 
+                #888 45%, 
+                #eee 50%, 
+                #888 55%, 
+                #222 100%
+            );
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            
+            /* DEPTH SHADOW */
+            filter: drop-shadow(5px 5px 15px rgba(0,0,0,0.8));
         }
 
         .sub-title {
             font-family: 'Helvetica Neue', Helvetica, sans-serif;
-            font-size: 1.1rem;
-            letter-spacing: 4px;
+            font-size: 1.3rem;
+            letter-spacing: 6px;
             text-transform: uppercase;
-            font-weight: 300;
+            font-weight: 400;
+            color: #ccc; /* Silver-grey text */
             opacity: 0.9;
         }
 
-        /* LABEL HOLDER ROW */
+        /* LABEL HOLDER ROW (Stayed the same) */
         .label-row {
             display: flex;
             justify-content: center;
             gap: 45px;
-            margin-top: 120px;
+            margin-top: 100px;
         }
 
-        /* THE GUNMETAL HARDWARE */
         .label-holder {
             width: 220px;
             height: 100px;
@@ -64,20 +77,31 @@
             cursor: pointer;
             box-shadow: inset 0 0 15px rgba(0,0,0,0.8), 0 5px 15px rgba(0,0,0,0.5);
             transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
-            transform: translateY(0);
         }
 
-        /* HOVER EFFECT: LIFT AND GLOW */
         .label-holder:hover {
             transform: translateY(-15px);
-            border-color: #555;
-            box-shadow: 
-                inset 0 0 10px rgba(0,0,0,0.6),
-                0 15px 35px rgba(255,255,255,0.15), 
-                0 0 20px rgba(130,130,130,0.3);
+            box-shadow: 0 15px 35px rgba(255,255,255,0.15), 0 0 20px rgba(130,130,130,0.3);
         }
 
-        /* HARDWARE DETAILS */
+        .label-content {
+            width: 85%;
+            height: 62%;
+            background: #fdfcf0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border: 1px solid #c0c0c0;
+        }
+
+        .label-text {
+            font-family: 'Special Elite', cursive;
+            font-size: 1.1rem;
+            font-weight: bold;
+            color: #000;
+            text-transform: uppercase;
+        }
+
         .screw {
             width: 8px;
             height: 8px;
@@ -86,10 +110,8 @@
             position: absolute;
             border: 1px solid #111;
         }
-        .s-tl { top: 8px; left: 8px; }
-        .s-tr { top: 8px; right: 8px; }
-        .s-bl { bottom: 8px; left: 8px; }
-        .s-br { bottom: 8px; right: 8px; }
+        .s-tl { top: 8px; left: 8px; } .s-tr { top: 8px; right: 8px; }
+        .s-bl { bottom: 8px; left: 8px; } .s-br { bottom: 8px; right: 8px; }
 
         .lip-pull {
             position: absolute;
@@ -101,32 +123,6 @@
             background: #1f1f1f;
             border-radius: 0 0 10px 10px;
             border: 1px solid #000;
-        }
-
-        /* THE TYPEWRITER LABEL */
-        .label-content {
-            width: 85%;
-            height: 62%;
-            background: #fdfcf0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 5px;
-            border: 1px solid #c0c0c0;
-            transition: background 0.4s ease;
-        }
-
-        .label-holder:hover .label-content {
-            background: #fff;
-        }
-
-        .label-text {
-            font-family: 'Special Elite', cursive;
-            font-size: 1.1rem;
-            font-weight: bold;
-            color: #000;
-            text-align: center;
-            text-transform: uppercase;
         }
     </style>
 </head>
