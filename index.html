@@ -3,109 +3,172 @@
 <head>
     <meta charset="UTF-8">
     <title>Room Glow Up | Studio</title>
+    <link href="https://fonts.googleapis.com/css2?family=Limelight&family=Special+Elite&display=swap" rel="stylesheet">
     <style>
-        /* CORE RESET */
         * { margin: 0; padding: 0; box-sizing: border-box; }
 
         body, html {
             width: 100%;
             height: 100%;
-            font-family: 'Times New Roman', serif; 
-            background-color: #000; 
-        }
-
-        /* MAIN SITE BACKGROUND */
-        #main-site {
-            width: 100%;
-            height: 100vh;
             background: url('background11.jpg') no-repeat center center fixed;
             background-size: cover;
+            overflow-x: hidden;
+        }
+
+        /* HEADER SECTION */
+        .header-container {
+            text-align: center;
+            padding-top: 50px;
+            color: #fff; /* White to pop against background11 */
+        }
+
+        .main-title {
+            font-family: 'Limelight', cursive;
+            font-size: 5rem;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 8px;
+            margin-bottom: 10px;
+            text-shadow: 3px 3px 15px rgba(0,0,0,0.6);
+        }
+
+        .sub-title {
+            font-family: 'Helvetica Neue', Helvetica, sans-serif;
+            font-size: 1.2rem;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            font-weight: 300;
+            opacity: 0.9;
+        }
+
+        /* LABEL HOLDER ROW */
+        .label-row {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            margin-top: 100px;
+        }
+
+        /* THE GUNMETAL HARDWARE */
+        .label-holder {
+            width: 220px;
+            height: 100px;
+            background: #2b2b2b; /* Deep Gunmetal */
+            border: 2px solid #1a1a1a;
+            position: relative;
+            box-shadow: 
+                inset 0 0 15px rgba(0,0,0,0.8), /* Interior Depth */
+                5px 5px 15px rgba(0,0,0,0.4);   /* Exterior Shadow */
+            border-radius: 2px;
             display: flex;
             justify-content: center;
             align-items: center;
-            position: relative;
-            z-index: 1;
         }
 
-        /* THE CATALOG (Hidden by default) */
-        #catalog-view {
-            display: none;
-            width: 100%;
-            height: 100vh;
-            background: url('backgroundcatalog.jpg') no-repeat center center fixed;
-            background-size: cover;
-            position: fixed;
-            top: 0;
-            left: 0;
-            z-index: 10;
-        }
-
-        /* 3D BOOK STYLING */
-        .book {
-            width: 450px;
-            height: 650px;
-            position: relative;
-            perspective: 1500px;
-            margin: auto;
-            top: 50%;
-            transform: translateY(-50%);
-        }
-
-        .page {
-            width: 100%;
-            height: 100%;
+        /* ROUGHED UP METAL EFFECT */
+        .label-holder::before {
+            content: '';
             position: absolute;
-            background: #fff; 
-            border: 1px solid #ddd;
-            transform-origin: left;
-            transition: transform 1s cubic-bezier(0.645, 0.045, 0.355, 1);
-            cursor: pointer;
-            padding: 30px;
-            box-shadow: 5px 5px 20px rgba(0,0,0,0.2);
-            backface-visibility: hidden;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: linear-gradient(135deg, rgba(255,255,255,0.05) 0%, rgba(0,0,0,0.1) 100%);
+            pointer-events: none;
         }
 
-        /* LIP PULL TRIGGER - Gunmetal Style */
+        /* EXPOSED SCREWS */
+        .screw {
+            width: 8px;
+            height: 8px;
+            background: #444;
+            border-radius: 50%;
+            position: absolute;
+            border: 1px solid #111;
+        }
+        .s-tl { top: 8px; left: 8px; }
+        .s-tr { top: 8px; right: 8px; }
+        .s-bl { bottom: 8px; left: 8px; }
+        .s-br { bottom: 8px; right: 8px; }
+
+        /* THE LIP PULL */
         .lip-pull {
-            width: 100px;
-            height: 40px;
-            background: #4a4a4a; /* Gunmetal */
             position: absolute;
-            bottom: 60px;
-            cursor: pointer;
-            text-align: center;
-            line-height: 40px;
-            font-size: 11px;
-            letter-spacing: 3px;
-            color: #fff;
-            text-transform: uppercase;
-            border: 1px solid #silver;
+            bottom: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 140px;
+            height: 20px;
+            background: #1f1f1f;
+            border-radius: 0 0 10px 10px;
+            border: 1px solid #000;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.5);
         }
+
+        /* THE TYPEWRITER LABEL */
+        .label-content {
+            width: 85%;
+            height: 60%;
+            background: #fdfcf0; /* Aged Cream Cardstock */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 5px;
+            border: 1px solid #c0c0c0;
+        }
+
+        .label-text {
+            font-family: 'Special Elite', cursive;
+            font-size: 1.1rem;
+            font-weight: bold;
+            color: #1a1a1a; /* Dark Charcoal Ink */
+            text-align: center;
+            text-transform: uppercase;
+        }
+
     </style>
 </head>
 <body>
 
-    <div id="main-site">
-        <div class="lip-pull" onclick="openCatalog()">Catalog</div>
+    <div class="header-container">
+        <h1 class="main-title">Room Glow Up</h1>
+        <p class="sub-title">Where Your Dream Space Comes To Life</p>
     </div>
 
-    <div id="catalog-view">
-        <div class="book">
-            <div class="page" id="p1" onclick="this.style.transform='rotateY(-160deg)'">
-                <h1 style="font-size: 1.8rem; letter-spacing: 6px; margin-top: 20px;">CURATED</h1>
-                <p style="margin-top: 15px; color: #333; font-style: italic;">Silver & Gunmetal Collection</p>
-                <div style="margin-top: 250px; border-top: 2px solid #000; padding-top: 15px;">
-                    <p style="font-size: 10px; letter-spacing: 1px;">VINTAGE INDUSTRIAL GRIT</p>
-                </div>
+    <div class="label-row">
+        <div class="label-holder">
+            <div class="screw s-tl"></div><div class="screw s-tr"></div>
+            <div class="screw s-bl"></div><div class="screw s-br"></div>
+            <div class="label-content">
+                <span class="label-text">Rooms</span>
             </div>
-            </div>
-    </div>
+            <div class="lip-pull"></div>
+        </div>
 
-    <script>
-        function openCatalog() {
-            document.getElementById('catalog-view').style.display = 'block';
-        }
-    </script>
+        <div class="label-holder">
+            <div class="screw s-tl"></div><div class="screw s-tr"></div>
+            <div class="screw s-bl"></div><div class="screw s-br"></div>
+            <div class="label-content">
+                <span class="label-text">Furniture Catalog</span>
+            </div>
+            <div class="lip-pull"></div>
+        </div>
+
+        <div class="label-holder">
+            <div class="screw s-tl"></div><div class="screw s-tr"></div>
+            <div class="screw s-bl"></div><div class="screw s-br"></div>
+            <div class="label-content">
+                <span class="label-text">Inspirational Look Book</span>
+            </div>
+            <div class="lip-pull"></div>
+        </div>
+
+        <div class="label-holder">
+            <div class="screw s-tl"></div><div class="screw s-tr"></div>
+            <div class="screw s-bl"></div><div class="screw s-br"></div>
+            <div class="label-content">
+                <span class="label-text">Save</span>
+            </div>
+            <div class="lip-pull"></div>
+        </div>
+    </div>
 
 </body>
 </html>
