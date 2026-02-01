@@ -10,7 +10,8 @@
         body, html {
             width: 100%;
             height: 100%;
-            background: url('backgroundb&t.jpg') no-repeat center center fixed;
+            /* NEW BACKGROUND */
+            background: url('backgroundG&Blk.jpg') no-repeat center center fixed;
             background-size: cover;
             overflow-x: hidden;
         }
@@ -23,106 +24,118 @@
 
         .main-title {
             font-family: 'Limelight', cursive;
-            /* BIGGER AND BOLDER */
-            font-size: 7rem; 
+            font-size: 8rem; /* Increased size */
             font-weight: 900;
             text-transform: uppercase;
-            letter-spacing: 12px;
+            letter-spacing: 15px;
             margin-bottom: 5px;
 
-            /* SHINY GUNMETAL GRADIENT */
+            /* POLISHED GUNMETAL GRADIENT */
             background: linear-gradient(
                 to bottom, 
-                #333 0%, 
-                #888 45%, 
-                #eee 50%, 
-                #888 55%, 
-                #222 100%
+                #222 0%, 
+                #777 40%, 
+                #fff 50%, 
+                #777 60%, 
+                #111 100%
             );
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            
-            /* DEPTH SHADOW */
-            filter: drop-shadow(5px 5px 15px rgba(0,0,0,0.8));
+            filter: drop-shadow(0 10px 20px rgba(0,0,0,0.9));
         }
 
         .sub-title {
             font-family: 'Helvetica Neue', Helvetica, sans-serif;
-            font-size: 1.3rem;
-            letter-spacing: 6px;
+            font-size: 1.4rem;
+            letter-spacing: 8px;
             text-transform: uppercase;
             font-weight: 400;
-            color: #ccc; /* Silver-grey text */
-            opacity: 0.9;
+            color: #a1a1a1;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
         }
 
-        /* LABEL HOLDER ROW (Stayed the same) */
+        /* INTERACTIVE TAB ROW */
         .label-row {
             display: flex;
             justify-content: center;
-            gap: 45px;
+            gap: 50px;
             margin-top: 100px;
         }
 
         .label-holder {
-            width: 220px;
-            height: 100px;
+            width: 230px;
+            height: 110px;
             background: #2b2b2b;
-            border: 2px solid #1a1a1a;
+            border: 2px solid #111;
             position: relative;
-            border-radius: 2px;
+            border-radius: 3px;
             display: flex;
             justify-content: center;
             align-items: center;
             cursor: pointer;
-            box-shadow: inset 0 0 15px rgba(0,0,0,0.8), 0 5px 15px rgba(0,0,0,0.5);
-            transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+            box-shadow: inset 0 0 20px rgba(0,0,0,0.9), 0 10px 20px rgba(0,0,0,0.6);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
 
+        /* LIFT AND GLOW EFFECT */
         .label-holder:hover {
-            transform: translateY(-15px);
-            box-shadow: 0 15px 35px rgba(255,255,255,0.15), 0 0 20px rgba(130,130,130,0.3);
+            transform: translateY(-20px);
+            border-color: #666;
+            box-shadow: 
+                inset 0 0 10px rgba(0,0,0,0.6),
+                0 20px 40px rgba(255,255,255,0.1), 
+                0 0 25px rgba(100,100,100,0.4);
         }
 
+        /* HARDWARE DETAILS */
+        .screw {
+            width: 9px;
+            height: 9px;
+            background: #3a3a3a;
+            border-radius: 50%;
+            position: absolute;
+            border: 1px solid #000;
+            box-shadow: inset 1px 1px 1px rgba(255,255,255,0.1);
+        }
+        .s-tl { top: 10px; left: 10px; } .s-tr { top: 10px; right: 10px; }
+        .s-bl { bottom: 10px; left: 10px; } .s-br { bottom: 10px; right: 10px; }
+
+        .lip-pull {
+            position: absolute;
+            bottom: -18px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 150px;
+            height: 22px;
+            background: #1a1a1a;
+            border-radius: 0 0 12px 12px;
+            border: 1px solid #000;
+            box-shadow: 0 5px 10px rgba(0,0,0,0.7);
+        }
+
+        /* RECESSED TYPEWRITER LABEL */
         .label-content {
-            width: 85%;
-            height: 62%;
+            width: 88%;
+            height: 65%;
             background: #fdfcf0;
             display: flex;
             justify-content: center;
             align-items: center;
-            border: 1px solid #c0c0c0;
+            border: 1px solid #b0b0b0;
+            transition: background 0.3s ease;
+        }
+
+        .label-holder:hover .label-content {
+            background: #ffffff;
         }
 
         .label-text {
             font-family: 'Special Elite', cursive;
-            font-size: 1.1rem;
+            font-size: 1.2rem;
             font-weight: bold;
             color: #000;
+            text-align: center;
             text-transform: uppercase;
-        }
-
-        .screw {
-            width: 8px;
-            height: 8px;
-            background: #333;
-            border-radius: 50%;
-            position: absolute;
-            border: 1px solid #111;
-        }
-        .s-tl { top: 8px; left: 8px; } .s-tr { top: 8px; right: 8px; }
-        .s-bl { bottom: 8px; left: 8px; } .s-br { bottom: 8px; right: 8px; }
-
-        .lip-pull {
-            position: absolute;
-            bottom: -15px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 140px;
-            height: 18px;
-            background: #1f1f1f;
-            border-radius: 0 0 10px 10px;
-            border: 1px solid #000;
         }
     </style>
 </head>
