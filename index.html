@@ -2,92 +2,100 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Room Glow Up | The Studio</title>
+    <title>Room Glow Up | Studio</title>
     <style>
+        /* CORE RESET */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
         body, html {
-            margin: 0;
-            padding: 0;
             width: 100%;
             height: 100%;
-            overflow-x: hidden;
-            font-family: 'Vogue', sans-serif; /* High-end serif style */
-            background: url('backgroundit.jpg') no-repeat center center fixed;
-            background-size: cover;
-            transition: background 1s ease-in-out;
+            font-family: 'Times New Roman', serif; 
+            background-color: #000; 
         }
 
-        /* The Catalog State */
-        body.catalog-active {
-            background: url('backgroundcatalog.jpg') no-repeat center center fixed;
+        /* MAIN SITE BACKGROUND */
+        #main-site {
+            width: 100%;
+            height: 100vh;
+            background: url('background11.jpg') no-repeat center center fixed;
             background-size: cover;
-        }
-
-        /* 3D BOOK LOGIC */
-        .book-container {
-            perspective: 2000px;
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 100vh;
-            display: none; /* Hidden until triggered */
+            position: relative;
+            z-index: 1;
         }
 
+        /* THE CATALOG (Hidden by default) */
+        #catalog-view {
+            display: none;
+            width: 100%;
+            height: 100vh;
+            background: url('backgroundcatalog.jpg') no-repeat center center fixed;
+            background-size: cover;
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 10;
+        }
+
+        /* 3D BOOK STYLING */
         .book {
-            width: 600px;
-            height: 800px;
+            width: 450px;
+            height: 650px;
             position: relative;
-            transform-style: preserve-3d;
-            transition: transform 1s;
+            perspective: 1500px;
+            margin: auto;
+            top: 50%;
+            transform: translateY(-50%);
         }
 
         .page {
             width: 100%;
             height: 100%;
             position: absolute;
-            top: 0;
-            left: 0;
-            transform-origin: left;
-            transform-style: preserve-3d;
-            transition: transform 1s cubic-bezier(0.645, 0.045, 0.355, 1);
-            background: #fff;
-            box-shadow: inset 3px 0px 20px rgba(0,0,0,0.1);
+            background: #fff; 
             border: 1px solid #ddd;
+            transform-origin: left;
+            transition: transform 1s cubic-bezier(0.645, 0.045, 0.355, 1);
+            cursor: pointer;
+            padding: 30px;
+            box-shadow: 5px 5px 20px rgba(0,0,0,0.2);
+            backface-visibility: hidden;
         }
 
-        /* The "Purchase" Plaque Logic */
-        .buy-link {
-            display: inline-block;
-            margin-top: 20px;
-            padding: 10px 25px;
-            border: 1px solid #000;
-            color: #000;
-            text-decoration: none;
-            letter-spacing: 2px;
-            text-transform: uppercase;
-            font-size: 12px;
-            transition: all 0.3s;
-        }
-
-        .buy-link:hover {
-            background: #000;
+        /* LIP PULL TRIGGER - Gunmetal Style */
+        .lip-pull {
+            width: 100px;
+            height: 40px;
+            background: #4a4a4a; /* Gunmetal */
+            position: absolute;
+            bottom: 60px;
+            cursor: pointer;
+            text-align: center;
+            line-height: 40px;
+            font-size: 11px;
+            letter-spacing: 3px;
             color: #fff;
+            text-transform: uppercase;
+            border: 1px solid #silver;
         }
-
-        /* Add your logic for Cabinet & Lip Pull here */
     </style>
 </head>
 <body>
 
-    <div id="studio">
-        </div>
+    <div id="main-site">
+        <div class="lip-pull" onclick="openCatalog()">Catalog</div>
+    </div>
 
-    <div class="book-container" id="catalog-view">
+    <div id="catalog-view">
         <div class="book">
-            <div class="page" onclick="this.style.transform='rotateY(-180deg)'">
-                <div style="padding: 40px;">
-                    <h2 style="font-weight: 300;">THE MODREST ANTHON</h2>
-                    <p>Gunmetal & Black Oak Anchor</p>
-                    <a href="#" class="buy-link">Acquire Piece</a>
+            <div class="page" id="p1" onclick="this.style.transform='rotateY(-160deg)'">
+                <h1 style="font-size: 1.8rem; letter-spacing: 6px; margin-top: 20px;">CURATED</h1>
+                <p style="margin-top: 15px; color: #333; font-style: italic;">Silver & Gunmetal Collection</p>
+                <div style="margin-top: 250px; border-top: 2px solid #000; padding-top: 15px;">
+                    <p style="font-size: 10px; letter-spacing: 1px;">VINTAGE INDUSTRIAL GRIT</p>
                 </div>
             </div>
             </div>
@@ -95,11 +103,9 @@
 
     <script>
         function openCatalog() {
-            document.body.classList.add('catalog-active');
-            document.getElementById('studio').style.display = 'none';
-            document.getElementById('catalog-view').style.display = 'flex';
+            document.getElementById('catalog-view').style.display = 'block';
         }
-        // Logic for page turns and purchasing goes here
     </script>
+
 </body>
 </html>
