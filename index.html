@@ -80,37 +80,37 @@
         .museum-stage {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             display: none; opacity: 0; transition: opacity 1.8s ease;
-            background-color: #000; /* BLACK BACKGROUND FOR SIDES */
+            background-color: #000;
             background-repeat: no-repeat;
             background-position: center;
         }
 
-        /* FIX: CONTAINED RAIN STAGES */
+        /* LITERAL FIX: CONTAINED RAIN */
         #stage-1 { background-image: url('rain1.jpg'); background-size: contain; z-index: 101; }
         #stage-2 { background-image: url('rain2.jpg'); background-size: contain; z-index: 102; }
         
-        /* GALLERY & LOOKBOOK STAGES */
         #gallery-view { background-image: url('goldhands.jpg'); background-size: cover; z-index: 103; }
-        #lookbook-view { background-image: url('lookbook1.jpg'); background-size: cover; z-index: 104; }
+        #lookbook-view { background-image: url('lookbook.jpg'); background-size: cover; z-index: 104; }
 
         .museum-btn {
-            position: absolute; bottom: 8%; left: 50%; transform: translateX(-50%);
-            padding: 18px 45px; font-family: 'Limelight', cursive; font-size: 1.5rem;
+            position: absolute; bottom: 5%; left: 50%; transform: translateX(-50%);
+            padding: 12px 30px; font-family: 'Limelight', cursive; font-size: 1.2rem;
             color: #fff; background: transparent; border: 1px solid #CF9D7B;
-            letter-spacing: 5px; text-transform: uppercase; cursor: pointer; z-index: 110;
+            letter-spacing: 3px; text-transform: uppercase; cursor: pointer; z-index: 110;
         }
 
         .art-frame {
-            position: absolute; width: 18.5%; height: 36%;
-            background: #000; overflow: hidden; border: 1px solid rgba(207, 157, 123, 0.4); 
-            z-index: 105;
+            position: absolute; background: #000; overflow: hidden; z-index: 105;
         }
-        .art-frame img { width: 100%; height: 100%; object-fit: cover; }
+        .art-frame img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.8s; }
+        .art-frame:hover img { transform: scale(1.1); }
 
-        /* ALIGNMENT FOR GOLDHANDS */
-        #art-1 { top: 24.5%; left: 19.8%; }
-        #art-2 { top: 19.5%; left: 40.8%; }
-        #art-3 { top: 24.5%; right: 19.8%; }
+        /* LOOKBOOK FRAME ALIGNMENT */
+        #lb-1 { top: 6.5%; left: 8.5%; width: 33.5%; height: 28%; }
+        #lb-2 { top: 6.5%; left: 56.5%; width: 31%; height: 24.5%; }
+        #lb-3 { top: 37.5%; left: 57.5%; width: 31.5%; height: 19.5%; }
+        #lb-4 { top: 56.5%; left: 8.5%; width: 33.5%; height: 35.5%; }
+        #lb-5 { top: 66.5%; left: 56.5%; width: 31%; height: 23%; }
 
     </style>
 </head>
@@ -133,13 +133,15 @@
     <div id="stage-2" class="museum-stage"><button class="museum-btn" onclick="nextAct('stage-2', 'gallery-view')">Enter the Gallery</button></div>
     
     <div id="gallery-view" class="museum-stage">
-        <div id="art-1" class="art-frame"><img src="pnkbathroom.jpg"></div>
-        <div id="art-2" class="art-frame"><img src="wellnesswinkliving.jpg"></div>
-        <div id="art-3" class="art-frame"><img src="kitchenpurp.jpg"></div>
         <button class="museum-btn" onclick="nextAct('gallery-view', 'lookbook-view')">View Lookbook</button>
     </div>
 
     <div id="lookbook-view" class="museum-stage">
+        <div id="lb-1" class="art-frame"><img src="insp9.jpg"></div>
+        <div id="lb-2" class="art-frame"><img src="insp11.jpg"></div>
+        <div id="lb-3" class="art-frame"><img src="insp16.jpg"></div>
+        <div id="lb-4" class="art-frame"><img src="insp17.jpg"></div>
+        <div id="lb-5" class="art-frame"><img src="insp18.jpg"></div>
         <button class="museum-btn" onclick="location.reload()">Return to Studio</button>
     </div>
 
