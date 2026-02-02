@@ -10,38 +10,37 @@ body, html { width: 100%; height: 100%; background: #000; overflow: hidden; }
     position: relative; z-index: 10;
 }
 
-.header-container { text-align: center; padding-top: 60px; }
+.header-container { text-align: center; padding-top: 50px; }
 .main-title {
     font-family: 'Limelight', cursive;
-    font-size: 7.5rem; font-weight: 900;
+    font-size: 8rem; font-weight: 900;
     background: linear-gradient(to bottom, #222 0%, #777 40%, #fff 50%, #777 60%, #111 100%);
     -webkit-background-clip: text; -webkit-text-fill-color: transparent;
     filter: drop-shadow(0 10px 20px rgba(0,0,0,0.9));
     letter-spacing: 15px; text-transform: uppercase; line-height: 1;
 }
 
+/* Sub-header made more visible */
 .sub-header {
     font-family: 'Special Elite', cursive;
-    font-size: 1.3rem; color: #999; letter-spacing: 5px;
-    margin-top: 15px; text-shadow: 2px 2px 4px rgba(0,0,0,0.6);
+    font-size: 1.8rem; color: #fff; letter-spacing: 8px;
+    margin-top: 20px; text-shadow: 3px 3px 6px rgba(0,0,0,0.8);
+    font-weight: bold;
 }
 
-.label-row { display: flex; justify-content: center; gap: 20px; margin-top: 60px; width: 90%; }
+.label-row { display: flex; justify-content: center; gap: 25px; margin-top: 50px; }
 .label-holder { 
-    width: 190px; height: 90px; 
+    width: 210px; height: 100px; 
     background: linear-gradient(145deg, #162127, #0C1519); 
-    border: 1px solid #222; position: relative; 
+    border: 2px solid #333; position: relative; 
     display: flex; justify-content: center; align-items: center; 
-    cursor: pointer; box-shadow: 8px 8px 15px rgba(0,0,0,0.7); transition: all 0.4s; 
+    cursor: pointer; box-shadow: 10px 10px 20px rgba(0,0,0,0.8); transition: all 0.4s; 
 }
 .label-holder:hover { transform: translateY(-5px); border-color: #CF9D7B; }
-.label-holder::after {
-    content: ''; position: absolute; bottom: -6px; left: 50%; transform: translateX(-50%);
-    width: 80px; height: 12px; background: #333; border-radius: 0 0 6px 6px; 
-    border: 1px solid #444; box-shadow: inset 0 -3px 5px rgba(0,0,0,0.5);
-}
-.label-content { width: 85%; height: 60%; background: #fdfcf0; display: flex; justify-content: center; align-items: center; border: 1px solid #999; }
-.label-text { font-family: 'Special Elite', cursive; font-size: 0.95rem; color: #111; text-transform: uppercase; text-align: center; line-height: 1.1; }
+
+/* Tab text made much larger and clearer */
+.label-content { width: 88%; height: 65%; background: #fdfcf0; display: flex; justify-content: center; align-items: center; border: 1px solid #000; }
+.label-text { font-family: 'Special Elite', cursive; font-size: 1.2rem; color: #000; text-transform: uppercase; text-align: center; font-weight: 900; }
 
 .museum-stage { position: fixed; top: 0; left: 0; width: 100%; height: 100%; display: none; opacity: 0; transition: opacity 1.8s ease; background-color: #000; background-repeat: no-repeat; background-position: center; }
 
@@ -49,26 +48,18 @@ body, html { width: 100%; height: 100%; background: #000; overflow: hidden; }
 #stage-2 { background-image: url('rain2.jpg'); background-size: contain; z-index: 102; }
 #gallery-view { background-image: url('goldhands.jpg'); background-size: 100% 100%; z-index: 103; }
 #ornate-view { background-image: url('image_1d89a4.png'); background-size: 100% 100%; z-index: 104; }
-#lookbook-view { background-image: url('lookbook.jpg'); background-size: 100% 100%; z-index: 105; }
-#final-exhibit { background-image: url('3rdgallerywall.jpg'); background-size: 100% 100%; z-index: 106; }
 
-.museum-btn { position: absolute; bottom: 5%; left: 50%; transform: translateX(-50%); padding: 12px 30px; font-family: 'Limelight', cursive; font-size: 1.2rem; color: #fff; background: rgba(0,0,0,0.6); border: 1px solid #CF9D7B; cursor: pointer; z-index: 120; text-transform: uppercase; letter-spacing: 2px; }
+.museum-btn { position: absolute; bottom: 5%; left: 50%; transform: translateX(-50%); padding: 15px 40px; font-family: 'Limelight', cursive; font-size: 1.4rem; color: #fff; background: rgba(0,0,0,0.8); border: 2px solid #CF9D7B; cursor: pointer; z-index: 120; text-transform: uppercase; }
 
 .art-frame { position: absolute; background: transparent; overflow: hidden; z-index: 110; display: flex; justify-content: center; align-items: center; }
-.art-frame img { width: 100%; height: 100%; object-fit: cover; filter: brightness(0.9); }
+.art-frame img { width: 100%; height: 100%; object-fit: cover; }
 
-/* FRAME POSITIONS */
-#art-1 { top: 25.3%; left: 20.3%; width: 17.5%; height: 34.5%; transform: rotate(-1deg); }
-#art-2 { top: 20.1%; left: 41.2%; width: 17.6%; height: 34.2%; }
-#art-3 { top: 25.3%; right: 20.3%; width: 17.5%; height: 34.5%; transform: rotate(1deg); }
+/* HANDS ALIGNMENT FIXED */
+#art-1 { top: 25.5%; left: 20.3%; width: 17.5%; height: 34.5%; transform: rotate(-1.5deg); }
+#art-2 { top: 20.3%; left: 41.2%; width: 17.6%; height: 34%; }
+#art-3 { top: 25.5%; right: 20.3%; width: 17.5%; height: 34.5%; transform: rotate(1.5deg); }
+
+/* ORNATE ALIGNMENT FIXED */
 #orn-frame-1 { top: 24.5%; left: 8.5%; width: 20%; height: 49.5%; }
 #orn-frame-2 { top: 21%; left: 39.2%; width: 21.5%; height: 53.5%; }
 #orn-frame-3 { top: 24.5%; right: 8.5%; width: 20%; height: 49.5%; }
-#lb-1 { top: 7.5%; left: 9.5%; width: 32%; height: 26.5%; }
-#lb-2 { top: 7.5%; left: 57.5%; width: 29.5%; height: 22.5%; }
-#lb-3 { top: 38.5%; left: 58.5%; width: 29.5%; height: 18%; }
-#lb-4 { top: 57.5%; left: 9.5%; width: 32%; height: 34%; }
-#lb-5 { top: 67.5%; left: 57.5%; width: 29.5%; height: 21.5%; }
-#mold-1 { top: 27.2%; left: 15.2%; width: 11.8%; height: 36%; }
-#mold-2 { top: 21.2%; left: 40.5%; width: 19%; height: 41.5%; } 
-#mold-3 { top: 27.2%; right: 15.2%; width: 11.8%; height: 36%; }
