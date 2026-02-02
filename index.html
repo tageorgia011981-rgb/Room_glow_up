@@ -6,6 +6,14 @@
     <title>Room Glow Up | Studio</title>
     <link href="https://fonts.googleapis.com/css2?family=Limelight&family=Special+Elite&display=swap" rel="stylesheet">
     <style>
+        /* --- DESIGN DNA (Safeguards) --- */
+        :root {
+            --metal-base: #1a2a33;
+            --metal-grit: repeating-linear-gradient(45deg, #1a2a33 0px, #1a2a33 2px, #1e2e38 2px, #1e2e38 4px);
+            --paper-aged: #e6e2cf;
+            --transition-speed: 1s; /* Controlled speed for transitions */
+        }
+
         /* --- RESET & CORE --- */
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body, html { width: 100%; height: 100%; background: #000; overflow: hidden; }
@@ -37,60 +45,76 @@
             font-weight: bold;
         }
 
-        /* --- VINTAGE LABEL HOLDER TABS --- */
-        .label-row { display: flex; justify-content: center; gap: 25px; margin-top: 50px; }
+        /* --- THE INDUSTRIAL PULL TABS --- */
+        .label-row { display: flex; justify-content: center; gap: 35px; margin-top: 50px; }
 
         .label-holder { 
-            width: 210px; height: 100px; 
-            background: linear-gradient(145deg, #1a2a33, #0a1114); 
-            border: 2px solid #333; 
+            width: 230px; height: 110px; 
+            background: linear-gradient(135deg, rgba(255,255,255,0.05) 0%, rgba(0,0,0,0) 50%), var(--metal-grit);
+            background-color: var(--metal-base);
+            border: 3px solid #000;
+            border-top: 3px solid #444; 
+            border-left: 3px solid #333;
             position: relative; 
             display: flex; justify-content: center; align-items: center; 
             cursor: pointer; 
-            box-shadow: 10px 10px 20px rgba(0,0,0,0.8); 
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); 
+            box-shadow: 12px 12px 25px rgba(0,0,0,0.9), inset 0 0 15px rgba(0,0,0,0.5); 
+            transition: all 0.3s ease-out;
         }
 
+        /* Fixed Screw Holes */
+        .label-holder::before {
+            content: '';
+            position: absolute;
+            width: 8px; height: 8px;
+            background: radial-gradient(circle, #333 20%, #000 80%);
+            border-radius: 50%;
+            top: 10px; left: 10px;
+            /* Box shadow creates the other 3 screws automatically based on holder size */
+            box-shadow: 202px 0 0 #111, 0 82px 0 #111, 202px 82px 0 #111; 
+        }
+
+        /* Heavy Pull Handle */
         .label-holder::after {
             content: ''; 
             position: absolute; 
-            bottom: -8px; left: 50%; 
+            bottom: -12px; left: 50%; 
             transform: translateX(-50%);
-            width: 90px; height: 14px; 
-            background: linear-gradient(to bottom, #222, #000); 
-            border-radius: 0 0 10px 10px;
-            border: 1px solid #444;
-            box-shadow: inset 0 -4px 6px rgba(0,0,0,0.7);
+            width: 100px; height: 18px; 
+            background: linear-gradient(to bottom, #111, #000); 
+            border-radius: 0 0 12px 12px;
+            border: 2px solid #333;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.8), inset 0 -2px 5px rgba(255,255,255,0.1);
         }
 
         .label-holder:hover { 
-            transform: translateY(-10px); 
-            border-color: #CF9D7B; 
-            box-shadow: 15px 15px 35px rgba(0,0,0,1);
+            transform: translateY(-5px); 
+            filter: brightness(1.15);
         }
 
         .label-content { 
-            width: 88%; height: 65%; 
-            background: #fdfcf0; 
+            width: 82%; height: 55%; 
+            background: var(--paper-aged); 
             display: flex; justify-content: center; align-items: center; 
             border: 2px solid #000; 
-            box-shadow: inset 2px 2px 5px rgba(0,0,0,0.2);
+            box-shadow: inset 4px 4px 8px rgba(0,0,0,0.4); 
         }
 
         .label-text { 
             font-family: 'Special Elite', cursive; 
-            font-size: 1.2rem; 
-            color: #000; 
+            font-size: 1.15rem; 
+            color: #222; 
             text-transform: uppercase; 
             text-align: center; 
             font-weight: 900; 
-            letter-spacing: 1px;
+            letter-spacing: 2px;
+            opacity: 0.85;
         }
 
-        /* --- MUSEUM STAGES --- */
+        /* --- MUSEUM STAGES & SMIG ALIGNMENT --- */
         .museum-stage { 
             position: fixed; top: 0; left: 0; width: 100%; height: 100%; 
-            display: none; opacity: 0; transition: opacity 1s ease; 
+            display: none; opacity: 0; transition: opacity var(--transition-speed) ease; 
             background-color: #000; background-repeat: no-repeat; background-position: center; 
         }
 
@@ -106,7 +130,6 @@
             cursor: pointer; z-index: 120; text-transform: uppercase; 
         }
 
-        /* --- IMAGE ALIGNMENT (SMIG FIX) --- */
         .art-frame { 
             position: absolute; background: transparent; overflow: hidden; 
             z-index: 110; display: flex; justify-content: center; align-items: center; 
@@ -188,9 +211,9 @@
             }, 1000); 
         }
 
-        function openRooms() { console.log("Waiting for instructions..."); }
-        function openFurnitureCatalog() { console.log("Waiting for instructions..."); }
-        function saveProject() { alert("Saved!"); }
+        function openRooms() { alert("Rooms opening..."); }
+        function openFurnitureCatalog() { alert("Catalog opening..."); }
+        function saveProject() { alert("Progress Saved."); }
     </script>
 </body>
 </html>
