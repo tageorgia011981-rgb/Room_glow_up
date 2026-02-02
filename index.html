@@ -67,27 +67,42 @@
 
         #stage-1 { background-image: url('rain1.jpg'); z-index: 101; }
         #stage-2 { background-image: url('rain2.jpg'); z-index: 102; }
-        #gallery-view { background-image: url('image_f51b81.png'); z-index: 103; }
+        
+        #gallery-view { 
+            background-image: url('goldhands.jpg'); /* FIXED FILENAME */
+            z-index: 103; 
+        }
+
+        .curtain {
+            position: absolute; top: 0; width: 12%; height: 100%;
+            background: linear-gradient(to right, rgba(0,0,0,1), rgba(20,20,20,0.8), rgba(0,0,0,0));
+            z-index: 104;
+        }
+        .curtain-left { left: 0; }
+        .curtain-right { right: 0; transform: scaleX(-1); }
 
         .museum-btn {
             position: absolute; bottom: 8%; left: 50%; transform: translateX(-50%);
             padding: 18px 45px; font-family: 'Limelight', cursive; font-size: 1.5rem;
             color: #fff; background: transparent; border: 1px solid #fff;
             letter-spacing: 5px; text-transform: uppercase; cursor: pointer; transition: 0.3s;
+            z-index: 110;
         }
         .museum-btn:hover { background: #fff; color: #000; }
 
         /* --- THE SIGNATURE ROOMS --- */
         .art-frame {
-            position: absolute; width: 18%; height: 35%;
+            position: absolute; width: 18.5%; height: 36%;
             background: #000; overflow: hidden;
-            border: 1px solid rgba(255, 215, 0, 0.3); transition: 0.5s;
+            border: 1px solid rgba(255, 215, 0, 0.1); transition: 0.5s;
+            z-index: 105;
         }
-        .art-frame img { width: 100%; height: 100%; object-fit: cover; opacity: 0.8; }
+        .art-frame img { width: 100%; height: 100%; object-fit: cover; opacity: 0.9; }
 
-        #art-1 { top: 25%; left: 20%; }
-        #art-2 { top: 20%; left: 41%; }
-        #art-3 { top: 25%; right: 20%; }
+        /* Frame placement for goldhands background */
+        #art-1 { top: 24.5%; left: 19.8%; }
+        #art-2 { top: 19.5%; left: 40.8%; }
+        #art-3 { top: 24.5%; right: 19.8%; }
 
     </style>
 </head>
@@ -128,9 +143,13 @@
     </div>
     
     <div id="gallery-view" class="museum-stage">
+        <div class="curtain curtain-left"></div>
+        <div class="curtain curtain-right"></div>
+
         <div id="art-1" class="art-frame"><img src="teal_bedroom.jpg"></div>
         <div id="art-2" class="art-frame"><img src="brushed_bronze_lounge.jpg"></div>
         <div id="art-3" class="art-frame"><img src="black_gold_suite.jpg"></div>
+        
         <button class="museum-btn" style="font-size: 1rem;" onclick="location.reload()">Return to Studio</button>
     </div>
 
