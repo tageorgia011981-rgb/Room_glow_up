@@ -41,7 +41,6 @@
         }
         .label-holder:hover { transform: translateY(-10px); border-color: #CF9D7B; }
         
-        /* The "Lip" Pull Tab look */
         .label-holder::after {
             content: ''; position: absolute; bottom: -10px; left: 50%; transform: translateX(-50%);
             width: 120px; height: 20px; background: #333;
@@ -64,14 +63,14 @@
         .museum-btn { position: absolute; bottom: 5%; left: 50%; transform: translateX(-50%); padding: 12px 30px; font-family: 'Limelight', cursive; font-size: 1.2rem; color: #fff; background: transparent; border: 1px solid #CF9D7B; cursor: pointer; z-index: 120; text-transform: uppercase; letter-spacing: 2px; }
 
         .art-frame { position: absolute; background: transparent; overflow: hidden; z-index: 110; display: flex; justify-content: center; align-items: center; }
-        .art-frame img { width: 100%; height: 100%; }
+        .art-frame img { width: 100%; height: 100%; filter: brightness(0.9); }
 
         /* --- STAGE POSITIONING --- */
-        #art-1 { top: 25.8%; left: 20.2%; width: 17.8%; height: 34.8%; }
+        #art-1 { top: 25.3%; left: 20.3%; width: 17.5%; height: 34.5%; transform: rotate(-1deg); }
         #art-1 img { object-fit: cover; }
-        #art-2 { top: 20.5%; left: 41.1%; width: 17.8%; height: 34.8%; }
+        #art-2 { top: 20.1%; left: 41.2%; width: 17.6%; height: 34.2%; }
         #art-2 img { object-fit: cover; }
-        #art-3 { top: 25.8%; right: 20.2%; width: 17.8%; height: 34.8%; }
+        #art-3 { top: 25.3%; right: 20.3%; width: 17.5%; height: 34.5%; transform: rotate(1deg); }
         #art-3 img { object-fit: cover; }
         
         #lb-1 { top: 7.5%; left: 9.5%; width: 32%; height: 26.5%; }
@@ -84,7 +83,6 @@
         #mold-1 { top: 27.2%; left: 15.2%; width: 11.8%; height: 36%; }
         #mold-2 { top: 21.2%; left: 40.5%; width: 19%; height: 41.5%; } 
         #mold-3 { top: 27.2%; right: 15.2%; width: 11.8%; height: 36%; }
-        .mold-img { object-fit: cover; }
 
     </style>
 </head>
@@ -105,7 +103,7 @@
         <div id="art-1" class="art-frame"><img src="pnkbathroom.jpg"></div>
         <div id="art-2" class="art-frame"><img src="wellnesswinkliving.jpg"></div>
         <div id="art-3" class="art-frame"><img src="kitchenpurp.jpg"></div>
-        <button class="museum-btn" onclick="nextAct('gallery-view', 'lookbook-view')">Continue Walk</button>
+        <button class="museum-btn" onclick="nextAct('gallery-view', 'lookbook-view')">View Lookbook</button>
     </div>
 
     <div id="lookbook-view" class="museum-stage">
@@ -118,14 +116,22 @@
     </div>
 
     <div id="final-exhibit" class="museum-stage">
-        <div id="mold-1" class="art-frame"><img class="mold-img" src="textures&vibes1.jpg"></div>
-        <div id="mold-2" class="art-frame"><img class="mold-img" src="textures&vibes.jpg"></div>
-        <div id="mold-3" class="art-frame"><img class="mold-img" src="textures&vibes2.jpg"></div>
+        <div id="mold-1" class="art-frame"><img src="textures&vibes1.jpg"></div>
+        <div id="mold-2" class="art-frame"><img src="textures&vibes.jpg"></div>
+        <div id="mold-3" class="art-frame"><img src="textures&vibes2.jpg"></div>
         <button class="museum-btn" onclick="location.reload()">Return to Studio</button>
     </div>
 
     <script>
-        function startMuseum() { document.getElementById('studio-main').style.opacity = '0'; setTimeout(() => { const act1 = document.getElementById('stage-1'); act1.style.display = 'block'; setTimeout(() => act1.style.opacity = '1', 50); }, 1200); }
+        function startMuseum() { 
+            document.getElementById('studio-main').style.opacity = '0'; 
+            setTimeout(() => { 
+                const act1 = document.getElementById('stage-1'); 
+                act1.style.display = 'block'; 
+                setTimeout(() => act1.style.opacity = '1', 50); 
+            }, 1200); 
+        }
+
         function nextAct(curr, next) { 
             document.getElementById(curr).style.opacity = '0'; 
             setTimeout(() => { 
