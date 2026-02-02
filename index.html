@@ -33,8 +33,13 @@
         </div>
     </div>
 
-    <div id="stage-1" class="museum-stage"><button class="museum-btn" onclick="nextAct('stage-1', 'stage-2')">Walk the Hall</button></div>
-    <div id="stage-2" class="museum-stage"><button class="museum-btn" onclick="nextAct('stage-2', 'gallery-view')">Enter Exhibit</button></div>
+    <div id="stage-1" class="museum-stage">
+        <button class="museum-btn" onclick="nextAct('stage-1', 'stage-2')">Walk the Hall</button>
+    </div>
+
+    <div id="stage-2" class="museum-stage">
+        <button class="museum-btn" onclick="nextAct('stage-2', 'gallery-view')">Enter Exhibit</button>
+    </div>
     
     <div id="gallery-view" class="museum-stage">
         <div id="art-1" class="art-frame"><img></div>
@@ -49,3 +54,23 @@
         <div id="orn-frame-3" class="art-frame"><img></div>
         <button class="museum-btn" onclick="nextAct('ornate-view', 'lookbook-view')">View Lookbook</button>
     </div>
+
+    <div id="lookbook-view" class="museum-stage">
+        <div id="lb-1" class="art-frame"><img></div>
+        <div id="lb-2" class="art-frame"><img></div>
+        <div id="lb-3" class="art-frame"><img></div>
+        <div id="lb-4" class="art-frame"><img></div>
+        <div id="lb-5" class="art-frame"><img></div>
+        <button class="museum-btn" onclick="nextAct('lookbook-view', 'final-exhibit')">The Grand Hall</button>
+    </div>
+
+    <div id="final-exhibit" class="museum-stage">
+        <div id="mold-1" class="art-frame"><img></div>
+        <div id="mold-2" class="art-frame"><img></div>
+        <div id="mold-3" class="art-frame"><img></div>
+        <button class="museum-btn" onclick="location.reload()">Return to Studio</button>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
