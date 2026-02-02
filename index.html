@@ -21,7 +21,7 @@
         .main-title {
             font-family: 'Limelight', cursive;
             font-size: 7.5rem; font-weight: 900;
-            background: linear-gradient(to bottom, #222 0%, #777 40%, #fff 50%, #777 60%, #111 100%);
+            background: linear-gradient(to bottom, #162127 0%, #CF9D7B 50%, #162127 100%);
             -webkit-background-clip: text; -webkit-text-fill-color: transparent;
             filter: drop-shadow(0 10px 20px rgba(0,0,0,0.9));
             letter-spacing: 15px; text-transform: uppercase;
@@ -34,30 +34,59 @@
             margin-top: 10px;
         }
 
-        /* --- THE HARDWARE PULL TABS --- */
+        /* --- INDUSTRIAL HARDWARE PULL TABS --- */
         .label-row { display: flex; justify-content: center; gap: 50px; margin-top: 100px; }
+        
         .label-holder {
-            width: 230px; height: 110px; background: #2b2b2b; border: 2px solid #111;
+            width: 240px; height: 120px; 
+            background: linear-gradient(145deg, #1a2a32, #111d22); /* Industrial Green Steel */
+            border: 1px solid #0a1114;
             position: relative; display: flex; justify-content: center; align-items: center;
-            cursor: pointer; box-shadow: inset 0 0 20px rgba(0,0,0,0.9), 0 10px 20px rgba(0,0,0,0.6);
+            cursor: pointer; 
+            box-shadow: 10px 10px 20px rgba(0,0,0,0.5), inset 2px 2px 5px rgba(255,255,255,0.05);
             transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
-        .label-holder:hover { transform: translateY(-20px); border-color: #666; }
+        .label-holder:hover { transform: translateY(-15px); }
 
-        .screw { width: 9px; height: 9px; background: #3a3a3a; border-radius: 50%; position: absolute; border: 1px solid #000; }
-        .s-tl { top: 10px; left: 10px; } .s-tr { top: 10px; right: 10px; }
-        .s-bl { bottom: 10px; left: 10px; } .s-br { bottom: 10px; right: 10px; }
+        /* ROUGHED UP FLATHEAD SCREWS */
+        .screw { 
+            width: 16px; height: 16px; 
+            background: radial-gradient(circle at 30% 30%, #e6be9b, #8a6345); /* Antique Brass */
+            border-radius: 50%; 
+            position: absolute; 
+            box-shadow: 2px 2px 4px rgba(0,0,0,0.8), inset -1px -1px 2px rgba(0,0,0,0.5);
+            border: 1px solid #5a402d;
+        }
+        /* Screw Head Slot */
+        .screw::after {
+            content: ''; position: absolute; top: 50%; left: 50%;
+            width: 80%; height: 2px; background: rgba(0,0,0,0.7);
+            transform: translate(-50%, -50%) rotate(45deg);
+            box-shadow: 0 1px 1px rgba(255,255,255,0.2);
+        }
+        
+        .s-tl { top: 12px; left: 12px; } .s-tr { top: 12px; right: 12px; }
+        .s-bl { bottom: 12px; left: 12px; } .s-br { bottom: 12px; right: 12px; }
 
         .lip-pull {
-            position: absolute; bottom: -18px; left: 50%; transform: translateX(-50%);
-            width: 150px; height: 22px; background: #1a1a1a;
-            border-radius: 0 0 12px 12px; border: 1px solid #000;
+            position: absolute; bottom: -20px; left: 50%; transform: translateX(-50%);
+            width: 140px; height: 24px; 
+            background: linear-gradient(to bottom, #111d22, #05080a);
+            border-radius: 0 0 10px 10px; 
+            border: 1px solid #CF9D7B;
+            box-shadow: 0 5px 10px rgba(0,0,0,0.5);
         }
 
-        .label-content { width: 88%; height: 65%; background: #fdfcf0; display: flex; justify-content: center; align-items: center; border: 1px solid #b0b0b0; }
-        .label-text { font-family: 'Special Elite', cursive; font-size: 1rem; font-weight: bold; color: #000; text-transform: uppercase; text-align: center; }
+        .label-content { 
+            width: 82%; height: 60%; 
+            background: #f4f1ea; 
+            display: flex; justify-content: center; align-items: center; 
+            border: 1px solid #b0aaa0;
+            box-shadow: inset 0 2px 5px rgba(0,0,0,0.2);
+        }
+        .label-text { font-family: 'Special Elite', cursive; font-size: 1.1rem; color: #222; text-transform: uppercase; }
 
-        /* --- THE SIGNATURE GALLERY EXPERIENCE --- */
+        /* --- SIGNATURE GALLERY --- */
         .museum-stage {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             display: none; opacity: 0; transition: opacity 1.8s ease;
@@ -67,15 +96,11 @@
 
         #stage-1 { background-image: url('rain1.jpg'); z-index: 101; }
         #stage-2 { background-image: url('rain2.jpg'); z-index: 102; }
-        
-        #gallery-view { 
-            background-image: url('goldhands.jpg'); /* FIXED FILENAME */
-            z-index: 103; 
-        }
+        #gallery-view { background-image: url('goldhands.jpg'); z-index: 103; }
 
         .curtain {
             position: absolute; top: 0; width: 12%; height: 100%;
-            background: linear-gradient(to right, rgba(0,0,0,1), rgba(20,20,20,0.8), rgba(0,0,0,0));
+            background: linear-gradient(to right, rgba(0,0,0,1), rgba(22,33,39,0.7), rgba(0,0,0,0));
             z-index: 104;
         }
         .curtain-left { left: 0; }
@@ -84,22 +109,21 @@
         .museum-btn {
             position: absolute; bottom: 8%; left: 50%; transform: translateX(-50%);
             padding: 18px 45px; font-family: 'Limelight', cursive; font-size: 1.5rem;
-            color: #fff; background: transparent; border: 1px solid #fff;
+            color: #fff; background: transparent; border: 1px solid #CF9D7B;
             letter-spacing: 5px; text-transform: uppercase; cursor: pointer; transition: 0.3s;
             z-index: 110;
         }
-        .museum-btn:hover { background: #fff; color: #000; }
+        .museum-btn:hover { background: #CF9D7B; color: #000; }
 
-        /* --- THE SIGNATURE ROOMS --- */
         .art-frame {
             position: absolute; width: 18.5%; height: 36%;
             background: #000; overflow: hidden;
-            border: 1px solid rgba(255, 215, 0, 0.1); transition: 0.5s;
+            border: 2px solid #CF9D7B; 
+            box-shadow: 0 0 30px rgba(0,0,0,0.9);
             z-index: 105;
         }
-        .art-frame img { width: 100%; height: 100%; object-fit: cover; opacity: 0.9; }
+        .art-frame img { width: 100%; height: 100%; object-fit: cover; opacity: 0.95; }
 
-        /* Frame placement for goldhands background */
         #art-1 { top: 24.5%; left: 19.8%; }
         #art-2 { top: 19.5%; left: 40.8%; }
         #art-3 { top: 24.5%; right: 19.8%; }
@@ -145,11 +169,9 @@
     <div id="gallery-view" class="museum-stage">
         <div class="curtain curtain-left"></div>
         <div class="curtain curtain-right"></div>
-
-        <div id="art-1" class="art-frame"><img src="teal_bedroom.jpg"></div>
-        <div id="art-2" class="art-frame"><img src="brushed_bronze_lounge.jpg"></div>
-        <div id="art-3" class="art-frame"><img src="black_gold_suite.jpg"></div>
-        
+        <div id="art-1" class="art-frame"><img src="pnkbathroom.jpg"></div>
+        <div id="art-2" class="art-frame"><img src="moodylounge.jpg"></div>
+        <div id="art-3" class="art-frame"><img src="blackgoldsuite.jpg"></div>
         <button class="museum-btn" style="font-size: 1rem;" onclick="location.reload()">Return to Studio</button>
     </div>
 
@@ -162,7 +184,6 @@
                 setTimeout(() => act1.style.opacity = '1', 50);
             }, 1200);
         }
-
         function nextAct(curr, next) {
             document.getElementById(curr).style.opacity = '0';
             setTimeout(() => {
