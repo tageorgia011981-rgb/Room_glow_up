@@ -8,7 +8,7 @@
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body, html { width: 100%; height: 100%; background: #000; overflow: hidden; }
 
-        /* --- STUDIO VIEW --- */
+        /* --- MAIN STUDIO VIEW --- */
         #studio-main {
             width: 100%; height: 100%;
             background: url('backgroundG&Blk.jpg') no-repeat center center fixed;
@@ -34,7 +34,7 @@
             margin-top: 10px;
         }
 
-        /* --- HARDWARE PULL TABS --- */
+        /* --- THE HARDWARE PULL TABS --- */
         .label-row { display: flex; justify-content: center; gap: 50px; margin-top: 100px; }
         .label-holder {
             width: 230px; height: 110px; background: #2b2b2b; border: 2px solid #111;
@@ -57,7 +57,7 @@
         .label-content { width: 88%; height: 65%; background: #fdfcf0; display: flex; justify-content: center; align-items: center; border: 1px solid #b0b0b0; }
         .label-text { font-family: 'Special Elite', cursive; font-size: 1rem; font-weight: bold; color: #000; text-transform: uppercase; text-align: center; }
 
-        /* --- THE GALLERY EXPERIENCE --- */
+        /* --- THE SIGNATURE GALLERY EXPERIENCE --- */
         .museum-stage {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             display: none; opacity: 0; transition: opacity 1.8s ease;
@@ -65,7 +65,8 @@
             background-position: center; background-size: contain;
         }
 
-        #rain-walk { background-image: url('rainwalkthru.jpg'); z-index: 101; }
+        #stage-1 { background-image: url('rain1.jpg'); z-index: 101; }
+        #stage-2 { background-image: url('rain2.jpg'); z-index: 102; }
         #gallery-view { background-image: url('image_f51b81.png'); z-index: 103; }
 
         .museum-btn {
@@ -118,8 +119,12 @@
         </div>
     </div>
 
-    <div id="rain-walk" class="museum-stage">
-        <button class="museum-btn" onclick="nextAct('rain-walk', 'gallery-view')">Enter the Gallery</button>
+    <div id="stage-1" class="museum-stage">
+        <button class="museum-btn" onclick="nextAct('stage-1', 'stage-2')">Walk the Hall</button>
+    </div>
+
+    <div id="stage-2" class="museum-stage">
+        <button class="museum-btn" onclick="nextAct('stage-2', 'gallery-view')">Enter the Gallery</button>
     </div>
     
     <div id="gallery-view" class="museum-stage">
@@ -133,7 +138,7 @@
         function startMuseum() {
             document.getElementById('studio-main').style.opacity = '0';
             setTimeout(() => {
-                const act1 = document.getElementById('rain-walk');
+                const act1 = document.getElementById('stage-1');
                 act1.style.display = 'block';
                 setTimeout(() => act1.style.opacity = '1', 50);
             }, 1200);
