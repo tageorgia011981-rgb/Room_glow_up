@@ -16,7 +16,7 @@
             background: url('backgroundG&Blk.jpg') no-repeat center center fixed;
             background-size: cover;
             display: flex; flex-direction: column; align-items: center;
-            transition: opacity 1.2s ease-in-out;
+            transition: opacity 0.8s ease-in-out;
             position: relative; z-index: 10;
         }
 
@@ -51,7 +51,6 @@
             transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); 
         }
 
-        /* Bottom Handle Grip Characteristic */
         .label-holder::after {
             content: ''; 
             position: absolute; 
@@ -91,7 +90,7 @@
         /* --- MUSEUM STAGES --- */
         .museum-stage { 
             position: fixed; top: 0; left: 0; width: 100%; height: 100%; 
-            display: none; opacity: 0; transition: opacity 1.8s ease; 
+            display: none; opacity: 0; transition: opacity 1s ease; 
             background-color: #000; background-repeat: no-repeat; background-position: center; 
         }
 
@@ -107,7 +106,7 @@
             cursor: pointer; z-index: 120; text-transform: uppercase; 
         }
 
-        /* --- IMAGE ALIGNMENT (REFINED) --- */
+        /* --- IMAGE ALIGNMENT (SMIG FIX) --- */
         .art-frame { 
             position: absolute; background: transparent; overflow: hidden; 
             z-index: 110; display: flex; justify-content: center; align-items: center; 
@@ -176,7 +175,7 @@
                 const act1 = document.getElementById('stage-1'); 
                 act1.style.display = 'block'; 
                 setTimeout(() => act1.style.opacity = '1', 50); 
-            }, 1200); 
+            }, 800); 
         }
 
         function nextAct(curr, next) { 
@@ -186,11 +185,11 @@
                 const nextStage = document.getElementById(next);
                 nextStage.style.display = 'block';
                 setTimeout(() => nextStage.style.opacity = '1', 50); 
-            }, 1800); 
+            }, 1000); 
         }
 
-        function openRooms() { console.log("Navigation triggered"); }
-        function openFurnitureCatalog() { console.log("Catalog triggered"); }
+        function openRooms() { console.log("Waiting for instructions..."); }
+        function openFurnitureCatalog() { console.log("Waiting for instructions..."); }
         function saveProject() { alert("Saved!"); }
     </script>
 </body>
