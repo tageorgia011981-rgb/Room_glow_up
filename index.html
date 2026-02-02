@@ -4,109 +4,32 @@
     <meta charset="UTF-8">
     <title>Room Glow Up | Studio</title>
     <link href="https://fonts.googleapis.com/css2?family=Limelight&family=Special+Elite&display=swap" rel="stylesheet">
-    <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body, html { width: 100%; height: 100%; background: #000; overflow: hidden; }
-
-        /* --- MAIN STUDIO VIEW --- */
-        #studio-main {
-            width: 100%; height: 100%;
-            background: url('backgroundG&Blk.jpg') no-repeat center center fixed;
-            background-size: cover;
-            display: flex; flex-direction: column; align-items: center;
-            transition: opacity 1.2s ease-in-out;
-            position: relative;
-            z-index: 10;
-        }
-
-        .header-container { text-align: center; padding-top: 60px; }
-        .main-title {
-            font-family: 'Limelight', cursive;
-            font-size: 7.5rem; font-weight: 900;
-            background: linear-gradient(to bottom, #222 0%, #777 40%, #fff 50%, #777 60%, #111 100%);
-            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-            filter: drop-shadow(0 10px 20px rgba(0,0,0,0.9));
-            letter-spacing: 15px; text-transform: uppercase;
-            line-height: 1;
-        }
-
-        .sub-header {
-            font-family: 'Special Elite', cursive;
-            font-size: 1.2rem;
-            color: #888;
-            letter-spacing: 8px;
-            text-transform: uppercase;
-            margin-top: 10px;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
-        }
-
-        /* --- VINTAGE PULL TAB HARDWARE --- */
-        .label-row { display: flex; justify-content: center; gap: 40px; margin-top: 80px; }
-        .label-holder { 
-            width: 260px; height: 130px; 
-            background: linear-gradient(145deg, #162127, #0C1519); 
-            border: 1px solid #222; 
-            position: relative; 
-            display: flex; justify-content: center; align-items: center; 
-            cursor: pointer; 
-            box-shadow: 12px 12px 25px rgba(0,0,0,0.7); 
-            transition: all 0.5s; 
-        }
-        .label-holder:hover { transform: translateY(-10px); border-color: #CF9D7B; }
-        .label-holder::after {
-            content: ''; position: absolute; bottom: -10px; left: 50%; transform: translateX(-50%);
-            width: 120px; height: 20px; background: #333;
-            border-radius: 0 0 10px 10px; border: 1px solid #444;
-            box-shadow: inset 0 -5px 10px rgba(0,0,0,0.5);
-        }
-        .label-content { width: 85%; height: 60%; background: #fdfcf0; display: flex; justify-content: center; align-items: center; border: 1px solid #999; }
-        .label-text { font-family: 'Special Elite', cursive; font-size: 1.4rem; color: #111; text-transform: uppercase; }
-
-        /* --- MUSEUM STAGES --- */
-        .museum-stage { position: fixed; top: 0; left: 0; width: 100%; height: 100%; display: none; opacity: 0; transition: opacity 1.8s ease; background-color: #000; background-repeat: no-repeat; background-position: center; }
-
-        #stage-1 { background-image: url('rain1.jpg'); background-size: contain; z-index: 101; }
-        #stage-2 { background-image: url('rain2.jpg'); background-size: contain; z-index: 102; }
-        #gallery-view { background-image: url('goldhands.jpg'); background-size: 100% 100%; z-index: 103; }
-        #ornate-view { background-image: url('lookbook1.jpg'); background-size: 100% 100%; z-index: 104; }
-        #lookbook-view { background-image: url('lookbook.jpg'); background-size: 100% 100%; z-index: 105; }
-        #final-exhibit { background-image: url('3rdgallerywall.jpg'); background-size: 100% 100%; z-index: 106; }
-
-        .museum-btn { position: absolute; bottom: 5%; left: 50%; transform: translateX(-50%); padding: 12px 30px; font-family: 'Limelight', cursive; font-size: 1.2rem; color: #fff; background: rgba(0,0,0,0.6); border: 1px solid #CF9D7B; cursor: pointer; z-index: 120; text-transform: uppercase; letter-spacing: 2px; }
-
-        .art-frame { position: absolute; background: transparent; overflow: hidden; z-index: 110; display: flex; justify-content: center; align-items: center; }
-        .art-frame img { width: 100%; height: 100%; object-fit: cover; filter: brightness(0.9); }
-
-        /* --- ALIGNMENTS --- */
-        #art-1 { top: 25.3%; left: 20.3%; width: 17.5%; height: 34.5%; transform: rotate(-1deg); }
-        #art-2 { top: 20.1%; left: 41.2%; width: 17.6%; height: 34.2%; }
-        #art-3 { top: 25.3%; right: 20.3%; width: 17.5%; height: 34.5%; transform: rotate(1deg); }
-        
-        #orn-frame-1 { top: 24.5%; left: 8.5%; width: 20%; height: 49.5%; }
-        #orn-frame-2 { top: 21%; left: 39.2%; width: 21.5%; height: 53.5%; }
-        #orn-frame-3 { top: 24.5%; right: 8.5%; width: 20%; height: 49.5%; }
-
-        #lb-1 { top: 7.5%; left: 9.5%; width: 32%; height: 26.5%; }
-        #lb-2 { top: 7.5%; left: 57.5%; width: 29.5%; height: 22.5%; }
-        #lb-3 { top: 38.5%; left: 58.5%; width: 29.5%; height: 18%; }
-        #lb-4 { top: 57.5%; left: 9.5%; width: 32%; height: 34%; }
-        #lb-5 { top: 67.5%; left: 57.5%; width: 29.5%; height: 21.5%; }
-
-        #mold-1 { top: 27.2%; left: 15.2%; width: 11.8%; height: 36%; }
-        #mold-2 { top: 21.2%; left: 40.5%; width: 19%; height: 41.5%; } 
-        #mold-3 { top: 27.2%; right: 15.2%; width: 11.8%; height: 36%; }
-    </style>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
     <div id="studio-main">
         <div class="header-container">
             <h1 class="main-title">Room Glow Up</h1>
-            <p class="sub-header">Interior Design Studio</p>
+            <p class="sub-header">Where Your Dream Space Comes To Life</p>
         </div>
+        
         <div class="label-row">
-            <div class="label-holder" onclick="startMuseum()"><div class="label-content"><span class="label-text">Signature Gallery</span></div></div>
-            <div class="label-holder"><div class="label-content"><span class="label-text">Room Studio</span></div></div>
+            <div class="label-holder" onclick="openRooms()">
+                <div class="label-content"><span class="label-text">Rooms</span></div>
+            </div>
+
+            <div class="label-holder" onclick="openFurnitureCatalog()">
+                <div class="label-content"><span class="label-text">Furniture Catalog</span></div>
+            </div>
+
+            <div class="label-holder" onclick="startMuseum()">
+                <div class="label-content"><span class="label-text">Signature Gallery</span></div>
+            </div>
+
+            <div class="label-holder" onclick="saveProject()">
+                <div class="label-content"><span class="label-text">Save</span></div>
+            </div>
         </div>
     </div>
 
@@ -126,61 +49,3 @@
         <div id="orn-frame-3" class="art-frame"><img></div>
         <button class="museum-btn" onclick="nextAct('ornate-view', 'lookbook-view')">View Lookbook</button>
     </div>
-
-    <div id="lookbook-view" class="museum-stage">
-        <div id="lb-1" class="art-frame"><img></div>
-        <div id="lb-2" class="art-frame"><img></div>
-        <div id="lb-3" class="art-frame"><img></div>
-        <div id="lb-4" class="art-frame"><img></div>
-        <div id="lb-5" class="art-frame"><img></div>
-        <button class="museum-btn" onclick="nextAct('lookbook-view', 'final-exhibit')">The Grand Hall</button>
-    </div>
-
-    <div id="final-exhibit" class="museum-stage">
-        <div id="mold-1" class="art-frame"><img></div>
-        <div id="mold-2" class="art-frame"><img></div>
-        <div id="mold-3" class="art-frame"><img></div>
-        <button class="museum-btn" onclick="location.reload()">Return to Studio</button>
-    </div>
-
-    <script>
-        const myArt = {
-            hands: ['pnkbathroom.jpg', 'wellnesswinkliving.jpg', 'kitchenpurp.jpg'],
-            ornate: ['textures&vibes1.jpg', 'colors&vibes.jpg', 'texture&vibes3.jpg'],
-            lookbook: ['insp9.jpg', 'insp11.jpg', 'insp16.jpg', 'insp17.jpg', 'insp18.jpg'],
-            molding: ['textures&vibes1.jpg', 'textures&vibes.jpg', 'textures&vibes2.jpg']
-        };
-
-        function populateGallery() {
-            const h = document.querySelectorAll('#gallery-view img');
-            myArt.hands.forEach((src, i) => { if(h[i]) h[i].src = src; });
-            const o = document.querySelectorAll('#ornate-view img');
-            myArt.ornate.forEach((src, i) => { if(o[i]) o[i].src = src; });
-            const lb = document.querySelectorAll('#lookbook-view img');
-            myArt.lookbook.forEach((src, i) => { if(lb[i]) { lb[i].src = src; lb[i].style.objectFit = 'contain'; } });
-            const m = document.querySelectorAll('#final-exhibit img');
-            myArt.molding.forEach((src, i) => { if(m[i]) m[i].src = src; });
-        }
-
-        function startMuseum() { 
-            populateGallery();
-            document.getElementById('studio-main').style.opacity = '0'; 
-            setTimeout(() => { 
-                const act1 = document.getElementById('stage-1'); 
-                act1.style.display = 'block'; 
-                setTimeout(() => act1.style.opacity = '1', 50); 
-            }, 1200); 
-        }
-
-        function nextAct(curr, next) { 
-            document.getElementById(curr).style.opacity = '0'; 
-            setTimeout(() => { 
-                document.getElementById(curr).style.display = 'none'; 
-                const nextStage = document.getElementById(next);
-                nextStage.style.display = 'block';
-                setTimeout(() => nextStage.style.opacity = '1', 50); 
-            }, 1800); 
-        }
-    </script>
-</body>
-</html>
