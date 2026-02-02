@@ -15,28 +15,15 @@
         </div>
         
         <div class="label-row">
-            <div class="label-holder" onclick="openRooms()">
-                <div class="label-content"><span class="label-text">Rooms</span></div>
-            </div>
-            <div class="label-holder" onclick="openFurnitureCatalog()">
-                <div class="label-content"><span class="label-text">Furniture Catalog</span></div>
-            </div>
-            <div class="label-holder" onclick="startMuseum()">
-                <div class="label-content"><span class="label-text">Signature Gallery</span></div>
-            </div>
-            <div class="label-holder" onclick="saveProject()">
-                <div class="label-content"><span class="label-text">Save</span></div>
-            </div>
+            <div class="label-holder" onclick="openRooms()"><div class="label-content"><span class="label-text">Rooms</span></div></div>
+            <div class="label-holder" onclick="openFurnitureCatalog()"><div class="label-content"><span class="label-text">Furniture Catalog</span></div></div>
+            <div class="label-holder" onclick="startMuseum()"><div class="label-content"><span class="label-text">Signature Gallery</span></div></div>
+            <div class="label-holder" onclick="saveProject()"><div class="label-content"><span class="label-text">Save</span></div></div>
         </div>
     </div>
 
-    <div id="stage-1" class="museum-stage">
-        <button class="museum-btn" onclick="nextAct('stage-1', 'stage-2')">Walk the Hall</button>
-    </div>
-
-    <div id="stage-2" class="museum-stage">
-        <button class="museum-btn" onclick="nextAct('stage-2', 'gallery-view')">Enter Exhibit</button>
-    </div>
+    <div id="stage-1" class="museum-stage"><button class="museum-btn" onclick="nextAct('stage-1', 'stage-2')">Walk the Hall</button></div>
+    <div id="stage-2" class="museum-stage"><button class="museum-btn" onclick="nextAct('stage-2', 'gallery-view')">Enter Exhibit</button></div>
     
     <div id="gallery-view" class="museum-stage">
         <div id="art-1" class="art-frame"><img src="pnkbathroom.jpg"></div>
