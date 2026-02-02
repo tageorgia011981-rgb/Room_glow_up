@@ -8,7 +8,7 @@
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body, html { width: 100%; height: 100%; background: #000; overflow: hidden; }
 
-        /* --- MAIN STUDIO VIEW --- */
+        /* --- STUDIO VIEW --- */
         #studio-main {
             width: 100%; height: 100%;
             background: url('backgroundG&Blk.jpg') no-repeat center center fixed;
@@ -21,7 +21,7 @@
         .main-title {
             font-family: 'Limelight', cursive;
             font-size: 7.5rem; font-weight: 900;
-            background: linear-gradient(to bottom, #333 0%, #888 45%, #fff 50%, #888 55%, #111 100%);
+            background: linear-gradient(to bottom, #222 0%, #777 40%, #fff 50%, #777 60%, #111 100%);
             -webkit-background-clip: text; -webkit-text-fill-color: transparent;
             filter: drop-shadow(0 10px 20px rgba(0,0,0,0.9));
             letter-spacing: 15px; text-transform: uppercase;
@@ -31,10 +31,10 @@
             font-family: 'Helvetica Neue', Helvetica, sans-serif;
             font-size: 1.4rem; letter-spacing: 8px;
             text-transform: uppercase; color: #a1a1a1;
-            margin-top: 10px; text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+            margin-top: 10px;
         }
 
-        /* --- THE PULL TABS --- */
+        /* --- HARDWARE PULL TABS --- */
         .label-row { display: flex; justify-content: center; gap: 50px; margin-top: 100px; }
         .label-holder {
             width: 230px; height: 110px; background: #2b2b2b; border: 2px solid #111;
@@ -55,21 +55,18 @@
         }
 
         .label-content { width: 88%; height: 65%; background: #fdfcf0; display: flex; justify-content: center; align-items: center; border: 1px solid #b0b0b0; }
-        .label-text { font-family: 'Special Elite', cursive; font-size: 1.2rem; font-weight: bold; color: #000; text-transform: uppercase; }
+        .label-text { font-family: 'Special Elite', cursive; font-size: 1rem; font-weight: bold; color: #000; text-transform: uppercase; text-align: center; }
 
-        /* --- RAIN MUSEUM STAGES --- */
+        /* --- THE GALLERY EXPERIENCE --- */
         .museum-stage {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             display: none; opacity: 0; transition: opacity 1.8s ease;
-            background-size: cover; background-position: center;
+            background-color: #000; background-repeat: no-repeat;
+            background-position: center; background-size: contain;
         }
 
-        #rain-1 { background-image: url('rain1.jpg'); z-index: 101; }
-        #rain-2 { background-image: url('rain2.jpg'); z-index: 102; }
-        #gallery { 
-            background: #1a1c22 url('image_f51b81.png') no-repeat center center; 
-            background-size: contain; z-index: 103; 
-        }
+        #rain-walk { background-image: url('rainwalkthru.jpg'); z-index: 101; }
+        #gallery-view { background-image: url('image_f51b81.png'); z-index: 103; }
 
         .museum-btn {
             position: absolute; bottom: 8%; left: 50%; transform: translateX(-50%);
@@ -81,20 +78,16 @@
 
         /* --- THE SIGNATURE ROOMS --- */
         .art-frame {
-            position: absolute;
-            width: 240px; height: 340px;
-            background: #000;
-            overflow: hidden;
-            border: 1px solid rgba(255, 215, 0, 0.3);
-            transition: 0.5s;
+            position: absolute; width: 18%; height: 35%;
+            background: #000; overflow: hidden;
+            border: 1px solid rgba(255, 215, 0, 0.3); transition: 0.5s;
         }
-        .art-frame img { width: 100%; height: 100%; object-fit: cover; opacity: 0.8; transition: 0.5s; }
-        .art-frame:hover img { opacity: 1; }
-        .art-frame:hover { border-color: gold; transform: scale(1.05) translateY(-10px); }
+        .art-frame img { width: 100%; height: 100%; object-fit: cover; opacity: 0.8; }
 
-        #art-1 { top: 23%; left: 18%; } /* The Teal Room */
-        #art-2 { top: 18%; left: 42%; } /* The Brushed Bronze Lounge */
-        #art-3 { top: 23%; right: 18%; } /* The Black & Gold Suite */
+        #art-1 { top: 25%; left: 20%; }
+        #art-2 { top: 20%; left: 41%; }
+        #art-3 { top: 25%; right: 20%; }
+
     </style>
 </head>
 <body>
@@ -106,28 +99,41 @@
         </div>
 
         <div class="label-row">
-            <div class="label-holder"><div class="screw s-tl"></div><div class="screw s-tr"></div><div class="screw s-bl"></div><div class="screw s-br"></div><div class="label-content"><span class="label-text">Rooms</span></div><div class="lip-pull"></div></div>
-            <div class="label-holder"><div class="screw s-tl"></div><div class="screw s-tr"></div><div class="screw s-bl"></div><div class="screw s-bl"></div><div class="label-content"><span class="label-text">Catalog</span></div><div class="lip-pull"></div></div>
-            <div class="label-holder" onclick="startMuseum()"><div class="screw s-tl"></div><div class="screw s-tr"></div><div class="screw s-bl"></div><div class="screw s-br"></div><div class="label-content"><span class="label-text">Look Book</span></div><div class="lip-pull"></div></div>
-            <div class="label-holder"><div class="screw s-tl"></div><div class="screw s-tr"></div><div class="screw s-bl"></div><div class="screw s-br"></div><div class="label-content"><span class="label-text">Save</span></div><div class="lip-pull"></div></div>
+            <div class="label-holder">
+                <div class="screw s-tl"></div><div class="screw s-tr"></div><div class="screw s-bl"></div><div class="screw s-br"></div>
+                <div class="label-content"><span class="label-text">Rooms</span></div><div class="lip-pull"></div>
+            </div>
+            <div class="label-holder">
+                <div class="screw s-tl"></div><div class="screw s-tr"></div><div class="screw s-bl"></div><div class="screw s-br"></div>
+                <div class="label-content"><span class="label-text">Catalog</span></div><div class="lip-pull"></div>
+            </div>
+            <div class="label-holder" onclick="startMuseum()">
+                <div class="screw s-tl"></div><div class="screw s-tr"></div><div class="screw s-bl"></div><div class="screw s-br"></div>
+                <div class="label-content"><span class="label-text">Signature Gallery</span></div><div class="lip-pull"></div>
+            </div>
+            <div class="label-holder">
+                <div class="screw s-tl"></div><div class="screw s-tr"></div><div class="screw s-bl"></div><div class="screw s-br"></div>
+                <div class="label-content"><span class="label-text">Save</span></div><div class="lip-pull"></div>
+            </div>
         </div>
     </div>
 
-    <div id="rain-1" class="museum-stage"><button class="museum-btn" onclick="nextAct('rain-1', 'rain-2')">Walk the Hall</button></div>
-    <div id="rain-2" class="museum-stage"><button class="museum-btn" onclick="nextAct('rain-2', 'gallery')">Approach Gallery</button></div>
+    <div id="rain-walk" class="museum-stage">
+        <button class="museum-btn" onclick="nextAct('rain-walk', 'gallery-view')">Enter the Gallery</button>
+    </div>
     
-    <div id="gallery" class="museum-stage">
+    <div id="gallery-view" class="museum-stage">
         <div id="art-1" class="art-frame"><img src="teal_bedroom.jpg"></div>
         <div id="art-2" class="art-frame"><img src="brushed_bronze_lounge.jpg"></div>
         <div id="art-3" class="art-frame"><img src="black_gold_suite.jpg"></div>
-        <button class="museum-btn" style="font-size: 1rem;" onclick="location.reload()">Exit Studio</button>
+        <button class="museum-btn" style="font-size: 1rem;" onclick="location.reload()">Return to Studio</button>
     </div>
 
     <script>
         function startMuseum() {
             document.getElementById('studio-main').style.opacity = '0';
             setTimeout(() => {
-                const act1 = document.getElementById('rain-1');
+                const act1 = document.getElementById('rain-walk');
                 act1.style.display = 'block';
                 setTimeout(() => act1.style.opacity = '1', 50);
             }, 1200);
