@@ -8,7 +8,7 @@
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body, html { width: 100%; height: 100%; background: #000; overflow: hidden; }
 
-        /* --- STUDIO VIEW (MAIN SITE) --- */
+        /* --- MAIN STUDIO VIEW --- */
         #studio-main {
             width: 100%; height: 100%;
             background: url('backgroundG&Blk.jpg') no-repeat center center fixed;
@@ -64,8 +64,8 @@
             background-size: cover; background-position: center;
         }
 
-        #rain-1 { background-image: url('rain1.jpg'); z-index: 101; } /* Replace with your rain filename */
-        #rain-2 { background-image: url('rain2.jpg'); z-index: 102; } /* Replace with your rain filename */
+        #rain-1 { background-image: url('rain1.jpg'); z-index: 101; }
+        #rain-2 { background-image: url('rain2.jpg'); z-index: 102; }
         #gallery { 
             background: #1a1c22 url('image_f51b81.png') no-repeat center center; 
             background-size: contain; z-index: 103; 
@@ -78,6 +78,23 @@
             letter-spacing: 5px; text-transform: uppercase; cursor: pointer; transition: 0.3s;
         }
         .museum-btn:hover { background: #fff; color: #000; }
+
+        /* --- THE SIGNATURE ROOMS --- */
+        .art-frame {
+            position: absolute;
+            width: 240px; height: 340px;
+            background: #000;
+            overflow: hidden;
+            border: 1px solid rgba(255, 215, 0, 0.3);
+            transition: 0.5s;
+        }
+        .art-frame img { width: 100%; height: 100%; object-fit: cover; opacity: 0.8; transition: 0.5s; }
+        .art-frame:hover img { opacity: 1; }
+        .art-frame:hover { border-color: gold; transform: scale(1.05) translateY(-10px); }
+
+        #art-1 { top: 23%; left: 18%; } /* The Teal Room */
+        #art-2 { top: 18%; left: 42%; } /* The Brushed Bronze Lounge */
+        #art-3 { top: 23%; right: 18%; } /* The Black & Gold Suite */
     </style>
 </head>
 <body>
@@ -90,7 +107,7 @@
 
         <div class="label-row">
             <div class="label-holder"><div class="screw s-tl"></div><div class="screw s-tr"></div><div class="screw s-bl"></div><div class="screw s-br"></div><div class="label-content"><span class="label-text">Rooms</span></div><div class="lip-pull"></div></div>
-            <div class="label-holder"><div class="screw s-tl"></div><div class="screw s-tr"></div><div class="screw s-bl"></div><div class="screw s-br"></div><div class="label-content"><span class="label-text">Catalog</span></div><div class="lip-pull"></div></div>
+            <div class="label-holder"><div class="screw s-tl"></div><div class="screw s-tr"></div><div class="screw s-bl"></div><div class="screw s-bl"></div><div class="label-content"><span class="label-text">Catalog</span></div><div class="lip-pull"></div></div>
             <div class="label-holder" onclick="startMuseum()"><div class="screw s-tl"></div><div class="screw s-tr"></div><div class="screw s-bl"></div><div class="screw s-br"></div><div class="label-content"><span class="label-text">Look Book</span></div><div class="lip-pull"></div></div>
             <div class="label-holder"><div class="screw s-tl"></div><div class="screw s-tr"></div><div class="screw s-bl"></div><div class="screw s-br"></div><div class="label-content"><span class="label-text">Save</span></div><div class="lip-pull"></div></div>
         </div>
@@ -98,7 +115,13 @@
 
     <div id="rain-1" class="museum-stage"><button class="museum-btn" onclick="nextAct('rain-1', 'rain-2')">Walk the Hall</button></div>
     <div id="rain-2" class="museum-stage"><button class="museum-btn" onclick="nextAct('rain-2', 'gallery')">Approach Gallery</button></div>
-    <div id="gallery" class="museum-stage"><button class="museum-btn" style="font-size: 1rem;" onclick="location.reload()">Exit Studio</button></div>
+    
+    <div id="gallery" class="museum-stage">
+        <div id="art-1" class="art-frame"><img src="teal_bedroom.jpg"></div>
+        <div id="art-2" class="art-frame"><img src="brushed_bronze_lounge.jpg"></div>
+        <div id="art-3" class="art-frame"><img src="black_gold_suite.jpg"></div>
+        <button class="museum-btn" style="font-size: 1rem;" onclick="location.reload()">Exit Studio</button>
+    </div>
 
     <script>
         function startMuseum() {
