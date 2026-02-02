@@ -18,6 +18,6 @@ function nextAct(curr, next) {
     }, 1800); 
 }
 
-function openRooms() { console.log("Designer active"); }
-function openFurnitureCatalog() { console.log("Catalog active"); }
-function saveProject() { alert("Studio Progress Saved!"); }
+function openRooms() { console.log("Rooms logic active"); }
+function openFurnitureCatalog() { console.log("Catalog logic active"); }
+function saveProject() { alert("Saved!"); }
