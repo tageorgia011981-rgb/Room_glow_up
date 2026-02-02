@@ -2,9 +2,126 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Room Glow Up | Studio</title>
     <link href="https://fonts.googleapis.com/css2?family=Limelight&family=Special+Elite&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="style.css">
+    <style>
+        /* --- RESET & CORE --- */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body, html { width: 100%; height: 100%; background: #000; overflow: hidden; }
+
+        /* --- MAIN STUDIO VIEW --- */
+        #studio-main {
+            width: 100%; height: 100%;
+            background: url('backgroundG&Blk.jpg') no-repeat center center fixed;
+            background-size: cover;
+            display: flex; flex-direction: column; align-items: center;
+            transition: opacity 1.2s ease-in-out;
+            position: relative; z-index: 10;
+        }
+
+        .header-container { text-align: center; padding-top: 50px; }
+        .main-title {
+            font-family: 'Limelight', cursive;
+            font-size: 8rem; font-weight: 900;
+            background: linear-gradient(to bottom, #222 0%, #777 40%, #fff 50%, #777 60%, #111 100%);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            filter: drop-shadow(0 10px 20px rgba(0,0,0,0.9));
+            letter-spacing: 15px; text-transform: uppercase; line-height: 1;
+        }
+
+        .sub-header {
+            font-family: 'Special Elite', cursive;
+            font-size: 1.8rem; color: #fff; letter-spacing: 8px;
+            margin-top: 20px; text-shadow: 3px 3px 6px rgba(0,0,0,0.8);
+            font-weight: bold;
+        }
+
+        /* --- VINTAGE LABEL HOLDER TABS --- */
+        .label-row { display: flex; justify-content: center; gap: 25px; margin-top: 50px; }
+
+        .label-holder { 
+            width: 210px; height: 100px; 
+            background: linear-gradient(145deg, #1a2a33, #0a1114); 
+            border: 2px solid #333; 
+            position: relative; 
+            display: flex; justify-content: center; align-items: center; 
+            cursor: pointer; 
+            box-shadow: 10px 10px 20px rgba(0,0,0,0.8); 
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); 
+        }
+
+        /* Bottom Handle Grip Characteristic */
+        .label-holder::after {
+            content: ''; 
+            position: absolute; 
+            bottom: -8px; left: 50%; 
+            transform: translateX(-50%);
+            width: 90px; height: 14px; 
+            background: linear-gradient(to bottom, #222, #000); 
+            border-radius: 0 0 10px 10px;
+            border: 1px solid #444;
+            box-shadow: inset 0 -4px 6px rgba(0,0,0,0.7);
+        }
+
+        .label-holder:hover { 
+            transform: translateY(-10px); 
+            border-color: #CF9D7B; 
+            box-shadow: 15px 15px 35px rgba(0,0,0,1);
+        }
+
+        .label-content { 
+            width: 88%; height: 65%; 
+            background: #fdfcf0; 
+            display: flex; justify-content: center; align-items: center; 
+            border: 2px solid #000; 
+            box-shadow: inset 2px 2px 5px rgba(0,0,0,0.2);
+        }
+
+        .label-text { 
+            font-family: 'Special Elite', cursive; 
+            font-size: 1.2rem; 
+            color: #000; 
+            text-transform: uppercase; 
+            text-align: center; 
+            font-weight: 900; 
+            letter-spacing: 1px;
+        }
+
+        /* --- MUSEUM STAGES --- */
+        .museum-stage { 
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%; 
+            display: none; opacity: 0; transition: opacity 1.8s ease; 
+            background-color: #000; background-repeat: no-repeat; background-position: center; 
+        }
+
+        #stage-1 { background-image: url('rain1.jpg'); background-size: contain; z-index: 101; }
+        #stage-2 { background-image: url('rain2.jpg'); background-size: contain; z-index: 102; }
+        #gallery-view { background-image: url('goldhands.jpg'); background-size: 100% 100%; z-index: 103; }
+        #ornate-view { background-image: url('lookbook1.jpg'); background-size: 100% 100%; z-index: 104; }
+
+        .museum-btn { 
+            position: absolute; bottom: 5%; left: 50%; transform: translateX(-50%); 
+            padding: 15px 40px; font-family: 'Limelight', cursive; font-size: 1.4rem; 
+            color: #fff; background: rgba(0,0,0,0.8); border: 2px solid #CF9D7B; 
+            cursor: pointer; z-index: 120; text-transform: uppercase; 
+        }
+
+        /* --- IMAGE ALIGNMENT (REFINED) --- */
+        .art-frame { 
+            position: absolute; background: transparent; overflow: hidden; 
+            z-index: 110; display: flex; justify-content: center; align-items: center; 
+        }
+        .art-frame img { width: 100%; height: 100%; object-fit: cover; }
+
+        #art-1 { top: 25.5%; left: 9.2%; width: 17.5%; height: 34.5%; transform: rotate(-1.5deg); } 
+        #art-2 { top: 36.5%; left: 41.2%; width: 17.6%; height: 34.2%; } 
+        #art-3 { top: 25.5%; right: 9.2%; width: 17.5%; height: 34.5%; transform: rotate(1.5deg); }
+
+        #orn-frame-1 { top: 24.5%; left: 8.5%; width: 20%; height: 49.5%; }
+        #orn-frame-2 { top: 21%; left: 39.2%; width: 21.5%; height: 53.5%; }
+        #orn-frame-3 { top: 24.5%; right: 8.5%; width: 20%; height: 49.5%; }
+    </style>
 </head>
 <body>
 
@@ -15,15 +132,27 @@
         </div>
         
         <div class="label-row">
-            <div class="label-holder" onclick="openRooms()"><div class="label-content"><span class="label-text">Rooms</span></div></div>
-            <div class="label-holder" onclick="openFurnitureCatalog()"><div class="label-content"><span class="label-text">Furniture Catalog</span></div></div>
-            <div class="label-holder" onclick="startMuseum()"><div class="label-content"><span class="label-text">Signature Gallery</span></div></div>
-            <div class="label-holder" onclick="saveProject()"><div class="label-content"><span class="label-text">Save</span></div></div>
+            <div class="label-holder" onclick="openRooms()">
+                <div class="label-content"><span class="label-text">Rooms</span></div>
+            </div>
+            <div class="label-holder" onclick="openFurnitureCatalog()">
+                <div class="label-content"><span class="label-text">Furniture Catalog</span></div>
+            </div>
+            <div class="label-holder" onclick="startMuseum()">
+                <div class="label-content"><span class="label-text">Signature Gallery</span></div>
+            </div>
+            <div class="label-holder" onclick="saveProject()">
+                <div class="label-content"><span class="label-text">Save</span></div>
+            </div>
         </div>
     </div>
 
-    <div id="stage-1" class="museum-stage"><button class="museum-btn" onclick="nextAct('stage-1', 'stage-2')">Walk the Hall</button></div>
-    <div id="stage-2" class="museum-stage"><button class="museum-btn" onclick="nextAct('stage-2', 'gallery-view')">Enter Exhibit</button></div>
+    <div id="stage-1" class="museum-stage">
+        <button class="museum-btn" onclick="nextAct('stage-1', 'stage-2')">Walk the Hall</button>
+    </div>
+    <div id="stage-2" class="museum-stage">
+        <button class="museum-btn" onclick="nextAct('stage-2', 'gallery-view')">Enter Exhibit</button>
+    </div>
     
     <div id="gallery-view" class="museum-stage">
         <div id="art-1" class="art-frame"><img src="pnkbathroom.jpg"></div>
@@ -39,6 +168,30 @@
         <button class="museum-btn" onclick="location.reload()">Return to Studio</button>
     </div>
 
-    <script src="script.js"></script>
+    <script>
+        function startMuseum() { 
+            document.getElementById('studio-main').style.opacity = '0'; 
+            setTimeout(() => { 
+                document.getElementById('studio-main').style.display = 'none';
+                const act1 = document.getElementById('stage-1'); 
+                act1.style.display = 'block'; 
+                setTimeout(() => act1.style.opacity = '1', 50); 
+            }, 1200); 
+        }
+
+        function nextAct(curr, next) { 
+            document.getElementById(curr).style.opacity = '0'; 
+            setTimeout(() => { 
+                document.getElementById(curr).style.display = 'none'; 
+                const nextStage = document.getElementById(next);
+                nextStage.style.display = 'block';
+                setTimeout(() => nextStage.style.opacity = '1', 50); 
+            }, 1800); 
+        }
+
+        function openRooms() { console.log("Navigation triggered"); }
+        function openFurnitureCatalog() { console.log("Catalog triggered"); }
+        function saveProject() { alert("Saved!"); }
+    </script>
 </body>
 </html>
