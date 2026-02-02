@@ -27,44 +27,64 @@
             letter-spacing: 15px; text-transform: uppercase;
         }
 
+        /* --- PULL TAB HARDWARE --- */
+        .label-row { display: flex; justify-content: center; margin-top: 80px; }
+        .label-holder { 
+            width: 260px; height: 130px; 
+            background: linear-gradient(145deg, #162127, #0C1519); 
+            border: 1px solid #222; 
+            position: relative; 
+            display: flex; justify-content: center; align-items: center; 
+            cursor: pointer; 
+            box-shadow: 12px 12px 25px rgba(0,0,0,0.7); 
+            transition: all 0.5s; 
+        }
+        .label-holder:hover { transform: translateY(-10px); border-color: #CF9D7B; }
+        
+        /* The "Lip" Pull Tab look */
+        .label-holder::after {
+            content: ''; position: absolute; bottom: -10px; left: 50%; transform: translateX(-50%);
+            width: 120px; height: 20px; background: #333;
+            border-radius: 0 0 10px 10px; border: 1px solid #444;
+            box-shadow: inset 0 -5px 10px rgba(0,0,0,0.5);
+        }
+
+        .label-content { width: 85%; height: 60%; background: #fdfcf0; display: flex; justify-content: center; align-items: center; border: 1px solid #999; }
+        .label-text { font-family: 'Special Elite', cursive; font-size: 1.4rem; color: #111; text-transform: uppercase; }
+
         /* --- MUSEUM STAGES --- */
         .museum-stage { position: fixed; top: 0; left: 0; width: 100%; height: 100%; display: none; opacity: 0; transition: opacity 1.8s ease; background-color: #000; background-repeat: no-repeat; background-position: center; }
 
         #stage-1 { background-image: url('rain1.jpg'); background-size: contain; z-index: 101; }
         #stage-2 { background-image: url('rain2.jpg'); background-size: contain; z-index: 102; }
-        
         #gallery-view { background-image: url('goldhands.jpg'); background-size: 100% 100%; z-index: 103; }
         #lookbook-view { background-image: url('lookbook.jpg'); background-size: 100% 100%; z-index: 104; }
-        
-        /* THE MOLDING WALL - 3RDGALLERYWALL.JPG */
-        #final-exhibit { 
-            background-image: url('3rdgallerywall.jpg'); 
-            background-size: 100% 100%; 
-            z-index: 106; 
-        }
+        #final-exhibit { background-image: url('3rdgallerywall.jpg'); background-size: 100% 100%; z-index: 106; }
 
         .museum-btn { position: absolute; bottom: 5%; left: 50%; transform: translateX(-50%); padding: 12px 30px; font-family: 'Limelight', cursive; font-size: 1.2rem; color: #fff; background: transparent; border: 1px solid #CF9D7B; cursor: pointer; z-index: 120; text-transform: uppercase; letter-spacing: 2px; }
 
-        .art-frame { position: absolute; background: #000; overflow: hidden; z-index: 110; }
-        .art-frame img { width: 100%; height: 100%; object-fit: cover; }
+        .art-frame { position: absolute; background: transparent; overflow: hidden; z-index: 110; display: flex; justify-content: center; align-items: center; }
+        .art-frame img { width: 100%; height: 100%; }
 
-        /* POSITIONING - GOLD HANDS */
-        #art-1 { top: 25.5%; left: 19.8%; width: 18.5%; height: 35.5%; }
-        #art-2 { top: 20%; left: 40.8%; width: 18.5%; height: 35.5%; }
-        #art-3 { top: 25.5%; right: 19.8%; width: 18.5%; height: 35.5%; }
+        /* --- STAGE POSITIONING --- */
+        #art-1 { top: 25.8%; left: 20.2%; width: 17.8%; height: 34.8%; }
+        #art-1 img { object-fit: cover; }
+        #art-2 { top: 20.5%; left: 41.1%; width: 17.8%; height: 34.8%; }
+        #art-2 img { object-fit: cover; }
+        #art-3 { top: 25.8%; right: 20.2%; width: 17.8%; height: 34.8%; }
+        #art-3 img { object-fit: cover; }
         
-        /* POSITIONING - LOOKBOOK */
-        #lb-1 { top: 7%; left: 9%; width: 33%; height: 27.5%; }
-        #lb-2 { top: 7%; left: 57%; width: 30.5%; height: 23.5%; }
-        #lb-3 { top: 38%; left: 58%; width: 30.5%; height: 19%; }
-        #lb-4 { top: 57%; left: 9%; width: 33%; height: 35%; }
-        #lb-5 { top: 67%; left: 57%; width: 30.5%; height: 22.5%; }
+        #lb-1 { top: 7.5%; left: 9.5%; width: 32%; height: 26.5%; }
+        #lb-2 { top: 7.5%; left: 57.5%; width: 29.5%; height: 22.5%; }
+        #lb-3 { top: 38.5%; left: 58.5%; width: 29.5%; height: 18%; }
+        #lb-4 { top: 57.5%; left: 9.5%; width: 32%; height: 34%; }
+        #lb-5 { top: 67.5%; left: 57.5%; width: 29.5%; height: 21.5%; }
+        .lookbook-img { object-fit: contain; }
 
-        /* POSITIONING - MOLDING WALL PANEL ALIGNMENT */
-        .molding-art { width: 12.5%; height: 38%; top: 26%; }
-        #mold-1 { left: 14.8%; }
-        #mold-2 { left: 40%; width: 20.2%; height: 43%; top: 20.5%; } 
-        #mold-3 { right: 14.8%; }
+        #mold-1 { top: 27.2%; left: 15.2%; width: 11.8%; height: 36%; }
+        #mold-2 { top: 21.2%; left: 40.5%; width: 19%; height: 41.5%; } 
+        #mold-3 { top: 27.2%; right: 15.2%; width: 11.8%; height: 36%; }
+        .mold-img { object-fit: cover; }
 
     </style>
 </head>
@@ -72,7 +92,9 @@
     <div id="studio-main">
         <div class="header-container"><h1 class="main-title">Room Glow Up</h1></div>
         <div class="label-row">
-            <div class="label-holder" onclick="startMuseum()" style="width: 260px; height: 130px; background: #111; display: flex; justify-content: center; align-items: center; border: 1px solid #CF9D7B; cursor: pointer;"><span style="font-family: 'Special Elite'; color: #fff;">SIGNATURE GALLERY</span></div>
+            <div class="label-holder" onclick="startMuseum()">
+                <div class="label-content"><span class="label-text">Signature Gallery</span></div>
+            </div>
         </div>
     </div>
 
@@ -87,18 +109,18 @@
     </div>
 
     <div id="lookbook-view" class="museum-stage">
-        <div id="lb-1" class="art-frame"><img src="insp9.jpg"></div>
-        <div id="lb-2" class="art-frame"><img src="insp11.jpg"></div>
-        <div id="lb-3" class="art-frame"><img src="insp16.jpg"></div>
-        <div id="lb-4" class="art-frame"><img src="insp17.jpg"></div>
-        <div id="lb-5" class="art-frame"><img src="insp18.jpg"></div>
+        <div id="lb-1" class="art-frame"><img class="lookbook-img" src="insp9.jpg"></div>
+        <div id="lb-2" class="art-frame"><img class="lookbook-img" src="insp11.jpg"></div>
+        <div id="lb-3" class="art-frame"><img class="lookbook-img" src="insp16.jpg"></div>
+        <div id="lb-4" class="art-frame"><img class="lookbook-img" src="insp17.jpg"></div>
+        <div id="lb-5" class="art-frame"><img class="lookbook-img" src="insp18.jpg"></div>
         <button class="museum-btn" onclick="nextAct('lookbook-view', 'final-exhibit')">The Grand Hall</button>
     </div>
 
     <div id="final-exhibit" class="museum-stage">
-        <div id="mold-1" class="art-frame molding-art"><img src="textures&vibes1.jpg"></div>
-        <div id="mold-2" class="art-frame molding-art"><img src="textures&vibes.jpg"></div>
-        <div id="mold-3" class="art-frame molding-art"><img src="textures&vibes2.jpg"></div>
+        <div id="mold-1" class="art-frame"><img class="mold-img" src="textures&vibes1.jpg"></div>
+        <div id="mold-2" class="art-frame"><img class="mold-img" src="textures&vibes.jpg"></div>
+        <div id="mold-3" class="art-frame"><img class="mold-img" src="textures&vibes2.jpg"></div>
         <button class="museum-btn" onclick="location.reload()">Return to Studio</button>
     </div>
 
@@ -108,9 +130,9 @@
             document.getElementById(curr).style.opacity = '0'; 
             setTimeout(() => { 
                 document.getElementById(curr).style.display = 'none'; 
-                const nextAct = document.getElementById(next);
-                nextAct.style.display = 'block';
-                setTimeout(() => nextAct.style.opacity = '1', 50); 
+                const nextStage = document.getElementById(next);
+                nextStage.style.display = 'block';
+                setTimeout(() => nextStage.style.opacity = '1', 50); 
             }, 1800); 
         }
     </script>
