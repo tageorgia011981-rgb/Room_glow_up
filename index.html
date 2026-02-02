@@ -6,7 +6,7 @@
     <title>Room Glow Up | Studio</title>
     <link href="https://fonts.googleapis.com/css2?family=Limelight&family=Special+Elite&display=swap" rel="stylesheet">
     <style>
-        /* --- DESIGN DNA --- */
+        /* --- DESIGN DNA (Safeguards) --- */
         :root {
             --metal-base: #1a2a33;
             --metal-grit: repeating-linear-gradient(45deg, #1a2a33 0px, #1a2a33 2px, #1e2e38 2px, #1e2e38 4px);
@@ -45,7 +45,7 @@
             font-weight: bold;
         }
 
-        /* --- INDUSTRIAL PULL TABS --- */
+        /* --- THE INDUSTRIAL PULL TABS --- */
         .label-row { display: flex; justify-content: center; gap: 35px; margin-top: 50px; }
 
         .label-holder { 
@@ -84,10 +84,7 @@
             box-shadow: 0 4px 10px rgba(0,0,0,0.8), inset 0 -2px 5px rgba(255,255,255,0.1);
         }
 
-        .label-holder:hover { 
-            transform: translateY(-5px); 
-            filter: brightness(1.15);
-        }
+        .label-holder:hover { transform: translateY(-5px); filter: brightness(1.15); }
 
         .label-content { 
             width: 82%; height: 55%; 
@@ -123,4 +120,95 @@
         .museum-btn { 
             position: absolute; bottom: 5%; left: 50%; transform: translateX(-50%); 
             padding: 15px 40px; font-family: 'Limelight', cursive; font-size: 1.4rem; 
-            color
+            color: #fff; background: rgba(0,0,0,0.8); border: 2px solid #CF9D7B; 
+            cursor: pointer; z-index: 120; text-transform: uppercase; 
+        }
+
+        /* --- FINE-TUNED ALIGNMENT --- */
+        .art-frame { 
+            position: absolute; background: transparent; overflow: hidden; 
+            z-index: 110; display: flex; justify-content: center; align-items: center; 
+        }
+        .art-frame img { width: 100%; height: 100%; object-fit: cover; }
+
+        #art-1 { top: 25.5%; left: 10.5%; width: 17.5%; height: 34.5%; transform: rotate(-1.5deg); } 
+        #art-2 { top: 34.5%; left: 41.2%; width: 17.6%; height: 34.2%; } 
+        #art-3 { top: 25.5%; right: 10.5%; width: 17.5%; height: 34.5%; transform: rotate(1.5deg); }
+
+        #orn-frame-1 { top: 24.5%; left: 8.5%; width: 20%; height: 49.5%; }
+        #orn-frame-2 { top: 21%; left: 39.2%; width: 21.5%; height: 53.5%; }
+        #orn-frame-3 { top: 24.5%; right: 8.5%; width: 20%; height: 49.5%; }
+    </style>
+</head>
+<body>
+
+    <div id="studio-main">
+        <div class="header-container">
+            <h1 class="main-title">Room Glow Up</h1>
+            <p class="sub-header">WHERE YOUR DREAM SPACE COMES TO LIFE</p>
+        </div>
+        
+        <div class="label-row">
+            <div class="label-holder" onclick="openRooms()">
+                <div class="label-content"><span class="label-text">Rooms</span></div>
+            </div>
+            <div class="label-holder" onclick="openFurnitureCatalog()">
+                <div class="label-content"><span class="label-text">Furniture Catalog</span></div>
+            </div>
+            <div class="label-holder" onclick="startMuseum()">
+                <div class="label-content"><span class="label-text">Signature Gallery</span></div>
+            </div>
+            <div class="label-holder" onclick="saveProject()">
+                <div class="label-content"><span class="label-text">Save</span></div>
+            </div>
+        </div>
+    </div>
+
+    <div id="stage-1" class="museum-stage">
+        <button class="museum-btn" onclick="nextAct('stage-1', 'stage-2')">Walk the Hall</button>
+    </div>
+    <div id="stage-2" class="museum-stage">
+        <button class="museum-btn" onclick="nextAct('stage-2', 'gallery-view')">Enter Exhibit</button>
+    </div>
+    
+    <div id="gallery-view" class="museum-stage">
+        <div id="art-1" class="art-frame"><img src="pnkbathroom.jpg"></div>
+        <div id="art-2" class="art-frame"><img src="wellnesswinkliving.jpg"></div>
+        <div id="art-3" class="art-frame"><img src="kitchenpurp.jpg"></div>
+        <button class="museum-btn" onclick="nextAct('gallery-view', 'ornate-view')">Next Room</button>
+    </div>
+
+    <div id="ornate-view" class="museum-stage">
+        <div id="orn-frame-1" class="art-frame"><img src="textures&vibes1.jpg"></div>
+        <div id="orn-frame-2" class="art-frame"><img src="colors&vibes.jpg"></div>
+        <div id="orn-frame-3" class="art-frame"><img src="texture&vibes3.jpg"></div>
+        <button class="museum-btn" onclick="location.reload()">Return to Studio</button>
+    </div>
+
+    <script>
+        function startMuseum() { 
+            document.getElementById('studio-main').style.opacity = '0'; 
+            setTimeout(() => { 
+                document.getElementById('studio-main').style.display = 'none';
+                const act1 = document.getElementById('stage-1'); 
+                act1.style.display = 'block'; 
+                setTimeout(() => act1.style.opacity = '1', 50); 
+            }, 800); 
+        }
+
+        function nextAct(curr, next) { 
+            document.getElementById(curr).style.opacity = '0'; 
+            setTimeout(() => { 
+                document.getElementById(curr).style.display = 'none'; 
+                const nextStage = document.getElementById(next);
+                nextStage.style.display = 'block';
+                setTimeout(() => nextStage.style.opacity = '1', 50); 
+            }, 1000); 
+        }
+
+        function openRooms() { console.log("Rooms trigger"); }
+        function openFurnitureCatalog() { console.log("Catalog trigger"); }
+        function saveProject() { alert("Saved!"); }
+    </script>
+</body>
+</html>
