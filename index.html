@@ -57,29 +57,36 @@
         #stage-1 { background-image: url('rain1.jpg'); background-size: contain; z-index: 101; }
         #stage-2 { background-image: url('rain2.jpg'); background-size: contain; z-index: 102; }
         #gallery-view { background-image: url('goldhands.jpg'); background-size: 100% 100%; z-index: 103; }
-        #lookbook-view { background-image: url('lookbook.jpg'); background-size: 100% 100%; z-index: 104; }
+        
+        /* THE ORNATE EXHIBIT */
+        #ornate-view { background-image: url('image_1d89a4.png'); background-size: 100% 100%; z-index: 104; }
+        
+        #lookbook-view { background-image: url('lookbook.jpg'); background-size: 100% 100%; z-index: 105; }
         #final-exhibit { background-image: url('3rdgallerywall.jpg'); background-size: 100% 100%; z-index: 106; }
 
         .museum-btn { position: absolute; bottom: 5%; left: 50%; transform: translateX(-50%); padding: 12px 30px; font-family: 'Limelight', cursive; font-size: 1.2rem; color: #fff; background: transparent; border: 1px solid #CF9D7B; cursor: pointer; z-index: 120; text-transform: uppercase; letter-spacing: 2px; }
 
         .art-frame { position: absolute; background: transparent; overflow: hidden; z-index: 110; display: flex; justify-content: center; align-items: center; }
-        .art-frame img { width: 100%; height: 100%; filter: brightness(0.9); }
+        .art-frame img { width: 100%; height: 100%; object-fit: cover; filter: brightness(0.9); }
 
-        /* --- STAGE POSITIONING --- */
+        /* --- CALIBRATION: GOLD HANDS --- */
         #art-1 { top: 25.3%; left: 20.3%; width: 17.5%; height: 34.5%; transform: rotate(-1deg); }
-        #art-1 img { object-fit: cover; }
         #art-2 { top: 20.1%; left: 41.2%; width: 17.6%; height: 34.2%; }
-        #art-2 img { object-fit: cover; }
         #art-3 { top: 25.3%; right: 20.3%; width: 17.5%; height: 34.5%; transform: rotate(1deg); }
-        #art-3 img { object-fit: cover; }
         
+        /* --- CALIBRATION: ORNATE EXHIBIT (Centered Vibes) --- */
+        #orn-frame-1 { top: 24.5%; left: 8.5%; width: 20%; height: 49.5%; }
+        #orn-frame-2 { top: 21%; left: 39.2%; width: 21.5%; height: 53.5%; }
+        #orn-frame-3 { top: 24.5%; right: 8.5%; width: 20%; height: 49.5%; }
+
+        /* --- CALIBRATION: LOOKBOOK GALLERY --- */
         #lb-1 { top: 7.5%; left: 9.5%; width: 32%; height: 26.5%; }
         #lb-2 { top: 7.5%; left: 57.5%; width: 29.5%; height: 22.5%; }
         #lb-3 { top: 38.5%; left: 58.5%; width: 29.5%; height: 18%; }
         #lb-4 { top: 57.5%; left: 9.5%; width: 32%; height: 34%; }
         #lb-5 { top: 67.5%; left: 57.5%; width: 29.5%; height: 21.5%; }
-        .lookbook-img { object-fit: contain; }
 
+        /* --- CALIBRATION: MOLDING WALL --- */
         #mold-1 { top: 27.2%; left: 15.2%; width: 11.8%; height: 36%; }
         #mold-2 { top: 21.2%; left: 40.5%; width: 19%; height: 41.5%; } 
         #mold-3 { top: 27.2%; right: 15.2%; width: 11.8%; height: 36%; }
@@ -103,15 +110,22 @@
         <div id="art-1" class="art-frame"><img src="pnkbathroom.jpg"></div>
         <div id="art-2" class="art-frame"><img src="wellnesswinkliving.jpg"></div>
         <div id="art-3" class="art-frame"><img src="kitchenpurp.jpg"></div>
-        <button class="museum-btn" onclick="nextAct('gallery-view', 'lookbook-view')">View Lookbook</button>
+        <button class="museum-btn" onclick="nextAct('gallery-view', 'ornate-view')">Next Room</button>
+    </div>
+
+    <div id="ornate-view" class="museum-stage">
+        <div id="orn-frame-1" class="art-frame"><img src="textures&vibes1.jpg"></div>
+        <div id="orn-frame-2" class="art-frame"><img src="colors&vibes.jpg"></div>
+        <div id="orn-frame-3" class="art-frame"><img src="texture&vibes3.jpg"></div>
+        <button class="museum-btn" onclick="nextAct('ornate-view', 'lookbook-view')">View Lookbook</button>
     </div>
 
     <div id="lookbook-view" class="museum-stage">
-        <div id="lb-1" class="art-frame"><img class="lookbook-img" src="insp9.jpg"></div>
-        <div id="lb-2" class="art-frame"><img class="lookbook-img" src="insp11.jpg"></div>
-        <div id="lb-3" class="art-frame"><img class="lookbook-img" src="insp16.jpg"></div>
-        <div id="lb-4" class="art-frame"><img class="lookbook-img" src="insp17.jpg"></div>
-        <div id="lb-5" class="art-frame"><img class="lookbook-img" src="insp18.jpg"></div>
+        <div id="lb-1" class="art-frame"><img style="object-fit:contain;" src="insp9.jpg"></div>
+        <div id="lb-2" class="art-frame"><img style="object-fit:contain;" src="insp11.jpg"></div>
+        <div id="lb-3" class="art-frame"><img style="object-fit:contain;" src="insp16.jpg"></div>
+        <div id="lb-4" class="art-frame"><img style="object-fit:contain;" src="insp17.jpg"></div>
+        <div id="lb-5" class="art-frame"><img style="object-fit:contain;" src="insp18.jpg"></div>
         <button class="museum-btn" onclick="nextAct('lookbook-view', 'final-exhibit')">The Grand Hall</button>
     </div>
 
