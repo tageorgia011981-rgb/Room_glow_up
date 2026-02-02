@@ -18,7 +18,6 @@
         }
 
         .header-container { text-align: center; padding-top: 60px; }
-        
         .main-title {
             font-family: 'Limelight', cursive;
             font-size: 7.5rem; font-weight: 900;
@@ -28,112 +27,64 @@
             letter-spacing: 15px; text-transform: uppercase;
         }
 
-        .sub-title {
-            font-family: 'Helvetica Neue', Helvetica, sans-serif;
-            font-size: 1.4rem; letter-spacing: 8px;
-            text-transform: uppercase; color: #a1a1a1;
-            margin-top: 10px;
-        }
+        /* --- MUSEUM STAGES --- */
+        .museum-stage { position: fixed; top: 0; left: 0; width: 100%; height: 100%; display: none; opacity: 0; transition: opacity 1.8s ease; background-color: #000; background-repeat: no-repeat; background-position: center; }
 
-        /* --- INDUSTRIAL GUNMETAL HARDWARE --- */
-        .label-row { display: flex; justify-content: center; gap: 50px; margin-top: 100px; }
-        
-        .label-holder {
-            width: 260px; height: 130px; 
-            background: linear-gradient(145deg, #162127, #0C1519); 
-            border: 1px solid #000;
-            position: relative; display: flex; justify-content: center; align-items: center;
-            cursor: pointer; 
-            box-shadow: 12px 12px 25px rgba(0,0,0,0.7), inset 1px 1px 3px rgba(255,255,255,0.05);
-            transition: all 0.5s;
-        }
-
-        .label-holder:hover { transform: translateY(-15px); border-color: #CF9D7B; }
-
-        .screw { 
-            width: 18px; height: 18px; 
-            background: radial-gradient(circle at 35% 35%, #CF9D7B, #724B39);
-            border-radius: 50%; position: absolute; border: 1px solid #3A3534;
-        }
-        .screw::after {
-            content: ''; position: absolute; top: 50%; left: 50%;
-            width: 80%; height: 3px; background: rgba(0,0,0,0.8);
-            transform: translate(-50%, -50%) rotate(45deg);
-        }
-        
-        .s-tl { top: 12px; left: 12px; } .s-tr { top: 12px; right: 12px; }
-        .s-bl { bottom: 12px; left: 12px; } .s-br { bottom: 12px; right: 12px; }
-
-        .lip-pull {
-            position: absolute; bottom: -22px; left: 50%; transform: translateX(-50%);
-            width: 160px; height: 26px; background: linear-gradient(to bottom, #162127, #0C1519);
-            border-radius: 0 0 12px 12px; border: 1px solid #3A3534;
-        }
-
-        .label-content { 
-            width: 80%; height: 55%; background: #fdfcf0; 
-            display: flex; justify-content: center; align-items: center; border: 1px solid #c0c0c0;
-        }
-        .label-text { font-family: 'Special Elite', cursive; font-size: 1.5rem; font-weight: 900; color: #111; text-transform: uppercase; }
-
-        /* --- THE MUSEUM STAGES --- */
-        .museum-stage {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            display: none; opacity: 0; transition: opacity 1.8s ease;
-            background-color: #000;
-            background-repeat: no-repeat;
-            background-position: center;
-        }
-
-        /* LITERAL FIX: CONTAINED RAIN TO PREVENT STRETCHING */
         #stage-1 { background-image: url('rain1.jpg'); background-size: contain; z-index: 101; }
         #stage-2 { background-image: url('rain2.jpg'); background-size: contain; z-index: 102; }
         
-        #gallery-view { background-image: url('goldhands.jpg'); background-size: cover; z-index: 103; }
-        #lookbook-view { background-image: url('lookbook.jpg'); background-size: cover; z-index: 104; }
-
-        .museum-btn {
-            position: absolute; bottom: 5%; left: 50%; transform: translateX(-50%);
-            padding: 12px 30px; font-family: 'Limelight', cursive; font-size: 1.2rem;
-            color: #fff; background: transparent; border: 1px solid #CF9D7B;
-            letter-spacing: 3px; text-transform: uppercase; cursor: pointer; z-index: 110;
+        #gallery-view { background-image: url('goldhands.jpg'); background-size: 100% 100%; z-index: 103; }
+        #lookbook-view { background-image: url('lookbook.jpg'); background-size: 100% 100%; z-index: 104; }
+        #wall-1 { background-image: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('wall.jpg'); background-size: cover; z-index: 105; }
+        
+        /* THE MOLDING WALL - 3RDGALLERYWALL.JPG */
+        #final-exhibit { 
+            background-image: url('3rdgallerywall.jpg'); 
+            background-size: 100% 100%; 
+            z-index: 106; 
         }
 
-        .art-frame {
-            position: absolute; background: #000; overflow: hidden; z-index: 105;
-        }
-        .art-frame img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.8s; }
-        .art-frame:hover img { transform: scale(1.1); }
+        .museum-btn { position: absolute; bottom: 5%; left: 50%; transform: translateX(-50%); padding: 12px 30px; font-family: 'Limelight', cursive; font-size: 1.2rem; color: #fff; background: transparent; border: 1px solid #CF9D7B; cursor: pointer; z-index: 120; text-transform: uppercase; letter-spacing: 2px; }
 
-        /* LOOKBOOK FRAME ALIGNMENT (VOGUE STYLE) */
-        #lb-1 { top: 6.5%; left: 8.5%; width: 33.5%; height: 28%; }
-        #lb-2 { top: 6.5%; left: 56.5%; width: 31%; height: 24.5%; }
-        #lb-3 { top: 37.5%; left: 57.5%; width: 31.5%; height: 19.5%; }
-        #lb-4 { top: 56.5%; left: 8.5%; width: 33.5%; height: 35.5%; }
-        #lb-5 { top: 66.5%; left: 56.5%; width: 31%; height: 23%; }
+        .art-frame { position: absolute; background: #000; overflow: hidden; z-index: 110; }
+        .art-frame img { width: 100%; height: 100%; object-fit: cover; }
+
+        /* HANDS POSITIONING */
+        #art-1 { top: 25.5%; left: 19.8%; width: 18.5%; height: 35.5%; }
+        #art-2 { top: 20%; left: 40.8%; width: 18.5%; height: 35.5%; }
+        #art-3 { top: 25.5%; right: 19.8%; width: 18.5%; height: 35.5%; }
+        
+        /* LOOKBOOK POSITIONING */
+        #lb-1 { top: 7%; left: 9%; width: 33%; height: 27.5%; }
+        #lb-2 { top: 7%; left: 57%; width: 30.5%; height: 23.5%; }
+        #lb-3 { top: 38%; left: 58%; width: 30.5%; height: 19%; }
+        #lb-4 { top: 57%; left: 9%; width: 33%; height: 35%; }
+        #lb-5 { top: 67%; left: 57%; width: 30.5%; height: 22.5%; }
+
+        /* MOLDING WALL PANEL ALIGNMENT */
+        .molding-art { width: 12.5%; height: 38%; top: 26%; }
+        #mold-1 { left: 14.8%; }
+        #mold-2 { left: 40%; width: 20.2%; height: 43%; top: 20.5%; } /* Larger center panel */
+        #mold-3 { right: 14.8%; }
 
     </style>
 </head>
 <body>
-
     <div id="studio-main">
-        <div class="header-container">
-            <h1 class="main-title">Room Glow Up</h1>
-            <p class="sub-title">Where Your Dream Space Comes To Life</p>
-        </div>
+        <div class="header-container"><h1 class="main-title">Room Glow Up</h1></div>
         <div class="label-row">
-            <div class="label-holder"><div class="screw s-tl"></div><div class="screw s-tr"></div><div class="screw s-bl"></div><div class="screw s-br"></div><div class="label-content"><span class="label-text">Rooms</span></div><div class="lip-pull"></div></div>
-            <div class="label-holder"><div class="screw s-tl"></div><div class="screw s-tr"></div><div class="screw s-bl"></div><div class="screw s-br"></div><div class="label-content"><span class="label-text">Catalog</span></div><div class="lip-pull"></div></div>
-            <div class="label-holder" onclick="startMuseum()"><div class="screw s-tl"></div><div class="screw s-tr"></div><div class="screw s-bl"></div><div class="screw s-br"></div><div class="label-content"><span class="label-text">Signature Gallery</span></div><div class="lip-pull"></div></div>
-            <div class="label-holder"><div class="screw s-tl"></div><div class="screw s-tr"></div><div class="screw s-bl"></div><div class="screw s-br"></div><div class="label-content"><span class="label-text">Save</span></div><div class="lip-pull"></div></div>
+            <div class="label-holder" onclick="startMuseum()" style="width: 260px; height: 130px; background: #111; display: flex; justify-content: center; align-items: center; border: 1px solid #CF9D7B; cursor: pointer;"><span style="font-family: 'Special Elite'; color: #fff;">SIGNATURE GALLERY</span></div>
         </div>
     </div>
 
     <div id="stage-1" class="museum-stage"><button class="museum-btn" onclick="nextAct('stage-1', 'stage-2')">Walk the Hall</button></div>
-    <div id="stage-2" class="museum-stage"><button class="museum-btn" onclick="nextAct('stage-2', 'gallery-view')">Enter the Gallery</button></div>
+    <div id="stage-2" class="museum-stage"><button class="museum-btn" onclick="nextAct('stage-2', 'gallery-view')">Enter Exhibit</button></div>
     
     <div id="gallery-view" class="museum-stage">
-        <button class="museum-btn" onclick="nextAct('gallery-view', 'lookbook-view')">View Lookbook</button>
+        <div id="art-1" class="art-frame"><img src="pnkbathroom.jpg"></div>
+        <div id="art-2" class="art-frame"><img src="wellnesswinkliving.jpg"></div>
+        <div id="art-3" class="art-frame"><img src="kitchenpurp.jpg"></div>
+        <button class="museum-btn" onclick="nextAct('gallery-view', 'lookbook-view')">Continue Walk</button>
     </div>
 
     <div id="lookbook-view" class="museum-stage">
@@ -142,26 +93,26 @@
         <div id="lb-3" class="art-frame"><img src="insp16.jpg"></div>
         <div id="lb-4" class="art-frame"><img src="insp17.jpg"></div>
         <div id="lb-5" class="art-frame"><img src="insp18.jpg"></div>
+        <button class="museum-btn" onclick="nextAct('lookbook-view', 'final-exhibit')">The Grand Hall</button>
+    </div>
+
+    <div id="final-exhibit" class="museum-stage">
+        <div id="mold-1" class="art-frame molding-art"><img src="insp5.jpg"></div>
+        <div id="mold-2" class="art-frame molding-art"><img src="insp6.jpg"></div>
+        <div id="mold-3" class="art-frame molding-art"><img src="insp7.jpg"></div>
         <button class="museum-btn" onclick="location.reload()">Return to Studio</button>
     </div>
 
     <script>
-        function startMuseum() {
-            document.getElementById('studio-main').style.opacity = '0';
-            setTimeout(() => {
-                const act1 = document.getElementById('stage-1');
-                act1.style.display = 'block';
-                setTimeout(() => act1.style.opacity = '1', 50);
-            }, 1200);
-        }
-        function nextAct(curr, next) {
-            document.getElementById(curr).style.opacity = '0';
-            setTimeout(() => {
-                document.getElementById(curr).style.display = 'none';
+        function startMuseum() { document.getElementById('studio-main').style.opacity = '0'; setTimeout(() => { const act1 = document.getElementById('stage-1'); act1.style.display = 'block'; setTimeout(() => act1.style.opacity = '1', 50); }, 1200); }
+        function nextAct(curr, next) { 
+            document.getElementById(curr).style.opacity = '0'; 
+            setTimeout(() => { 
+                document.getElementById(curr).style.display = 'none'; 
                 const nextAct = document.getElementById(next);
                 nextAct.style.display = 'block';
-                setTimeout(() => nextAct.style.opacity = '1', 50);
-            }, 1800);
+                setTimeout(() => nextAct.style.opacity = '1', 50); 
+            }, 1800); 
         }
     </script>
 </body>
