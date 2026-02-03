@@ -3,164 +3,160 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Room Glow Up | Studio</title>
+    <title>Room Glow Up | Designer Studio</title>
     <link href="https://fonts.googleapis.com/css2?family=Limelight&family=Special+Elite&display=swap" rel="stylesheet">
     <style>
         :root {
+            /* --- MASTER PROJECT MANIFEST PALETTE --- */
+            --gunmetal-dark: #0C1519;
+            --gunmetal-light: #162127;
+            --bronze-screw: #CF9D7B;
             --paper-aged: #e6e2cf;
-            --transition-speed: 1.1s; 
-            --gold-glow: 0 0 25px rgba(255, 215, 0, 0.9);
-            --stage-shift: 480px; 
+            --transition-speed: 1.2s; /* Slow, heavy glide */
+            --stage-shift: 420px;
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body, html { width: 100%; height: 100%; background: #000; overflow: hidden; }
 
-        /* --- BACKGROUND SCENE (Assests) --- */
-        #scene-container {
-            position: fixed;
-            top: 0; left: 0;
-            width: 100vw; height: 100vh;
+        /* --- THE STATIC BACKGROUND (Assests) --- */
+        #main-scene {
+            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
             background: url('Assests/backgroundG&Blk.jpg') no-repeat center center;
-            background-size: cover;
-            z-index: 1;
+            background-size: cover; z-index: 1;
         }
 
-        /* --- FIXED HEADER (Isolated) --- */
+        /* --- FIXED HEADER SECTION --- */
         #studio-header {
-            position: fixed;
-            top: 0; left: 0;
-            width: 100vw; height: 300px;
-            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            position: fixed; top: 40px; left: 0; width: 100vw;
+            display: flex; flex-direction: column; align-items: center;
             z-index: 5000; pointer-events: none;
         }
 
         .main-title {
-            font-family: 'Limelight', cursive; font-size: 7.5rem;
+            font-family: 'Limelight', cursive; font-size: 7rem;
             background: linear-gradient(to bottom, #555, #fff, #333);
             -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-            letter-spacing: 15px; text-transform: uppercase; line-height: 1;
+            letter-spacing: 12px; text-transform: uppercase;
         }
 
         .sub-header {
-            font-family: 'Special Elite', cursive;
-            color: #aaa; font-size: 1.2rem; letter-spacing: 4px;
-            margin-top: 15px; text-transform: uppercase;
+            font-family: 'Special Elite', cursive; color: #aaa;
+            font-size: 1.1rem; letter-spacing: 4px; text-transform: uppercase;
+            margin-bottom: 30px;
         }
 
-        .top-nav-row { display: flex; gap: 40px; justify-content: center; margin-top: 40px; pointer-events: auto; }
+        /* --- GUNMETAL NAVIGATION PULLS --- */
+        .nav-hardware-row { 
+            display: flex; gap: 25px; pointer-events: auto; 
+        }
 
-        /* --- THE STAGE OBJECT (The Blank Slate Square) --- */
+        .gunmetal-pull {
+            width: 200px; height: 60px;
+            background: linear-gradient(145deg, var(--gunmetal-light), var(--gunmetal-dark));
+            border-top: 1px solid #333;
+            position: relative; cursor: pointer;
+            display: flex; justify-content: center; align-items: center;
+            box-shadow: inset 0 2px 5px rgba(0,0,0,0.5), 0 5px 15px rgba(0,0,0,0.3);
+        }
+
+        /* Hardware Screws (Bronze #CF9D7B) */
+        .gunmetal-pull::before, .gunmetal-pull::after {
+            content: ''; position: absolute; width: 6px; height: 6px;
+            background: var(--bronze-screw); border-radius: 50%;
+            box-shadow: inset -1px -1px 2px rgba(0,0,0,0.8);
+        }
+        .gunmetal-pull::before { left: 10px; }
+        .gunmetal-pull::after { right: 10px; }
+
+        .pull-label {
+            font-family: 'Special Elite', cursive; color: #000;
+            font-weight: 900; font-size: 0.85rem; text-transform: uppercase;
+            pointer-events: none;
+        }
+
+        /* --- THE STAGE OBJECT (Blank Slate) --- */
         #studio-stage {
-            position: absolute;
-            top: 55%; left: 50%;
-            width: 800px; height: 500px; /* The Slate Square */
+            position: absolute; top: 60%; left: 50%;
+            width: 850px; height: 500px;
             transform: translate(-50%, -50%);
-            background: rgba(255, 255, 255, 0.05); /* Initially a blank slate */
-            border: 2px solid rgba(255, 255, 255, 0.1);
-            background-size: cover;
-            background-position: center;
-            transition: transform var(--transition-speed) cubic-bezier(0.19, 1, 0.22, 1), background-image 0.2s ease;
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            background-size: cover; background-position: center;
+            transition: transform var(--transition-speed) cubic-bezier(0.19, 1, 0.22, 1);
             z-index: 10;
         }
-
-        /* Shift logic only for the stage object */
         #studio-stage.shifted { transform: translate(calc(-50% + var(--stage-shift)), -50%); }
 
-        /* --- ARCHIVE PANELS (assests) --- */
-        .archive-panel {
-            position: fixed; 
-            left: -850px; width: 750px; height: 100vh;
+        /* --- ROOM CABINET (assests/cabinet.png) --- */
+        #room-cabinet {
+            position: fixed; left: -850px; width: 750px; height: 100vh;
+            background: url('assests/cabinet.png') no-repeat center left;
+            background-size: contain;
             transition: left var(--transition-speed) cubic-bezier(0.19, 1, 0.22, 1);
-            display: flex; flex-direction: column; align-items: center;
-            padding-top: 320px; z-index: 1000;
+            z-index: 1000;
+            display: flex; flex-direction: column; align-items: flex-start;
+            padding: 280px 0 0 80px;
         }
+        #room-cabinet.active { left: 0; }
 
-        .archive-panel.active { left: 0; }
-
-        /* Drawer Tabs (assests) */
-        .drawer-tab { 
-            width: 230px; height: 110px; margin-bottom: 25px;
-            background: url('assests/tab-label.png') no-repeat center center;
-            background-size: contain;
+        /* Cabinet Drawer Interaction */
+        .drawer-interaction {
+            width: 240px; height: 100px; margin-bottom: 20px;
             cursor: pointer; display: flex; justify-content: center; align-items: center;
-            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
-
-        .drawer-tab:hover { transform: scale(1.1) translateX(45px); }
-
-        #furniture-case .drawer-tab {
-            background: url('assests/gunmetal-brushed-pull.png') no-repeat center;
-            background-size: contain;
+        
+        .drawer-label {
+            font-family: 'Special Elite', cursive; color: #000;
+            font-weight: 900; font-size: 1rem; text-transform: uppercase;
         }
-
-        .tab-label-inner {
-            width: 145px; height: 48px; background: var(--paper-aged);
-            display: flex; justify-content: center; align-items: center;
-            border: 1px solid #000; transform: translateY(-4px);
-            font-family: 'Special Elite', cursive; 
-            font-size: 0.85rem; font-weight: 900; color: #000; 
-            text-align: center;
-        }
-
-        #furniture-case .tab-label-inner { background: transparent; border: none; }
     </style>
 </head>
 <body>
 
-    <div id="scene-container"></div>
+    <div id="main-scene"></div>
 
     <header id="studio-header">
         <h1 class="main-title">Room Glow Up</h1>
         <p class="sub-header">Where Your Dream Space Comes To Life</p>
-        <div class="top-nav-row">
-            <div class="nav-tab" onclick="toggleArchive('room')"><div class="tab-label-inner">ROOMS</div></div>
-            <div class="nav-tab" onclick="toggleArchive('furniture')"><div class="tab-label-inner">FURNITURE</div></div>
-            <div class="nav-tab"><div class="tab-label-inner">GALLERY</div></div>
+        
+        <div class="nav-hardware-row">
+            <div class="gunmetal-pull" onclick="toggleCabinet()">
+                <div class="pull-label">Rooms</div>
+            </div>
+            <div class="gunmetal-pull">
+                <div class="pull-label">Furniture Catalog</div>
+            </div>
+            <div class="gunmetal-pull">
+                <div class="pull-label">Inspirational Gallery</div>
+            </div>
+            <div class="gunmetal-pull">
+                <div class="pull-label">Save</div>
+            </div>
         </div>
     </header>
 
     <div id="studio-stage"></div>
 
-    <aside id="room-archive" class="archive-panel" style="background: url('assests/cabinet.png') no-repeat center; background-size: contain;">
-        <div class="drawer-tab" onmouseover="preview('LivingRoom')" onclick="lockAndSwitch()"><div class="tab-label-inner">LIVING ROOM</div></div>
-        <div class="drawer-tab" onmouseover="preview('Bedroom')"><div class="tab-label-inner">BEDROOM</div></div>
-        <div class="drawer-tab" onmouseover="preview('DiningRoom')"><div class="tab-label-inner">DINING ROOM</div></div>
-        <div class="drawer-tab" onmouseover="preview('ExtraRoom')"><div class="tab-label-inner">EXTRA ROOM</div></div>
-        <div class="drawer-tab"><div class="tab-label-inner">UPLOAD ROOM</div></div>
-    </aside>
-
-    <aside id="furniture-case" class="archive-panel" style="background: url('assests/furniturecases.png') no-repeat center; background-size: contain;">
-        <div class="drawer-tab"><div class="tab-label-inner">SEATING</div></div>
-        <div class="drawer-tab"><div class="tab-label-inner">TABLES</div></div>
-        <div class="drawer-tab"><div class="tab-label-inner">LIGHTING</div></div>
-        <div class="drawer-tab"><div class="tab-label-inner">DECOR</div></div>
-        <div class="drawer-tab"><div class="tab-label-inner">RUGS</div></div>
+    <aside id="room-cabinet">
+        <div class="drawer-interaction" onmouseover="preview('LivingRoom')"><div class="drawer-label">Living Room</div></div>
+        <div class="drawer-interaction" onmouseover="preview('Bedroom')"><div class="drawer-label">Bedroom</div></div>
+        <div class="drawer-interaction" onmouseover="preview('DiningRoom')"><div class="drawer-label">Dining Room</div></div>
     </aside>
 
     <script>
         const stage = document.getElementById('studio-stage');
+        const cabinet = document.getElementById('room-cabinet');
 
-        function toggleArchive(type) {
-            const roomArchive = document.getElementById('room-archive');
-            const furnArchive = document.getElementById('furniture-case');
+        function toggleCabinet() {
+            cabinet.classList.toggle('active');
             stage.classList.toggle('shifted');
-            if (type === 'room') roomArchive.classList.toggle('active');
-            if (type === 'furniture') furnArchive.classList.toggle('active');
         }
 
-        function preview(roomName) {
-            // Room pieces are in assests/
-            stage.style.backgroundImage = `url('assests/${roomName}_Preview.jpg')`;
-        }
-
-        function lockAndSwitch() {
-            stage.classList.remove('shifted');
-            document.getElementById('room-archive').classList.remove('active');
-            setTimeout(() => {
-                stage.classList.add('shifted');
-                document.getElementById('furniture-case').classList.add('active');
-            }, 1100);
+        function preview(room) {
+            // Hover logic triggers image from assests onto blank stage
+            stage.style.backgroundImage = `url('assests/${room}_preview.jpg')`;
+            stage.style.backgroundAlpha = "1";
         }
     </script>
 </body>
