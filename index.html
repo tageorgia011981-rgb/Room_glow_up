@@ -7,11 +7,10 @@
     <link href="https://fonts.googleapis.com/css2?family=Limelight&family=Special+Elite&display=swap" rel="stylesheet">
     <style>
         :root {
-            --gunmetal-dark: #0C1519;
-            --gunmetal-mid: #121B20;
-            --gunmetal-light: #1A262C;
-            --bronze-screw: #CF9D7B;
-            --gold-glow: 0 0 25px rgba(207, 157, 123, 0.5);
+            /* COLOR PALETTE & SETTINGS */
+            --gunmetal-matte: #2F3336; 
+            --gunmetal-dark: #1D2124;
+            --bronze-screw: #c48f65;
             --transition-speed: 1.2s;
             --stage-shift: 500px;
         }
@@ -19,214 +18,130 @@
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body, html { width: 100%; height: 100%; background: #000; overflow: hidden; }
 
+        /* --- BACKGROUND --- */
+        /* Using Capital 'A' Assests folder for Interface */
         #main-scene {
             position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
             background: url('Assests/backgroundG&Blk.jpg') no-repeat center center;
             background-size: cover; z-index: 1;
         }
 
+        /* --- HEADER --- */
         #studio-header { position: fixed; top: 30px; width: 100%; text-align: center; z-index: 5000; }
+        
         .main-title {
-            font-family: 'Limelight', cursive; font-size: 8rem;
-            background: linear-gradient(to bottom, #777, #fff, #444);
+            font-family: 'Limelight', cursive; 
+            font-size: 9.5rem; 
+            background: linear-gradient(to bottom, #999, #fff, #333);
             -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-            letter-spacing: 15px; text-transform: uppercase; line-height: 0.9;
+            letter-spacing: 20px; text-transform: uppercase; line-height: 0.85;
+            filter: drop-shadow(0 0 30px rgba(255,255,255,0.1));
         }
         .sub-header {
-            font-family: 'Special Elite', cursive; color: #aaa;
-            font-size: 2.2rem; letter-spacing: 6px; text-transform: uppercase;
-            margin-top: 10px; margin-bottom: 50px; display: block;
+            font-family: 'Special Elite', cursive; color: #888;
+            font-size: 2.8rem; letter-spacing: 8px; text-transform: uppercase;
+            margin-top: 20px; display: block; opacity: 0.7;
         }
 
-        .nav-hardware-row { display: flex; gap: 35px; justify-content: center; pointer-events: auto; }
+        .nav-hardware-row { 
+            display: flex; gap: 50px; justify-content: center; pointer-events: auto; margin-top: 50px;
+        }
 
-        /* --- ROUGH GUNMETAL HARDWARE --- */
+        /* --- HARDWARE TABS (Gunmetal Stamped Steel) --- */
         .hardware-pull {
-            width: 180px; height: 75px; 
-            background: radial-gradient(circle at center, #2c3e46 0%, #1a262c 70%, #0C1519 100%);
-            border-radius: 4px; position: relative; cursor: pointer;
-            display: flex; flex-direction: column; align-items: center;
-            box-shadow: 0 8px 15px rgba(0,0,0,0.9), 
-                        inset 0 2px 3px rgba(255,255,255,0.1), 
-                        inset 0 -5px 10px rgba(0,0,0,0.6), 
-                        inset 2px 0 5px rgba(0,0,0,0.3);
-            border: 1px solid #111;
-            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.4s ease;
+            width: 190px; height: 70px; 
+            background: linear-gradient(180deg, var(--gunmetal-matte) 0%, var(--gunmetal-dark) 100%);
+            position: relative; cursor: pointer;
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            border-radius: 2px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.8), inset 0 1px 1px rgba(255,255,255,0.1), inset 0 -2px 5px rgba(0,0,0,0.5);
+            border: 1px solid #111; z-index: 10;
+            transition: transform 0.3s;
         }
-
-        .hardware-pull:hover {
-            transform: translateY(-10px) scale(1.15); 
-            box-shadow: var(--gold-glow), 0 20px 35px rgba(0,0,0,1);
-            z-index: 100;
+        .hardware-pull::before, .hardware-pull::after {
+            content: ''; position: absolute; top: 50%; transform: translateY(-50%);
+            width: 30px; height: 40px; background: var(--gunmetal-matte);
+            border-radius: 50%; z-index: -1;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.9); border: 1px solid #111;
         }
+        .hardware-pull::before { left: -14px; }
+        .hardware-pull::after { right: -14px; }
 
-        .label-frame { 
-            margin-top: 15px; width: 125px; height: 38px; background: #000; padding: 3px;
-            box-shadow: inset 0 0 10px #000, 0 1px 1px rgba(255,255,255,0.1);
-            border: 1px solid #222;
+        .screw { 
+            position: absolute; top: 50%; transform: translateY(-50%);
+            width: 8px; height: 8px; 
+            background: radial-gradient(circle, #CF9D7B 30%, #5c4230 100%); 
+            border-radius: 50%; box-shadow: inset 0 0 2px #000; z-index: 20;
         }
-
-        .white-card { 
-            width: 100%; height: 100%; background: #FFF; display: flex; 
-            justify-content: center; align-items: center; font-family: 'Special Elite', cursive; 
-            color: #000; font-weight: 900; font-size: 0.75rem; text-transform: uppercase;
-        }
-
-        .screw { position: absolute; width: 10px; height: 10px; background: var(--bronze-screw); border-radius: 50%; top: 50%; transform: translateY(-50%); }
-        .screw-left { left: 12px; } .screw-right { right: 12px; }
+        .screw-left { left: -10px; } .screw-right { right: -10px; } 
 
         .pull-lip { 
-            position: absolute; bottom: -12px; width: 110px; height: 25px; 
-            background: linear-gradient(to bottom, #121B20, #05080a);
-            border-radius: 0 0 60px 60px;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.8);
+            position: absolute; bottom: -14px; width: 140px; height: 20px; 
+            background: linear-gradient(to bottom, var(--gunmetal-dark), #000);
+            border-radius: 0 0 50% 50%; box-shadow: 0 4px 8px rgba(0,0,0,0.9);
+            border-top: 1px solid #333; 
         }
+        .hardware-pull:hover { transform: translateY(-5px) scale(1.05); z-index: 100; }
+
+        .label-frame { 
+            width: 160px; height: 44px; background: #151515; padding: 5px; 
+            box-shadow: inset 0 0 8px #000; border-radius: 2px;
+        }
+        .white-card { 
+            width: 100%; height: 100%; background: #dcdcdc; 
+            display: flex; justify-content: center; align-items: center; 
+            font-family: 'Special Elite', cursive; color: #111; font-weight: 900; 
+            font-size: 1.0rem; letter-spacing: -1.5px; text-transform: uppercase;
+            text-shadow: 1px 1px 0px rgba(0,0,0,0.2); transform: rotate(-0.5deg); 
+            box-shadow: inset 0 0 5px rgba(0,0,0,0.1);
+        }
+        .smashed-text { font-size: 0.8rem; letter-spacing: -1px; }
 
         /* --- CABINETS --- */
         .cabinet-unit {
-            position: fixed; left: -900px; 
-            width: 850px; height: 100vh;
-            background: url('Assests/cabinet.png') no-repeat left center;
-            background-size: contain; z-index: 1000;
-            transition: left var(--transition-speed) cubic-bezier(0.19, 1, 0.22, 1);
-            display: flex; flex-direction: column; padding-top: 420px; 
+            position: fixed; left: -900px; top: 50%; transform: translateY(-50%);
+            z-index: 1000; transition: left var(--transition-speed) cubic-bezier(0.19, 1, 0.22, 1);
+            display: flex; flex-direction: column; 
         }
-        .cabinet-unit.active { left: 0; }
+        .cabinet-unit.active { left: 50px; }
 
-        .drawer-scroll-track {
-            width: 450px; height: 500px; margin-left: 140px; 
-            overflow-y: scroll; scrollbar-width: none;
+        /* 1. ROOMS: Black Diamond Chest */
+        #room-cabinet {
+            width: 600px; height: 800px;
+            /* Capital 'A' Assests */
+            background: url('Assests/cabinet.png') no-repeat center center;
+            background-size: contain;
+            padding-top: 160px; padding-left: 100px; 
+        }
+
+        /* 2. FURNITURE & GALLERY: Silver Industrial Trunks */
+        #decor-cabinet, #gallery-cabinet {
+            width: 600px; height: 800px;
+            /* Capital 'A' Assests */
+            background: url('Assests/furniturecases.png') no-repeat center center;
+            background-size: contain;
+            padding-top: 120px; padding-left: 90px; 
+        }
+
+        .drawer-scroll-track { 
+            width: 400px; height: 550px; overflow-y: scroll; scrollbar-width: none;
+            display: flex; flex-direction: column; gap: 40px; 
         }
         .drawer-scroll-track::-webkit-scrollbar { display: none; }
-        .drawer-item { margin-bottom: 110px; position: relative; height: 75px; }
+        .drawer-item { position: relative; height: 75px; display: flex; justify-content: center; flex-shrink: 0; }
 
-        /* --- STAGE --- */
+        /* --- THE STAGE --- */
         #studio-stage {
             position: fixed; top: 62%; left: 50%; 
-            width: 850px; height: 500px;
-            transform: translate(-50%, -50%); 
-            background: rgba(255, 255, 255, 0.05) no-repeat center center;
-            background-size: cover; border: 1px solid rgba(255, 255, 255, 0.1); 
+            width: 850px; height: 500px; transform: translate(-50%, -50%); 
+            /* Capital 'A' Assests */
+            background: url('Assests/stagecurtain.png') no-repeat center center;
+            background-size: cover; 
+            border: 1px solid rgba(255, 255, 255, 0.1); 
             transition: transform var(--transition-speed) cubic-bezier(0.19, 1, 0.22, 1);
-            z-index: 10;
+            z-index: 10; box-shadow: 0 0 50px rgba(0,0,0,0.8);
         }
-        #studio-stage.shifted { transform: translate(calc(-50% + var(--stage-shift)), -50%); }
+        #studio-stage.shifted { transform: translate(calc(-50% + 400px), -50%); }
     </style>
 </head>
 <body>
-
-    <div id="main-scene"></div>
-
-    <header id="studio-header">
-        <h1 class="main-title">Room Glow Up</h1>
-        <span class="sub-header">Where Your Dream Space Comes To Life</span>
-        <div class="nav-hardware-row">
-            <div class="hardware-pull" onclick="toggleCabinet('room-cabinet')">
-                <div class="screw screw-left"></div>
-                <div class="label-frame"><div class="white-card">Rooms</div></div>
-                <div class="screw screw-right"></div>
-                <div class="pull-lip"></div>
-            </div>
-            <div class="hardware-pull" onclick="toggleCabinet('decor-cabinet')">
-                <div class="label-frame"><div class="white-card">Decor</div></div>
-                <div class="pull-lip"></div>
-            </div>
-            <div class="hardware-pull" onclick="toggleCabinet('gallery-cabinet')">
-                <div class="label-frame"><div class="white-card">Gallery</div></div>
-                <div class="pull-lip"></div>
-            </div>
-            <div class="hardware-pull">
-                <div class="label-frame"><div class="white-card">Save</div></div>
-                <div class="pull-lip"></div>
-            </div>
-        </div>
-    </header>
-
-    <div id="studio-stage"></div>
-
-    <aside id="room-cabinet" class="cabinet-unit">
-        <div class="drawer-scroll-track">
-            <div class="drawer-item" onmouseover="preview('livingroom')" onclick="cycle('livingroom')">
-                <div class="hardware-pull"><div class="label-frame"><div class="white-card">Living Room</div></div><div class="pull-lip"></div></div>
-            </div>
-            <div class="drawer-item" onmouseover="preview('bedroom')" onclick="cycle('bedroom')">
-                <div class="hardware-pull"><div class="label-frame"><div class="white-card">Bedroom</div></div><div class="pull-lip"></div></div>
-            </div>
-            <div class="drawer-item" onmouseover="preview('diningroom')">
-                <div class="hardware-pull"><div class="label-frame"><div class="white-card">Dining Room</div></div><div class="pull-lip"></div></div>
-            </div>
-            <div class="drawer-item" onmouseover="preview('atmosphere')" onclick="cycle('atmosphere')">
-                <div class="hardware-pull"><div class="label-frame"><div class="white-card">Rain Hallway</div></div><div class="pull-lip"></div></div>
-            </div>
-        </div>
-    </aside>
-
-    <aside id="decor-cabinet" class="cabinet-unit">
-        <div class="drawer-scroll-track">
-            <div class="drawer-item">
-                <div class="hardware-pull"><div class="label-frame"><div class="white-card">Luxe Bench</div></div><div class="pull-lip"></div></div>
-            </div>
-        </div>
-    </aside>
-
-    <aside id="gallery-cabinet" class="cabinet-unit">
-        <div class="drawer-scroll-track">
-            <div class="drawer-item" onmouseover="preview('gallery')" onclick="cycle('gallery')">
-                <div class="hardware-pull"><div class="label-frame"><div class="white-card">Inspiration</div></div><div class="pull-lip"></div></div>
-            </div>
-        </div>
-    </aside>
-
-    <script>
-        const registry = {
-            livingroom: ['livingroom.jpg', 'livingroom1.jpg', 'livingroom3.jpg'],
-            bedroom: ['bedroom.jpg', 'bedroom2.jpg'],
-            diningroom: ['diningroom.jpg'],
-            atmosphere: ['rain1.jpg', 'rain2.jpg'],
-            gallery: ['goldhands.jpg', 'insp9.jpg', 'insp11.jpg', 'insp16.jpg', 'insp17.jpg', 'insp18.jpg']
-        };
-
-        const currentCycles = { livingroom: 0, bedroom: 0, atmosphere: 0, gallery: 0 };
-
-        function toggleCabinet(id) {
-            const stage = document.getElementById('studio-stage');
-            const target = document.getElementById(id);
-            const alreadyOpen = target.classList.contains('active');
-
-            document.querySelectorAll('.cabinet-unit').forEach(c => c.classList.remove('active'));
-
-            if (!alreadyOpen) {
-                target.classList.add('active');
-                stage.classList.add('shifted');
-            } else {
-                stage.classList.remove('shifted');
-            }
-        }
-
-        function preview(room) {
-            const files = registry[room];
-            if(files) {
-                const stage = document.getElementById('studio-stage');
-                const file = files[currentCycles[room] || 0];
-                stage.style.backgroundImage = `url('Assests/${file}')`;
-                
-                // Rain Hallway Physics: Use contain instead of cover
-                if (file.includes('rain')) {
-                    stage.style.backgroundSize = 'contain';
-                    stage.style.backgroundColor = '#000';
-                } else {
-                    stage.style.backgroundSize = 'cover';
-                }
-            }
-        }
-
-        function cycle(room) {
-            const files = registry[room];
-            if (files && files.length > 1) {
-                currentCycles[room] = (currentCycles[room] + 1) % files.length;
-                preview(room);
-            }
-        }
-    </script>
-</body>
-</html>
