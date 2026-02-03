@@ -7,19 +7,17 @@
     <link href="https://fonts.googleapis.com/css2?family=Limelight&family=Special+Elite&display=swap" rel="stylesheet">
     <style>
         :root {
-            /* MANIFEST PALETTE (LOCKED) */
             --gunmetal-matte: #162127;  
             --gunmetal-dark: #0C1519;   
             --bronze-screw: #CF9D7B;    
-            
             --transition-speed: 1.2s;
-            --stage-shift: 450px;
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
         
         body, html { 
-            width: 100%; min-height: 100vh; 
+            width: 100%; 
+            min-height: 350vh; /* Deep scroll for a massive workspace */
             background: #000; 
             overflow-x: hidden; 
             overflow-y: auto;   
@@ -33,153 +31,115 @@
             pointer-events: none;
         }
 
-        /* --- HEADER (FIXED TO MANIFEST) --- */
+        /* --- HEADER --- */
         #studio-header { 
             position: relative; 
             width: 100%; text-align: center; z-index: 5000; 
-            padding-top: 20px; margin-bottom: 10px;
+            padding-top: 50px;
         }
         
         .main-title {
             font-family: 'Limelight', cursive; 
-            font-size: 6rem; /* Tightened to one line */
+            font-size: 7rem;
             background: linear-gradient(to bottom, #999, #fff, #333);
             -webkit-background-clip: text; -webkit-text-fill-color: transparent;
             letter-spacing: 15px; text-transform: uppercase; line-height: 1;
-            filter: drop-shadow(0 0 30px rgba(255,255,255,0.1));
         }
         .sub-header {
-            font-family: 'Special Elite', cursive; color: #fff; /* Bolder */
-            font-size: 1.8rem; letter-spacing: 5px; text-transform: uppercase;
-            margin-top: 5px; display: block; opacity: 1; font-weight: 900;
+            font-family: 'Special Elite', cursive; color: #fff;
+            font-size: 2.2rem; letter-spacing: 5px; text-transform: uppercase;
+            margin-top: 10px; display: block; font-weight: 900;
         }
 
-        /* --- FURNITURE CATALOG (THE BOOK AT TOP) --- */
-        #furniture-catalog-book {
-            position: fixed; top: -300px; left: 50%; transform: translateX(-50%);
-            width: 80%; height: 200px; background: rgba(255,255,255,0.9);
-            z-index: 6000; border: 5px solid var(--gunmetal-matte);
-            transition: top 0.8s ease-in-out;
-            display: flex; align-items: center; justify-content: space-around;
-            padding: 20px; border-radius: 0 0 20px 20px;
-        }
-        #furniture-catalog-book.active { top: 0; }
-        .catalog-item { width: 120px; height: 120px; cursor: grab; }
-
+        /* --- NAVIGATION --- */
         .nav-hardware-row { 
             display: flex; gap: 40px; justify-content: center; 
-            margin-top: 20px; padding-bottom: 20px;
-            flex-wrap: wrap; 
+            margin-top: 50px; 
         }
 
-        /* --- HARDWARE TABS --- */
+        /* --- WORKSPACE (PEEK LOGIC) --- */
+        #workspace-anchor {
+            position: relative;
+            margin-top: 900px; /* Cabinet "peeks" 2 drawers here */
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            z-index: 10;
+        }
+
+        /* CABINETS - Sized for the peek */
+        .cabinet-unit {
+            position: absolute; 
+            left: -1100px; 
+            top: -50px;
+            z-index: 2000;
+            transition: left var(--transition-speed) cubic-bezier(0.19, 1, 0.22, 1);
+        }
+        .cabinet-unit.active { left: 30px; }
+
+        #room-cabinet, #furniture-cases-menu, #seating-case-unit {
+            width: 700px; height: 1000px;
+            background-size: contain;
+            background-repeat: no-repeat;
+            padding-top: 200px;
+            padding-left: 120px; 
+        }
+        #room-cabinet { background-image: url('Assests/cabinet.png'); }
+        #furniture-cases-menu, #seating-case-unit { background-image: url('Assests/furniturecases.png'); }
+
+        .drawer-scroll-track { 
+            width: 450px; height: 650px; overflow-y: scroll; scrollbar-width: none;
+            display: flex; flex-direction: column; gap: 40px;
+        }
+
+        /* THE STAGE - NOT MINIATURE (LARGE & WIDE) */
+        #studio-stage {
+            position: relative; 
+            width: 1200px; /* Massive Width */
+            height: 800px; /* Deep Height */
+            background: url('Assests/stagecurtain.png') no-repeat center center;
+            background-size: cover; 
+            margin-top: 150px;
+            transition: transform var(--transition-speed) cubic-bezier(0.19, 1, 0.22, 1);
+            z-index: 10;
+            box-shadow: 0 0 150px rgba(0,0,0,1);
+            border: 3px solid rgba(255,255,255,0.1);
+        }
+        #studio-stage.shifted { transform: translateX(350px); }
+
+        /* CATALOG BOOK (FIXED TOP) */
+        #furniture-catalog-book {
+            position: fixed; top: -400px; left: 50%; transform: translateX(-50%);
+            width: 95%; height: 320px; background: rgba(255,255,255,0.98);
+            z-index: 9000;
+            border: 12px solid var(--gunmetal-matte);
+            transition: top 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            display: flex; align-items: center; justify-content: center; gap: 60px;
+            border-radius: 0 0 50px 50px;
+        }
+        #furniture-catalog-book.active { top: 0; }
+
+        /* Assets inside Stage */
+        .dropped-furniture {
+            cursor: move;
+            filter: drop-shadow(0 10px 20px rgba(0,0,0,0.5));
+        }
+
+        /* TABS */
         .hardware-pull {
-            width: 190px; height: 70px; 
+            width: 200px; height: 75px; 
             background: linear-gradient(180deg, var(--gunmetal-matte) 0%, var(--gunmetal-dark) 100%);
             position: relative; cursor: pointer;
-            display: flex; flex-direction: column; align-items: center; justify-content: center;
-            border-radius: 2px;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.8), inset 0 1px 1px rgba(255,255,255,0.1), inset 0 -2px 5px rgba(0,0,0,0.5);
-            border: 1px solid #000; z-index: 10;
-            transition: transform 0.3s;
+            display: flex; align-items: center; justify-content: center;
+            border-radius: 3px; border: 1px solid #000;
         }
-        .hardware-pull::before, .hardware-pull::after {
-            content: ''; position: absolute; top: 50%; transform: translateY(-50%);
-            width: 30px; height: 40px; background: var(--gunmetal-matte);
-            border-radius: 50%; z-index: -1;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.9); border: 1px solid #000;
-        }
-        .hardware-pull::before { left: -14px; }
-        .hardware-pull::after { right: -14px; }
-
-        .screw { 
-            position: absolute; top: 50%; transform: translateY(-50%);
-            width: 8px; height: 8px; 
-            background: radial-gradient(circle, var(--bronze-screw) 30%, #5c4230 100%); 
-            border-radius: 50%; box-shadow: inset 0 0 2px #000; z-index: 20;
-        }
-        .screw-left { left: -10px; } .screw-right { right: -10px; } 
-
-        .pull-lip { 
-            position: absolute; bottom: -14px; width: 140px; height: 20px; 
-            background: linear-gradient(to bottom, var(--gunmetal-dark), #000);
-            border-radius: 0 0 50% 50%; box-shadow: 0 4px 8px rgba(0,0,0,0.9);
-            border-top: 1px solid #333; 
-        }
-        .hardware-pull:hover { transform: translateY(-5px) scale(1.05); z-index: 100; }
-
-        .label-frame { 
-            width: 160px; height: 44px; background: #080808; padding: 5px; 
-            box-shadow: inset 0 0 8px #000; border-radius: 2px;
-        }
+        .label-frame { width: 170px; height: 48px; background: #080808; padding: 5px; }
         .white-card { 
             width: 100%; height: 100%; background: #dcdcdc; 
             display: flex; justify-content: center; align-items: center; 
             font-family: 'Special Elite', cursive; color: #111; font-weight: 900; 
-            font-size: 1.0rem; letter-spacing: -1.5px; text-transform: uppercase;
-            text-shadow: 1px 1px 0px rgba(0,0,0,0.2); transform: rotate(-0.5deg); 
-            box-shadow: inset 0 0 5px rgba(0,0,0,0.1);
-        }
-        .smashed-text { font-size: 0.8rem; letter-spacing: -1px; }
-
-        /* --- CABINETS & CASES --- */
-        .cabinet-unit {
-            position: fixed; left: -900px; top: 55%; transform: translateY(-50%);
-            z-index: 1000; transition: left var(--transition-speed) cubic-bezier(0.19, 1, 0.22, 1);
-            display: flex; flex-direction: column; 
-        }
-        .cabinet-unit.active { left: 50px; }
-
-        #room-cabinet {
-            width: 600px; height: 800px;
-            background: url('Assests/cabinet.png') no-repeat center center;
-            background-size: contain;
-            padding-top: 160px; padding-left: 100px; 
-        }
-
-        /* furniturecases.png is the white stack asset */
-        #furniture-cases-menu {
-            width: 600px; height: 800px;
-            background: url('Assests/furniturecases.png') no-repeat center center;
-            background-size: contain;
-            padding-top: 120px; padding-left: 90px; 
-        }
-
-        /* Sub-category replacement case */
-        #seating-case-unit {
-            width: 600px; height: 800px;
-            background: url('Assests/seatingcase.png') no-repeat center center;
-            background-size: contain;
-            padding-top: 120px; padding-left: 90px; 
-        }
-
-        .drawer-scroll-track { 
-            width: 400px; height: 500px; overflow-y: scroll; scrollbar-width: none;
-            display: flex; flex-direction: column; gap: 40px; padding-bottom: 50px;
-        }
-        .drawer-scroll-track::-webkit-scrollbar { display: none; }
-        .drawer-item { 
-            position: relative; height: 75px; display: flex; justify-content: center; flex-shrink: 0; 
-        }
-
-        /* --- THE STAGE --- */
-        #studio-stage {
-            position: relative; 
-            margin: 50px auto 100px auto; 
-            width: 850px; height: 500px; 
-            background: url('Assests/stagecurtain.png') no-repeat center center;
-            background-size: cover; 
-            border: 1px solid rgba(255, 255, 255, 0.1); 
-            transition: transform var(--transition-speed) cubic-bezier(0.19, 1, 0.22, 1);
-            z-index: 10; box-shadow: 0 0 50px rgba(0,0,0,0.8);
-        }
-        #studio-stage.shifted { transform: translateX(250px); }
-
-        #studio-stage.rain-mode {
-            background-size: contain !important;
-            background-color: #000 !important;
-            background-repeat: no-repeat;
-            background-position: center center;
+            font-size: 1.1rem; text-transform: uppercase;
         }
     </style>
 </head>
@@ -188,9 +148,9 @@
     <div id="main-scene"></div>
 
     <div id="furniture-catalog-book">
-        <div class="catalog-item" draggable="true" ondragstart="drag(event)" id="item1"><img src="Assests/chair1.png" width="100"></div>
-        <div class="catalog-item" draggable="true" ondragstart="drag(event)" id="item2"><img src="Assests/chair2.png" width="100"></div>
-        </div>
+        <div class="catalog-item" draggable="true" ondragstart="drag(event)" id="chair-1"><img src="Assests/chair1.png" width="200"></div>
+        <div class="catalog-item" draggable="true" ondragstart="drag(event)" id="sofa-1"><img src="Assests/sofa1.png" width="280"></div>
+    </div>
 
     <header id="studio-header">
         <h1 class="main-title">Room Glow Up</h1>
@@ -198,74 +158,51 @@
         
         <div class="nav-hardware-row">
             <div class="hardware-pull" onclick="toggleCabinet('room-cabinet')">
-                <div class="screw screw-left"></div>
                 <div class="label-frame"><div class="white-card">Rooms</div></div>
-                <div class="screw screw-right"></div><div class="pull-lip"></div>
             </div>
-            
             <div class="hardware-pull" onclick="toggleCabinet('furniture-cases-menu')">
-                <div class="screw screw-left"></div>
-                <div class="label-frame"><div class="white-card smashed-text">Furniture Catalog</div></div>
-                <div class="screw screw-right"></div><div class="pull-lip"></div>
+                <div class="label-frame"><div class="white-card">Furniture Catalog</div></div>
             </div>
-            
-            <div class="hardware-pull">
-                <div class="screw screw-left"></div>
-                <div class="label-frame"><div class="white-card">Decor Closet</div></div>
-                <div class="screw screw-right"></div><div class="pull-lip"></div>
-            </div>
-            
-            <div class="hardware-pull">
-                <div class="screw screw-left"></div>
-                <div class="label-frame"><div class="white-card">Save</div></div>
-                <div class="screw screw-right"></div><div class="pull-lip"></div>
-            </div>
+            <div class="hardware-pull"><div class="label-frame"><div class="white-card">Decor Closet</div></div></div>
+            <div class="hardware-pull"><div class="label-frame"><div class="white-card">Save</div></div></div>
         </div>
     </header>
 
-    <div id="studio-stage" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+    <div id="workspace-anchor">
+        <div id="studio-stage" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
 
-    <aside id="room-cabinet" class="cabinet-unit">
-        <div class="drawer-scroll-track">
-            <div class="drawer-item" onclick="selectRoom('livingroom')">
-                <div class="hardware-pull"><div class="screw screw-left"></div><div class="label-frame"><div class="white-card">Living Room</div></div><div class="screw screw-right"></div><div class="pull-lip"></div></div>
+        <aside id="room-cabinet" class="cabinet-unit">
+            <div class="drawer-scroll-track">
+                <div class="drawer-item" onclick="selectRoom('livingroom')">
+                    <div class="hardware-pull"><div class="label-frame"><div class="white-card">Living Room</div></div></div>
+                </div>
+                <div class="drawer-item" onclick="selectRoom('bedroom')">
+                    <div class="hardware-pull"><div class="label-frame"><div class="white-card">Bedroom</div></div></div>
+                </div>
             </div>
-            <div class="drawer-item" onclick="selectRoom('bedroom')">
-                <div class="hardware-pull"><div class="screw screw-left"></div><div class="label-frame"><div class="white-card">Bedroom</div></div><div class="screw screw-right"></div><div class="pull-lip"></div></div>
-            </div>
-            <div class="drawer-item" onclick="selectRoom('diningroom')">
-                <div class="hardware-pull"><div class="screw screw-left"></div><div class="label-frame"><div class="white-card">Dining Room</div></div><div class="screw screw-right"></div><div class="pull-lip"></div></div>
-            </div>
-        </div>
-    </aside>
+        </aside>
 
-    <aside id="furniture-cases-menu" class="cabinet-unit">
-        <div class="drawer-scroll-track">
-            <div class="drawer-item" onclick="replaceCase('furniture-cases-menu', 'seating-case-unit')">
-                <div class="hardware-pull"><div class="screw screw-left"></div><div class="label-frame"><div class="white-card">Seating</div></div><div class="screw screw-right"></div><div class="pull-lip"></div></div>
+        <aside id="furniture-cases-menu" class="cabinet-unit">
+            <div class="drawer-scroll-track">
+                <div class="drawer-item" onclick="replaceCase('furniture-cases-menu', 'seating-case-unit')">
+                    <div class="hardware-pull"><div class="label-frame"><div class="white-card">Seating</div></div></div>
+                </div>
             </div>
-            <div class="drawer-item">
-                <div class="hardware-pull"><div class="screw screw-left"></div><div class="label-frame"><div class="white-card">Tables</div></div><div class="screw screw-right"></div><div class="pull-lip"></div></div>
-            </div>
-        </div>
-    </aside>
+        </aside>
 
-    <aside id="seating-case-unit" class="cabinet-unit">
-        <div class="drawer-scroll-track">
-            <div class="drawer-item" onclick="openCatalogBook()">
-                <div class="hardware-pull"><div class="screw screw-left"></div><div class="label-frame"><div class="white-card">Chairs</div></div><div class="screw screw-right"></div><div class="pull-lip"></div></div>
+        <aside id="seating-case-unit" class="cabinet-unit">
+            <div class="drawer-scroll-track">
+                <div class="drawer-item" onclick="openCatalogBook()">
+                    <div class="hardware-pull"><div class="label-frame"><div class="white-card">Chairs</div></div></div>
+                </div>
             </div>
-            <div class="drawer-item" onclick="openCatalogBook()">
-                <div class="hardware-pull"><div class="screw screw-left"></div><div class="label-frame"><div class="white-card">Couches</div></div><div class="screw screw-right"></div><div class="pull-lip"></div></div>
-            </div>
-        </div>
-    </aside>
+        </aside>
+    </div>
 
     <script>
         const registry = {
-            livingroom: { files: ['livingroom.jpg', 'livingroom1.jpg'], folder: 'Assests' },
-            bedroom:    { files: ['bedroom.jpg'], folder: 'Assests' },
-            diningroom: { files: ['diningroom.jpg'], folder: 'Assests' }
+            livingroom: { files: ['livingroom.jpg'], folder: 'Assests' },
+            bedroom:    { files: ['bedroom.jpg'], folder: 'Assests' }
         };
 
         function toggleCabinet(id) {
@@ -276,49 +213,46 @@
             if (!alreadyOpen) {
                 target.classList.add('active');
                 stage.classList.add('shifted');
+                window.scrollTo({ top: 1300, behavior: 'smooth' });
             } else {
                 stage.classList.remove('shifted');
             }
         }
 
-        // SEQUENCE: Pick Room -> Cabinet glides back -> Furniture Cases glide in
         function selectRoom(key) {
             const entry = registry[key];
             const stage = document.getElementById('studio-stage');
             stage.style.backgroundImage = `url('${entry.folder}/${entry.files[0]}')`;
-            
-            // 1. Close Cabinet
             document.getElementById('room-cabinet').classList.remove('active');
-            
-            // 2. Wait for transition, then glide in furniturecases.png
-            setTimeout(() => {
-                toggleCabinet('furniture-cases-menu');
-            }, 1000);
+            setTimeout(() => { toggleCabinet('furniture-cases-menu'); }, 1000);
         }
 
-        // REPLACEMENT LOGIC: One case slides out, the next slides in
         function replaceCase(oldId, newId) {
             document.getElementById(oldId).classList.remove('active');
-            setTimeout(() => {
-                document.getElementById(newId).classList.add('active');
-            }, 600);
+            setTimeout(() => { document.getElementById(newId).classList.add('active'); }, 600);
         }
 
-        // CATALOG LOGIC: Opens the book at the top
         function openCatalogBook() {
             document.getElementById('furniture-catalog-book').classList.add('active');
+            window.scrollTo({ top: 0, behavior: 'smooth' }); 
         }
 
-        /* DRAG AND DROP FOR AFFILIATE MARKETING */
         function allowDrop(ev) { ev.preventDefault(); }
         function drag(ev) { ev.dataTransfer.setData("text", ev.target.id); }
         function drop(ev) {
             ev.preventDefault();
             var data = ev.dataTransfer.getData("text");
-            var nodeCopy = document.getElementById(data).cloneNode(true);
+            var original = document.getElementById(data);
+            var nodeCopy = original.cloneNode(true);
+            
+            nodeCopy.classList.add('dropped-furniture');
             nodeCopy.style.position = "absolute";
-            nodeCopy.style.left = (ev.clientX - ev.target.offsetLeft) + "px";
-            nodeCopy.style.top = (ev.clientY - ev.target.offsetTop) + "px";
+            
+            var rect = ev.target.getBoundingClientRect();
+            // Center the item on the mouse drop point
+            nodeCopy.style.left = (ev.clientX - rect.left - (original.offsetWidth / 2)) + "px"; 
+            nodeCopy.style.top = (ev.clientY - rect.top - (original.offsetHeight / 2)) + "px";
+            
             ev.target.appendChild(nodeCopy);
         }
     </script>
