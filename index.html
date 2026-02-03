@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Glow Up Studio | Window View</title>
     <style>
-        /* --- CORE STYLE (RETAINING YOUR BACKGROUND/HEADER SPIRIT) --- */
         :root {
             --accent: #008080; 
             --transition: 0.8s cubic-bezier(0.4, 0, 0.2, 1);
@@ -17,10 +16,11 @@
             height: 100%; width: 100%;
             font-family: 'Segoe UI', serif;
             overflow: hidden;
-            background: #1a1a1a; /backgroundG&Blk.jpg*/
+            /* YOUR REAL BACKGROUND */
+            background: url('backgroundG&Blk.png') center/cover no-repeat;
         }
 
-        /* --- LEFT RAIL (OFF-SCREEN BY DEFAULT) --- */
+        /* --- THE RAILS (HIDDEN BY DEFAULT) --- */
         #left-rail {
             position: fixed; left: 0; top: 120px; 
             bottom: 60px; width: 320px;
@@ -30,8 +30,8 @@
 
         .side-panel {
             position: absolute; width: 100%; height: 100%;
-            background: rgba(10, 10, 10, 0.95);
-            backdrop-filter: blur(20px);
+            background: rgba(10, 10, 10, 0.92);
+            backdrop-filter: blur(15px);
             transition: var(--transition);
             padding: 30px; box-sizing: border-box;
             border-right: 1px solid rgba(255,255,255,0.1);
@@ -39,12 +39,10 @@
             transform: translateX(-105%); 
         }
 
-        /* Active State Logic */
         .show-rooms:not(.is-locked) #room-cabinet { transform: translateX(0); }
         .is-locked #room-cabinet { transform: translateX(-105%); }
         .is-locked #furniture-cases { transform: translateX(0); }
 
-        /* Lip-Pull Interaction */
         .drawer-pull {
             width: 100%; height: 50px; background: #222;
             margin-bottom: 15px; cursor: pointer;
@@ -57,10 +55,9 @@
             border-left: 10px solid var(--accent);
             background: #2a2a2a;
             color: white;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.5);
         }
 
-        /* --- THE WINDOW STAGE --- */
+        /* --- THE WINDOW VIEW STAGE --- */
         #stage-container {
             display: flex; justify-content: center; align-items: center;
             height: 100vh; width: 100%;
@@ -72,44 +69,35 @@
             background: #000;
             position: relative; cursor: pointer;
             transition: var(--transition);
-            /* Creating the "Window Casing" */
-            border: 15px solid var(--window-frame);
-            box-shadow: 
-                0 0 100px rgba(0,0,0,0.8),
-                inset 0 0 40px rgba(0,0,0,1);
+            border: 12px solid var(--window-frame);
+            box-shadow: 0 0 80px rgba(0,0,0,0.9), inset 0 0 30px rgba(0,0,0,1);
             overflow: hidden;
         }
 
         #stage img { width: 100%; height: 100%; object-fit: cover; }
 
-        /* THE GLASS & CURTAIN OVERLAY */
+        /* GLASS EFFECT */
         #stage::after {
             content: "";
             position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-            /* Faint reflection streak */
-            background: linear-gradient(135deg, rgba(255,255,255,0.08) 0%, rgba(255,255,255,0) 40%);
-            /* Optional Curtain Overlay - Replace 'curtains.png' if you find it */
-            /* background-image: url('curtains.png'); background-size: cover; */
+            background: linear-gradient(135deg, rgba(255,255,255,0.06) 0%, rgba(255,255,255,0) 45%);
             pointer-events: none;
             z-index: 100;
         }
 
-        .is-locked #stage { border-color: #222; }
-
-        /* --- DECOR SPACE SHIFT --- */
+        /* DECOR SPACE SHIFT */
         .decor-space-active #stage-container {
-            background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('decorclosetbg.jpg') center/cover;
+            background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('decorclosetbg.jpg') center/cover;
         }
 
-        /* HUD & BUTTONS */
         #studio-hud {
             position: fixed; bottom: 0; width: 100%; height: 60px;
             background: rgba(0,0,0,0.95); display: flex;
             align-items: center; padding: 0 50px; justify-content: space-between;
         }
 
-        .btn-nav { padding: 10px 25px; cursor: pointer; background: #333; color: white; border: 1px solid #444; text-transform: uppercase; }
-        .btn-nav:hover { background: var(--accent); }
+        .btn-nav { padding: 10px 25px; cursor: pointer; background: #222; color: white; border: 1px solid #444; text-transform: uppercase; font-size: 11px; letter-spacing: 1px; }
+        .btn-nav:hover { background: var(--accent); border-color: var(--accent); }
     </style>
 </head>
 <body id="studio-body">
@@ -121,14 +109,14 @@
 
     <div id="left-rail">
         <div id="room-cabinet" class="side-panel">
-            <h2 style="color:var(--accent); letter-spacing: 2px;">ROOM CABINET</h2>
+            <h2 style="color:var(--accent); font-weight: 300;">ROOM CABINET</h2>
             <div class="drawer-pull" onclick="cycleRoom()"><span>Living Room</span></div>
             <div class="drawer-pull" onclick="cycleRoom()"><span>Dining Gallery</span></div>
         </div>
 
         <div id="furniture-cases" class="side-panel">
-            <h2 style="color:var(--accent); letter-spacing: 2px;">FURNITURE</h2>
-            <div style="padding:20px; border:1px solid #444; cursor:grab; background:#1a1a1a; text-align:center;" draggable="true" ondragstart="drag(event)" id="bench-item">
+            <h2 style="color:var(--accent); font-weight: 300;">FURNITURE</h2>
+            <div style="padding:20px; border:1px solid #444; cursor:grab; background:#111; text-align:center;" draggable="true" ondragstart="drag(event)" id="bench-item">
                 LUXE BENCH
             </div>
         </div>
@@ -141,8 +129,8 @@
     </div>
 
     <div id="studio-hud">
-        <div id="sku-display" style="font-size: 12px; opacity: 0.6;">REF: <span id="sku-val">LR-101</span></div>
-        <button onclick="triggerStartOver()" style="background:#400; color:white; border:none; padding:10px 20px; cursor:pointer; font-size:11px;">CHANGE ROOMS</button>
+        <div id="sku-display" style="font-size: 11px; opacity: 0.5;">REF: <span id="sku-val">LR-101</span></div>
+        <button onclick="triggerStartOver()" style="background:#500; color:white; border:none; padding:8px 18px; cursor:pointer; font-size:10px; letter-spacing: 1px;">CHANGE ROOMS</button>
     </div>
 
     <script>
@@ -172,13 +160,10 @@
         function triggerStartOver() {
             if(confirm("Would you like to save this design?")) { alert("Design Saved!"); }
             body.classList.remove('is-locked', 'decor-space-active', 'show-rooms');
-            // Logic to remove dropped items
-            const stage = document.getElementById('stage');
-            const items = stage.querySelectorAll('.placed-item');
+            const items = document.getElementById('stage').querySelectorAll('.placed-item');
             items.forEach(i => i.remove());
         }
 
-        // Drag & Drop
         function allowDrop(ev) { ev.preventDefault(); }
         function drag(ev) { ev.dataTransfer.setData("text", ev.target.id); }
         function drop(ev) {
@@ -189,10 +174,9 @@
             clone.style.position = "absolute";
             clone.style.left = (ev.offsetX - 50) + "px";
             clone.style.top = (ev.offsetY - 50) + "px";
-            clone.style.zIndex = "50"; // Sits behind the glass/curtain overlay
+            clone.style.zIndex = "50"; 
             ev.target.appendChild(clone);
         }
     </script>
 </body>
 </html>
-
