@@ -16,7 +16,7 @@
             --stage-shift: 460px;
         }
 
-        /* STRICT BOXING: No page-level scrolling allowed */
+        /* Prevent the whole page from scrolling */
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body, html { 
             width: 100%; height: 100%; background: #000; 
@@ -56,7 +56,6 @@
             transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.4s ease;
         }
 
-        /* Magnifying Glass Lift Effect */
         .hardware-pull:hover {
             transform: translateY(-10px) scale(1.15); 
             box-shadow: var(--gold-glow), 0 20px 35px rgba(0,0,0,1);
@@ -74,44 +73,40 @@
         .screw-left { left: 12px; } .screw-right { right: 12px; }
         .pull-lip { position: absolute; bottom: -10px; width: 100px; height: 22px; background: var(--gunmetal-dark); border-radius: 0 0 60px 60px; }
 
-        /* --- CABINET (BOLTED DOWN) --- */
+        /* --- CABINET (Visible by default) --- */
         #room-cabinet {
-            position: fixed; left: -850px; width: 750px; height: 100vh;
+            position: fixed; left: 0; width: 750px; height: 100vh;
             background: url('assests/cabinet.png') no-repeat left center;
             background-size: contain; z-index: 1000;
-            transition: left var(--transition-speed) cubic-bezier(0.19, 1, 0.22, 1);
             display: flex; flex-direction: column; padding-top: 380px;
         }
-        #room-cabinet.active { left: 0; }
 
-        /* ONLY THIS SCROLLS */
+        /* SCROLL TRACK FIXED */
         .drawer-scroll-track {
-            width: 400px; height: 420px; margin-left: 110px;
-            overflow-y: scroll; scrollbar-width: none;
-            padding-bottom: 100px;
+            width: 400px; 
+            height: 500px; /* Force a height so it can scroll */
+            margin-left: 110px;
+            overflow-y: scroll; 
+            scrollbar-width: none; 
+            -ms-overflow-style: none;
         }
         .drawer-scroll-track::-webkit-scrollbar { display: none; }
-        .drawer-item { margin-bottom: 85px; position: relative; }
+        
+        .drawer-item { 
+            margin-bottom: 90px; 
+            position: relative;
+            height: 75px; /* Matches pull height */
+        }
 
-        /* --- STAGE (BOLTED DOWN) --- */
+        /* --- THE STAGE --- */
         #studio-stage {
-            position: fixed; top: 62%; left: 50%; width: 850px; height: 500px;
+            position: fixed; top: 62%; left: calc(50% + 230px); /* Positioned to the right of cabinet */
+            width: 850px; height: 500px;
             transform: translate(-50%, -50%); 
-            background: rgba(255, 255, 255, 0.02) no-repeat center center;
+            background: rgba(255, 255, 255, 0.05) no-repeat center center;
             background-size: cover; border: 1px solid rgba(255, 255, 255, 0.1); 
-            transition: transform var(--transition-speed) cubic-bezier(0.19, 1, 0.22, 1), background 0.5s ease;
-            z-index: 10; cursor: cell;
+            z-index: 10;
         }
-        #studio-stage.shifted { transform: translate(calc(-50% + var(--stage-shift)), -50%); }
-        #studio-stage.locked { border: 2px solid var(--bronze-screw); box-shadow: var(--gold-glow); }
-
-        #furniture-cases {
-            position: fixed; left: -850px; width: 750px; height: 100vh;
-            background: url('assests/furniturecases.png') no-repeat left center;
-            background-size: contain; z-index: 1001;
-            transition: left var(--transition-speed) cubic-bezier(0.19, 1, 0.22, 1);
-        }
-        #furniture-cases.active { left: 0; }
     </style>
 </head>
 <body>
@@ -122,7 +117,7 @@
         <h1 class="main-title">Room Glow Up</h1>
         <span class="sub-header">Where Your Dream Space Comes To Life</span>
         <div class="nav-hardware-row">
-            <div class="hardware-pull" onclick="toggleCabinet('room-cabinet')">
+            <div class="hardware-pull">
                 <div class="screw screw-left"></div>
                 <div class="label-frame"><div class="white-card">Rooms</div></div>
                 <div class="screw screw-right"></div>
@@ -134,7 +129,7 @@
                 <div class="screw screw-right"></div>
                 <div class="pull-lip"></div>
             </div>
-            <div class="hardware-pull" onclick="openGallery()">
+            <div class="hardware-pull">
                 <div class="screw screw-left"></div>
                 <div class="label-frame"><div class="white-card">Gallery</div></div>
                 <div class="screw screw-right"></div>
@@ -149,67 +144,31 @@
         </div>
     </header>
 
-    <div id="studio-stage" onclick="lockRoom()"></div>
+    <div id="studio-stage"></div>
 
     <aside id="room-cabinet">
         <div class="drawer-scroll-track">
-            <div class="drawer-item" onmouseover="previewRoom('LivingRoom')" onclick="cycleRoom('LivingRoom')">
+            <div class="drawer-item" onmouseover="preview('LivingRoom')">
                 <div class="hardware-pull"><div class="label-frame"><div class="white-card">Living Room</div></div><div class="pull-lip"></div></div>
             </div>
-            <div class="drawer-item" onmouseover="previewRoom('Bedroom')" onclick="cycleRoom('Bedroom')">
+            <div class="drawer-item" onmouseover="preview('Bedroom')">
                 <div class="hardware-pull"><div class="label-frame"><div class="white-card">Bedroom</div></div><div class="pull-lip"></div></div>
             </div>
-            <div class="drawer-item" onmouseover="previewRoom('DiningRoom')" onclick="cycleRoom('DiningRoom')">
+            <div class="drawer-item" onmouseover="preview('DiningRoom')">
                 <div class="hardware-pull"><div class="label-frame"><div class="white-card">Dining Room</div></div><div class="pull-lip"></div></div>
             </div>
-            <div class="drawer-item" onmouseover="previewRoom('ExtraRoom')" onclick="cycleRoom('ExtraRoom')">
+            <div class="drawer-item" onmouseover="preview('ExtraRoom')">
                 <div class="hardware-pull"><div class="label-frame"><div class="white-card">Extra Room</div></div><div class="pull-lip"></div></div>
             </div>
             <div class="drawer-item">
                 <div class="hardware-pull"><div class="label-frame"><div class="white-card">Try Yours</div></div><div class="pull-lip"></div></div>
             </div>
-            <div style="height:150px;"></div> </div>
+            <div style="height: 300px;"></div> </div>
     </aside>
 
-    <aside id="furniture-cases"></aside>
-
     <script>
-        let currentRoomType = "";
-        let cycleIndex = 1;
-
-        function toggleCabinet(id) {
-            document.getElementById(id).classList.toggle('active');
-            document.getElementById('studio-stage').classList.toggle('shifted');
-        }
-
-        function previewRoom(type) {
-            if(document.getElementById('studio-stage').classList.contains('locked')) return;
-            currentRoomType = type;
-            document.getElementById('studio-stage').style.backgroundImage = `url('assests/${type}_1.jpg')`;
-        }
-
-        function cycleRoom(type) {
-            cycleIndex = (cycleIndex % 3) + 1; 
-            document.getElementById('studio-stage').style.backgroundImage = `url('assests/${type}_${cycleIndex}.jpg')`;
-        }
-
-        function lockRoom() {
-            const stage = document.getElementById('studio-stage');
-            const roomCab = document.getElementById('room-cabinet');
-            const furnCab = document.getElementById('furniture-cases');
-            if(!currentRoomType) return; 
-
-            stage.classList.add('locked');
-            roomCab.classList.remove('active');
-            
-            setTimeout(() => {
-                furnCab.classList.add('active');
-            }, 600);
-        }
-
-        function openGallery() {
-            document.getElementById('room-cabinet').classList.remove('active');
-            document.getElementById('studio-stage').classList.remove('shifted');
+        function preview(room) {
+            document.getElementById('studio-stage').style.backgroundImage = `url('assests/${room}_1.jpg')`;
         }
     </script>
 </body>
