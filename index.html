@@ -16,17 +16,21 @@
             --stage-shift: 460px;
         }
 
+        /* STRICT BOXING: No page-level scrolling allowed */
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body, html { width: 100%; height: 100%; background: #000; overflow-x: hidden; }
+        body, html { 
+            width: 100%; height: 100%; background: #000; 
+            overflow: hidden; 
+        }
 
-        /* --- STUDIO BACKGROUND --- */
+        /* --- STUDIO BACKGROUND (Assests) --- */
         #main-scene {
             position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
             background: url('Assests/backgroundG&Blk.jpg') no-repeat center center;
             background-size: cover; z-index: 1;
         }
 
-        /* --- HEADER & TOP NAV --- */
+        /* --- HEADER & FULL TOP NAV --- */
         #studio-header { position: fixed; top: 30px; width: 100%; text-align: center; z-index: 5000; }
         .main-title {
             font-family: 'Limelight', cursive; font-size: 8rem;
@@ -40,9 +44,11 @@
             margin-top: 10px; margin-bottom: 50px; display: block;
         }
 
+        .nav-hardware-row { display: flex; gap: 35px; justify-content: center; pointer-events: auto; }
+
         /* --- SHARED HARDWARE CLASS --- */
         .hardware-pull {
-            width: 180px; height: 75px; /* Scaled down for drawer fit */
+            width: 180px; height: 75px; 
             background: linear-gradient(180deg, var(--gunmetal-light) 0%, var(--gunmetal-mid) 50%, var(--gunmetal-dark) 100%);
             border-radius: 4px; position: relative; cursor: pointer;
             display: flex; flex-direction: column; align-items: center;
@@ -50,7 +56,7 @@
             transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.4s ease;
         }
 
-        /* Magnifying Glass Hover Effect */
+        /* Magnifying Glass Lift Effect */
         .hardware-pull:hover {
             transform: translateY(-10px) scale(1.15); 
             box-shadow: var(--gold-glow), 0 20px 35px rgba(0,0,0,1);
@@ -68,39 +74,44 @@
         .screw-left { left: 12px; } .screw-right { right: 12px; }
         .pull-lip { position: absolute; bottom: -10px; width: 100px; height: 22px; background: var(--gunmetal-dark); border-radius: 0 0 60px 60px; }
 
-        /* --- CABINETS & CASES --- */
-        #room-cabinet, #furniture-cases {
+        /* --- CABINET (BOLTED DOWN) --- */
+        #room-cabinet {
             position: fixed; left: -850px; width: 750px; height: 100vh;
-            background-size: contain; background-repeat: no-repeat;
-            background-position: left center; z-index: 1000;
+            background: url('assests/cabinet.png') no-repeat left center;
+            background-size: contain; z-index: 1000;
             transition: left var(--transition-speed) cubic-bezier(0.19, 1, 0.22, 1);
             display: flex; flex-direction: column; padding-top: 380px;
         }
-        #room-cabinet { background-image: url('assests/cabinet.png'); }
-        #furniture-cases { background-image: url('assests/furniturecases.png'); }
+        #room-cabinet.active { left: 0; }
 
-        #room-cabinet.active, #furniture-cases.active { left: 0; }
-
-        /* DRAWER VIEWPORT */
+        /* ONLY THIS SCROLLS */
         .drawer-scroll-track {
-            width: 400px; height: 350px; margin-left: 110px;
+            width: 400px; height: 420px; margin-left: 110px;
             overflow-y: scroll; scrollbar-width: none;
+            padding-bottom: 100px;
         }
         .drawer-scroll-track::-webkit-scrollbar { display: none; }
-        .drawer-item { margin-bottom: 80px; position: relative; }
+        .drawer-item { margin-bottom: 85px; position: relative; }
 
-        /* --- THE STAGE --- */
+        /* --- STAGE (BOLTED DOWN) --- */
         #studio-stage {
-            position: absolute; top: 62%; left: 50%; width: 850px; height: 500px;
+            position: fixed; top: 62%; left: 50%; width: 850px; height: 500px;
             transform: translate(-50%, -50%); 
             background: rgba(255, 255, 255, 0.02) no-repeat center center;
             background-size: cover; border: 1px solid rgba(255, 255, 255, 0.1); 
-            transition: transform var(--transition-speed) cubic-bezier(0.19, 1, 0.22, 1);
+            transition: transform var(--transition-speed) cubic-bezier(0.19, 1, 0.22, 1), background 0.5s ease;
             z-index: 10; cursor: cell;
         }
         #studio-stage.shifted { transform: translate(calc(-50% + var(--stage-shift)), -50%); }
         #studio-stage.locked { border: 2px solid var(--bronze-screw); box-shadow: var(--gold-glow); }
 
+        #furniture-cases {
+            position: fixed; left: -850px; width: 750px; height: 100vh;
+            background: url('assests/furniturecases.png') no-repeat left center;
+            background-size: contain; z-index: 1001;
+            transition: left var(--transition-speed) cubic-bezier(0.19, 1, 0.22, 1);
+        }
+        #furniture-cases.active { left: 0; }
     </style>
 </head>
 <body>
@@ -110,14 +121,32 @@
     <header id="studio-header">
         <h1 class="main-title">Room Glow Up</h1>
         <span class="sub-header">Where Your Dream Space Comes To Life</span>
-        <div class="nav-hardware-row" style="display:flex; gap:35px; justify-content:center; pointer-events:auto;">
+        <div class="nav-hardware-row">
             <div class="hardware-pull" onclick="toggleCabinet('room-cabinet')">
                 <div class="screw screw-left"></div>
                 <div class="label-frame"><div class="white-card">Rooms</div></div>
                 <div class="screw screw-right"></div>
                 <div class="pull-lip"></div>
             </div>
+            <div class="hardware-pull">
+                <div class="screw screw-left"></div>
+                <div class="label-frame"><div class="white-card">Catalog</div></div>
+                <div class="screw screw-right"></div>
+                <div class="pull-lip"></div>
             </div>
+            <div class="hardware-pull" onclick="openGallery()">
+                <div class="screw screw-left"></div>
+                <div class="label-frame"><div class="white-card">Gallery</div></div>
+                <div class="screw screw-right"></div>
+                <div class="pull-lip"></div>
+            </div>
+            <div class="hardware-pull">
+                <div class="screw screw-left"></div>
+                <div class="label-frame"><div class="white-card">Save</div></div>
+                <div class="screw screw-right"></div>
+                <div class="pull-lip"></div>
+            </div>
+        </div>
     </header>
 
     <div id="studio-stage" onclick="lockRoom()"></div>
@@ -139,8 +168,7 @@
             <div class="drawer-item">
                 <div class="hardware-pull"><div class="label-frame"><div class="white-card">Try Yours</div></div><div class="pull-lip"></div></div>
             </div>
-            <div style="height:150px;"></div>
-        </div>
+            <div style="height:150px;"></div> </div>
     </aside>
 
     <aside id="furniture-cases"></aside>
@@ -161,7 +189,7 @@
         }
 
         function cycleRoom(type) {
-            cycleIndex = (cycleIndex % 3) + 1; // Assuming 3 variations per room
+            cycleIndex = (cycleIndex % 3) + 1; 
             document.getElementById('studio-stage').style.backgroundImage = `url('assests/${type}_${cycleIndex}.jpg')`;
         }
 
@@ -169,6 +197,7 @@
             const stage = document.getElementById('studio-stage');
             const roomCab = document.getElementById('room-cabinet');
             const furnCab = document.getElementById('furniture-cases');
+            if(!currentRoomType) return; 
 
             stage.classList.add('locked');
             roomCab.classList.remove('active');
@@ -176,6 +205,11 @@
             setTimeout(() => {
                 furnCab.classList.add('active');
             }, 600);
+        }
+
+        function openGallery() {
+            document.getElementById('room-cabinet').classList.remove('active');
+            document.getElementById('studio-stage').classList.remove('shifted');
         }
     </script>
 </body>
