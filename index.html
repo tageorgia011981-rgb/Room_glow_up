@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -27,18 +28,21 @@
 
         /* --- HEADER & SUBHEADER --- */
         #studio-header {
-            position: fixed; top: 40px; width: 100%; text-align: center; z-index: 5000;
+            position: fixed; top: 30px; width: 100%; text-align: center; z-index: 5000;
         }
         .main-title {
-            font-family: 'Limelight', cursive; font-size: 7.5rem;
+            font-family: 'Limelight', cursive; font-size: 8rem;
             background: linear-gradient(to bottom, #555, #fff, #333);
             -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-            letter-spacing: 15px; text-transform: uppercase;
+            letter-spacing: 15px; text-transform: uppercase; line-height: 0.9;
         }
         .sub-header {
             font-family: 'Special Elite', cursive; color: #aaa;
-            font-size: 1.2rem; letter-spacing: 4px; text-transform: uppercase;
-            margin-bottom: 30px; display: block;
+            font-size: 2.2rem; /* Significantly Bigger */
+            letter-spacing: 6px; text-transform: uppercase;
+            margin-top: 10px;
+            margin-bottom: 45px; display: block;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
         }
 
         /* --- THE HARDWARE TABS --- */
@@ -47,48 +51,47 @@
         }
 
         .lip-pull-hardware {
-            width: 190px; height: 80px;
+            width: 210px; height: 85px;
             background: linear-gradient(145deg, var(--gunmetal-light), var(--gunmetal-dark));
             border-radius: 3px; position: relative; cursor: pointer;
             display: flex; flex-direction: column; align-items: center; justify-content: flex-start;
-            padding-top: 15px;
-            box-shadow: inset 0 1px 2px rgba(255,255,255,0.1), 0 8px 20px rgba(0,0,0,0.8);
+            padding-top: 18px;
+            box-shadow: inset 0 1px 2px rgba(255,255,255,0.1), 0 10px 25px rgba(0,0,0,0.8);
         }
 
         /* The White Card Window */
         .white-card-label {
-            width: 130px; height: 35px; 
-            background: #FFFFFF; /* Pure White Card */
-            border: 1.5px solid #000; 
+            width: 145px; height: 40px; 
+            background: #FFFFFF; 
+            border: 2px solid #000; 
             display: flex; justify-content: center; align-items: center;
             font-family: 'Special Elite', cursive; 
-            color: #000; /* Black Ink */
-            font-weight: 900; /* Bold */
-            font-size: 0.85rem; 
+            color: #000; 
+            font-weight: 900; 
+            font-size: 0.95rem; 
             text-transform: uppercase;
-            box-shadow: inset 0 1px 3px rgba(0,0,0,0.2);
         }
 
         /* Hardware Screws (#CF9D7B) */
         .screw {
-            position: absolute; width: 9px; height: 9px; border-radius: 50%;
+            position: absolute; width: 10px; height: 10px; border-radius: 50%;
             background: var(--bronze-screw); top: 50%; transform: translateY(-50%);
-            box-shadow: inset -1px -1px 2px rgba(0,0,0,0.6), 1px 1px 1px rgba(255,255,255,0.1);
+            box-shadow: inset -1px -1px 2px rgba(0,0,0,0.6);
         }
-        .screw-left { left: 12px; }
-        .screw-right { right: 12px; }
+        .screw-left { left: 15px; }
+        .screw-right { right: 15px; }
 
         /* Bottom Finger Lip */
         .pull-lip {
-            position: absolute; bottom: -8px; width: 110px; height: 22px;
+            position: absolute; bottom: -10px; width: 120px; height: 25px;
             background: #080E11; border-radius: 0 0 60px 60px;
             border-top: 1px solid #1a2a33;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.7);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.7);
         }
 
         /* --- STAGE & CABINET LOGIC --- */
         #studio-stage {
-            position: absolute; top: 60%; left: 50%; width: 850px; height: 500px;
+            position: absolute; top: 62%; left: 50%; width: 850px; height: 500px;
             transform: translate(-50%, -50%); 
             background: rgba(255, 255, 255, 0.02);
             border: 1px solid rgba(255, 255, 255, 0.1); 
@@ -123,13 +126,13 @@
             </div>
             <div class="lip-pull-hardware">
                 <div class="screw screw-left"></div>
-                <div class="white-card-label">Catalog</div>
+                <div class="white-card-label">Furniture Catalog</div>
                 <div class="screw screw-right"></div>
                 <div class="pull-lip"></div>
             </div>
             <div class="lip-pull-hardware">
                 <div class="screw screw-left"></div>
-                <div class="white-card-label">Gallery</div>
+                <div class="white-card-label">Inspirational Gallery</div>
                 <div class="screw screw-right"></div>
                 <div class="pull-lip"></div>
             </div>
