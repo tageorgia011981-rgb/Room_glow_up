@@ -13,17 +13,16 @@
             --bronze-screw: #CF9D7B;
             --gold-glow: 0 0 25px rgba(207, 157, 123, 0.5);
             --transition-speed: 1.2s;
-            --stage-shift: 460px;
+            --stage-shift: 500px;
         }
 
-        /* Prevent the whole page from scrolling */
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body, html { 
             width: 100%; height: 100%; background: #000; 
             overflow: hidden; 
         }
 
-        /* --- STUDIO BACKGROUND (Assests) --- */
+        /* --- STUDIO BACKGROUND --- */
         #main-scene {
             position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
             background: url('Assests/backgroundG&Blk.jpg') no-repeat center center;
@@ -73,19 +72,25 @@
         .screw-left { left: 12px; } .screw-right { right: 12px; }
         .pull-lip { position: absolute; bottom: -10px; width: 100px; height: 22px; background: var(--gunmetal-dark); border-radius: 0 0 60px 60px; }
 
-        /* --- CABINET (Visible by default) --- */
+        /* --- CABINET (Fixed & Hidden Initially) --- */
         #room-cabinet {
-            position: fixed; left: 0; width: 750px; height: 100vh;
+            position: fixed; left: -900px; 
+            width: 850px; 
+            height: 100vh;
             background: url('assests/cabinet.png') no-repeat left center;
-            background-size: contain; z-index: 1000;
-            display: flex; flex-direction: column; padding-top: 380px;
+            background-size: contain; 
+            z-index: 1000;
+            transition: left var(--transition-speed) cubic-bezier(0.19, 1, 0.22, 1);
+            display: flex; flex-direction: column; 
+            padding-top: 420px; 
         }
+        #room-cabinet.active { left: 0; }
 
-        /* SCROLL TRACK FIXED */
+        /* SCROLL TRACK FOR PULLS ONLY */
         .drawer-scroll-track {
-            width: 400px; 
-            height: 500px; /* Force a height so it can scroll */
-            margin-left: 110px;
+            width: 450px; 
+            height: 500px; 
+            margin-left: 140px; 
             overflow-y: scroll; 
             scrollbar-width: none; 
             -ms-overflow-style: none;
@@ -93,20 +98,22 @@
         .drawer-scroll-track::-webkit-scrollbar { display: none; }
         
         .drawer-item { 
-            margin-bottom: 90px; 
+            margin-bottom: 110px; 
             position: relative;
-            height: 75px; /* Matches pull height */
+            height: 75px; 
         }
 
         /* --- THE STAGE --- */
         #studio-stage {
-            position: fixed; top: 62%; left: calc(50% + 230px); /* Positioned to the right of cabinet */
+            position: fixed; top: 62%; left: 50%; 
             width: 850px; height: 500px;
             transform: translate(-50%, -50%); 
             background: rgba(255, 255, 255, 0.05) no-repeat center center;
             background-size: cover; border: 1px solid rgba(255, 255, 255, 0.1); 
+            transition: transform var(--transition-speed) cubic-bezier(0.19, 1, 0.22, 1);
             z-index: 10;
         }
+        #studio-stage.shifted { transform: translate(calc(-50% + var(--stage-shift)), -50%); }
     </style>
 </head>
 <body>
@@ -117,30 +124,15 @@
         <h1 class="main-title">Room Glow Up</h1>
         <span class="sub-header">Where Your Dream Space Comes To Life</span>
         <div class="nav-hardware-row">
-            <div class="hardware-pull">
+            <div class="hardware-pull" onclick="toggleCabinet('room-cabinet')">
                 <div class="screw screw-left"></div>
                 <div class="label-frame"><div class="white-card">Rooms</div></div>
                 <div class="screw screw-right"></div>
                 <div class="pull-lip"></div>
             </div>
-            <div class="hardware-pull">
-                <div class="screw screw-left"></div>
-                <div class="label-frame"><div class="white-card">Catalog</div></div>
-                <div class="screw screw-right"></div>
-                <div class="pull-lip"></div>
-            </div>
-            <div class="hardware-pull">
-                <div class="screw screw-left"></div>
-                <div class="label-frame"><div class="white-card">Gallery</div></div>
-                <div class="screw screw-right"></div>
-                <div class="pull-lip"></div>
-            </div>
-            <div class="hardware-pull">
-                <div class="screw screw-left"></div>
-                <div class="label-frame"><div class="white-card">Save</div></div>
-                <div class="screw screw-right"></div>
-                <div class="pull-lip"></div>
-            </div>
+            <div class="hardware-pull"><div class="label-frame"><div class="white-card">Catalog</div></div><div class="pull-lip"></div></div>
+            <div class="hardware-pull"><div class="label-frame"><div class="white-card">Gallery</div></div><div class="pull-lip"></div></div>
+            <div class="hardware-pull"><div class="label-frame"><div class="white-card">Save</div></div><div class="pull-lip"></div></div>
         </div>
     </header>
 
@@ -148,27 +140,59 @@
 
     <aside id="room-cabinet">
         <div class="drawer-scroll-track">
-            <div class="drawer-item" onmouseover="preview('LivingRoom')">
+            <div class="drawer-item" onmouseover="preview('livingroom')" onclick="cycle('livingroom')">
                 <div class="hardware-pull"><div class="label-frame"><div class="white-card">Living Room</div></div><div class="pull-lip"></div></div>
             </div>
-            <div class="drawer-item" onmouseover="preview('Bedroom')">
+            <div class="drawer-item" onmouseover="preview('bedroom')" onclick="cycle('bedroom')">
                 <div class="hardware-pull"><div class="label-frame"><div class="white-card">Bedroom</div></div><div class="pull-lip"></div></div>
             </div>
-            <div class="drawer-item" onmouseover="preview('DiningRoom')">
+            <div class="drawer-item" onmouseover="preview('diningroom')">
                 <div class="hardware-pull"><div class="label-frame"><div class="white-card">Dining Room</div></div><div class="pull-lip"></div></div>
             </div>
-            <div class="drawer-item" onmouseover="preview('ExtraRoom')">
+            <div class="drawer-item" onmouseover="preview('extraroom')" onclick="cycle('extraroom')">
                 <div class="hardware-pull"><div class="label-frame"><div class="white-card">Extra Room</div></div><div class="pull-lip"></div></div>
             </div>
-            <div class="drawer-item">
-                <div class="hardware-pull"><div class="label-frame"><div class="white-card">Try Yours</div></div><div class="pull-lip"></div></div>
+            <div class="drawer-item" onmouseover="preview('officeroom')">
+                <div class="hardware-pull"><div class="label-frame"><div class="white-card">Office Room</div></div><div class="pull-lip"></div></div>
             </div>
-            <div style="height: 300px;"></div> </div>
+            <div style="height: 300px;"></div> 
+        </div>
     </aside>
 
     <script>
+        // File Registry
+        const registry = {
+            livingroom: ['livingroom.jpg', 'livingroom1.jpg', 'livingroom3.jpg'],
+            bedroom: ['bedroom.jpg', 'bedroom2.jpg'],
+            diningroom: ['diningroom.jpg'],
+            extraroom: ['foyer.jpg', 'kitchen.jpg', 'kitchen2.jpg'],
+            officeroom: ['officeroom.jpg']
+        };
+
+        const currentCycles = {
+            livingroom: 0,
+            bedroom: 0,
+            extraroom: 0
+        };
+
+        function toggleCabinet(id) {
+            document.getElementById(id).classList.toggle('active');
+            document.getElementById('studio-stage').classList.toggle('shifted');
+        }
+
         function preview(room) {
-            document.getElementById('studio-stage').style.backgroundImage = `url('assests/${room}_1.jpg')`;
+            const files = registry[room];
+            // Show first file in sequence on hover
+            document.getElementById('studio-stage').style.backgroundImage = `url('assests/${files[0]}')`;
+        }
+
+        function cycle(room) {
+            const files = registry[room];
+            if (files.length > 1) {
+                currentCycles[room] = (currentCycles[room] + 1) % files.length;
+                const nextFile = files[currentCycles[room]];
+                document.getElementById('studio-stage').style.backgroundImage = `url('assests/${nextFile}')`;
+            }
         }
     </script>
 </body>
