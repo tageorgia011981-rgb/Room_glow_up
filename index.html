@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Glow Up Studio | Window View</title>
+    <title>Glow Up Studio | Professional Edition</title>
     <style>
         :root {
             --accent: #008080; 
@@ -16,44 +16,54 @@
             height: 100%; width: 100%;
             font-family: 'Segoe UI', serif;
             overflow: hidden;
-            /* YOUR REAL BACKGROUND */
             background: url('backgroundG&Blk.png') center/cover no-repeat;
         }
 
-        /* --- THE RAILS (HIDDEN BY DEFAULT) --- */
+        /* --- THE RAILS --- */
         #left-rail {
-            position: fixed; left: 0; top: 120px; 
-            bottom: 60px; width: 320px;
-            z-index: 90;
+            position: fixed; left: 0; top: 0; 
+            bottom: 0; width: 320px;
+            z-index: 1000;
             pointer-events: none;
         }
 
         .side-panel {
             position: absolute; width: 100%; height: 100%;
-            background: rgba(10, 10, 10, 0.92);
-            backdrop-filter: blur(15px);
+            background: rgba(10, 10, 10, 0.98);
+            backdrop-filter: blur(25px);
             transition: var(--transition);
-            padding: 30px; box-sizing: border-box;
+            padding: 40px 30px; box-sizing: border-box;
             border-right: 1px solid rgba(255,255,255,0.1);
             pointer-events: all;
             transform: translateX(-105%); 
         }
 
+        /* Logic for show/hide cabinet vs furniture */
         .show-rooms:not(.is-locked) #room-cabinet { transform: translateX(0); }
         .is-locked #room-cabinet { transform: translateX(-105%); }
         .is-locked #furniture-cases { transform: translateX(0); }
 
+        /* BRANDING INSIDE CABINET */
+        .cabinet-branding {
+            margin-bottom: 40px;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            padding-bottom: 20px;
+        }
+        .cabinet-branding h1 { color: white; margin: 0; letter-spacing: 3px; font-size: 22px; text-transform: uppercase; }
+        .cabinet-branding h2 { color: var(--accent); margin: 5px 0 0 0; font-size: 12px; letter-spacing: 2px; text-transform: uppercase; }
+
         .drawer-pull {
-            width: 100%; height: 50px; background: #222;
+            width: 100%; height: 50px; background: #1a1a1a;
             margin-bottom: 15px; cursor: pointer;
             display: flex; align-items: center; padding-left: 20px;
             transition: 0.3s; border-left: 0px solid var(--accent);
-            color: #888; text-transform: uppercase;
+            color: #888; text-transform: uppercase; font-size: 11px;
+            letter-spacing: 1px;
         }
         .drawer-pull:hover {
-            transform: translateY(-3px);
+            transform: translateX(10px);
             border-left: 10px solid var(--accent);
-            background: #2a2a2a;
+            background: #222;
             color: white;
         }
 
@@ -61,7 +71,6 @@
         #stage-container {
             display: flex; justify-content: center; align-items: center;
             height: 100vh; width: 100%;
-            transition: background 1s ease;
         }
 
         #stage {
@@ -69,14 +78,13 @@
             background: #000;
             position: relative; cursor: pointer;
             transition: var(--transition);
-            border: 12px solid var(--window-frame);
-            box-shadow: 0 0 80px rgba(0,0,0,0.9), inset 0 0 30px rgba(0,0,0,1);
+            border: 15px solid var(--window-frame);
+            box-shadow: 0 0 100px rgba(0,0,0,0.9), inset 0 0 40px rgba(0,0,0,1);
             overflow: hidden;
         }
 
         #stage img { width: 100%; height: 100%; object-fit: cover; }
 
-        /* GLASS EFFECT */
         #stage::after {
             content: "";
             position: absolute; top: 0; left: 0; width: 100%; height: 100%;
@@ -85,38 +93,38 @@
             z-index: 100;
         }
 
-        /* DECOR SPACE SHIFT */
-        .decor-space-active #stage-container {
-            background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('decorclosetbg.jpg') center/cover;
-        }
-
         #studio-hud {
             position: fixed; bottom: 0; width: 100%; height: 60px;
             background: rgba(0,0,0,0.95); display: flex;
             align-items: center; padding: 0 50px; justify-content: space-between;
         }
-
-        .btn-nav { padding: 10px 25px; cursor: pointer; background: #222; color: white; border: 1px solid #444; text-transform: uppercase; font-size: 11px; letter-spacing: 1px; }
-        .btn-nav:hover { background: var(--accent); border-color: var(--accent); }
     </style>
 </head>
 <body id="studio-body">
 
-    <div style="position:fixed; top:20px; right:50px; z-index:1000; display:flex; gap:15px;">
-        <button class="btn-nav" onclick="toggleRooms()">Rooms</button>
-        <button class="btn-nav" onclick="enterDecorSpace()">Decor Tab</button>
+    <div style="position:fixed; top:30px; right:50px; z-index:2000;">
+        <button onclick="toggleRooms()" style="padding:10px 25px; cursor:pointer; background:#222; color:white; border:1px solid #444; text-transform:uppercase; font-size:10px;">Select Room</button>
     </div>
 
     <div id="left-rail">
         <div id="room-cabinet" class="side-panel">
-            <h2 style="color:var(--accent); font-weight: 300;">ROOM CABINET</h2>
-            <div class="drawer-pull" onclick="cycleRoom()"><span>Living Room</span></div>
-            <div class="drawer-pull" onclick="cycleRoom()"><span>Dining Gallery</span></div>
+            <div class="cabinet-branding">
+                <h1>ROOM GLOW UP</h1>
+                <h2>STUDIO CABINET</h2>
+            </div>
+            <div class="drawer-pull" onclick="cycleLiving()"><span>Living Room</span></div>
+            <div class="drawer-pull" onclick="cycleBedroom()"><span>Bedroom Series</span></div>
+            <div class="drawer-pull" onclick="setRoom('diningroom.jpg')"><span>Dining Room</span></div>
+            <div class="drawer-pull" onclick="cycleExtras()"><span>Extras Vault</span></div>
+            <div class="drawer-pull" onclick="alert('Upload Portal Engaged')"><span>Your Uploads</span></div>
         </div>
 
         <div id="furniture-cases" class="side-panel">
-            <h2 style="color:var(--accent); font-weight: 300;">FURNITURE</h2>
-            <div style="padding:20px; border:1px solid #444; cursor:grab; background:#111; text-align:center;" draggable="true" ondragstart="drag(event)" id="bench-item">
+            <div class="cabinet-branding">
+                <h1>ROOM GLOW UP</h1>
+                <h2>FURNISHINGS</h2>
+            </div>
+            <div style="padding:20px; border:1px solid #444; cursor:grab; background:#111; text-align:center; color:white;" draggable="true" ondragstart="drag(event)" id="bench-item">
                 LUXE BENCH
             </div>
         </div>
@@ -124,27 +132,48 @@
 
     <div id="stage-container">
         <div id="stage" onclick="lockRoom()" ondrop="drop(event)" ondragover="allowDrop(event)">
-            <img src="livingroom.jpg" id="active-room-img" alt="Room View">
+            <img src="livingroom.jpg" id="active-room-img">
         </div>
     </div>
 
     <div id="studio-hud">
-        <div id="sku-display" style="font-size: 11px; opacity: 0.5;">REF: <span id="sku-val">LR-101</span></div>
-        <button onclick="triggerStartOver()" style="background:#500; color:white; border:none; padding:8px 18px; cursor:pointer; font-size:10px; letter-spacing: 1px;">CHANGE ROOMS</button>
+        <div style="font-size: 11px; color:#555;">ID: <span id="sku-val">LIVINGROOM</span></div>
+        <button onclick="location.reload()" style="background:#500; color:white; border:none; padding:8px 18px; cursor:pointer; font-size:10px;">RESET STUDIO</button>
     </div>
 
     <script>
-        const roomArray = ["livingroom.jpg", "livingroom2.jpg", "dining.jpg"];
-        let currentIdx = 0;
+        // THE 11 ROOMS
+        const livingRooms = ["livingroom.jpg", "livingroom1.jpg", "livingroom3.jpg"];
+        const bedrooms = ["bedroom.jpg", "bedroom2.jpg"];
+        const extras = ["foyer.jpg", "kitchen.jpg", "kitchen2.jpg", "officeroom.jpg"];
+        
+        let lIdx = 0, bIdx = 0, eIdx = 0;
         const body = document.getElementById('studio-body');
+        const mainImg = document.getElementById('active-room-img');
+        const sku = document.getElementById('sku-val');
 
         function toggleRooms() { body.classList.toggle('show-rooms'); }
 
-        function cycleRoom() {
+        function setRoom(file) {
             if (body.classList.contains('is-locked')) return;
-            currentIdx = (currentIdx + 1) % roomArray.length;
-            document.getElementById('active-room-img').src = roomArray[currentIdx];
-            document.getElementById('sku-val').innerText = "ROOM-" + (currentIdx + 101);
+            mainImg.src = file;
+            sku.innerText = file.split('.')[0].toUpperCase();
+        }
+
+        // Cycle Functions for the 5-Drawer System
+        function cycleLiving() {
+            lIdx = (lIdx + 1) % livingRooms.length;
+            setRoom(livingRooms[lIdx]);
+        }
+
+        function cycleBedroom() {
+            bIdx = (bIdx + 1) % bedrooms.length;
+            setRoom(bedrooms[bIdx]);
+        }
+
+        function cycleExtras() {
+            eIdx = (eIdx + 1) % extras.length;
+            setRoom(extras[eIdx]);
         }
 
         function lockRoom() {
@@ -152,29 +181,18 @@
             body.classList.add('is-locked');
         }
 
-        function enterDecorSpace() {
-            if (!body.classList.contains('is-locked')) return alert("Lock your room first!");
-            body.classList.add('decor-space-active');
-        }
-
-        function triggerStartOver() {
-            if(confirm("Would you like to save this design?")) { alert("Design Saved!"); }
-            body.classList.remove('is-locked', 'decor-space-active', 'show-rooms');
-            const items = document.getElementById('stage').querySelectorAll('.placed-item');
-            items.forEach(i => i.remove());
-        }
-
+        // Drag and Drop Logic
         function allowDrop(ev) { ev.preventDefault(); }
         function drag(ev) { ev.dataTransfer.setData("text", ev.target.id); }
         function drop(ev) {
             ev.preventDefault();
             const data = ev.dataTransfer.getData("text");
-            const clone = document.getElementById(data).cloneNode(true);
+            const original = document.getElementById(data);
+            const clone = original.cloneNode(true);
             clone.classList.add('placed-item');
             clone.style.position = "absolute";
             clone.style.left = (ev.offsetX - 50) + "px";
-            clone.style.top = (ev.offsetY - 50) + "px";
-            clone.style.zIndex = "50"; 
+            clone.style.top = (ev.offsetY - 25) + "px";
             ev.target.appendChild(clone);
         }
     </script>
