@@ -6,209 +6,130 @@
     <title>Room Glow Up | Studio</title>
     <link href="https://fonts.googleapis.com/css2?family=Limelight&family=Special+Elite&display=swap" rel="stylesheet">
     <style>
-        /* --- DESIGN DNA --- */
         :root {
-            --metal-base: #1a2a33;
-            --metal-grit: repeating-linear-gradient(45deg, #1a2a33 0px, #1a2a33 2px, #1e2e38 2px, #1e2e38 4px);
             --paper-aged: #e6e2cf;
-            --transition-speed: 1s;
+            --transition-speed: 0.8s;
+            --gold-glow: 0 0 25px rgba(255, 215, 0, 0.9);
         }
 
-        /* --- RESET & CORE --- */
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body, html { width: 100%; height: 100%; background: #000; overflow: hidden; }
 
-        /* --- MAIN STUDIO VIEW --- */
-        #studio-main {
-            width: 100%; height: 100%;
-            background: url('assets/backgroundG&Blk.jpg') no-repeat center center fixed;
+        /* --- THE STAGE (Assests folder) --- */
+        #studio-stage {
+            width: 100vw; height: 100vh;
             background-size: cover;
-            display: flex; flex-direction: column; align-items: center;
-            transition: opacity 0.8s ease-in-out;
-            position: relative; z-index: 10;
+            background-position: center;
+            background-image: url('Assests/backgroundG&Blk.jpg'); 
+            transition: background-image 0.2s ease-in-out;
+            display: flex; align-items: center; justify-content: center;
+            position: relative;
         }
 
-        .header-container { text-align: center; padding-top: 50px; }
-        .main-title {
-            font-family: 'Limelight', cursive;
-            font-size: 8rem; font-weight: 900;
-            background: linear-gradient(to bottom, #222 0%, #777 40%, #fff 50%, #777 60%, #111 100%);
-            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-            filter: drop-shadow(0 10px 20px rgba(0,0,0,0.9));
-            letter-spacing: 15px; text-transform: uppercase; line-height: 1;
-        }
-
-        .sub-header {
-            font-family: 'Special Elite', cursive;
-            font-size: 1.8rem; color: #fff; letter-spacing: 8px;
-            margin-top: 20px; text-shadow: 3px 3px 6px rgba(0,0,0,0.8);
-            font-weight: bold;
-        }
-
-        /* --- THE INDUSTRIAL PULL TABS --- */
-        .label-row { display: flex; justify-content: center; gap: 35px; margin-top: 50px; }
-
-        .label-holder { 
-            width: 230px; height: 110px; 
-            background: linear-gradient(135deg, rgba(255,255,255,0.05) 0%, rgba(0,0,0,0) 50%), var(--metal-grit);
-            background-color: var(--metal-base);
-            border: 3px solid #000;
-            border-top: 3px solid #444; 
-            border-left: 3px solid #333;
-            position: relative; 
-            display: flex; justify-content: center; align-items: center; 
-            cursor: pointer; 
-            box-shadow: 12px 12px 25px rgba(0,0,0,0.9), inset 0 0 15px rgba(0,0,0,0.5); 
-            transition: all 0.3s ease-out;
-        }
-
-        .label-holder::before {
-            content: '';
+        /* --- THE ARCHIVE PANELS (assests folder) --- */
+        .archive-panel {
             position: absolute;
-            width: 8px; height: 8px;
-            background: radial-gradient(circle, #333 20%, #000 80%);
-            border-radius: 50%;
-            top: 10px; left: 10px;
-            box-shadow: 202px 0 0 #111, 0 82px 0 #111, 202px 82px 0 #111; 
+            left: -850px; 
+            width: 750px;
+            height: 100vh;
+            transition: left var(--transition-speed) cubic-bezier(0.19, 1, 0.22, 1);
+            display: flex; flex-direction: column; align-items: center;
+            padding-top: 150px;
+            z-index: 100;
         }
 
-        .label-holder::after {
-            content: ''; 
-            position: absolute; 
-            bottom: -12px; left: 50%; 
-            transform: translateX(-50%);
-            width: 100px; height: 18px; 
-            background: linear-gradient(to bottom, #111, #000); 
-            border-radius: 0 0 12px 12px;
-            border: 2px solid #333;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.8), inset 0 -2px 5px rgba(255,255,255,0.1);
+        .archive-panel.active { left: 0; }
+
+        /* Universal Drawer Style */
+        .drawer-tab { 
+            width: 230px; height: 110px; margin-bottom: 30px;
+            background: url('assests/tab-label.png') no-repeat center center;
+            background-size: contain;
+            cursor: pointer;
+            display: flex; justify-content: center; align-items: center;
+            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
 
-        .label-holder:hover { transform: translateY(-5px); filter: brightness(1.15); }
+        .drawer-tab:hover { transform: scale(1.1) translateX(45px); }
 
-        .label-content { 
-            width: 82%; height: 55%; 
-            background: var(--paper-aged); 
-            display: flex; justify-content: center; align-items: center; 
-            border: 2px solid #000; 
-            box-shadow: inset 4px 4px 8px rgba(0,0,0,0.4); 
+        .tab-label-inner {
+            width: 145px; height: 48px; background: var(--paper-aged);
+            display: flex; justify-content: center; align-items: center;
+            border: 1px solid #000; transform: translateY(-4px);
+            font-family: 'Special Elite', cursive; font-size: 0.8rem; font-weight: 900;
         }
 
-        .label-text { 
-            font-family: 'Special Elite', cursive; 
-            font-size: 1.15rem; 
-            color: #222; 
-            text-transform: uppercase; 
-            text-align: center; 
-            font-weight: 900; 
-            letter-spacing: 2px;
-            opacity: 0.85;
+        .drawer-tab:hover .tab-label-inner {
+            background: #fff;
+            box-shadow: var(--gold-glow);
+            border-color: #ffd700;
         }
 
-        /* --- MUSEUM STAGES --- */
-        .museum-stage { 
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%; 
-            display: none; opacity: 0; transition: opacity var(--transition-speed) ease; 
-            background-color: #000; background-repeat: no-repeat; background-position: center; 
+        /* --- UI LAYER --- */
+        #ui-layer {
+            position: fixed; top: 40px; right: 40px;
+            display: flex; gap: 20px; z-index: 1000;
         }
 
-        #stage-1 { background-image: url('assets/rain1.jpg'); background-size: contain; z-index: 101; }
-        #stage-2 { background-image: url('assets/rain2.jpg'); background-size: contain; z-index: 102; }
-        #gallery-view { background-image: url('assets/goldhands.jpg'); background-size: 100% 100%; z-index: 103; }
-        #ornate-view { background-image: url('assets/lookbook1.jpg'); background-size: 100% 100%; z-index: 104; }
-
-        .museum-btn { 
-            position: absolute; bottom: 5%; left: 50%; transform: translateX(-50%); 
-            padding: 15px 40px; font-family: 'Limelight', cursive; font-size: 1.4rem; 
-            color: #fff; background: rgba(0,0,0,0.8); border: 2px solid #CF9D7B; 
-            cursor: pointer; z-index: 120; text-transform: uppercase; 
+        .nav-btn {
+            background: rgba(0,0,0,0.8); color: #fff; padding: 12px 25px;
+            font-family: 'Limelight', cursive; text-transform: uppercase;
+            border: 1px solid #444; cursor: pointer; letter-spacing: 2px;
         }
-
-        /* --- FINE-TUNED ALIGNMENT (Nudged up a hair) --- */
-        .art-frame { 
-            position: absolute; background: transparent; overflow: hidden; 
-            z-index: 110; display: flex; justify-content: center; align-items: center; 
-        }
-        .art-frame img { width: 100%; height: 100%; object-fit: cover; }
-
-        #art-1 { top: 24.5%; left: 10.5%; width: 17.5%; height: 34.5%; transform: rotate(-1.5deg); } 
-        #art-2 { top: 33.5%; left: 41.2%; width: 17.6%; height: 34.2%; } 
-        #art-3 { top: 24.5%; right: 10.5%; width: 17.5%; height: 34.5%; transform: rotate(1.5deg); }
-
-        #orn-frame-1 { top: 24.5%; left: 8.5%; width: 20%; height: 49.5%; }
-        #orn-frame-2 { top: 21%; left: 39.2%; width: 21.5%; height: 53.5%; }
-        #orn-frame-3 { top: 24.5%; right: 8.5%; width: 20%; height: 49.5%; }
     </style>
 </head>
 <body>
 
-    <div id="studio-main">
-        <div class="header-container">
-            <h1 class="main-title">Room Glow Up</h1>
-            <p class="sub-header">WHERE YOUR DREAM SPACE COMES TO LIFE</p>
+    <div id="ui-layer">
+        <button class="nav-btn" onclick="openArchive('room')">Rooms</button>
+    </div>
+
+    <div id="studio-stage" onclick="lockSelection()">
+        
+        <div id="room-archive" class="archive-panel" style="background: url('assests/cabinet.png') no-repeat center; background-size: contain;">
+            <div class="drawer-tab" onmouseover="flashRoom('LivingRoom')"><div class="tab-label-inner">Living Room</div></div>
+            <div class="drawer-tab" onmouseover="flashRoom('Bedroom')"><div class="tab-label-inner">Bedroom</div></div>
+            <div class="drawer-tab" onmouseover="flashRoom('DiningRoom')"><div class="tab-label-inner">Dining Room</div></div>
+            <div class="drawer-tab" onmouseover="flashRoom('ExtraRoom')"><div class="tab-label-inner">Extra Room</div></div>
+            <div class="drawer-tab" onclick="triggerUpload()"><div class="tab-label-inner">Upload Room</div></div>
+        </div>
+
+        <div id="furniture-case" class="archive-panel" style="background: url('assests/furniturecases.png') no-repeat center; background-size: contain;">
+            <div class="drawer-tab"><div class="tab-label-inner">Furniture Case</div></div>
         </div>
         
-        <div class="label-row">
-            <div class="label-holder" onclick="openRooms()">
-                <div class="label-content"><span class="label-text">Rooms</span></div>
-            </div>
-            <div class="label-holder" onclick="openFurnitureCatalog()">
-                <div class="label-content"><span class="label-text">Furniture Catalog</span></div>
-            </div>
-            <div class="label-holder" onclick="startMuseum()">
-                <div class="label-content"><span class="label-text">Signature Gallery</span></div>
-            </div>
-            <div class="label-holder" onclick="saveProject()">
-                <div class="label-content"><span class="label-text">Save</span></div>
-            </div>
-        </div>
-    </div>
-
-    <div id="stage-1" class="museum-stage">
-        <button class="museum-btn" onclick="nextAct('stage-1', 'stage-2')">Walk the Hall</button>
-    </div>
-    <div id="stage-2" class="museum-stage">
-        <button class="museum-btn" onclick="nextAct('stage-2', 'gallery-view')">Enter Exhibit</button>
-    </div>
-    
-    <div id="gallery-view" class="museum-stage">
-        <div id="art-1" class="art-frame"><img src="assets/pnkbathroom.jpg"></div>
-        <div id="art-2" class="art-frame"><img src="assets/wellnesswinkliving.jpg"></div>
-        <div id="art-3" class="art-frame"><img src="assets/kitchenpurp.jpg"></div>
-        <button class="museum-btn" onclick="nextAct('gallery-view', 'ornate-view')">Next Room</button>
-    </div>
-
-    <div id="ornate-view" class="museum-stage">
-        <div id="orn-frame-1" class="art-frame"><img src="assets/textures&vibes1.jpg"></div>
-        <div id="orn-frame-2" class="art-frame"><img src="assets/colors&vibes.jpg"></div>
-        <div id="orn-frame-3" class="art-frame"><img src="assets/texture&vibes3.jpg"></div>
-        <button class="museum-btn" onclick="location.reload()">Return to Studio</button>
     </div>
 
     <script>
-        function startMuseum() { 
-            document.getElementById('studio-main').style.opacity = '0'; 
-            setTimeout(() => { 
-                document.getElementById('studio-main').style.display = 'none';
-                const act1 = document.getElementById('stage-1'); 
-                act1.style.display = 'block'; 
-                setTimeout(() => act1.style.opacity = '1', 50); 
-            }, 800); 
+        const stage = document.getElementById('studio-stage');
+        let currentMode = 'room'; 
+
+        function openArchive(type) {
+            document.querySelectorAll('.archive-panel').forEach(p => p.classList.remove('active'));
+            if (type === 'room') document.getElementById('room-archive').classList.add('active');
+            if (type === 'furniture') document.getElementById('furniture-case').classList.add('active');
+            currentMode = type;
         }
 
-        function nextAct(curr, next) { 
-            document.getElementById(curr).style.opacity = '0'; 
-            setTimeout(() => { 
-                document.getElementById(curr).style.display = 'none'; 
-                const nextStage = document.getElementById(next);
-                nextStage.style.display = 'block';
-                setTimeout(() => nextStage.style.opacity = '1', 50); 
-            }, 1000); 
+        function flashRoom(roomName) {
+            if (currentMode !== 'room') return;
+            // Previews in lowercase folder
+            stage.style.backgroundImage = `url('assests/${roomName}_Preview.jpg')`;
         }
 
-        function openRooms() { console.log("Rooms trigger"); }
-        function openFurnitureCatalog() { console.log("Catalog trigger"); }
-        function saveProject() { alert("Saved!"); }
+        function lockSelection() {
+            //Retract current archive
+            document.querySelectorAll('.archive-panel').forEach(p => p.classList.remove('active'));
+            
+            // Automatic glide-in of Furniture Case
+            if (currentMode === 'room') {
+                setTimeout(() => {
+                    openArchive('furniture');
+                }, 900);
+            }
+        }
+
+        function triggerUpload() { /* Logic */ }
     </script>
 </body>
 </html>
