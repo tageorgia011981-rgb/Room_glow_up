@@ -18,20 +18,19 @@
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
         
-        /* SCROLL ENABLED: Changed from hidden to auto so page isn't jammed */
+        /* SCROLL ENABLED */
         body, html { 
             width: 100%; min-height: 100vh; 
             background: #000; 
-            overflow-x: hidden; /* No side scroll */
-            overflow-y: auto;   /* Vertical scroll allowed */
+            overflow-x: hidden; 
+            overflow-y: auto;   
         }
 
-       /* --- SITE BACKGROUND (FIXED) --- */
-        /* Forces lowercase 'assests' */
+        /* --- SITE BACKGROUND --- */
+        /* UPDATED: 'assests/mainbackground.jpg' */
         #main-scene {
             position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
-            /* Try replacing & with %26 if it still fails, or rename file to backgroundGnBlk.jpg */
-            background: url('assests/backgroundG&Blk.jpg') no-repeat center center;
+            background: url('assests/mainbackground.jpg') no-repeat center center;
             background-size: cover; 
             z-index: 1;
             pointer-events: none;
@@ -64,7 +63,7 @@
             flex-wrap: wrap; 
         }
 
-        /* --- HARDWARE TABS (Gunmetal Stamped Steel) --- */
+        /* --- HARDWARE TABS --- */
         .hardware-pull {
             width: 190px; height: 70px; 
             background: linear-gradient(180deg, var(--gunmetal-matte) 0%, var(--gunmetal-dark) 100%);
@@ -122,7 +121,7 @@
         }
         .cabinet-unit.active { left: 50px; }
 
-        /* ROOMS: Black Chest -> 'assests' */
+        /* ROOMS: Black Chest -> 'assests' (lowercase) */
         #room-cabinet {
             width: 600px; height: 800px;
             background: url('assests/cabinet.png') no-repeat center center;
@@ -130,7 +129,7 @@
             padding-top: 160px; padding-left: 100px; 
         }
 
-        /* FURNITURE & GALLERY: Silver Trunks -> 'assests' */
+        /* FURNITURE & GALLERY: Silver Trunks -> 'assests' (lowercase) */
         #furniture-cabinet, #decor-cabinet, #gallery-cabinet {
             width: 600px; height: 800px;
             background: url('assests/furniturecases.png') no-repeat center center;
@@ -150,10 +149,10 @@
 
         /* --- THE STAGE --- */
         #studio-stage {
-            position: relative; /* Scrolls with page */
+            position: relative; 
             margin: 50px auto 100px auto; 
             width: 850px; height: 500px; 
-            /* Stage Curtain -> 'assests' */
+            /* Stage Curtain -> 'assests' (lowercase) */
             background: url('assests/stagecurtain.png') no-repeat center center;
             background-size: cover; 
             border: 1px solid rgba(255, 255, 255, 0.1); 
@@ -172,7 +171,7 @@
     </style>
 </head>
 <body>
-<div id="main-scene"></div>
+    <div id="main-scene"></div>
 
     <header id="studio-header">
         <h1 class="main-title">Room Glow Up</h1>
@@ -233,7 +232,7 @@
     <aside id="furniture-cabinet" class="cabinet-unit">
         <div class="drawer-scroll-track">
             <div class="drawer-item" onmouseover="preview('luxebench')">
-                <a href="#"> 
+                <a href="#">
                     <div class="hardware-pull"><div class="screw screw-left"></div><div class="label-frame"><div class="white-card">Luxe Bench</div></div><div class="screw screw-right"></div><div class="pull-lip"></div></div>
                 </a>
             </div>
@@ -258,25 +257,25 @@
             <div class="drawer-item" onmouseover="preview('lookbook')">
                 <div class="hardware-pull"><div class="screw screw-left"></div><div class="label-frame"><div class="white-card smashed-text">Lookbook</div></div><div class="screw screw-right"></div><div class="pull-lip"></div></div>
             </div>
-            <div class="drawer-item" onmouseover="preview('goldhands')">
+             <div class="drawer-item" onmouseover="preview('goldhands')">
                 <div class="hardware-pull"><div class="screw screw-left"></div><div class="label-frame"><div class="white-card smashed-text">Gold Gallery</div></div><div class="screw screw-right"></div><div class="pull-lip"></div></div>
             </div>
         </div>
     </aside>
 
     <script>
-        /* --- REGISTRY --- */
+        /* REGISTRY OF CONTENT */
         const registry = {
-            // PRODUCTS/ROOMS (Will pull from 'Assests' - Capital)
+            /* Sales Items (Capital Assests) */
             livingroom: ['livingroom.jpg', 'livingroom1.jpg', 'livingroom3.jpg'],
-            bedroom: ['bedroom.jpg', 'bedroom2.jpg'],
-            diningroom: ['dining.jpg'], 
-            luxebench: ['luxebench.jpg'],
-
-            // PROPS/ATMOSPHERE (Will pull from 'assests' - lowercase)
-            atmosphere: ['rain1.jpg', 'rain2.jpg'], 
-            lookbook: ['lookbook.jpg'], 
-            goldhands: ['goldhands.jpg']
+            bedroom:    ['bedroom.jpg', 'bedroom2.jpg'],
+            diningroom: ['dining.jpg'],
+            luxebench:  ['luxebench.jpg'],
+            
+            /* Props/Atmosphere (lowercase assests) */
+            atmosphere: ['rain1.jpg', 'rain2.jpg'],
+            lookbook:   ['lookbook.jpg'],
+            goldhands:  ['goldhands.jpg']
         };
 
         const currentCycles = { livingroom: 0, bedroom: 0, atmosphere: 0 };
@@ -304,8 +303,8 @@
                 const file = files[currentCycles[key] || 0];
                 
                 // FOLDER LOGIC:
-                // If it is Rain, Lookbook, or Goldhands -> use 'assests' (lowercase)
-                // If it is Furniture or Rooms -> use 'Assests' (Capital A)
+                // 'Assests' (Capital) = Furniture / Sales
+                // 'assests' (lowercase) = Rain / Lookbook / Site Props
                 let folder = 'Assests'; 
                 if (['atmosphere', 'lookbook', 'goldhands'].includes(key)) {
                     folder = 'assests';
@@ -332,4 +331,3 @@
     </script>
 </body>
 </html>
-
