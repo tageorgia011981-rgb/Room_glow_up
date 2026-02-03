@@ -27,10 +27,10 @@
         }
 
         /* --- SITE BACKGROUND --- */
-        /* UPDATED: 'assests/mainbackground.jpg' */
+        /* FOLDER: Assests (Capital A) - "Backgrounds and Stuff" */
         #main-scene {
             position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
-            background: url('assests/mainbackground.jpg') no-repeat center center;
+            background: url('Assests/mainbackground.jpg') no-repeat center center;
             background-size: cover; 
             z-index: 1;
             pointer-events: none;
@@ -121,7 +121,7 @@
         }
         .cabinet-unit.active { left: 50px; }
 
-        /* ROOMS: Black Chest -> 'Assests' (uppercase) */
+        /* FOLDER: Assests (Capital A) - "Backgrounds and Stuff" */
         #room-cabinet {
             width: 600px; height: 800px;
             background: url('Assests/cabinet.png') no-repeat center center;
@@ -129,7 +129,6 @@
             padding-top: 160px; padding-left: 100px; 
         }
 
-        /* FURNITURE & GALLERY: Silver Trunks -> 'Assests' (uppercase) */
         #furniture-cabinet, #decor-cabinet, #gallery-cabinet {
             width: 600px; height: 800px;
             background: url('Assests/furniturecases.png') no-repeat center center;
@@ -152,7 +151,7 @@
             position: relative; 
             margin: 50px auto 100px auto; 
             width: 850px; height: 500px; 
-            /* Stage Curtain -> 'assests' (lowercase) */
+            /* FOLDER: Assests (Capital A) - "Backgrounds and Stuff" */
             background: url('Assests/stagecurtain.png') no-repeat center center;
             background-size: cover; 
             border: 1px solid rgba(255, 255, 255, 0.1); 
@@ -171,6 +170,7 @@
     </style>
 </head>
 <body>
+
     <div id="main-scene"></div>
 
     <header id="studio-header">
@@ -210,7 +210,7 @@
         </div>
     </header>
 
-    <div id="studio-stage" style="background-image: url('Assests/stagecurtain.png');"></div>
+    <div id="studio-stage"></div>
 
     <aside id="room-cabinet" class="cabinet-unit">
         <div class="drawer-scroll-track">
@@ -264,18 +264,22 @@
     </aside>
 
     <script>
-        /* REGISTRY OF CONTENT */
+        /* REGISTRY
+           Note: 
+           - 'assests' (lowercase a) = Furniture / Rooms
+           - 'Assests' (Capital A) = Backgrounds / Stuff
+        */
         const registry = {
-            /* Sales Items (Capital Assests) */
-            livingroom: ['livingroom.jpg', 'livingroom1.jpg', 'livingroom3.jpg'],
-            bedroom:    ['bedroom.jpg', 'bedroom2.jpg'],
-            diningroom: ['dining.jpg'],
-            luxebench:  ['luxebench.jpg'],
+            /* Furniture & Rooms -> 'assests' (lowercase) */
+            livingroom: { files: ['livingroom.jpg', 'livingroom1.jpg', 'livingroom3.jpg'], folder: 'assests' },
+            bedroom:    { files: ['bedroom.jpg', 'bedroom2.jpg'], folder: 'assests' },
+            diningroom: { files: ['dining.jpg'], folder: 'assests' },
+            luxebench:  { files: ['luxebench.jpg'], folder: 'assests' },
             
-            /* Props/Atmosphere (lowercase assests) */
-            atmosphere: ['rain1.jpg', 'rain2.jpg'],
-            lookbook:   ['lookbook.jpg'],
-            goldhands:  ['goldhands.jpg']
+            /* Backgrounds/Stuff -> 'Assests' (Capital A) */
+            atmosphere: { files: ['rain1.jpg', 'rain2.jpg'], folder: 'Assests' },
+            lookbook:   { files: ['lookbook.jpg'], folder: 'Assests' },
+            goldhands:  { files: ['goldhands.jpg'], folder: 'Assests' }
         };
 
         const currentCycles = { livingroom: 0, bedroom: 0, atmosphere: 0 };
@@ -285,7 +289,6 @@
             const target = document.getElementById(id);
             const alreadyOpen = target.classList.contains('active');
 
-            // Close all cabinets
             document.querySelectorAll('.cabinet-unit').forEach(c => c.classList.remove('active'));
 
             if (!alreadyOpen) {
@@ -297,22 +300,15 @@
         }
 
         function preview(key) {
-            const files = registry[key];
-            if(files) {
+            const entry = registry[key];
+            if(entry) {
                 const stage = document.getElementById('studio-stage');
-                const file = files[currentCycles[key] || 0];
+                const file = entry.files[currentCycles[key] || 0];
                 
-                // FOLDER LOGIC:
-                // 'Assests' (Capital) = Furniture / Sales
-                // 'assests' (lowercase) = Rain / Lookbook / Site Props
-                let folder = 'Assests'; 
-                if (['atmosphere', 'lookbook', 'goldhands'].includes(key)) {
-                    folder = 'assests';
-                }
-
-                stage.style.backgroundImage = `url('${folder}/${file}')`;
+                // Uses the specific folder defined in registry
+                stage.style.backgroundImage = `url('${entry.folder}/${file}')`;
                 
-                // MANIFEST RULE: RAIN PHYSICS
+                // RAIN PHYSICS: Check if file name has 'rain'
                 if (file.includes('rain')) {
                     stage.classList.add('rain-mode');
                 } else {
@@ -322,13 +318,12 @@
         }
 
         function cycle(key) {
-            const files = registry[key];
-            if (files && files.length > 1) {
-                currentCycles[key] = (currentCycles[key] + 1) % files.length;
+            const entry = registry[key];
+            if (entry && entry.files.length > 1) {
+                currentCycles[key] = (currentCycles[key] + 1) % entry.files.length;
                 preview(key);
             }
         }
     </script>
 </body>
 </html>
-
