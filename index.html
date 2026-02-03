@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -10,8 +9,10 @@
         :root {
             /* MASTER PROJECT MANIFEST PALETTE */
             --gunmetal-dark: #0C1519;
-            --gunmetal-light: #162127;
+            --gunmetal-mid: #121B20;
+            --gunmetal-light: #1A262C;
             --bronze-screw: #CF9D7B;
+            --gold-glow: 0 0 25px rgba(207, 157, 123, 0.5); /* Bronze-tinted glow */
             --transition-speed: 1.2s;
             --stage-shift: 460px;
         }
@@ -32,64 +33,67 @@
         }
         .main-title {
             font-family: 'Limelight', cursive; font-size: 8rem;
-            background: linear-gradient(to bottom, #555, #fff, #333);
+            background: linear-gradient(to bottom, #777, #fff, #444);
             -webkit-background-clip: text; -webkit-text-fill-color: transparent;
             letter-spacing: 15px; text-transform: uppercase; line-height: 0.9;
         }
         .sub-header {
             font-family: 'Special Elite', cursive; color: #aaa;
-            font-size: 2.2rem; /* Significantly Bigger */
-            letter-spacing: 6px; text-transform: uppercase;
-            margin-top: 10px;
-            margin-bottom: 45px; display: block;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+            font-size: 2.2rem; letter-spacing: 6px; text-transform: uppercase;
+            margin-top: 10px; margin-bottom: 50px; display: block;
         }
 
         /* --- THE HARDWARE TABS --- */
         .nav-hardware-row { 
-            display: flex; gap: 35px; justify-content: center; pointer-events: auto; 
+            display: flex; gap: 40px; justify-content: center; pointer-events: auto; 
         }
 
         .lip-pull-hardware {
-            width: 210px; height: 85px;
-            background: linear-gradient(145deg, var(--gunmetal-light), var(--gunmetal-dark));
-            border-radius: 3px; position: relative; cursor: pointer;
-            display: flex; flex-direction: column; align-items: center; justify-content: flex-start;
-            padding-top: 18px;
-            box-shadow: inset 0 1px 2px rgba(255,255,255,0.1), 0 10px 25px rgba(0,0,0,0.8);
+            width: 220px; height: 90px;
+            background: linear-gradient(180deg, var(--gunmetal-light) 0%, var(--gunmetal-mid) 50%, var(--gunmetal-dark) 100%);
+            border-radius: 4px; border-top: 1px solid rgba(255,255,255,0.1);
+            position: relative; cursor: pointer;
+            display: flex; flex-direction: column; align-items: center;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.8);
+            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.4s ease;
         }
 
-        /* The White Card Window */
+        /* --- HOVER LIFT & GLOW --- */
+        .lip-pull-hardware:hover {
+            transform: translateY(-15px); /* Lifts up */
+            box-shadow: var(--gold-glow), 0 20px 40px rgba(0,0,0,1); /* Adds aura */
+        }
+
+        .label-frame {
+            margin-top: 18px; width: 150px; height: 42px;
+            background: #000; padding: 2px; border-radius: 2px;
+            box-shadow: inset 0 2px 4px rgba(0,0,0,1);
+        }
+
         .white-card-label {
-            width: 145px; height: 40px; 
-            background: #FFFFFF; 
-            border: 2px solid #000; 
+            width: 100%; height: 100%; 
+            background: #FFFFFF; /* White Card */
             display: flex; justify-content: center; align-items: center;
             font-family: 'Special Elite', cursive; 
-            color: #000; 
-            font-weight: 900; 
-            font-size: 0.95rem; 
+            color: #000; font-weight: 900; font-size: 0.95rem; 
             text-transform: uppercase;
         }
 
-        /* Hardware Screws (#CF9D7B) */
         .screw {
-            position: absolute; width: 10px; height: 10px; border-radius: 50%;
+            position: absolute; width: 12px; height: 12px; border-radius: 50%;
             background: var(--bronze-screw); top: 50%; transform: translateY(-50%);
-            box-shadow: inset -1px -1px 2px rgba(0,0,0,0.6);
+            box-shadow: 1px 1px 2px rgba(0,0,0,0.8), inset -1px -1px 1px rgba(0,0,0,0.5);
         }
-        .screw-left { left: 15px; }
-        .screw-right { right: 15px; }
+        .screw-left { left: 18px; }
+        .screw-right { right: 18px; }
 
-        /* Bottom Finger Lip */
         .pull-lip {
-            position: absolute; bottom: -10px; width: 120px; height: 25px;
-            background: #080E11; border-radius: 0 0 60px 60px;
-            border-top: 1px solid #1a2a33;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.7);
+            position: absolute; bottom: -12px; width: 130px; height: 28px;
+            background: var(--gunmetal-dark); border-radius: 0 0 70px 70px;
+            border-top: 2px solid #1a262c;
         }
 
-        /* --- STAGE & CABINET LOGIC --- */
+        /* --- STAGE (The Blank Slate) --- */
         #studio-stage {
             position: absolute; top: 62%; left: 50%; width: 850px; height: 500px;
             transform: translate(-50%, -50%); 
@@ -100,6 +104,7 @@
         }
         #studio-stage.shifted { transform: translate(calc(-50% + var(--stage-shift)), -50%); }
 
+        /* --- CABINET (assests/cabinet.png) --- */
         #room-cabinet {
             position: fixed; left: -850px; width: 750px; height: 100vh;
             background: url('assests/cabinet.png') no-repeat left center;
@@ -120,28 +125,16 @@
         <div class="nav-hardware-row">
             <div class="lip-pull-hardware" onclick="toggleCabinet()">
                 <div class="screw screw-left"></div>
-                <div class="white-card-label">Rooms</div>
+                <div class="label-frame">
+                    <div class="white-card-label">Rooms</div>
+                </div>
                 <div class="screw screw-right"></div>
                 <div class="pull-lip"></div>
             </div>
-            <div class="lip-pull-hardware">
-                <div class="screw screw-left"></div>
-                <div class="white-card-label">Furniture Catalog</div>
-                <div class="screw screw-right"></div>
-                <div class="pull-lip"></div>
-            </div>
-            <div class="lip-pull-hardware">
-                <div class="screw screw-left"></div>
-                <div class="white-card-label">Inspirational Gallery</div>
-                <div class="screw screw-right"></div>
-                <div class="pull-lip"></div>
-            </div>
-            <div class="lip-pull-hardware">
-                <div class="screw screw-left"></div>
-                <div class="white-card-label">Save</div>
-                <div class="screw screw-right"></div>
-                <div class="pull-lip"></div>
-            </div>
+            
+            <div class="lip-pull-hardware"><div class="screw screw-left"></div><div class="label-frame"><div class="white-card-label">Catalog</div></div><div class="screw screw-right"></div><div class="pull-lip"></div></div>
+            <div class="lip-pull-hardware"><div class="screw screw-left"></div><div class="label-frame"><div class="white-card-label">Gallery</div></div><div class="screw screw-right"></div><div class="pull-lip"></div></div>
+            <div class="lip-pull-hardware"><div class="screw screw-left"></div><div class="label-frame"><div class="white-card-label">Save</div></div><div class="screw screw-right"></div><div class="pull-lip"></div></div>
         </div>
     </header>
 
@@ -150,6 +143,7 @@
 
     <script>
         function toggleCabinet() {
+            // This glides the cabinet in and moves the stage
             document.getElementById('room-cabinet').classList.toggle('active');
             document.getElementById('studio-stage').classList.toggle('shifted');
         }
