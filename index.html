@@ -7,44 +7,59 @@
     <link href="https://fonts.googleapis.com/css2?family=Limelight&family=Special+Elite&display=swap" rel="stylesheet">
     <style>
         :root {
-            /* COLOR PALETTE & SETTINGS */
-            --gunmetal-matte: #2F3336; 
-            --gunmetal-dark: #1D2124;
-            --bronze-screw: #c48f65;
+            /* MANIFEST PALETTE (LOCKED) */
+            --gunmetal-matte: #162127;  
+            --gunmetal-dark: #0C1519;   
+            --bronze-screw: #CF9D7B;    
+            
             --transition-speed: 1.2s;
-            --stage-shift: 500px;
+            --stage-shift: 450px;
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body, html { width: 100%; height: 100%; background: #000; overflow: hidden; }
+        
+        /* SCROLL ENABLED: Changed from hidden to auto so page isn't jammed */
+        body, html { 
+            width: 100%; min-height: 100vh; 
+            background: #000; 
+            overflow-x: hidden; /* No side scroll */
+            overflow-y: auto;   /* Vertical scroll allowed */
+        }
 
-        /* --- BACKGROUND --- */
-        /* Using Capital 'A' Assests folder for Interface */
+        /* --- SITE BACKGROUND --- */
+        /* Folder: 'assests' (lowercase) for Site Makeup */
         #main-scene {
             position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
-            background: url('Assests/backgroundG&Blk.jpg') no-repeat center center;
+            background: url('assests/backgroundG&Blk.jpg') no-repeat center center;
             background-size: cover; z-index: 1;
+            pointer-events: none;
         }
 
         /* --- HEADER --- */
-        #studio-header { position: fixed; top: 30px; width: 100%; text-align: center; z-index: 5000; }
+        #studio-header { 
+            position: relative; 
+            width: 100%; text-align: center; z-index: 5000; 
+            padding-top: 40px; margin-bottom: 20px;
+        }
         
         .main-title {
             font-family: 'Limelight', cursive; 
-            font-size: 9.5rem; 
+            font-size: 8.5rem; 
             background: linear-gradient(to bottom, #999, #fff, #333);
             -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-            letter-spacing: 20px; text-transform: uppercase; line-height: 0.85;
+            letter-spacing: 20px; text-transform: uppercase; line-height: 0.9;
             filter: drop-shadow(0 0 30px rgba(255,255,255,0.1));
         }
         .sub-header {
             font-family: 'Special Elite', cursive; color: #888;
-            font-size: 2.8rem; letter-spacing: 8px; text-transform: uppercase;
-            margin-top: 20px; display: block; opacity: 0.7;
+            font-size: 2.2rem; letter-spacing: 8px; text-transform: uppercase;
+            margin-top: 10px; display: block; opacity: 0.7;
         }
 
         .nav-hardware-row { 
-            display: flex; gap: 50px; justify-content: center; pointer-events: auto; margin-top: 50px;
+            display: flex; gap: 40px; justify-content: center; 
+            margin-top: 40px; padding-bottom: 20px;
+            flex-wrap: wrap; 
         }
 
         /* --- HARDWARE TABS (Gunmetal Stamped Steel) --- */
@@ -55,14 +70,14 @@
             display: flex; flex-direction: column; align-items: center; justify-content: center;
             border-radius: 2px;
             box-shadow: 0 4px 10px rgba(0,0,0,0.8), inset 0 1px 1px rgba(255,255,255,0.1), inset 0 -2px 5px rgba(0,0,0,0.5);
-            border: 1px solid #111; z-index: 10;
+            border: 1px solid #000; z-index: 10;
             transition: transform 0.3s;
         }
         .hardware-pull::before, .hardware-pull::after {
             content: ''; position: absolute; top: 50%; transform: translateY(-50%);
             width: 30px; height: 40px; background: var(--gunmetal-matte);
             border-radius: 50%; z-index: -1;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.9); border: 1px solid #111;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.9); border: 1px solid #000;
         }
         .hardware-pull::before { left: -14px; }
         .hardware-pull::after { right: -14px; }
@@ -70,7 +85,7 @@
         .screw { 
             position: absolute; top: 50%; transform: translateY(-50%);
             width: 8px; height: 8px; 
-            background: radial-gradient(circle, #CF9D7B 30%, #5c4230 100%); 
+            background: radial-gradient(circle, var(--bronze-screw) 30%, #5c4230 100%); 
             border-radius: 50%; box-shadow: inset 0 0 2px #000; z-index: 20;
         }
         .screw-left { left: -10px; } .screw-right { right: -10px; } 
@@ -84,7 +99,7 @@
         .hardware-pull:hover { transform: translateY(-5px) scale(1.05); z-index: 100; }
 
         .label-frame { 
-            width: 160px; height: 44px; background: #151515; padding: 5px; 
+            width: 160px; height: 44px; background: #080808; padding: 5px; 
             box-shadow: inset 0 0 8px #000; border-radius: 2px;
         }
         .white-card { 
@@ -99,49 +114,219 @@
 
         /* --- CABINETS --- */
         .cabinet-unit {
-            position: fixed; left: -900px; top: 50%; transform: translateY(-50%);
+            position: fixed; left: -900px; top: 55%; transform: translateY(-50%);
             z-index: 1000; transition: left var(--transition-speed) cubic-bezier(0.19, 1, 0.22, 1);
             display: flex; flex-direction: column; 
         }
         .cabinet-unit.active { left: 50px; }
 
-        /* 1. ROOMS: Black Diamond Chest */
+        /* ROOMS: Black Chest -> 'assests' */
         #room-cabinet {
             width: 600px; height: 800px;
-            /* Capital 'A' Assests */
-            background: url('Assests/cabinet.png') no-repeat center center;
+            background: url('assests/cabinet.png') no-repeat center center;
             background-size: contain;
             padding-top: 160px; padding-left: 100px; 
         }
 
-        /* 2. FURNITURE & GALLERY: Silver Industrial Trunks */
-        #decor-cabinet, #gallery-cabinet {
+        /* FURNITURE & GALLERY: Silver Trunks -> 'assests' */
+        #furniture-cabinet, #decor-cabinet, #gallery-cabinet {
             width: 600px; height: 800px;
-            /* Capital 'A' Assests */
-            background: url('Assests/furniturecases.png') no-repeat center center;
+            background: url('assests/furniturecases.png') no-repeat center center;
             background-size: contain;
             padding-top: 120px; padding-left: 90px; 
         }
 
         .drawer-scroll-track { 
-            width: 400px; height: 550px; overflow-y: scroll; scrollbar-width: none;
-            display: flex; flex-direction: column; gap: 40px; 
+            width: 400px; height: 500px; overflow-y: scroll; scrollbar-width: none;
+            display: flex; flex-direction: column; gap: 40px; padding-bottom: 50px;
         }
         .drawer-scroll-track::-webkit-scrollbar { display: none; }
-        .drawer-item { position: relative; height: 75px; display: flex; justify-content: center; flex-shrink: 0; }
+        .drawer-item { 
+            position: relative; height: 75px; display: flex; justify-content: center; flex-shrink: 0; 
+        }
+        .drawer-item a { text-decoration: none; color: inherit; display: block; }
 
         /* --- THE STAGE --- */
         #studio-stage {
-            position: fixed; top: 62%; left: 50%; 
-            width: 850px; height: 500px; transform: translate(-50%, -50%); 
-            /* Capital 'A' Assests */
-            background: url('Assests/stagecurtain.png') no-repeat center center;
+            position: relative; /* Scrolls with page */
+            margin: 50px auto 100px auto; 
+            width: 850px; height: 500px; 
+            /* Stage Curtain -> 'assests' */
+            background: url('assests/stagecurtain.png') no-repeat center center;
             background-size: cover; 
             border: 1px solid rgba(255, 255, 255, 0.1); 
             transition: transform var(--transition-speed) cubic-bezier(0.19, 1, 0.22, 1);
             z-index: 10; box-shadow: 0 0 50px rgba(0,0,0,0.8);
         }
-        #studio-stage.shifted { transform: translate(calc(-50% + 400px), -50%); }
+        #studio-stage.shifted { transform: translateX(250px); }
+
+        /* MANIFEST RULE: RAIN PHYSICS */
+        #studio-stage.rain-mode {
+            background-size: contain !important;
+            background-color: #000 !important;
+            background-repeat: no-repeat;
+            background-position: center center;
+        }
     </style>
 </head>
 <body>
+<div id="main-scene"></div>
+
+    <header id="studio-header">
+        <h1 class="main-title">Room Glow Up</h1>
+        <span class="sub-header">Where Your Dream Space Comes To Life</span>
+        
+        <div class="nav-hardware-row">
+            <div class="hardware-pull" onclick="toggleCabinet('room-cabinet')">
+                <div class="screw screw-left"></div>
+                <div class="label-frame"><div class="white-card">Rooms</div></div>
+                <div class="screw screw-right"></div><div class="pull-lip"></div>
+            </div>
+            
+            <div class="hardware-pull" onclick="toggleCabinet('furniture-cabinet')">
+                <div class="screw screw-left"></div>
+                <div class="label-frame"><div class="white-card smashed-text">Furniture Cases</div></div>
+                <div class="screw screw-right"></div><div class="pull-lip"></div>
+            </div>
+            
+            <div class="hardware-pull" onclick="toggleCabinet('decor-cabinet')">
+                <div class="screw screw-left"></div>
+                <div class="label-frame"><div class="white-card">Decor Closet</div></div>
+                <div class="screw screw-right"></div><div class="pull-lip"></div>
+            </div>
+            
+            <div class="hardware-pull" onclick="toggleCabinet('gallery-cabinet')">
+                <div class="screw screw-left"></div>
+                <div class="label-frame"><div class="white-card smashed-text">Inspirational Walkthrough</div></div>
+                <div class="screw screw-right"></div><div class="pull-lip"></div>
+            </div>
+            
+            <div class="hardware-pull">
+                <div class="screw screw-left"></div>
+                <div class="label-frame"><div class="white-card">Save</div></div>
+                <div class="screw screw-right"></div><div class="pull-lip"></div>
+            </div>
+        </div>
+    </header>
+
+    <div id="studio-stage" style="background-image: url('assests/stagecurtain.png');"></div>
+
+    <aside id="room-cabinet" class="cabinet-unit">
+        <div class="drawer-scroll-track">
+            <div class="drawer-item" onmouseover="preview('livingroom')" onclick="cycle('livingroom')">
+                <div class="hardware-pull"><div class="screw screw-left"></div><div class="label-frame"><div class="white-card">Living Room</div></div><div class="screw screw-right"></div><div class="pull-lip"></div></div>
+            </div>
+            <div class="drawer-item" onmouseover="preview('bedroom')" onclick="cycle('bedroom')">
+                <div class="hardware-pull"><div class="screw screw-left"></div><div class="label-frame"><div class="white-card">Bedroom</div></div><div class="screw screw-right"></div><div class="pull-lip"></div></div>
+            </div>
+            <div class="drawer-item" onmouseover="preview('diningroom')">
+                <div class="hardware-pull"><div class="screw screw-left"></div><div class="label-frame"><div class="white-card">Dining Room</div></div><div class="screw screw-right"></div><div class="pull-lip"></div></div>
+            </div>
+            <div class="drawer-item" onmouseover="preview('atmosphere')" onclick="cycle('atmosphere')">
+                <div class="hardware-pull"><div class="screw screw-left"></div><div class="label-frame"><div class="white-card">Rain Hallway</div></div><div class="screw screw-right"></div><div class="pull-lip"></div></div>
+            </div>
+        </div>
+    </aside>
+
+    <aside id="furniture-cabinet" class="cabinet-unit">
+        <div class="drawer-scroll-track">
+            <div class="drawer-item" onmouseover="preview('luxebench')">
+                <a href="#"> 
+                    <div class="hardware-pull"><div class="screw screw-left"></div><div class="label-frame"><div class="white-card">Luxe Bench</div></div><div class="screw screw-right"></div><div class="pull-lip"></div></div>
+                </a>
+            </div>
+            <div class="drawer-item">
+                <a href="#">
+                    <div class="hardware-pull"><div class="screw screw-left"></div><div class="label-frame"><div class="white-card">Velvet Sofa</div></div><div class="screw screw-right"></div><div class="pull-lip"></div></div>
+                </a>
+            </div>
+        </div>
+    </aside>
+
+    <aside id="decor-cabinet" class="cabinet-unit">
+        <div class="drawer-scroll-track">
+            <div class="drawer-item">
+                <div class="hardware-pull"><div class="screw screw-left"></div><div class="label-frame"><div class="white-card">Gold Lamp</div></div><div class="screw screw-right"></div><div class="pull-lip"></div></div>
+            </div>
+        </div>
+    </aside>
+
+    <aside id="gallery-cabinet" class="cabinet-unit">
+        <div class="drawer-scroll-track">
+            <div class="drawer-item" onmouseover="preview('lookbook')">
+                <div class="hardware-pull"><div class="screw screw-left"></div><div class="label-frame"><div class="white-card smashed-text">Lookbook</div></div><div class="screw screw-right"></div><div class="pull-lip"></div></div>
+            </div>
+            <div class="drawer-item" onmouseover="preview('goldhands')">
+                <div class="hardware-pull"><div class="screw screw-left"></div><div class="label-frame"><div class="white-card smashed-text">Gold Gallery</div></div><div class="screw screw-right"></div><div class="pull-lip"></div></div>
+            </div>
+        </div>
+    </aside>
+
+    <script>
+        /* --- REGISTRY --- */
+        const registry = {
+            // PRODUCTS/ROOMS (Will pull from 'Assests' - Capital)
+            livingroom: ['livingroom.jpg', 'livingroom1.jpg', 'livingroom3.jpg'],
+            bedroom: ['bedroom.jpg', 'bedroom2.jpg'],
+            diningroom: ['dining.jpg'], 
+            luxebench: ['luxebench.jpg'],
+
+            // PROPS/ATMOSPHERE (Will pull from 'assests' - lowercase)
+            atmosphere: ['rain1.jpg', 'rain2.jpg'], 
+            lookbook: ['lookbook.jpg'], 
+            goldhands: ['goldhands.jpg']
+        };
+
+        const currentCycles = { livingroom: 0, bedroom: 0, atmosphere: 0 };
+
+        function toggleCabinet(id) {
+            const stage = document.getElementById('studio-stage');
+            const target = document.getElementById(id);
+            const alreadyOpen = target.classList.contains('active');
+
+            // Close all cabinets
+            document.querySelectorAll('.cabinet-unit').forEach(c => c.classList.remove('active'));
+
+            if (!alreadyOpen) {
+                target.classList.add('active');
+                stage.classList.add('shifted');
+            } else {
+                stage.classList.remove('shifted');
+            }
+        }
+
+        function preview(key) {
+            const files = registry[key];
+            if(files) {
+                const stage = document.getElementById('studio-stage');
+                const file = files[currentCycles[key] || 0];
+                
+                // FOLDER LOGIC:
+                // If it is Rain, Lookbook, or Goldhands -> use 'assests' (lowercase)
+                // If it is Furniture or Rooms -> use 'Assests' (Capital A)
+                let folder = 'Assests'; 
+                if (['atmosphere', 'lookbook', 'goldhands'].includes(key)) {
+                    folder = 'assests';
+                }
+
+                stage.style.backgroundImage = `url('${folder}/${file}')`;
+                
+                // MANIFEST RULE: RAIN PHYSICS
+                if (file.includes('rain')) {
+                    stage.classList.add('rain-mode');
+                } else {
+                    stage.classList.remove('rain-mode');
+                }
+            }
+        }
+
+        function cycle(key) {
+            const files = registry[key];
+            if (files && files.length > 1) {
+                currentCycles[key] = (currentCycles[key] + 1) % files.length;
+                preview(key);
+            }
+        }
+    </script>
+</body>
+</html>
