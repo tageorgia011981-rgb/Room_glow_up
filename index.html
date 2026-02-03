@@ -3,169 +3,144 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Master Manifest</title>
+    <title>Room Glow Up | Studio</title>
+    <link href="https://fonts.googleapis.com/css2?family=Limelight&family=Special+Elite&display=swap" rel="stylesheet">
     <style>
-        /* 110vh MASTER VIEWPORT */
-        body, html { 
-            margin: 0; padding: 0; height: 110vh; overflow: hidden; 
-            background: #121212; font-family: sans-serif; 
+        :root {
+            /* COLOR PALETTE & SETTINGS */
+            --gunmetal-matte: #2F3336; 
+            --gunmetal-dark: #1D2124;
+            --bronze-screw: #c48f65;
+            --transition-speed: 1.2s;
+            --stage-shift: 500px;
         }
 
-        /* FIXED HEADER */
-        header { 
-            position: fixed; top: 0; width: 100%; height: 60px; 
-            background: #000; border-bottom: 1px solid #333; z-index: 9999; 
-            display: flex; align-items: center; justify-content: center; 
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body, html { width: 100%; height: 100%; background: #000; overflow: hidden; }
+
+        /* --- BACKGROUND --- */
+        /* Using Capital 'A' Assests folder for Interface */
+        #main-scene {
+            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+            background: url('Assests/backgroundG&Blk.jpg') no-repeat center center;
+            background-size: cover; z-index: 1;
         }
 
-        .nav-tab { 
-            color: white; padding: 0 25px; cursor: pointer; 
-            text-transform: uppercase; font-size: 13px; letter-spacing: 2px;
-        }
-
-        /* CABINET (LEFT) */
-        #furniture-cabinet { 
-            position: absolute; left: 0; top: 60px; width: 30%; 
-            height: calc(110vh - 60px); background: #222; 
-            border-right: 1px solid #444; transition: transform 0.4s ease; z-index: 1000; 
-        }
-
-        /* STAGE (RIGHT) */
-        #main-stage { 
-            position: absolute; right: 0; top: 60px; width: 70%; 
-            height: calc(110vh - 60px); background: #1a1a1a; perspective: 1200px; 
-            overflow: hidden;
-        }
-
-        /* DECOR CLOSET (FLOATING) */
-        #decor-closet { 
-            display: none; position: fixed; right: 20px; top: 80px; 
-            width: 300px; height: 75vh; background: #111; 
-            border: 1px solid #444; z-index: 5000; padding: 20px; overflow-y: auto; 
-            box-shadow: -10px 0 30px rgba(0,0,0,0.5);
-        }
-
-        .shelf-title {
-            color: #888; font-size: 11px; letter-spacing: 1px;
-            margin-bottom: 15px; border-bottom: 1px solid #333; padding-bottom: 5px;
-        }
-
-        /* SHELF ITEMS & "i" BUBBLE */
-        .shelf-item-container { position: relative; margin-bottom: 20px; cursor: grab; }
-        .shelf-item { width: 100%; display: block; }
+        /* --- HEADER --- */
+        #studio-header { position: fixed; top: 30px; width: 100%; text-align: center; z-index: 5000; }
         
-        .hover-info { 
-            position: absolute; bottom: 8px; right: 8px; background: #fff; 
-            color: #000; width: 20px; height: 20px; border-radius: 50%; 
-            text-align: center; font-size: 12px; line-height: 20px; 
-            display: none; font-weight: bold; 
+        .main-title {
+            font-family: 'Limelight', cursive; 
+            font-size: 9.5rem; 
+            background: linear-gradient(to bottom, #999, #fff, #333);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            letter-spacing: 20px; text-transform: uppercase; line-height: 0.85;
+            filter: drop-shadow(0 0 30px rgba(255,255,255,0.1));
         }
-        .shelf-item-container:hover .hover-info { display: block; }
+        .sub-header {
+            font-family: 'Special Elite', cursive; color: #888;
+            font-size: 2.8rem; letter-spacing: 8px; text-transform: uppercase;
+            margin-top: 20px; display: block; opacity: 0.7;
+        }
 
-        /* PLACED ON STAGE */
-        .placed-asset { position: absolute; cursor: move; }
+        .nav-hardware-row { 
+            display: flex; gap: 50px; justify-content: center; pointer-events: auto; margin-top: 50px;
+        }
+
+        /* --- HARDWARE TABS (Gunmetal Stamped Steel) --- */
+        .hardware-pull {
+            width: 190px; height: 70px; 
+            background: linear-gradient(180deg, var(--gunmetal-matte) 0%, var(--gunmetal-dark) 100%);
+            position: relative; cursor: pointer;
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            border-radius: 2px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.8), inset 0 1px 1px rgba(255,255,255,0.1), inset 0 -2px 5px rgba(0,0,0,0.5);
+            border: 1px solid #111; z-index: 10;
+            transition: transform 0.3s;
+        }
+        .hardware-pull::before, .hardware-pull::after {
+            content: ''; position: absolute; top: 50%; transform: translateY(-50%);
+            width: 30px; height: 40px; background: var(--gunmetal-matte);
+            border-radius: 50%; z-index: -1;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.9); border: 1px solid #111;
+        }
+        .hardware-pull::before { left: -14px; }
+        .hardware-pull::after { right: -14px; }
+
+        .screw { 
+            position: absolute; top: 50%; transform: translateY(-50%);
+            width: 8px; height: 8px; 
+            background: radial-gradient(circle, #CF9D7B 30%, #5c4230 100%); 
+            border-radius: 50%; box-shadow: inset 0 0 2px #000; z-index: 20;
+        }
+        .screw-left { left: -10px; } .screw-right { right: -10px; } 
+
+        .pull-lip { 
+            position: absolute; bottom: -14px; width: 140px; height: 20px; 
+            background: linear-gradient(to bottom, var(--gunmetal-dark), #000);
+            border-radius: 0 0 50% 50%; box-shadow: 0 4px 8px rgba(0,0,0,0.9);
+            border-top: 1px solid #333; 
+        }
+        .hardware-pull:hover { transform: translateY(-5px) scale(1.05); z-index: 100; }
+
+        .label-frame { 
+            width: 160px; height: 44px; background: #151515; padding: 5px; 
+            box-shadow: inset 0 0 8px #000; border-radius: 2px;
+        }
+        .white-card { 
+            width: 100%; height: 100%; background: #dcdcdc; 
+            display: flex; justify-content: center; align-items: center; 
+            font-family: 'Special Elite', cursive; color: #111; font-weight: 900; 
+            font-size: 1.0rem; letter-spacing: -1.5px; text-transform: uppercase;
+            text-shadow: 1px 1px 0px rgba(0,0,0,0.2); transform: rotate(-0.5deg); 
+            box-shadow: inset 0 0 5px rgba(0,0,0,0.1);
+        }
+        .smashed-text { font-size: 0.8rem; letter-spacing: -1px; }
+
+        /* --- CABINETS --- */
+        .cabinet-unit {
+            position: fixed; left: -900px; top: 50%; transform: translateY(-50%);
+            z-index: 1000; transition: left var(--transition-speed) cubic-bezier(0.19, 1, 0.22, 1);
+            display: flex; flex-direction: column; 
+        }
+        .cabinet-unit.active { left: 50px; }
+
+        /* 1. ROOMS: Black Diamond Chest */
+        #room-cabinet {
+            width: 600px; height: 800px;
+            /* Capital 'A' Assests */
+            background: url('Assests/cabinet.png') no-repeat center center;
+            background-size: contain;
+            padding-top: 160px; padding-left: 100px; 
+        }
+
+        /* 2. FURNITURE & GALLERY: Silver Industrial Trunks */
+        #decor-cabinet, #gallery-cabinet {
+            width: 600px; height: 800px;
+            /* Capital 'A' Assests */
+            background: url('Assests/furniturecases.png') no-repeat center center;
+            background-size: contain;
+            padding-top: 120px; padding-left: 90px; 
+        }
+
+        .drawer-scroll-track { 
+            width: 400px; height: 550px; overflow-y: scroll; scrollbar-width: none;
+            display: flex; flex-direction: column; gap: 40px; 
+        }
+        .drawer-scroll-track::-webkit-scrollbar { display: none; }
+        .drawer-item { position: relative; height: 75px; display: flex; justify-content: center; flex-shrink: 0; }
+
+        /* --- THE STAGE --- */
+        #studio-stage {
+            position: fixed; top: 62%; left: 50%; 
+            width: 850px; height: 500px; transform: translate(-50%, -50%); 
+            /* Capital 'A' Assests */
+            background: url('Assests/stagecurtain.png') no-repeat center center;
+            background-size: cover; 
+            border: 1px solid rgba(255, 255, 255, 0.1); 
+            transition: transform var(--transition-speed) cubic-bezier(0.19, 1, 0.22, 1);
+            z-index: 10; box-shadow: 0 0 50px rgba(0,0,0,0.8);
+        }
+        #studio-stage.shifted { transform: translate(calc(-50% + 400px), -50%); }
     </style>
 </head>
-<body>
-
-    <header>
-        <div class="nav-tab" onclick="toggleDecor(false)">Rooms</div>
-        <div class="nav-tab" onclick="toggleDecor(true)">Decor</div>
-    </header>
-
-    <div id="furniture-cabinet">
-        </div>
-
-    <div id="main-stage">
-        </div>
-
-    <div id="decor-closet">
-        <div class="shelf-title">DECOR CLOSET</div>
-        
-        <div class="shelf-item-container">
-            <img src="Assets/decor/rug1.png" class="shelf-item" 
-                 data-cat="rug" data-id="R-101" data-price="$299" data-link="buy.com/rug1" draggable="true">
-            <div class="hover-info">i</div>
-        </div>
-
-        <div class="shelf-item-container">
-            <img src="Assets/decor/lamp1.png" class="shelf-item" 
-                 data-cat="lamp" data-id="L-201" data-price="$85" data-link="buy.com/lamp1" draggable="true">
-            <div class="hover-info">i</div>
-        </div>
-    </div>
-
-    <script>
-        // THE SILENT DATA COLLECTOR
-        let scrollReceiptData = {};
-
-        // NAVIGATION: GLIDE CABINET & SHOW CLOSET
-        function toggleDecor(show) {
-            const closet = document.getElementById('decor-closet');
-            const cabinet = document.getElementById('furniture-cabinet');
-            
-            if (show) {
-                closet.style.display = "block";
-                cabinet.style.transform = "translateX(-100%)";
-            } else {
-                closet.style.display = "none";
-                cabinet.style.transform = "translateX(0)";
-            }
-        }
-
-        // DRAG START
-        document.addEventListener('dragstart', (e) => {
-            if (e.target.classList.contains('shelf-item')) {
-                const d = e.target.dataset;
-                e.dataTransfer.setData('itemInfo', JSON.stringify({
-                    src: e.target.src,
-                    cat: d.cat,
-                    id: d.id,
-                    price: d.price,
-                    link: d.link
-                }));
-            }
-        });
-
-        const stage = document.getElementById('main-stage');
-        stage.addEventListener('dragover', (e) => e.preventDefault());
-
-        // DROP & HOT SWAP LOGIC
-        stage.addEventListener('drop', (e) => {
-            e.preventDefault();
-            const data = JSON.parse(e.dataTransfer.getData('itemInfo'));
-
-            // 1. HOT SWAP (Visual Cleanup)
-            const existing = stage.querySelector(`[data-cat="${data.cat}"]`);
-            if (existing) existing.remove();
-
-            // 2. PLACE ON STAGE
-            const img = document.createElement('img');
-            img.src = data.src;
-            img.dataset.cat = data.cat;
-            img.className = 'placed-asset';
-            img.style.left = (e.clientX - stage.offsetLeft) + 'px';
-            img.style.top = (e.clientY - stage.offsetTop) + 'px';
-
-            // 3. RUG PIVOT (Flatten on Floor)
-            if (data.cat === 'rug') {
-                img.style.transform = "rotateX(75deg) scale(2.5)";
-                img.style.zIndex = "5";
-            } else {
-                img.style.zIndex = "50";
-            }
-
-            stage.appendChild(img);
-
-            // 4. UPDATE RECEIPT (Data Sync)
-            scrollReceiptData[data.cat] = {
-                id: data.id,
-                price: data.price,
-                link: data.link
-            };
-            
-            console.log("Master Receipt Updated:", scrollReceiptData);
-        });
-    </script>
-</body>
-</html>
