@@ -15,121 +15,109 @@
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body, html { width: 100%; height: 100%; background: #000; overflow: hidden; }
 
-        /* --- THE STAGE (Assests folder) --- */
+        /* --- THE STAGE (Assests) --- */
         #studio-stage {
             width: 100vw; height: 100vh;
+            background: url('Assests/backgroundG&Blk.jpg') no-repeat center center;
             background-size: cover;
-            background-position: center;
-            background-image: url('Assests/backgroundG&Blk.jpg'); 
-            transition: background-image 0.2s ease-in-out;
-            display: flex; align-items: center; justify-content: center;
+            display: flex; flex-direction: column; align-items: center;
             position: relative;
         }
 
-        /* --- THE ARCHIVE PANELS (assests folder) --- */
+        /* --- THE HEADER & TOP TABS --- */
+        .header-container { text-align: center; padding-top: 40px; z-index: 10; }
+        
+        .main-title {
+            font-family: 'Limelight', cursive; font-size: 6rem;
+            background: linear-gradient(to bottom, #444, #fff, #222);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            letter-spacing: 12px; text-transform: uppercase;
+            margin-bottom: 30px;
+        }
+
+        .top-nav-row { display: flex; gap: 30px; justify-content: center; }
+
+        /* Navigation Tabs use the tab asset in assests */
+        .nav-tab {
+            width: 200px; height: 90px;
+            background: url('assests/tab-label.png') no-repeat center center;
+            background-size: contain;
+            cursor: pointer; display: flex; justify-content: center; align-items: center;
+        }
+
+        /* --- THE ARCHIVE PANELS (assests) --- */
         .archive-panel {
             position: absolute;
-            left: -850px; 
-            width: 750px;
-            height: 100vh;
+            left: -850px; width: 750px; height: 100vh;
             transition: left var(--transition-speed) cubic-bezier(0.19, 1, 0.22, 1);
             display: flex; flex-direction: column; align-items: center;
-            padding-top: 150px;
-            z-index: 100;
+            padding-top: 180px; z-index: 100;
         }
 
         .archive-panel.active { left: 0; }
 
-        /* Universal Drawer Style */
+        /* Drawer Tab Style */
         .drawer-tab { 
-            width: 230px; height: 110px; margin-bottom: 30px;
+            width: 230px; height: 110px; margin-bottom: 25px;
             background: url('assests/tab-label.png') no-repeat center center;
             background-size: contain;
-            cursor: pointer;
-            display: flex; justify-content: center; align-items: center;
+            cursor: pointer; display: flex; justify-content: center; align-items: center;
             transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
 
         .drawer-tab:hover { transform: scale(1.1) translateX(45px); }
 
         .tab-label-inner {
-            width: 145px; height: 48px; background: var(--paper-aged);
+            width: 140px; height: 45px; background: var(--paper-aged);
             display: flex; justify-content: center; align-items: center;
             border: 1px solid #000; transform: translateY(-4px);
             font-family: 'Special Elite', cursive; font-size: 0.8rem; font-weight: 900;
         }
 
         .drawer-tab:hover .tab-label-inner {
-            background: #fff;
-            box-shadow: var(--gold-glow);
-            border-color: #ffd700;
-        }
-
-        /* --- UI LAYER --- */
-        #ui-layer {
-            position: fixed; top: 40px; right: 40px;
-            display: flex; gap: 20px; z-index: 1000;
-        }
-
-        .nav-btn {
-            background: rgba(0,0,0,0.8); color: #fff; padding: 12px 25px;
-            font-family: 'Limelight', cursive; text-transform: uppercase;
-            border: 1px solid #444; cursor: pointer; letter-spacing: 2px;
+            background: #fff; box-shadow: var(--gold-glow); border-color: #ffd700;
         }
     </style>
 </head>
 <body>
 
-    <div id="ui-layer">
-        <button class="nav-btn" onclick="openArchive('room')">Rooms</button>
-    </div>
-
-    <div id="studio-stage" onclick="lockSelection()">
+    <div id="studio-stage">
         
+        <div class="header-container">
+            <h1 class="main-title">Room Glow Up</h1>
+            <div class="top-nav-row">
+                <div class="nav-tab" onclick="openArchive('room')"><div class="tab-label-inner">Rooms</div></div>
+                <div class="nav-tab"><div class="tab-label-inner">Catalog</div></div>
+                <div class="nav-tab"><div class="tab-label-inner">Gallery</div></div>
+            </div>
+        </div>
+
         <div id="room-archive" class="archive-panel" style="background: url('assests/cabinet.png') no-repeat center; background-size: contain;">
-            <div class="drawer-tab" onmouseover="flashRoom('LivingRoom')"><div class="tab-label-inner">Living Room</div></div>
-            <div class="drawer-tab" onmouseover="flashRoom('Bedroom')"><div class="tab-label-inner">Bedroom</div></div>
-            <div class="drawer-tab" onmouseover="flashRoom('DiningRoom')"><div class="tab-label-inner">Dining Room</div></div>
-            <div class="drawer-tab" onmouseover="flashRoom('ExtraRoom')"><div class="tab-label-inner">Extra Room</div></div>
-            <div class="drawer-tab" onclick="triggerUpload()"><div class="tab-label-inner">Upload Room</div></div>
+            <div class="drawer-tab" onclick="lockRoom()"><div class="tab-label-inner">Living Room</div></div>
+            <div class="drawer-tab"><div class="tab-label-inner">Bedroom</div></div>
+            <div class="drawer-tab"><div class="tab-label-inner">Dining Room</div></div>
+            <div class="drawer-tab"><div class="tab-label-inner">Extra Room</div></div>
+            <div class="drawer-tab"><div class="tab-label-inner">Upload Room</div></div>
         </div>
 
         <div id="furniture-case" class="archive-panel" style="background: url('assests/furniturecases.png') no-repeat center; background-size: contain;">
             <div class="drawer-tab"><div class="tab-label-inner">Furniture Case</div></div>
         </div>
-        
+
     </div>
 
     <script>
-        const stage = document.getElementById('studio-stage');
-        let currentMode = 'room'; 
-
         function openArchive(type) {
             document.querySelectorAll('.archive-panel').forEach(p => p.classList.remove('active'));
             if (type === 'room') document.getElementById('room-archive').classList.add('active');
             if (type === 'furniture') document.getElementById('furniture-case').classList.add('active');
-            currentMode = type;
         }
 
-        function flashRoom(roomName) {
-            if (currentMode !== 'room') return;
-            // Previews in lowercase folder
-            stage.style.backgroundImage = `url('assests/${roomName}_Preview.jpg')`;
+        function lockRoom() {
+            document.getElementById('room-archive').classList.remove('active');
+            // Logic to glide in furniturecases.png goes here
+            setTimeout(() => openArchive('furniture'), 900);
         }
-
-        function lockSelection() {
-            //Retract current archive
-            document.querySelectorAll('.archive-panel').forEach(p => p.classList.remove('active'));
-            
-            // Automatic glide-in of Furniture Case
-            if (currentMode === 'room') {
-                setTimeout(() => {
-                    openArchive('furniture');
-                }, 900);
-            }
-        }
-
-        function triggerUpload() { /* Logic */ }
     </script>
 </body>
 </html>
