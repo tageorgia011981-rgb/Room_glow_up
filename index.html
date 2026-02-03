@@ -26,12 +26,14 @@
             overflow-y: auto;   /* Vertical scroll allowed */
         }
 
-        /* --- SITE BACKGROUND --- */
-        /* Folder: 'assests' (lowercase) for Site Makeup */
+       /* --- SITE BACKGROUND (FIXED) --- */
+        /* Forces lowercase 'assests' */
         #main-scene {
             position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+            /* Try replacing & with %26 if it still fails, or rename file to backgroundGnBlk.jpg */
             background: url('assests/backgroundG&Blk.jpg') no-repeat center center;
-            background-size: cover; z-index: 1;
+            background-size: cover; 
+            z-index: 1;
             pointer-events: none;
         }
 
@@ -330,3 +332,4 @@
     </script>
 </body>
 </html>
+
