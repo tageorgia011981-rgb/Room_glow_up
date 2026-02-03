@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Glow Up Studio | Professional Edition</title>
+    <title>Room Glow Up | Studio Workspace</title>
+    <link href="https://fonts.googleapis.com/css2?family=Limelight&display=swap" rel="stylesheet">
     <style>
         :root {
             --accent: #008080; 
@@ -14,15 +15,15 @@
         body, html {
             margin: 0; padding: 0;
             height: 100%; width: 100%;
-            font-family: 'Segoe UI', serif;
+            font-family: 'Limelight', cursive;
             overflow: hidden;
             background: url('backgroundG&Blk.png') center/cover no-repeat;
         }
 
-        /* --- THE RAILS --- */
+        /* --- THE SLIDING CABINET (LEFT RAIL) --- */
         #left-rail {
             position: fixed; left: 0; top: 0; 
-            bottom: 0; width: 320px;
+            bottom: 0; width: 340px;
             z-index: 1000;
             pointer-events: none;
         }
@@ -32,33 +33,42 @@
             background: rgba(10, 10, 10, 0.98);
             backdrop-filter: blur(25px);
             transition: var(--transition);
-            padding: 40px 30px; box-sizing: border-box;
+            padding: 50px 30px; box-sizing: border-box;
             border-right: 1px solid rgba(255,255,255,0.1);
             pointer-events: all;
             transform: translateX(-105%); 
         }
 
-        /* Logic for show/hide cabinet vs furniture */
+        /* Cabinet State Logic */
         .show-rooms:not(.is-locked) #room-cabinet { transform: translateX(0); }
         .is-locked #room-cabinet { transform: translateX(-105%); }
         .is-locked #furniture-cases { transform: translateX(0); }
 
-        /* BRANDING INSIDE CABINET */
+        /* BRANDING AT TOP OF CABINET */
         .cabinet-branding {
             margin-bottom: 40px;
             border-bottom: 1px solid rgba(255,255,255,0.1);
             padding-bottom: 20px;
         }
-        .cabinet-branding h1 { color: white; margin: 0; letter-spacing: 3px; font-size: 22px; text-transform: uppercase; }
-        .cabinet-branding h2 { color: var(--accent); margin: 5px 0 0 0; font-size: 12px; letter-spacing: 2px; text-transform: uppercase; }
+        .cabinet-branding h1 { 
+            color: white; margin: 0; letter-spacing: 3px; 
+            font-size: 28px; text-transform: uppercase; 
+        }
+        .cabinet-branding h2 { 
+            color: var(--accent); margin: 8px 0 0 0; 
+            font-size: 11px; letter-spacing: 1px; 
+            text-transform: uppercase; font-weight: 400; 
+            font-family: 'Segoe UI', sans-serif; /* Subtitle in cleaner font */
+        }
 
+        /* THE 5 PULL TABS */
         .drawer-pull {
             width: 100%; height: 50px; background: #1a1a1a;
             margin-bottom: 15px; cursor: pointer;
             display: flex; align-items: center; padding-left: 20px;
             transition: 0.3s; border-left: 0px solid var(--accent);
             color: #888; text-transform: uppercase; font-size: 11px;
-            letter-spacing: 1px;
+            letter-spacing: 1px; font-family: 'Segoe UI', sans-serif;
         }
         .drawer-pull:hover {
             transform: translateX(10px);
@@ -85,6 +95,7 @@
 
         #stage img { width: 100%; height: 100%; object-fit: cover; }
 
+        /* Window Glare Effect */
         #stage::after {
             content: "";
             position: absolute; top: 0; left: 0; width: 100%; height: 100%;
@@ -93,30 +104,39 @@
             z-index: 100;
         }
 
+        /* HUD ELEMENTS */
         #studio-hud {
             position: fixed; bottom: 0; width: 100%; height: 60px;
             background: rgba(0,0,0,0.95); display: flex;
             align-items: center; padding: 0 50px; justify-content: space-between;
+            z-index: 500;
+        }
+
+        .btn-main {
+            padding: 10px 25px; cursor: pointer; background: #222; 
+            color: white; border: 1px solid #444; text-transform: uppercase; 
+            font-size: 10px; font-family: 'Segoe UI', sans-serif;
         }
     </style>
 </head>
 <body id="studio-body">
 
     <div style="position:fixed; top:30px; right:50px; z-index:2000;">
-        <button onclick="toggleRooms()" style="padding:10px 25px; cursor:pointer; background:#222; color:white; border:1px solid #444; text-transform:uppercase; font-size:10px;">Select Room</button>
+        <button class="btn-main" onclick="toggleRooms()">Select Room</button>
     </div>
 
     <div id="left-rail">
         <div id="room-cabinet" class="side-panel">
             <div class="cabinet-branding">
                 <h1>ROOM GLOW UP</h1>
-                <h2>STUDIO CABINET</h2>
+                <h2>Where Your Dream Space Comes To Life</h2>
             </div>
-            <div class="drawer-pull" onclick="cycleLiving()"><span>Living Room</span></div>
-            <div class="drawer-pull" onclick="cycleBedroom()"><span>Bedroom Series</span></div>
-            <div class="drawer-pull" onclick="setRoom('diningroom.jpg')"><span>Dining Room</span></div>
-            <div class="drawer-pull" onclick="cycleExtras()"><span>Extras Vault</span></div>
-            <div class="drawer-pull" onclick="alert('Upload Portal Engaged')"><span>Your Uploads</span></div>
+            
+            <div class="drawer-pull" onclick="cycleLiving()">LIVING ROOM</div>
+            <div class="drawer-pull" onclick="cycleBedroom()">BEDROOM SERIES</div>
+            <div class="drawer-pull" onclick="setRoom('diningroom.jpg')">DINING ROOM</div>
+            <div class="drawer-pull" onclick="cycleExtras()">EXTRAS VAULT</div>
+            <div class="drawer-pull" onclick="alert('Upload Portal Engaged')">YOUR UPLOADS</div>
         </div>
 
         <div id="furniture-cases" class="side-panel">
@@ -124,7 +144,7 @@
                 <h1>ROOM GLOW UP</h1>
                 <h2>FURNISHINGS</h2>
             </div>
-            <div style="padding:20px; border:1px solid #444; cursor:grab; background:#111; text-align:center; color:white;" draggable="true" ondragstart="drag(event)" id="bench-item">
+            <div style="padding:20px; border:1px solid #444; cursor:grab; background:#111; text-align:center; color:white; font-family: 'Segoe UI';" draggable="true" ondragstart="drag(event)" id="bench-item">
                 LUXE BENCH
             </div>
         </div>
@@ -132,17 +152,17 @@
 
     <div id="stage-container">
         <div id="stage" onclick="lockRoom()" ondrop="drop(event)" ondragover="allowDrop(event)">
-            <img src="livingroom.jpg" id="active-room-img">
+            <img src="livingroom.jpg" id="active-room-img" alt="Stage View">
         </div>
     </div>
 
     <div id="studio-hud">
-        <div style="font-size: 11px; color:#555;">ID: <span id="sku-val">LIVINGROOM</span></div>
-        <button onclick="location.reload()" style="background:#500; color:white; border:none; padding:8px 18px; cursor:pointer; font-size:10px;">RESET STUDIO</button>
+        <div style="font-size: 11px; color:#555; font-family: 'Segoe UI';">REF: <span id="sku-val">LIVINGROOM</span></div>
+        <button class="btn-main" onclick="location.reload()" style="background:#500; border:none;">RESET STUDIO</button>
     </div>
 
     <script>
-        // THE 11 ROOMS
+        // YOUR 11-ROOM LIBRARY
         const livingRooms = ["livingroom.jpg", "livingroom1.jpg", "livingroom3.jpg"];
         const bedrooms = ["bedroom.jpg", "bedroom2.jpg"];
         const extras = ["foyer.jpg", "kitchen.jpg", "kitchen2.jpg", "officeroom.jpg"];
@@ -160,7 +180,7 @@
             sku.innerText = file.split('.')[0].toUpperCase();
         }
 
-        // Cycle Functions for the 5-Drawer System
+        // Drawer Cycle Logic
         function cycleLiving() {
             lIdx = (lIdx + 1) % livingRooms.length;
             setRoom(livingRooms[lIdx]);
@@ -177,11 +197,12 @@
         }
 
         function lockRoom() {
-            if (body.classList.contains('is-locked')) return;
-            body.classList.add('is-locked');
+            if (!body.classList.contains('is-locked')) {
+                body.classList.add('is-locked');
+            }
         }
 
-        // Drag and Drop Logic
+        // Drag/Drop Functions
         function allowDrop(ev) { ev.preventDefault(); }
         function drag(ev) { ev.dataTransfer.setData("text", ev.target.id); }
         function drop(ev) {
@@ -198,4 +219,3 @@
     </script>
 </body>
 </html>
-
