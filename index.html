@@ -1,182 +1,246 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Room Glow Up | Studio</title>
-    <link href="https://fonts.googleapis.com/css2?family=Limelight&family=Special+Elite&display=swap" rel="stylesheet">
-    <style>
-        :root {
-            --gunmetal-dark: #0C1519;
-            --gunmetal-mid: #121B20;
-            --gunmetal-light: #1A262C;
-            --bronze-screw: #CF9D7B;
-            --gold-glow: 0 0 25px rgba(207, 157, 123, 0.5);
-            --transition-speed: 1.2s;
-            --stage-shift: 460px;
-        }
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Room Glow Up</title>
 
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body, html { width: 100%; height: 100%; background: #000; overflow-x: hidden; }
+<!-- Google Font: Limelight -->
+<link href="https://fonts.googleapis.com/css2?family=LimeLight&display=swap" rel="stylesheet">
 
-        /* --- STUDIO BACKGROUND --- */
-        #main-scene {
-            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
-            background: url('Assests/backgroundG&Blk.jpg') no-repeat center center;
-            background-size: cover; z-index: 1;
-        }
+<style>
+/* ================================
+   CORE RESET
+================================ */
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { width: 100%; height: 100%; }
 
-        /* --- HEADER & TOP NAV --- */
-        #studio-header { position: fixed; top: 30px; width: 100%; text-align: center; z-index: 5000; }
-        .main-title {
-            font-family: 'Limelight', cursive; font-size: 8rem;
-            background: linear-gradient(to bottom, #777, #fff, #444);
-            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-            letter-spacing: 15px; text-transform: uppercase; line-height: 0.9;
-        }
-        .sub-header {
-            font-family: 'Special Elite', cursive; color: #aaa;
-            font-size: 2.2rem; letter-spacing: 6px; text-transform: uppercase;
-            margin-top: 10px; margin-bottom: 50px; display: block;
-        }
+/* ================================
+   MAIN BACKGROUND
+================================ */
+body {
+  background-image: url("Assets/mainbackground.jpg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  font-family: Arial, Helvetica, sans-serif;
+}
 
-        /* --- SHARED HARDWARE CLASS --- */
-        .hardware-pull {
-            width: 180px; height: 75px; /* Scaled down for drawer fit */
-            background: linear-gradient(180deg, var(--gunmetal-light) 0%, var(--gunmetal-mid) 50%, var(--gunmetal-dark) 100%);
-            border-radius: 4px; position: relative; cursor: pointer;
-            display: flex; flex-direction: column; align-items: center;
-            box-shadow: 0 8px 15px rgba(0,0,0,0.8);
-            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.4s ease;
-        }
+/* ================================
+   HEADER
+================================ */
+header {
+  width: 100%;
+  background: linear-gradient(to bottom, #162127, #0C1519);
+  border-bottom: 1px solid #0C1519;
+  position: relative;
+  z-index: 10;
+}
 
-        /* Magnifying Glass Hover Effect */
-        .hardware-pull:hover {
-            transform: translateY(-10px) scale(1.15); 
-            box-shadow: var(--gold-glow), 0 20px 35px rgba(0,0,0,1);
-            z-index: 100;
-        }
+.header-main {
+  display: flex;
+  justify-content: center;
+  padding: 34px 28px 10px;
+}
 
-        .label-frame { margin-top: 15px; width: 120px; height: 35px; background: #000; padding: 2px; }
-        .white-card { 
-            width: 100%; height: 100%; background: #FFF; display: flex; 
-            justify-content: center; align-items: center; font-family: 'Special Elite', cursive; 
-            color: #000; font-weight: 900; font-size: 0.75rem; text-transform: uppercase;
-        }
+.site-title {
+  font-family: 'LimeLight', cursive;
+  font-size: 72px;
+  letter-spacing: 6px;
+  text-align: center;
+  text-transform: uppercase;
+  color: #CFD2D4;
+  text-shadow:
+    0 2px 0 #162127,
+    0 4px 6px rgba(0,0,0,0.5),
+    0 0 8px rgba(207,157,123,0.3);
+}
 
-        .screw { position: absolute; width: 10px; height: 10px; background: var(--bronze-screw); border-radius: 50%; top: 50%; transform: translateY(-50%); }
-        .screw-left { left: 12px; } .screw-right { right: 12px; }
-        .pull-lip { position: absolute; bottom: -10px; width: 100px; height: 22px; background: var(--gunmetal-dark); border-radius: 0 0 60px 60px; }
+.header-tagline {
+  display: flex;
+  justify-content: center;
+  padding: 6px 28px 20px;
+}
+.header-tagline span {
+  font-family: 'LimeLight', cursive;
+  font-size: 26px;
+  letter-spacing: 3px;
+  color: #CFD2D4;
+  text-shadow: 0 1px 0 #162127, 0 2px 4px rgba(0,0,0,0.4);
+  opacity: 0.9;
+}
 
-        /* --- CABINETS & CASES --- */
-        #room-cabinet, #furniture-cases {
-            position: fixed; left: -850px; width: 750px; height: 100vh;
-            background-size: contain; background-repeat: no-repeat;
-            background-position: left center; z-index: 1000;
-            transition: left var(--transition-speed) cubic-bezier(0.19, 1, 0.22, 1);
-            display: flex; flex-direction: column; padding-top: 380px;
-        }
-        #room-cabinet { background-image: url('assests/cabinet.png'); }
-        #furniture-cases { background-image: url('assests/furniturecases.png'); }
+/* ================================
+   NAV TABS
+================================ */
+.sub-header {
+  display: flex;
+  justify-content: center;
+  gap: 18px;
+  padding: 14px 0 18px;
+  border-top: 1px solid #0C1519;
+}
 
-        #room-cabinet.active, #furniture-cases.active { left: 0; }
+.nav-tab {
+  position: relative;
+  min-width: 160px;
+  padding: 14px 16px 12px;
+  text-align: center;
+  cursor: pointer;
+  background: linear-gradient(to bottom, #1E2B31, #0C1519);
+  border-radius: 3px;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.08), inset 0 -2px 3px rgba(0,0,0,0.6), 0 4px 8px rgba(0,0,0,0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
 
-        /* DRAWER VIEWPORT */
-        .drawer-scroll-track {
-            width: 400px; height: 350px; margin-left: 110px;
-            overflow-y: scroll; scrollbar-width: none;
-        }
-        .drawer-scroll-track::-webkit-scrollbar { display: none; }
-        .drawer-item { margin-bottom: 80px; position: relative; }
+.nav-tab span {
+  display: block;
+  width: 100%;
+  height: 100%;
+  background: #fff;
+  padding: 8px 0;
+  border-radius: 2px;
+  font-family: 'Courier New', Courier, monospace;
+  font-weight: bold;
+  font-size: 16px;
+  letter-spacing: 1px;
+  color: #000;
+  transition: transform 0.25s ease, box-shadow 0.25s ease, filter 0.25s ease;
+}
 
-        /* --- THE STAGE --- */
-        #studio-stage {
-            position: absolute; top: 62%; left: 50%; width: 850px; height: 500px;
-            transform: translate(-50%, -50%); 
-            background: rgba(255, 255, 255, 0.02) no-repeat center center;
-            background-size: cover; border: 1px solid rgba(255, 255, 255, 0.1); 
-            transition: transform var(--transition-speed) cubic-bezier(0.19, 1, 0.22, 1);
-            z-index: 10; cursor: cell;
-        }
-        #studio-stage.shifted { transform: translate(calc(-50% + var(--stage-shift)), -50%); }
-        #studio-stage.locked { border: 2px solid var(--bronze-screw); box-shadow: var(--gold-glow); }
+.nav-tab:hover span {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 14px rgba(207,157,123,0.4);
+  filter: brightness(1.1);
+}
 
-    </style>
+.nav-tab::before {
+  content: "";
+  position: absolute;
+  left: 10%;
+  right: 10%;
+  bottom: -6px;
+  height: 8px;
+  background: linear-gradient(to bottom, #CFD2D4, #8A8E91);
+  border-radius: 0 0 3px 3px;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.6), 0 3px 4px rgba(0,0,0,0.7);
+}
+
+.nav-tab::after {
+  content: "•      •";
+  position: absolute;
+  top: 6px;
+  left: 0;
+  right: 0;
+  font-size: 10px;
+  letter-spacing: 26px;
+  text-align: center;
+  color: #CF9D7B;
+  opacity: 0.8;
+}
+
+.nav-tab.active {
+  box-shadow: inset 0 0 0 1px #CF9D7B, inset 0 -2px 4px rgba(0,0,0,0.7), 0 6px 12px rgba(0,0,0,0.8);
+}
+
+/* ================================
+   STAGE AREA
+================================ */
+#stage {
+  width: 100%;
+  height: calc(100vh - 240px);
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+/* Placeholder */
+.stage-placeholder {
+  color: #CF9D7B;
+  opacity: 0.35;
+  letter-spacing: 1px;
+  font-size: 14px;
+  text-align: center;
+}
+
+/* ================================
+   WALKTHRU / GALLERY
+================================ */
+.walkthru-rain, .walkthru-gallery {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: none; /* show only when Walkthru active */
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  z-index: 5;
+}
+
+.walkthru-rain {
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.rain-hallway-1 { background-image: url("Assets/rain1.jpg"); }
+.rain-hallway-2 { background-image: url("Assets/rain2.jpg"); }
+
+.walkthru-gallery img {
+  max-width: 90%;
+  max-height: 90%;
+  object-fit: contain;
+  margin: 6px 0;
+}
+</style>
 </head>
+
 <body>
 
-    <div id="main-scene"></div>
+<header>
 
-    <header id="studio-header">
-        <h1 class="main-title">Room Glow Up</h1>
-        <span class="sub-header">Where Your Dream Space Comes To Life</span>
-        <div class="nav-hardware-row" style="display:flex; gap:35px; justify-content:center; pointer-events:auto;">
-            <div class="hardware-pull" onclick="toggleCabinet('room-cabinet')">
-                <div class="screw screw-left"></div>
-                <div class="label-frame"><div class="white-card">Rooms</div></div>
-                <div class="screw screw-right"></div>
-                <div class="pull-lip"></div>
-            </div>
-            </div>
-    </header>
+  <div class="header-main">
+    <div class="site-title">Room Glow Up</div>
+  </div>
 
-    <div id="studio-stage" onclick="lockRoom()"></div>
+  <div class="header-tagline">
+    <span>Where Your Dream Space Comes To Life</span>
+  </div>
 
-    <aside id="room-cabinet">
-        <div class="drawer-scroll-track">
-            <div class="drawer-item" onmouseover="previewRoom('LivingRoom')" onclick="cycleRoom('LivingRoom')">
-                <div class="hardware-pull"><div class="label-frame"><div class="white-card">Living Room</div></div><div class="pull-lip"></div></div>
-            </div>
-            <div class="drawer-item" onmouseover="previewRoom('Bedroom')" onclick="cycleRoom('Bedroom')">
-                <div class="hardware-pull"><div class="label-frame"><div class="white-card">Bedroom</div></div><div class="pull-lip"></div></div>
-            </div>
-            <div class="drawer-item" onmouseover="previewRoom('DiningRoom')" onclick="cycleRoom('DiningRoom')">
-                <div class="hardware-pull"><div class="label-frame"><div class="white-card">Dining Room</div></div><div class="pull-lip"></div></div>
-            </div>
-            <div class="drawer-item" onmouseover="previewRoom('ExtraRoom')" onclick="cycleRoom('ExtraRoom')">
-                <div class="hardware-pull"><div class="label-frame"><div class="white-card">Extra Room</div></div><div class="pull-lip"></div></div>
-            </div>
-            <div class="drawer-item">
-                <div class="hardware-pull"><div class="label-frame"><div class="white-card">Try Yours</div></div><div class="pull-lip"></div></div>
-            </div>
-            <div style="height:150px;"></div>
-        </div>
-    </aside>
+  <div class="sub-header">
+    <div class="nav-tab active"><span>Rooms</span></div>
+    <div class="nav-tab"><span>Furniture Catalog</span></div>
+    <div class="nav-tab"><span>Decor Closet</span></div>
+    <div class="nav-tab"><span>Inspirational Walkthru</span></div>
+    <div class="nav-tab"><span>Save / Checkout</span></div>
+  </div>
 
-    <aside id="furniture-cases"></aside>
+</header>
 
-    <script>
-        let currentRoomType = "";
-        let cycleIndex = 1;
+<main id="stage">
+  <div class="stage-placeholder">
+    STAGE READY — AWAITING INTERACTIONS
+  </div>
 
-        function toggleCabinet(id) {
-            document.getElementById(id).classList.toggle('active');
-            document.getElementById('studio-stage').classList.toggle('shifted');
-        }
+  <!-- WALKTHRU RAIN + GALLERY -->
+  <div class="walkthru-rain rain-hallway-1"></div>
+  <div class="walkthru-rain rain-hallway-2"></div>
+  <div class="walkthru-gallery">
+    <img src="Assets/lookbook.jpg" alt="Lookbook Base">
+    <div class="frame frame1"><img src="Assets/insp9.jpg" alt=""></div>
+    <div class="frame frame2"><img src="Assets/insp11.jpg" alt=""></div>
+    <div class="frame frame3"><img src="Assets/insp16.jpg" alt=""></div>
+    <div class="frame frame4"><img src="Assets/insp17.jpg" alt=""></div>
+    <div class="frame frame5"><img src="Assets/insp18.jpg" alt=""></div>
+  </div>
+</main>
 
-        function previewRoom(type) {
-            if(document.getElementById('studio-stage').classList.contains('locked')) return;
-            currentRoomType = type;
-            document.getElementById('studio-stage').style.backgroundImage = `url('assests/${type}_1.jpg')`;
-        }
-
-        function cycleRoom(type) {
-            cycleIndex = (cycleIndex % 3) + 1; // Assuming 3 variations per room
-            document.getElementById('studio-stage').style.backgroundImage = `url('assests/${type}_${cycleIndex}.jpg')`;
-        }
-
-        function lockRoom() {
-            const stage = document.getElementById('studio-stage');
-            const roomCab = document.getElementById('room-cabinet');
-            const furnCab = document.getElementById('furniture-cases');
-
-            stage.classList.add('locked');
-            roomCab.classList.remove('active');
-            
-            setTimeout(() => {
-                furnCab.classList.add('active');
-            }, 600);
-        }
-    </script>
 </body>
 </html>
