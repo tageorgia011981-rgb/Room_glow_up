@@ -15,56 +15,59 @@
         body, html {
             margin: 0;
             padding: 0;
-            height: 100%;
+            height: 200vh; /* Allows for the "peeking" scroll */
             background: url('Assests/mainbackground.jpg') no-repeat center center fixed;
             background-size: cover;
-            overflow: hidden;
             font-family: 'Special Elite', serif;
+            overflow-x: hidden;
         }
 
-        /* --- HEADERS --- */
-        .branding {
-            text-align: center;
-            padding-top: 40px;
-            pointer-events: none;
+        /* --- STICKY HEADER AREA --- */
+        .sticky-header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 2000;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background: linear-gradient(to bottom, rgba(0,0,0,0.9) 60%, rgba(0,0,0,0) 100%);
+            padding-bottom: 20px;
         }
 
         .branding h1 {
             font-family: 'Limelight', cursive;
-            font-size: 90px;
-            margin: 0;
+            font-size: 80px;
+            margin: 20px 0 0 0;
             color: var(--silver);
             text-transform: uppercase;
-            letter-spacing: 4px;
-            /* Metal Shine Effect */
-            background: linear-gradient(to bottom, #cfd3d6 0%, #75797d 50%, #2a2e30 51%, #4a4e50 100%);
+            background: linear-gradient(to bottom, #cfd3d6 0%, #2a2e30 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            filter: drop-shadow(4px 4px 2px var(--black));
+            filter: drop-shadow(4px 4px 2px #000);
         }
 
         .branding h2 {
             font-family: 'Limelight', cursive;
-            font-size: 24px;
+            font-size: 22px;
             color: var(--silver);
-            margin-top: -10px;
-            text-shadow: 2px 2px 4px var(--black);
+            margin: 5px 0 25px 0;
+            text-shadow: 2px 2px 4px #000;
         }
 
-        /* --- TOP NAVIGATION (Library Label Style) --- */
+        /* --- TOP NAV PULLS --- */
         .top-nav {
             display: flex;
             justify-content: center;
             gap: 15px;
-            margin-top: 30px;
         }
 
-        .label-holder {
+        .library-pull {
             background: var(--gunmetal);
             border: 1px solid #111;
             border-top: 1px solid var(--silver);
-            width: 180px;
-            height: 55px;
+            width: 160px;
+            height: 50px;
             position: relative;
             cursor: pointer;
             display: flex;
@@ -73,8 +76,7 @@
             box-shadow: 0 4px 8px rgba(0,0,0,0.6);
         }
 
-        /* The "Lip" pull at the bottom */
-        .label-holder::after {
+        .library-pull::after {
             content: '';
             position: absolute;
             bottom: -4px;
@@ -89,156 +91,132 @@
         .white-card {
             background: #fff;
             color: var(--black);
-            font-size: 13px;
+            font-size: 12px;
             font-weight: bold;
-            padding: 5px;
+            padding: 4px;
             width: 85%;
             text-align: center;
-            transform: rotate(-1.2deg); /* Sloppy alignment */
+            transform: rotate(-1.5deg);
             transition: all 0.3s ease;
             border: 1px solid #333;
         }
 
-        .label-holder:hover .white-card {
+        .library-pull:hover .white-card {
             background: var(--teal-glow);
             box-shadow: 0 0 15px var(--teal-glow);
             transform: rotate(0deg);
         }
 
-        .screw {
-            position: absolute;
-            width: 4px;
-            height: 4px;
-            background: #444;
-            border-radius: 50%;
-            box-shadow: 1px 1px 0px var(--silver);
-        }
-        .tl { top: 4px; left: 4px; } .tr { top: 4px; right: 4px; }
-
-        /* --- CABINET (Rooms Tab) --- */
+        /* --- THE CABINET GLIDE --- */
         #cabinet-container {
             position: fixed;
-            left: -500px;
-            top: 25%;
-            transition: left 0.8s cubic-bezier(0.16, 1, 0.3, 1);
-            z-index: 100;
+            left: -500px; /* Hidden */
+            top: 360px; /* Aligned for the peeking effect */
+            transition: left 0.9s cubic-bezier(0.23, 1, 0.32, 1);
+            z-index: 500;
         }
 
-        .cabinet-active { left: 20px !important; }
+        #cabinet-container.active {
+            left: 20px; /* Glides in from left */
+        }
 
         .drawer-labels {
             position: absolute;
-            top: 50px; /* Adjust based on cabinet.png handles */
-            left: 40px;
+            top: 60px; /* Adjust to match cabinet.png handles */
+            left: 45px;
             display: flex;
             flex-direction: column;
             gap: 45px; /* Adjust to match drawer spacing */
         }
 
-        /* --- STAGE PREVIEW --- */
-        #stage {
+        /* --- THE STAGE --- */
+        #stage-area {
             position: absolute;
-            top: 55%;
-            left: 60%;
-            transform: translate(-50%, -50%);
-            width: 700px;
-            height: 450px;
-            background-size: cover;
-            background-position: center;
-            border: 10px solid var(--gunmetal);
+            top: 360px; /* Aligned with cabinet top */
+            left: 55%;
+            transform: translateX(-50%);
+            width: 800px;
+            height: 550px;
+            border: 12px solid var(--gunmetal);
             outline: 2px solid var(--silver);
-            display: none;
+            background: rgba(0,0,0,0.4) no-repeat center center;
+            background-size: cover;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.8);
+            z-index: 100;
         }
-
-        /* --- SCROLL RECEIPT --- */
-        #scroll-receipt {
-            position: fixed;
-            top: -100%;
-            right: 50px;
-            width: 300px;
-            transition: top 1.2s ease-in;
-            z-index: 2000;
-        }
-
     </style>
 </head>
 <body>
 
-    <div class="branding">
-        <h1>Room Glow Up</h1>
-        <h2>Where Your Dream Space Comes To Life</h2>
+    <div class="sticky-header">
+        <div class="branding">
+            <h1>Room Glow Up</h1>
+            <h2>Where Your Dream Space Comes To Life</h2>
+        </div>
+        <div class="top-nav">
+            <div class="library-pull" onclick="toggleCabinet()">
+                <div class="white-card">Rooms</div>
+            </div>
+            <div class="library-pull">
+                <div class="white-card">Furniture Catalog</div>
+            </div>
+            <div class="library-pull">
+                <div class="white-card">Decor Closet</div>
+            </div>
+            <div class="library-pull">
+                <div class="white-card">Inspirational Walkthrough</div>
+            </div>
+            <div class="library-pull">
+                <div class="white-card">save/checkout</div>
+            </div>
+        </div>
     </div>
-
-    <nav class="top-nav">
-        <div class="label-holder" onclick="toggleCabinet()">
-            <div class="screw tl"></div><div class="screw tr"></div>
-            <div class="white-card">Rooms</div>
-        </div>
-        <div class="label-holder">
-            <div class="screw tl"></div><div class="screw tr"></div>
-            <div class="white-card">Furniture Catalog</div>
-        </div>
-        <div class="label-holder">
-            <div class="screw tl"></div><div class="screw tr"></div>
-            <div class="white-card">Decor Closet</div>
-        </div>
-        <div class="label-holder">
-            <div class="screw tl"></div><div class="screw tr"></div>
-            <div class="white-card">Inspirational Walkthrough</div>
-        </div>
-        <div class="label-holder" onclick="showReceipt()">
-            <div class="screw tl"></div><div class="screw tr"></div>
-            <div class="white-card">Save/Checkout</div>
-        </div>
-    </nav>
 
     <div id="cabinet-container">
         <img src="Assests/cabinet.png" width="400">
         <div class="drawer-labels">
-            <div class="label-holder" onmouseover="preview('livingroom1.jpg')" onclick="cycleLiving()">
+            <div class="library-pull" onmouseover="preview('livingroom1.jpg')" onclick="cycleLiving()">
                 <div class="white-card">Living Room</div>
             </div>
-            <div class="label-holder" onmouseover="preview('bedroom.jpg')" onclick="cycleBed()">
+            <div class="library-pull" onmouseover="preview('bedroom.jpg')" onclick="cycleBedroom()">
                 <div class="white-card">Bedroom</div>
             </div>
-            <div class="label-holder" onmouseover="preview('diningroom.jpg')">
+            <div class="library-pull" onmouseover="preview('diningroom.jpg')">
                 <div class="white-card">Dining Room</div>
             </div>
-            <div class="label-holder" onmouseover="preview('foyer.jpg')">
+            <div class="library-pull" onmouseover="preview('foyer.jpg')">
                 <div class="white-card">Extra Rooms</div>
             </div>
-            <div class="label-holder">
+            <div class="library-pull">
                 <div class="white-card">Upload Yours</div>
             </div>
         </div>
     </div>
 
-    <div id="stage"></div>
-
-    <img src="Assests/scrollreceipt.jpg" id="scroll-receipt">
+    <div id="stage-area"></div>
 
     <script>
         function toggleCabinet() {
-            document.getElementById('cabinet-container').classList.toggle('cabinet-active');
+            document.getElementById('cabinet-container').classList.toggle('active');
         }
 
         function preview(imgName) {
-            const stage = document.getElementById('stage');
-            stage.style.display = 'block';
+            const stage = document.getElementById('stage-area');
             stage.style.backgroundImage = `url('Assests/${imgName}')`;
         }
 
-        function showReceipt() {
-            const receipt = document.getElementById('scroll-receipt');
-            receipt.style.top = "50px";
-        }
-
-        // Logic for cycling through multiple room variations
         let lvIdx = 0;
         function cycleLiving() {
-            const lvRooms = ['livingroom1.jpg', 'livingroom3.jpg'];
-            lvIdx = (lvIdx + 1) % lvRooms.length;
-            preview(lvRooms[lvIdx]);
+            const rooms = ['livingroom1.jpg', 'livingroom3.jpg'];
+            lvIdx = (lvIdx + 1) % rooms.length;
+            preview(rooms[lvIdx]);
+        }
+
+        let bdIdx = 0;
+        function cycleBedroom() {
+            const rooms = ['bedroom.jpg', 'bedroom2.jpg'];
+            bdIdx = (bdIdx + 1) % rooms.length;
+            preview(rooms[bdIdx]);
         }
     </script>
 </body>
