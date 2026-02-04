@@ -11,11 +11,11 @@ html, body {
     margin: 0;
     padding: 0;
     height: 100%;
-    background-color: black; /* solid black sides */
+    background-color: black;
     background-image: url("Assests/mainbackground.jpg");
     background-repeat: no-repeat;
     background-position: center top;
-    background-size: contain; /* keep image centered and fully visible */
+    background-size: contain;
     font-family: Arial, sans-serif;
     overflow-x: hidden;
 }
@@ -29,18 +29,18 @@ html, body {
 #title {
     font-family: 'Limelight', cursive;
     font-size: 88px;
-    color: black; /* headline color */
-    text-shadow: 2px 2px 6px #333, -2px -2px 6px #555; /* subtle gunmetal depth */
+    color: black;
+    text-shadow: 2px 2px 6px #333, -2px -2px 6px #555;
 }
 
 #subtitle {
     font-family: 'Limelight', cursive;
     font-size: 32px;
-    color: #444; /* gunmetal shade */
+    color: #444;
     margin-top: 10px;
 }
 
-/* ---------- NAV TABS AS LIBRARY LABEL HOLDERS ---------- */
+/* ---------- NAV TABS ---------- */
 #nav {
     display: flex;
     justify-content: center;
@@ -52,14 +52,13 @@ html, body {
     position: relative;
     width: 180px;
     height: 70px;
-    background: #222; /* gunmetal frame */
+    background: #222;
     border: 2px solid #333;
     border-radius: 6px;
     box-shadow: 2px 2px 6px #000 inset;
     cursor: pointer;
 }
 
-/* tiny screws in corners */
 .nav-tab::before, .nav-tab::after {
     content: '';
     position: absolute;
@@ -77,8 +76,8 @@ html, body {
     top: 8px;
     left: 8px;
     right: 8px;
-    bottom: 12px; /* leave room for pull lip */
-    background: #f9f5eb; /* paper label */
+    bottom: 12px;
+    background: #f9f5eb;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -90,7 +89,6 @@ html, body {
     box-shadow: 0 2px 4px rgba(0,0,0,0.3);
 }
 
-/* bottom lip */
 .nav-label::after {
     content: '';
     position: absolute;
@@ -103,7 +101,6 @@ html, body {
     border-radius: 2px 2px 0 0;
 }
 
-/* hover effect */
 .nav-tab:hover .nav-label {
     transform: translateY(-4px);
     box-shadow: 0 0 14px teal, 0 4px 8px rgba(0,0,0,0.4);
@@ -114,10 +111,20 @@ html, body {
     width: 900px;
     height: 500px;
     margin: 30px auto;
-    background: url("Assests/stagecurtains.png") center/cover no-repeat; /* curtains visible */
+    background: url("Assests/stagecurtains.png") center/cover no-repeat;
     border: 2px solid #222;
     position: relative;
     overflow: hidden;
+}
+
+#stage img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+    z-index: 2;
 }
 
 /* ---------- CABINET ---------- */
@@ -168,7 +175,7 @@ html, body {
     transition: left 0.6s;
 }
 
-/* ---------- CATALOG BOOK ---------- */
+/* ---------- CATALOG ---------- */
 #catalog {
     position: fixed;
     top: 80px;
