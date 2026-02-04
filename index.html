@@ -11,11 +11,11 @@ html, body {
     margin: 0;
     padding: 0;
     height: 100%;
-    background-color: black;
-    background-image: url("Assests/mainbackground.jpg");
+    background-color: black; /* black sides */
+    background-image: url("background10.jpg"); /* repository root */
     background-repeat: no-repeat;
     background-position: center top;
-    background-size: contain;
+    background-size: cover;
     font-family: Arial, sans-serif;
     overflow-x: hidden;
 }
@@ -29,14 +29,18 @@ html, body {
 #title {
     font-family: 'Limelight', cursive;
     font-size: 88px;
-    color: black;
-    text-shadow: 2px 2px 6px #333, -2px -2px 6px #555;
+    color: #111;
+    text-shadow: 
+        2px 2px 6px #888, 
+        -2px -2px 6px #bbb, 
+        0 0 12px #ccc; /* metallic shine */
 }
 
 #subtitle {
     font-family: 'Limelight', cursive;
     font-size: 32px;
-    color: #444;
+    color: #bbb;
+    text-shadow: 1px 1px 3px #444;
     margin-top: 10px;
 }
 
@@ -52,22 +56,23 @@ html, body {
     position: relative;
     width: 180px;
     height: 70px;
-    background: #222;
-    border: 2px solid #333;
+    background: linear-gradient(145deg, #222, #444);
+    border: 2px solid #555;
     border-radius: 6px;
-    box-shadow: 2px 2px 6px #000 inset;
+    box-shadow: inset 1px 1px 4px #000, 2px 2px 6px rgba(0,0,0,0.5);
     cursor: pointer;
 }
 
+/* screws */
 .nav-tab::before, .nav-tab::after {
     content: '';
     position: absolute;
-    width: 6px;
-    height: 6px;
-    background: #555;
+    width: 8px;
+    height: 8px;
+    background: #aaa;
     border-radius: 50%;
+    box-shadow: inset 1px 1px 2px #555;
 }
-
 .nav-tab::before { top: 6px; left: 6px; }
 .nav-tab::after  { top: 6px; right: 6px; }
 
@@ -89,6 +94,7 @@ html, body {
     box-shadow: 0 2px 4px rgba(0,0,0,0.3);
 }
 
+/* label lip */
 .nav-label::after {
     content: '';
     position: absolute;
@@ -101,9 +107,13 @@ html, body {
     border-radius: 2px 2px 0 0;
 }
 
+/* hover effect with strong glow */
 .nav-tab:hover .nav-label {
-    transform: translateY(-4px);
-    box-shadow: 0 0 14px teal, 0 4px 8px rgba(0,0,0,0.4);
+    transform: translateY(-6px);
+    box-shadow: 
+        0 0 20px teal, 
+        0 0 40px rgba(0,255,255,0.3),
+        0 6px 12px rgba(0,0,0,0.5);
 }
 
 /* ---------- STAGE ---------- */
@@ -115,6 +125,7 @@ html, body {
     border: 2px solid #222;
     position: relative;
     overflow: hidden;
+    box-shadow: 0 0 20px rgba(0,0,0,0.5);
 }
 
 #stage img {
@@ -143,7 +154,7 @@ html, body {
     left: 60px;
     width: 380px;
     height: 60px;
-    background: rgba(40,40,40,0.9);
+    background: rgba(40,40,40,0.95);
     border: 1px solid #333;
     cursor: pointer;
 }
@@ -161,7 +172,7 @@ html, body {
 
 .drawer:hover span {
     transform: translateY(-4px);
-    box-shadow: 0 0 14px teal;
+    box-shadow: 0 0 16px teal, 0 4px 8px rgba(0,0,0,0.4);
 }
 
 /* ---------- FURNITURE CASES ---------- */
