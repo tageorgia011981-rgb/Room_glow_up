@@ -11,7 +11,7 @@ html, body {
     margin: 0;
     padding: 0;
     height: 100%;
-    background: url("Assets/mainbackground.jpg") center/cover no-repeat fixed;
+    background: url("Assests/mainbackground.jpg") center/cover no-repeat fixed;
     font-family: Arial, sans-serif;
     overflow-x: hidden;
 }
@@ -99,7 +99,7 @@ html, body {
     left: -520px;
     width: 500px;
     height: 520px;
-    background: url("Assets/cabinet.png") center/contain no-repeat;
+    background: url("Assests/cabinet.png") center/contain no-repeat;
     transition: left 0.6s;
 }
 
@@ -135,19 +135,8 @@ html, body {
     left: -520px;
     width: 500px;
     height: 520px;
-    background: url("Assets/furniturecases.png") center/contain no-repeat;
+    background: url("Assests/furniturecases.png") center/contain no-repeat;
     transition: left 0.6s;
-}
-
-.case-tag {
-    position: absolute;
-    width: 140px;
-    height: 40px;
-    background: #ddd;
-    font-weight: bold;
-    text-align: center;
-    line-height: 40px;
-    cursor: pointer;
 }
 
 /* ---------- CATALOG BOOK ---------- */
@@ -166,12 +155,6 @@ html, body {
     gap: 10px;
 }
 
-.catalog-item {
-    flex: 1;
-    border: 1px solid #aaa;
-    cursor: pointer;
-}
-
 /* ---------- RECEIPT ---------- */
 #receipt {
     position: fixed;
@@ -180,7 +163,7 @@ html, body {
     transform: translateX(-50%);
     width: 420px;
     height: 600px;
-    background: url("Assets/scrollreceipt.jpg") center/contain no-repeat;
+    background: url("Assests/scrollreceipt.jpg") center/contain no-repeat;
     transition: top 0.8s;
 }
 
@@ -188,7 +171,7 @@ html, body {
 #walkthrough {
     display: none;
     padding: 40px;
-    background: url("Assets/rainbg.jpg") center/cover fixed;
+    background: url("Assests/rainbackground.jpg") center/cover fixed;
 }
 
 .gallery {
@@ -196,6 +179,7 @@ html, body {
     grid-template-columns: repeat(auto-fill,minmax(220px,1fr));
     gap: 20px;
 }
+
 .gallery img {
     width: 100%;
     border: 4px solid #333;
@@ -229,16 +213,14 @@ html, body {
 </div>
 
 <div id="furnitureCases"></div>
-
 <div id="catalog"></div>
-
 <div id="receipt"></div>
 
 <div id="walkthrough">
     <div class="gallery">
-        <img src="Assets/inspo1.jpg">
-        <img src="Assets/inspo2.jpg">
-        <img src="Assets/inspo3.jpg">
+        <img src="Assests/inspo1.jpg">
+        <img src="Assests/inspo2.jpg">
+        <img src="Assests/inspo3.jpg">
     </div>
 </div>
 
@@ -246,17 +228,14 @@ html, body {
 let stage = document.getElementById("stage");
 let cabinet = document.getElementById("cabinet");
 let cases = document.getElementById("furnitureCases");
-let catalog = document.getElementById("catalog");
 let receipt = document.getElementById("receipt");
 let walkthrough = document.getElementById("walkthrough");
 
-let estimate = [];
-
 const rooms = {
-    living: ["Assets/livingroom1.jpg","Assets/livingroom3.jpg"],
-    bedroom: ["Assets/bedroom.jpg","Assets/bedroom2.jpg"],
-    dining: ["Assets/diningroom.jpg"],
-    extras: ["Assets/foyer.jpg","Assets/officeroom.jpg","Assets/kitchen.jpg","Assets/kitchen2.jpg"]
+    living: ["Assests/livingroom1.jpg","Assests/livingroom3.jpg"],
+    bedroom: ["Assests/bedroom.jpg","Assests/bedroom2.jpg"],
+    dining: ["Assests/diningroom.jpg"],
+    extras: ["Assests/foyer.jpg","Assests/officeroom.jpg","Assests/kitchen.jpg","Assests/kitchen2.jpg"]
 };
 
 let roomIndex = {};
