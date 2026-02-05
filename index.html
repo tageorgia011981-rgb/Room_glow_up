@@ -1,34 +1,340 @@
-<!DOCTYPE html><html lang="en"><head>    <meta charset="UTF-8">    <meta name="viewport" content="width=device-width, initial-scale=1.0">    <title>Room Glow Up - Your Dream Space Come To Life</title>    <link href="https://fonts.googleapis.com/css2?family=Limelight&display=swap" rel="stylesheet">    <style>        :root {            --metal-shine: linear-gradient(145deg, #bdc3c7, #2c3e50, #95a5a6, #000);            --silver-header: linear-gradient(to bottom, #ffffff 0%, #a6a6a6 45%, #4d4d4d 50%, #ffffff 55%, #808080 100%);            --glow-teal: #00f2ff;        }
-        body, html {            margin: 0;            padding: 0;            min-height: 100vh;            background: url('Assets/mainbackground.jpg') no-repeat center center fixed;            background-size: cover;            scroll-behavior: smooth;            overflow-x: hidden;        }
-        #main-site-container {            width: 100%;            display: flex;            flex-direction: column;            align-items: center;            padding-bottom: 200px;        }
-        /* HEADER - High Silver Shine */        header {            text-align: center;            padding: 60px 0 30px 0;            z-index: 50;        }
-        h1 {            font-family: 'Limelight', cursive;            font-size: 100px;            margin: 0;            background: var(--silver-header);            -webkit-background-clip: text;            -webkit-text-fill-color: transparent;            filter: drop-shadow(5px 5px 8px rgba(0,0,0,0.8));            text-transform: uppercase;            letter-spacing: 4px;        }
-        h2 {            font-family: 'Limelight', cursive;            font-size: 36px;            margin: -10px 0 0 0;            color: #e0e0e0;            letter-spacing: 3px;            text-shadow: 3px 3px 6px #000;        }
-        /* TOP NAV - Library Labels */        .nav-container {            display: flex;            gap: 25px;            margin-top: 40px;            margin-bottom: 300px; /* Large gap for smooth scroll reveal */            z-index: 50;        }
-        .label-holder {            width: 210px;            height: 105px;            background: var(--metal-shine);            border: 2px solid #000;            position: relative;            display: flex;            justify-content: center;            align-items: center;            box-shadow: inset 0 0 15px #000, 8px 8px 20px rgba(0,0,0,0.9);            cursor: pointer;        }
-        .label-holder::before, .label-holder::after {            content: '';            position: absolute;            width: 10px;            height: 10px;            background: #111;            border-radius: 50%;            box-shadow: inset 1px 1px 2px #777;        }        .label-holder::before { top: 10px; left: 10px; }        .label-holder::after { top: 10px; right: 10px; }
-        .white-card {            width: 85%;            height: 65%;            background: #fff;            display: flex;            justify-content: center;            align-items: center;            transition: background 0.4s ease, box-shadow 0.4s ease;        }
-        .label-holder:hover .white-card {            background: var(--glow-teal);            box-shadow: 0 0 30px var(--glow-teal);        }
-        .label-text {            font-family: 'Courier New', Courier, monospace;            font-weight: 900;            font-size: 18px;            color: #000;            text-transform: uppercase;        }
-        .lip-pull {            position: absolute;            bottom: 0;            width: 80%;            height: 16px;            background: #0a0a0a;            border-radius: 0 0 15px 15px;            border: 1px solid #444;        }
-        /* INTERACTION ZONE */        #interaction-zone {            display: flex;            justify-content: center;            align-items: flex-start;            gap: 60px;            width: 100%;            padding-top: 100px;        }
-        /* CABINET GRACEFUL GLIDE */        #rooms-cabinet-container {            position: relative;            width: 550px;            transform: translateX(-200%); /* Further out for more glide */            transition: transform 1.5s cubic-bezier(0.23, 1, 0.32, 1); /* Graceful ease-out */            z-index: 30;        }
-        #rooms-cabinet-container.glided-in {            transform: translateX(0);        }
-        #cabinet-img {            width: 100%;            filter: drop-shadow(15px 15px 30px #000);        }
-        /* DRAWER ALIGNMENT - Positioned to look like actual pulls on the cabinet.png */        .drawer-labels-overlay {            position: absolute;            top: 72px; /* Adjusted for alignment */            left: 95px;            display: flex;            flex-direction: column;            gap: 28px; /* Matched to drawer vertical spacing */        }
-        .small-pull-tab {            width: 160px;            height: 65px;            background: var(--metal-shine);            display: flex;            justify-content: center;            align-items: center;            position: relative;            cursor: pointer;            box-shadow: inset 0 0 8px #000, 3px 3px 10px rgba(0,0,0,0.5);        }
-        .drawer-white-card {            width: 80%;            height: 60%;            background: #fff;            display: flex;            justify-content: center;            align-items: center;            font-family: 'Courier New', Courier, monospace;            font-size: 15px;            font-weight: bold;            transition: 0.3s;        }
-        .small-pull-tab:hover .drawer-white-card {            background: var(--glow-teal);            box-shadow: 0 0 15px var(--glow-teal);        }
-        /* STAGE */        #theater-container {            position: relative;            width: 950px;            height: 600px;            border: 25px solid #000;            overflow: hidden;            background: #000;            box-shadow: 0 0 60px rgba(0,0,0,1);            z-index: 5;        }
-        .curtain {            position: absolute;            top: 0;            width: 50%;            height: 100%;            background: url('Assets/stagecurtains.png') no-repeat;            background-size: 200% 100%;            transition: transform 2s cubic-bezier(0.645, 0.045, 0.355, 1);            z-index: 20;        }
-        #curtain-left { left: 0; background-position: left; }        #curtain-right { right: 0; background-position: right; }
-        #theater-container.open #curtain-left { transform: translateX(-100%); }        #theater-container.open #curtain-right { transform: translateX(100%); }
-        #room-display {            width: 100%;            height: 100%;            background-size: cover;            background-position: center;        }    </style></head><body>
-<div id="main-site-container">    <header>        <h1>Room Glow Up</h1>        <h2>Where Your Dream Space Comes To Life</h2>    </header>
-    <nav class="nav-container">        <div class="label-holder" onclick="smoothRevealRooms()">            <div class="white-card"><span class="label-text">Rooms</span></div>            <div class="lip-pull"></div>        </div>        <div class="label-holder">            <div class="white-card"><span class="label-text">Furniture Catalog</span></div>            <div class="lip-pull"></div>        </div>        <div class="label-holder">            <div class="white-card"><span class="label-text">Decor Closet</span></div>            <div class="lip-pull"></div>        </div>        <div class="label-holder">            <div class="white-card"><span class="label-text">Inspirational Walkthrough</span></div>            <div class="lip-pull"></div>        </div>        <div class="label-holder">            <div class="white-card"><span class="label-text">Save / Checkout</span></div>            <div class="lip-pull"></div>        </div>    </nav>
-    <div id="interaction-zone">        <div id="rooms-cabinet-container">            <img src="Assets/cabinet.png" id="cabinet-img" alt="Storage Cabinet">            <div class="drawer-labels-overlay">                <div class="small-pull-tab" onmouseover="peekRoom('livingroom1.jpg')" onclick="selectRoom('livingroom1.jpg')">                    <div class="drawer-white-card">livingroom</div>                </div>                <div class="small-pull-tab" onmouseover="peekRoom('bedroom.jpg')" onclick="selectRoom('bedroom.jpg')">                    <div class="drawer-white-card">bedroom</div>                </div>                <div class="small-pull-tab" onmouseover="peekRoom('diningroom.jpg')" onclick="selectRoom('diningroom.jpg')">                    <div class="drawer-white-card">diningroom</div>                </div>                <div class="small-pull-tab" onmouseover="peekRoom('foyer.jpg')" onclick="selectRoom('foyer.jpg')">                    <div class="drawer-white-card">extra rooms</div>                </div>                <div class="small-pull-tab">                    <div class="drawer-white-card">upload yours</div>                </div>            </div>        </div>
-        <div id="theater-container">            <div id="curtain-left" class="curtain"></div>            <div id="curtain-right" class="curtain"></div>            <div id="room-display"></div>        </div>    </div></div>
-<script>    function smoothRevealRooms() {        // More graceful scroll speed        window.scrollTo({            top: document.getElementById('interaction-zone').offsetTop - 50,            behavior: 'smooth'        });                // Slightly longer delay for a cinematic glide in        setTimeout(() => {            document.getElementById('rooms-cabinet-container').classList.add('glided-in');        }, 800);    }
-    function peekRoom(img) {        document.getElementById('room-display').style.backgroundImage = `url('Assets/${img}')`;    }
-    function selectRoom(img) {        document.getElementById('room-display').style.backgroundImage = `url('Assets/${img}')`;        document.getElementById('theater-container').classList.add('open');                // Wait for curtains to be fully open before gliding cabinet back        setTimeout(() => {            document.getElementById('rooms-cabinet-container').classList.remove('glided-in');        }, 1200);    }</script>
-</body></html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Room Glow Up - Your Dream Space Come To Life</title>
+    <link href="https://fonts.googleapis.com/css2?family=Limelight&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --metal-shine: linear-gradient(145deg, #bdc3c7, #2c3e50, #95a5a6, #000);
+            --silver-header: linear-gradient(to bottom, #ffffff 0%, #a6a6a6 45%, #4d4d4d 50%, #ffffff 55%, #808080 100%);
+            --glow-teal: #00f2ff;
+        }
+
+        body, html {
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            background: url('Assets/mainbackground.jpg') no-repeat center center fixed;
+            background-size: cover;
+            scroll-behavior: smooth;
+            overflow-x: hidden;
+        }
+
+        #main-site-container {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding-bottom: 200px;
+        }
+
+        /* HEADERS */
+        header {
+            text-align: center;
+            padding: 60px 0 30px 0;
+            z-index: 50;
+        }
+
+        h1 {
+            font-family: 'Limelight', cursive;
+            font-size: 100px;
+            margin: 0;
+            background: var(--silver-header);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            filter: drop-shadow(5px 5px 8px rgba(0,0,0,0.8));
+            text-transform: uppercase;
+            letter-spacing: 4px;
+        }
+
+        h2 {
+            font-family: 'Limelight', cursive;
+            font-size: 36px;
+            margin: -5px 0 0 0;
+            color: #e0e0e0;
+            letter-spacing: 3px;
+            text-shadow: 3px 3px 6px #000;
+        }
+
+        /* TOP NAV LABELS */
+        .nav-container {
+            display: flex;
+            gap: 25px;
+            margin-top: 40px;
+            margin-bottom: 300px; /* Space to allow the scroll effect */
+            z-index: 50;
+        }
+
+        .label-holder {
+            width: 210px;
+            height: 105px;
+            background: var(--metal-shine);
+            border: 2px solid #000;
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: inset 0 0 15px #000, 8px 8px 20px rgba(0,0,0,0.9);
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        /* Industrial Screw Detail */
+        .screw {
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            background: #111;
+            border-radius: 50%;
+            box-shadow: inset 1px 1px 2px #777;
+        }
+        .s-tl { top: 8px; left: 8px; }
+        .s-tr { top: 8px; right: 8px; }
+        .s-bl { bottom: 25px; left: 8px; }
+        .s-br { bottom: 25px; right: 8px; }
+
+        .white-card {
+            width: 85%;
+            height: 60%;
+            background: #fff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: background 0.4s ease, box-shadow 0.4s ease;
+        }
+
+        .label-holder:hover .white-card {
+            background: var(--glow-teal);
+            box-shadow: 0 0 30px var(--glow-teal);
+        }
+
+        .label-text {
+            font-family: 'Courier New', Courier, monospace;
+            font-weight: 900;
+            font-size: 16px;
+            color: #000;
+            text-transform: uppercase;
+        }
+
+        .lip-pull {
+            position: absolute;
+            bottom: 0;
+            width: 80%;
+            height: 16px;
+            background: #0a0a0a;
+            border-radius: 0 0 15px 15px;
+            border: 1px solid #444;
+        }
+
+        /* INTERACTION ZONE */
+        #interaction-zone {
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            gap: 60px;
+            width: 100%;
+            padding-top: 100px;
+        }
+
+        /* ROOMS CABINET - Slow Glide */
+        #rooms-cabinet-container {
+            position: relative;
+            width: 550px;
+            transform: translateX(-200%);
+            transition: transform 3s cubic-bezier(0.23, 1, 0.32, 1); /* Slow Glide */
+            z-index: 30;
+        }
+
+        #rooms-cabinet-container.glided-in {
+            transform: translateX(0);
+        }
+
+        #cabinet-img {
+            width: 100%;
+            filter: drop-shadow(15px 15px 30px #000);
+        }
+
+        /* DRAWER LABELS OVER CABINET */
+        .drawer-labels-overlay {
+            position: absolute;
+            top: 72px;
+            left: 95px;
+            display: flex;
+            flex-direction: column;
+            gap: 28px;
+        }
+
+        .small-pull-tab {
+            width: 160px;
+            height: 65px;
+            background: var(--metal-shine);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            cursor: pointer;
+            box-shadow: inset 0 0 8px #000, 3px 3px 10px rgba(0,0,0,0.5);
+            transition: transform 0.3s ease;
+        }
+
+        .small-pull-tab:hover {
+            transform: translateY(-5px); /* Lift effect */
+        }
+
+        .drawer-white-card {
+            width: 80%;
+            height: 60%;
+            background: #fff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 14px;
+            font-weight: bold;
+            text-transform: uppercase;
+            transition: 0.3s;
+        }
+
+        .small-pull-tab:hover .drawer-white-card {
+            background: var(--glow-teal);
+            box-shadow: 0 0 15px var(--glow-teal);
+        }
+
+        /* STAGE */
+        #theater-container {
+            position: relative;
+            width: 950px;
+            height: 600px;
+            border: 25px solid #000;
+            overflow: hidden;
+            background: #000;
+            box-shadow: 0 0 60px rgba(0,0,0,1);
+            z-index: 5;
+        }
+
+        #room-display {
+            width: 100%;
+            height: 100%;
+            background-size: cover;
+            background-position: center;
+            transition: background-image 0.5s ease;
+        }
+    </style>
+</head>
+<body>
+
+<div id="main-site-container">
+    <header>
+        <h1>Room Glow Up</h1>
+        <h2>Where Your Dream Space Comes To Life</h2>
+    </header>
+
+    <nav class="nav-container">
+        <div class="label-holder" onclick="roomsAction()">
+            <div class="screw s-tl"></div><div class="screw s-tr"></div>
+            <div class="white-card"><span class="label-text">Rooms</span></div>
+            <div class="screw s-bl"></div><div class="screw s-br"></div>
+            <div class="lip-pull"></div>
+        </div>
+        <div class="label-holder">
+            <div class="screw s-tl"></div><div class="screw s-tr"></div>
+            <div class="white-card"><span class="label-text">Furniture Catalog</span></div>
+            <div class="screw s-bl"></div><div class="screw s-br"></div>
+            <div class="lip-pull"></div>
+        </div>
+        <div class="label-holder">
+            <div class="screw s-tl"></div><div class="screw s-tr"></div>
+            <div class="white-card"><span class="label-text">Decor Closet</span></div>
+            <div class="screw s-bl"></div><div class="screw s-br"></div>
+            <div class="lip-pull"></div>
+        </div>
+        <div class="label-holder">
+            <div class="screw s-tl"></div><div class="screw s-tr"></div>
+            <div class="white-card"><span class="label-text">Inspirational Walkthrough</span></div>
+            <div class="screw s-bl"></div><div class="screw s-br"></div>
+            <div class="lip-pull"></div>
+        </div>
+        <div class="label-holder">
+            <div class="screw s-tl"></div><div class="screw s-tr"></div>
+            <div class="white-card"><span class="label-text">Save / Checkout</span></div>
+            <div class="screw s-bl"></div><div class="screw s-br"></div>
+            <div class="lip-pull"></div>
+        </div>
+    </nav>
+
+    <div id="interaction-zone">
+        <div id="rooms-cabinet-container">
+            <img src="Assets/cabinet.png" id="cabinet-img" alt="Storage Cabinet">
+            <div class="drawer-labels-overlay">
+                <div class="small-pull-tab" onmouseover="peekRoom('livingroom1.jpg')" onclick="cycleRoom('livingroom')">
+                    <div class="drawer-white-card">livingroom</div>
+                </div>
+                <div class="small-pull-tab" onmouseover="peekRoom('bedroom.jpg')" onclick="cycleRoom('bedroom')">
+                    <div class="drawer-white-card">bedroom</div>
+                </div>
+                <div class="small-pull-tab" onmouseover="peekRoom('diningroom.jpg')" onclick="cycleRoom('diningroom')">
+                    <div class="drawer-white-card">diningroom</div>
+                </div>
+                <div class="small-pull-tab" onmouseover="peekRoom('foyer.jpg')" onclick="cycleRoom('extra')">
+                    <div class="drawer-white-card">extra rooms</div>
+                </div>
+                <div class="small-pull-tab">
+                    <input type="file" id="room-upload" style="display:none" onchange="uploadRoom(this)">
+                    <div class="drawer-white-card" onclick="document.getElementById('room-upload').click()">upload yours</div>
+                </div>
+            </div>
+        </div>
+
+        <div id="theater-container">
+            <div id="room-display"></div>
+        </div>
+    </div>
+</div>
+
+<script>
+    const roomInventory = {
+        livingroom: ['livingroom1.jpg', 'livingroom3.jpg'],
+        bedroom: ['bedroom.jpg', 'bedroom2.jpg'],
+        diningroom: ['diningroom.jpg'],
+        extra: ['foyer.jpg', 'officeroom.jpg', 'kitchen.jpg', 'kitchen2.jpg']
+    };
+
+    let indices = { livingroom: 0, bedroom: 0, diningroom: 0, extra: 0 };
+
+    function roomsAction() {
+        // Slow move down and slow glide in synchronized
+        window.scrollTo({
+            top: document.getElementById('interaction-zone').offsetTop - 20,
+            behavior: 'smooth'
+        });
+
+        // Slow glide in
+        document.getElementById('rooms-cabinet-container').classList.add('glided-in');
+    }
+
+    function peekRoom(img) {
+        document.getElementById('room-display').style.backgroundImage = `url('Assets/${img}')`;
+    }
+
+    function cycleRoom(type) {
+        let list = roomInventory[type];
+        indices[type] = (indices[type] + 1) % list.length;
+        let selectedImg = list[indices[type]];
+        peekRoom(selectedImg);
+    }
+
+    function uploadRoom(input) {
+        if (input.files && input.files[0]) {
+            let reader = new FileReader();
+            reader.onload = function(e) {
+                document.getElementById('room-display').style.backgroundImage = `url(${e.target.result})`;
+            };
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+</script>
+
+</body>
+</html>
