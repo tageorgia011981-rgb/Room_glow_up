@@ -10,6 +10,7 @@
             --metal-shine: linear-gradient(145deg, #bdc3c7, #2c3e50, #95a5a6, #000);
             --silver-header: linear-gradient(to bottom, #ffffff 0%, #a6a6a6 45%, #4d4d4d 50%, #ffffff 55%, #808080 100%);
             --glow-teal: #00f2ff;
+            --tag-gold: #d4af37;
         }
 
         body, html {
@@ -65,7 +66,6 @@
             z-index: 50;
         }
 
-        /* Library Label Holders */
         .label-holder {
             width: 210px;
             height: 105px;
@@ -114,7 +114,6 @@
             font-size: 16px;
             color: #000;
             text-transform: uppercase;
-            text-align: center;
         }
 
         .lip-pull {
@@ -204,10 +203,10 @@
             box-shadow: 0 0 15px var(--glow-teal);
         }
 
-        /* BLACK HANGING TAGS - FIXED DESIGN */
+        /* HANGING BLACK TAGS WITH ICONS */
         .furniture-tags-overlay {
             position: absolute;
-            top: 140px; /* Aligned with case handles */
+            top: 135px; 
             left: 105px;
             display: flex;
             flex-direction: column;
@@ -217,53 +216,52 @@
         .tag-hanger {
             position: relative;
             width: 160px;
-            height: 70px;
+            height: 65px;
             display: flex;
             justify-content: center;
         }
 
         .icon-tag {
             position: absolute;
-            top: 10px;
-            width: 100px;
-            height: 60px;
-            background: #000; /* Solid Black Tag */
-            border: 1px solid #d4af37; /* Subtle Gold edge */
-            /* Clip path for the classic tag shape */
+            top: 15px; 
+            width: 110px;
+            height: 65px;
+            background: #000;
+            border: 1px solid var(--tag-gold);
             clip-path: polygon(15% 0%, 85% 0%, 100% 25%, 100% 100%, 0% 100%, 0% 25%);
             display: flex;
             justify-content: center;
             align-items: center;
-            box-shadow: 5px 5px 15px rgba(0,0,0,0.7);
+            box-shadow: 4px 4px 10px rgba(0,0,0,0.8);
             transform: rotate(-3deg);
             transform-origin: top center;
-            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            transition: transform 0.4s ease;
             cursor: pointer;
             z-index: 35;
         }
 
-        /* The String/Hole */
         .icon-tag::before {
             content: '';
             position: absolute;
-            top: 4px;
+            top: 5px;
             width: 6px;
             height: 6px;
-            background: #222; /* Hole */
+            background: #222;
             border-radius: 50%;
-            border: 1px solid #d4af37;
-            box-shadow: 0 -12px 0 -1px #111; /* Represents the hanging string */
+            border: 1px solid var(--tag-gold);
+            box-shadow: 0 -15px 0 -1px #111;
         }
 
         .icon-tag img {
-            max-width: 65%;
-            max-height: 65%;
-            margin-top: 8px;
-            filter: brightness(0) invert(1) drop-shadow(0 0 2px #d4af37); /* Makes icons look silver/gold */
+            max-width: 60%;
+            max-height: 60%;
+            margin-top: 10px;
+            /* Gold Filter for the PNG Icons */
+            filter: brightness(0) saturate(100%) invert(82%) sepia(54%) saturate(417%) hue-rotate(357deg) brightness(91%) contrast(85%);
         }
 
         .icon-tag:hover {
-            transform: rotate(0deg) scale(1.15);
+            transform: rotate(0deg) scale(1.1);
             box-shadow: 0 0 20px var(--glow-teal);
         }
 
