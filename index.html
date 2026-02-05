@@ -5,128 +5,101 @@
     <title>Room Glow Up</title>
     <link href="https://fonts.googleapis.com/css2?family=Limelight&family=Special+Elite&display=swap" rel="stylesheet">
     <style>
-        :root {
-            --gunmetal: #2a2e30; --silver: #c0c0c0; --teal-glow: #40E0D0;
-        }
+        :root { --teal: #40E0D0; --silver: #c0c0c0; --gunmetal: #2a2e30; }
 
         body, html {
             margin: 0; padding: 0; height: 200vh;
-            background: url('Assests/mainbackground.jpg'), url('assests/mainbackground.jpg');
-            background-size: cover; background-attachment: fixed;
-            font-family: 'Special Elite', serif; overflow-x: hidden;
+            background: url('Assets/mainbackground.jpg') no-repeat center center fixed;
+            background-size: cover; font-family: 'Special Elite', serif; overflow-x: hidden;
         }
 
-        /* --- THE FIXED PEERING WORKSPACE --- */
-        #cabinet-container, #cases-container {
-            position: fixed; left: -550px; top: 450px;
-            transition: left 0.9s cubic-bezier(0.23, 1, 0.32, 1);
-            z-index: 500;
-        }
-
+        /* --- THE FIXED "PEEKING" WORKSPACE --- */
         #stage-area {
             position: fixed; top: 450px; left: 55%; transform: translateX(-50%);
-            width: 850px; height: 550px;
-            border: 12px solid var(--gunmetal); outline: 2px solid var(--silver);
-            background-color: rgba(0,0,0,0.5); background-size: cover;
-            z-index: 100;
+            width: 850px; height: 550px; border: 12px solid var(--gunmetal); outline: 2px solid var(--silver);
+            background-color: rgba(0,0,0,0.6); background-size: cover; z-index: 100;
         }
 
-        /* --- FURNITURE INTERFACE --- */
-        .icon-tags { position: absolute; top: 85px; left: 45px; display: flex; gap: 15px; }
-        .hanging-tag { cursor: pointer; transition: 0.3s; transform-origin: top center; }
-        .hanging-tag:hover { transform: rotate(5deg) scale(1.1); }
+        #cabinet, #furniture-cases {
+            position: fixed; left: -550px; top: 450px; 
+            transition: left 0.9s cubic-bezier(0.23, 1, 0.32, 1); z-index: 500;
+        }
 
-        .plain-tag-list {
-            position: absolute; left: 460px; top: 20px;
-            display: flex; flex-direction: column; gap: 8px;
-            font-family: Arial, sans-serif;
+        /* --- THE SCROLL RECEIPT --- */
+        #receipt {
+            position: fixed; top: -150%; left: 50%; transform: translateX(-50%);
+            width: 380px; transition: 1.5s cubic-bezier(0.19, 1, 0.22, 1); z-index: 3000;
         }
-        .plain-tag {
-            background: #fff; padding: 5px 15px; border: 1px solid #000;
-            cursor: pointer; white-space: nowrap; transition: 0.2s;
+
+        /* Pull Tab Styling */
+        .pull-tab {
+            background: var(--gunmetal); width: 180px; height: 55px; border: 2px solid #111;
+            position: relative; cursor: pointer; display: inline-block; margin: 10px;
         }
-        .plain-tag:hover { background: var(--teal-glow); }
+        .white-card {
+            background: #fff; color: #000; padding: 5px; width: 80%;
+            position: absolute; top: 10px; left: 8%; text-align: center;
+            transform: rotate(-1.5deg); transition: 0.3s;
+        }
+        .pull-tab:hover .white-card { background: var(--teal); box-shadow: 0 0 15px var(--teal); transform: rotate(0deg); }
     </style>
 </head>
 <body>
 
-    <div id="cabinet-container">
-        <img src="" id="cabinet-img" width="400">
-        <div class="drawer-labels" style="position:absolute; top:70px; left:45px; display:flex; flex-direction:column; gap:45px;">
-            <div class="pull-tab" onmouseover="smartPreview('livingroom1.jpg')" onclick="cycleLiving()"><div class="white-card">Living Room</div></div>
-            <div class="pull-tab" onmouseover="smartPreview('bedroom.jpg')" onclick="cycleBedroom()"><div class="white-card">Bedroom</div></div>
-            <div class="pull-tab" onmouseover="smartPreview('diningroom.jpg')" onclick="commitRoom('diningroom.jpg')"><div class="white-card">Dining Room</div></div>
-            <div class="pull-tab" onmouseover="smartPreview('foyer.jpg')" onclick="cycleExtras()"><div class="white-card">Extra Rooms</div></div>
-            <div class="pull-tab"><div class="white-card">Upload Yours</div></div>
+    <div style="text-align:center; padding: 40px; position:relative; z-index:2000;">
+        <h1 style="font-family:'Limelight'; font-size:90px; color:var(--silver); margin:0;">Room Glow Up</h1>
+        <h2 style="font-family:'Limelight'; font-size:24px; color:var(--silver);">Where Your Dream Space Comes To Life</h2>
+        
+        <div id="top-navigation">
+            <div class="pull-tab" onclick="glideIn('cabinet')"><div class="white-card">Rooms</div></div>
+            <div class="pull-tab"><div class="white-card">Furniture Catalog</div></div>
+            <div class="pull-tab"><div class="white-card">Decor Closet</div></div>
+            <div class="pull-tab"><div class="white-card">Walkthrough</div></div>
+            <div class="pull-tab" onclick="toggleReceipt()"><div class="white-card">save/checkout</div></div>
         </div>
     </div>
 
-    <div id="cases-container">
-        <img src="" id="cases-img" width="450">
-        <div class="icon-tags">
-            <img id="icon-seating" class="hanging-tag" onclick="showSubs('seating')">
-            <img id="icon-tables" class="hanging-tag" onclick="showSubs('tables')">
-            <img id="icon-storage" class="hanging-tag" onclick="showSubs('storage')">
-            <img id="icon-beds" class="hanging-tag" onclick="showSubs('beds')">
+    <div id="cabinet">
+        <img src="Assets/cabinet.png" width="400">
+        <div style="position:absolute; top:70px; left:45px; display:flex; flex-direction:column; gap:45px;">
+            <div class="pull-tab" onclick="chooseRoom('livingroom1.jpg')"><div class="white-card">Living Room</div></div>
+            <div class="pull-tab" onclick="chooseRoom('bedroom.jpg')"><div class="white-card">Bedroom</div></div>
+            <div class="pull-tab" onclick="chooseRoom('foyer.jpg')"><div class="white-card">Extra Rooms</div></div>
         </div>
-        <div id="sub-tag-list" class="plain-tag-list"></div>
     </div>
+
+    <div id="furniture-cases">
+        <img src="Assets/furniturecases.png" width="450">
+        </div>
 
     <div id="stage-area"></div>
 
+    <img src="Assets/scrollreceipt.png" id="receipt">
+
     <script>
-        // SMART PATH LOGIC: Tries Capital A, then lowercase a
-        function getPath(filename) {
-            return `Assests/${filename}`; // Or logic to handle fallbacks if hosted
+        const PATH = 'Assets/';
+
+        function glideIn(id) {
+            document.getElementById(id).style.left = "20px";
         }
 
-        // Initialize images from both possible folders
-        document.getElementById('cabinet-img').src = "Assests/cabinet.png";
-        document.getElementById('cases-img').src = "Assests/furniturecases.png";
-        document.getElementById('icon-seating').src = "assests/iconseating.png";
-        document.getElementById('icon-tables').src = "assests/icontables.png";
-        document.getElementById('icon-storage').src = "assests/iconstorage.png";
-        document.getElementById('icon-beds').src = "assests/iconbeds.png";
-
-        function smartPreview(file) {
-            const stage = document.getElementById('stage-area');
-            stage.style.backgroundImage = `url('Assests/${file}'), url('assests/${file}')`;
-        }
-
-        // CYCLING LOGIC
-        let extraIdx = 0;
-        const extras = ['foyer.jpg', 'officeroom.jpg', 'kitchen.jpg', 'kitchen2.jpg'];
-        function cycleExtras() {
-            smartPreview(extras[extraIdx]);
-            extraIdx = (extraIdx + 1) % extras.length;
-        }
-
-        function commitRoom(file) {
-            smartPreview(file);
-            document.getElementById('cabinet-container').style.left = "-550px";
+        function chooseRoom(img) {
+            // Set the room on the stage
+            document.getElementById('stage-area').style.backgroundImage = `url('${PATH}${img}')`;
+            
+            // Glide out Cabinet
+            document.getElementById('cabinet').style.left = "-600px";
+            
+            // Glide in Furniture Cases after 1 second
             setTimeout(() => {
-                document.getElementById('cases-container').style.left = "20px";
-            }, 900);
+                document.getElementById('furniture-cases').style.left = "20px";
+            }, 1000);
         }
 
-        function showSubs(cat) {
-            const list = document.getElementById('sub-tag-list');
-            list.innerHTML = '';
-            const data = {
-                seating: ['Couches', 'Chairs', 'Dining Room Chairs', 'Benches', 'Stools'],
-                tables: ['Coffee Tables', 'Dining Tables', 'Side Tables'],
-                storage: ['Bookshelves', 'Dressers'],
-                beds: ['King Size', 'Queen Size', 'Twin']
-            };
-            data[cat].forEach(name => {
-                const tag = document.createElement('div');
-                tag.className = 'plain-tag';
-                tag.innerText = name;
-                tag.onclick = () => { /* Logic for Catalog Book */ };
-                list.appendChild(tag);
-            });
+        function toggleReceipt() {
+            const r = document.getElementById('receipt');
+            r.style.top = (r.style.top === "50px") ? "-150%" : "50px";
         }
     </script>
 </body>
 </html>
-
