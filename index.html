@@ -1,123 +1,154 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Room Glow Up</title>
-<link href="https://fonts.googleapis.com/css2?family=Limelight&family=Special+Elite&display=swap" rel="stylesheet">
-<style>
-:root {
-    --teal: #40E0D0;
-    --silver: #e0e0e0;
-    --gunmetal: #2a2e30;
-}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Room Glow Up</title>
+    <link href="https://fonts.googleapis.com/css2?family=Limelight&family=Special+Elite&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --teal: #40E0D0;
+            --silver: #c0c0c0;
+            --gunmetal: #2a2e30;
+        }
 
-body, html {
-    margin: 0; padding: 0;
-    height: 250vh; 
-    background: #000 url('Assets/mainbackground.jpg') no-repeat center top fixed;
-    background-size: contain;
-    font-family: 'Special Elite', serif;
-    overflow-x: hidden;
-}
+        /* --- BACKGROUND: CONTAINED WITH BLACK SIDES --- */
+        body, html {
+            margin: 0; padding: 0;
+            height: 200vh;
+            background-color: #000000;
+            background-image: url('Assets/mainbackground.jpg');
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center top;
+            background-attachment: fixed;
+            font-family: 'Special Elite', serif;
+            overflow-x: hidden;
+            color: white;
+        }
 
-/* --- HEADER & LARGER SUB-HEADER --- */
-.header-area { text-align: center; padding: 30px 0 20px; position: relative; z-index: 2000; }
-h1 { 
-    font-family: 'Limelight'; 
-    font-size: 70px; 
-    margin: 0; 
-    color: var(--silver); 
-    text-transform: uppercase; 
-    letter-spacing: 2px;
-}
-h2 {
-    font-family: 'Limelight';
-    font-size: 32px; /* Bigger sub-header */
-    color: var(--silver);
-    margin: 15px 0 30px 0;
-    text-shadow: 2px 2px 4px #000;
-}
+        /* --- HEADERS (Untouched except H2 size) --- */
+        .header-area {
+            text-align: center;
+            padding: 60px 0 20px;
+            position: relative;
+            z-index: 2000;
+        }
+        h1 {
+            font-family: 'Limelight';
+            font-size: 100px;
+            margin: 0;
+            color: var(--silver);
+            text-transform: uppercase;
+            letter-spacing: 4px;
+            background: linear-gradient(to bottom, #ffffff 0%, #a9a9a9 50%, #2a2e30 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            filter: drop-shadow(4px 4px 2px #000);
+        }
+        h2 {
+            font-family: 'Limelight';
+            font-size: 32px; 
+            color: var(--silver);
+            margin-top: 10px;
+            text-shadow: 2px 2px 4px #000;
+        }
 
-.nav-row { 
-    display: flex; 
-    justify-content: center; 
-    gap: 20px; /* Balanced spacing */
-    max-width: 1000px; 
-    margin: 0 auto;
-}
+        /* --- TOP NAV PULL TABS (Original Specs) --- */
+        .nav-row {
+            display: flex;
+            justify-content: center;
+            gap: 25px;
+            margin-top: 30px;
+        }
+        .pull-tab {
+            background: var(--gunmetal);
+            width: 190px;
+            height: 60px;
+            border: 2px solid #111;
+            position: relative;
+            cursor: pointer;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.8);
+        }
+        .pull-tab::after {
+            content: ''; position: absolute; bottom: -6px; left: 15%;
+            width: 70%; height: 12px; background: #111;
+            border-radius: 0 0 8px 8px; box-shadow: inset 0 2px 4px var(--silver);
+        }
+        .white-card {
+            background: #fff; color: #000;
+            font-family: 'Special Elite'; font-weight: bold; font-size: 14px;
+            width: 85%; padding: 6px 0;
+            position: absolute; top: 12px; left: 7.5%;
+            text-align: center; transform: rotate(-1.5deg);
+            transition: 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        .pull-tab:hover .white-card {
+            background: var(--teal);
+            box-shadow: 0 0 20px var(--teal);
+            transform: rotate(0deg) scale(1.05);
+        }
 
-.pull-tab {
-    background: var(--gunmetal);
-    width: 170px; height: 60px;
-    border: 1px solid #111;
-    position: relative;
-    cursor: pointer;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.8);
-    transition: transform 0.3s ease;
-}
+        /* --- THE FIXED WORKSPACE --- */
+        #stage-area {
+            position: fixed; 
+            top: 450px; 
+            left: 55%;
+            transform: translateX(-50%);
+            width: 850px; height: 550px;
+            border: 12px solid var(--gunmetal);
+            outline: 2px solid var(--silver);
+            background: rgba(0,0,0,0.7) no-repeat center center;
+            background-size: cover;
+            z-index: 100;
+            box-shadow: 0 0 50px rgba(0,0,0,0.9);
+            transition: left 0.9s cubic-bezier(0.23, 1, 0.32, 1);
+        }
+        /* Stage shift for room/furniture selection */
+        #stage-area.shift { left: 68%; }
 
-.white-card {
-    background: #fff; color: #000;
-    font-family: 'Special Elite'; 
-    font-weight: bold; font-size: 13px;
-    width: 88%; padding: 6px 0;
-    position: absolute; top: 12px; left: 6%;
-    text-align: center; 
-    transform: rotate(-1.5deg);
-    transition: 0.3s ease;
-}
+        #cabinet, #furniture-cases {
+            position: fixed; 
+            left: -550px; 
+            top: 450px;
+            transition: left 0.9s cubic-bezier(0.23, 1, 0.32, 1);
+            z-index: 500;
+        }
 
-.pull-tab:hover { transform: translateY(-5px); }
-.pull-tab:hover .white-card {
-    background: var(--teal);
-    box-shadow: 0 0 20px var(--teal);
-    transform: rotate(0deg) scale(1.05);
-}
+        .drawer-labels {
+            position: absolute; 
+            top: 70px; 
+            left: 45px;
+            display: flex; 
+            flex-direction: column; 
+            gap: 46px;
+        }
 
-/* --- THE STAGE --- */
-#stage-area {
-    position: absolute; top: 85vh; left: 50%; transform: translateX(-50%);
-    width: 900px; height: 600px;
-    border: 12px solid #222; outline: 1px solid var(--silver);
-    background: url('Assets/stagecurtain.png') no-repeat center center / cover;
-    z-index: 100; transition: transform 0.9s cubic-bezier(0.23, 1, 0.32, 1);
-}
-#stage-area.shift { transform: translateX(10%); }
+        .hanging-icons {
+            position: absolute; top: 80px; left: 40px;
+            display: flex; gap: 18px;
+        }
+        .icon-tag { cursor: pointer; transition: 0.3s; transform-origin: top center; }
+        .icon-tag:hover { transform: rotate(7deg) scale(1.1); }
+        
+        .sub-tag-list {
+            position: absolute; left: 470px; top: 20px;
+            display: flex; flex-direction: column; gap: 12px;
+        }
+        .plain-tag {
+            background: #fff; color: #333; font-family: Arial, sans-serif;
+            padding: 8px 15px; border: 1px solid #000;
+            cursor: pointer; white-space: nowrap; transition: 0.2s;
+        }
+        .plain-tag:hover { background: var(--teal); }
 
-/* --- LARGE QUILTED CABINET --- */
-#cabinet-container {
-    position: absolute; 
-    left: -800px; 
-    top: 70vh;    
-    width: 700px; 
-    height: 1100px;
-    background: url('Assets/cabinet.png') no-repeat center center / contain;
-    z-index: 1000; 
-    transition: left 0.9s cubic-bezier(0.19, 1, 0.22, 1);
-    display: flex; 
-    flex-direction: column;
-    padding-top: 180px; 
-    box-sizing: border-box;
-}
-#cabinet-container.open { left: -40px; }
-
-.drawer-zone {
-    height: 145px; 
-    display: flex; 
-    align-items: center; 
-    justify-content: center;
-    cursor: pointer;
-}
-.label { 
-    font-family: 'Special Elite'; 
-    color: #444; 
-    font-size: 26px; 
-    text-transform: uppercase;
-    text-shadow: 1px 1px 0px rgba(255,255,255,0.5);
-    pointer-events: none;
-}
-</style>
+        #receipt {
+            position: fixed; top: -150%; left: 50%;
+            transform: translateX(-50%);
+            width: 380px; z-index: 3000;
+            transition: top 1.5s cubic-bezier(0.19, 1, 0.22, 1);
+        }
+    </style>
 </head>
 <body>
 
@@ -125,57 +156,129 @@ h2 {
     <h1>Room Glow Up</h1>
     <h2>Where Your Dream Space Comes To Life</h2>
     <div class="nav-row">
-        <div class="pull-tab" id="rooms-btn"><div class="white-card">Rooms</div></div>
-        <div class="pull-tab"><div class="white-card">Furniture</div></div>
-        <div class="pull-tab"><div class="white-card">Decor</div></div>
+        <div class="pull-tab" onclick="openCabinet()"><div class="white-card">Rooms</div></div>
+        <div class="pull-tab" onclick="openFurniture()"><div class="white-card">Furniture Catalog</div></div>
+        <div class="pull-tab"><div class="white-card">Decor Closet</div></div>
         <div class="pull-tab"><div class="white-card">Walkthrough</div></div>
-        <div class="pull-tab"><div class="white-card">Checkout</div></div>
+        <div class="pull-tab" onclick="toggleReceipt()"><div class="white-card">save/checkout</div></div>
     </div>
 </div>
 
 <div id="stage-area"></div>
 
-<div id="cabinet-container">
-    <div class="drawer-zone" data-bg="Assets/livingroom.jpg"><span class="label">Living Room</span></div>
-    <div class="drawer-zone" data-bg="Assets/bedroom.jpg"><span class="label">Bedroom</span></div>
-    <div class="drawer-zone" data-bg="Assets/diningroom.jpg"><span class="label">Dining Room</span></div>
-    <div class="drawer-zone" id="extra-trigger"><span class="label">Extra Rooms</span></div>
-    <div class="drawer-zone" id="upload-trigger"><span class="label">Upload Yours</span></div>
+<div id="cabinet">
+    <img src="Assets/cabinet.png" width="400">
+    <div class="drawer-labels">
+        <div class="pull-tab" onmouseover="preview('livingroom1.jpg')" onclick="commitRoom('livingroom1.jpg')">
+            <div class="white-card">Living Room</div>
+        </div>
+        <div class="pull-tab" onmouseover="preview('bedroom.jpg')" onclick="commitRoom('bedroom.jpg')">
+            <div class="white-card">Bedroom</div>
+        </div>
+        <div class="pull-tab" onmouseover="preview('diningroom.jpg')" onclick="commitRoom('diningroom.jpg')">
+            <div class="white-card">Dining Room</div>
+        </div>
+        <div class="pull-tab" onmouseover="cyclePreview()" onclick="cycleExtras()">
+            <div class="white-card">Extra Rooms</div>
+        </div>
+        <div class="pull-tab" onclick="triggerUpload()">
+            <div class="white-card">Upload Yours</div>
+        </div>
+    </div>
 </div>
 
-<input type="file" id="file-upload" style="display:none" accept="image/*">
+<div id="furniture-cases">
+    <img src="Assets/furniturecases.png" width="450">
+    <div class="hanging-icons">
+        <img src="Assets/iconseating.png" width="85" class="icon-tag" onclick="showSubs('seating')">
+        <img src="Assets/icontables.png" width="85" class="icon-tag" onclick="showSubs('tables')">
+        <img src="Assets/iconstorage.png" width="85" class="icon-tag" onclick="showSubs('storage')">
+        <img src="Assets/iconbeds.png" width="85" class="icon-tag" onclick="showSubs('beds')">
+    </div>
+    <div id="sub-tag-list" class="sub-tag-list"></div>
+</div>
+
+<input type="file" id="file-input" style="display:none" accept="image/*">
+<img src="Assets/scrollreceipt.png" id="receipt">
 
 <script>
-    const roomsBtn = document.getElementById('rooms-btn');
-    const cabinet = document.getElementById('cabinet-container');
+    const Assets = 'Assets/';
     const stage = document.getElementById('stage-area');
-    const fileInput = document.getElementById('file-upload');
+    const cab = document.getElementById('cabinet');
+    const furn = document.getElementById('furniture-cases');
 
-    roomsBtn.onclick = () => {
-        cabinet.classList.toggle('open');
-        stage.classList.toggle('shift');
-    };
+    function preview(img) {
+        stage.style.backgroundImage = `url('${Assets}${img}')`;
+    }
 
-    document.querySelectorAll('.drawer-zone').forEach(drawer => {
-        drawer.onmouseenter = () => {
-            const bg = drawer.getAttribute('data-bg');
-            if(bg) stage.style.backgroundImage = `url(${bg})`;
-        };
-        drawer.onmouseleave = () => {
-            stage.style.backgroundImage = "url('Assets/stagecurtain.png')";
-        };
-    });
+    function openCabinet() {
+        cab.style.left = "20px";
+        stage.classList.add('shift');
+        furn.style.left = "-550px";
+    }
 
-    document.getElementById('upload-trigger').onclick = () => fileInput.click();
+    function openFurniture() {
+        furn.style.left = "20px";
+        stage.classList.add('shift');
+        cab.style.left = "-550px";
+    }
+
+    function commitRoom(img) {
+        preview(img);
+        cab.style.left = "-550px";
+        stage.classList.remove('shift');
+        setTimeout(() => {
+            openFurniture();
+        }, 900);
+    }
+
+    let extraIdx = 0;
+    const extras = ['foyer.jpg', 'officeroom.jpg', 'kitchen.jpg', 'kitchen2.jpg'];
+    
+    function cyclePreview() {
+        preview(extras[extraIdx]);
+    }
+
+    function cycleExtras() {
+        extraIdx = (extraIdx + 1) % extras.length;
+        preview(extras[extraIdx]);
+    }
+
+    const fileInput = document.getElementById('file-input');
+    function triggerUpload() { fileInput.click(); }
     fileInput.onchange = (e) => {
         const file = e.target.files[0];
         if (file) {
             const reader = new FileReader();
-            reader.onload = (ev) => stage.style.backgroundImage = `url(${ev.target.result})`;
+            reader.onload = (event) => {
+                stage.style.backgroundImage = `url(${event.target.result})`;
+            };
             reader.readAsDataURL(file);
         }
     };
-</script>
 
+    function showSubs(category) {
+        const list = document.getElementById('sub-tag-list');
+        list.innerHTML = '';
+        const data = {
+            seating: ['Couches', 'Chairs', 'Dining Chairs', 'Benches', 'Stools'],
+            tables: ['Coffee Tables', 'Dining Tables', 'Side Tables'],
+            storage: ['Bookshelves', 'Dressers', 'Cabinets'],
+            beds: ['King', 'Queen', 'Twin']
+        };
+        data[category].forEach(item => {
+            const tag = document.createElement('div');
+            tag.className = 'plain-tag';
+            tag.innerText = item;
+            tag.onclick = () => console.log("Open catalog book for: " + item);
+            list.appendChild(tag);
+        });
+    }
+
+    function toggleReceipt() {
+        const r = document.getElementById('receipt');
+        r.style.top = (r.style.top === "50px") ? "-150%" : "50px";
+    }
+</script>
 </body>
 </html>
