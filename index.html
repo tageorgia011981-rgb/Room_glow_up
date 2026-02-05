@@ -12,122 +12,53 @@
     --gunmetal: #2a2e30;
 }
 
-/* --- THE FOUNDATION --- */
 body, html {
     margin: 0; padding: 0;
     height: 250vh; 
-    background-color: #000000;
-    background-image: url('Assets/mainbackground.jpg');
+    background: #000 url('Assets/mainbackground.jpg') no-repeat center top fixed;
     background-size: contain;
-    background-repeat: no-repeat;
-    background-position: center top;
-    background-attachment: fixed;
     font-family: 'Special Elite', serif;
     overflow-x: hidden;
-    color: white;
 }
 
-/* --- HEADER & SUB-HEADER --- */
-.header-area {
-    text-align: center;
-    padding: 60px 0 40px; 
-    position: relative;
-    z-index: 2000;
-}
-h1 {
-    font-family: 'Limelight';
-    font-size: 100px;
-    margin: 0;
-    color: var(--silver);
-    text-transform: uppercase;
-    letter-spacing: 4px;
-    background: linear-gradient(to bottom, #ffffff 0%, #a9a9a9 50%, #2a2e30 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    filter: drop-shadow(4px 4px 2px #000);
-}
-h2 {
-    font-family: 'Limelight';
-    font-size: 24px;
-    color: var(--silver);
-    margin: 20px 0 40px 0;
-    text-shadow: 2px 2px 4px #000;
-}
+/* --- HEADER --- */
+.header-area { text-align: center; padding: 60px 0 40px; position: relative; z-index: 2000; }
+h1 { font-family: 'Limelight'; font-size: 100px; margin: 0; color: var(--silver); text-transform: uppercase; background: linear-gradient(to bottom, #ffffff 0%, #a9a9a9 50%, #2a2e30 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+h2 { font-family: 'Limelight'; font-size: 24px; color: var(--silver); margin: 20px 0 40px 0; }
 
-/* --- PULL TABS --- */
-.nav-row {
-    display: flex;
-    justify-content: center;
-    gap: 25px;
-}
-.pull-tab {
-    background: var(--gunmetal);
-    width: 190px; height: 60px;
-    border: 2px solid #111;
-    position: relative;
-    cursor: pointer;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.8);
-}
-.pull-tab::after {
-    content: ''; position: absolute; bottom: -6px; left: 15%;
-    width: 70%; height: 12px; background: #111;
-    border-radius: 0 0 8px 8px; box-shadow: inset 0 2px 4px var(--silver);
-}
-.white-card {
-    background: #fff; color: #000;
-    font-family: 'Special Elite'; font-weight: bold; font-size: 14px;
-    width: 85%; padding: 6px 0;
-    position: absolute; top: 12px; left: 7.5%;
-    text-align: center; transform: rotate(-1.5deg);
-    transition: 0.3s ease;
-}
-.pull-tab:hover .white-card {
-    background: var(--teal);
-    box-shadow: 0 0 20px var(--teal);
-    transform: rotate(0deg) scale(1.05);
-}
+/* --- TABS --- */
+.nav-row { display: flex; justify-content: center; gap: 25px; }
+.pull-tab { background: var(--gunmetal); width: 190px; height: 60px; border: 2px solid #111; position: relative; cursor: pointer; }
+.white-card { background: #fff; color: #000; font-family: 'Special Elite'; font-weight: bold; font-size: 14px; width: 85%; padding: 6px 0; position: absolute; top: 12px; left: 7.5%; text-align: center; transform: rotate(-1.5deg); }
 
-/* --- THE STAGE PEEK (Centered & Shifting) --- */
+/* --- STAGE --- */
 #stage-area {
-    position: absolute; 
-    top: 85vh; /* Grounded at the bottom */
-    left: 50%;
-    transform: translateX(-50%);
+    position: absolute; top: 85vh; left: 50%; transform: translateX(-50%);
     width: 850px; height: 550px;
-    border: 12px solid var(--gunmetal);
-    outline: 2px solid var(--silver);
+    border: 12px solid var(--gunmetal); outline: 2px solid var(--silver);
     background: url('Assets/stagecurtain.png') no-repeat center center / cover;
-    z-index: 100;
-    transition: left 0.9s cubic-bezier(0.23, 1, 0.32, 1), transform 0.9s cubic-bezier(0.23, 1, 0.32, 1);
+    z-index: 100; transition: transform 0.9s ease, background 0.3s ease;
 }
+#stage-area.shift { transform: translateX(-5%); }
 
-/* Shift Stage Right to make room */
-#stage-area.shift {
-    left: 65%;
-}
-
-/* --- THE IMAGE CABINET (Assets/cabinet.png) --- */
+/* --- CABINET --- */
 #cabinet-container {
-    position: absolute;
-    left: -500px; /* Fully off-screen */
-    top: 85vh;    /* Matches Stage height exactly */
-    width: 400px;
-    height: 600px;
+    position: absolute; left: -650px; top: 80vh;
+    width: 550px; height: 800px;
     background: url('Assets/cabinet.png') no-repeat center center / contain;
-    z-index: 1000;
-    transition: left 0.9s cubic-bezier(0.23, 1, 0.32, 1);
+    z-index: 1000; transition: left 0.9s cubic-bezier(0.23, 1, 0.32, 1);
+    display: flex; flex-direction: column; 
+    padding: 60px 0 40px 0; /* Adjusted padding to help text-to-drawer alignment */
 }
+#cabinet-container.open { left: 20px; }
 
-#cabinet-container.open {
-    left: 50px; /* Glides in beside the stage */
-}
-
-/* Invisible Hit Zones */
 .drawer-zone {
-    height: 20%; /* 5 drawers = 20% each */
-    width: 100%;
-    cursor: pointer;
+    flex: 1; display: flex; align-items: center; justify-content: center;
+    cursor: pointer; position: relative;
 }
+.label { font-family: 'Special Elite'; color: var(--silver); font-size: 22px; text-transform: uppercase; text-shadow: 2px 2px 2px #000; pointer-events: none; }
+
+#file-upload { display: none; }
 </style>
 </head>
 <body>
@@ -135,7 +66,6 @@ h2 {
 <div class="header-area">
     <h1>Room Glow Up</h1>
     <h2>Where Your Dream Space Comes To Life</h2>
-
     <div class="nav-row">
         <div class="pull-tab" id="rooms-btn"><div class="white-card">Rooms</div></div>
         <div class="pull-tab"><div class="white-card">Furniture Catalog</div></div>
@@ -148,22 +78,49 @@ h2 {
 <div id="stage-area"></div>
 
 <div id="cabinet-container">
-    <div class="drawer-zone" title="Living Room"></div>
-    <div class="drawer-zone" title="Bedroom"></div>
-    <div class="drawer-zone" title="Kitchen"></div>
-    <div class="drawer-zone" title="Extra Rooms"></div>
-    <div class="drawer-zone" title="Upload Yours"></div>
+    <div class="drawer-zone" data-bg="Assets/livingroom.jpg"><span class="label">Living Room</span></div>
+    <div class="drawer-zone" data-bg="Assets/bedroom.jpg"><span class="label">Bedroom</span></div>
+    <div class="drawer-zone" data-bg="Assets/diningroom.jpg"><span class="label">Dining Room</span></div>
+    <div class="drawer-zone" id="extra-trigger"><span class="label">Extra Rooms</span></div>
+    <div class="drawer-zone" id="upload-trigger"><span class="label">Upload Yours</span></div>
 </div>
+
+<input type="file" id="file-upload" accept="image/*">
 
 <script>
     const roomsBtn = document.getElementById('rooms-btn');
     const cabinet = document.getElementById('cabinet-container');
     const stage = document.getElementById('stage-area');
+    const fileInput = document.getElementById('file-upload');
+    const drawers = document.querySelectorAll('.drawer-zone');
 
-    roomsBtn.addEventListener('click', () => {
+    roomsBtn.onclick = () => {
         cabinet.classList.toggle('open');
         stage.classList.toggle('shift');
+    };
+
+    drawers.forEach(drawer => {
+        drawer.onmouseenter = () => {
+            const bg = drawer.getAttribute('data-bg');
+            if(bg) stage.style.backgroundImage = `url(${bg})`;
+        };
+        drawer.onmouseleave = () => {
+            stage.style.backgroundImage = "url('Assets/stagecurtain.png')";
+        };
     });
+
+    // Upload Yours Trigger
+    document.getElementById('upload-trigger').onclick = () => fileInput.click();
+    fileInput.onchange = (e) => {
+        const file = e.target.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = (event) => {
+                stage.style.backgroundImage = `url(${event.target.result})`;
+            };
+            reader.readAsDataURL(file);
+        }
+    };
 </script>
 
 </body>
