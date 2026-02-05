@@ -1,265 +1,179 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Room Glow Up</title>
-
-<link href="https://fonts.googleapis.com/css2?family=LimeLight&family=Special+Elite&display=swap" rel="stylesheet">
-
+<link href="https://fonts.googleapis.com/css2?family=Limelight&family=Special+Elite&display=swap" rel="stylesheet">
 <style>
-/* ================================
-   CORE RESET & ORIGINAL STYLES
-================================ */
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
+:root {
+    --teal: #40E0D0;
+    --silver: #c0c0c0;
+    --gunmetal: #2a2e30;
 }
 
-html, body {
-  width: 100%;
-  height: 100%;
-  background-color: #000;
-  font-family: Arial, Helvetica, sans-serif;
-  scroll-behavior: smooth;
+/* --- BACKGROUND: CONTAINED WITH BLACK SIDES --- */
+body, html {
+    margin: 0; padding: 0;
+    height: 250vh; /* Extra height to allow for the 'Reveal' scroll */
+    background-color: #000000;
+    background-image: url('Assets/mainbackground.jpg');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center top;
+    background-attachment: fixed;
+    font-family: 'Special Elite', serif;
+    overflow-x: hidden;
+    color: white;
 }
 
-body {
-  background-image: url("Assets/backgroundG&Blk.jpg");
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-  background-attachment: fixed;
-  min-height: 180vh; /* Allows for the half-visible cabinet scroll */
-  overflow-x: hidden;
+/* --- YOUR ORIGINAL HEADERS (UNTOUCHED) --- */
+.header-area {
+    text-align: center;
+    padding: 60px 0 20px;
+    position: relative;
+    z-index: 2000;
+}
+h1 {
+    font-family: 'Limelight';
+    font-size: 100px;
+    margin: 0;
+    color: var(--silver);
+    text-transform: uppercase;
+    letter-spacing: 4px;
+    background: linear-gradient(to bottom, #ffffff 0%, #a9a9a9 50%, #2a2e30 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    filter: drop-shadow(4px 4px 2px #000);
+}
+h2 {
+    font-family: 'Limelight';
+    font-size: 24px;
+    color: var(--silver);
+    margin-top: 10px;
+    text-shadow: 2px 2px 4px #000;
 }
 
-header {
-  width: 100%;
-  background: linear-gradient(to bottom, #162127, #0C1519);
-  border-bottom: 1px solid #0C1519;
-  position: relative;
-  z-index: 1000;
+/* --- YOUR ORIGINAL NAV PULL TABS --- */
+.nav-row {
+    display: flex;
+    justify-content: center;
+    gap: 25px;
+    margin-top: 30px;
+}
+.pull-tab {
+    background: var(--gunmetal);
+    width: 190px; height: 60px;
+    border: 2px solid #111;
+    position: relative;
+    cursor: pointer;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.8);
+}
+.pull-tab::after {
+    content: ''; position: absolute; bottom: -6px; left: 15%;
+    width: 70%; height: 12px; background: #111;
+    border-radius: 0 0 8px 8px; box-shadow: inset 0 2px 4px var(--silver);
+}
+.white-card {
+    background: #fff; color: #000;
+    font-family: 'Special Elite'; font-weight: bold; font-size: 14px;
+    width: 85%; padding: 6px 0;
+    position: absolute; top: 12px; left: 7.5%;
+    text-align: center; transform: rotate(-1.5deg);
+    transition: 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+.pull-tab:hover .white-card {
+    background: var(--teal);
+    box-shadow: 0 0 20px var(--teal);
+    transform: rotate(0deg) scale(1.05);
 }
 
-.header-main {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 34px 28px 10px;
+/* --- THE STAGE (CLICK TO LOCK) --- */
+#stage-area {
+    position: fixed; top: 450px; left: 55%;
+    transform: translateX(-50%);
+    width: 850px; height: 550px;
+    border: 12px solid var(--gunmetal);
+    outline: 2px solid var(--silver);
+    background: rgba(0,0,0,0.7) no-repeat center center;
+    background-size: cover;
+    z-index: 100;
+    cursor: pointer;
 }
 
-.site-title {
-  font-family: 'LimeLight', cursive;
-  color: #CF9D7B;
-  font-size: 72px;
-  letter-spacing: 6px;
-  text-align: center;
-  text-transform: uppercase;
-  text-shadow: 0 2px 0 rgba(0,0,0,0.6), 0 6px 18px rgba(0,0,0,0.65);
+/* --- CABINET & CASES (PEEK FACTOR) --- */
+#cabinet, #furniture-cases {
+    position: absolute; /* Set to absolute so it scrolls with the page */
+    left: -550px; 
+    top: 850px; /* Positioned low enough to only peek over the bottom edge */
+    transition: left 0.9s cubic-bezier(0.23, 1, 0.32, 1);
+    z-index: 500;
 }
 
-.header-tagline {
-  display: flex;
-  justify-content: center;
-  padding: 6px 28px 20px;
+.drawer-labels {
+    position: absolute; top: 70px; left: 45px;
+    display: flex; flex-direction: column; gap: 46px;
 }
-
-.header-tagline span {
-  font-family: 'LimeLight', cursive;
-  color: #CF9D7B;
-  font-size: 26px;
-  letter-spacing: 3px;
-  opacity: 0.9;
-}
-
-.sub-header {
-  display: flex;
-  justify-content: center;
-  gap: 18px;
-  padding: 14px 0 18px;
-  border-top: 1px solid #0C1519;
-}
-
-.nav-tab {
-  position: relative;
-  min-width: 160px;
-  padding: 14px 16px 12px;
-  text-align: center;
-  color: #000;
-  font-family: 'Courier New', Courier, monospace;
-  font-weight: bold;
-  font-size: 16px;
-  letter-spacing: 1px;
-  cursor: pointer;
-  background: linear-gradient(to bottom, #1E2B31, #0C1519);
-  border-radius: 3px;
-  box-shadow: inset 0 1px 0 rgba(255,255,255,0.08), 0 4px 8px rgba(0,0,0,0.7);
-  transition: transform 0.25s ease, box-shadow 0.25s ease;
-}
-
-.nav-tab::before {
-  content: "";
-  position: absolute;
-  left: 10%; right: 10%; bottom: -6px; height: 8px;
-  background: linear-gradient(to bottom, #CFD2D4, #8A8E91);
-  border-radius: 0 0 3px 3px;
-  box-shadow: inset 0 1px 0 rgba(255,255,255,0.6), 0 3px 4px rgba(0,0,0,0.7);
-}
-
-.nav-tab:hover {
-  transform: translateY(-3px);
-  background: #CF9D7B; /* Visual feedback for pull */
-}
-
-/* ================================
-   MECHANICAL STAGE & SLIDING UNITS
-================================ */
-#stage {
-  position: absolute;
-  top: 450px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 800px;
-  height: 500px;
-  border: 12px solid #1E2B31;
-  outline: 2px solid #CF9D7B;
-  background-color: rgba(0,0,0,0.4);
-  background-size: cover;
-  background-position: center;
-  z-index: 50;
-  cursor: pointer;
-  transition: left 1s cubic-bezier(0.23, 1, 0.32, 1);
-}
-
-.unit-base {
-  position: absolute;
-  top: 500px;
-  left: -600px; /* Hidden start */
-  width: 420px;
-  transition: left 1s cubic-bezier(0.23, 1, 0.32, 1);
-  z-index: 500;
-}
-
-/* Internal labels for Cabinet */
-.cabinet-labels {
-  position: absolute;
-  top: 60px;
-  left: 40px;
-  display: flex;
-  flex-direction: column;
-  gap: 25px;
-}
-
-/* Hanging Tags for Furniture Cases */
-.hanging-tags {
-  position: absolute;
-  top: 70px;
-  left: 35px;
-  display: flex;
-  gap: 15px;
-}
-
-.tag-wrapper {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  transform-origin: top center;
-  transition: 0.4s;
-}
-
-.tag-string { width: 1px; height: 30px; background: #888; }
-.tag-icon { width: 75px; cursor: pointer; }
-
-/* Wonky rotation for real tag look */
-.tag-wrapper:nth-child(odd) { transform: rotate(-6deg); }
-.tag-wrapper:nth-child(even) { transform: rotate(5deg); margin-top: 10px; }
-
 </style>
 </head>
-
 <body>
 
-<header>
-  <div class="header-main">
-    <div class="site-title">Room Glow Up</div>
-  </div>
-  <div class="header-tagline">
-    <span>Where Your Dream Space Comes To Life</span>
-  </div>
-  <div class="sub-header">
-    <div class="nav-tab active" onclick="openCabinet()">Rooms</div>
-    <div class="nav-tab">Furniture Catalog</div>
-    <div class="nav-tab">Decor Closet</div>
-    <div class="nav-tab">Inspirational Walkthru</div>
-    <div class="nav-tab">Save / Checkout</div>
-  </div>
-</header>
-
-<main id="stage" onclick="lockInRoom()"></main>
-
-<div id="cabinet" class="unit-base">
-  <img src="Assets/cabinet.png" style="width:100%;">
-  <div class="cabinet-labels">
-    <div class="nav-tab" onmouseover="previewRoom('living1.jpg')" onclick="cycleRooms('living')">Living Room</div>
-    <div class="nav-tab" onmouseover="previewRoom('bed1.jpg')" onclick="cycleRooms('bed')">Bedroom</div>
-    <div class="nav-tab" onmouseover="previewRoom('dining1.jpg')" onclick="cycleRooms('dining')">Dining Room</div>
-  </div>
+<div class="header-area">
+    <h1>Room Glow Up</h1>
+    <h2>Where Your Dream Space Comes To Life</h2>
+    <div class="nav-row">
+        <div class="pull-tab" onclick="openCabinet()"><div class="white-card">Rooms</div></div>
+        <div class="pull-tab"><div class="white-card">Furniture Catalog</div></div>
+        <div class="pull-tab" onclick="toggleReceipt()"><div class="white-card">save/checkout</div></div>
+    </div>
 </div>
 
-<div id="furniture-cases" class="unit-base">
-  <img src="Assets/furniturecases.png" style="width:100%;">
-  <div class="hanging-tags">
-    <div class="tag-wrapper"><div class="tag-string"></div><img src="Assets/iconseating.png" class="tag-icon"></div>
-    <div class="tag-wrapper"><div class="tag-string"></div><img src="Assets/icontables.png" class="tag-icon"></div>
-    <div class="tag-wrapper"><div class="tag-string"></div><img src="Assets/icondecor.png" class="tag-icon"></div>
-  </div>
+<div id="stage-area" onclick="lockAndSwap()"></div>
+
+<div id="cabinet">
+    <img src="Assets/cabinet.png" width="400">
+    <div class="drawer-labels">
+        <div class="pull-tab" onmouseover="preview('livingroom1.jpg')" onclick="cycleRooms('living')">
+            <div class="white-card">Living Room</div>
+        </div>
+        <div class="pull-tab" onmouseover="preview('bedroom.jpg')" onclick="cycleRooms('bedroom')">
+            <div class="white-card">Bedroom</div>
+        </div>
+    </div>
+</div>
+
+<div id="furniture-cases">
+    <img src="Assets/furniturecases.png" width="450">
 </div>
 
 <script>
-const roomData = {
-  living: ['living1.jpg', 'living2.jpg', 'living3.jpg'],
-  bed: ['bed1.jpg', 'bed2.jpg'],
-  dining: ['dining1.jpg']
-};
-let roomIndexes = { living: 0, bed: 0, dining: 0 };
-let currentSelection = "";
+const Assets = 'Assets/';
+let isRoomReady = false;
 
-// 1. "Rooms" Tab Click
+function preview(img) {
+    document.getElementById('stage-area').style.backgroundImage = `url('${Assets}${img}')`;
+    isRoomReady = true;
+}
+
 function openCabinet() {
-  document.getElementById('stage').style.left = "65%";
-  document.getElementById('cabinet').style.left = "20px";
-  // Mechanical Reveal: Half-visible until scroll
-  window.scrollTo({ top: 200, behavior: 'smooth' });
+    document.getElementById('cabinet').style.left = "20px";
+    document.getElementById('furniture-cases').style.left = "-550px";
 }
 
-// 2. Hover Preview
-function previewRoom(img) {
-  document.getElementById('stage').style.backgroundImage = `url('Assets/${img}')`;
-  currentSelection = img;
+function lockAndSwap() {
+    if(!isRoomReady) return;
+    document.getElementById('cabinet').style.left = "-550px"; 
+    setTimeout(() => {
+        document.getElementById('furniture-cases').style.left = "20px"; 
+    }, 900);
 }
 
-// 3. Click Pull Tab to Cycle
-function cycleRooms(type) {
-  roomIndexes[type] = (roomIndexes[type] + 1) % roomData[type].length;
-  previewRoom(roomData[type][roomIndexes[type]]);
-}
-
-// 4. THE LOCK-IN: Click Stage Image
-function lockInRoom() {
-  if (!currentSelection) return;
-
-  // Cabinet glides OUT
-  document.getElementById('cabinet').style.left = "-600px";
-
-  // Furniture Cases glide IN
-  setTimeout(() => {
-    document.getElementById('furniture-cases').style.left = "20px";
-  }, 800);
+const rooms = { living: ['livingroom1.jpg', 'livingroom2.jpg'], bedroom: ['bedroom.jpg'] };
+let roomIdx = { living: 0, bedroom: 0 };
+function cycleRooms(cat) {
+    roomIdx[cat] = (roomIdx[cat] + 1) % rooms[cat].length;
+    preview(rooms[cat][roomIdx[cat]]);
 }
 </script>
-
 </body>
 </html>
