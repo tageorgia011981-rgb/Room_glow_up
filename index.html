@@ -12,138 +12,105 @@
             --gunmetal: #2a2e30;
         }
 
-        /* --- CINEMATIC LETTERBOX BACKGROUND --- */
+        /* --- THE CINEMATIC "LETTERBOX" BACKGROUND --- */
         body, html {
-            margin: 0; padding: 0;
-            min-height: 200vh; /* Extra height for the 'reveal' scroll */
-            background-color: #000000; 
+            margin: 0; padding: 0; min-height: 250vh;
+            background-color: #000;
             background-image: url('Assets/mainbackground.jpg');
-            background-size: contain; 
-            background-repeat: no-repeat;
-            background-position: center top;
-            background-attachment: fixed;
-            font-family: 'Special Elite', serif;
-            overflow-x: hidden;
-            color: white;
+            background-size: contain; background-repeat: no-repeat;
+            background-position: center top; background-attachment: fixed;
+            font-family: 'Special Elite', serif; overflow-x: hidden;
             scroll-behavior: smooth;
         }
 
-        /* --- HEADERS (Absolute so they scroll away) --- */
+        /* --- THE INDUSTRIAL HEADERS --- */
         .header-area {
-            text-align: center;
-            padding: 80px 0 40px;
-            position: absolute;
-            top: 0; width: 100%;
-            z-index: 2000;
+            text-align: center; padding: 100px 0 50px;
+            position: absolute; top: 0; width: 100%; z-index: 2000;
         }
         h1 {
-            font-family: 'Limelight';
-            font-size: 100px;
-            margin: 0;
-            color: var(--silver);
-            text-transform: uppercase;
-            background: linear-gradient(to bottom, #ffffff 0%, #a9a9a9 50%, #2a2e30 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            filter: drop-shadow(4px 4px 2px #000);
+            font-family: 'Limelight'; font-size: 110px; margin: 0;
+            color: var(--silver); text-transform: uppercase;
+            background: linear-gradient(to bottom, #ffffff, #a9a9a9, var(--gunmetal));
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            filter: drop-shadow(5px 5px 3px #000);
         }
-        h2 {
-            font-family: 'Limelight';
-            font-size: 24px;
-            color: var(--silver);
-            margin-top: 10px;
-        }
+        h2 { font-family: 'Limelight'; font-size: 28px; color: var(--silver); margin-top: 15px; }
 
-        /* --- TOP NAV PULL TABS --- */
-        .nav-row {
-            display: flex;
-            justify-content: center;
-            gap: 20px;
-            margin-top: 40px;
-        }
+        /* --- LIBRARY LABEL PULL TABS --- */
+        .nav-row { display: flex; justify-content: center; gap: 20px; margin-top: 50px; }
         .pull-tab {
-            background: var(--gunmetal);
-            width: 190px;
-            height: 60px;
-            border: 2px solid #111;
-            position: relative;
-            cursor: pointer;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.7);
+            background: var(--gunmetal); width: 210px; height: 65px;
+            border: 2px solid #111; position: relative; cursor: pointer;
+            box-shadow: 0 8px 15px rgba(0,0,0,0.8);
         }
         .pull-tab::after {
-            content: ''; position: absolute; bottom: -5px; left: 15%;
-            width: 70%; height: 10px; background: #111;
-            border-radius: 0 0 5px 5px; box-shadow: inset 0 1px 3px var(--silver);
+            content: ''; position: absolute; bottom: -8px; left: 15%;
+            width: 70%; height: 14px; background: #111;
+            border-radius: 0 0 10px 10px; box-shadow: inset 0 2px 4px var(--silver);
         }
         .white-card {
-            background: #fff; color: #000;
-            font-family: 'Special Elite'; font-weight: bold;
-            width: 85%; padding: 5px 0;
-            position: absolute; top: 12px; left: 7.5%;
-            text-align: center; transform: rotate(-1.5deg);
-            transition: 0.3s;
+            background: #fff; color: #000; font-family: 'Special Elite';
+            font-weight: bold; font-size: 16px; width: 85%; padding: 8px 0;
+            position: absolute; top: 12px; left: 7.5%; text-align: center;
+            transform: rotate(-1.5deg); transition: 0.3s;
         }
         .pull-tab:hover .white-card {
-            background: var(--teal);
-            box-shadow: 0 0 15px var(--teal);
-            transform: rotate(0deg);
+            background: var(--teal); box-shadow: 0 0 20px var(--teal); transform: rotate(0deg);
         }
 
-        /* --- THE STUDIO WORKSPACE (Positioned for the Hook) --- */
+        /* --- STUDIO WORKSPACE --- */
         #stage-area {
-            position: absolute; 
-            top: 850px; /* Pushed down for curiosity */
-            left: 55%;
-            transform: translateX(-50%);
-            width: 850px; height: 550px;
-            border: 12px solid var(--gunmetal);
-            outline: 2px solid var(--silver);
-            background-color: rgba(0,0,0,0.8);
-            background-size: cover;
-            z-index: 100;
+            position: absolute; top: 1000px; left: 55%; transform: translateX(-50%);
+            width: 850px; height: 550px; border: 15px solid var(--gunmetal);
+            outline: 2px solid var(--silver); background-color: rgba(0,0,0,0.8);
+            background-size: cover; z-index: 100; box-shadow: 0 0 50px #000;
         }
 
         #cabinet, #furniture-cases {
-            position: absolute;
-            top: 900px; /* Aligns with Stage */
-            left: -550px; 
-            transition: left 0.9s cubic-bezier(0.23, 1, 0.32, 1);
-            z-index: 500;
+            position: absolute; top: 1050px; left: -600px;
+            transition: left 1s cubic-bezier(0.23, 1, 0.32, 1); z-index: 500;
         }
 
+        /* --- CABINET: ROOM LABELS --- */
         .drawer-labels {
-            position: absolute; top: 70px; left: 45px;
-            display: flex; flex-direction: column; gap: 46px;
+            position: absolute; top: 85px; left: 55px;
+            display: flex; flex-direction: column; gap: 48px;
         }
 
-        /* --- FURNITURE INTERFACE --- */
-        .hanging-icons {
-            position: absolute; top: 80px; left: 40px;
-            display: flex; gap: 15px;
+        /* --- FURNITURE CASES: HANGING TAGS --- */
+        .hanging-tags-container {
+            position: absolute; top: 70px; left: 40px;
+            display: flex; align-items: flex-start; gap: 15px;
         }
-        .icon-tag { cursor: pointer; transition: 0.3s; transform-origin: top center; }
-        .icon-tag:hover { transform: rotate(5deg) scale(1.1); }
+        .tag-wrapper {
+            display: flex; flex-direction: column; align-items: center;
+            transition: 0.4s ease-in-out; cursor: pointer; transform-origin: top center;
+        }
+        /* The "String" for the tag */
+        .tag-string { width: 2px; height: 30px; background: #555; }
+        
+        /* Specific rotations for a "natural" hanging look */
+        .tag-wrapper:nth-child(1) { transform: rotate(-3deg); }
+        .tag-wrapper:nth-child(2) { transform: rotate(2deg); margin-top: 10px; }
+        .tag-wrapper:nth-child(3) { transform: rotate(-1deg); margin-top: -5px; }
+        .tag-wrapper:nth-child(4) { transform: rotate(4deg); margin-top: 5px; }
 
-        .sub-tag-list {
-            position: absolute; left: 470px; top: 20px;
+        .tag-wrapper:hover { transform: rotate(0deg) scale(1.1) translateY(5px); filter: brightness(1.2); }
+
+        #sub-tag-list {
+            position: absolute; left: 530px; top: 50px;
             display: flex; flex-direction: column; gap: 10px;
         }
         .plain-tag {
-            background: #fff; color: #333; font-family: Arial, sans-serif;
-            padding: 8px 15px; border: 1px solid #000;
-            cursor: pointer; white-space: nowrap; transition: 0.2s;
+            background: #fff; color: #333; font-family: sans-serif; padding: 10px 20px;
+            border: 1px solid #000; cursor: pointer; transition: 0.2s; white-space: nowrap;
         }
         .plain-tag:hover { background: var(--teal); }
 
-        /* --- THE SCROLL RECEIPT (Fixed so it rolls down over view) --- */
         #receipt {
-            position: fixed; 
-            top: -150%; 
-            left: 50%;
-            transform: translateX(-50%);
-            width: 380px; 
-            z-index: 3000;
-            transition: top 1.5s cubic-bezier(0.19, 1, 0.22, 1);
+            position: fixed; top: -160%; left: 50%; transform: translateX(-50%);
+            width: 400px; z-index: 3000; transition: top 1.8s cubic-bezier(0.19, 1, 0.22, 1);
         }
     </style>
 </head>
@@ -153,10 +120,10 @@
         <h1>Room Glow Up</h1>
         <h2>Where Your Dream Space Comes To Life</h2>
         <div class="nav-row">
-            <div class="pull-tab" onclick="openCabinet()"><div class="white-card">Rooms</div></div>
+            <div class="pull-tab" onclick="glideIn('cabinet')"><div class="white-card">Rooms</div></div>
             <div class="pull-tab"><div class="white-card">Furniture Catalog</div></div>
             <div class="pull-tab"><div class="white-card">Decor Closet</div></div>
-            <div class="pull-tab"><div class="white-card">Walkthrough</div></div>
+            <div class="pull-tab"><div class="white-card">Inspirational Walkthrough</div></div>
             <div class="pull-tab" onclick="toggleReceipt()"><div class="white-card">save/checkout</div></div>
         </div>
     </div>
@@ -164,7 +131,7 @@
     <div id="stage-area"></div>
 
     <div id="cabinet">
-        <img src="Assets/cabinet.png" width="400">
+        <img src="Assets/cabinet.png" width="450">
         <div class="drawer-labels">
             <div class="pull-tab" onmouseover="preview('livingroom1.jpg')" onclick="commitRoom('livingroom1.jpg')"><div class="white-card">Living Room</div></div>
             <div class="pull-tab" onmouseover="preview('bedroom.jpg')" onclick="commitRoom('bedroom.jpg')"><div class="white-card">Bedroom</div></div>
@@ -175,14 +142,26 @@
     </div>
 
     <div id="furniture-cases">
-        <img src="Assets/furniturecases.png" width="450">
-        <div class="hanging-icons">
-            <img src="Assets/iconseating.png" width="80" class="icon-tag" onclick="showSubs('seating')">
-            <img src="Assets/icontables.png" width="80" class="icon-tag" onclick="showSubs('tables')">
-            <img src="Assets/iconstorage.png" width="80" class="icon-tag" onclick="showSubs('storage')">
-            <img src="Assets/iconbeds.png" width="80" class="icon-tag" onclick="showSubs('beds')">
+        <img src="Assets/furniturecases.png" width="500">
+        <div class="hanging-tags-container">
+            <div class="tag-wrapper" onclick="showFurniture('seating')">
+                <div class="tag-string"></div>
+                <img src="Assets/iconseating.png" width="85">
+            </div>
+            <div class="tag-wrapper" onclick="showFurniture('tables')">
+                <div class="tag-string"></div>
+                <img src="Assets/icontables.png" width="85">
+            </div>
+            <div class="tag-wrapper" onclick="showFurniture('storage')">
+                <div class="tag-string"></div>
+                <img src="Assets/iconstorage.png" width="85">
+            </div>
+            <div class="tag-wrapper" onclick="showFurniture('beds')">
+                <div class="tag-string"></div>
+                <img src="Assets/iconbeds.png" width="85">
+            </div>
         </div>
-        <div id="sub-tag-list" class="sub-tag-list"></div>
+        <div id="sub-tag-list"></div>
     </div>
 
     <img src="Assets/scrollreceipt.png" id="receipt">
@@ -194,27 +173,17 @@
             document.getElementById('stage-area').style.backgroundImage = `url('${PATH}${img}')`;
         }
 
-        function openCabinet() {
-            const cab = document.getElementById('cabinet');
-            cab.style.left = "20px";
-            
-            // The "Curiosity Nudge": Scroll down just enough to tease the workspace
-            setTimeout(() => {
-                window.scrollBy({ top: 350, behavior: 'smooth' });
-            }, 600);
+        function glideIn(id) {
+            document.getElementById(id).style.left = "30px";
+            setTimeout(() => { window.scrollBy({ top: 400, behavior: 'smooth' }); }, 700);
         }
 
         function commitRoom(img) {
             preview(img);
-            // Cabinet glides out
-            document.getElementById('cabinet').style.left = "-550px";
-            // Cases glide in
-            setTimeout(() => {
-                document.getElementById('furniture-cases').style.left = "20px";
-            }, 900);
+            document.getElementById('cabinet').style.left = "-600px";
+            setTimeout(() => { document.getElementById('furniture-cases').style.left = "30px"; }, 1000);
         }
 
-        // Cycling through the extra rooms
         let extraIdx = 0;
         const extras = ['foyer.jpg', 'officeroom.jpg', 'kitchen.jpg', 'kitchen2.jpg'];
         function cycleExtras() {
@@ -222,32 +191,27 @@
             extraIdx = (extraIdx + 1) % extras.length;
         }
 
-        function showSubs(category) {
+        function showFurniture(cat) {
             const list = document.getElementById('sub-tag-list');
             list.innerHTML = '';
             const data = {
                 seating: ['Couches', 'Chairs', 'Dining Chairs', 'Benches', 'Stools'],
                 tables: ['Coffee Tables', 'Dining Tables', 'Side Tables'],
                 storage: ['Bookshelves', 'Dressers'],
-                beds: ['King', 'Queen', 'Twin']
+                beds: ['King Size', 'Queen Size', 'Twin']
             };
-            data[category].forEach(item => {
+            data[cat].forEach(name => {
                 const tag = document.createElement('div');
                 tag.className = 'plain-tag';
-                tag.innerText = item;
-                tag.onclick = () => console.log("Catalog for: " + item);
+                tag.innerText = name;
+                tag.onclick = () => console.log('Open Catalog for ' + name);
                 list.appendChild(tag);
             });
         }
 
         function toggleReceipt() {
             const r = document.getElementById('receipt');
-            // If up, pull down. If down, push up.
-            if (r.style.top === "50px") {
-                r.style.top = "-150%";
-            } else {
-                r.style.top = "50px";
-            }
+            r.style.top = (r.style.top === "60px") ? "-160%" : "60px";
         }
     </script>
 </body>
