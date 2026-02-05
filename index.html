@@ -12,205 +12,142 @@
             --gunmetal: #2a2e30;
         }
 
-        /* --- BACKGROUND & CORE --- */
+        /* THE FLIPPING SCROLL */
         body, html {
             margin: 0; padding: 0;
-            height: 100vh;
-            background-color: #000;
-            background-image: url('Assets/mainbackground.jpg');
-            background-size: contain;
-            background-repeat: no-repeat;
-            background-position: center top;
-            background-attachment: fixed;
+            min-height: 140vh; 
+            background: #000 url('Assets/mainbackground.jpg') no-repeat center top fixed;
+            background-size: cover;
             font-family: 'Special Elite', serif;
-            overflow: hidden;
+            overflow-y: auto;
             color: white;
         }
 
-        /* --- HEADER AREA (UNTOUCHED STYLES) --- */
+        /* PINNED HEADER - VISIBLE AT ALL TIMES */
         .header-area {
             text-align: center;
-            padding: 60px 0 20px;
+            padding: 40px 0 20px;
             position: fixed;
             top: 0; left: 0; width: 100%;
             z-index: 2000;
+            background: linear-gradient(to bottom, rgba(0,0,0,0.9) 50%, rgba(0,0,0,0) 100%);
         }
+
         h1 {
-            font-family: 'Limelight';
-            font-size: 100px;
-            margin: 0;
-            color: var(--silver);
-            text-transform: uppercase;
-            letter-spacing: 4px;
+            font-family: 'Limelight'; font-size: 80px; margin: 0;
+            color: var(--silver); text-transform: uppercase;
             background: linear-gradient(to bottom, #ffffff 0%, #a9a9a9 50%, #2a2e30 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            filter: drop-shadow(4px 4px 2px #000);
-        }
-        h2 {
-            font-family: 'Limelight';
-            font-size: 32px; 
-            color: var(--silver);
-            margin-top: 10px;
-            text-shadow: 2px 2px 4px #000;
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
         }
 
-        .nav-row {
-            display: flex;
-            justify-content: center;
-            gap: 25px;
-            margin-top: 30px;
-        }
+        .nav-row { display: flex; justify-content: center; gap: 20px; margin-top: 20px; }
+        
         .pull-tab {
-            background: var(--gunmetal);
-            width: 190px; height: 60px;
-            border: 2px solid #111;
-            position: relative;
-            cursor: pointer;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.8);
+            background: var(--gunmetal); width: 160px; height: 50px;
+            border: 2px solid #111; position: relative; cursor: pointer;
         }
-        .pull-tab::after {
-            content: ''; position: absolute; bottom: -6px; left: 15%;
-            width: 70%; height: 12px; background: #111;
-            border-radius: 0 0 8px 8px; box-shadow: inset 0 2px 4px var(--silver);
-        }
+
         .white-card {
-            background: #fff; color: #000;
-            font-family: 'Special Elite'; font-weight: bold; font-size: 14px;
-            width: 85%; padding: 6px 0;
-            position: absolute; top: 12px; left: 7.5%;
-            text-align: center; transform: rotate(-1.5deg);
-            transition: 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        }
-        .pull-tab:hover .white-card {
-            background: var(--teal);
-            box-shadow: 0 0 20px var(--teal);
-            transform: rotate(0deg) scale(1.05);
+            background: #fff; color: #000; font-weight: bold; font-size: 13px;
+            width: 85%; padding: 5px 0; position: absolute; top: 10px; left: 7.5%;
+            text-align: center; transform: rotate(-1.5deg); transition: 0.3s;
         }
 
-        /* --- THE FIXED WORKSPACE --- */
+        .pull-tab:hover .white-card { background: var(--teal); box-shadow: 0 0 15px var(--teal); transform: rotate(0deg); }
+
+        /* POSITIONED TO BE NOTICED AT TOP */
+        #stage-area, #cabinet, #furniture-cases {
+            position: absolute;
+            top: 320px; 
+        }
+
         #stage-area {
-            position: fixed; 
-            top: 500px; 
-            left: 55%;
-            transform: translateX(-50%);
+            left: 50%; transform: translateX(-50%);
             width: 850px; height: 550px;
-            border: 12px solid var(--gunmetal);
-            outline: 2px solid var(--silver);
-            background: rgba(0,0,0,0.7) no-repeat center center;
-            background-size: cover;
-            z-index: 100;
-            box-shadow: 0 0 50px rgba(0,0,0,0.9);
-            transition: left 0.9s cubic-bezier(0.23, 1, 0.32, 1);
-            cursor: pointer;
+            border: 12px solid var(--gunmetal); outline: 2px solid var(--silver);
+            background: rgba(0,0,0,0.7) no-repeat center center / cover;
+            z-index: 100; cursor: pointer;
+            transition: left 0.8s cubic-bezier(0.165, 0.84, 0.44, 1);
         }
-        #stage-area.shift { left: 68%; }
 
-        /* --- CABINETS & CASES --- */
         #cabinet, #furniture-cases {
-            position: fixed; 
-            left: -550px; 
-            top: 500px;
-            transition: left 0.9s cubic-bezier(0.23, 1, 0.32, 1);
+            left: -600px; /* Hidden off-left */
             z-index: 500;
+            transition: left 0.8s cubic-bezier(0.165, 0.84, 0.44, 1);
         }
 
         .drawer-labels {
-            position: absolute; 
-            top: 70px; left: 45px;
-            display: flex; flex-direction: column; gap: 46px;
+            position: absolute; top: 60px; left: 40px;
+            display: flex; flex-direction: column; gap: 40px;
         }
 
-        /* Tags for furniture icons */
-        .hanging-icons {
-            position: absolute; 
-            top: 80px; left: 40px;
-            display: flex; 
-            gap: 18px;
+        .icon-tags {
+            position: absolute; top: 80px; left: 45px;
+            display: flex; gap: 15px;
         }
-        .icon-tag { cursor: pointer; transition: 0.3s; }
-        .icon-tag:hover { transform: scale(1.1); }
     </style>
 </head>
 <body>
 
 <div class="header-area">
     <h1>Room Glow Up</h1>
-    <h2>Where Your Dream Space Comes To Life</h2>
     <div class="nav-row">
         <div class="pull-tab" onclick="openCabinet()"><div class="white-card">Rooms</div></div>
-        <div class="pull-tab"><div class="white-card">Furniture Catalog</div></div>
-        <div class="pull-tab"><div class="white-card">Decor Closet</div></div>
-        <div class="pull-tab"><div class="white-card">Walkthrough</div></div>
-        <div class="pull-tab"><div class="white-card">save/checkout</div></div>
+        <div class="pull-tab"><div class="white-card">Furniture</div></div>
+        <div class="pull-tab"><div class="white-card">Decor</div></div>
+        <div class="pull-tab"><div class="white-card">Save</div></div>
     </div>
 </div>
 
-<div id="stage-area" onclick="lockAndSwitch()"></div>
+<div id="stage-area" onclick="lockStage()"></div>
 
 <div id="cabinet">
     <img src="Assets/cabinet.png" width="400">
     <div class="drawer-labels">
-        <div class="pull-tab" onmouseover="preview('livingroom1.jpg')" onclick="preview('livingroom1.jpg')"><div class="white-card">Living Room</div></div>
-        <div class="pull-tab" onmouseover="preview('bedroom.jpg')" onclick="preview('bedroom.jpg')"><div class="white-card">Bedroom</div></div>
-        <div class="pull-tab" onmouseover="preview('diningroom.jpg')" onclick="preview('diningroom.jpg')"><div class="white-card">Dining Room</div></div>
+        <div class="pull-tab" onmouseover="preview('living.jpg')"><div class="white-card">Living Room</div></div>
+        <div class="pull-tab" onmouseover="preview('bed.jpg')"><div class="white-card">Bedroom</div></div>
         <div class="pull-tab" onclick="cycleExtras()"><div class="white-card">Extra Rooms</div></div>
-        <div class="pull-tab" onclick="triggerUpload()"><div class="white-card">Upload Yours</div></div>
     </div>
 </div>
 
 <div id="furniture-cases">
     <img src="Assets/furniturecases.png" width="450">
-    <div class="hanging-icons">
-        <img src="Assets/iconseating.png" width="85" class="icon-tag">
-        <img src="Assets/icontables.png" width="85" class="icon-tag">
-        <img src="Assets/iconstorage.png" width="85" class="icon-tag">
-        <img src="Assets/iconbeds.png" width="85" class="icon-tag">
+    <div class="icon-tags">
+        <img src="Assets/iconseating.png" width="70">
+        <img src="Assets/icontables.png" width="70">
+        <img src="Assets/iconstorage.png" width="70">
+        <img src="Assets/iconbeds.png" width="70">
     </div>
 </div>
 
-<input type="file" id="file-input" style="display:none" accept="image/*">
-
 <script>
-    const Assets = 'Assets/';
     const stage = document.getElementById('stage-area');
     const cab = document.getElementById('cabinet');
     const furn = document.getElementById('furniture-cases');
 
-    function preview(img) { stage.style.backgroundImage = `url('${Assets}${img}')`; }
+    function preview(img) { stage.style.backgroundImage = `url('Assets/${img}')`; }
 
     function openCabinet() {
-        cab.style.left = "20px";
-        stage.classList.add('shift');
-        furn.style.left = "-550px"; // Ensure furniture is hidden
+        cab.style.left = "30px";
+        stage.style.left = "62%";
     }
 
-    // THE BIG STEP: Click stage to lock room and swap to furniture
-    function lockAndSwitch() {
-        if (cab.style.left === "20px") {
-            cab.style.left = "-550px"; // Cabinet glides OUT left
+    function lockStage() {
+        if (cab.style.left === "30px") {
+            cab.style.left = "-600px"; // Cab glides out left
             setTimeout(() => {
-                furn.style.left = "20px"; // Furniture glides IN left
-            }, 900);
+                furn.style.left = "30px"; // Furn glides in left
+            }, 500);
         }
     }
 
-    let extraIdx = 0;
-    const extras = ['foyer.jpg', 'officeroom.jpg', 'kitchen.jpg', 'kitchen2.jpg'];
+    let extras = ['kitchen.jpg', 'office.jpg'];
+    let i = 0;
     function cycleExtras() {
-        preview(extras[extraIdx]);
-        extraIdx = (extraIdx + 1) % extras.length;
+        preview(extras[i]);
+        i = (i + 1) % extras.length;
     }
-
-    function triggerUpload() { document.getElementById('file-input').click(); }
-    document.getElementById('file-input').onchange = (e) => {
-        const file = e.target.files[0];
-        if (file) {
-            const reader = new FileReader();
-            reader.onload = (ev) => stage.style.backgroundImage = `url(${ev.target.result})`;
-            reader.readAsDataURL(file);
-        }
-    };
 </script>
+
 </body>
 </html>
