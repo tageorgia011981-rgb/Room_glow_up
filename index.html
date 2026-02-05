@@ -9,85 +9,53 @@
 
         body, html {
             margin: 0; padding: 0;
-            min-height: 150vh; /* Enables the short scroll */
             background: #000 url('Assets/mainbackground.jpg') no-repeat center top fixed;
             background-size: cover;
             font-family: 'Special Elite', serif;
-            overflow-x: hidden;
             color: white;
+            min-height: 1600px; /* Physical scroll depth */
+            overflow-y: scroll;
         }
 
-        /* FIXED HEADER AREA WITH CORRECT SPACING */
+        /* FIXED HEADER: GRID LOCKED */
         .header-area {
-            text-align: center;
-            padding: 40px 0 50px; /* Extra bottom padding for tab clearance */
             position: fixed;
             top: 0; left: 0; width: 100%;
+            height: 420px; 
             z-index: 2000;
-            background: linear-gradient(to bottom, rgba(0,0,0,1) 85%, rgba(0,0,0,0) 100%);
+            background: linear-gradient(to bottom, #000 90%, transparent 100%);
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
         }
 
-        h1 {
-            font-family: 'Limelight'; font-size: 80px; margin: 0; line-height: 1;
-            color: var(--silver); text-transform: uppercase;
-            background: linear-gradient(to bottom, #ffffff 0%, #a9a9a9 50%, #2a2e30 100%);
-            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-        }
+        h1 { font-family: 'Limelight'; font-size: 80px; margin: 0; color: var(--silver); }
+        h2 { font-family: 'Limelight'; font-size: 24px; color: var(--silver); margin: 10px 0 0 0; }
+        .nav-row { display: flex; gap: 20px; margin-top: 30px; }
 
-        h2 { 
-            font-family: 'Limelight'; font-size: 24px; color: var(--silver); 
-            margin: 20px 0 0 0; /* Pushes H2 away from H1 */
-            display: block;
-        }
+        /* THE SPACER: THE SCROLL FORCE */
+        .top-spacer { height: 450px; width: 100%; }
 
-        .nav-row { 
-            display: flex; justify-content: center; gap: 20px; 
-            margin-top: 40px; /* Pushes tabs away from H2 */
-        }
-        
-        .pull-tab {
-            background: var(--gunmetal); width: 170px; height: 55px;
-            border: 2px solid #111; position: relative; cursor: pointer;
-        }
-
-        .white-card {
-            background: #fff; color: #000; font-weight: bold; font-size: 13px;
-            width: 85%; padding: 6px 0; position: absolute; top: 11px; left: 7.5%;
-            text-align: center; transform: rotate(-1.5deg); transition: 0.3s;
-        }
-
-        /* HOVER EFFECTS */
-        .pull-tab:hover .white-card { 
-            background: var(--teal); 
-            box-shadow: 0 0 20px var(--teal); 
-            transform: rotate(0deg) translateY(-5px); 
-        }
-
-        /* WORKSPACE POSITIONING */
-        #stage-area, #cabinet, #furniture-cases {
-            position: absolute;
-            top: 420px; /* Sits below the fixed header area */
-        }
+        /* THE STAGE: RELATIVE POSITIONING */
+        .workspace { display: flex; justify-content: center; position: relative; padding-bottom: 100px; }
 
         #stage-area {
-            left: 50%; transform: translateX(-50%);
             width: 850px; height: 550px;
             border: 12px solid var(--gunmetal); outline: 2px solid var(--silver);
-            background: rgba(0,0,0,0.7) no-repeat center center / cover;
-            z-index: 100; cursor: pointer;
-            transition: left 0.8s cubic-bezier(0.165, 0.84, 0.44, 1);
+            background: rgba(0,0,0,0.8) no-repeat center/cover;
+            transition: transform 0.8s cubic-bezier(0.165, 0.84, 0.44, 1);
+            cursor: pointer; z-index: 100;
         }
 
+        /* CABINET & FURNITURE: FIXED OVERLAY */
         #cabinet, #furniture-cases {
-            left: -600px;
-            z-index: 500;
-            transition: left 0.8s cubic-bezier(0.165, 0.84, 0.44, 1);
+            position: fixed; top: 450px; left: -600px;
+            z-index: 500; transition: left 0.8s cubic-bezier(0.165, 0.84, 0.44, 1);
         }
 
-        .drawer-labels {
-            position: absolute; top: 60px; left: 40px;
-            display: flex; flex-direction: column; gap: 35px;
-        }
+        .drawer-labels { position: absolute; top: 60px; left: 40px; display: flex; flex-direction: column; gap: 35px; }
+
+        .pull-tab { background: var(--gunmetal); width: 170px; height: 55px; border: 2px solid #111; position: relative; cursor: pointer; }
+        .white-card { background: #fff; color: #000; font-weight: bold; font-size: 13px; width: 85%; padding: 6px 0; position: absolute; top: 11px; left: 7.5%; text-align: center; transform: rotate(-1.5deg); transition: 0.3s; }
+        .pull-tab:hover .white-card { background: var(--teal); transform: rotate(0deg) translateY(-5px); }
     </style>
 </head>
 <body>
@@ -97,20 +65,24 @@
     <h2>Where Your Dream Space Comes To Life</h2>
     <div class="nav-row">
         <div class="pull-tab" onclick="openCabinet()"><div class="white-card">Rooms</div></div>
-        <div class="pull-tab"><div class="white-card">Furniture Catalog</div></div>
-        <div class="pull-tab"><div class="white-card">Decor Closet</div></div>
-        <div class="pull-tab"><div class="white-card">Save / Checkout</div></div>
+        <div class="pull-tab" onclick="openFurniture()"><div class="white-card">Furniture</div></div>
+        <div class="pull-tab"><div class="white-card">Decor</div></div>
+        <div class="pull-tab"><div class="white-card">Save</div></div>
     </div>
 </div>
 
-<div id="stage-area" onclick="lockDesign()"></div>
+<div class="top-spacer"></div>
+
+<div class="workspace">
+    <div id="stage-area" onclick="swapOutCabinet()"></div>
+</div>
 
 <div id="cabinet">
     <img src="Assets/cabinet.png" width="400">
     <div class="drawer-labels">
-        <div class="pull-tab" onmouseover="preview('living1.jpg')" onclick="swapRoom('living')"><div class="white-card">Living Room</div></div>
-        <div class="pull-tab" onmouseover="preview('bed1.jpg')" onclick="swapRoom('bed')"><div class="white-card">Bedroom</div></div>
-        <div class="pull-tab" onmouseover="preview('dining1.jpg')" onclick="swapRoom('dining')"><div class="white-card">Dining Room</div></div>
+        <div class="pull-tab" onmouseover="preview('living1.jpg')" onclick="loadRoom('living')"><div class="white-card">Living Room</div></div>
+        <div class="pull-tab" onmouseover="preview('bed1.jpg')" onclick="loadRoom('bed')"><div class="white-card">Bedroom</div></div>
+        <div class="pull-tab" onmouseover="preview('dining1.jpg')" onclick="loadRoom('dining')"><div class="white-card">Dining Room</div></div>
     </div>
 </div>
 
@@ -124,28 +96,29 @@
     const furn = document.getElementById('furniture-cases');
 
     function preview(img) { stage.style.backgroundImage = `url('Assets/${img}')`; }
+    
+    function loadRoom(type) {
+        // Your existing loadRoom logic here
+        preview(type + '1.jpg');
+    }
 
     function openCabinet() {
+        furn.style.left = "-600px";
         cab.style.left = "30px";
-        stage.style.left = "62%";
+        stage.style.transform = "translateX(200px)";
     }
 
-    const variations = {
-        'living': ['living1.jpg', 'living2.jpg'],
-        'bed': ['bed1.jpg', 'bed2.jpg'],
-        'dining': ['dining1.jpg', 'dining2.jpg']
-    };
-    let vIdx = 0;
-    function swapRoom(type) {
-        vIdx = (vIdx + 1) % variations[type].length;
-        preview(variations[type][vIdx]);
-    }
-
-    function lockDesign() {
+    function swapOutCabinet() {
         if (cab.style.left === "30px") {
             cab.style.left = "-600px";
-            setTimeout(() => { furn.style.left = "30px"; }, 600);
+            setTimeout(() => { furn.style.left = "30px"; }, 400);
         }
+    }
+
+    function openFurniture() {
+        cab.style.left = "-600px";
+        furn.style.left = "30px";
+        stage.style.transform = "translateX(200px)";
     }
 </script>
 
