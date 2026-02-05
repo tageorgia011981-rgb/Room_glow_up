@@ -14,59 +14,59 @@
         body, html {
             margin: 0;
             padding: 0;
-            height: 100%;
-            overflow: hidden;
+            min-height: 100vh;
             background: url('Assets/mainbackground.jpg') no-repeat center center fixed;
             background-size: cover;
+            scroll-behavior: smooth;
+            overflow-x: hidden;
         }
 
-        #main-stage {
-            position: relative;
-            width: 100vw;
-            height: 100vh;
+        #main-site-container {
+            width: 100%;
             display: flex;
             flex-direction: column;
             align-items: center;
+            padding-bottom: 150px;
         }
 
-        /* Headers */
         header {
             text-align: center;
-            margin-top: 20px;
+            padding: 40px 0 20px 0;
             z-index: 50;
         }
 
         h1 {
             font-family: 'Limelight', cursive;
-            font-size: 85px;
+            font-size: 90px;
             margin: 0;
             background: linear-gradient(to bottom, #cfcfcf 0%, #000000 50%, #444444 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            filter: drop-shadow(3px 3px 3px rgba(0,0,0,0.6));
+            filter: drop-shadow(4px 4px 4px rgba(0,0,0,0.7));
             text-transform: uppercase;
         }
 
         h2 {
             font-family: 'Limelight', cursive;
-            font-size: 32px;
+            font-size: 34px;
             margin: -10px 0 0 0;
             color: #cfcfcf;
             letter-spacing: 2px;
             text-shadow: 2px 2px 4px #000;
         }
 
-        /* Top Navigation - Industrial Library Labels */
+        /* Pull Tab Navigation */
         .nav-container {
             display: flex;
-            gap: 15px;
+            gap: 20px;
             margin-top: 30px;
+            margin-bottom: 200px; 
             z-index: 50;
         }
 
         .label-holder {
-            width: 190px;
-            height: 95px;
+            width: 200px;
+            height: 100px;
             background: var(--metal-shine);
             border: 2px solid #111;
             position: relative;
@@ -80,14 +80,14 @@
         .label-holder::before, .label-holder::after {
             content: '';
             position: absolute;
-            width: 8px;
-            height: 8px;
-            background: #222;
+            width: 10px;
+            height: 10px;
+            background: #111;
             border-radius: 50%;
             box-shadow: inset 1px 1px 1px #555;
         }
-        .label-holder::before { top: 6px; left: 6px; }
-        .label-holder::after { top: 6px; right: 6px; }
+        .label-holder::before { top: 8px; left: 8px; }
+        .label-holder::after { top: 8px; right: 8px; }
 
         .white-card {
             width: 85%;
@@ -107,7 +107,7 @@
         .label-text {
             font-family: 'Courier New', Courier, monospace;
             font-weight: bold;
-            font-size: 16px;
+            font-size: 17px;
             color: #000;
             text-transform: uppercase;
         }
@@ -115,22 +115,88 @@
         .lip-pull {
             position: absolute;
             bottom: 0;
-            width: 70%;
-            height: 12px;
-            background: #1a1a1a;
-            border-radius: 0 0 12px 12px;
+            width: 75%;
+            height: 14px;
+            background: #111;
+            border-radius: 0 0 14px 14px;
             border: 1px solid #333;
         }
 
-        /* The Stage and Curtains */
-        #theater-container {
+        /* Interaction Zone */
+        #interaction-zone {
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            gap: 40px;
+            width: 100%;
+            padding-top: 50px;
+        }
+
+        /* CABINET GLIDE LOGIC */
+        #rooms-cabinet-container {
+            position: relative;
+            width: 500px;
+            transform: translateX(-150%); /* Hidden off-screen to the left */
+            transition: transform 1.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            z-index: 30;
+        }
+
+        #rooms-cabinet-container.glided-in {
+            transform: translateX(0); /* Glides into place */
+        }
+
+        #cabinet-img {
+            width: 100%;
+            filter: drop-shadow(10px 10px 20px #000);
+        }
+
+        .drawer-labels-overlay {
             position: absolute;
+            top: 65px;
+            left: 75px;
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+        }
+
+        .small-label {
+            width: 150px;
+            height: 60px;
+            background: var(--metal-shine);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            cursor: pointer;
+            box-shadow: inset 0 0 5px #000;
+        }
+
+        .drawer-card {
+            width: 80%;
+            height: 60%;
+            background: #fff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+        .small-label:hover .drawer-card {
+            background: var(--glow-teal);
+            box-shadow: 0 0 15px var(--glow-teal);
+        }
+
+        /* STAGE */
+        #theater-container {
+            position: relative;
             width: 900px;
             height: 550px;
-            bottom: 30px;
-            border: 15px solid #111;
+            border: 20px solid #111;
             overflow: hidden;
             background: #000;
+            box-shadow: 0 0 50px rgba(0,0,0,0.9);
             z-index: 5;
         }
 
@@ -141,15 +207,15 @@
             height: 100%;
             background: url('Assets/stagecurtains.png') no-repeat;
             background-size: 200% 100%;
-            transition: transform 1.5s ease-in-out;
+            transition: transform 1.8s cubic-bezier(0.45, 0.05, 0.55, 0.95);
             z-index: 20;
         }
 
         #curtain-left { left: 0; background-position: left; }
         #curtain-right { right: 0; background-position: right; }
 
-        .open #curtain-left { transform: translateX(-100%); }
-        .open #curtain-right { transform: translateX(100%); }
+        #theater-container.open #curtain-left { transform: translateX(-100%); }
+        #theater-container.open #curtain-right { transform: translateX(100%); }
 
         #room-display {
             width: 100%;
@@ -157,70 +223,18 @@
             background-size: cover;
             background-position: center;
         }
-
-        /* Gliding Cabinet */
-        #rooms-cabinet {
-            position: absolute;
-            left: -650px;
-            top: 180px;
-            width: 550px;
-            z-index: 30;
-            transition: left 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        }
-
-        #rooms-cabinet.active { left: 30px; }
-
-        #cabinet-img { width: 100%; }
-
-        .drawer-labels-overlay {
-            position: absolute;
-            top: 60px;
-            left: 80px;
-            display: flex;
-            flex-direction: column;
-            gap: 22px;
-        }
-
-        .small-label {
-            width: 140px;
-            height: 55px;
-            background: var(--metal-shine);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            position: relative;
-            cursor: pointer;
-        }
-
-        /* Cabinet Labels */
-        .drawer-card {
-            width: 80%;
-            height: 60%;
-            background: #fff;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-family: 'Courier New', Courier, monospace;
-            font-size: 13px;
-            font-weight: bold;
-        }
-
-        .small-label:hover .drawer-card {
-            background: var(--glow-teal);
-            box-shadow: 0 0 15px var(--glow-teal);
-        }
     </style>
 </head>
 <body>
 
-<div id="main-stage">
+<div id="main-site-container">
     <header>
         <h1>Room Glow Up</h1>
         <h2>Where Your Dream Space Comes To Life</h2>
     </header>
 
     <nav class="nav-container">
-        <div class="label-holder" onclick="openRooms()">
+        <div class="label-holder" onclick="triggerRoomsWorkflow()">
             <div class="white-card"><span class="label-text">Rooms</span></div>
             <div class="lip-pull"></div>
         </div>
@@ -242,50 +256,59 @@
         </div>
     </nav>
 
-    <div id="rooms-cabinet">
-        <img src="Assets/cabinet.png" id="cabinet-img" alt="Storage Cabinet">
-        <div class="drawer-labels-overlay">
-            <div class="small-label" onmouseover="peekRoom('livingroom1.jpg')" onclick="selectRoom('livingroom1.jpg')">
-                <div class="drawer-card">livingroom</div>
-            </div>
-            <div class="small-label" onmouseover="peekRoom('bedroom.jpg')" onclick="selectRoom('bedroom.jpg')">
-                <div class="drawer-card">bedroom</div>
-            </div>
-            <div class="small-label" onmouseover="peekRoom('diningroom.jpg')" onclick="selectRoom('diningroom.jpg')">
-                <div class="drawer-card">diningroom</div>
-            </div>
-            <div class="small-label" onmouseover="peekRoom('foyer.jpg')" onclick="selectRoom('foyer.jpg')">
-                <div class="drawer-card">extra rooms</div>
-            </div>
-            <div class="small-label">
-                <div class="drawer-card">upload yours</div>
+    <div id="interaction-zone">
+        <div id="rooms-cabinet-container">
+            <img src="Assets/cabinet.png" id="cabinet-img" alt="Storage Cabinet">
+            <div class="drawer-labels-overlay">
+                <div class="small-label" onmouseover="peekRoom('livingroom1.jpg')" onclick="selectRoom('livingroom1.jpg')">
+                    <div class="drawer-card">livingroom</div>
+                </div>
+                <div class="small-label" onmouseover="peekRoom('bedroom.jpg')" onclick="selectRoom('bedroom.jpg')">
+                    <div class="drawer-card">bedroom</div>
+                </div>
+                <div class="small-label" onmouseover="peekRoom('diningroom.jpg')" onclick="selectRoom('diningroom.jpg')">
+                    <div class="drawer-card">diningroom</div>
+                </div>
+                <div class="small-label" onmouseover="peekRoom('foyer.jpg')" onclick="selectRoom('foyer.jpg')">
+                    <div class="drawer-card">extra rooms</div>
+                </div>
+                <div class="small-label">
+                    <div class="drawer-card">upload yours</div>
+                </div>
             </div>
         </div>
-    </div>
 
-    <div id="theater-container">
-        <div id="curtain-left" class="curtain"></div>
-        <div id="curtain-right" class="curtain"></div>
-        <div id="room-display"></div>
+        <div id="theater-container">
+            <div id="curtain-left" class="curtain"></div>
+            <div id="curtain-right" class="curtain"></div>
+            <div id="room-display"></div>
+        </div>
     </div>
-
 </div>
 
 <script>
-    function openRooms() {
-        document.getElementById('rooms-cabinet').classList.add('active');
+    function triggerRoomsWorkflow() {
+        // 1. Scroll down to the interaction area
+        document.getElementById('interaction-zone').scrollIntoView({ behavior: 'smooth' });
+        
+        // 2. Glide the cabinet in after a tiny delay for smooth effect
+        setTimeout(() => {
+            document.getElementById('rooms-cabinet-container').classList.add('glided-in');
+        }, 300);
     }
 
     function peekRoom(img) {
-        // Show room behind curtains while hovering
         document.getElementById('room-display').style.backgroundImage = `url('Assets/${img}')`;
     }
 
     function selectRoom(img) {
-        // Commit to room: open curtains and hide cabinet
         document.getElementById('room-display').style.backgroundImage = `url('Assets/${img}')`;
         document.getElementById('theater-container').classList.add('open');
-        document.getElementById('rooms-cabinet').classList.remove('active');
+        
+        // Glide cabinet back out once room is committed
+        setTimeout(() => {
+            document.getElementById('rooms-cabinet-container').classList.remove('glided-in');
+        }, 500);
     }
 </script>
 
