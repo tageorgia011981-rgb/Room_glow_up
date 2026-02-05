@@ -11,7 +11,7 @@
         .label-holder:hover .white-card {            background: var(--glow-teal);            box-shadow: 0 0 30px var(--glow-teal);        }
         .label-text {            font-family: 'Courier New', Courier, monospace;            font-weight: 900;            font-size: 16px;            color: #000;            text-transform: uppercase;        }
         .lip-pull {            position: absolute;            bottom: 0;            width: 80%;            height: 16px;            background: #0a0a0a;            border-radius: 0 0 15px 15px;            border: 1px solid #444;        }
-        /* INTERACTION ZONE */        #interaction-zone {            display: flex;            justify-content: center;            align-items: flex-start;            gap: 60px;            width: 100%;            padding-top: 100px;        }
+        /* INTERACTION ZONE */        #interaction-zone {            display: flex;            justify-content: center;            align-items: flex-start;            gap: 20px; /* Reduced gap to bring cabinet closer to stage */            width: 100%;            padding-top: 100px;        }
         /* ROOMS CABINET - Slow Glide */        #rooms-cabinet-container {            position: relative;            width: 550px;            transform: translateX(-200%);            transition: transform 3s cubic-bezier(0.23, 1, 0.32, 1); /* Slow Glide */            z-index: 30;        }
         #rooms-cabinet-container.glided-in {            transform: translateX(0);        }
         #cabinet-img {            width: 100%;            filter: drop-shadow(15px 15px 30px #000);        }
@@ -38,4 +38,4 @@
     }
 
     function uploadRoom(input) {        if (input.files && input.files[0]) {            let reader = new FileReader();            reader.onload = function(e) {                document.getElementById('room-display').style.backgroundImage = `url(${e.target.result})`;            };            reader.readAsDataURL(input.files[0]);        }    }</script>
-</body></html>
+</body></html>```
