@@ -8,7 +8,7 @@
 <style>
 :root {
     --teal: #40E0D0;
-    --silver: #c0c0c0;
+    --silver: #e0e0e0;
     --gunmetal: #2a2e30;
 }
 
@@ -21,44 +21,102 @@ body, html {
     overflow-x: hidden;
 }
 
-/* --- HEADER --- */
-.header-area { text-align: center; padding: 60px 0 40px; position: relative; z-index: 2000; }
-h1 { font-family: 'Limelight'; font-size: 100px; margin: 0; color: var(--silver); text-transform: uppercase; background: linear-gradient(to bottom, #ffffff 0%, #a9a9a9 50%, #2a2e30 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-h2 { font-family: 'Limelight'; font-size: 24px; color: var(--silver); margin: 20px 0 40px 0; }
+/* --- HEADER & LARGER SUB-HEADER --- */
+.header-area { text-align: center; padding: 30px 0 20px; position: relative; z-index: 2000; }
+h1 { 
+    font-family: 'Limelight'; 
+    font-size: 70px; 
+    margin: 0; 
+    color: var(--silver); 
+    text-transform: uppercase; 
+    letter-spacing: 2px;
+}
+h2 {
+    font-family: 'Limelight';
+    font-size: 32px; /* Bigger sub-header */
+    color: var(--silver);
+    margin: 15px 0 30px 0;
+    text-shadow: 2px 2px 4px #000;
+}
 
-/* --- TABS --- */
-.nav-row { display: flex; justify-content: center; gap: 25px; }
-.pull-tab { background: var(--gunmetal); width: 190px; height: 60px; border: 2px solid #111; position: relative; cursor: pointer; }
-.white-card { background: #fff; color: #000; font-family: 'Special Elite'; font-weight: bold; font-size: 14px; width: 85%; padding: 6px 0; position: absolute; top: 12px; left: 7.5%; text-align: center; transform: rotate(-1.5deg); }
+.nav-row { 
+    display: flex; 
+    justify-content: center; 
+    gap: 20px; /* Balanced spacing */
+    max-width: 1000px; 
+    margin: 0 auto;
+}
 
-/* --- STAGE --- */
+.pull-tab {
+    background: var(--gunmetal);
+    width: 170px; height: 60px;
+    border: 1px solid #111;
+    position: relative;
+    cursor: pointer;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.8);
+    transition: transform 0.3s ease;
+}
+
+.white-card {
+    background: #fff; color: #000;
+    font-family: 'Special Elite'; 
+    font-weight: bold; font-size: 13px;
+    width: 88%; padding: 6px 0;
+    position: absolute; top: 12px; left: 6%;
+    text-align: center; 
+    transform: rotate(-1.5deg);
+    transition: 0.3s ease;
+}
+
+.pull-tab:hover { transform: translateY(-5px); }
+.pull-tab:hover .white-card {
+    background: var(--teal);
+    box-shadow: 0 0 20px var(--teal);
+    transform: rotate(0deg) scale(1.05);
+}
+
+/* --- THE STAGE --- */
 #stage-area {
     position: absolute; top: 85vh; left: 50%; transform: translateX(-50%);
-    width: 850px; height: 550px;
-    border: 12px solid var(--gunmetal); outline: 2px solid var(--silver);
+    width: 900px; height: 600px;
+    border: 12px solid #222; outline: 1px solid var(--silver);
     background: url('Assets/stagecurtain.png') no-repeat center center / cover;
-    z-index: 100; transition: transform 0.9s ease, background 0.3s ease;
+    z-index: 100; transition: transform 0.9s cubic-bezier(0.23, 1, 0.32, 1);
 }
-#stage-area.shift { transform: translateX(-5%); }
+#stage-area.shift { transform: translateX(10%); }
 
-/* --- CABINET --- */
+/* --- LARGE QUILTED CABINET --- */
 #cabinet-container {
-    position: absolute; left: -650px; top: 80vh;
-    width: 550px; height: 800px;
+    position: absolute; 
+    left: -800px; 
+    top: 70vh;    
+    width: 700px; 
+    height: 1100px;
     background: url('Assets/cabinet.png') no-repeat center center / contain;
-    z-index: 1000; transition: left 0.9s cubic-bezier(0.23, 1, 0.32, 1);
-    display: flex; flex-direction: column; 
-    padding: 60px 0 40px 0; /* Adjusted padding to help text-to-drawer alignment */
+    z-index: 1000; 
+    transition: left 0.9s cubic-bezier(0.19, 1, 0.22, 1);
+    display: flex; 
+    flex-direction: column;
+    padding-top: 180px; 
+    box-sizing: border-box;
 }
-#cabinet-container.open { left: 20px; }
+#cabinet-container.open { left: -40px; }
 
 .drawer-zone {
-    flex: 1; display: flex; align-items: center; justify-content: center;
-    cursor: pointer; position: relative;
+    height: 145px; 
+    display: flex; 
+    align-items: center; 
+    justify-content: center;
+    cursor: pointer;
 }
-.label { font-family: 'Special Elite'; color: var(--silver); font-size: 22px; text-transform: uppercase; text-shadow: 2px 2px 2px #000; pointer-events: none; }
-
-#file-upload { display: none; }
+.label { 
+    font-family: 'Special Elite'; 
+    color: #444; 
+    font-size: 26px; 
+    text-transform: uppercase;
+    text-shadow: 1px 1px 0px rgba(255,255,255,0.5);
+    pointer-events: none;
+}
 </style>
 </head>
 <body>
@@ -68,10 +126,10 @@ h2 { font-family: 'Limelight'; font-size: 24px; color: var(--silver); margin: 20
     <h2>Where Your Dream Space Comes To Life</h2>
     <div class="nav-row">
         <div class="pull-tab" id="rooms-btn"><div class="white-card">Rooms</div></div>
-        <div class="pull-tab"><div class="white-card">Furniture Catalog</div></div>
-        <div class="pull-tab"><div class="white-card">Decor Closet</div></div>
+        <div class="pull-tab"><div class="white-card">Furniture</div></div>
+        <div class="pull-tab"><div class="white-card">Decor</div></div>
         <div class="pull-tab"><div class="white-card">Walkthrough</div></div>
-        <div class="pull-tab"><div class="white-card">save/checkout</div></div>
+        <div class="pull-tab"><div class="white-card">Checkout</div></div>
     </div>
 </div>
 
@@ -85,21 +143,20 @@ h2 { font-family: 'Limelight'; font-size: 24px; color: var(--silver); margin: 20
     <div class="drawer-zone" id="upload-trigger"><span class="label">Upload Yours</span></div>
 </div>
 
-<input type="file" id="file-upload" accept="image/*">
+<input type="file" id="file-upload" style="display:none" accept="image/*">
 
 <script>
     const roomsBtn = document.getElementById('rooms-btn');
     const cabinet = document.getElementById('cabinet-container');
     const stage = document.getElementById('stage-area');
     const fileInput = document.getElementById('file-upload');
-    const drawers = document.querySelectorAll('.drawer-zone');
 
     roomsBtn.onclick = () => {
         cabinet.classList.toggle('open');
         stage.classList.toggle('shift');
     };
 
-    drawers.forEach(drawer => {
+    document.querySelectorAll('.drawer-zone').forEach(drawer => {
         drawer.onmouseenter = () => {
             const bg = drawer.getAttribute('data-bg');
             if(bg) stage.style.backgroundImage = `url(${bg})`;
@@ -109,15 +166,12 @@ h2 { font-family: 'Limelight'; font-size: 24px; color: var(--silver); margin: 20
         };
     });
 
-    // Upload Yours Trigger
     document.getElementById('upload-trigger').onclick = () => fileInput.click();
     fileInput.onchange = (e) => {
         const file = e.target.files[0];
         if (file) {
             const reader = new FileReader();
-            reader.onload = (event) => {
-                stage.style.backgroundImage = `url(${event.target.result})`;
-            };
+            reader.onload = (ev) => stage.style.backgroundImage = `url(${ev.target.result})`;
             reader.readAsDataURL(file);
         }
     };
