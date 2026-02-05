@@ -6,12 +6,11 @@
 
 <title>Room Glow Up</title>
 
-<!-- GOOGLE FONT: LIMELIGHT -->
-<link href="https://fonts.googleapis.com/css2?family=LimeLight&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=LimeLight&family=Special+Elite&display=swap" rel="stylesheet">
 
 <style>
 /* ================================
-   CORE RESET
+   CORE RESET & ORIGINAL STYLES
 ================================ */
 * {
   box-sizing: border-box;
@@ -24,32 +23,27 @@ html, body {
   height: 100%;
   background-color: #000;
   font-family: Arial, Helvetica, sans-serif;
+  scroll-behavior: smooth;
 }
 
-/* ================================
-   LOCKED STUDIO BACKGROUND
-================================ */
 body {
   background-image: url("Assets/backgroundG&Blk.jpg");
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
+  background-attachment: fixed;
+  min-height: 180vh; /* Allows for the half-visible cabinet scroll */
+  overflow-x: hidden;
 }
 
-/* ================================
-   HEADER
-================================ */
 header {
   width: 100%;
   background: linear-gradient(to bottom, #162127, #0C1519);
   border-bottom: 1px solid #0C1519;
   position: relative;
-  z-index: 10;
+  z-index: 1000;
 }
 
-/* ================================
-   MAIN HEADER BAR
-================================ */
 .header-main {
   display: flex;
   align-items: center;
@@ -57,7 +51,6 @@ header {
   padding: 34px 28px 10px;
 }
 
-/* HOLLYWOOD-STYLE TITLE */
 .site-title {
   font-family: 'LimeLight', cursive;
   color: #CF9D7B;
@@ -65,15 +58,9 @@ header {
   letter-spacing: 6px;
   text-align: center;
   text-transform: uppercase;
-  text-shadow:
-    0 2px 0 rgba(0,0,0,0.6),
-    0 6px 18px rgba(0,0,0,0.65),
-    0 0 10px rgba(207,157,123,0.35);
+  text-shadow: 0 2px 0 rgba(0,0,0,0.6), 0 6px 18px rgba(0,0,0,0.65);
 }
 
-/* ================================
-   TAGLINE
-================================ */
 .header-tagline {
   display: flex;
   justify-content: center;
@@ -88,9 +75,6 @@ header {
   opacity: 0.9;
 }
 
-/* ================================
-   NAV BAR
-================================ */
 .sub-header {
   display: flex;
   justify-content: center;
@@ -99,123 +83,99 @@ header {
   border-top: 1px solid #0C1519;
 }
 
-/* ================================
-   LIBRARY FILE LABEL TAB
-================================ */
 .nav-tab {
   position: relative;
   min-width: 160px;
   padding: 14px 16px 12px;
   text-align: center;
-  color: #000; /* old-style typewriter black */
+  color: #000;
   font-family: 'Courier New', Courier, monospace;
   font-weight: bold;
   font-size: 16px;
   letter-spacing: 1px;
   cursor: pointer;
-
-  /* Gunmetal drawer base */
-  background: linear-gradient(
-    to bottom,
-    #1E2B31,
-    #0C1519
-  );
-
+  background: linear-gradient(to bottom, #1E2B31, #0C1519);
   border-radius: 3px;
-
-  /* Depth */
-  box-shadow:
-    inset 0 1px 0 rgba(255,255,255,0.08),
-    inset 0 -2px 3px rgba(0,0,0,0.6),
-    0 4px 8px rgba(0,0,0,0.7);
-
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.08), 0 4px 8px rgba(0,0,0,0.7);
   transition: transform 0.25s ease, box-shadow 0.25s ease;
 }
 
-/* Metal lip / pull edge */
 .nav-tab::before {
   content: "";
   position: absolute;
-  left: 10%;
-  right: 10%;
-  bottom: -6px;
-  height: 8px;
-
-  background: linear-gradient(
-    to bottom,
-    #CFD2D4,
-    #8A8E91
-  );
-
+  left: 10%; right: 10%; bottom: -6px; height: 8px;
+  background: linear-gradient(to bottom, #CFD2D4, #8A8E91);
   border-radius: 0 0 3px 3px;
-
-  box-shadow:
-    inset 0 1px 0 rgba(255,255,255,0.6),
-    0 3px 4px rgba(0,0,0,0.7);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.6), 0 3px 4px rgba(0,0,0,0.7);
 }
 
-/* Screw holes */
-.nav-tab::after {
-  content: "•      •";
-  position: absolute;
-  top: 6px;
-  left: 0;
-  right: 0;
-  font-size: 10px;
-  letter-spacing: 26px;
-  text-align: center;
-  color: #CF9D7B;
-  opacity: 0.8;
-}
-
-/* Hover: lift like a real pull */
 .nav-tab:hover {
   transform: translateY(-3px);
-  box-shadow:
-    inset 0 1px 0 rgba(255,255,255,0.1),
-    inset 0 -2px 4px rgba(0,0,0,0.7),
-    0 8px 14px rgba(0,0,0,0.85);
-}
-
-/* Active state */
-.nav-tab.active {
-  box-shadow:
-    inset 0 0 0 1px #CF9D7B,
-    inset 0 -2px 4px rgba(0,0,0,0.7),
-    0 6px 12px rgba(0,0,0,0.8);
+  background: #CF9D7B; /* Visual feedback for pull */
 }
 
 /* ================================
-   STAGE AREA
+   MECHANICAL STAGE & SLIDING UNITS
 ================================ */
 #stage {
-  width: 100%;
-  height: calc(100vh - 240px);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.stage-placeholder {
-  color: #CF9D7B;
-  opacity: 0.35;
-  letter-spacing: 1px;
-  font-size: 14px;
-}
-
-/* ================================
-   RAIN HALLWAY CLASSES (LOCKED)
-================================ */
-.rain-hallway-1,
-.rain-hallway-2 {
-  background-size: contain;
-  background-repeat: no-repeat;
+  position: absolute;
+  top: 450px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 800px;
+  height: 500px;
+  border: 12px solid #1E2B31;
+  outline: 2px solid #CF9D7B;
+  background-color: rgba(0,0,0,0.4);
+  background-size: cover;
   background-position: center;
-  background-color: #000;
+  z-index: 50;
+  cursor: pointer;
+  transition: left 1s cubic-bezier(0.23, 1, 0.32, 1);
 }
 
-.rain-hallway-1 { background-image: url("Assets/rain1.jpg"); }
-.rain-hallway-2 { background-image: url("Assets/rain2.jpg"); }
+.unit-base {
+  position: absolute;
+  top: 500px;
+  left: -600px; /* Hidden start */
+  width: 420px;
+  transition: left 1s cubic-bezier(0.23, 1, 0.32, 1);
+  z-index: 500;
+}
+
+/* Internal labels for Cabinet */
+.cabinet-labels {
+  position: absolute;
+  top: 60px;
+  left: 40px;
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+}
+
+/* Hanging Tags for Furniture Cases */
+.hanging-tags {
+  position: absolute;
+  top: 70px;
+  left: 35px;
+  display: flex;
+  gap: 15px;
+}
+
+.tag-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transform-origin: top center;
+  transition: 0.4s;
+}
+
+.tag-string { width: 1px; height: 30px; background: #888; }
+.tag-icon { width: 75px; cursor: pointer; }
+
+/* Wonky rotation for real tag look */
+.tag-wrapper:nth-child(odd) { transform: rotate(-6deg); }
+.tag-wrapper:nth-child(even) { transform: rotate(5deg); margin-top: 10px; }
 
 </style>
 </head>
@@ -223,30 +183,83 @@ header {
 <body>
 
 <header>
-
   <div class="header-main">
     <div class="site-title">Room Glow Up</div>
   </div>
-
   <div class="header-tagline">
     <span>Where Your Dream Space Comes To Life</span>
   </div>
-
   <div class="sub-header">
-    <div class="nav-tab active">Rooms</div>
+    <div class="nav-tab active" onclick="openCabinet()">Rooms</div>
     <div class="nav-tab">Furniture Catalog</div>
     <div class="nav-tab">Decor Closet</div>
     <div class="nav-tab">Inspirational Walkthru</div>
     <div class="nav-tab">Save / Checkout</div>
   </div>
-
 </header>
 
-<main id="stage">
-  <div class="stage-placeholder">
-    STAGE READY — AWAITING INTERACTIONS
+<main id="stage" onclick="lockInRoom()"></main>
+
+<div id="cabinet" class="unit-base">
+  <img src="Assets/cabinet.png" style="width:100%;">
+  <div class="cabinet-labels">
+    <div class="nav-tab" onmouseover="previewRoom('living1.jpg')" onclick="cycleRooms('living')">Living Room</div>
+    <div class="nav-tab" onmouseover="previewRoom('bed1.jpg')" onclick="cycleRooms('bed')">Bedroom</div>
+    <div class="nav-tab" onmouseover="previewRoom('dining1.jpg')" onclick="cycleRooms('dining')">Dining Room</div>
   </div>
-</main>
+</div>
+
+<div id="furniture-cases" class="unit-base">
+  <img src="Assets/furniturecases.png" style="width:100%;">
+  <div class="hanging-tags">
+    <div class="tag-wrapper"><div class="tag-string"></div><img src="Assets/iconseating.png" class="tag-icon"></div>
+    <div class="tag-wrapper"><div class="tag-string"></div><img src="Assets/icontables.png" class="tag-icon"></div>
+    <div class="tag-wrapper"><div class="tag-string"></div><img src="Assets/icondecor.png" class="tag-icon"></div>
+  </div>
+</div>
+
+<script>
+const roomData = {
+  living: ['living1.jpg', 'living2.jpg', 'living3.jpg'],
+  bed: ['bed1.jpg', 'bed2.jpg'],
+  dining: ['dining1.jpg']
+};
+let roomIndexes = { living: 0, bed: 0, dining: 0 };
+let currentSelection = "";
+
+// 1. "Rooms" Tab Click
+function openCabinet() {
+  document.getElementById('stage').style.left = "65%";
+  document.getElementById('cabinet').style.left = "20px";
+  // Mechanical Reveal: Half-visible until scroll
+  window.scrollTo({ top: 200, behavior: 'smooth' });
+}
+
+// 2. Hover Preview
+function previewRoom(img) {
+  document.getElementById('stage').style.backgroundImage = `url('Assets/${img}')`;
+  currentSelection = img;
+}
+
+// 3. Click Pull Tab to Cycle
+function cycleRooms(type) {
+  roomIndexes[type] = (roomIndexes[type] + 1) % roomData[type].length;
+  previewRoom(roomData[type][roomIndexes[type]]);
+}
+
+// 4. THE LOCK-IN: Click Stage Image
+function lockInRoom() {
+  if (!currentSelection) return;
+
+  // Cabinet glides OUT
+  document.getElementById('cabinet').style.left = "-600px";
+
+  // Furniture Cases glide IN
+  setTimeout(() => {
+    document.getElementById('furniture-cases').style.left = "20px";
+  }, 800);
+}
+</script>
 
 </body>
 </html>
