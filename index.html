@@ -65,6 +65,7 @@
             z-index: 50;
         }
 
+        /* Library Label Holders */
         .label-holder {
             width: 210px;
             height: 105px;
@@ -113,6 +114,7 @@
             font-size: 16px;
             color: #000;
             text-transform: uppercase;
+            text-align: center;
         }
 
         .lip-pull {
@@ -183,8 +185,6 @@
             transition: transform 0.3s ease;
         }
 
-        .small-pull-tab:hover { transform: translateY(-5px); }
-
         .drawer-white-card {
             width: 80%;
             height: 60%;
@@ -204,48 +204,67 @@
             box-shadow: 0 0 15px var(--glow-teal);
         }
 
-        /* HANGING TAGS DESIGN */
+        /* BLACK HANGING TAGS - FIXED DESIGN */
         .furniture-tags-overlay {
             position: absolute;
-            top: 80px;
-            left: 110px;
+            top: 140px; /* Aligned with case handles */
+            left: 105px;
             display: flex;
             flex-direction: column;
-            gap: 45px;
+            gap: 25px;
+        }
+
+        .tag-hanger {
+            position: relative;
+            width: 160px;
+            height: 70px;
+            display: flex;
+            justify-content: center;
         }
 
         .icon-tag {
-            width: 130px;
-            height: 70px;
-            background: #ffffff;
-            border: 1.5px solid #222;
-            position: relative;
+            position: absolute;
+            top: 10px;
+            width: 100px;
+            height: 60px;
+            background: #000; /* Solid Black Tag */
+            border: 1px solid #d4af37; /* Subtle Gold edge */
+            /* Clip path for the classic tag shape */
+            clip-path: polygon(15% 0%, 85% 0%, 100% 25%, 100% 100%, 0% 100%, 0% 25%);
             display: flex;
             justify-content: center;
             align-items: center;
+            box-shadow: 5px 5px 15px rgba(0,0,0,0.7);
+            transform: rotate(-3deg);
+            transform-origin: top center;
+            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             cursor: pointer;
-            box-shadow: 4px 6px 12px rgba(0,0,0,0.6);
-            transform: rotate(-4deg);
-            transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            z-index: 35;
         }
 
-        /* The Hanging String */
+        /* The String/Hole */
         .icon-tag::before {
             content: '';
             position: absolute;
-            top: -20px;
-            left: 50%;
-            width: 2px;
-            height: 20px;
-            background: #1a1a1a;
+            top: 4px;
+            width: 6px;
+            height: 6px;
+            background: #222; /* Hole */
+            border-radius: 50%;
+            border: 1px solid #d4af37;
+            box-shadow: 0 -12px 0 -1px #111; /* Represents the hanging string */
         }
 
-        .icon-tag img { max-width: 80%; max-height: 80%; filter: grayscale(20%); }
+        .icon-tag img {
+            max-width: 65%;
+            max-height: 65%;
+            margin-top: 8px;
+            filter: brightness(0) invert(1) drop-shadow(0 0 2px #d4af37); /* Makes icons look silver/gold */
+        }
 
         .icon-tag:hover {
-            transform: rotate(0deg) scale(1.1);
+            transform: rotate(0deg) scale(1.15);
             box-shadow: 0 0 20px var(--glow-teal);
-            z-index: 40;
         }
 
         #theater-container {
@@ -337,10 +356,10 @@
             <div id="furniture-cases-container" class="asset-side-container">
                 <img src="Assets/furniturecases.png" class="asset-img" alt="Furniture Cases">
                 <div class="furniture-tags-overlay">
-                    <div class="icon-tag"><img src="Assets/iconseating.png" alt="Seating"></div>
-                    <div class="icon-tag"><img src="Assets/icontables.png" alt="Tables"></div>
-                    <div class="icon-tag"><img src="Assets/iconstorage.png" alt="Storage"></div>
-                    <div class="icon-tag"><img src="Assets/iconbeds.png" alt="Beds"></div>
+                    <div class="tag-hanger"><div class="icon-tag"><img src="Assets/iconseating.png" alt="Seating"></div></div>
+                    <div class="tag-hanger"><div class="icon-tag"><img src="Assets/icontables.png" alt="Tables"></div></div>
+                    <div class="tag-hanger"><div class="icon-tag"><img src="Assets/iconstorage.png" alt="Storage"></div></div>
+                    <div class="tag-hanger"><div class="icon-tag"><img src="Assets/iconbeds.png" alt="Beds"></div></div>
                 </div>
             </div>
         </div>
