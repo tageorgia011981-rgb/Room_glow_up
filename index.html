@@ -30,7 +30,6 @@
             padding-bottom: 200px;
         }
 
-        /* HEADER - High Silver Shine */
         header {
             text-align: center;
             padding: 60px 0 30px 0;
@@ -58,12 +57,11 @@
             text-shadow: 3px 3px 6px #000;
         }
 
-        /* TOP NAV - Library Labels */
         .nav-container {
             display: flex;
             gap: 25px;
             margin-top: 40px;
-            margin-bottom: 300px; /* Large gap for smooth scroll reveal */
+            margin-bottom: 300px;
             z-index: 50;
         }
 
@@ -80,18 +78,6 @@
             cursor: pointer;
         }
 
-        .label-holder::before, .label-holder::after {
-            content: '';
-            position: absolute;
-            width: 10px;
-            height: 10px;
-            background: #111;
-            border-radius: 50%;
-            box-shadow: inset 1px 1px 2px #777;
-        }
-        .label-holder::before { top: 10px; left: 10px; }
-        .label-holder::after { top: 10px; right: 10px; }
-
         .white-card {
             width: 85%;
             height: 65%;
@@ -99,7 +85,7 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            transition: background 0.4s ease, box-shadow 0.4s ease;
+            transition: 0.4s;
         }
 
         .label-holder:hover .white-card {
@@ -115,17 +101,6 @@
             text-transform: uppercase;
         }
 
-        .lip-pull {
-            position: absolute;
-            bottom: 0;
-            width: 80%;
-            height: 16px;
-            background: #0a0a0a;
-            border-radius: 0 0 15px 15px;
-            border: 1px solid #444;
-        }
-
-        /* INTERACTION ZONE */
         #interaction-zone {
             display: flex;
             justify-content: center;
@@ -135,12 +110,11 @@
             padding-top: 100px;
         }
 
-        /* CABINET GRACEFUL GLIDE */
         #rooms-cabinet-container {
             position: relative;
             width: 550px;
-            transform: translateX(-200%); /* Further out for more glide */
-            transition: transform 1.5s cubic-bezier(0.23, 1, 0.32, 1); /* Graceful ease-out */
+            transform: translateX(-200%);
+            transition: transform 1.5s cubic-bezier(0.23, 1, 0.32, 1);
             z-index: 30;
         }
 
@@ -153,14 +127,13 @@
             filter: drop-shadow(15px 15px 30px #000);
         }
 
-        /* DRAWER ALIGNMENT - Positioned to look like actual pulls on the cabinet.png */
         .drawer-labels-overlay {
             position: absolute;
-            top: 72px; /* Adjusted for alignment */
+            top: 110px; 
             left: 95px;
             display: flex;
             flex-direction: column;
-            gap: 28px; /* Matched to drawer vertical spacing */
+            gap: 28px;
         }
 
         .small-pull-tab {
@@ -173,6 +146,7 @@
             position: relative;
             cursor: pointer;
             box-shadow: inset 0 0 8px #000, 3px 3px 10px rgba(0,0,0,0.5);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
 
         .drawer-white-card {
@@ -188,12 +162,16 @@
             transition: 0.3s;
         }
 
-        .small-pull-tab:hover .drawer-white-card {
-            background: var(--glow-teal);
-            box-shadow: 0 0 15px var(--glow-teal);
+        .small-pull-tab:hover {
+            transform: translateY(-8px);
+            box-shadow: inset 0 0 8px #000, 0 10px 20px rgba(0,0,0,0.6);
         }
 
-        /* STAGE */
+        .small-pull-tab:hover .drawer-white-card {
+            background: var(--glow-teal);
+            box-shadow: 0 0 20px var(--glow-teal);
+        }
+
         #theater-container {
             position: relative;
             width: 950px;
@@ -241,23 +219,18 @@
     <nav class="nav-container">
         <div class="label-holder" onclick="smoothRevealRooms()">
             <div class="white-card"><span class="label-text">Rooms</span></div>
-            <div class="lip-pull"></div>
         </div>
         <div class="label-holder">
             <div class="white-card"><span class="label-text">Furniture Catalog</span></div>
-            <div class="lip-pull"></div>
         </div>
         <div class="label-holder">
             <div class="white-card"><span class="label-text">Decor Closet</span></div>
-            <div class="lip-pull"></div>
         </div>
         <div class="label-holder">
             <div class="white-card"><span class="label-text">Inspirational Walkthrough</span></div>
-            <div class="lip-pull"></div>
         </div>
         <div class="label-holder">
             <div class="white-card"><span class="label-text">Save / Checkout</span></div>
-            <div class="lip-pull"></div>
         </div>
     </nav>
 
@@ -265,16 +238,16 @@
         <div id="rooms-cabinet-container">
             <img src="Assets/cabinet.png" id="cabinet-img" alt="Storage Cabinet">
             <div class="drawer-labels-overlay">
-                <div class="small-pull-tab" onmouseover="peekRoom('livingroom1.jpg')" onclick="selectRoom('livingroom1.jpg')">
+                <div class="small-pull-tab" onmouseover="peekRoom('livingroom.jpg')" onclick="cycleRoom('living')">
                     <div class="drawer-white-card">livingroom</div>
                 </div>
-                <div class="small-pull-tab" onmouseover="peekRoom('bedroom.jpg')" onclick="selectRoom('bedroom.jpg')">
+                <div class="small-pull-tab" onmouseover="peekRoom('bedroom.jpg')" onclick="cycleRoom('bedroom')">
                     <div class="drawer-white-card">bedroom</div>
                 </div>
                 <div class="small-pull-tab" onmouseover="peekRoom('diningroom.jpg')" onclick="selectRoom('diningroom.jpg')">
                     <div class="drawer-white-card">diningroom</div>
                 </div>
-                <div class="small-pull-tab" onmouseover="peekRoom('foyer.jpg')" onclick="selectRoom('foyer.jpg')">
+                <div class="small-pull-tab" onmouseover="peekRoom('foyer.jpg')" onclick="cycleRoom('extra')">
                     <div class="drawer-white-card">extra rooms</div>
                 </div>
                 <div class="small-pull-tab">
@@ -292,14 +265,19 @@
 </div>
 
 <script>
+    const roomSets = {
+        living: ['livingroom.jpg', 'livingroom1.jpg', 'livingroom3.jpg'],
+        bedroom: ['bedroom.jpg', 'bedroom2.jpg'],
+        extra: ['foyer.jpg', 'kitchen.jpg', 'kitchen2.jpg', 'office.jpg']
+    };
+    
+    const indices = { living: 0, bedroom: 0, extra: 0 };
+
     function smoothRevealRooms() {
-        // More graceful scroll speed
         window.scrollTo({
             top: document.getElementById('interaction-zone').offsetTop - 50,
             behavior: 'smooth'
         });
-        
-        // Slightly longer delay for a cinematic glide in
         setTimeout(() => {
             document.getElementById('rooms-cabinet-container').classList.add('glided-in');
         }, 800);
@@ -312,11 +290,15 @@
     function selectRoom(img) {
         document.getElementById('room-display').style.backgroundImage = `url('Assets/${img}')`;
         document.getElementById('theater-container').classList.add('open');
-        
-        // Wait for curtains to be fully open before gliding cabinet back
         setTimeout(() => {
             document.getElementById('rooms-cabinet-container').classList.remove('glided-in');
         }, 1200);
+    }
+
+    function cycleRoom(type) {
+        indices[type] = (indices[type] + 1) % roomSets[type].length;
+        const nextImg = roomSets[type][indices[type]];
+        selectRoom(nextImg);
     }
 </script>
 
