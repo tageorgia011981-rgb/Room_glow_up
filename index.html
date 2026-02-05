@@ -101,7 +101,6 @@
             text-transform: uppercase;
         }
 
-        /* EXPANDED LAYOUT */
         #interaction-zone {
             display: flex;
             justify-content: flex-start;
@@ -114,7 +113,6 @@
             position: relative;
         }
 
-        /* LEFT SIDE CABINET PORTAL */
         #cabinet-portal {
             width: 550px;
             height: 100%;
@@ -141,68 +139,71 @@
             filter: drop-shadow(15px 15px 30px #000);
         }
 
-        /* SCREWHOLES AND TABS */
-        .drawer-labels-overlay {
-            position: absolute;
-            top: 110px; 
-            left: 95px;
-            display: flex;
-            flex-direction: column;
-            gap: 28px;
-        }
-
-        .small-pull-tab {
-            width: 160px;
-            height: 65px;
-            background: var(--metal-shine);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            position: relative;
-            cursor: pointer;
-            box-shadow: inset 0 0 8px #000, 3px 3px 10px rgba(0,0,0,0.5);
-            transition: transform 0.3s ease;
-        }
-
-        .small-pull-tab::before, .small-pull-tab::after, .screw-tr, .screw-br {
-            content: ''; position: absolute; width: 8px; height: 8px; background: #111; border-radius: 50%; box-shadow: inset 1px 1px 1px #444;
-        }
-        .small-pull-tab::before { top: 6px; left: 6px; }
-        .small-pull-tab::after { bottom: 6px; left: 6px; }
-        .screw-tr { top: 6px; right: 6px; position: absolute; }
-        .screw-br { bottom: 6px; right: 6px; position: absolute; }
-
-        .drawer-white-card {
-            width: 75%; height: 55%; background: #fff; display: flex; justify-content: center; align-items: center;
-            font-family: 'Courier New', Courier, monospace; font-size: 14px; font-weight: bold; transition: 0.3s; z-index: 2;
-        }
-
-        /* FURNITURE TAGS */
-        .furniture-tags-overlay {
+        /* TAGS & SUB-TAGS */
+        .tags-overlay {
             position: absolute;
             top: 100px;
-            right: 80px;
+            right: 60px;
             display: flex;
             flex-direction: column;
-            gap: 35px;
+            gap: 20px;
+            width: 180px;
         }
 
         .swing-tag {
             width: 85px;
             cursor: pointer;
             transform-origin: top center;
-            transition: transform 0.5s ease;
+            transition: transform 0.5s ease, opacity 0.5s;
             filter: drop-shadow(5px 5px 10px rgba(0,0,0,0.5));
         }
 
-        .swing-tag:hover { animation: sway 1.5s ease-in-out infinite alternate; }
+        .sub-tag {
+            width: 150px;
+            height: 40px;
+            background: var(--metal-shine);
+            border: 1px solid #000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            box-shadow: inset 0 0 5px #000;
+            margin-bottom: 5px;
+        }
 
+        .sub-tag-card {
+            width: 90%;
+            height: 80%;
+            background: #fff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 11px;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+
+        .sub-tag:hover .sub-tag-card {
+            background: var(--glow-teal);
+        }
+
+        .back-tag {
+            color: #fff;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 12px;
+            cursor: pointer;
+            text-decoration: underline;
+            margin-bottom: 10px;
+        }
+
+        .swing-tag:hover { animation: sway 1.5s ease-in-out infinite alternate; }
         @keyframes sway { 0% { transform: rotate(-10deg); } 100% { transform: rotate(10deg); } }
 
-        /* THE EXPANDED STAGE */
+        /* THEATER STAGE & CURTAINS */
         #theater-container {
             position: relative;
-            flex-grow: 1; /* EXPANDS TO FILL RIGHT SPACE */
+            flex-grow: 1;
             height: 650px;
             border: 25px solid #000;
             overflow: hidden;
@@ -214,55 +215,45 @@
         .curtain {
             position: absolute;
             top: 0; width: 50%; height: 100%;
-            background: url('Assets/stagecurtains.png') no-repeat;
+            background-image: url('Assets/stagecurtains.png');
             background-size: 200% 100%;
-            transition: transform 2s cubic-bezier(0.645, 0.045, 0.355, 1);
+            transition: transform 2.5s cubic-bezier(0.455, 0.03, 0.515, 0.955);
             z-index: 20; pointer-events: none;
         }
-        #curtain-left { left: 0; background-position: left; }
-        #curtain-right { right: 0; background-position: right; }
+        #curtain-left { left: 0; background-position: left center; }
+        #curtain-right { right: 0; background-position: right center; }
         #theater-container.open #curtain-left { transform: translateX(-100%); }
         #theater-container.open #curtain-right { transform: translateX(100%); }
 
         #room-display {
-            width: 100%; height: 100%; 
-            background-size: cover; 
-            background-position: center; 
-            cursor: pointer;
-            position: relative;
+            width: 100%; height: 100%; background-size: cover; background-position: center; cursor: pointer; position: relative;
         }
 
-        /* DRAGGABLE ITEMS */
         .drag-item {
             position: absolute;
             cursor: grab;
             width: 150px;
             z-index: 25;
-            filter: drop-shadow(5px 5px 10px rgba(0,0,0,0.5));
+            filter: drop-shadow(5px 5px 15px rgba(0,0,0,0.6));
         }
-        .drag-item:active { cursor: grabbing; }
 
-        /* THUMBNAIL TRAY (Hidden inside case) */
         #furniture-tray {
             position: absolute;
             top: 100px;
-            left: 50px;
-            width: 300px;
+            left: 45px;
+            width: 280px;
             display: grid;
-            grid-template-columns: 1fr 1fr;
+            grid-template-columns: repeat(2, 1fr);
             gap: 15px;
             z-index: 40;
-            pointer-events: auto;
+            max-height: 450px;
+            overflow-y: auto;
         }
 
         .furniture-thumb {
-            width: 100%;
-            background: rgba(255,255,255,0.1);
-            border: 1px solid #fff;
-            cursor: pointer;
-            transition: transform 0.2s;
+            width: 100%; background: rgba(255,255,255,0.05); border: 2px solid #444; cursor: pointer; transition: 0.3s;
         }
-        .furniture-thumb:hover { transform: scale(1.1); background: var(--glow-teal); }
+        .furniture-thumb:hover { border-color: var(--glow-teal); box-shadow: 0 0 10px var(--glow-teal); }
     </style>
 </head>
 <body>
@@ -294,34 +285,33 @@
     <div id="interaction-zone">
         <div id="cabinet-portal">
             <div id="rooms-cabinet-container" class="side-asset">
-                <img src="Assets/cabinet.png" class="asset-img" alt="Room Cabinet">
+                <img src="Assets/cabinet.png" class="asset-img">
                 <div class="drawer-labels-overlay">
-                    <div class="small-pull-tab" onmouseover="peekRoom('livingroom.jpg')" onclick="cycleRoom('living')">
+                    <div class="small-pull-tab" onclick="cycleRoom('living')">
                         <span class="screw-tr"></span><span class="screw-br"></span>
                         <div class="drawer-white-card">livingroom</div>
                     </div>
-                    <div class="small-pull-tab" onmouseover="peekRoom('bedroom.jpg')" onclick="cycleRoom('bedroom')">
+                    <div class="small-pull-tab" onclick="cycleRoom('bedroom')">
                         <span class="screw-tr"></span><span class="screw-br"></span>
                         <div class="drawer-white-card">bedroom</div>
-                    </div>
-                    <div class="small-pull-tab" onmouseover="peekRoom('diningroom.jpg')" onclick="cycleRoom('dining')">
-                        <span class="screw-tr"></span><span class="screw-br"></span>
-                        <div class="drawer-white-card">diningroom</div>
-                    </div>
-                    <div class="small-pull-tab" onmouseover="peekRoom('foyer.jpg')" onclick="cycleRoom('extra')">
-                        <span class="screw-tr"></span><span class="screw-br"></span>
-                        <div class="drawer-white-card">extra rooms</div>
                     </div>
                 </div>
             </div>
 
             <div id="furniture-case-container" class="side-asset">
-                <img src="Assets/furniturecases.png" class="asset-img" alt="Furniture Case">
-                <div id="furniture-tray"></div> <div class="furniture-tags-overlay">
-                    <div class="swing-tag" onclick="loadFurniture('seating')"><img src="Assets/iconseating.png" class="tag-icon"></div>
-                    <div class="swing-tag" onclick="loadFurniture('tables')"><img src="Assets/icontables.png" class="tag-icon"></div>
-                    <div class="swing-tag" onclick="loadFurniture('storage')"><img src="Assets/iconstorage.png" class="tag-icon"></div>
-                    <div class="swing-tag" onclick="loadFurniture('beds')"><img src="Assets/iconbeds.png" class="tag-icon"></div>
+                <img src="Assets/furniturecases.png" class="asset-img">
+                <div id="furniture-tray"></div>
+                
+                <div id="main-tags" class="tags-overlay">
+                    <div class="swing-tag" onclick="showSubTags('seating')"><img src="Assets/iconseating.png" class="tag-icon"></div>
+                    <div class="swing-tag" onclick="showSubTags('tables')"><img src="Assets/icontables.png" class="tag-icon"></div>
+                    <div class="swing-tag" onclick="showSubTags('storage')"><img src="Assets/iconstorage.png" class="tag-icon"></div>
+                    <div class="swing-tag" onclick="showSubTags('beds')"><img src="Assets/iconbeds.png" class="tag-icon"></div>
+                </div>
+
+                <div id="sub-tags" class="tags-overlay" style="display:none;">
+                    <div class="back-tag" onclick="backToMainTags()">← Back to Main</div>
+                    <div id="sub-tag-list"></div>
                 </div>
             </div>
         </div>
@@ -335,32 +325,22 @@
 </div>
 
 <script>
-    const roomSets = {
-        living: ['livingroom.jpg', 'livingroom1.jpg', 'livingroom3.jpg'],
-        bedroom: ['bedroom.jpg', 'bedroom2.jpg'],
-        dining: ['diningroom.jpg'],
-        extra: ['foyer.jpg', 'kitchen.jpg', 'kitchen2.jpg', 'office.jpg']
-    };
-    
-    // Mock data for furniture assets
-    const furnitureData = {
-        beds: ['bed1.png', 'bed2.png', 'bed3.png'],
-        seating: ['sofa.png', 'chair.png'],
-        tables: ['table1.png'],
-        storage: ['dresser.png']
+    const subCategories = {
+        seating: ['couches', 'chairs', 'diningroom', 'benches', 'stools', 'ottomans'],
+        storage: ['dressers', 'cabinets', 'armoires'],
+        tables: ['diningroom', 'coffeetable', 'end tables', 'bedside table'],
+        beds: ['beds']
     };
 
-    const indices = { living: 0, bedroom: 0, dining: 0, extra: 0 };
+    const roomSets = {
+        living: ['livingroom.jpg', 'livingroom1.jpg'],
+        bedroom: ['bedroom.jpg', 'bedroom2.jpg']
+    };
+    const indices = { living: 0, bedroom: 0 };
 
     function smoothRevealRooms() {
         document.getElementById('furniture-case-container').classList.remove('glided-in');
         setTimeout(() => { document.getElementById('rooms-cabinet-container').classList.add('glided-in'); }, 800);
-    }
-
-    function peekRoom(img) {
-        if(!document.getElementById('theater-container').classList.contains('open')) {
-            document.getElementById('room-display').style.backgroundImage = `url('Assets/${img}')`;
-        }
     }
 
     function cycleRoom(type) {
@@ -381,16 +361,34 @@
         document.getElementById('furniture-case-container').classList.add('glided-in');
     }
 
-    function loadFurniture(category) {
-        const tray = document.getElementById('furniture-tray');
-        tray.innerHTML = ''; // Clear tray
-        furnitureData[category].forEach(item => {
-            const img = document.createElement('img');
-            img.src = `Assets/${item}`;
-            img.className = 'furniture-thumb';
-            img.onclick = () => addToRoom(item);
-            tray.appendChild(img);
+    function showSubTags(cat) {
+        document.getElementById('main-tags').style.display = 'none';
+        const subList = document.getElementById('sub-tag-list');
+        subList.innerHTML = '';
+        
+        subCategories[cat].forEach(sub => {
+            const div = document.createElement('div');
+            div.className = 'sub-tag';
+            div.innerHTML = `<div class="sub-tag-card">${sub}</div>`;
+            div.onclick = () => loadFurniture(sub);
+            subList.appendChild(div);
         });
+        
+        document.getElementById('sub-tags').style.display = 'flex';
+    }
+
+    function backToMainTags() {
+        document.getElementById('sub-tags').style.display = 'none';
+        document.getElementById('main-tags').style.display = 'flex';
+        document.getElementById('furniture-tray').innerHTML = '';
+    }
+
+    function loadFurniture(subCat) {
+        console.log("Loading items for: " + subCat);
+        const tray = document.getElementById('furniture-tray');
+        tray.innerHTML = '';
+        // In the future, match subCat string to actual image filenames
+        // Example: ['Assets/couch1.png', 'Assets/couch2.png'].forEach(...)
     }
 
     function addToRoom(item) {
@@ -398,25 +396,16 @@
         const img = document.createElement('img');
         img.src = `Assets/${item}`;
         img.className = 'drag-item';
-        img.style.left = '50px';
-        img.style.top = '50px';
-        
-        // Simple drag logic
+        img.style.left = '100px'; img.style.top = '100px';
         img.onmousedown = (e) => {
-            let shiftX = e.clientX - img.getBoundingClientRect().left;
-            let shiftY = e.clientY - img.getBoundingClientRect().top;
-            
-            function moveAt(pageX, pageY) {
-                img.style.left = pageX - stage.getBoundingClientRect().left - shiftX + 'px';
-                img.style.top = pageY - stage.getBoundingClientRect().top - shiftY + 'px';
+            let sX = e.clientX - img.getBoundingClientRect().left;
+            let sY = e.clientY - img.getBoundingClientRect().top;
+            function move(ev) {
+                img.style.left = ev.pageX - stage.getBoundingClientRect().left - sX + 'px';
+                img.style.top = ev.pageY - stage.getBoundingClientRect().top - sY + 'px';
             }
-
-            function onMouseMove(e) { moveAt(e.pageX, e.pageY); }
-            document.addEventListener('mousemove', onMouseMove);
-            img.onmouseup = () => {
-                document.removeEventListener('mousemove', onMouseMove);
-                img.onmouseup = null;
-            };
+            document.addEventListener('mousemove', move);
+            img.onmouseup = () => document.removeEventListener('mousemove', move);
         };
         img.ondragstart = () => false;
         stage.appendChild(img);
