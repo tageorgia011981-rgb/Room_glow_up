@@ -9,12 +9,12 @@
         body { background: #111; color: white; font-family: 'Times New Roman', serif; display: flex; flex-direction: column; align-items: center; margin: 0; }
 
         /* --- STAGE --- */
-        #stage { width: var(--stage-w); height: var(--stage-h); position: relative; background: url('Assets/main_room_bg.jpg') center/cover; border: 10px solid #222; overflow: hidden; margin-top: 20px; }
+        #stage { width: var(--stage-w); height: var(--stage-h); position: relative; background: url('main_room_bg.jpg') center/cover; border: 10px solid #222; overflow: hidden; margin-top: 20px; }
         .placed-item { position: absolute; cursor: move; user-select: none; }
 
         /* --- CLOSET & 3D DOORS --- */
         #closet-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: none; z-index: 1000; perspective: 1200px; }
-        .door { position: absolute; width: 50%; height: 100%; background: url('Assets/closetdoors.jpg') no-repeat; background-size: 200% 100%; transition: transform 1.2s cubic-bezier(0.4, 0, 0.2, 1); z-index: 1010; }
+        .door { position: absolute; width: 50%; height: 100%; background: url('closetdoors.jpg') no-repeat; background-size: 200% 100%; transition: transform 1.2s cubic-bezier(0.4, 0, 0.2, 1); z-index: 1010; }
         #door-left { left: 0; background-position: left; transform-origin: left; }
         #door-right { right: 0; background-position: right; transform-origin: right; }
         .open #door-left { transform: rotateY(-110deg); }
@@ -25,17 +25,16 @@
         .shelf-item:hover { transform: scale(1.1); }
 
         /* --- DECOR BOOK --- */
-        #decor-book { position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 750px; height: 550px; background: url('Assets/decorbook_bg.jpg') center/cover; display: none; z-index: 2000; transition: 0.5s; border-radius: 8px; box-shadow: 0 20px 60px rgba(0,0,0,0.8); }
-        #decor-book.is-open { background: url('Assets/decorcatalog.png') center/cover; }
+        #decor-book { position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 750px; height: 550px; background: url('decorbook_bg.jpg') center/cover; display: none; z-index: 2000; transition: 0.5s; }
+        #decor-book.is-open { background: url('decorcatalog.png') center/cover; }
         .book-info { opacity: 0; transition: 0.5s; padding: 60px; display: flex; justify-content: flex-end; height: 100%; box-sizing: border-box; }
         .is-open .book-info { opacity: 1; }
-        .product-card { background: white; width: 260px; height: fit-content; padding: 20px; color: black; text-align: center; border-radius: 3px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); margin-top: 50px; }
+        .product-card { background: white; width: 260px; height: fit-content; padding: 20px; color: black; text-align: center; border-radius: 3px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
 
-        /* --- RECEIPT & UI --- */
-        #ui { width: var(--stage-w); display: flex; gap: 20px; margin-top: 20px; margin-bottom: 50px; }
-        #receipt { background: #fefefe; color: black; padding: 20px; width: 300px; min-height: 250px; font-family: 'Courier New', monospace; box-shadow: 10px 10px 0px #333; }
-        .tab-btn { padding: 12px 24px; background: #222; color: #fff; border: 1px solid #444; cursor: pointer; letter-spacing: 2px; text-transform: uppercase; transition: 0.3s; }
-        .tab-btn:hover { background: #fff; color: #000; }
+        /* --- RECEIPT --- */
+        #ui { width: var(--stage-w); display: flex; gap: 20px; margin-top: 20px; }
+        #receipt { background: white; color: black; padding: 20px; width: 280px; min-height: 250px; font-family: 'Courier New', monospace; }
+        .tab-btn { padding: 12px 24px; background: #333; color: white; border: 1px solid #555; cursor: pointer; letter-spacing: 1px; }
     </style>
 </head>
 <body>
@@ -44,12 +43,12 @@
 
 <div id="ui">
     <div style="display:flex; flex-direction:column; gap:10px;">
-        <button class="tab-btn" onclick="openCloset('Assets/decorshelves.jpg')">Industrial Wing</button>
-        <button class="tab-btn" onclick="openCloset('Assets/decorshelves2.png')">Glass Gallery</button>
-        <button class="tab-btn" onclick="openCloset('Assets/decorshelves3.jpg')">White Showroom</button>
+        <button class="tab-btn" onclick="openCloset('decorshelves.jpg')">INDUSTRIAL WING</button>
+        <button class="tab-btn" onclick="openCloset('decorshelves2.png')">GLASS GALLERY</button>
+        <button class="tab-btn" onclick="openCloset('decorshelves3.jpg')">WHITE SHOWROOM</button>
     </div>
     <div id="receipt">
-        <h3 style="text-align:center; margin-top:0; border-bottom: 1px solid #000; padding-bottom: 10px;">DESIGN MANIFEST</h3>
+        <h3 style="text-align:center; margin-top:0;">MANIFEST</h3>
         <ul id="manifest-list" style="padding:0; list-style:none;"></ul>
     </div>
 </div>
@@ -57,34 +56,31 @@
 <div id="closet-overlay">
     <div id="door-left" class="door"></div>
     <div id="door-right" class="door"></div>
-    <div id="closet-content" onclick="closeCloset()"></div>
+    <div id="closet-content"></div>
 </div>
 
 <div id="decor-book" onclick="closeBook()">
     <div class="book-info">
-        <div class="product-card" onclick="event.stopPropagation()">
+        <div class="product-card">
             <img id="book-img" src="" style="width:100%; height:180px; object-fit:contain;">
-            <h2 id="book-name" style="font-size:18px; margin: 10px 0;"></h2>
-            <p id="book-price" style="font-weight:bold; font-size: 20px;"></p>
-            <a id="book-link" href="#" target="_blank" style="background:black; color:white; padding:10px 20px; text-decoration:none; display:inline-block; margin-top:15px; font-weight: bold;">SHOP NOW</a>
+            <h2 id="book-name" style="font-size:18px;"></h2>
+            <p id="book-price" style="font-weight:bold;"></p>
+            <a id="book-link" href="#" target="_blank" style="background:black; color:white; padding:10px 20px; text-decoration:none; display:inline-block; margin-top:10px;">SHOP NOW</a>
         </div>
     </div>
 </div>
 
 <script>
-    // Asset Folder Variable
-    const path = "Assets/";
-
     const inventory = [
-        { name: "Vintage Palm", img: path + "plant1.png", price: "$180", link: "#" },
-        { name: "Persian Rug", img: path + "rug3.png", price: "$1,200", link: "#" }
-        // Add all 32 items here with path + "filename.png"
+        { name: "Vintage Palm", img: "plant1.png", price: "$180", link: "#" },
+        { name: "Persian Rug", img: "rug3.png", price: "$1,200", link: "#" }
+        // Add all 32 items here
     ];
 
-    function openCloset(bgPath) {
+    function openCloset(bg) {
         const overlay = document.getElementById('closet-overlay');
         const content = document.getElementById('closet-content');
-        content.style.backgroundImage = `url('${bgPath}')`;
+        content.style.backgroundImage = `url('${bg}')`;
         overlay.style.display = 'block';
         content.innerHTML = '';
         inventory.forEach(item => {
@@ -124,7 +120,7 @@
         const el = document.createElement('img');
         el.src = item.img;
         el.className = 'placed-item';
-        el.style.width = "200px"; el.style.left = "200px"; el.style.top = "200px";
+        el.style.width = "200px"; el.style.left = "100px"; el.style.top = "100px";
         el.dataset.name = item.name;
         el.ondblclick = () => { el.remove(); updateReceipt(); };
         dragElement(el);
@@ -138,7 +134,7 @@
         list.innerHTML = '';
         document.querySelectorAll('.placed-item').forEach(i => {
             const li = document.createElement('li');
-            li.innerText = `• ${i.dataset.name}`;
+            li.innerText = `- ${i.dataset.name}`;
             list.appendChild(li);
         });
     }
