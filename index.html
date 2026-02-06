@@ -87,28 +87,51 @@
         #room-display { width: 100%; height: 100%; background-size: cover; background-position: center; transition: background-image 0.5s ease; cursor: pointer; }
         .placed-item { position: absolute; width: 150px; cursor: move; z-index: 10; filter: drop-shadow(5px 5px 10px #000); }
 
-        /* --- CLOSET POPUP --- */
-        #closet-layer {
+        /* --- DECOR CLOSET SYSTEM --- */
+        #closet-popup {
             position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%);
-            width: 1100px; height: 700px; z-index: 10000; display: none; perspective: 1500px;
+            width: 1100px; height: 750px; z-index: 10000; display: none; perspective: 1500px;
         }
         #closet-door {
             position: absolute; width: 100%; height: 100%; z-index: 100;
             background: url('Assets/closetdoors.jpg') center/cover no-repeat;
-            transform-origin: left; transition: transform 1.5s ease; cursor: pointer; border: 10px solid #000;
+            transform-origin: left; transition: transform 1.5s ease; cursor: pointer; border: 12px solid #000;
         }
         .closet-open #closet-door { transform: rotateY(-110deg); pointer-events: none; }
+        
         #closet-interior {
-            position: absolute; width: 100%; height: 100%; background: #111; display: flex; border: 10px solid #000;
+            position: absolute; width: 100%; height: 100%; display: flex; 
+            border: 12px solid #000; background: #111; overflow: hidden;
         }
         .shelf-section {
-            flex: 1; height: 100%; background-size: cover; background-position: center;
-            display: flex; flex-wrap: wrap; justify-content: center; align-content: flex-start;
-            padding-top: 100px; overflow-y: auto; border: 1px solid #222;
+            position: absolute; width: 100%; height: 100%; background-size: cover; background-position: center;
+            display: none; flex-wrap: wrap; justify-content: center; align-content: flex-start;
+            padding-top: 160px; transition: opacity 0.5s ease;
         }
-        .decor-thumb { width: 120px; height: 120px; margin: 15px; cursor: pointer; transition: 0.3s; }
-        .decor-thumb:hover { transform: scale(1.1); }
-        #close-closet { position: absolute; top: 20px; right: 30px; color: #fff; font-size: 40px; cursor: pointer; z-index: 110; font-family: sans-serif; }
+        .shelf-section.active { display: flex; }
+
+        .shelf-item { 
+            width: 130px; height: 130px; margin: 20px; cursor: pointer; 
+            transition: transform 0.3s; object-fit: contain; 
+        }
+        .shelf-item:hover { transform: scale(1.2); filter: drop-shadow(0 0 15px var(--glow-teal)); }
+
+        #closet-controls {
+            position: absolute; bottom: 30px; width: 100%; display: flex; justify-content: center; gap: 50px; z-index: 120;
+        }
+        .closet-btn {
+            background: var(--metal-shine); border: 2px solid #000; color: #fff; font-family: 'Courier New', monospace;
+            padding: 10px 30px; font-weight: bold; cursor: pointer; text-transform: uppercase;
+            box-shadow: 4px 4px 0px #000; transition: 0.2s;
+        }
+        .closet-btn:hover { background: var(--glow-teal); color: #000; transform: translate(-2px, -2px); box-shadow: 6px 6px 0px #000; }
+        
+        #closet-label {
+            position: absolute; top: 30px; left: 50%; transform: translateX(-50%);
+            color: #fff; font-family: 'Limelight', cursive; font-size: 24px; text-shadow: 2px 2px 5px #000; z-index: 120;
+        }
+
+        #close-closet-x { position: absolute; top: 15px; right: 25px; color: #fff; font-size: 50px; cursor: pointer; z-index: 130; }
     </style>
 </head>
 <body>
@@ -130,7 +153,7 @@
     <div id="interaction-zone">
         <div class="cabinet-space">
             <div id="rooms-cabinet-container" class="asset-side-container">
-                <img src="Assets/cabinet.png" class="asset-img" alt="Storage Cabinet">
+                <img src="Assets/cabinet.png" class="asset-img">
                 <div class="drawer-labels-overlay">
                     <div class="small-pull-tab" onmouseover="peekRoom('livingroom1.jpg')" onclick="cycleRoom('livingroom')"><div class="drawer-white-card">livingroom</div></div>
                     <div class="small-pull-tab" onmouseover="peekRoom('bedroom.jpg')" onclick="cycleRoom('bedroom')"><div class="drawer-white-card">bedroom</div></div>
@@ -139,116 +162,103 @@
                     <div class="small-pull-tab"><input type="file" id="room-upload" style="display:none" onchange="uploadRoom(this)"><div class="drawer-white-card" onclick="document.getElementById('room-upload').click()">upload yours</div></div>
                 </div>
             </div>
-
             <div id="furniture-cases-container" class="asset-side-container">
-                <img src="Assets/furniturecases.png" class="asset-img" alt="Furniture Cases">
+                <img src="Assets/furniturecases.png" class="asset-img">
                 <div id="dynamic-tags-container" class="furniture-tags-overlay"></div>
             </div>
         </div>
-
         <div id="theater-container">
             <div id="room-display" onclick="commitSelection()"></div>
         </div>
     </div>
 </div>
 
-<div id="closet-layer">
-    <div id="close-closet" onclick="closeCloset()">×</div>
+<div id="closet-popup">
+    <div id="close-closet-x" onclick="closeCloset()">×</div>
     <div id="closet-door" onclick="this.parentElement.classList.add('closet-open')"></div>
+    
+    <div id="closet-label">Plants Section</div>
+    
     <div id="closet-interior">
-        <div class="shelf-section" id="shelf1" style="background-image: url('Assets/decorshelves.jpg');"></div>
-        <div class="shelf-section" id="shelf2" style="background-image: url('Assets/decorshelves2.png');"></div>
-        <div class="shelf-section" id="shelf3" style="background-image: url('Assets/decorshelves3.jpg');"></div>
+        <div class="shelf-section active" id="sec-1" style="background-image: url('Assets/decorshelves.jpg');"></div>
+        <div class="shelf-section" id="sec-2" style="background-image: url('Assets/decorshelves2.png');"></div>
+        <div class="shelf-section" id="sec-3" style="background-image: url('Assets/decorshelves3.jpg');"></div>
+    </div>
+
+    <div id="closet-controls">
+        <button class="closet-btn" onclick="nextSection()">Next Section →</button>
     </div>
 </div>
 
 <script>
-    const subCategories = {
-        seating: ['couches', 'chairs', 'dining chairs', 'benches', 'stools'],
-        tables: ['coffee', 'end', 'dining table'],
-        storage: ['armoire', 'dressers', 'buffet'],
-        beds: ['beds']
-    };
-
-    const mainCategories = [
-        { id: 'seating', img: 'iconseating.png' },
-        { id: 'tables', img: 'icontables.png' },
-        { id: 'storage', img: 'iconstorage.png' },
-        { id: 'beds', img: 'iconbeds.png' }
-    ];
+    // NAVIGATION & ROOMS
+    const subCategories = { seating: ['couches', 'chairs', 'dining chairs'], tables: ['coffee', 'end'], storage: ['armoire'], beds: ['beds'] };
+    const mainCategories = [{ id: 'seating', img: 'iconseating.png' }, { id: 'tables', img: 'icontables.png' }, { id: 'storage', img: 'iconstorage.png' }, { id: 'beds', img: 'iconbeds.png' }];
 
     function renderMainTags() {
         const container = document.getElementById('dynamic-tags-container');
-        container.innerHTML = mainCategories.map(cat => `
-            <div class="tag-hanger">
-                <div class="icon-tag" onclick="showSubTags('${cat.id}')">
-                    <img src="Assets/${cat.img}" alt="${cat.id}">
-                </div>
-            </div>
-        `).join('');
+        container.innerHTML = mainCategories.map(cat => `<div class="tag-hanger"><div class="icon-tag" onclick="showSubTags('${cat.id}')"><img src="Assets/${cat.img}"></div></div>`).join('');
     }
+    renderMainTags();
 
     function showSubTags(id) {
         const container = document.getElementById('dynamic-tags-container');
-        let tagsHTML = subCategories[id].map(sub => `
-            <div class="tag-hanger">
-                <div class="icon-tag" onclick="openCatalog('${sub}')">
-                    <span class="tag-text">${sub}</span>
-                </div>
-            </div>
-        `).join('');
-        tagsHTML += `
-            <div class="tag-hanger">
-                <div class="icon-tag back-tag" onclick="renderMainTags()">
-                    <span class="tag-text">← Back</span>
-                </div>
-            </div>
-        `;
-        container.innerHTML = tagsHTML;
+        let html = subCategories[id].map(sub => `<div class="tag-hanger"><div class="icon-tag" onclick="openCatalog('${sub}')"><span class="tag-text">${sub}</span></div></div>`).join('');
+        html += `<div class="tag-hanger"><div class="icon-tag back-tag" onclick="renderMainTags()"><span class="tag-text">← Back</span></div></div>`;
+        container.innerHTML = html;
     }
 
-    function openCatalog(item) { console.log("Opening catalog for: " + item); }
-
-    // ROOM LOGIC
-    const roomInventory = { livingroom: ['livingroom1.jpg', 'livingroom3.jpg'], bedroom: ['bedroom.jpg', 'bedroom2.jpg'], diningroom: ['diningroom.jpg'], extra: ['foyer.jpg', 'officeroom.jpg', 'kitchen.jpg', 'kitchen2.jpg'] };
-    let indices = { livingroom: 0, bedroom: 0, diningroom: 0, extra: 0 };
-    function roomsAction() { window.scrollTo({ top: document.getElementById('interaction-zone').offsetTop - 20, behavior: 'smooth' }); document.getElementById('rooms-cabinet-container').classList.add('glided-in'); }
+    const roomInventory = { livingroom: ['livingroom1.jpg'], bedroom: ['bedroom.jpg'], diningroom: ['diningroom.jpg'], extra: ['foyer.jpg'] };
+    function roomsAction() { document.getElementById('rooms-cabinet-container').classList.add('glided-in'); }
     function peekRoom(img) { document.getElementById('room-display').style.backgroundImage = `url('Assets/${img}')`; }
-    function cycleRoom(type) { let list = roomInventory[type]; indices[type] = (indices[type] + 1) % list.length; peekRoom(list[indices[type]]); }
-    function commitSelection() { document.getElementById('rooms-cabinet-container').classList.remove('glided-in'); document.getElementById('rooms-cabinet-container').classList.add('glided-out'); setTimeout(() => { document.getElementById('furniture-cases-container').classList.add('glided-in'); }, 1000); }
-    function uploadRoom(input) { if (input.files && input.files[0]) { let reader = new FileReader(); reader.onload = function(e) { document.getElementById('room-display').style.backgroundImage = `url(${e.target.result})`; }; reader.readAsDataURL(input.files[0]); } }
+    function cycleRoom(type) { peekRoom(roomInventory[type][0]); }
+    function commitSelection() { 
+        document.getElementById('rooms-cabinet-container').classList.remove('glided-in'); 
+        setTimeout(() => { document.getElementById('furniture-cases-container').classList.add('glided-in'); }, 1000); 
+    }
 
     // CLOSET LOGIC
-    function openCloset() { document.getElementById('closet-layer').style.display = 'block'; }
+    let currentSec = 1;
+    const labels = ["Plants Section", "Pillows Section", "Decor Section"];
+
+    function openCloset() { document.getElementById('closet-popup').style.display = 'block'; }
     function closeCloset() { 
-        document.getElementById('closet-layer').classList.remove('closet-open');
-        document.getElementById('closet-layer').style.display = 'none'; 
+        document.getElementById('closet-popup').classList.remove('closet-open');
+        document.getElementById('closet-popup').style.display = 'none'; 
     }
 
-    const decorData = [
-        { name: "plant1.png", shelf: "shelf1" }, { name: "plant2.png", shelf: "shelf1" },
-        { name: "pillow1.png", shelf: "shelf2" }, { name: "pillow2.png", shelf: "shelf2" },
-        { name: "decor1.png", shelf: "shelf3" }, { name: "decor2.png", shelf: "shelf3" }
+    function nextSection() {
+        document.getElementById(`sec-${currentSec}`).classList.remove('active');
+        currentSec = (currentSec % 3) + 1;
+        document.getElementById(`sec-${currentSec}`).classList.add('active');
+        document.getElementById('closet-label').innerText = labels[currentSec - 1];
+    }
+
+    // ITEMS
+    const decorItems = [
+        { src: "plant1.png", sec: "sec-1" }, { src: "plant2.png", sec: "sec-1" },
+        { src: "pillow1.png", sec: "sec-2" }, { src: "pillow2.png", sec: "sec-2" },
+        { src: "decor1.png", sec: "sec-3" }, { src: "decor2.png", sec: "sec-3" }
     ];
 
-    decorData.forEach(item => {
+    decorItems.forEach(item => {
         const img = document.createElement('img');
-        img.src = "Assets/" + item.name;
-        img.className = "decor-thumb";
-        img.onclick = () => { placeDecor(item.name); closeCloset(); };
-        document.getElementById(item.shelf).appendChild(img);
+        img.src = "Assets/" + item.src;
+        img.className = "shelf-item";
+        img.onclick = () => { spawnDecor(item.src); closeCloset(); };
+        document.getElementById(item.sec).appendChild(img);
     });
 
-    function placeDecor(src) {
+    function spawnDecor(src) {
         const img = document.createElement('img');
         img.src = "Assets/" + src;
         img.className = "placed-item";
         img.style.left = "400px"; img.style.top = "200px";
-        initDrag(img);
+        makeDraggable(img);
         document.getElementById('theater-container').appendChild(img);
     }
 
-    function initDrag(el) {
+    function makeDraggable(el) {
         let x1=0, y1=0, x2=0, y2=0;
         el.onmousedown = (e) => {
             e.preventDefault(); x2=e.clientX; y2=e.clientY;
@@ -259,8 +269,6 @@
             };
         };
     }
-
-    renderMainTags();
 </script>
 </body>
 </html>
