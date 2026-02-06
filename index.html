@@ -28,54 +28,50 @@
         .label-text { font-family: 'Courier New', Courier, monospace; font-weight: 900; font-size: 16px; color: #000; text-transform: uppercase; }
 
         #interaction-zone { display: flex; justify-content: center; align-items: flex-start; gap: 40px; width: 1540px; height: 750px; position: relative; margin: 0 auto; }
-        .cabinet-space { position: relative; width: 550px; height: 650px; }
-        .asset-side-container { position: absolute; top: 0; left: 0; width: 550px; transform: translateX(-200%); transition: transform 3s cubic-bezier(0.23, 1, 0.32, 1); z-index: 30; }
-        #rooms-cabinet-container.glided-in { transform: translateX(0); }
-        #furniture-cases-container.glided-in { transform: translateX(0); }
-        
         #theater-container { width: 950px; height: 600px; border: 25px solid #000; overflow: hidden; background: #000; box-shadow: 0 0 60px rgba(0,0,0,1); z-index: 5; position: relative; }
         #room-display { width: 100%; height: 100%; background-size: cover; background-position: center; }
-        .placed-item { position: absolute; width: 150px; cursor: move; z-index: 10; }
+        .placed-item { position: absolute; width: 150px; cursor: move; z-index: 10; filter: drop-shadow(5px 5px 10px #000); }
 
-        /* --- CLOSET SYSTEM: FIXED 2 DOORS --- */
+        /* --- CLOSET OVERLAY --- */
         #closet-overlay {
-            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: #111; z-index: 10000; display: none; overflow: hidden;
             perspective: 2000px;
         }
+        #back-btn {
+            position: absolute; top: 30px; left: 50%; transform: translateX(-50%);
+            z-index: 10005; background: #fff; color: #000; border: 3px solid #000;
+            padding: 15px 40px; font-family: 'Limelight', cursive; font-size: 24px;
+            cursor: pointer; box-shadow: 0 0 20px var(--glow-teal);
+        }
         .door-wrapper {
-            position: absolute; width: 100%; height: 100%; display: flex; z-index: 10;
+            position: absolute; width: 100%; height: 100%; display: flex; z-index: 10001;
         }
         .closet-door {
             width: 50%; height: 100%; 
-            background: url('Assets/closetdoors.jpg') center center / cover no-repeat;
+            background: url('Assets/closetdoors.jpg') center center / 100% 100% no-repeat;
             transition: transform 1.5s cubic-bezier(0.4, 0, 0.2, 1);
         }
-        #left-door { transform-origin: left; border-right: 1px solid #000; }
-        #right-door { transform-origin: right; border-left: 1px solid #000; }
+        #left-door { transform-origin: left; border-right: 2px solid #000; }
+        #right-door { transform-origin: right; border-left: 2px solid #000; }
 
-        #interior-content {
-            width: 100%; height: 100%; display: flex; 
-            opacity: 0; transform: scale(0.9); transition: 1.5s;
+        #shelf-container {
+            width: 100%; height: 100%; display: flex; opacity: 0;
+            transform: scale(0.95); transition: 1.5s ease;
         }
-        .shelf-wall {
+        .wall-section {
             flex: 1; height: 100%; background-size: cover; background-position: center;
             display: flex; flex-wrap: wrap; justify-content: center; align-content: flex-start;
-            padding: 50px 20px; overflow-y: auto; border: 2px solid #222;
+            padding: 120px 20px 40px 20px; overflow-y: auto;
         }
-        .item-on-shelf { width: 140px; height: 140px; margin: 20px; cursor: pointer; transition: 0.3s; object-fit: contain; }
-        .item-on-shelf:hover { transform: scale(1.1) rotate(2deg); filter: brightness(1.2); }
+        .shelf-item { width: 140px; height: 140px; margin: 25px; cursor: pointer; transition: 0.3s; object-fit: contain; }
+        .shelf-item:hover { transform: scale(1.2); filter: drop-shadow(0 0 10px var(--glow-teal)); }
 
-        /* Active State */
-        .walk-in-active #left-door { transform: rotateY(-120deg); }
-        .walk-in-active #right-door { transform: rotateY(120deg); }
-        .walk-in-active #interior-content { opacity: 1; transform: scale(1); }
-        .walk-in-active .door-wrapper { pointer-events: none; }
-
-        #exit-closet {
-            position: absolute; top: 20px; left: 20px; z-index: 10010;
-            background: #fff; color: #000; padding: 10px 20px; font-family: 'Limelight', cursive; cursor: pointer;
-        }
+        /* Opening Logic */
+        .is-open #left-door { transform: rotateY(-110deg); }
+        .is-open #right-door { transform: rotateY(110deg); }
+        .is-open #shelf-container { opacity: 1; transform: scale(1); }
+        .is-open .door-wrapper { pointer-events: none; }
     </style>
 </head>
 <body>
@@ -94,85 +90,71 @@
     </nav>
 
     <div id="interaction-zone">
-        <div class="cabinet-space">
-            <div id="rooms-cabinet-container" class="asset-side-container">
-                <img src="Assets/cabinet.png" style="width:100%">
-                <div style="position:absolute; top:135px; left:95px; display:flex; flex-direction:column; gap:28px;">
-                    <div class="label-holder" style="width:160px; height:65px;" onclick="cycleRoom('livingroom')"><div class="white-card">Living</div></div>
-                    <div class="label-holder" style="width:160px; height:65px;" onclick="cycleRoom('bedroom')"><div class="white-card">Bedroom</div></div>
-                </div>
-            </div>
-            <div id="furniture-cases-container" class="asset-side-container">
-                <img src="Assets/furniturecases.png" style="width:100%">
-            </div>
-        </div>
         <div id="theater-container">
-            <div id="room-display" onclick="commitSelection()"></div>
+            <div id="room-display"></div>
         </div>
     </div>
 </div>
 
 <div id="closet-overlay">
-    <div id="exit-closet" onclick="closeCloset()">BACK TO STUDIO</div>
-    <div class="door-wrapper" onclick="this.parentElement.classList.add('walk-in-active')">
+    <div id="back-btn" onclick="closeCloset()">BACK TO STUDIO</div>
+    
+    <div class="door-wrapper" onclick="document.getElementById('closet-overlay').classList.add('is-open')">
         <div class="closet-door" id="left-door"></div>
         <div class="closet-door" id="right-door"></div>
     </div>
-    <div id="interior-content">
-        <div class="shelf-wall" id="shelf-1" style="background-image: url('Assets/decorshelves.jpg');"></div>
-        <div class="shelf-wall" id="shelf-2" style="background-image: url('Assets/decorshelves2.png');"></div>
-        <div class="shelf-wall" id="shelf-3" style="background-image: url('Assets/decorshelves3.jpg');"></div>
+
+    <div id="shelf-container">
+        <div class="wall-section" id="plants" style="background-image: url('Assets/decorshelves.jpg');"></div>
+        <div class="wall-section" id="pillows" style="background-image: url('Assets/decorshelves2.png');"></div>
+        <div class="wall-section" id="decor" style="background-image: url('Assets/decorshelves3.jpg');"></div>
     </div>
 </div>
 
 <script>
     function openCloset() { document.getElementById('closet-overlay').style.display = 'block'; }
     function closeCloset() { 
-        document.getElementById('closet-overlay').classList.remove('walk-in-active');
+        document.getElementById('closet-overlay').classList.remove('is-open');
         document.getElementById('closet-overlay').style.display = 'none'; 
     }
 
-    const decorList = [
-        { n: "plant1.png", s: "shelf-1" }, { n: "plant2.png", s: "shelf-1" }, { n: "plant3.png", s: "shelf-1" }, { n: "plant4.png", s: "shelf-1" }, { n: "plant5.png", s: "shelf-1" }, { n: "plant6.png", s: "shelf-1" }, { n: "plant7.png", s: "shelf-1" }, { n: "plant8.png", s: "shelf-1" }, { n: "plant9.png", s: "shelf-1" }, { n: "plant10.png", s: "shelf-1" },
-        { n: "pillow1.png", s: "shelf-2" }, { n: "pillow2.png", s: "shelf-2" }, { n: "pillow3.png", s: "shelf-2" }, { n: "pillow4.png", s: "shelf-2" }, { n: "pillow5.png", s: "shelf-2" }, { n: "pillow6.png", s: "shelf-2" }, { n: "pillow7.png", s: "shelf-2" }, { n: "pillow8.png", s: "shelf-2" }, { n: "pillow9.png", s: "shelf-2" }, { n: "pillow10.png", s: "shelf-2" },
-        { n: "decor1.png", s: "shelf-3" }, { n: "decor2.png", s: "shelf-3" }, { n: "decor3.png", s: "shelf-3" }, { n: "decor4.png", s: "shelf-3" }, { n: "decor5.png", s: "shelf-3" }, { n: "decor6.png", s: "shelf-3" }, { n: "decor7.png", s: "shelf-3" }, { n: "decor8.png", s: "shelf-3" }, { n: "decor9.png", s: "shelf-3" }, { n: "decor10.png", s: "shelf-3" }, { n: "decor11.png", s: "shelf-3" }, { n: "decor12.png", s: "shelf-3" }
+    const items = [
+        { n: "plant1.png", w: "plants" }, { n: "plant2.png", w: "plants" }, { n: "plant3.png", w: "plants" }, { n: "plant4.png", w: "plants" }, { n: "plant5.png", w: "plants" }, { n: "plant6.png", w: "plants" }, { n: "plant7.png", w: "plants" }, { n: "plant8.png", w: "plants" }, { n: "plant9.png", w: "plants" }, { n: "plant10.png", w: "plants" },
+        { n: "pillow1.png", w: "pillows" }, { n: "pillow2.png", w: "pillows" }, { n: "pillow3.png", w: "pillows" }, { n: "pillow4.png", w: "pillows" }, { n: "pillow5.png", w: "pillows" }, { n: "pillow6.png", w: "pillows" }, { n: "pillow7.png", w: "pillows" }, { n: "pillow8.png", w: "pillows" }, { n: "pillow9.png", w: "pillows" }, { n: "pillow10.png", w: "pillows" },
+        { n: "decor1.png", w: "decor" }, { n: "decor2.png", w: "decor" }, { n: "decor3.png", w: "decor" }, { n: "decor4.png", w: "decor" }, { n: "decor5.png", w: "decor" }, { n: "decor6.png", w: "decor" }, { n: "decor7.png", w: "decor" }, { n: "decor8.png", w: "decor" }, { n: "decor9.png", w: "decor" }, { n: "decor10.png", w: "decor" }, { n: "decor11.png", w: "decor" }, { n: "decor12.png", w: "decor" }
     ];
 
-    decorList.forEach(item => {
+    items.forEach(item => {
         const img = document.createElement('img');
         img.src = "Assets/" + item.n;
-        img.className = "item-on-shelf";
-        img.onclick = () => { spawnItem(item.n); closeCloset(); };
-        document.getElementById(item.s).appendChild(img);
+        img.className = "shelf-item";
+        img.onclick = () => { selectItem(item.n); };
+        document.getElementById(item.w).appendChild(img);
     });
 
-    function spawnItem(src) {
+    function selectItem(src) {
         const img = document.createElement('img');
         img.src = "Assets/" + src;
         img.className = "placed-item";
-        img.style.left = "400px"; img.style.top = "200px";
-        dragInit(img);
+        img.style.left = "300px"; img.style.top = "200px";
+        initDrag(img);
         document.getElementById('theater-container').appendChild(img);
+        closeCloset();
     }
 
-    function dragInit(el) {
-        let p1=0, p2=0, p3=0, p4=0;
+    function initDrag(el) {
+        let x1=0, y1=0, x2=0, y2=0;
         el.onmousedown = (e) => {
-            e.preventDefault(); p3=e.clientX; p4=e.clientY;
+            e.preventDefault(); x2=e.clientX; y2=e.clientY;
             document.onmouseup = () => { document.onmouseup=null; document.onmousemove=null; };
             document.onmousemove = (e) => {
-                e.preventDefault(); p1=p3-e.clientX; p2=p4-e.clientY; p3=e.clientX; p4=e.clientY;
-                el.style.top=(el.offsetTop-p2)+"px"; el.style.left=(el.offsetLeft-p1)+"px";
+                e.preventDefault(); x1=x2-e.clientX; y1=y2-e.clientY; x2=e.clientX; y2=e.clientY;
+                el.style.top=(el.offsetTop-y1)+"px"; el.style.left=(el.offsetLeft-x1)+"px";
             };
         };
     }
 
-    function roomsAction() { document.getElementById('rooms-cabinet-container').classList.add('glided-in'); }
-    function cycleRoom(t) { document.getElementById('room-display').style.backgroundImage = `url('Assets/${t}1.jpg')`; }
-    function commitSelection() { 
-        document.getElementById('rooms-cabinet-container').classList.remove('glided-in'); 
-        setTimeout(() => document.getElementById('furniture-cases-container').classList.add('glided-in'), 1000); 
-    }
+    function roomsAction() { /* Logic for sliding rooms in */ }
 </script>
 </body>
 </html>
