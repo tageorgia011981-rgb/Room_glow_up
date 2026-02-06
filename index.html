@@ -3,270 +3,146 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Room Glow Up - Your Dream Space Come To Life</title>
-    <link href="https://fonts.googleapis.com/css2?family=Limelight&display=swap" rel="stylesheet">
+    <title>Vogue Industrial Design Studio</title>
     <style>
-        :root {
-            --metal-shine: linear-gradient(145deg, #bdc3c7, #2c3e50, #95a5a6, #000);
-            --silver-header: linear-gradient(to bottom, #ffffff 0%, #a6a6a6 45%, #4d4d4d 50%, #ffffff 55%, #808080 100%);
-            --glow-teal: #00f2ff;
-            --tag-gold: #d4af37;
-            --silver-ink: #e0e0e0; 
-        }
+        :root { --stage-w: 950px; --stage-h: 650px; }
+        body { background: #111; color: white; font-family: 'Times New Roman', serif; display: flex; flex-direction: column; align-items: center; margin: 0; }
 
-        body, html {
-            margin: 0;
-            padding: 0;
-            min-height: 100vh;
-            background: url('Assets/mainbackground.jpg') no-repeat center center fixed;
-            background-size: cover;
-            scroll-behavior: smooth;
-            overflow-x: hidden;
-        }
+        /* --- STAGE --- */
+        #stage { width: var(--stage-w); height: var(--stage-h); position: relative; background: url('main_room_bg.jpg') center/cover; border: 10px solid #222; overflow: hidden; margin-top: 20px; }
+        .placed-item { position: absolute; cursor: move; user-select: none; }
 
-        #main-site-container {
-            width: 100%;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            padding-bottom: 200px;
-        }
+        /* --- CLOSET & 3D DOORS --- */
+        #closet-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: none; z-index: 1000; perspective: 1200px; }
+        .door { position: absolute; width: 50%; height: 100%; background: url('closetdoors.jpg') no-repeat; background-size: 200% 100%; transition: transform 1.2s cubic-bezier(0.4, 0, 0.2, 1); z-index: 1010; }
+        #door-left { left: 0; background-position: left; transform-origin: left; }
+        #door-right { right: 0; background-position: right; transform-origin: right; }
+        .open #door-left { transform: rotateY(-110deg); }
+        .open #door-right { transform: rotateY(110deg); }
 
-        header {
-            text-align: center;
-            padding: 60px 0 30px 0;
-            z-index: 1000;
-            position: relative;
-        }
+        #closet-content { width: 100%; height: 100%; background-size: cover; display: flex; flex-wrap: wrap; padding: 50px; box-sizing: border-box; }
+        .shelf-item { width: 130px; height: 130px; margin: 20px; cursor: pointer; transition: 0.3s; }
+        .shelf-item:hover { transform: scale(1.1); }
 
-        h1 {
-            font-family: 'Limelight', cursive;
-            font-size: 100px;
-            margin: 0;
-            background: var(--silver-header);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            filter: drop-shadow(5px 5px 8px rgba(0,0,0,0.8));
-            text-transform: uppercase;
-            letter-spacing: 4px;
-        }
+        /* --- DECOR BOOK --- */
+        #decor-book { position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 750px; height: 550px; background: url('decorbook_bg.jpg') center/cover; display: none; z-index: 2000; transition: 0.5s; }
+        #decor-book.is-open { background: url('decorcatalog.png') center/cover; }
+        .book-info { opacity: 0; transition: 0.5s; padding: 60px; display: flex; justify-content: flex-end; height: 100%; box-sizing: border-box; }
+        .is-open .book-info { opacity: 1; }
+        .product-card { background: white; width: 260px; height: fit-content; padding: 20px; color: black; text-align: center; border-radius: 3px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
 
-        h2 {
-            font-family: 'Limelight', cursive;
-            font-size: 36px;
-            margin: -5px 0 0 0;
-            color: #e0e0e0;
-            letter-spacing: 3px;
-            text-shadow: 3px 3px 6px #000;
-            position: relative;
-            z-index: 1001;
-        }
-
-        .nav-container {
-            display: flex;
-            gap: 25px;
-            margin-top: 40px;
-            margin-bottom: 100px;
-            z-index: 1002;
-            position: relative;
-        }
-
-        .label-holder {
-            width: 210px;
-            height: 105px;
-            background: var(--metal-shine);
-            border: 2px solid #000;
-            position: relative;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            box-shadow: inset 0 0 15px #000, 8px 8px 20px rgba(0,0,0,0.9);
-            cursor: pointer;
-            transition: transform 0.3s ease;
-        }
-
-        .screw { position: absolute; width: 8px; height: 8px; background: #111; border-radius: 50%; box-shadow: inset 1px 1px 2px #777; }
-        .s-tl { top: 8px; left: 8px; }
-        .s-tr { top: 8px; right: 8px; }
-        .s-bl { bottom: 25px; left: 8px; }
-        .s-br { bottom: 25px; right: 8px; }
-
-        .white-card {
-            width: 85%; height: 60%; background: #fff;
-            display: flex; justify-content: center; align-items: center;
-            transition: background 0.4s ease, box-shadow 0.4s ease;
-        }
-
-        .label-holder:hover .white-card { background: var(--glow-teal); box-shadow: 0 0 30px var(--glow-teal); }
-        .label-text { font-family: 'Courier New', monospace; font-weight: 900; font-size: 16px; color: #000; text-transform: uppercase; }
-        .lip-pull { position: absolute; bottom: 0; width: 80%; height: 16px; background: #0a0a0a; border-radius: 0 0 15px 15px; border: 1px solid #444; }
-
-        #interaction-zone {
-            display: flex; justify-content: center; align-items: flex-start;
-            gap: 40px; width: 1540px; height: 850px; position: relative; margin: 0 auto;
-        }
-
-        .cabinet-space { position: relative; width: 550px; height: 650px; }
-
-        .asset-side-container {
-            position: absolute; top: 0; left: 0; width: 550px;
-            transform: translateX(-200%); transition: transform 2.5s cubic-bezier(0.23, 1, 0.32, 1); z-index: 30;
-        }
-
-        #rooms-cabinet-container.glided-in { transform: translateX(0); }
-        #rooms-cabinet-container.glided-out { transform: translateX(-200%); }
-        #furniture-cases-container.glided-in { transform: translateX(0); }
-
-        .asset-img { width: 100%; filter: drop-shadow(15px 15px 30px #000); }
-
-        /* --- FURNITURE TAGS --- */
-        .furniture-tags-overlay { position: absolute; top: 135px; left: 105px; display: flex; flex-direction: column; gap: 15px; }
-        .tag-hanger { width: 160px; height: 70px; display: flex; justify-content: center; }
-        .icon-tag {
-            width: 110px; height: 65px; background: #000; border: 1px solid var(--tag-gold);
-            clip-path: polygon(15% 0%, 85% 0%, 100% 25%, 100% 100%, 0% 100%, 0% 25%);
-            display: flex; justify-content: center; align-items: center; cursor: pointer; transition: 0.3s;
-        }
-        .icon-tag:hover { transform: scale(1.1); border-color: var(--glow-teal); }
-        .tag-text { font-family: 'Courier New', monospace; color: var(--tag-gold); font-size: 11px; font-weight: bold; text-transform: uppercase; text-align: center; }
-
-        /* --- THEATER & CATALOG BOOK --- */
-        #theater-container {
-            width: 950px; height: 600px; border: 25px solid #000; overflow: hidden;
-            background: #000; box-shadow: 0 0 60px rgba(0,0,0,1); z-index: 5; position: relative; margin-top: 50px;
-        }
-
-        #room-display { width: 100%; height: 100%; background-size: cover; background-position: center; }
-
-        #catalog-book {
-            position: absolute; top: 50px; left: 50%; transform: translateX(-50%) scale(0);
-            width: 900px; height: 550px; background: #fff; border: 15px solid #1a1a1a;
-            z-index: 500; transition: transform 0.6s ease;
-            display: flex; box-shadow: 0 0 100px #000;
-        }
-        #catalog-book.open { transform: translateX(-50%) scale(1); }
-
-        .book-page { width: 50%; height: 100%; padding: 40px; box-sizing: border-box; border-right: 1px solid #ccc; position: relative; }
-        .book-close { position: absolute; top: 10px; right: 20px; cursor: pointer; color: red; font-family: sans-serif; font-weight: bold; }
-
-        .furniture-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
-        .thumb-item { border: 1px solid #ddd; padding: 10px; cursor: pointer; transition: 0.2s; text-align: center; }
-        .thumb-item:hover { border-color: var(--glow-teal); background: #f0ffff; }
-        .thumb-item img { width: 100%; height: auto; max-height: 120px; object-fit: contain; }
-        .thumb-name { font-family: 'Courier New', monospace; font-size: 12px; margin-top: 5px; }
+        /* --- RECEIPT --- */
+        #ui { width: var(--stage-w); display: flex; gap: 20px; margin-top: 20px; }
+        #receipt { background: white; color: black; padding: 20px; width: 280px; min-height: 250px; font-family: 'Courier New', monospace; }
+        .tab-btn { padding: 12px 24px; background: #333; color: white; border: 1px solid #555; cursor: pointer; letter-spacing: 1px; }
     </style>
 </head>
 <body>
 
-<div id="main-site-container">
-    <header>
-        <h1>Room Glow Up</h1>
-        <h2>Where Your Dream Space Comes To Life</h2>
-    </header>
+<div id="stage"></div>
 
-    <nav class="nav-container">
-        <div class="label-holder" onclick="roomsAction()"><div class="screw s-tl"></div><div class="screw s-tr"></div><div class="white-card"><span class="label-text">Rooms</span></div><div class="screw s-bl"></div><div class="screw s-br"></div><div class="lip-pull"></div></div>
-        <div class="label-holder" onclick="commitSelection()"><div class="screw s-tl"></div><div class="screw s-tr"></div><div class="white-card"><span class="label-text">Furniture Catalog</span></div><div class="screw s-bl"></div><div class="screw s-br"></div><div class="lip-pull"></div></div>
-        <div class="label-holder"><div class="screw s-tl"></div><div class="screw s-tr"></div><div class="white-card"><span class="label-text">Decor Closet</span></div><div class="screw s-bl"></div><div class="screw s-br"></div><div class="lip-pull"></div></div>
-        <div class="label-holder"><div class="screw s-tl"></div><div class="screw s-tr"></div><div class="white-card"><span class="label-text">Inspirational Walkthrough</span></div><div class="screw s-bl"></div><div class="screw s-br"></div><div class="lip-pull"></div></div>
-        <div class="label-holder" onclick="toggleReceipt()"><div class="screw s-tl"></div><div class="screw s-tr"></div><div class="white-card"><span class="label-text">Save / Checkout</span></div><div class="screw s-bl"></div><div class="screw s-br"></div><div class="lip-pull"></div></div>
-    </nav>
+<div id="ui">
+    <div style="display:flex; flex-direction:column; gap:10px;">
+        <button class="tab-btn" onclick="openCloset('decorshelves.jpg')">INDUSTRIAL WING</button>
+        <button class="tab-btn" onclick="openCloset('decorshelves2.png')">GLASS GALLERY</button>
+        <button class="tab-btn" onclick="openCloset('decorshelves3.jpg')">WHITE SHOWROOM</button>
+    </div>
+    <div id="receipt">
+        <h3 style="text-align:center; margin-top:0;">MANIFEST</h3>
+        <ul id="manifest-list" style="padding:0; list-style:none;"></ul>
+    </div>
+</div>
 
-    <div id="interaction-zone">
-        <div class="cabinet-space">
-            <div id="rooms-cabinet-container" class="asset-side-container glided-in">
-                <img src="Assets/cabinet.png" class="asset-img">
-                <div style="position: absolute; top: 135px; left: 95px; display: flex; flex-direction: column; gap: 28px;">
-                    <div class="small-pull-tab" onclick="cycleRoom('livingroom')"><div class="drawer-white-card">livingroom</div></div>
-                    <div class="small-pull-tab" onclick="cycleRoom('bedroom')"><div class="drawer-white-card">bedroom</div></div>
-                    <div class="small-pull-tab" onclick="cycleRoom('diningroom')"><div class="drawer-white-card">diningroom</div></div>
-                    <div class="small-pull-tab" onclick="cycleRoom('extra')"><div class="drawer-white-card">extra rooms</div></div>
-                </div>
-            </div>
+<div id="closet-overlay">
+    <div id="door-left" class="door"></div>
+    <div id="door-right" class="door"></div>
+    <div id="closet-content"></div>
+</div>
 
-            <div id="furniture-cases-container" class="asset-side-container">
-                <img src="Assets/furniturecases.png" class="asset-img">
-                <div id="dynamic-tags-container" class="furniture-tags-overlay"></div>
-            </div>
-        </div>
-
-        <div id="theater-container">
-            <div id="room-display"></div>
-            <div id="catalog-book">
-                <div class="book-close" onclick="closeBook()">X CLOSE</div>
-                <div class="book-page">
-                    <h2 id="book-title" style="font-family:'Limelight'; margin-bottom:20px;">CATALOG</h2>
-                    <div class="furniture-grid" id="catalog-grid"></div>
-                </div>
-                <div class="book-page">
-                    <p style="margin-top:100px; text-align:center; color:#666; font-family:monospace;">Click an item to add it to your room.</p>
-                </div>
-            </div>
+<div id="decor-book" onclick="closeBook()">
+    <div class="book-info">
+        <div class="product-card">
+            <img id="book-img" src="" style="width:100%; height:180px; object-fit:contain;">
+            <h2 id="book-name" style="font-size:18px;"></h2>
+            <p id="book-price" style="font-weight:bold;"></p>
+            <a id="book-link" href="#" target="_blank" style="background:black; color:white; padding:10px 20px; text-decoration:none; display:inline-block; margin-top:10px;">SHOP NOW</a>
         </div>
     </div>
 </div>
 
 <script>
-    // --- DROP YOUR IMAGE NAMES HERE ---
-    const seatingInventory = [
-        { name: 'Seating 1', img: 'seating1.png' },
-        { name: 'Seating 2', img: 'seating2.png' },
-        { name: 'Seating 3', img: 'seating3.png' },
-        { name: 'Seating 4', img: 'seating4.png' }
+    const inventory = [
+        { name: "Vintage Palm", img: "plant1.png", price: "$180", link: "#" },
+        { name: "Persian Rug", img: "rug3.png", price: "$1,200", link: "#" }
+        // Add all 32 items here
     ];
 
-    const mainCategories = [
-        { id: 'seating', img: 'iconseating.png' },
-        { id: 'tables', img: 'icontables.png' },
-        { id: 'storage', img: 'iconstorage.png' },
-        { id: 'beds', img: 'iconbeds.png' }
-    ];
-
-    function renderMainTags() {
-        const container = document.getElementById('dynamic-tags-container');
-        container.innerHTML = mainCategories.map(cat => `
-            <div class="tag-hanger">
-                <div class="icon-tag" onclick="openBook('${cat.id}')">
-                    <img src="Assets/${cat.img}" style="width:65%">
-                </div>
-            </div>
-        `).join('');
+    function openCloset(bg) {
+        const overlay = document.getElementById('closet-overlay');
+        const content = document.getElementById('closet-content');
+        content.style.backgroundImage = `url('${bg}')`;
+        overlay.style.display = 'block';
+        content.innerHTML = '';
+        inventory.forEach(item => {
+            const img = document.createElement('img');
+            img.src = item.img;
+            img.className = 'shelf-item';
+            img.onclick = (e) => { e.stopPropagation(); addToStage(item); };
+            img.oncontextmenu = (e) => { e.preventDefault(); openBook(item); };
+            content.appendChild(img);
+        });
+        setTimeout(() => overlay.classList.add('open'), 50);
     }
 
-    function openBook(category) {
-        document.getElementById('book-title').innerText = category.toUpperCase();
-        const grid = document.getElementById('catalog-grid');
-        
-        if(category === 'seating') {
-            grid.innerHTML = seatingInventory.map(item => `
-                <div class="thumb-item" onclick="alert('Adding ${item.name}')">
-                    <img src="Assets/${item.img}">
-                    <div class="thumb-name">${item.name}</div>
-                </div>
-            `).join('');
-        } else {
-            grid.innerHTML = '<p style="font-family:monospace">Coming Soon...</p>';
-        }
-        
-        document.getElementById('catalog-book').classList.add('open');
+    function closeCloset() {
+        const overlay = document.getElementById('closet-overlay');
+        overlay.classList.remove('open');
+        setTimeout(() => overlay.style.display = 'none', 1200);
     }
 
-    function closeBook() { document.getElementById('catalog-book').classList.remove('open'); }
-
-    const roomInventory = { livingroom: ['livingroom1.jpg'], bedroom: ['bedroom.jpg'], diningroom: ['diningroom.jpg'], extra: ['bathroom.jpg'] };
-    function cycleRoom(type) { document.getElementById('room-display').style.backgroundImage = `url('Assets/${roomInventory[type][0]}')`; }
-    
-    function roomsAction() { 
-        document.getElementById('furniture-cases-container').classList.remove('glided-in');
-        document.getElementById('rooms-cabinet-container').classList.add('glided-in'); 
+    function openBook(item) {
+        const book = document.getElementById('decor-book');
+        document.getElementById('book-img').src = item.img;
+        document.getElementById('book-name').innerText = item.name;
+        document.getElementById('book-price').innerText = item.price;
+        document.getElementById('book-link').href = item.link;
+        book.style.display = 'block';
+        setTimeout(() => book.classList.add('is-open'), 100);
     }
 
-    function commitSelection() { 
-        document.getElementById('rooms-cabinet-container').classList.remove('glided-in'); 
-        document.getElementById('furniture-cases-container').classList.add('glided-in'); 
+    function closeBook() {
+        const book = document.getElementById('decor-book');
+        book.classList.remove('is-open');
+        setTimeout(() => book.style.display = 'none', 500);
     }
 
-    renderMainTags();
+    function addToStage(item) {
+        const el = document.createElement('img');
+        el.src = item.img;
+        el.className = 'placed-item';
+        el.style.width = "200px"; el.style.left = "100px"; el.style.top = "100px";
+        el.dataset.name = item.name;
+        el.ondblclick = () => { el.remove(); updateReceipt(); };
+        dragElement(el);
+        document.getElementById('stage').appendChild(el);
+        updateReceipt();
+        closeCloset();
+    }
+
+    function updateReceipt() {
+        const list = document.getElementById('manifest-list');
+        list.innerHTML = '';
+        document.querySelectorAll('.placed-item').forEach(i => {
+            const li = document.createElement('li');
+            li.innerText = `- ${i.dataset.name}`;
+            list.appendChild(li);
+        });
+    }
+
+    function dragElement(elmnt) {
+        let p1=0, p2=0, p3=0, p4=0;
+        elmnt.onmousedown = (e) => { e.preventDefault(); p3=e.clientX; p4=e.clientY; document.onmouseup=()=> { document.onmouseup=null; document.onmousemove=null; }; document.onmousemove=(e)=> { e.preventDefault(); p1=p3-e.clientX; p2=p4-e.clientY; p3=e.clientX; p4=e.clientY; elmnt.style.top=(elmnt.offsetTop-p2)+"px"; elmnt.style.left=(elmnt.offsetLeft-p1)+"px"; }; };
+    }
 </script>
 </body>
 </html>
