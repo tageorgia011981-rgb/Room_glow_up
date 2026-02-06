@@ -85,195 +85,75 @@
             transition: transform 0.3s ease;
         }
 
-        .screw {
-            position: absolute;
-            width: 8px;
-            height: 8px;
-            background: #111;
-            border-radius: 50%;
-            box-shadow: inset 1px 1px 2px #777;
-        }
+        .screw { position: absolute; width: 8px; height: 8px; background: #111; border-radius: 50%; box-shadow: inset 1px 1px 2px #777; }
         .s-tl { top: 8px; left: 8px; }
         .s-tr { top: 8px; right: 8px; }
         .s-bl { bottom: 25px; left: 8px; }
         .s-br { bottom: 25px; right: 8px; }
 
         .white-card {
-            width: 85%;
-            height: 60%;
-            background: #fff;
-            display: flex;
-            justify-content: center;
-            align-items: center;
+            width: 85%; height: 60%; background: #fff;
+            display: flex; justify-content: center; align-items: center;
             transition: background 0.4s ease, box-shadow 0.4s ease;
         }
 
-        .label-holder:hover .white-card {
-            background: var(--glow-teal);
-            box-shadow: 0 0 30px var(--glow-teal);
-        }
-
-        .label-text {
-            font-family: 'Courier New', Courier, monospace;
-            font-weight: 900;
-            font-size: 16px;
-            color: #000;
-            text-transform: uppercase;
-        }
-
-        .lip-pull {
-            position: absolute;
-            bottom: 0;
-            width: 80%;
-            height: 16px;
-            background: #0a0a0a;
-            border-radius: 0 0 15px 15px;
-            border: 1px solid #444;
-        }
+        .label-holder:hover .white-card { background: var(--glow-teal); box-shadow: 0 0 30px var(--glow-teal); }
+        .label-text { font-family: 'Courier New', monospace; font-weight: 900; font-size: 16px; color: #000; text-transform: uppercase; }
+        .lip-pull { position: absolute; bottom: 0; width: 80%; height: 16px; background: #0a0a0a; border-radius: 0 0 15px 15px; border: 1px solid #444; }
 
         #interaction-zone {
-            display: flex;
-            justify-content: center;
-            align-items: flex-start;
-            gap: 40px;
-            width: 1540px;
-            height: 850px;
-            position: relative;
-            margin: 0 auto;
+            display: flex; justify-content: center; align-items: flex-start;
+            gap: 40px; width: 1540px; height: 850px; position: relative; margin: 0 auto;
         }
 
-        .cabinet-space {
-            position: relative;
-            width: 550px;
-            height: 650px;
-        }
+        .cabinet-space { position: relative; width: 550px; height: 650px; }
 
         .asset-side-container {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 550px;
-            transform: translateX(-200%);
-            transition: transform 2.5s cubic-bezier(0.23, 1, 0.32, 1);
-            z-index: 30;
+            position: absolute; top: 0; left: 0; width: 550px;
+            transform: translateX(-200%); transition: transform 2.5s cubic-bezier(0.23, 1, 0.32, 1); z-index: 30;
         }
 
         #rooms-cabinet-container.glided-in { transform: translateX(0); }
         #rooms-cabinet-container.glided-out { transform: translateX(-200%); }
         #furniture-cases-container.glided-in { transform: translateX(0); }
 
-        .asset-img {
-            width: 100%;
-            filter: drop-shadow(15px 15px 30px #000);
-        }
+        .asset-img { width: 100%; filter: drop-shadow(15px 15px 30px #000); }
 
-        /* --- SILVER TYPEWRITER SCROLL RECEIPT --- */
-        #scroll-receipt-container {
-            width: 450px; 
-            height: 750px;
-            position: absolute;
-            right: -600px; 
-            top: 0px;
-            transition: right 1.2s cubic-bezier(0.23, 1, 0.32, 1);
-            z-index: 2000;
-            background: url('Assets/scrollreceipt.png') no-repeat center center;
-            background-size: contain;
-            display: flex;
-            flex-direction: column;
-            padding: 135px 85px; 
-            box-sizing: border-box;
-        }
-        #scroll-receipt-container.visible { right: 0px; }
-
-        .receipt-content {
-            font-family: 'Courier New', Courier, monospace;
-            color: var(--silver-ink); 
-            text-align: center;
-            text-shadow: 1px 1px 2px rgba(255,255,255,0.1);
-        }
-
-        .receipt-header {
-            font-family: 'Limelight', cursive;
-            color: var(--tag-gold); 
-            font-size: 20px;
-            text-transform: uppercase;
-            margin-bottom: 25px;
-            border-bottom: 1px solid var(--tag-gold);
-        }
-
-        .drawer-labels-overlay {
-            position: absolute;
-            top: 135px;
-            left: 95px;
-            display: flex;
-            flex-direction: column;
-            gap: 28px;
-        }
-
-        .small-pull-tab {
-            width: 160px;
-            height: 65px;
-            background: var(--metal-shine);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            position: relative;
-            cursor: pointer;
-            box-shadow: inset 0 0 8px #000, 3px 3px 10px rgba(0,0,0,0.5);
-        }
-
-        .drawer-white-card {
-            width: 80%;
-            height: 60%;
-            background: #fff;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-family: 'Courier New', monospace;
-            font-size: 14px;
-            font-weight: bold;
-            text-transform: uppercase;
-            transition: 0.3s;
-        }
-
-        .small-pull-tab:hover .drawer-white-card {
-            background: var(--glow-teal);
-            box-shadow: 0 0 15px var(--glow-teal);
-        }
-
-        .furniture-tags-overlay {
-            position: absolute;
-            top: 135px; 
-            left: 105px;
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-        }
-
+        /* --- FURNITURE TAGS --- */
+        .furniture-tags-overlay { position: absolute; top: 135px; left: 105px; display: flex; flex-direction: column; gap: 15px; }
         .tag-hanger { width: 160px; height: 70px; display: flex; justify-content: center; }
-
         .icon-tag {
             width: 110px; height: 65px; background: #000; border: 1px solid var(--tag-gold);
             clip-path: polygon(15% 0%, 85% 0%, 100% 25%, 100% 100%, 0% 100%, 0% 25%);
-            display: flex; justify-content: center; align-items: center;
-            cursor: pointer; transition: 0.3s;
+            display: flex; justify-content: center; align-items: center; cursor: pointer; transition: 0.3s;
         }
         .icon-tag:hover { transform: scale(1.1); border-color: var(--glow-teal); }
-        .tag-text { font-family: 'Courier New', monospace; color: var(--tag-gold); font-size: 13px; font-weight: bold; text-transform: uppercase; }
+        .tag-text { font-family: 'Courier New', monospace; color: var(--tag-gold); font-size: 11px; font-weight: bold; text-transform: uppercase; text-align: center; }
 
+        /* --- THEATER & CATALOG BOOK --- */
         #theater-container {
-            width: 950px;
-            height: 600px;
-            border: 25px solid #000;
-            overflow: hidden;
-            background: #000;
-            box-shadow: 0 0 60px rgba(0,0,0,1);
-            z-index: 5;
-            position: relative;
-            margin-top: 50px;
+            width: 950px; height: 600px; border: 25px solid #000; overflow: hidden;
+            background: #000; box-shadow: 0 0 60px rgba(0,0,0,1); z-index: 5; position: relative; margin-top: 50px;
         }
 
-        #room-display { width: 100%; height: 100%; background-size: cover; background-position: center; cursor: pointer; }
+        #room-display { width: 100%; height: 100%; background-size: cover; background-position: center; }
+
+        #catalog-book {
+            position: absolute; top: 50px; left: 50%; transform: translateX(-50%) scale(0);
+            width: 900px; height: 550px; background: #fff; border: 15px solid #1a1a1a;
+            z-index: 500; transition: transform 0.6s ease;
+            display: flex; box-shadow: 0 0 100px #000;
+        }
+        #catalog-book.open { transform: translateX(-50%) scale(1); }
+
+        .book-page { width: 50%; height: 100%; padding: 40px; box-sizing: border-box; border-right: 1px solid #ccc; position: relative; }
+        .book-close { position: absolute; top: 10px; right: 20px; cursor: pointer; color: red; font-family: sans-serif; font-weight: bold; }
+
+        .furniture-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+        .thumb-item { border: 1px solid #ddd; padding: 10px; cursor: pointer; transition: 0.2s; text-align: center; }
+        .thumb-item:hover { border-color: var(--glow-teal); background: #f0ffff; }
+        .thumb-item img { width: 100%; height: auto; max-height: 120px; object-fit: contain; }
+        .thumb-name { font-family: 'Courier New', monospace; font-size: 12px; margin-top: 5px; }
     </style>
 </head>
 <body>
@@ -295,46 +175,45 @@
     <div id="interaction-zone">
         <div class="cabinet-space">
             <div id="rooms-cabinet-container" class="asset-side-container glided-in">
-                <img src="Assets/cabinet.png" class="asset-img" alt="Storage Cabinet">
-                <div class="drawer-labels-overlay">
-                    <div class="small-pull-tab" onmouseover="peekRoom('livingroom1.jpg')" onclick="cycleRoom('livingroom')"><div class="drawer-white-card">livingroom</div></div>
-                    <div class="small-pull-tab" onmouseover="peekRoom('bedroom.jpg')" onclick="cycleRoom('bedroom')"><div class="drawer-white-card">bedroom</div></div>
-                    <div class="small-pull-tab" onmouseover="peekRoom('diningroom.jpg')" onclick="cycleRoom('diningroom')"><div class="drawer-white-card">diningroom</div></div>
-                    <div class="small-pull-tab" onmouseover="peekRoom('foyer.jpg')" onclick="cycleRoom('extra')"><div class="drawer-white-card">extra rooms</div></div>
-                    <div class="small-pull-tab"><input type="file" id="room-upload" style="display:none" onchange="uploadRoom(this)"><div class="drawer-white-card" onclick="document.getElementById('room-upload').click()">upload yours</div></div>
+                <img src="Assets/cabinet.png" class="asset-img">
+                <div style="position: absolute; top: 135px; left: 95px; display: flex; flex-direction: column; gap: 28px;">
+                    <div class="small-pull-tab" onclick="cycleRoom('livingroom')"><div class="drawer-white-card">livingroom</div></div>
+                    <div class="small-pull-tab" onclick="cycleRoom('bedroom')"><div class="drawer-white-card">bedroom</div></div>
+                    <div class="small-pull-tab" onclick="cycleRoom('diningroom')"><div class="drawer-white-card">diningroom</div></div>
+                    <div class="small-pull-tab" onclick="cycleRoom('extra')"><div class="drawer-white-card">extra rooms</div></div>
                 </div>
             </div>
 
             <div id="furniture-cases-container" class="asset-side-container">
-                <img src="Assets/furniturecases.png" class="asset-img" alt="Furniture Cases">
+                <img src="Assets/furniturecases.png" class="asset-img">
                 <div id="dynamic-tags-container" class="furniture-tags-overlay"></div>
             </div>
         </div>
 
-        <div id="scroll-receipt-container">
-            <div class="receipt-content">
-                <div class="receipt-header">Design Manifest</div>
-                <div style="font-size: 13px; text-align: left; line-height: 2;">
-                    <div style="display: flex; justify-content: space-between;"><span>Selected Room</span><span>-</span></div>
-                    <div style="display: flex; justify-content: space-between; border-bottom: 1px dotted #333;"><span>Affiliate Piece A</span><span>$---.--</span></div>
-                </div>
-                <div style="margin-top: 30px; font-weight: bold; color: var(--tag-gold); border-top: 2px solid var(--tag-gold); padding-top: 10px;">Total: $0.00</div>
-            </div>
-        </div>
-
         <div id="theater-container">
-            <div id="room-display" onclick="commitSelection()"></div>
+            <div id="room-display"></div>
+            <div id="catalog-book">
+                <div class="book-close" onclick="closeBook()">X CLOSE</div>
+                <div class="book-page">
+                    <h2 id="book-title" style="font-family:'Limelight'; margin-bottom:20px;">CATALOG</h2>
+                    <div class="furniture-grid" id="catalog-grid"></div>
+                </div>
+                <div class="book-page">
+                    <p style="margin-top:100px; text-align:center; color:#666; font-family:monospace;">Click an item to add it to your room.</p>
+                </div>
+            </div>
         </div>
     </div>
 </div>
 
 <script>
-    const subCategories = {
-        seating: ['couches', 'chairs', 'dining chairs', 'benches', 'stools'],
-        tables: ['coffee', 'end', 'dining table'],
-        storage: ['armoire', 'dressers', 'buffet'],
-        beds: ['beds']
-    };
+    // --- DROP YOUR IMAGE NAMES HERE ---
+    const seatingInventory = [
+        { name: 'Seating 1', img: 'seating1.png' },
+        { name: 'Seating 2', img: 'seating2.png' },
+        { name: 'Seating 3', img: 'seating3.png' },
+        { name: 'Seating 4', img: 'seating4.png' }
+    ];
 
     const mainCategories = [
         { id: 'seating', img: 'iconseating.png' },
@@ -343,57 +222,49 @@
         { id: 'beds', img: 'iconbeds.png' }
     ];
 
-    function toggleReceipt() { document.getElementById('scroll-receipt-container').classList.toggle('visible'); }
-
     function renderMainTags() {
         const container = document.getElementById('dynamic-tags-container');
         container.innerHTML = mainCategories.map(cat => `
             <div class="tag-hanger">
-                <div class="icon-tag" onclick="showSubTags('${cat.id}')">
-                    <img src="Assets/${cat.img}" style="width:65%" alt="${cat.id}">
+                <div class="icon-tag" onclick="openBook('${cat.id}')">
+                    <img src="Assets/${cat.img}" style="width:65%">
                 </div>
             </div>
         `).join('');
     }
 
-    function showSubTags(id) {
-        const container = document.getElementById('dynamic-tags-container');
-        let tagsHTML = subCategories[id].map(sub => `
-            <div class="tag-hanger">
-                <div class="icon-tag" onclick="console.log('Open catalog for ${sub}')">
-                    <span class="tag-text">${sub}</span>
+    function openBook(category) {
+        document.getElementById('book-title').innerText = category.toUpperCase();
+        const grid = document.getElementById('catalog-grid');
+        
+        if(category === 'seating') {
+            grid.innerHTML = seatingInventory.map(item => `
+                <div class="thumb-item" onclick="alert('Adding ${item.name}')">
+                    <img src="Assets/${item.img}">
+                    <div class="thumb-name">${item.name}</div>
                 </div>
-            </div>
-        `).join('');
-        tagsHTML += `<div class="tag-hanger"><div class="icon-tag" style="border-color:#ff4444" onclick="renderMainTags()"><span class="tag-text">← Back</span></div></div>`;
-        container.innerHTML = tagsHTML;
+            `).join('');
+        } else {
+            grid.innerHTML = '<p style="font-family:monospace">Coming Soon...</p>';
+        }
+        
+        document.getElementById('catalog-book').classList.add('open');
     }
 
-    const roomInventory = { livingroom: ['livingroom1.jpg', 'livingroom3.jpg'], bedroom: ['bedroom.jpg', 'bedroom2.jpg'], diningroom: ['diningroom.jpg'], extra: ['foyer.jpg', 'officeroom.jpg', 'kitchen.jpg', 'kitchen2.jpg', 'bathroom.jpg'] };
-    let indices = { livingroom: 0, bedroom: 0, diningroom: 0, extra: 0 };
+    function closeBook() { document.getElementById('catalog-book').classList.remove('open'); }
 
+    const roomInventory = { livingroom: ['livingroom1.jpg'], bedroom: ['bedroom.jpg'], diningroom: ['diningroom.jpg'], extra: ['bathroom.jpg'] };
+    function cycleRoom(type) { document.getElementById('room-display').style.backgroundImage = `url('Assets/${roomInventory[type][0]}')`; }
+    
     function roomsAction() { 
-        document.getElementById('scroll-receipt-container').classList.remove('visible');
         document.getElementById('furniture-cases-container').classList.remove('glided-in');
-        document.getElementById('rooms-cabinet-container').classList.remove('glided-out');
         document.getElementById('rooms-cabinet-container').classList.add('glided-in'); 
-    }
-    
-    function peekRoom(img) { document.getElementById('room-display').style.backgroundImage = `url('Assets/${img}')`; }
-    
-    function cycleRoom(type) { 
-        let list = roomInventory[type]; 
-        indices[type] = (indices[type] + 1) % list.length; 
-        peekRoom(list[indices[type]]); 
     }
 
     function commitSelection() { 
         document.getElementById('rooms-cabinet-container').classList.remove('glided-in'); 
-        document.getElementById('rooms-cabinet-container').classList.add('glided-out'); 
-        setTimeout(() => { document.getElementById('furniture-cases-container').classList.add('glided-in'); }, 1000); 
+        document.getElementById('furniture-cases-container').classList.add('glided-in'); 
     }
-
-    function uploadRoom(input) { if (input.files && input.files[0]) { let reader = new FileReader(); reader.onload = function(e) { document.getElementById('room-display').style.backgroundImage = `url(${e.target.result})`; }; reader.readAsDataURL(input.files[0]); } }
 
     renderMainTags();
 </script>
