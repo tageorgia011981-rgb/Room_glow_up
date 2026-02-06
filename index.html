@@ -62,7 +62,7 @@
             display: flex;
             gap: 25px;
             margin-top: 40px;
-            margin-bottom: 50px; /* Reduced to make room for book */
+            margin-bottom: 50px;
             z-index: 50;
         }
 
@@ -79,19 +79,6 @@
             cursor: pointer;
             transition: transform 0.3s ease;
         }
-
-        .screw {
-            position: absolute;
-            width: 8px;
-            height: 8px;
-            background: #111;
-            border-radius: 50%;
-            box-shadow: inset 1px 1px 2px #777;
-        }
-        .s-tl { top: 8px; left: 8px; }
-        .s-tr { top: 8px; right: 8px; }
-        .s-bl { bottom: 25px; left: 8px; }
-        .s-br { bottom: 25px; right: 8px; }
 
         .white-card {
             width: 85%;
@@ -132,7 +119,7 @@
             align-items: flex-start;
             gap: 40px;
             width: 1540px;
-            height: 850px; /* Increased to allow for stage drop */
+            height: 850px;
             position: relative;
             margin: 0 auto;
         }
@@ -141,7 +128,7 @@
             position: relative;
             width: 550px;
             height: 650px;
-            margin-top: 100px; /* Dropped down with stage */
+            margin-top: 100px;
         }
 
         .asset-side-container {
@@ -163,10 +150,10 @@
             filter: drop-shadow(15px 15px 30px #000);
         }
 
-        /* --- FURNITURE TAGS MOVED UP TO HANDLES --- */
+        /* TAG ALIGNMENT FIX */
         .furniture-tags-overlay {
             position: absolute;
-            top: 110px; /* Nudged up from 135px */
+            top: 110px; 
             left: 105px;
             display: flex;
             flex-direction: column;
@@ -198,51 +185,60 @@
         }
 
         .icon-tag img { width: 65%; height: auto; }
-        .tag-text { font-family: 'Courier New', monospace; color: var(--tag-gold); font-size: 12px; font-weight: bold; text-transform: uppercase; text-align: center; }
+        .tag-text { font-family: 'Courier New', monospace; color: var(--tag-gold); font-size: 12px; font-weight: bold; text-transform: uppercase; }
 
-        .icon-tag:hover { transform: rotate(0deg) scale(1.1); border-color: var(--glow-teal); }
-
-        /* --- THEATER AND BOOK --- */
         #theater-wrapper {
             display: flex;
             flex-direction: column;
             align-items: center;
             gap: 20px;
-            margin-top: 0; /* Align with top of interaction zone */
         }
 
-        #catalog-book {
+        /* FURNITURE CATALOG BOOK */
+        #catalog-book-container {
             width: 900px;
-            height: 0; /* Starts closed */
-            background: #222;
-            border: 8px solid var(--tag-gold);
-            overflow: hidden;
-            transition: height 1.5s ease-in-out;
-            display: flex;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.8);
+            height: 0;
+            background: url('Assets/furniturecatalog.png') no-repeat center center;
+            background-size: contain;
+            transition: height 1.2s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
             z-index: 100;
+            display: flex;
+            justify-content: space-around;
+            padding: 40px;
+            overflow: hidden;
         }
+        #catalog-book-container.open { height: 400px; }
 
-        #catalog-book.open { height: 350px; }
-
-        .book-page {
-            flex: 1;
-            padding: 20px;
-            background: #fdfcf0; /* Aged paper */
-            color: #333;
-            border: 1px solid #ccc;
-            overflow-y: auto;
+        /* SCROLL RECEIPT */
+        #receipt-overlay {
+            position: absolute;
+            top: -1000px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 500px;
+            height: 700px;
+            background: url('Assets/scrollreceipt.png') no-repeat center center;
+            background-size: contain;
+            transition: top 2s ease-in-out;
+            z-index: 200;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 100px 40px;
+            font-family: 'Courier New', Courier, monospace;
         }
+        #receipt-overlay.rolled-down { top: -50px; }
 
         #theater-container {
             width: 950px;
             height: 600px;
             border: 25px solid #000;
+            position: relative;
             overflow: hidden;
             background: #000;
             box-shadow: 0 0 60px rgba(0,0,0,1);
             z-index: 5;
-            flex-shrink: 0;
         }
 
         #room-display {
@@ -300,7 +296,7 @@
         <div class="label-holder"><div class="white-card"><span class="label-text">Furniture Catalog</span></div><div class="lip-pull"></div></div>
         <div class="label-holder"><div class="white-card"><span class="label-text">Decor Closet</span></div><div class="lip-pull"></div></div>
         <div class="label-holder"><div class="white-card"><span class="label-text">Inspirational Walkthrough</span></div><div class="lip-pull"></div></div>
-        <div class="label-holder"><div class="white-card"><span class="label-text">Save / Checkout</span></div><div class="lip-pull"></div></div>
+        <div class="label-holder" onclick="showReceipt()"><div class="white-card"><span class="label-text">Save / Checkout</span></div><div class="lip-pull"></div></div>
     </nav>
 
     <div id="interaction-zone">
@@ -312,7 +308,6 @@
                     <div class="small-pull-tab" onclick="cycleRoom('bedroom')"><div class="drawer-white-card">bedroom</div></div>
                     <div class="small-pull-tab" onclick="cycleRoom('diningroom')"><div class="drawer-white-card">diningroom</div></div>
                     <div class="small-pull-tab" onclick="cycleRoom('extra')"><div class="drawer-white-card">extra rooms</div></div>
-                    <div class="small-pull-tab"><div class="drawer-white-card">upload yours</div></div>
                 </div>
             </div>
 
@@ -323,12 +318,16 @@
         </div>
 
         <div id="theater-wrapper">
-            <div id="catalog-book">
-                <div class="book-page" id="page-left"></div>
-                <div class="book-page" id="page-right"></div>
+            <div id="catalog-book-container">
+                <div id="page-left" style="flex:1; padding:60px 20px 20px 60px;"></div>
+                <div id="page-right" style="flex:1; padding:60px 60px 20px 20px;"></div>
             </div>
 
             <div id="theater-container">
+                <div id="receipt-overlay">
+                    <h3 style="margin-top: 20px;">DESIGN SUMMARY</h3>
+                    <div id="receipt-items-list" style="width:100%; text-align:left; margin-top:20px;"></div>
+                </div>
                 <div id="room-display" onclick="commitSelection()"></div>
             </div>
         </div>
@@ -336,6 +335,8 @@
 </div>
 
 <script>
+    let designList = [];
+
     const subCategories = {
         seating: ['couches', 'chairs', 'dining chairs', 'benches', 'stools'],
         tables: ['coffee', 'end', 'dining table'],
@@ -370,16 +371,18 @@
                 </div>
             </div>
         `).join('');
-        tagsHTML += `<div class="tag-hanger"><div class="icon-tag" style="border-color:#ff4444" onclick="renderMainTags()"><span class="tag-text">Back</span></div></div>`;
+        tagsHTML += `<div class="tag-hanger"><div class="icon-tag" style="border-color:#ff4444" onclick="renderMainTags(); closeBook();"><span class="tag-text">Back</span></div></div>`;
         container.innerHTML = tagsHTML;
     }
 
     function openBook(category) {
-        const book = document.getElementById('catalog-book');
-        book.classList.add('open');
-        document.getElementById('page-left').innerHTML = `<h3 style="font-family:'Limelight'">${category} Catalog</h3><p style="font-family:'Courier New'">Item #CF-1092<br>Vintage Style</p>`;
-        document.getElementById('page-right').innerHTML = `<p style="font-family:'Courier New'">Ready to drag and drop...</p>`;
+        document.getElementById('catalog-book-container').classList.add('open');
+        document.getElementById('page-left').innerHTML = `<h3 style="color:#fff; font-family:'Limelight'">${category}</h3>`;
     }
+
+    function closeBook() { document.getElementById('catalog-book-container').classList.remove('open'); }
+
+    function showReceipt() { document.getElementById('receipt-overlay').classList.add('rolled-down'); }
 
     function roomsAction() { document.getElementById('rooms-cabinet-container').classList.add('glided-in'); }
     function cycleRoom(type) { document.getElementById('room-display').style.backgroundImage = `url('Assets/${type}1.jpg')`; }
