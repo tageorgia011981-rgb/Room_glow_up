@@ -13,298 +13,85 @@
             --tag-gold: #d4af37;
         }
         body, html {
-            margin: 0;
-            padding: 0;
-            min-height: 100vh;
+            margin: 0; padding: 0; min-height: 100vh;
             background: url('Assets/mainbackground.jpg') no-repeat center center fixed;
-            background-size: cover;
-            scroll-behavior: smooth;
-            overflow-x: hidden;
+            background-size: cover; scroll-behavior: smooth; overflow-x: hidden;
         }
-        #main-site-container {
-            width: 100%;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            padding-bottom: 200px;
-        }
-        header {
-            text-align: center;
-            padding: 60px 0 30px 0;
-            z-index: 50;
-        }
-        h1 {
-            font-family: 'Limelight', cursive;
-            font-size: 100px;
-            margin: 0;
-            background: var(--silver-header);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            filter: drop-shadow(5px 5px 8px rgba(0,0,0,0.8));
-            text-transform: uppercase;
-            letter-spacing: 4px;
-        }
-        h2 {
-            font-family: 'Limelight', cursive;
-            font-size: 36px;
-            margin: -5px 0 0 0;
-            color: #e0e0e0;
-            letter-spacing: 3px;
-            text-shadow: 3px 3px 6px #000;
-        }
-        .nav-container {
-            display: flex;
-            gap: 25px;
-            margin-top: 40px;
-            margin-bottom: 100px;
-            z-index: 50;
-        }
-        .label-holder {
-            width: 210px;
-            height: 105px;
-            background: var(--metal-shine);
-            border: 2px solid #000;
-            position: relative;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            box-shadow: inset 0 0 15px #000, 8px 8px 20px rgba(0,0,0,0.9);
-            cursor: pointer;
-            transition: transform 0.3s ease;
-        }
-        .screw {
-            position: absolute;
-            width: 8px;
-            height: 8px;
-            background: #111;
-            border-radius: 50%;
-            box-shadow: inset 1px 1px 2px #777;
-        } .s-tl { top: 8px; left: 8px; } .s-tr { top: 8px; right: 8px; } .s-bl { bottom: 25px; left: 8px; } .s-br { bottom: 25px; right: 8px; }
-        .white-card {
-            width: 85%;
-            height: 60%;
-            background: #fff;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            transition: background 0.4s ease, box-shadow 0.4s ease;
-        }
-        .label-holder:hover .white-card {
-            background: var(--glow-teal);
-            box-shadow: 0 0 30px var(--glow-teal);
-        }
-        .label-text {
-            font-family: 'Courier New', Courier, monospace;
-            font-weight: 900;
-            font-size: 16px;
-            color: #000;
-            text-transform: uppercase;
-        }
-        .lip-pull {
-            position: absolute;
-            bottom: 0;
-            width: 80%;
-            height: 16px;
-            background: #0a0a0a;
-            border-radius: 0 0 15px 15px;
-            border: 1px solid #444;
-        }
-        #interaction-zone {
-            display: flex;
-            justify-content: center;
-            align-items: flex-start;
-            gap: 40px;
-            width: 1540px;
-            height: 750px;
-            position: relative;
-            margin: 0 auto;
-        }
-        .cabinet-space {
-            position: relative;
-            width: 550px;
-            height: 650px;
-        }
-        .asset-side-container {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 550px;
-            transform: translateX(-200%);
-            transition: transform 3s cubic-bezier(0.23, 1, 0.32, 1);
-            z-index: 30;
-        }
-        #rooms-cabinet-container.glided-in { transform: translateX(0); } #rooms-cabinet-container.glided-out { transform: translateX(-200%); } #furniture-cases-container.glided-in { transform: translateX(0); }
-        .asset-img {
-            width: 100%;
-            filter: drop-shadow(15px 15px 30px #000);
-        }
-        .drawer-labels-overlay {
-            position: absolute;
-            top: 135px;
-            left: 95px;
-            display: flex;
-            flex-direction: column;
-            gap: 28px;
-        }
-        .small-pull-tab {
-            width: 160px;
-            height: 65px;
-            background: var(--metal-shine);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            position: relative;
-            cursor: pointer;
-            box-shadow: inset 0 0 8px #000, 3px 3px 10px rgba(0,0,0,0.5);
-            transition: transform 0.3s ease;
-        }
-        .drawer-white-card {
-            width: 80%;
-            height: 60%;
-            background: #fff;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-family: 'Courier New', Courier, monospace;
-            font-size: 14px;
-            font-weight: bold;
-            text-transform: uppercase;
-            transition: 0.3s;
-        }
-        .small-pull-tab:hover .drawer-white-card {
-            background: var(--glow-teal);
-            box-shadow: 0 0 15px var(--glow-teal);
-        }
-        .furniture-tags-overlay {
-            position: absolute;
-            top: 135px; 
-            left: 105px;
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-        }
-        .tag-hanger {
-            position: relative;
-            width: 160px;
-            height: 70px;
-            display: flex;
-            justify-content: center;
-        }
-        .icon-tag {
-            width: 110px;
-            height: 65px;
-            background: #000;
-            border: 1px solid var(--tag-gold);
-            clip-path: polygon(15% 0%, 85% 0%, 100% 25%, 100% 100%, 0% 100%, 0% 25%);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            box-shadow: 4px 4px 10px rgba(0,0,0,0.8);
-            transform: rotate(-3deg);
-            transition: transform 0.3s ease;
-            cursor: pointer;
-            z-index: 40;
-        }
-        .icon-tag img {
-            width: 65%;
-            height: auto;
-            max-height: 80%;
-        }
-        .tag-text {
-            font-family: 'Courier New', Courier, monospace;
-            color: var(--tag-gold);
-            font-size: 13px;
-            font-weight: bold;
-            text-transform: uppercase;
-            text-align: center;
-            padding: 0 5px;
-        }
-        .icon-tag:hover {
-            transform: rotate(0deg) scale(1.1);
-            border-color: var(--glow-teal);
-        }
-        .back-tag {
-            border-color: #ff4444 !important;
-            margin-top: 10px;
-        }
-        #theater-container {
-            width: 950px;
-            height: 600px;
-            border: 25px solid #000;
-            overflow: hidden;
-            background: #000;
-            box-shadow: 0 0 60px rgba(0,0,0,1);
-            z-index: 5;
-            flex-shrink: 0;
-            position: relative;
-        }
-        #room-display {
-            width: 100%;
-            height: 100%;
-            background-size: cover;
-            background-position: center;
-            transition: background-image 0.5s ease;
-        }
-
-        /* --- DECOR CLOSET POP-UP SYSTEM --- */
-        #decor-closet-popup {
-            position: fixed;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
-            background: rgba(0,0,0,0.95);
-            z-index: 1000;
-            display: none;
-            perspective: 1500px;
-        }
-        #closet-exit {
-            position: absolute;
-            top: 30px; right: 30px;
-            background: #fff; color: #000;
-            padding: 10px 20px; font-family: 'Limelight', cursive;
-            cursor: pointer; z-index: 1100;
-        }
-        .closet-doors {
-            width: 100%; height: 100%;
-            display: flex;
-            transition: transform 1.5s ease-in-out, opacity 1s;
-        }
-        .c-door {
-            width: 50%; height: 100%;
-            background: url('Assets/closetdoors.jpg') center/cover;
-            transition: 1.5s cubic-bezier(0.4, 0, 0.2, 1);
-            cursor: pointer;
-        }
-        #c-door-l { transform-origin: left; border-right: 1px solid #222; }
-        #c-door-r { transform-origin: right; border-left: 1px solid #222; }
+        #main-site-container { width: 100%; display: flex; flex-direction: column; align-items: center; padding-bottom: 200px; }
+        header { text-align: center; padding: 60px 0 30px 0; z-index: 50; }
+        h1 { font-family: 'Limelight', cursive; font-size: 100px; margin: 0; background: var(--silver-header); -webkit-background-clip: text; -webkit-text-fill-color: transparent; filter: drop-shadow(5px 5px 8px rgba(0,0,0,0.8)); text-transform: uppercase; letter-spacing: 4px; }
+        h2 { font-family: 'Limelight', cursive; font-size: 36px; margin: -5px 0 0 0; color: #e0e0e0; letter-spacing: 3px; text-shadow: 3px 3px 6px #000; }
         
-        #closet-interior {
-            position: absolute;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
-            display: flex;
-            opacity: 0;
-            transform: scale(0.8) translateZ(-500px);
-            transition: 1.5s cubic-bezier(0.4, 0, 0.2, 1);
+        /* --- NAVIGATION --- */
+        .nav-container { display: flex; gap: 25px; margin-top: 40px; margin-bottom: 100px; z-index: 50; }
+        .label-holder { width: 210px; height: 105px; background: var(--metal-shine); border: 2px solid #000; position: relative; display: flex; justify-content: center; align-items: center; box-shadow: inset 0 0 15px #000, 8px 8px 20px rgba(0,0,0,0.9); cursor: pointer; transition: transform 0.3s ease; }
+        .screw { position: absolute; width: 8px; height: 8px; background: #111; border-radius: 50%; box-shadow: inset 1px 1px 2px #777; }
+        .s-tl { top: 8px; left: 8px; } .s-tr { top: 8px; right: 8px; } .s-bl { bottom: 25px; left: 8px; } .s-br { bottom: 25px; right: 8px; }
+        .white-card { width: 85%; height: 60%; background: #fff; display: flex; justify-content: center; align-items: center; transition: background 0.4s ease, box-shadow 0.4s ease; }
+        .label-holder:hover .white-card { background: var(--glow-teal); box-shadow: 0 0 30px var(--glow-teal); }
+        .label-text { font-family: 'Courier New', Courier, monospace; font-weight: 900; font-size: 16px; color: #000; text-transform: uppercase; }
+        .lip-pull { position: absolute; bottom: 0; width: 80%; height: 16px; background: #0a0a0a; border-radius: 0 0 15px 15px; border: 1px solid #444; }
+
+        /* --- STUDIO AREA --- */
+        #interaction-zone { display: flex; justify-content: center; align-items: flex-start; gap: 40px; width: 1540px; height: 750px; position: relative; margin: 0 auto; }
+        .cabinet-space { position: relative; width: 550px; height: 650px; }
+        .asset-side-container { position: absolute; top: 0; left: 0; width: 550px; transform: translateX(-200%); transition: transform 3s cubic-bezier(0.23, 1, 0.32, 1); z-index: 30; }
+        #rooms-cabinet-container.glided-in { transform: translateX(0); }
+        #furniture-cases-container.glided-in { transform: translateX(0); }
+        .asset-img { width: 100%; filter: drop-shadow(15px 15px 30px #000); }
+        .drawer-labels-overlay { position: absolute; top: 135px; left: 95px; display: flex; flex-direction: column; gap: 28px; }
+        .small-pull-tab { width: 160px; height: 65px; background: var(--metal-shine); display: flex; justify-content: center; align-items: center; position: relative; cursor: pointer; box-shadow: inset 0 0 8px #000, 3px 3px 10px rgba(0,0,0,0.5); }
+        .drawer-white-card { width: 80%; height: 60%; background: #fff; display: flex; justify-content: center; align-items: center; font-family: 'Courier New', Courier, monospace; font-size: 14px; font-weight: bold; text-transform: uppercase; }
+        
+        /* --- THEATER/ROOM --- */
+        #theater-container { width: 950px; height: 600px; border: 25px solid #000; overflow: hidden; background: #000; box-shadow: 0 0 60px rgba(0,0,0,1); z-index: 5; flex-shrink: 0; position: relative; }
+        #room-display { width: 100%; height: 100%; background-size: cover; background-position: center; }
+        .placed-item { position: absolute; width: 150px; cursor: move; z-index: 10; filter: drop-shadow(5px 5px 10px rgba(0,0,0,0.5)); }
+
+        /* --- CENTERED CLOSET POP-UP --- */
+        #closet-modal-overlay { 
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%; 
+            background: rgba(0,0,0,0.85); z-index: 2000; display: none; 
+            justify-content: center; align-items: center;
         }
-        .wall {
-            flex: 1; height: 100%;
-            background-size: cover; background-position: center;
-            padding: 50px; display: flex; flex-wrap: wrap; 
-            align-content: flex-start; justify-content: center;
-            overflow-y: auto;
+        #closet-window {
+            width: 1200px; height: 700px; background: #111; 
+            border: 10px solid #2c3e50; position: relative; 
+            overflow: hidden; perspective: 1500px; box-shadow: 0 0 100px #000;
         }
-        .closet-item-img {
-            width: 140px; height: 140px; 
-            margin: 15px; cursor: pointer;
-            object-fit: contain; transition: 0.3s;
+        #close-x {
+            position: absolute; top: 15px; right: 20px; color: #fff; 
+            font-family: 'Limelight', cursive; font-size: 30px; 
+            cursor: pointer; z-index: 2100;
         }
+        .closet-doors-container { 
+            width: 100%; height: 100%; display: flex; position: absolute; z-index: 100; 
+            transition: opacity 1.2s;
+        }
+        .c-door { 
+            width: 50%; height: 100%; background: url('Assets/closetdoors.jpg') center/cover; 
+            transition: 1.5s cubic-bezier(0.4, 0, 0.2, 1); 
+        }
+        #door-l { transform-origin: left; border-right: 1px solid #000; }
+        #door-r { transform-origin: right; border-left: 1px solid #000; }
+
+        #closet-interior-space { 
+            position: absolute; width: 100%; height: 100%; display: flex; 
+            opacity: 0; transform: scale(0.9); transition: 1.5s;
+        }
+        .closet-shelf { 
+            flex: 1; height: 100%; background-size: cover; background-position: center; 
+            padding: 30px; display: flex; flex-wrap: wrap; align-content: flex-start; 
+            justify-content: center; overflow-y: auto; border: 1px solid #222;
+        }
+        .closet-item-img { width: 120px; height: 120px; margin: 10px; cursor: pointer; transition: 0.3s; object-fit: contain; }
         .closet-item-img:hover { transform: scale(1.1); filter: brightness(1.2); }
 
         /* Animation Trigger */
-        .opened-closet .c-door-l { transform: rotateY(-110deg); }
-        .opened-closet .c-door-r { transform: rotateY(110deg); }
-        .opened-closet #closet-interior { opacity: 1; transform: scale(1) translateZ(0); }
-        .opened-closet .closet-doors { pointer-events: none; opacity: 0.2; }
+        .active-closet #door-l { transform: rotateY(-115deg); }
+        .active-closet #door-r { transform: rotateY(115deg); }
+        .active-closet #closet-interior-space { opacity: 1; transform: scale(1); }
+        .active-closet .closet-doors-container { pointer-events: none; opacity: 0.3; }
 
     </style>
 </head>
@@ -327,18 +114,15 @@
     <div id="interaction-zone">
         <div class="cabinet-space">
             <div id="rooms-cabinet-container" class="asset-side-container">
-                <img src="Assets/cabinet.png" class="asset-img" alt="Storage Cabinet">
+                <img src="Assets/cabinet.png" class="asset-img">
                 <div class="drawer-labels-overlay">
-                    <div class="small-pull-tab" onmouseover="peekRoom('livingroom1.jpg')" onclick="cycleRoom('livingroom')"><div class="drawer-white-card">livingroom</div></div>
-                    <div class="small-pull-tab" onmouseover="peekRoom('bedroom.jpg')" onclick="cycleRoom('bedroom')"><div class="drawer-white-card">bedroom</div></div>
-                    <div class="small-pull-tab" onmouseover="peekRoom('diningroom.jpg')" onclick="cycleRoom('diningroom')"><div class="drawer-white-card">diningroom</div></div>
-                    <div class="small-pull-tab" onmouseover="peekRoom('foyer.jpg')" onclick="cycleRoom('extra')"><div class="drawer-white-card">extra rooms</div></div>
-                    <div class="small-pull-tab"><input type="file" id="room-upload" style="display:none" onchange="uploadRoom(this)"><div class="drawer-white-card" onclick="document.getElementById('room-upload').click()">upload yours</div></div>
+                    <div class="small-pull-tab" onclick="cycleRoom('livingroom')"><div class="drawer-white-card">livingroom</div></div>
+                    <div class="small-pull-tab" onclick="cycleRoom('bedroom')"><div class="drawer-white-card">bedroom</div></div>
+                    <div class="small-pull-tab" onclick="cycleRoom('diningroom')"><div class="drawer-white-card">diningroom</div></div>
                 </div>
             </div>
             <div id="furniture-cases-container" class="asset-side-container">
-                <img src="Assets/furniturecases.png" class="asset-img" alt="Furniture Cases">
-                <div id="dynamic-tags-container" class="furniture-tags-overlay"></div>
+                <img src="Assets/furniturecases.png" class="asset-img">
             </div>
         </div>
         <div id="theater-container">
@@ -347,39 +131,42 @@
     </div>
 </div>
 
-<div id="decor-closet-popup">
-    <div id="closet-exit" onclick="closeCloset()">BACK TO STUDIO</div>
-    <div class="closet-doors" onclick="walkIn()">
-        <div class="c-door" id="c-door-l"></div>
-        <div class="c-door" id="c-door-r"></div>
-    </div>
-    <div id="closet-interior">
-        <div class="wall" id="plants-wall" style="background-image: url('Assets/decorshelves.jpg');"></div>
-        <div class="wall" id="pillows-wall" style="background-image: url('Assets/decorshelves2.png');"></div>
-        <div class="wall" id="decor-wall" style="background-image: url('Assets/decorshelves3.jpg');"></div>
+<div id="closet-modal-overlay">
+    <div id="closet-window">
+        <div id="close-x" onclick="closeCloset()">X</div>
+        
+        <div class="closet-doors-container" onclick="walkIn()">
+            <div class="c-door" id="door-l"></div>
+            <div class="c-door" id="door-r"></div>
+        </div>
+
+        <div id="closet-interior-space">
+            <div class="closet-shelf" id="shelf-plants" style="background-image: url('Assets/decorshelves.jpg');"></div>
+            <div class="closet-shelf" id="shelf-pillows" style="background-image: url('Assets/decorshelves2.png');"></div>
+            <div class="closet-shelf" id="shelf-decor" style="background-image: url('Assets/decorshelves3.jpg');"></div>
+        </div>
     </div>
 </div>
 
 <script>
     /* --- CLOSET LOGIC --- */
-    function openCloset() { document.getElementById('decor-closet-popup').style.display = 'block'; }
+    function openCloset() { document.getElementById('closet-modal-overlay').style.display = 'flex'; }
     function closeCloset() { 
-        document.getElementById('decor-closet-popup').classList.remove('opened-closet');
-        document.getElementById('decor-closet-popup').style.display = 'none'; 
+        document.getElementById('closet-window').classList.remove('active-closet');
+        document.getElementById('closet-modal-overlay').style.display = 'none'; 
     }
-    function walkIn() { document.getElementById('decor-closet-popup').classList.add('opened-closet'); }
+    function walkIn() { document.getElementById('closet-window').classList.add('active-closet'); }
 
-    // THE 32 ITEM MAPPING
     const closetInventory = [
-        { name: "plant1.png", wall: "plants-wall" }, { name: "plant2.png", wall: "plants-wall" }, { name: "plant3.png", wall: "plants-wall" }, { name: "plant4.png", wall: "plants-wall" },
-        { name: "plant5.png", wall: "plants-wall" }, { name: "plant6.png", wall: "plants-wall" }, { name: "plant7.png", wall: "plants-wall" }, { name: "plant8.png", wall: "plants-wall" },
-        { name: "plant9.png", wall: "plants-wall" }, { name: "plant10.png", wall: "plants-wall" },
-        { name: "pillow1.png", wall: "pillows-wall" }, { name: "pillow2.png", wall: "pillows-wall" }, { name: "pillow3.png", wall: "pillows-wall" }, { name: "pillow4.png", wall: "pillows-wall" },
-        { name: "pillow5.png", wall: "pillows-wall" }, { name: "pillow6.png", wall: "pillows-wall" }, { name: "pillow7.png", wall: "pillows-wall" }, { name: "pillow8.png", wall: "pillows-wall" },
-        { name: "pillow9.png", wall: "pillows-wall" }, { name: "pillow10.png", wall: "pillows-wall" },
-        { name: "decor1.png", wall: "decor-wall" }, { name: "decor2.png", wall: "decor-wall" }, { name: "decor3.png", wall: "decor-wall" }, { name: "decor4.png", wall: "decor-wall" },
-        { name: "decor5.png", wall: "decor-wall" }, { name: "decor6.png", wall: "decor-wall" }, { name: "decor7.png", wall: "decor-wall" }, { name: "decor8.png", wall: "decor-wall" },
-        { name: "decor9.png", wall: "decor-wall" }, { name: "decor10.png", wall: "decor-wall" }, { name: "decor11.png", wall: "decor-wall" }, { name: "decor12.png", wall: "decor-wall" }
+        { name: "plant1.png", shelf: "shelf-plants" }, { name: "plant2.png", shelf: "shelf-plants" }, { name: "plant3.png", shelf: "shelf-plants" }, { name: "plant4.png", shelf: "shelf-plants" },
+        { name: "plant5.png", shelf: "shelf-plants" }, { name: "plant6.png", shelf: "shelf-plants" }, { name: "plant7.png", shelf: "shelf-plants" }, { name: "plant8.png", shelf: "shelf-plants" },
+        { name: "plant9.png", shelf: "shelf-plants" }, { name: "plant10.png", shelf: "shelf-plants" },
+        { name: "pillow1.png", shelf: "shelf-pillows" }, { name: "pillow2.png", shelf: "shelf-pillows" }, { name: "pillow3.png", shelf: "shelf-pillows" }, { name: "pillow4.png", shelf: "shelf-pillows" },
+        { name: "pillow5.png", shelf: "shelf-pillows" }, { name: "pillow6.png", shelf: "shelf-pillows" }, { name: "pillow7.png", shelf: "shelf-pillows" }, { name: "pillow8.png", shelf: "shelf-pillows" },
+        { name: "pillow9.png", shelf: "shelf-pillows" }, { name: "pillow10.png", shelf: "shelf-pillows" },
+        { name: "decor1.png", shelf: "shelf-decor" }, { name: "decor2.png", shelf: "shelf-decor" }, { name: "decor3.png", shelf: "shelf-decor" }, { name: "decor4.png", shelf: "shelf-decor" },
+        { name: "decor5.png", shelf: "shelf-decor" }, { name: "decor6.png", shelf: "shelf-decor" }, { name: "decor7.png", shelf: "shelf-decor" }, { name: "decor8.png", shelf: "shelf-decor" },
+        { name: "decor9.png", shelf: "shelf-decor" }, { name: "decor10.png", shelf: "shelf-decor" }, { name: "decor11.png", shelf: "shelf-decor" }, { name: "decor12.png", shelf: "shelf-decor" }
     ];
 
     closetInventory.forEach(item => {
@@ -387,14 +174,15 @@
         img.src = "Assets/" + item.name;
         img.className = "closet-item-img";
         img.onclick = () => { addItemToStage(item.name); closeCloset(); };
-        document.getElementById(item.wall).appendChild(img);
+        const shelf = document.getElementById(item.shelf);
+        if(shelf) shelf.appendChild(img);
     });
 
     function addItemToStage(imgName) {
         const img = document.createElement('img');
         img.src = "Assets/" + imgName;
         img.className = "placed-item";
-        img.style.left = "100px"; img.style.top = "100px";
+        img.style.left = "400px"; img.style.top = "200px";
         makeDraggable(img);
         document.getElementById('theater-container').appendChild(img);
     }
@@ -411,29 +199,19 @@
         };
     }
 
-    /* --- CATALOG & ROOM LOGIC --- */
-    const subCategories = { seating: ['couches', 'chairs', 'dining chairs', 'benches', 'stools'], tables: ['coffee', 'end', 'dining table'], storage: ['armoire', 'dressers', 'buffet'], beds: ['beds'] };
-    const mainCategories = [{ id: 'seating', img: 'iconseating.png' }, { id: 'tables', img: 'icontables.png' }, { id: 'storage', img: 'iconstorage.png' }, { id: 'beds', img: 'iconbeds.png' }];
-    function renderMainTags() {
-        const container = document.getElementById('dynamic-tags-container');
-        container.innerHTML = mainCategories.map(cat => `<div class="tag-hanger"><div class="icon-tag" onclick="showSubTags('${cat.id}')"><img src="Assets/${cat.img}" alt="${cat.id}"></div></div>`).join('');
+    /* --- ROOM LOGIC --- */
+    const roomInventory = { livingroom: ['livingroom1.jpg', 'livingroom3.jpg'], bedroom: ['bedroom.jpg', 'bedroom2.jpg'], diningroom: ['diningroom.jpg'] };
+    let indices = { livingroom: 0, bedroom: 0, diningroom: 0 };
+    function roomsAction() { document.getElementById('rooms-cabinet-container').classList.add('glided-in'); }
+    function cycleRoom(type) { 
+        let list = roomInventory[type]; 
+        indices[type] = (indices[type] + 1) % list.length; 
+        document.getElementById('room-display').style.backgroundImage = `url('Assets/${list[indices[type]]}')`; 
     }
-    function showSubTags(id) {
-        const container = document.getElementById('dynamic-tags-container');
-        let html = subCategories[id].map(sub => `<div class="tag-hanger"><div class="icon-tag" onclick="openCatalog('${sub}')"><span class="tag-text">${sub}</span></div></div>`).join('');
-        html += `<div class="tag-hanger"><div class="icon-tag back-tag" onclick="renderMainTags()"><span class="tag-text">← Back</span></div></div>`;
-        container.innerHTML = html;
+    function commitSelection() { 
+        document.getElementById('rooms-cabinet-container').classList.remove('glided-in'); 
+        setTimeout(() => { document.getElementById('furniture-cases-container').classList.add('glided-in'); }, 1000); 
     }
-    function openCatalog(item) { console.log("Catalog for: " + item); }
-    renderMainTags();
-
-    const roomInventory = { livingroom: ['livingroom1.jpg', 'livingroom3.jpg'], bedroom: ['bedroom.jpg', 'bedroom2.jpg'], diningroom: ['diningroom.jpg'], extra: ['foyer.jpg', 'officeroom.jpg', 'kitchen.jpg', 'kitchen2.jpg'] };
-    let indices = { livingroom: 0, bedroom: 0, diningroom: 0, extra: 0 };
-    function roomsAction() { window.scrollTo({ top: document.getElementById('interaction-zone').offsetTop - 20, behavior: 'smooth' }); document.getElementById('rooms-cabinet-container').classList.add('glided-in'); }
-    function peekRoom(img) { document.getElementById('room-display').style.backgroundImage = `url('Assets/${img}')`; }
-    function cycleRoom(type) { let list = roomInventory[type]; indices[type] = (indices[type] + 1) % list.length; peekRoom(list[indices[type]]); }
-    function commitSelection() { document.getElementById('rooms-cabinet-container').classList.remove('glided-in'); document.getElementById('rooms-cabinet-container').classList.add('glided-out'); setTimeout(() => { document.getElementById('furniture-cases-container').classList.add('glided-in'); }, 1000); }
-    function uploadRoom(input) { if (input.files && input.files[0]) { let reader = new FileReader(); reader.onload = (e) => { document.getElementById('room-display').style.backgroundImage = `url(${e.target.result})`; }; reader.readAsDataURL(input.files[0]); } }
 </script>
 </body>
 </html>
