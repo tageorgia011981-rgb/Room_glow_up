@@ -11,242 +11,95 @@
             --silver-header: linear-gradient(to bottom, #ffffff 0%, #a6a6a6 45%, #4d4d4d 50%, #ffffff 55%, #808080 100%);
             --glow-teal: #00f2ff;
             --tag-gold: #d4af37;
-            /* New Silver Ink Variable */
             --silver-ink: #e0e0e0; 
         }
 
         body, html {
-            margin: 0;
-            padding: 0;
-            min-height: 100vh;
+            margin: 0; padding: 0; min-height: 100vh;
             background: url('Assets/mainbackground.jpg') no-repeat center center fixed;
-            background-size: cover;
-            scroll-behavior: smooth;
-            overflow-x: hidden;
+            background-size: cover; scroll-behavior: smooth; overflow-x: hidden;
         }
 
         #main-site-container {
-            width: 100%;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            padding-bottom: 200px;
+            width: 100%; display: flex; flex-direction: column; align-items: center; padding-bottom: 200px;
         }
 
-        header {
-            text-align: center;
-            padding: 60px 0 30px 0;
-            z-index: 50;
-        }
+        header { text-align: center; padding: 60px 0 30px 0; z-index: 50; }
 
         h1 {
-            font-family: 'Limelight', cursive;
-            font-size: 100px;
-            margin: 0;
-            background: var(--silver-header);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            filter: drop-shadow(5px 5px 8px rgba(0,0,0,0.8));
-            text-transform: uppercase;
-            letter-spacing: 4px;
+            font-family: 'Limelight', cursive; font-size: 100px; margin: 0;
+            background: var(--silver-header); -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent; filter: drop-shadow(5px 5px 8px rgba(0,0,0,0.8));
+            text-transform: uppercase; letter-spacing: 4px;
         }
 
-        h2 {
-            font-family: 'Limelight', cursive;
-            font-size: 36px;
-            margin: -5px 0 0 0;
-            color: #e0e0e0;
-            letter-spacing: 3px;
-            text-shadow: 3px 3px 6px #000;
-        }
-
-        .nav-container {
-            display: flex;
-            gap: 25px;
-            margin-top: 40px;
-            margin-bottom: 100px;
-            z-index: 50;
-        }
+        .nav-container { display: flex; gap: 25px; margin-top: 40px; margin-bottom: 100px; z-index: 150; }
 
         .label-holder {
-            width: 210px;
-            height: 105px;
-            background: var(--metal-shine);
-            border: 2px solid #000;
-            position: relative;
-            display: flex;
-            justify-content: center;
-            align-items: center;
+            width: 210px; height: 105px; background: var(--metal-shine);
+            border: 2px solid #000; position: relative; display: flex;
+            justify-content: center; align-items: center; cursor: pointer;
             box-shadow: inset 0 0 15px #000, 8px 8px 20px rgba(0,0,0,0.9);
-            cursor: pointer;
-            transition: transform 0.3s ease;
         }
 
         .white-card {
-            width: 85%;
-            height: 60%;
-            background: #fff;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            transition: background 0.4s ease, box-shadow 0.4s ease;
+            width: 85%; height: 60%; background: #fff; display: flex;
+            justify-content: center; align-items: center; transition: all 0.4s ease;
         }
 
-        .label-holder:hover .white-card {
-            background: var(--glow-teal);
-            box-shadow: 0 0 30px var(--glow-teal);
-        }
+        .label-holder:hover .white-card { background: var(--glow-teal); box-shadow: 0 0 30px var(--glow-teal); }
 
-        .label-text {
-            font-family: 'Courier New', Courier, monospace;
-            font-weight: 900;
-            font-size: 16px;
-            color: #000;
-            text-transform: uppercase;
-        }
+        .label-text { font-family: 'Courier New', monospace; font-weight: 900; font-size: 16px; color: #000; text-transform: uppercase; }
 
-        #interaction-zone {
-            display: flex;
-            justify-content: center;
-            align-items: flex-start;
-            gap: 40px;
-            width: 1540px;
-            height: 850px;
-            position: relative;
-            margin: 0 auto;
-        }
-
-        /* --- THE BLACK AND GOLD SCROLL RECEIPT --- */
+        /* --- VERTICAL UNROLLING SCROLL --- */
         #scroll-receipt-container {
-            width: 450px; 
-            height: 750px;
+            width: 450px; height: 750px;
             position: absolute;
-            right: -600px; 
-            top: 20px;
-            transition: right 1.5s cubic-bezier(0.23, 1, 0.32, 1);
+            top: 145px; /* Positioned right under the nav tab */
+            right: 50px;
             z-index: 100;
-            background: url('Assets/scrollreceipt.png') no-repeat center center;
+            background: url('Assets/scrollreceipt.png') no-repeat center top;
             background-size: contain;
-            display: flex;
-            flex-direction: column;
-            padding: 135px 85px; /* Precision padding for your image */
+            display: flex; flex-direction: column;
+            padding: 130px 85px;
             box-sizing: border-box;
+            
+            /* Initial State: Rolled up (hidden) */
+            opacity: 0;
+            clip-path: inset(0 0 100% 0); 
+            transition: clip-path 2s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.3s ease;
+            pointer-events: none;
         }
-        #scroll-receipt-container.visible { right: 20px; }
+
+        #scroll-receipt-container.visible {
+            opacity: 1;
+            clip-path: inset(0 0 0% 0); /* Unrolls downward */
+            pointer-events: all;
+        }
 
         .receipt-content {
-            /* SILVER TYPEWRITER STYLE */
             font-family: 'Courier New', Courier, monospace;
-            color: var(--silver-ink); 
-            text-align: center;
+            color: var(--silver-ink); text-align: center;
             text-shadow: 1px 1px 2px rgba(255,255,255,0.2);
         }
 
         .receipt-header {
-            font-family: 'Limelight', cursive;
-            color: var(--tag-gold); 
-            font-size: 22px;
-            text-transform: uppercase;
-            margin-bottom: 25px;
-            border-bottom: 1px solid var(--tag-gold);
-            padding-bottom: 10px;
-            letter-spacing: 2px;
+            font-family: 'Limelight', cursive; color: var(--tag-gold);
+            font-size: 22px; text-transform: uppercase; margin-bottom: 25px;
+            border-bottom: 1px solid var(--tag-gold); padding-bottom: 10px;
         }
 
-        .receipt-list {
-            list-style: none;
-            padding: 0;
-            margin: 0;
-            text-align: left;
-            font-size: 14px;
-            line-height: 2.2;
-        }
+        .receipt-list { list-style: none; padding: 0; text-align: left; font-size: 14px; line-height: 2.2; }
+        .receipt-item { display: flex; justify-content: space-between; border-bottom: 1px dotted #333; }
+        .receipt-total { margin-top: 40px; font-weight: bold; font-size: 20px; color: var(--tag-gold); border-top: 2px solid var(--tag-gold); padding-top: 15px; }
 
-        .receipt-item {
-            display: flex;
-            justify-content: space-between;
-            border-bottom: 1px dotted #333;
-        }
-
-        .receipt-total {
-            margin-top: 40px;
-            font-weight: bold;
-            font-size: 20px;
-            color: var(--tag-gold);
-            border-top: 2px solid var(--tag-gold);
-            padding-top: 15px;
-        }
-
-        #theater-wrapper {
-            position: relative;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            padding-top: 100px;
-        }
-
-        #theater-container {
-            width: 950px;
-            height: 600px;
-            border: 25px solid #000;
-            position: relative;
-            overflow: hidden;
-            background: #000;
-            box-shadow: 0 0 60px rgba(0,0,0,1);
-            z-index: 5;
-        }
-
-        #room-display {
-            width: 100%;
-            height: 100%;
-            background-size: cover;
-            background-position: center;
-        }
-
-        .asset-side-container {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 550px;
-            transform: translateX(-200%);
-            transition: transform 3s cubic-bezier(0.23, 1, 0.32, 1);
-            z-index: 30;
-        }
+        #interaction-zone { display: flex; justify-content: center; width: 1540px; height: 850px; position: relative; margin: 0 auto; }
+        #theater-container { width: 950px; height: 600px; border: 25px solid #000; position: relative; overflow: hidden; background: #000; z-index: 5; }
+        #room-display { width: 100%; height: 100%; background-size: cover; background-position: center; }
+        .asset-side-container { position: absolute; top: 0; left: 0; width: 550px; transform: translateX(-200%); transition: transform 3s ease; z-index: 30; }
         #rooms-cabinet-container.glided-in { transform: translateX(0); }
-        #furniture-cases-container.glided-in { transform: translateX(0); }
-
-        .drawer-labels-overlay {
-            position: absolute;
-            top: 135px;
-            left: 95px;
-            display: flex;
-            flex-direction: column;
-            gap: 28px;
-        }
-
-        .small-pull-tab {
-            width: 160px;
-            height: 65px;
-            background: var(--metal-shine);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            cursor: pointer;
-            box-shadow: inset 0 0 8px #000, 3px 3px 10px rgba(0,0,0,0.5);
-        }
-
-        .drawer-white-card {
-            width: 80%;
-            height: 60%;
-            background: #fff;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-family: 'Courier New', monospace;
-            font-size: 14px;
-            font-weight: bold;
-            text-transform: uppercase;
-        }
+        .small-pull-tab { width: 160px; height: 65px; background: var(--metal-shine); display: flex; justify-content: center; align-items: center; cursor: pointer; margin-bottom: 10px;}
+        .drawer-white-card { width: 80%; height: 60%; background: #fff; display: flex; justify-content: center; align-items: center; font-family: 'Courier New', monospace; font-size: 14px; font-weight: bold; text-transform: uppercase; }
     </style>
 </head>
 <body>
@@ -258,86 +111,72 @@
     </header>
 
     <nav class="nav-container">
-        <div class="label-holder" onclick="roomsAction()"><div class="white-card"><span class="label-text">Rooms</span></div><div class="lip-pull"></div></div>
-        <div class="label-holder"><div class="white-card"><span class="label-text">Furniture Catalog</span></div><div class="lip-pull"></div></div>
-        <div class="label-holder"><div class="white-card"><span class="label-text">Decor Closet</span></div><div class="lip-pull"></div></div>
-        <div class="label-holder"><div class="white-card"><span class="label-text">Inspirational Walkthrough</span></div><div class="lip-pull"></div></div>
-        <div class="label-holder" onclick="toggleReceipt()"><div class="white-card"><span class="label-text">Save / Checkout</span></div><div class="lip-pull"></div></div>
+        <div class="label-holder" onclick="roomsAction()">
+            <div class="white-card"><span class="label-text">Rooms</span></div>
+        </div>
+        <div class="label-holder">
+            <div class="white-card"><span class="label-text">Furniture Catalog</span></div>
+        </div>
+        <div class="label-holder">
+            <div class="white-card"><span class="label-text">Decor Closet</span></div>
+        </div>
+        <div class="label-holder">
+            <div class="white-card"><span class="label-text">Walkthrough</span></div>
+        </div>
+        <div class="label-holder" onclick="toggleReceipt()">
+            <div class="white-card"><span class="label-text">Save / Checkout</span></div>
+        </div>
     </nav>
 
     <div id="interaction-zone">
-        <div class="cabinet-space">
-            <div id="rooms-cabinet-container" class="asset-side-container">
-                <img src="Assets/cabinet.png" class="asset-img">
-                <div class="drawer-labels-overlay">
-                    <div class="small-pull-tab" onclick="cycleRoom('livingroom')"><div class="drawer-white-card">livingroom</div></div>
-                    <div class="small-pull-tab" onclick="cycleRoom('bedroom')"><div class="drawer-white-card">bedroom</div></div>
-                    <div class="small-pull-tab" onclick="cycleRoom('diningroom')"><div class="drawer-white-card">diningroom</div></div>
-                    <div class="small-pull-tab" onclick="cycleRoom('extra')"><div class="drawer-white-card">extra rooms</div></div>
-                    <div class="small-pull-tab" style="margin-top: 20px; border-color: #ff4444;" onclick="startFresh()"><div class="drawer-white-card" style="color: #ff4444;">Start Fresh</div></div>
-                </div>
-            </div>
-
-            <div id="furniture-cases-container" class="asset-side-container">
-                <img src="Assets/furniturecases.png" class="asset-img">
+        <div id="rooms-cabinet-container" class="asset-side-container">
+            <img src="Assets/cabinet.png" style="width:100%;">
+            <div style="position:absolute; top:135px; left:95px; display:flex; flex-direction:column;">
+                <div class="small-pull-tab" onclick="cycleRoom('livingroom')"><div class="drawer-white-card">Living</div></div>
+                <div class="small-pull-tab" onclick="cycleRoom('bedroom')"><div class="drawer-white-card">Bedroom</div></div>
+                <div class="small-pull-tab" style="margin-top:20px; border:2px solid #ff4444;" onclick="startFresh()"><div class="drawer-white-card" style="color:#ff4444;">Fresh</div></div>
             </div>
         </div>
 
-        <div id="theater-wrapper">
-            <div id="scroll-receipt-container">
-                <div class="receipt-content">
-                    <div class="receipt-header">Design Manifest</div>
-                    <ul class="receipt-list">
-                        <li class="receipt-item"><span>Selected Concept</span><span>-</span></li>
-                        <li class="receipt-item"><span>Affiliate Piece A</span><span>$---.--</span></li>
-                        <li class="receipt-item"><span>Affiliate Piece B</span><span>$---.--</span></li>
-                    </ul>
-                    <div class="receipt-total">
-                        Total: $0.00
-                    </div>
-                </div>
+        <div id="scroll-receipt-container">
+            <div class="receipt-content">
+                <div class="receipt-header">Design Manifest</div>
+                <ul class="receipt-list">
+                    <li class="receipt-item"><span>Selected Concept</span><span>-</span></li>
+                    <li class="receipt-item"><span>Affiliate Piece A</span><span>$---.--</span></li>
+                    <li class="receipt-item"><span>Affiliate Piece B</span><span>$---.--</span></li>
+                </ul>
+                <div class="receipt-total">Total: $0.00</div>
             </div>
+        </div>
 
-            <div id="theater-container">
-                <div id="room-display" onclick="commitSelection()"></div>
-            </div>
+        <div id="theater-container">
+            <div id="room-display"></div>
         </div>
     </div>
 </div>
 
 <script>
     function toggleReceipt() {
-        document.getElementById('scroll-receipt-container').classList.toggle('visible');
+        const receipt = document.getElementById('scroll-receipt-container');
+        receipt.classList.toggle('visible');
     }
 
     function roomsAction() {
         document.getElementById('scroll-receipt-container').classList.remove('visible');
-        document.getElementById('furniture-cases-container').classList.remove('glided-in');
-        const roomsCabinet = document.getElementById('rooms-cabinet-container');
-        roomsCabinet.classList.remove('glided-out');
-        roomsCabinet.classList.add('glided-in');
+        const cabinet = document.getElementById('rooms-cabinet-container');
+        cabinet.classList.add('glided-in');
     }
 
     function cycleRoom(type) {
         document.getElementById('room-display').style.backgroundImage = `url('Assets/${type}.jpg')`;
     }
 
-    function commitSelection() {
-        document.getElementById('rooms-cabinet-container').classList.remove('glided-in');
-        document.getElementById('rooms-cabinet-container').classList.add('glided-out');
-        setTimeout(() => {
-            document.getElementById('furniture-cases-container').classList.add('glided-in');
-        }, 1000);
-    }
-
     function startFresh() {
         document.getElementById('room-display').style.backgroundImage = 'none';
         document.getElementById('scroll-receipt-container').classList.remove('visible');
-        document.getElementById('furniture-cases-container').classList.remove('glided-in');
-        const roomsCabinet = document.getElementById('rooms-cabinet-container');
-        roomsCabinet.classList.remove('glided-out');
-        roomsCabinet.classList.add('glided-in');
     }
 </script>
+
 </body>
 </html>
