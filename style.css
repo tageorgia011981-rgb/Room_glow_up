@@ -1,65 +1,111 @@
-/* --- RESET & CORE --- */
-* { margin: 0; padding: 0; box-sizing: border-box; }
-body, html { width: 100%; height: 100%; background: #000; overflow: hidden; }
-
-/* --- MAIN STUDIO VIEW --- */
-#studio-main {
-    width: 100%; height: 100%;
-    background: url('backgroundG&Blk.jpg') no-repeat center center fixed;
-    background-size: cover;
-    display: flex; flex-direction: column; align-items: center;
-    transition: opacity 1.2s ease-in-out;
-    position: relative; z-index: 10;
+:root {
+    --metal-shine: linear-gradient(145deg, #bdc3c7, #2c3e50, #95a5a6, #000);
+    --silver-header: linear-gradient(to bottom, #ffffff 0%, #a6a6a6 45%, #4d4d4d 50%, #ffffff 55%, #808080 100%);
+    --glow-teal: #00f2ff;
+    --tag-gold: #d4af37;
 }
 
-.header-container { text-align: center; padding-top: 50px; }
-.main-title {
-    font-family: 'Limelight', cursive;
-    font-size: 8rem; font-weight: 900;
-    background: linear-gradient(to bottom, #222 0%, #777 40%, #fff 50%, #777 60%, #111 100%);
-    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-    filter: drop-shadow(0 10px 20px rgba(0,0,0,0.9));
-    letter-spacing: 15px; text-transform: uppercase; line-height: 1;
+body, html {
+    margin: 0; padding: 0; min-height: 100vh;
+    background: url('Assets/mainbackground.jpg') no-repeat center center fixed;
+    background-size: cover; scroll-behavior: smooth; overflow-x: hidden;
 }
 
-.sub-header {
-    font-family: 'Special Elite', cursive;
-    font-size: 1.8rem; color: #fff; letter-spacing: 8px;
-    margin-top: 20px; text-shadow: 3px 3px 6px rgba(0,0,0,0.8);
-    font-weight: bold;
+#main-site-container {
+    width: 100%; display: flex; flex-direction: column; align-items: center; padding-bottom: 200px;
 }
 
-/* --- VINTAGE PULL TABS --- */
-.label-row { display: flex; justify-content: center; gap: 25px; margin-top: 50px; }
-.label-holder { 
-    width: 210px; height: 100px; 
-    background: linear-gradient(145deg, #162127, #0C1519); 
-    border: 2px solid #333; position: relative; 
-    display: flex; justify-content: center; align-items: center; 
-    cursor: pointer; box-shadow: 10px 10px 20px rgba(0,0,0,0.8); transition: all 0.4s; 
+header { text-align: center; padding: 60px 0 30px 0; z-index: 50; }
+
+h1 {
+    font-family: 'Limelight', cursive; font-size: 100px; margin: 0;
+    background: var(--silver-header); -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    filter: drop-shadow(5px 5px 8px rgba(0,0,0,0.8)); text-transform: uppercase; letter-spacing: 4px;
 }
-.label-content { width: 88%; height: 65%; background: #fdfcf0; display: flex; justify-content: center; align-items: center; border: 1px solid #000; }
-.label-text { font-family: 'Special Elite', cursive; font-size: 1.2rem; color: #000; text-transform: uppercase; text-align: center; font-weight: 900; }
 
-/* --- MUSEUM STAGES --- */
-.museum-stage { position: fixed; top: 0; left: 0; width: 100%; height: 100%; display: none; opacity: 0; transition: opacity 1.8s ease; background-color: #000; background-repeat: no-repeat; background-position: center; }
+h2 {
+    font-family: 'Limelight', cursive; font-size: 36px; margin: -5px 0 0 0;
+    color: #e0e0e0; letter-spacing: 3px; text-shadow: 3px 3px 6px #000;
+}
 
-#stage-1 { background-image: url('rain1.jpg'); background-size: contain; z-index: 101; }
-#stage-2 { background-image: url('rain2.jpg'); background-size: contain; z-index: 102; }
-#gallery-view { background-image: url('goldhands.jpg'); background-size: 100% 100%; z-index: 103; }
-#ornate-view { background-image: url('lookbook1.jpg'); background-size: 100% 100%; z-index: 104; }
+.nav-container { display: flex; gap: 25px; margin-top: 40px; margin-bottom: 100px; z-index: 50; }
 
-.museum-btn { position: absolute; bottom: 5%; left: 50%; transform: translateX(-50%); padding: 15px 40px; font-family: 'Limelight', cursive; font-size: 1.4rem; color: #fff; background: rgba(0,0,0,0.8); border: 2px solid #CF9D7B; cursor: pointer; z-index: 120; text-transform: uppercase; }
+.label-holder {
+    width: 210px; height: 105px; background: var(--metal-shine); border: 2px solid #000;
+    position: relative; display: flex; justify-content: center; align-items: center;
+    box-shadow: inset 0 0 15px #000, 8px 8px 20px rgba(0,0,0,0.9); cursor: pointer; transition: transform 0.3s ease;
+}
 
-.art-frame { position: absolute; background: transparent; overflow: hidden; z-index: 110; display: flex; justify-content: center; align-items: center; }
-.art-frame img { width: 100%; height: 100%; object-fit: cover; }
+.white-card {
+    width: 85%; height: 60%; background: #fff; display: flex; justify-content: center; align-items: center;
+    transition: background 0.4s ease, box-shadow 0.4s ease;
+}
 
-/* --- REVERSED ALIGNMENT (RE-CENTERED) --- */
-#art-1 { top: 25.5%; left: 8.5%; width: 17.5%; height: 34.5%; transform: rotate(-1.5deg); } 
-#art-2 { top: 37.5%; left: 41.2%; width: 17.6%; height: 34.2%; } 
-#art-3 { top: 25.5%; right: 8.5%; width: 17.5%; height: 34.5%; transform: rotate(1.5deg); }
+.label-holder:hover .white-card { background: var(--glow-teal); box-shadow: 0 0 30px var(--glow-teal); }
+.label-text { font-family: 'Courier New', Courier, monospace; font-weight: 900; font-size: 16px; color: #000; text-transform: uppercase; }
 
-/* --- ORNATE LOOKBOOK --- */
-#orn-frame-1 { top: 24.5%; left: 8.5%; width: 20%; height: 49.5%; }
-#orn-frame-2 { top: 21%; left: 39.2%; width: 21.5%; height: 53.5%; }
-#orn-frame-3 { top: 24.5%; right: 8.5%; width: 20%; height: 49.5%; }
+#interaction-zone { display: flex; justify-content: center; align-items: flex-start; gap: 40px; width: 1600px; height: 750px; position: relative; margin: 0 auto; }
+
+.cabinet-space { position: relative; width: 550px; height: 650px; }
+
+.asset-side-container {
+    position: absolute; top: 0; left: 0; width: 550px; transform: translateX(-200%);
+    transition: transform 3s cubic-bezier(0.23, 1, 0.32, 1); z-index: 30;
+}
+
+#rooms-cabinet-container.glided-in, #furniture-cases-container.glided-in { transform: translateX(0); }
+.asset-img { width: 100%; filter: drop-shadow(15px 15px 30px #000); }
+
+#theater-container {
+    width: 950px; height: 600px; border: 25px solid #000; overflow: hidden; background: #000;
+    box-shadow: 0 0 60px rgba(0,0,0,1); z-index: 5; flex-shrink: 0; position: relative;
+}
+
+#room-display { width: 100%; height: 100%; background-size: cover; background-position: center; transition: background-image 0.5s ease; cursor: pointer; }
+
+.placed-item { position: absolute; width: 120px; cursor: move; z-index: 1000; filter: drop-shadow(5px 5px 10px #000); }
+
+/* --- TRIPLE AISLE DECOR CLOSET --- */
+#closet-popup {
+    position: fixed; top: 55%; right: 5%; 
+    width: 320px; height: 500px; z-index: 10000; display: none; perspective: 1000px;
+}
+
+#closet-door-left, #closet-door-right {
+    position: absolute; width: 50%; height: 100%; z-index: 105;
+    background: url('Assets/closetdoors.jpg') no-repeat;
+    background-size: 640px 500px; border: 4px solid #000; transition: transform 0.8s ease; cursor: pointer;
+}
+
+#closet-door-left { left: 0; background-position: left; transform-origin: left; }
+#closet-door-right { right: 0; background-position: right; transform-origin: right; }
+
+.closet-open #closet-door-left { transform: rotateY(-135deg); }
+.closet-open #closet-door-right { transform: rotateY(135deg); }
+
+#closet-interior { position: absolute; width: 100%; height: 100%; border: 8px solid #000; background: #000; overflow: hidden; }
+
+.shelf-section {
+    position: absolute; width: 100%; height: 100%; 
+    background-size: 100% 100%; background-repeat: no-repeat;
+    display: none; flex-wrap: wrap; justify-content: center; align-content: flex-start;
+    padding: 20px; box-sizing: border-box;
+}
+
+.shelf-section.active { display: flex; }
+
+#shelf-1 { padding-top: 100px; } 
+#shelf-3 { justify-content: space-between; padding: 80px 30px; } 
+
+.shelf-item { width: 75px; height: 75px; margin: 10px; cursor: pointer; transition: transform 0.2s; object-fit: contain; z-index: 110; }
+.shelf-item:hover { transform: scale(1.1); filter: drop-shadow(0 0 10px var(--glow-teal)); }
+
+#aisle-arrow {
+    position: absolute; bottom: 15px; right: 10px; width: 120px; height: 35px;
+    background: #000; border: 1px solid var(--tag-gold); cursor: pointer;
+    display: flex; justify-content: center; align-items: center; z-index: 120;
+    clip-path: polygon(0% 0%, 80% 0%, 100% 50%, 80% 100%, 0% 100%);
+}
+
+.aisle-text { color: var(--tag-gold); font-family: 'Courier New', monospace; font-size: 100pxpx; font-weight: bold; text-transform: uppercase; }
+#close-closet-x { position: absolute; top: -35px; right: 0; color: #fff; font-size: 30px; cursor: pointer; }
