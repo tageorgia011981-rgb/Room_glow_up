@@ -100,38 +100,32 @@
         .closet-open #closet-door { transform: rotateY(-110deg); pointer-events: none; }
         
         #closet-interior {
-            position: absolute; width: 100%; height: 100%; display: flex; 
-            border: 12px solid #000; background: #111; overflow: hidden;
+            position: absolute; width: 100%; height: 100%; border: 12px solid #000; background: transparent; overflow: hidden;
         }
         .shelf-section {
             position: absolute; width: 100%; height: 100%; background-size: cover; background-position: center;
             display: none; flex-wrap: wrap; justify-content: center; align-content: flex-start;
-            padding-top: 160px; transition: opacity 0.5s ease;
+            padding-top: 150px; 
         }
         .shelf-section.active { display: flex; }
-
         .shelf-item { 
-            width: 130px; height: 130px; margin: 20px; cursor: pointer; 
+            width: 130px; height: 130px; margin: 25px; cursor: pointer; 
             transition: transform 0.3s; object-fit: contain; 
         }
         .shelf-item:hover { transform: scale(1.2); filter: drop-shadow(0 0 15px var(--glow-teal)); }
-
-        #closet-controls {
-            position: absolute; bottom: 30px; width: 100%; display: flex; justify-content: center; gap: 50px; z-index: 120;
-        }
-        .closet-btn {
-            background: var(--metal-shine); border: 2px solid #000; color: #fff; font-family: 'Courier New', monospace;
-            padding: 10px 30px; font-weight: bold; cursor: pointer; text-transform: uppercase;
-            box-shadow: 4px 4px 0px #000; transition: 0.2s;
-        }
-        .closet-btn:hover { background: var(--glow-teal); color: #000; transform: translate(-2px, -2px); box-shadow: 6px 6px 0px #000; }
         
-        #closet-label {
-            position: absolute; top: 30px; left: 50%; transform: translateX(-50%);
-            color: #fff; font-family: 'Limelight', cursive; font-size: 24px; text-shadow: 2px 2px 5px #000; z-index: 120;
+        /* THE "STORE WALL" ARROW */
+        #store-arrow-sign {
+            position: absolute; bottom: 40px; right: -15px; z-index: 110;
+            width: 180px; height: 60px; background: #000; border: 2px solid var(--tag-gold);
+            display: flex; justify-content: center; align-items: center; cursor: pointer;
+            box-shadow: 5px 5px 15px rgba(0,0,0,0.8); transition: transform 0.2s;
+            clip-path: polygon(0% 0%, 80% 0%, 100% 50%, 80% 100%, 0% 100%);
         }
+        #store-arrow-sign:hover { transform: scale(1.05) translateX(5px); border-color: var(--glow-teal); }
+        .arrow-text { color: var(--tag-gold); font-family: 'Courier New', monospace; font-weight: bold; font-size: 14px; text-transform: uppercase; padding-right: 20px; }
 
-        #close-closet-x { position: absolute; top: 15px; right: 25px; color: #fff; font-size: 50px; cursor: pointer; z-index: 130; }
+        #close-closet-x { position: absolute; top: 15px; right: 25px; color: #fff; font-size: 50px; cursor: pointer; z-index: 110; }
     </style>
 </head>
 <body>
@@ -144,7 +138,7 @@
 
     <nav class="nav-container">
         <div class="label-holder" onclick="roomsAction()"><div class="screw s-tl"></div><div class="screw s-tr"></div><div class="white-card"><span class="label-text">Rooms</span></div><div class="screw s-bl"></div><div class="screw s-br"></div><div class="lip-pull"></div></div>
-        <div class="label-holder"><div class="screw s-tl"></div><div class="screw s-tr"></div><div class="white-card"><span class="label-text">Furniture Catalog</span></div><div class="screw s-bl"></div><div class="screw s-br"></div><div class="lip-pull"></div></div>
+        <div class="label-holder" onclick="furnitureAction()"><div class="screw s-tl"></div><div class="screw s-tr"></div><div class="white-card"><span class="label-text">Furniture Catalog</span></div><div class="screw s-bl"></div><div class="screw s-br"></div><div class="lip-pull"></div></div>
         <div class="label-holder" onclick="openCloset()"><div class="screw s-tl"></div><div class="screw s-tr"></div><div class="white-card"><span class="label-text">Decor Closet</span></div><div class="screw s-bl"></div><div class="screw s-br"></div><div class="lip-pull"></div></div>
         <div class="label-holder"><div class="screw s-tl"></div><div class="screw s-tr"></div><div class="white-card"><span class="label-text">Inspirational Walkthrough</span></div><div class="screw s-bl"></div><div class="screw s-br"></div><div class="lip-pull"></div></div>
         <div class="label-holder"><div class="screw s-tl"></div><div class="screw s-tr"></div><div class="white-card"><span class="label-text">Save / Checkout</span></div><div class="screw s-bl"></div><div class="screw s-br"></div><div class="lip-pull"></div></div>
@@ -176,80 +170,89 @@
 <div id="closet-popup">
     <div id="close-closet-x" onclick="closeCloset()">×</div>
     <div id="closet-door" onclick="this.parentElement.classList.add('closet-open')"></div>
-    
-    <div id="closet-label">Plants Section</div>
-    
     <div id="closet-interior">
-        <div class="shelf-section active" id="sec-1" style="background-image: url('Assets/decorshelves.jpg');"></div>
-        <div class="shelf-section" id="sec-2" style="background-image: url('Assets/decorshelves2.png');"></div>
-        <div class="shelf-section" id="sec-3" style="background-image: url('Assets/decorshelves3.jpg');"></div>
-    </div>
-
-    <div id="closet-controls">
-        <button class="closet-btn" onclick="nextSection()">Next Section →</button>
+        <div class="shelf-section active" id="shelf-1" style="background-image: url('Assets/decorshelves.jpg');"></div>
+        <div class="shelf-section" id="shelf-2" style="background-image: url('Assets/decorshelves2.png');"></div>
+        <div class="shelf-section" id="shelf-3" style="background-image: url('Assets/decorshelves3.jpg');"></div>
+        
+        <div id="store-arrow-sign" onclick="nextShelf()">
+            <span class="arrow-text">Next Aisle →</span>
+        </div>
     </div>
 </div>
 
 <script>
-    // NAVIGATION & ROOMS
-    const subCategories = { seating: ['couches', 'chairs', 'dining chairs'], tables: ['coffee', 'end'], storage: ['armoire'], beds: ['beds'] };
-    const mainCategories = [{ id: 'seating', img: 'iconseating.png' }, { id: 'tables', img: 'icontables.png' }, { id: 'storage', img: 'iconstorage.png' }, { id: 'beds', img: 'iconbeds.png' }];
+    // ROOM & FURNITURE TOGGLES
+    function roomsAction() { 
+        window.scrollTo({ top: document.getElementById('interaction-zone').offsetTop - 20, behavior: 'smooth' });
+        document.getElementById('furniture-cases-container').classList.remove('glided-in');
+        document.getElementById('rooms-cabinet-container').classList.add('glided-in'); 
+    }
+    function furnitureAction() {
+        document.getElementById('rooms-cabinet-container').classList.remove('glided-in');
+        document.getElementById('furniture-cases-container').classList.add('glided-in');
+    }
+
+    // CATALOG DATA
+    const subCategories = {
+        seating: ['couches', 'chairs', 'dining chairs', 'benches', 'stools'],
+        tables: ['coffee', 'end', 'dining table'],
+        storage: ['armoire', 'dressers', 'buffet'],
+        beds: ['beds']
+    };
+    const mainCategories = [
+        { id: 'seating', img: 'iconseating.png' },
+        { id: 'tables', img: 'icontables.png' },
+        { id: 'storage', img: 'iconstorage.png' },
+        { id: 'beds', img: 'iconbeds.png' }
+    ];
 
     function renderMainTags() {
         const container = document.getElementById('dynamic-tags-container');
-        container.innerHTML = mainCategories.map(cat => `<div class="tag-hanger"><div class="icon-tag" onclick="showSubTags('${cat.id}')"><img src="Assets/${cat.img}"></div></div>`).join('');
+        container.innerHTML = mainCategories.map(cat => `
+            <div class="tag-hanger"><div class="icon-tag" onclick="showSubTags('${cat.id}')"><img src="Assets/${cat.img}"></div></div>
+        `).join('');
     }
     renderMainTags();
 
     function showSubTags(id) {
         const container = document.getElementById('dynamic-tags-container');
-        let html = subCategories[id].map(sub => `<div class="tag-hanger"><div class="icon-tag" onclick="openCatalog('${sub}')"><span class="tag-text">${sub}</span></div></div>`).join('');
+        let html = subCategories[id].map(sub => `
+            <div class="tag-hanger"><div class="icon-tag" onclick="openCatalog('${sub}')"><span class="tag-text">${sub}</span></div></div>
+        `).join('');
         html += `<div class="tag-hanger"><div class="icon-tag back-tag" onclick="renderMainTags()"><span class="tag-text">← Back</span></div></div>`;
         container.innerHTML = html;
     }
 
-    const roomInventory = { livingroom: ['livingroom1.jpg'], bedroom: ['bedroom.jpg'], diningroom: ['diningroom.jpg'], extra: ['foyer.jpg'] };
-    function roomsAction() { document.getElementById('rooms-cabinet-container').classList.add('glided-in'); }
-    function peekRoom(img) { document.getElementById('room-display').style.backgroundImage = `url('Assets/${img}')`; }
-    function cycleRoom(type) { peekRoom(roomInventory[type][0]); }
-    function commitSelection() { 
-        document.getElementById('rooms-cabinet-container').classList.remove('glided-in'); 
-        setTimeout(() => { document.getElementById('furniture-cases-container').classList.add('glided-in'); }, 1000); 
-    }
-
     // CLOSET LOGIC
-    let currentSec = 1;
-    const labels = ["Plants Section", "Pillows Section", "Decor Section"];
-
+    let currentShelf = 1;
     function openCloset() { document.getElementById('closet-popup').style.display = 'block'; }
     function closeCloset() { 
         document.getElementById('closet-popup').classList.remove('closet-open');
         document.getElementById('closet-popup').style.display = 'none'; 
     }
-
-    function nextSection() {
-        document.getElementById(`sec-${currentSec}`).classList.remove('active');
-        currentSec = (currentSec % 3) + 1;
-        document.getElementById(`sec-${currentSec}`).classList.add('active');
-        document.getElementById('closet-label').innerText = labels[currentSec - 1];
+    function nextShelf() {
+        document.getElementById(`shelf-${currentShelf}`).classList.remove('active');
+        currentShelf = (currentShelf % 3) + 1;
+        document.getElementById(`shelf-${currentShelf}`).classList.add('active');
     }
 
-    // ITEMS
-    const decorItems = [
-        { src: "plant1.png", sec: "sec-1" }, { src: "plant2.png", sec: "sec-1" },
-        { src: "pillow1.png", sec: "sec-2" }, { src: "pillow2.png", sec: "sec-2" },
-        { src: "decor1.png", sec: "sec-3" }, { src: "decor2.png", sec: "sec-3" }
+    // INVENTORY
+    const items = [
+        { src: "plant1.png", shelf: "shelf-1" }, { src: "plant2.png", shelf: "shelf-1" },
+        { src: "pillow1.png", shelf: "shelf-2" }, { src: "pillow2.png", shelf: "shelf-2" },
+        { src: "decor1.png", shelf: "shelf-3" }, { src: "decor2.png", shelf: "shelf-3" }
     ];
 
-    decorItems.forEach(item => {
+    items.forEach(item => {
         const img = document.createElement('img');
         img.src = "Assets/" + item.src;
         img.className = "shelf-item";
-        img.onclick = () => { spawnDecor(item.src); closeCloset(); };
-        document.getElementById(item.sec).appendChild(img);
+        img.onclick = () => { spawnItem(item.src); closeCloset(); };
+        document.getElementById(item.shelf).appendChild(img);
     });
 
-    function spawnDecor(src) {
+    function spawnItem(src) {
         const img = document.createElement('img');
         img.src = "Assets/" + src;
         img.className = "placed-item";
@@ -268,6 +271,15 @@
                 el.style.top=(el.offsetTop-y1)+"px"; el.style.left=(el.offsetLeft-x1)+"px";
             };
         };
+    }
+
+    // ROOM LOGIC
+    const roomInventory = { livingroom: ['livingroom1.jpg'], bedroom: ['bedroom.jpg'], diningroom: ['diningroom.jpg'], extra: ['foyer.jpg'] };
+    function peekRoom(img) { document.getElementById('room-display').style.backgroundImage = `url('Assets/${img}')`; }
+    function cycleRoom(type) { peekRoom(roomInventory[type][0]); }
+    function commitSelection() { 
+        document.getElementById('rooms-cabinet-container').classList.remove('glided-in'); 
+        setTimeout(() => { document.getElementById('furniture-cases-container').classList.add('glided-in'); }, 1000); 
     }
 </script>
 </body>
