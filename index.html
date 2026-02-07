@@ -179,11 +179,9 @@
         /* LOOKBOOK PRECISION MAPPING */
         #lookbook-container {
             position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 100%; 
-            max-width: 1920px;
+            top: 0;
+            left: 0;
+            width: 100%;
             height: 100%;
             display: none;
             z-index: 10001;
@@ -191,18 +189,18 @@
 
         .museum-piece {
             position: absolute;
-            background-size: cover;
+            background-size: 100% 100%; 
             background-position: center;
             background-repeat: no-repeat;
-            box-shadow: inset 0 0 10px rgba(0,0,0,0.5);
+            clip-path: inset(0 0 0 0);
         }
 
-        /* Coordinates for ornate frame alignment */
-        #l-slot-1 { top: 12%; left: 14%; width: 24%; height: 26%; }
-        #l-slot-2 { top: 11%; left: 62%; width: 23%; height: 23%; }
-        #l-slot-3 { top: 38%; left: 62%; width: 25%; height: 19%; }
-        #l-slot-4 { top: 52%; left: 14%; width: 24%; height: 35%; }
-        #l-slot-5 { top: 62%; left: 62%; width: 23%; height: 26%; }
+        /* Refined museum containment coordinates */
+        #l-slot-1 { top: 12.8%; left: 14.8%; width: 22.4%; height: 24.8%; }
+        #l-slot-2 { top: 11.8%; left: 62.8%; width: 21.4%; height: 21.4%; }
+        #l-slot-3 { top: 38.8%; left: 62.8%; width: 23.4%; height: 17.4%; }
+        #l-slot-4 { top: 53.5%; left: 14.8%; width: 22.4%; height: 32.4%; }
+        #l-slot-5 { top: 62.8%; left: 62.8%; width: 21.4%; height: 24.4%; }
     </style>
 </head>
 <body>
@@ -248,7 +246,6 @@
         { bg: 'rain1.jpg', mode: 'empty', images: [], showHands: false },
         { bg: 'rain2.jpg', mode: 'empty', images: [], showHands: false },
         { bg: 'goldhands.jpg', mode: 'gallery', images: ['colorvibes.jpg', 'colorvibes1.jpg', 'colorvibes2.jpg'], showHands: true },
-        /* Swapped top-right (insp16) with bottom-left (insp20) */
         { bg: 'lookbook.jpg', mode: 'lookbook', images: ['insp17.jpg', 'insp20.jpg', 'insp18.jpg', 'insp16.jpg', 'insp21.jpg'], showHands: false }
     ]; 
 
