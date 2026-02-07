@@ -153,37 +153,69 @@
             transition: opacity 0.8s ease;
         }
 
-        #frame-container {
+        /* CENTERED GALLERY ALIGNMENT */
+        #gallery-frames {
             position: absolute;
-            top: 41%;
-            left: 50%;
+            top: 42.5%; /* Lowered slightly to hit center of gold hands framing */
+            left: 50.5%; /* Micro-adjustment to the right */
             transform: translate(-50%, -50%);
-            width: 72%; 
+            width: 70%; 
             height: 42%;
-            display: flex;
+            display: none;
             justify-content: space-between;
             align-items: center;
             z-index: 10000;
         }
 
+        /* LOOKBOOK 5-FRAME ALIGNMENT */
+        #lookbook-container {
+            position: absolute;
+            top: 45%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 90%;
+            height: 80%;
+            display: none;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 15px;
+            padding: 20px;
+            z-index: 10001;
+        }
+
         .frame-slot {
             width: 31%; 
             height: 100%;
-            /* Shrunk the images in frames slightly as requested */
-            background-size: 90%; 
+            background-size: 85%; /* Shrunk slightly more to ensure it fits the hand framing */
             background-position: center;
             background-repeat: no-repeat;
+        }
+
+        .museum-frame {
+            width: 100%;
+            height: 100%;
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center;
         }
     </style>
 </head>
 <body>
 
 <div id="immersive-space" onclick="nextWalkthroughStep()">
-    <div id="frame-container">
-        <div id="slot-1" class="frame-slot"></div>
-        <div id="slot-2" class="frame-slot"></div>
-        <div id="slot-3" class="frame-slot"></div>
+    <div id="gallery-frames">
+        <div id="g-slot-1" class="frame-slot"></div>
+        <div id="g-slot-2" class="frame-slot"></div>
+        <div id="g-slot-3" class="frame-slot"></div>
     </div>
+    
+    <div id="lookbook-container">
+        <div id="l-slot-1" class="museum-frame"></div>
+        <div id="l-slot-2" class="museum-frame"></div>
+        <div id="l-slot-3" class="museum-frame"></div>
+        <div id="l-slot-4" class="museum-frame"></div>
+        <div id="l-slot-5" class="museum-frame"></div>
+    </div>
+
     <div id="hands-overlay"></div>
 </div>
 
@@ -207,9 +239,10 @@
     let currentWalkStep = 0;
     
     const walkScenes = [
-        { bg: 'rain1.jpg', images: [], showHands: false },
-        { bg: 'rain2.jpg', images: [], showHands: false },
-        { bg: 'goldhands.jpg', images: ['colorvibes.jpg', 'colorvibes1.jpg', 'colorvibes2.jpg'], showHands: true }
+        { bg: 'rain1.jpg', mode: 'empty', images: [], showHands: false },
+        { bg: 'rain2.jpg', mode: 'empty', images: [], showHands: false },
+        { bg: 'goldhands.jpg', mode: 'gallery', images: ['colorvibes.jpg', 'colorvibes1.jpg', 'colorvibes2.jpg'], showHands: true },
+        { bg: 'lookbook.jpg', mode: 'lookbook', images: ['insp9.jpg', 'insp11.jpg', 'insp16.jpg', 'insp17.jpg', 'insp18.jpg'], showHands: false }
     ]; 
 
     function startWalkthrough(e) {
@@ -225,21 +258,27 @@
     function renderScene() {
         const space = document.getElementById('immersive-space');
         const hands = document.getElementById('hands-overlay');
-        const slots = document.querySelectorAll('.frame-slot');
+        const gallery = document.getElementById('gallery-frames');
+        const lookbook = document.getElementById('lookbook-container');
         const scene = walkScenes[currentWalkStep];
 
         space.style.backgroundImage = `url('Assets/${scene.bg}')`;
-        
-        if (scene.images.length > 0) {
-            scene.images.forEach((img, index) => {
-                const slot = document.getElementById(`slot-${index+1}`);
-                if (slot) slot.style.backgroundImage = `url('Assets/${img}')`;
-            });
-        } else {
-            slots.forEach(s => s.style.backgroundImage = 'none');
-        }
-        
         hands.style.opacity = scene.showHands ? '1' : '0';
+        
+        gallery.style.display = (scene.mode === 'gallery') ? 'flex' : 'none';
+        lookbook.style.display = (scene.mode === 'lookbook') ? 'grid' : 'none';
+
+        if (scene.mode === 'gallery') {
+            scene.images.forEach((img, i) => {
+                document.getElementById(`g-slot-${i+1}`).style.backgroundImage = `url('Assets/${img}')`;
+            });
+        }
+
+        if (scene.mode === 'lookbook') {
+            scene.images.forEach((img, i) => {
+                document.getElementById(`l-slot-${i+1}`).style.backgroundImage = `url('Assets/${img}')`;
+            });
+        }
     }
 
     function nextWalkthroughStep() {
