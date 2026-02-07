@@ -1,55 +1,172 @@
-<div id="theater-container" ondragover="allowDrop(event)" ondrop="dropDecor(event)">
-    <div id="room-display">
-        </div>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Room Glow Up - Studio Dashboard</title>
+    <link href="https://fonts.googleapis.com/css2?family=Limelight&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --metal-shine: linear-gradient(145deg, #bdc3c7, #2c3e50, #95a5a6, #000);
+            --silver-header: linear-gradient(to bottom, #ffffff 0%, #a6a6a6 45%, #4d4d4d 50%, #ffffff 55%, #808080 100%);
+            --glow-teal: #00f2ff;
+            --tag-gold: #d4af37;
+        }
+
+        body, html {
+            margin: 0; padding: 0; min-height: 100vh;
+            background: #000 url('Assets/mainbackground.jpg') no-repeat center center fixed;
+            background-size: cover; overflow-x: hidden; color: #fff;
+        }
+
+        header { text-align: center; padding: 40px 0; }
+        h1 {
+            font-family: 'Limelight', cursive; font-size: 80px; margin: 0;
+            background: var(--silver-header); -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent; filter: drop-shadow(5px 5px 8px #000);
+        }
+        h2 { font-family: 'Limelight', cursive; font-size: 28px; color: #e0e0e0; margin-top: -10px; }
+
+        /* NAVIGATION */
+        .nav-container { display: flex; gap: 15px; justify-content: center; margin-bottom: 50px; }
+        .label-holder {
+            width: 190px; height: 95px; background: var(--metal-shine);
+            border: 2px solid #000; position: relative; cursor: pointer;
+            display: flex; align-items: center; justify-content: center;
+            box-shadow: inset 0 0 15px #000;
+        }
+        .white-card { width: 85%; height: 65%; background: #fff; display: flex; align-items: center; justify-content: center; transition: 0.3s; }
+        .label-holder:hover .white-card { background: var(--glow-teal); box-shadow: 0 0 20px var(--glow-teal); }
+        .label-text { font-family: 'Courier New', monospace; color: #000; font-weight: 900; font-size: 14px; text-transform: uppercase; text-align: center;}
+
+        /* THEATER / DROP ZONE */
+        #theater-container {
+            width: 900px; height: 550px; border: 20px solid #111;
+            margin: 0 auto; background: #222; position: relative;
+            overflow: hidden; box-shadow: 0 0 50px #000; z-index: 5;
+        }
+        #room-display { width: 100%; height: 100%; background-size: cover; background-position: center; position: relative; }
+        .placed-decor { position: absolute; width: 120px; height: auto; cursor: move; filter: drop-shadow(5px 10px 10px rgba(0,0,0,0.6)); }
+
+        /* DECOR CLOSET SYSTEM (DOUBLE DOORS) */
+        #decor-closet-overlay {
+            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+            z-index: 100000; background: #000; display: none;
+        }
+        #closet-door-layer, #closet-shelf-layer {
+            width: 100%; height: 100%; background-size: contain;
+            background-position: center; background-repeat: no-repeat; position: absolute;
+        }
+        .grab-anchor { position: absolute; width: 140px; height: 210px; cursor: grab; background: rgba(255,255,255,0); }
+        .grab-anchor:hover { background: rgba(0, 242, 255, 0.1); border: 1px dashed #fff; }
+
+        /* CABINETS */
+        .asset-side-container { position: fixed; top: 15%; left: -600px; width: 500px; transition: left 0.8s; z-index: 500; }
+        .glided-in { left: 40px; }
+
+        /* IMMERSIVE SPACE */
+        #immersive-space { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background-size: contain; background-repeat: no-repeat; background-position: center; background-color: #000; z-index: 200000; display: none; cursor: pointer; }
+        
+        .exit-btn { position: absolute; bottom: 30px; left: 50%; transform: translateX(-50%); padding: 12px 30px; background: #000; color: #fff; border: 2px solid var(--tag-gold); cursor: pointer; font-weight: bold; }
+    </style>
+</head>
+<body>
+
+<div id="immersive-space" onclick="nextWalkthroughStep()"></div>
+
+<div id="decor-closet-overlay">
+    <div id="closet-door-layer" style="background-image: url('Assets/closetdoor.jpg');" onclick="openDoubleDoors()"></div>
+    
+    <div id="closet-shelf-layer" style="background-image: url('Assets/decorshelves.jpg'); display: none;">
+        <div class="grab-anchor" style="top: 22%; left: 18%;" draggable="true" ondragstart="pickUpDecor(event, 'orange_plant.png')"></div>
+        <div class="grab-anchor" style="top: 18%; left: 60%; width: 180px; height: 260px;" draggable="true" ondragstart="pickUpDecor(event, 'bird_of_paradise.png')"></div>
+        <div class="grab-anchor" style="top: 52%; left: 15%;" draggable="true" ondragstart="pickUpDecor(event, 'tall_palm.png')"></div>
+        <div class="grab-anchor" style="top: 52%; left: 40%;" draggable="true" ondragstart="pickUpDecor(event, 'monstera.png')"></div>
+        <div class="grab-anchor" style="top: 52%; left: 65%;" draggable="true" ondragstart="pickUpDecor(event, 'peace_lily.png')"></div>
+        <button class="exit-btn" onclick="exitCloset()">Close Closet</button>
+    </div>
+</div>
+
+<div id="site-wrapper">
+    <header>
+        <h1>Room Glow Up</h1>
+        <h2>Where Your Dream Space Comes To Life</h2>
+    </header>
+
+    <nav class="nav-container">
+        <div class="label-holder" onclick="toggleSideAsset('rooms')"><div class="white-card"><span class="label-text">Rooms</span></div></div>
+        <div class="label-holder" onclick="toggleSideAsset('furniture')"><div class="white-card"><span class="label-text">Furniture</span></div></div>
+        <div class="label-holder" onclick="triggerCloset()"><div class="white-card"><span class="label-text">Decor Closet</span></div></div>
+        <div class="label-holder" onclick="launchWalkthrough()"><div class="white-card"><span class="label-text">Walkthrough</span></div></div>
+    </nav>
+
+    <div id="theater-container" ondragover="event.preventDefault()" ondrop="finishDrop(event)">
+        <div id="room-display" style="background-image: url('Assets/livingroom1.jpg');"></div>
+    </div>
+
+    <div id="rooms-cabinet" class="asset-side-container"><img src="Assets/cabinet.png" style="width:100%;"></div>
+    <div id="furniture-cases" class="asset-side-container"><img src="Assets/furniturecases.png" style="width:100%;"></div>
 </div>
 
 <script>
-    // 1. Tell the browser it's okay to drop things here
-    function allowDrop(ev) {
-        ev.preventDefault();
+    // --- SIDE CABINETS ---
+    function toggleSideAsset(type) {
+        document.getElementById('rooms-cabinet').classList.toggle('glided-in', type === 'rooms');
+        document.getElementById('furniture-cases').classList.toggle('glided-in', type === 'furniture');
     }
 
-    // 2. The Logic for when you let go of the mouse
-    function dropDecor(ev) {
+    // --- DECOR CLOSET DOUBLE DOOR ENGINE ---
+    function triggerCloset() {
+        document.getElementById('decor-closet-overlay').style.display = 'block';
+        document.getElementById('decor-closet-overlay').style.opacity = '1';
+    }
+
+    function openDoubleDoors() {
+        document.getElementById('closet-door-layer').style.display = 'none';
+        document.getElementById('closet-shelf-layer').style.display = 'block';
+    }
+
+    function exitCloset() {
+        document.getElementById('decor-closet-overlay').style.display = 'none';
+        document.getElementById('closet-door-layer').style.display = 'block';
+        document.getElementById('closet-shelf-layer').style.display = 'none';
+    }
+
+    // --- DRAG AND DROP ---
+    function pickUpDecor(ev, file) {
+        ev.dataTransfer.setData("text", `Assets/${file}`);
+        document.getElementById('decor-closet-overlay').style.opacity = "0.25";
+        document.getElementById('decor-closet-overlay').style.pointerEvents = "none";
+    }
+
+    document.addEventListener("dragend", () => {
+        const cl = document.getElementById('decor-closet-overlay');
+        cl.style.opacity = "1"; cl.style.pointerEvents = "auto";
+    });
+
+    function finishDrop(ev) {
         ev.preventDefault();
-        
-        // Get the image path we stored during 'pickUp'
-        const imagePath = ev.dataTransfer.getData("text");
-        
-        // Create a new image element for the room
-        const newDecor = document.createElement("img");
-        newDecor.src = imagePath;
-        newDecor.className = "placed-decor";
-        
-        // Position it exactly where you dropped it
-        const rect = ev.target.getBoundingClientRect();
-        const x = ev.clientX - rect.left;
-        const y = ev.clientY - rect.top;
-        
-        newDecor.style.left = (x - 50) + "px"; // Offset by half width to center it
-        newDecor.style.top = (y - 100) + "px"; // Offset to make it sit on the 'floor'
-        
-        document.getElementById('room-display').appendChild(newDecor);
-        
-        // Close the closet automatically after a drop
+        const path = ev.dataTransfer.getData("text");
+        const img = document.createElement("img");
+        img.src = path; img.className = "placed-decor";
+        const b = document.getElementById('room-display').getBoundingClientRect();
+        img.style.left = (ev.clientX - b.left - 60) + "px";
+        img.style.top = (ev.clientY - b.top - 100) + "px";
+        document.getElementById('room-display').appendChild(img);
         exitCloset();
+    }
+
+    // --- WALKTHROUGH ---
+    let s = 0;
+    const imgs = ['rain1.jpg', 'rain2.jpg', 'goldhands.jpg', 'galleryframes1.jpg', 'gallerywalkthrough5.jpg', 'gallerywalkthrough.jpg'];
+    function launchWalkthrough() { s = 0; document.getElementById('immersive-space').style.display = 'block'; showScene(); }
+    function showScene() { document.getElementById('immersive-space').style.backgroundImage = `url('Assets/${imgs[s]}')`; }
+    function nextWalkthroughStep() {
+        s++;
+        if(s < imgs.length) showScene();
+        else document.getElementById('immersive-space').style.display = 'none';
     }
 </script>
 
-<style>
-    /* Ensure the room display can hold absolute-positioned items */
-    #room-display {
-        position: relative;
-        overflow: hidden;
-    }
-
-    /* Style for the plants once they are inside the room */
-    .placed-decor {
-        position: absolute;
-        width: 150px; /* Adjust size as needed */
-        height: auto;
-        pointer-events: auto; /* Let you move them again later if you want */
-        cursor: move;
-        filter: drop-shadow(5px 10px 15px rgba(0,0,0,0.5)); /* Adds a 'baked-in' shadow to the floor */
-    }
-</style>
+</body>
+</html>
