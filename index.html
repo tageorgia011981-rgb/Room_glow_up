@@ -3,310 +3,163 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Room Glow Up - Your Dream Space Come To Life</title>
+    <title>Room Glow Up - Studio Dashboard</title>
     <link href="https://fonts.googleapis.com/css2?family=Limelight&display=swap" rel="stylesheet">
     <style>
         :root {
-            --gunmetal-bg: linear-gradient(145deg, #162127, #0C1519);
+            --metal-shine: linear-gradient(145deg, #bdc3c7, #2c3e50, #95a5a6, #000);
             --brushed-bronze: #CF9D7B;
             --silver-header: linear-gradient(to bottom, #ffffff 0%, #a6a6a6 45%, #4d4d4d 50%, #ffffff 55%, #808080 100%);
             --glow-teal: #00f2ff;
         }
 
-        /* MASTER RULE: STRICT CONTAINED PHYSICS */
+        /* MASTER PHYSICS: NO STRETCHING */
         body, html {
-            margin: 0;
-            padding: 0;
-            min-height: 100vh;
-            background-color: #000; 
-            background-image: url('Assets/mainbackground.jpg');
-            background-repeat: no-repeat;
-            background-position: center center;
-            background-attachment: fixed;
-            background-size: contain; 
-            overflow: hidden;
-            color: #fff;
+            margin: 0; padding: 0; min-height: 100vh;
+            background: #000 url('Assets/mainbackground.jpg') no-repeat center fixed;
+            background-size: contain; overflow-x: hidden; color: #fff;
         }
 
-        #site-wrapper {
-            width: 100%;
-            height: 100vh;
-            position: relative;
-            z-index: 10;
-        }
-
-        #main-site-container {
-            width: 100%;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-
-        header {
-            text-align: center;
-            padding: 60px 0 30px 0;
-        }
-
-        h1 {
-            font-family: 'Limelight', cursive;
-            font-size: 100px;
-            margin: 0;
-            background: var(--silver-header);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            filter: drop-shadow(5px 5px 8px rgba(0,0,0,0.8));
-            text-transform: uppercase;
-            letter-spacing: 4px;
-        }
-
-        h2 {
-            font-family: 'Limelight', cursive;
-            font-size: 36px;
-            margin: -5px 0 0 0;
-            color: #e0e0e0;
-            letter-spacing: 3px;
-            text-shadow: 3px 3px 6px #000;
-        }
-
-        .nav-container {
-            display: flex;
-            gap: 25px;
-            margin-top: 40px;
-        }
-
-        .label-holder {
-            width: 210px;
-            height: 105px;
-            background: var(--gunmetal-bg);
-            border: 2px solid #000;
-            position: relative;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            box-shadow: inset 0 0 15px #000, 8px 8px 20px rgba(0,0,0,0.9);
-            cursor: pointer;
-        }
-
-        .screw {
-            position: absolute;
-            width: 8px;
-            height: 8px;
-            background: var(--brushed-bronze);
-            border-radius: 50%;
-            box-shadow: inset 1px 1px 2px #000;
-        }
-
-        .s-tl { top: 8px; left: 8px; }
-        .s-tr { top: 8px; right: 8px; }
-        .s-bl { bottom: 25px; left: 8px; }
-        .s-br { bottom: 25px; right: 8px; }
-
-        .white-card {
-            width: 85%;
-            height: 60%;
-            background: #fff;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            transition: 0.4s;
-        }
-
-        .label-holder:hover .white-card {
-            background: var(--glow-teal);
-            box-shadow: 0 0 30px var(--glow-teal);
-        }
-
-        .label-text {
-            font-family: 'Courier New', Courier, monospace;
-            font-weight: 900;
-            font-size: 16px;
-            color: #000;
-            text-transform: uppercase;
-            text-align: center;
-        }
-
-        /* IMMERSIVE SPACE */
-        #immersive-space {
+        /* 3D CATALOG BOOK SYSTEM */
+        #catalog-book-container {
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
-            background-color: #000; 
-            background-repeat: no-repeat;
-            background-size: contain; 
-            background-position: center;
-            z-index: 9999;
-            display: none;
-            cursor: pointer;
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%) scale(0);
+            width: 900px; height: 550px;
+            perspective: 2000px; z-index: 20000;
+            transition: transform 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
 
-        #hands-overlay {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: url('Assets/goldhands.jpg') no-repeat center center;
-            background-size: contain;
-            pointer-events: none;
-            opacity: 0;
-            transition: opacity 0.8s ease;
+        #catalog-book-container.open { transform: translate(-50%, -50%) scale(1); }
+
+        #catalog-book {
+            width: 100%; height: 100%;
+            position: relative; transform-style: preserve-3d;
+            transition: transform 1s ease-in-out;
         }
 
-        /* SIGNATURE GALLERY */
-        #gallery-frames {
-            position: absolute;
-            top: 42.5%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 62%; 
-            height: 42%;
-            display: none;
-            justify-content: space-between;
-            align-items: center;
-            z-index: 10000;
+        .book-page {
+            position: absolute; width: 50%; height: 100%;
+            top: 0; left: 50%; border: 2px solid #000;
+            backface-visibility: hidden; transform-origin: left;
         }
 
-        .frame-slot {
-            height: 100%;
-            background-position: center;
-            background-repeat: no-repeat;
+        .front-cover {
+            /* YOUR ASSET GOES HERE */
+            background: url('Assets/book.png') no-repeat center;
+            background-size: cover; z-index: 2;
+            transform: rotateY(0deg);
         }
 
-        #g-slot-1, #g-slot-3 { width: 28%; background-size: 78%; }
-        #g-slot-2 { width: 32%; background-size: 85%; }
-
-        /* LOOKBOOK PRECISION MAPPING */
-        #lookbook-container {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 100%; 
-            max-width: 1920px;
-            height: 100%;
-            display: none;
-            z-index: 10001;
+        .inside-page {
+            background: #fdfdfd; transform: rotateY(0deg);
+            padding: 30px; color: #333;
         }
 
-        .museum-piece {
-            position: absolute;
-            background-size: cover;
-            background-position: center;
-            background-repeat: no-repeat;
-            box-shadow: inset 0 0 10px rgba(0,0,0,0.5);
+        #catalog-book-container.flipped #catalog-book .front-cover {
+            transform: rotateY(-150deg);
         }
 
-        #l-slot-1 { top: 12%; left: 14%; width: 24%; height: 26%; }
-        #l-slot-2 { top: 11%; left: 62%; width: 23%; height: 23%; }
-        #l-slot-3 { top: 38%; left: 62%; width: 25%; height: 19%; }
-        #l-slot-4 { top: 52%; left: 14%; width: 24%; height: 35%; }
-        #l-slot-5 { top: 62%; left: 62%; width: 23%; height: 26%; }
+        /* IMMERSIVE WALKTHROUGH SPACE */
+        #immersive-space {
+            position: fixed; top: 0; left: 0;
+            width: 100vw; height: 100vh;
+            background: #000 no-repeat center;
+            background-size: contain; z-index: 99999;
+            display: none; cursor: pointer;
+        }
+
+        /* EXISTING NAV & UI STYLES */
+        #site-wrapper { width: 100%; text-align: center; }
+        .nav-container { display: flex; gap: 20px; justify-content: center; margin-top: 30px; }
+        .label-holder {
+            width: 200px; height: 100px; background: var(--metal-shine);
+            position: relative; cursor: pointer; display: flex; align-items: center; justify-content: center;
+        }
+        .white-card { width: 85%; height: 60%; background: #fff; display: flex; align-items: center; justify-content: center; }
+        .label-text { font-family: 'Courier New', monospace; color: #000; font-weight: 900; }
+        
+        /* CABINET SLIDE */
+        .asset-side-container {
+            position: fixed; top: 20%; left: -600px; 
+            width: 550px; transition: left 1s ease-in-out;
+        }
+        .glided-in { left: 50px; }
     </style>
 </head>
 <body>
 
-<div id="immersive-space" onclick="nextWalkthroughStep()">
-    <div id="gallery-frames">
-        <div id="g-slot-1" class="frame-slot"></div>
-        <div id="g-slot-2" class="frame-slot"></div>
-        <div id="g-slot-3" class="frame-slot"></div>
-    </div>
-    
-    <div id="lookbook-container">
-        <div id="l-slot-1" class="museum-piece"></div>
-        <div id="l-slot-2" class="museum-piece"></div>
-        <div id="l-slot-3" class="museum-piece"></div>
-        <div id="l-slot-4" class="museum-piece"></div>
-        <div id="l-slot-5" class="museum-piece"></div>
-    </div>
+<div id="immersive-space" onclick="nextWalkthroughStep()"></div>
 
-    <div id="hands-overlay"></div>
+<div id="catalog-book-container">
+    <div id="catalog-book">
+        <div class="book-page front-cover"></div>
+        <div class="book-page inside-page">
+            <h2 id="catalog-category-title" style="color:#111; font-family:'Limelight';">Category</h2>
+            <div id="product-grid" style="display:grid; grid-template-columns: 1fr 1fr; gap:10px;">
+                </div>
+            <button onclick="closeBook()" style="margin-top:20px; cursor:pointer;">Close Catalog</button>
+        </div>
+    </div>
 </div>
 
 <div id="site-wrapper">
-    <div id="main-site-container">
-        <header>
-            <h1>Room Glow Up</h1>
-            <h2>Where Your Dream Space Comes To Life</h2>
-        </header>
-        <nav class="nav-container">
-            <div class="label-holder"><div class="screw s-tl"></div><div class="screw s-tr"></div><div class="white-card"><span class="label-text">Rooms</span></div><div class="screw s-bl"></div><div class="screw s-br"></div></div>
-            <div class="label-holder"><div class="screw s-tl"></div><div class="screw s-tr"></div><div class="white-card"><span class="label-text">Furniture Catalog</span></div><div class="screw s-bl"></div><div class="screw s-br"></div></div>
-            <div class="label-holder" onclick="startWalkthrough(event)"><div class="screw s-tl"></div><div class="screw s-tr"></div><div class="white-card"><span class="label-text">Inspirational Walkthrough</span></div><div class="screw s-bl"></div><div class="screw s-br"></div></div>
-            <div class="label-holder"><div class="screw s-tl"></div><div class="screw s-tr"></div><div class="white-card"><span class="label-text">Decor Closet</span></div><div class="screw s-bl"></div><div class="screw s-br"></div></div>
-            <div class="label-holder"><div class="screw s-tl"></div><div class="screw s-tr"></div><div class="white-card"><span class="label-text">Save / Checkout</span></div><div class="screw s-bl"></div><div class="screw s-br"></div></div>
-        </nav>
+    <header>
+        <h1 style="font-family:'Limelight'; font-size:80px;">Room Glow Up</h1>
+    </header>
+
+    <nav class="nav-container">
+        <div class="label-holder" onclick="toggleCabinet()"><div class="white-card"><span class="label-text">Rooms</span></div></div>
+        <div class="label-holder" onclick="openBook('Seating')"><div class="white-card"><span class="label-text">Furniture</span></div></div>
+        <div class="label-holder" onclick="startWalkthrough()"><div class="white-card"><span class="label-text">Walkthrough</span></div></div>
+    </nav>
+
+    <div id="rooms-cabinet" class="asset-side-container">
+        <img src="Assets/cabinet.png" style="width:100%;">
     </div>
 </div>
 
 <script>
-    let currentWalkStep = 0;
-    
-    // THE MASTER SEQUENCE (6 ROOMS)
-    const walkScenes = [
-        { bg: 'rain1.jpg', mode: 'empty', images: [], showHands: false },
-        { bg: 'rain2.jpg', mode: 'empty', images: [], showHands: false },
-        { bg: 'goldhands.jpg', mode: 'gallery', images: ['colorvibes.jpg', 'colorvibes1.jpg', 'colorvibes2.jpg'], showHands: true },
-        { bg: 'galleryframes1.jpg', mode: 'empty', images: [], showHands: false },
-        { bg: 'gallerywalkthrough5.jpg', mode: 'empty', images: [], showHands: false },
-        { bg: 'gallerywalkthrough.jpg', mode: 'empty', images: [], showHands: false }
-    ]; 
+    // --- WALKTHROUGH LOGIC ---
+    let currentStep = 0;
+    const scenes = [
+        'rain1.jpg', 'rain2.jpg', 'goldhands.jpg', 
+        'galleryframes1.jpg', 'gallerywalkthrough5.jpg', 'gallerywalkthrough.jpg'
+    ];
 
-    function startWalkthrough(e) {
-        if(e) e.stopPropagation();
-        const space = document.getElementById('immersive-space');
-        const wrapper = document.getElementById('site-wrapper');
-        currentWalkStep = 0;
-        wrapper.style.display = 'none';
-        space.style.display = 'block';
+    function startWalkthrough() {
+        currentStep = 0;
+        document.getElementById('immersive-space').style.display = 'block';
         renderScene();
     }
 
     function renderScene() {
-        const space = document.getElementById('immersive-space');
-        const hands = document.getElementById('hands-overlay');
-        const gallery = document.getElementById('gallery-frames');
-        const lookbook = document.getElementById('lookbook-container');
-        const scene = walkScenes[currentWalkStep];
-
-        // Apply background and strictly maintain contain
-        space.style.backgroundImage = `url('Assets/${scene.bg}')`;
-        space.style.backgroundSize = 'contain';
-        
-        // Hands logic
-        hands.style.opacity = scene.showHands ? '1' : '0';
-        
-        // Mode switching for overlays
-        gallery.style.display = (scene.mode === 'gallery') ? 'flex' : 'none';
-        lookbook.style.display = (scene.mode === 'lookbook') ? 'block' : 'none';
-
-        if (scene.mode === 'gallery') {
-            scene.images.forEach((img, i) => {
-                const slot = document.getElementById(`g-slot-${i+1}`);
-                if(slot) slot.style.backgroundImage = `url('Assets/${img}')`;
-            });
-        }
-
-        if (scene.mode === 'lookbook') {
-            scene.images.forEach((img, i) => {
-                const slot = document.getElementById(`l-slot-${i+1}`);
-                if (slot) slot.style.backgroundImage = `url('Assets/${img}')`;
-            });
-        }
+        document.getElementById('immersive-space').style.backgroundImage = `url('Assets/${scenes[currentStep]}')`;
     }
 
     function nextWalkthroughStep() {
-        currentWalkStep++;
-        if (currentWalkStep < walkScenes.length) {
-            renderScene();
-        } else {
-            // End of tour - return home
-            document.getElementById('immersive-space').style.display = 'none';
-            document.getElementById('site-wrapper').style.display = 'block';
-            currentWalkStep = 0;
-        }
+        currentStep++;
+        if(currentStep < scenes.length) renderScene();
+        else document.getElementById('immersive-space').style.display = 'none';
+    }
+
+    // --- CABINET LOGIC ---
+    function toggleCabinet() {
+        document.getElementById('rooms-cabinet').classList.toggle('glided-in');
+    }
+
+    // --- BOOK LOGIC ---
+    function openBook(category) {
+        document.getElementById('catalog-category-title').innerText = category;
+        const container = document.getElementById('catalog-book-container');
+        container.classList.add('open');
+        setTimeout(() => container.classList.add('flipped'), 100);
+    }
+
+    function closeBook() {
+        const container = document.getElementById('catalog-book-container');
+        container.classList.remove('flipped');
+        setTimeout(() => container.classList.remove('open'), 600);
     }
 </script>
 
