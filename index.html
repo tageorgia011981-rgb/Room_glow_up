@@ -10,150 +10,125 @@
             --metal-shine: linear-gradient(145deg, #bdc3c7, #2c3e50, #95a5a6, #000);
             --silver-header: linear-gradient(to bottom, #ffffff 0%, #a6a6a6 45%, #4d4d4d 50%, #ffffff 55%, #808080 100%);
         }
+
         body, html {
-            margin: 0; padding: 0; min-height: 100vh;
-            background: #000; overflow-x: hidden;
+            margin: 0; padding: 0; height: 100%; width: 100%;
+            background: #000; overflow: hidden;
+            font-family: 'Limelight', cursive;
         }
-        #mood-background {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: url('Assets/mainbackground.jpg') no-repeat center center fixed;
-            background-size: cover; z-index: -1; filter: brightness(0.4);
-            transition: background-image 2.5s ease-in-out;
-        }
-        #main-site-container {
-            width: 100%; display: flex; flex-direction: column; align-items: center; padding-bottom: 200px;
-        }
-        header { text-align: center; padding: 60px 0 20px 0; }
-        h1 {
-            font-family: 'Limelight', cursive; font-size: 100px; margin: 0;
-            background: var(--silver-header); -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-            filter: drop-shadow(5px 5px 8px rgba(0,0,0,0.8)); text-transform: uppercase;
-        }
-        .nav-container { display: flex; gap: 20px; margin: 40px 0; z-index: 100; }
-        .label-holder {
-            width: 220px; height: 110px; background: var(--metal-shine); border: 2px solid #000;
-            display: flex; justify-content: center; align-items: center;
-            box-shadow: 8px 8px 20px rgba(0,0,0,0.8); cursor: pointer;
-        }
-        .white-card {
-            width: 85%; height: 60%; background: #fff; display: flex; justify-content: center; align-items: center;
-        }
-        .label-text { font-family: 'Courier New', monospace; font-weight: 900; font-size: 14px; color: #000; text-transform: uppercase; text-align: center; }
 
-        #interaction-zone { display: flex; justify-content: center; align-items: flex-start; gap: 40px; width: 100%; max-width: 1600px; height: 750px; position: relative; }
-        .cabinet-space { position: relative; width: 550px; height: 650px; overflow: hidden; }
-        .asset-side-container {
-            position: absolute; top: 0; left: 0; width: 100%; transform: translateX(-110%);
-            transition: transform 2.5s cubic-bezier(0.23, 1, 0.32, 1); z-index: 30;
-        }
-        .glided-in { transform: translateX(0) !important; }
-
-        #theater-container {
-            width: 1000px; height: 700px; position: relative;
-            background: transparent; overflow: hidden;
-            display: flex; justify-content: center; align-items: center;
-        }
-        #gold-hands-overlay {
+        /* The Main Site UI */
+        #site-ui {
             position: absolute; width: 100%; height: 100%;
+            background: url('Assets/mainbackground.jpg') no-repeat center center fixed;
+            background-size: cover;
+            display: flex; flex-direction: column; align-items: center;
+            transition: opacity 1.5s ease-in-out;
+            z-index: 10;
+        }
+
+        header { text-align: center; padding: 60px 0; }
+        h1 { font-size: 90px; background: var(--silver-header); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin: 0; text-transform: uppercase; }
+
+        .nav-container { display: flex; gap: 20px; }
+        .label-holder {
+            width: 210px; height: 105px; background: var(--metal-shine);
+            display: flex; justify-content: center; align-items: center;
+            border: 2px solid #000; cursor: pointer; box-shadow: 8px 8px 20px #000;
+        }
+        .white-card { width: 85%; height: 60%; background: #fff; display: flex; justify-content: center; align-items: center; }
+        .label-text { font-family: 'Courier New', monospace; font-weight: bold; color: #000; text-transform: uppercase; font-size: 14px; }
+
+        /* The Immersive Space */
+        #immersive-space {
+            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+            background-size: cover; background-position: center;
+            display: none; opacity: 0; z-index: 100;
+            transition: opacity 2s ease-in-out;
+            cursor: pointer;
+        }
+
+        /* Gold Hands as a fixed overlay on the lens */
+        #hands-overlay {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
             background: url('Assets/goldhands.png') no-repeat center center;
-            background-size: contain; z-index: 50; pointer-events: none;
-            display: none;
-        }
-        #room-display { 
-            width: 100%; height: 100%; 
-            background-size: contain; background-repeat: no-repeat; background-position: center; 
-            transition: 2.5s ease-in-out; 
+            background-size: contain;
+            pointer-events: none;
         }
 
-        /* Specific alignment for images when hands are present */
-        .framed-fit {
-            width: 82% !important; height: 82% !important;
-            margin: auto;
+        /* Logic for fitting the art perfectly in the frames */
+        #frame-content {
+            position: absolute; top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            width: 78%; height: 78%; /* Aligns with the hand frames */
+            background-size: contain; background-repeat: no-repeat; background-position: center;
         }
 
-        #closet-popup {
-            position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%);
-            width: 350px; height: 500px; z-index: 2000; display: none; perspective: 1500px;
-        }
-        .door {
-            position: absolute; width: 50%; height: 100%; z-index: 1000;
-            background: url('Assets/closetdoors.jpg') no-repeat; background-size: 350px 500px;
-            border: 2px solid #222; transition: transform 1.2s ease; cursor: pointer;
-        }
-        #door-left { left: 0; background-position: left; transform-origin: left; }
-        #door-right { right: 0; background-position: right; transform-origin: right; }
-        .closet-open #door-left { transform: rotateY(-145deg); }
-        .closet-open #door-right { transform: rotateY(145deg); }
-        #closet-interior { width: 100%; height: 100%; background: #050505; border: 5px solid #222; position: relative; }
+        /* Utility Classes */
+        .hidden { opacity: 0 !important; pointer-events: none !important; }
+        .visible { display: block !important; opacity: 1 !important; }
     </style>
 </head>
 <body>
 
-<div id="mood-background"></div>
-
-<div id="main-site-container">
-    <header>
-        <h1>Room Glow Up</h1>
-    </header>
-
-    <nav class="nav-container">
-        <div class="label-holder" onclick="runWalkthrough()"><div class="white-card"><span class="label-text">Inspirational Walkthrough</span></div></div>
-        <div class="label-holder" onclick="triggerGlide('rooms-panel')"><div class="white-card"><span class="label-text">Rooms</span></div></div>
-        <div class="label-holder" onclick="triggerGlide('furniture-panel')"><div class="white-card"><span class="label-text">Furniture</span></div></div>
-        <div class="label-holder" onclick="openCloset()"><div class="white-card"><span class="label-text">Decor Closet</span></div></div>
-    </nav>
-
-    <div id="interaction-zone">
-        <div class="cabinet-space">
-            <div id="rooms-panel" class="asset-side-container"><img src="Assets/cabinet.png" style="width:100%"></div>
-            <div id="furniture-panel" class="asset-side-container"><img src="Assets/furniturecases.png" style="width:100%"></div>
-        </div>
-        <div id="theater-container">
-            <div id="gold-hands-overlay"></div>
-            <div id="room-display"></div>
-        </div>
+    <div id="site-ui">
+        <header><h1>Room Glow Up</h1></header>
+        <nav class="nav-container">
+            <div class="label-holder" onclick="launchImmersion()">
+                <div class="white-card"><span class="label-text">Inspirational Walkthrough</span></div>
+            </div>
+            <div class="label-holder"><div class="white-card"><span class="label-text">Rooms</span></div></div>
+            <div class="label-holder"><div class="white-card"><span class="label-text">Furniture</span></div></div>
+        </nav>
     </div>
-</div>
 
-<div id="closet-popup">
-    <div id="door-left" onclick="toggleDoors()"></div>
-    <div id="door-right" onclick="toggleDoors()"></div>
-    <div id="closet-interior"></div>
-</div>
+    <div id="immersive-space" onclick="nextScene()">
+        <div id="frame-content"></div>
+        <div id="hands-overlay"></div>
+    </div>
 
 <script>
-    let walkthroughIndex = 0;
-    const walkthroughArt = ['rain_bg1.jpg', 'rain_bg2.jpg', 'room_art1.jpg', 'room_art2.jpg'];
+    let currentStep = 0;
+    // Map your two uploaded images as the rain backgrounds
+    const rainScenes = ['image_f1ccfe.png', 'image_f1cd3a.jpg']; 
 
-    function runWalkthrough() {
-        const display = document.getElementById('room-display');
-        const hands = document.getElementById('gold-hands-overlay');
-        const mood = document.getElementById('mood-background');
-        
-        // Handle Hands and Background Alignment for first two steps
-        if (walkthroughIndex === 0 || walkthroughIndex === 1) {
-            hands.style.display = 'block';
-            display.classList.add('framed-fit');
-            mood.style.backgroundImage = `url('Assets/${walkthroughArt[walkthroughIndex]}')`;
+    function launchImmersion() {
+        const ui = document.getElementById('site-ui');
+        const space = document.getElementById('immersive-space');
+        const content = document.getElementById('frame-content');
+
+        // Step out of the website
+        ui.classList.add('hidden');
+
+        // Set the scene
+        space.style.backgroundImage = `url('Assets/${rainScenes[0]}')`;
+        content.style.backgroundImage = `url('Assets/${rainScenes[0]}')`;
+
+        // Step into the rain
+        setTimeout(() => {
+            space.classList.add('visible');
+        }, 1000);
+    }
+
+    function nextScene() {
+        currentStep++;
+        const space = document.getElementById('immersive-space');
+        const content = document.getElementById('frame-content');
+        const ui = document.getElementById('site-ui');
+
+        if (currentStep < rainScenes.length) {
+            // Move to the next "standing in the rain" shot
+            space.style.backgroundImage = `url('Assets/${rainScenes[currentStep]}')`;
+            content.style.backgroundImage = `url('Assets/${rainScenes[currentStep]}')`;
         } else {
-            hands.style.display = 'none';
-            display.classList.remove('framed-fit');
+            // Exit the experience and return to the UI
+            space.classList.remove('visible');
+            setTimeout(() => {
+                ui.classList.remove('hidden');
+                currentStep = 0;
+            }, 1500);
         }
-
-        display.style.backgroundImage = `url('Assets/${walkthroughArt[walkthroughIndex]}')`;
-        document.getElementById('rooms-panel').classList.add('glided-in');
-        
-        walkthroughIndex = (walkthroughIndex + 1) % walkthroughArt.length;
     }
-
-    function triggerGlide(panelId) {
-        document.getElementById('rooms-panel').classList.remove('glided-in');
-        document.getElementById('furniture-panel').classList.remove('glided-in');
-        setTimeout(() => { document.getElementById(panelId).classList.add('glided-in'); }, 50);
-    }
-
-    function openCloset() { document.getElementById('closet-popup').style.display = 'block'; }
-    function toggleDoors() { document.getElementById('closet-popup').classList.toggle('closet-open'); }
 </script>
 
 </body>
