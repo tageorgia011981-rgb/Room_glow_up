@@ -25,6 +25,7 @@
             background-attachment: fixed;
             background-size: contain; 
             overflow: hidden;
+            color: #fff;
         }
 
         #site-wrapper {
@@ -197,7 +198,6 @@
             box-shadow: inset 0 0 10px rgba(0,0,0,0.5);
         }
 
-        /* Coordinates for ornate frame alignment */
         #l-slot-1 { top: 12%; left: 14%; width: 24%; height: 26%; }
         #l-slot-2 { top: 11%; left: 62%; width: 23%; height: 23%; }
         #l-slot-3 { top: 38%; left: 62%; width: 25%; height: 19%; }
@@ -244,12 +244,14 @@
 <script>
     let currentWalkStep = 0;
     
+    // THE MASTER SEQUENCE (6 ROOMS)
     const walkScenes = [
         { bg: 'rain1.jpg', mode: 'empty', images: [], showHands: false },
         { bg: 'rain2.jpg', mode: 'empty', images: [], showHands: false },
         { bg: 'goldhands.jpg', mode: 'gallery', images: ['colorvibes.jpg', 'colorvibes1.jpg', 'colorvibes2.jpg'], showHands: true },
-        /* Swapped top-right (insp16) with bottom-left (insp20) */
-        { bg: 'lookbook.jpg', mode: 'lookbook', images: ['insp17.jpg', 'insp20.jpg', 'insp18.jpg', 'insp16.jpg', 'insp21.jpg'], showHands: false }
+        { bg: 'galleryframes1.jpg', mode: 'empty', images: [], showHands: false },
+        { bg: 'gallerywalkthrough5.jpg', mode: 'empty', images: [], showHands: false },
+        { bg: 'gallerywalkthrough.jpg', mode: 'empty', images: [], showHands: false }
     ]; 
 
     function startWalkthrough(e) {
@@ -269,9 +271,14 @@
         const lookbook = document.getElementById('lookbook-container');
         const scene = walkScenes[currentWalkStep];
 
+        // Apply background and strictly maintain contain
         space.style.backgroundImage = `url('Assets/${scene.bg}')`;
+        space.style.backgroundSize = 'contain';
+        
+        // Hands logic
         hands.style.opacity = scene.showHands ? '1' : '0';
         
+        // Mode switching for overlays
         gallery.style.display = (scene.mode === 'gallery') ? 'flex' : 'none';
         lookbook.style.display = (scene.mode === 'lookbook') ? 'block' : 'none';
 
@@ -295,11 +302,13 @@
         if (currentWalkStep < walkScenes.length) {
             renderScene();
         } else {
+            // End of tour - return home
             document.getElementById('immersive-space').style.display = 'none';
             document.getElementById('site-wrapper').style.display = 'block';
             currentWalkStep = 0;
         }
     }
 </script>
+
 </body>
 </html>
