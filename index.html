@@ -1,156 +1,55 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Room Glow Up - Studio Dashboard</title>
-    <link href="https://fonts.googleapis.com/css2?family=Limelight&display=swap" rel="stylesheet">
-    <style>
-        :root {
-            --metal-shine: linear-gradient(145deg, #bdc3c7, #2c3e50, #95a5a6, #000);
-            --brushed-bronze: #CF9D7B;
-            --silver-header: linear-gradient(to bottom, #ffffff 0%, #a6a6a6 45%, #4d4d4d 50%, #ffffff 55%, #808080 100%);
-            --glow-teal: #00f2ff;
-            --tag-gold: #d4af37;
-        }
-
-        /* MASTER PHYSICS: STRICT CONTAINMENT */
-        body, html {
-            margin: 0; padding: 0; min-height: 100vh;
-            background: #000 url('Assets/mainbackground.jpg') no-repeat center fixed;
-            background-size: contain; overflow-x: hidden; color: #fff;
-        }
-
-        /* HEADER STYLES (RESTORED) */
-        header { text-align: center; padding: 60px 0 30px 0; z-index: 50; }
-        h1 {
-            font-family: 'Limelight', cursive; font-size: 100px; margin: 0;
-            background: var(--silver-header); -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent; filter: drop-shadow(5px 5px 8px rgba(0,0,0,0.8));
-            text-transform: uppercase; letter-spacing: 4px;
-        }
-        h2 {
-            font-family: 'Limelight', cursive; font-size: 36px; margin: -5px 0 0 0;
-            color: #e0e0e0; letter-spacing: 3px; text-shadow: 3px 3px 6px #000;
-        }
-
-        /* 3D CATALOG BOOK SYSTEM */
-        #catalog-book-container {
-            position: fixed; top: 50%; left: 50%;
-            transform: translate(-50%, -50%) scale(0);
-            width: 900px; height: 550px; perspective: 2000px; z-index: 20000;
-            transition: transform 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        }
-        #catalog-book-container.open { transform: translate(-50%, -50%) scale(1); }
-        #catalog-book { width: 100%; height: 100%; position: relative; transform-style: preserve-3d; transition: transform 1s ease-in-out; }
-        .book-page { position: absolute; width: 50%; height: 100%; top: 0; left: 50%; border: 2px solid #000; backface-visibility: hidden; transform-origin: left; }
-        .front-cover { background: url('Assets/book.png') no-repeat center; background-size: cover; z-index: 2; transform: rotateY(0deg); }
-        .inside-page { background: #fdfdfd; padding: 30px; color: #333; }
-        #catalog-book-container.flipped #catalog-book .front-cover { transform: rotateY(-150deg); }
-
-        /* NAVIGATION & LABELS */
-        .nav-container { display: flex; gap: 25px; justify-content: center; margin-top: 40px; }
-        .label-holder {
-            width: 210px; height: 105px; background: var(--metal-shine); border: 2px solid #000;
-            position: relative; display: flex; justify-content: center; align-items: center;
-            box-shadow: inset 0 0 15px #000, 8px 8px 20px rgba(0,0,0,0.9); cursor: pointer;
-        }
-        .white-card { width: 85%; height: 60%; background: #fff; display: flex; justify-content: center; align-items: center; transition: 0.4s; }
-        .label-holder:hover .white-card { background: var(--glow-teal); box-shadow: 0 0 30px var(--glow-teal); }
-        .label-text { font-family: 'Courier New', monospace; font-weight: 900; font-size: 16px; color: #000; text-transform: uppercase; }
-
-        /* ASSET CONTAINERS (CABINET & FURNITURE CASES) */
-        .asset-side-container { position: fixed; top: 20%; left: -600px; width: 550px; transition: left 1s ease-in-out; z-index: 100; }
-        .glided-in { left: 50px; }
-
-        /* IMMERSIVE SPACE */
-        #immersive-space { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: #000 no-repeat center; background-size: contain; z-index: 99999; display: none; cursor: pointer; }
-    </style>
-</head>
-<body>
-
-<div id="immersive-space" onclick="nextWalkthroughStep()"></div>
-
-<div id="catalog-book-container">
-    <div id="catalog-book">
-        <div class="book-page front-cover"></div>
-        <div class="book-page inside-page">
-            <h2 id="catalog-category-title" style="color:#111; font-family:'Limelight'; margin-top:0;">Category</h2>
-            <div id="product-grid"></div>
-            <button onclick="closeBook()" style="margin-top:20px; cursor:pointer; background:#000; color:#fff; border:1px solid var(--tag-gold); padding:5px 15px;">Close Catalog</button>
+<div id="theater-container" ondragover="allowDrop(event)" ondrop="dropDecor(event)">
+    <div id="room-display">
         </div>
-    </div>
-</div>
-
-<div id="site-wrapper">
-    <header>
-        <h1>Room Glow Up</h1>
-        <h2>Where Your Dream Space Comes To Life</h2>
-    </header>
-
-    <nav class="nav-container">
-        <div class="label-holder" onclick="toggleCabinet('rooms')"><div class="white-card"><span class="label-text">Rooms</span></div></div>
-        <div class="label-holder" onclick="toggleCabinet('furniture')"><div class="white-card"><span class="label-text">Furniture</span></div></div>
-        <div class="label-holder" onclick="startWalkthrough()"><div class="white-card"><span class="label-text">Walkthrough</span></div></div>
-        <div class="label-holder"><div class="white-card"><span class="label-text">Decor</span></div></div>
-        <div class="label-holder"><div class="white-card"><span class="label-text">Save</span></div></div>
-    </nav>
-
-    <div id="rooms-cabinet" class="asset-side-container">
-        <img src="Assets/cabinet.png" style="width:100%;">
-    </div>
-    
-    <div id="furniture-cases" class="asset-side-container">
-        <img src="Assets/furniturecases.png" style="width:100%;">
-    </div>
 </div>
 
 <script>
-    // --- MECHANICAL TOGGLES ---
-    function toggleCabinet(type) {
-        const rooms = document.getElementById('rooms-cabinet');
-        const furniture = document.getElementById('furniture-cases');
+    // 1. Tell the browser it's okay to drop things here
+    function allowDrop(ev) {
+        ev.preventDefault();
+    }
+
+    // 2. The Logic for when you let go of the mouse
+    function dropDecor(ev) {
+        ev.preventDefault();
         
-        if(type === 'rooms') {
-            rooms.classList.toggle('glided-in');
-            furniture.classList.remove('glided-in');
-        } else {
-            furniture.classList.toggle('glided-in');
-            rooms.classList.remove('glided-in');
-            // This is where you'd trigger the tags to appear
-        }
-    }
-
-    // --- BOOK ANIMATION ---
-    function openBook(cat) {
-        document.getElementById('catalog-category-title').innerText = cat;
-        const book = document.getElementById('catalog-book-container');
-        book.classList.add('open');
-        setTimeout(() => book.classList.add('flipped'), 100);
-    }
-
-    function closeBook() {
-        const book = document.getElementById('catalog-book-container');
-        book.classList.remove('flipped');
-        setTimeout(() => book.classList.remove('open'), 600);
-    }
-
-    // --- WALKTHROUGH ENGINE ---
-    let currentStep = 0;
-    const scenes = ['rain1.jpg', 'rain2.jpg', 'goldhands.jpg', 'galleryframes1.jpg', 'gallerywalkthrough5.jpg', 'gallerywalkthrough.jpg'];
-
-    function startWalkthrough() {
-        currentStep = 0;
-        document.getElementById('immersive-space').style.display = 'block';
-        renderScene();
-    }
-    function renderScene() { document.getElementById('immersive-space').style.backgroundImage = `url('Assets/${scenes[currentStep]}')`; }
-    function nextWalkthroughStep() {
-        currentStep++;
-        if(currentStep < scenes.length) renderScene();
-        else document.getElementById('immersive-space').style.display = 'none';
+        // Get the image path we stored during 'pickUp'
+        const imagePath = ev.dataTransfer.getData("text");
+        
+        // Create a new image element for the room
+        const newDecor = document.createElement("img");
+        newDecor.src = imagePath;
+        newDecor.className = "placed-decor";
+        
+        // Position it exactly where you dropped it
+        const rect = ev.target.getBoundingClientRect();
+        const x = ev.clientX - rect.left;
+        const y = ev.clientY - rect.top;
+        
+        newDecor.style.left = (x - 50) + "px"; // Offset by half width to center it
+        newDecor.style.top = (y - 100) + "px"; // Offset to make it sit on the 'floor'
+        
+        document.getElementById('room-display').appendChild(newDecor);
+        
+        // Close the closet automatically after a drop
+        exitCloset();
     }
 </script>
 
-</body>
-</html>
+<style>
+    /* Ensure the room display can hold absolute-positioned items */
+    #room-display {
+        position: relative;
+        overflow: hidden;
+    }
+
+    /* Style for the plants once they are inside the room */
+    .placed-decor {
+        position: absolute;
+        width: 150px; /* Adjust size as needed */
+        height: auto;
+        pointer-events: auto; /* Let you move them again later if you want */
+        cursor: move;
+        filter: drop-shadow(5px 10px 15px rgba(0,0,0,0.5)); /* Adds a 'baked-in' shadow to the floor */
+    }
+</style>
