@@ -24,8 +24,6 @@
         #site-wrapper {
             width: 100%;
             min-height: 100vh;
-            transition: opacity 1.5s ease-in-out;
-            opacity: 1;
         }
         #main-site-container {
             width: 100%;
@@ -231,14 +229,6 @@
             text-align: center;
             padding: 0 5px;
         }
-        .icon-tag:hover {
-            transform: rotate(0deg) scale(1.1);
-            border-color: var(--glow-teal);
-        }
-        .back-tag {
-            border-color: #ff4444 !important;
-            margin-top: 10px;
-        }
         #theater-container {
             width: 950px;
             height: 600px;
@@ -269,8 +259,6 @@
             background-position: center;
             z-index: 1000;
             display: none;
-            opacity: 0;
-            transition: opacity 1.5s ease-in-out;
             cursor: pointer;
         }
         #hands-overlay {
@@ -282,7 +270,8 @@
             background: url('Assets/goldhands.jpg') no-repeat center center;
             background-size: contain;
             pointer-events: none;
-            transition: opacity 1s ease;
+            opacity: 0;
+            transition: opacity 0.5s ease;
         }
         #frame-content {
             position: absolute;
@@ -294,7 +283,6 @@
             background-size: cover;
             background-repeat: no-repeat;
             background-position: center;
-            transition: background-image 0.8s ease-in-out;
         }
     </style>
 </head>
@@ -348,9 +336,9 @@
     const walkScenes = [
         { bg: 'rain1.jpg', frame: '', showHands: false },
         { bg: 'rain2.jpg', frame: '', showHands: false },
-        { bg: 'rain2.jpg', frame: 'colorvibes.jpg', showHands: true },
-        { bg: 'rain2.jpg', frame: 'colorvibes1.jpg', showHands: true },
-        { bg: 'rain2.jpg', frame: 'colorvibes2.jpg', showHands: true }
+        { bg: 'roomwalkthrough.jpg', frame: 'colorvibes.jpg', showHands: true },
+        { bg: 'roomwalkthrough.jpg', frame: 'colorvibes1.jpg', showHands: true },
+        { bg: 'roomwalkthrough.jpg', frame: 'colorvibes2.jpg', showHands: true }
     ]; 
 
     function startWalkthrough() {
@@ -359,17 +347,12 @@
         const frame = document.getElementById('frame-content');
         const hands = document.getElementById('hands-overlay');
 
-        wrapper.style.opacity = '0';
-        setTimeout(() => {
-            wrapper.style.display = 'none';
-            space.style.display = 'block';
-            
-            space.style.backgroundImage = `url('Assets/${walkScenes[0].bg}')`;
-            frame.style.backgroundImage = 'none';
-            hands.style.opacity = '0';
-
-            setTimeout(() => { space.style.opacity = '1'; }, 50);
-        }, 1500);
+        wrapper.style.display = 'none'; 
+        space.style.display = 'block';
+        
+        space.style.backgroundImage = `url('Assets/${walkScenes[0].bg}')`;
+        frame.style.backgroundImage = 'none';
+        hands.style.opacity = '0';
     }
 
     function nextWalkthroughStep() {
@@ -391,13 +374,9 @@
 
             hands.style.opacity = scene.showHands ? '1' : '0';
         } else {
-            space.style.opacity = '0';
-            setTimeout(() => {
-                space.style.display = 'none';
-                wrapper.style.display = 'block';
-                setTimeout(() => { wrapper.style.opacity = '1'; }, 50);
-                currentWalkStep = 0;
-            }, 1500);
+            space.style.display = 'none';
+            wrapper.style.display = 'block';
+            currentWalkStep = 0;
         }
     }
 
@@ -434,7 +413,7 @@
         `).join('');
         tagsHTML += `
             <div class="tag-hanger">
-                <div class="icon-tag back-tag" onclick="renderMainTags()">
+                <div class="icon-tag" onclick="renderMainTags()" style="border-color:#ff4444">
                     <span class="tag-text">← Back</span>
                 </div>
             </div>
