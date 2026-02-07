@@ -273,24 +273,24 @@
             pointer-events: none;
             opacity: 0;
             transition: opacity 0.5s ease;
-            z-index: 1002;
+            z-index: 1002; /* Sits on top of images */
         }
         #frame-container {
             position: absolute;
-            top: 40%; /* Adjusted to match the visual height of the frame boxes */
+            top: 52%; /* Better alignment for the frames in the hands */
             left: 50%;
             transform: translate(-50%, -50%);
-            width: 82%; /* Match the horizontal span of the 3 frames */
-            height: 40%;
+            width: 75%; 
+            height: 45%;
             display: flex;
             justify-content: space-around;
             align-items: center;
-            z-index: 1001;
+            z-index: 1001; /* Behind the hands */
         }
         .frame-slot {
-            width: 28%;
-            height: 100%;
-            background-size: cover;
+            width: 25%;
+            height: 65%;
+            background-size: contain; /* Keeps colorvibes images from being too big */
             background-position: center;
             background-repeat: no-repeat;
         }
@@ -347,7 +347,6 @@
 <script>
     let currentWalkStep = 0;
     
-    // Logic: Taps through Rain backgrounds, then Gold Hands appear with frame images.
     const walkScenes = [
         { bg: 'rain1.jpg', images: [], showHands: false },
         { bg: 'rain2.jpg', images: [], showHands: false },
@@ -382,7 +381,8 @@
             
             if (scene.images.length > 0) {
                 scene.images.forEach((img, index) => {
-                    document.getElementById(`slot-${index+1}`).style.backgroundImage = `url('Assets/${img}')`;
+                    const slot = document.getElementById(`slot-${index+1}`);
+                    if (slot) slot.style.backgroundImage = `url('Assets/${img}')`;
                 });
             } else {
                 slots.forEach(s => s.style.backgroundImage = 'none');
@@ -410,6 +410,7 @@
     ];
     function renderMainTags() {
         const container = document.getElementById('dynamic-tags-container');
+        if (!container) return;
         container.innerHTML = mainCategories.map(cat => `
             <div class="tag-hanger">
                 <div class="icon-tag" onclick="showSubTags('${cat.id}')">
