@@ -255,6 +255,7 @@
             left: 0;
             width: 100vw;
             height: 100vh;
+            background-repeat: no-repeat;
             background-size: cover;
             background-position: center;
             z-index: 1000;
@@ -272,24 +273,37 @@
             pointer-events: none;
             opacity: 0;
             transition: opacity 0.5s ease;
+            z-index: 1002;
         }
-        #frame-content {
+        #frame-container {
             position: absolute;
-            top: 50.5%;
+            top: 40%; /* Adjusted to match the visual height of the frame boxes */
             left: 50%;
             transform: translate(-50%, -50%);
-            width: 68%;
-            height: 68%;
+            width: 82%; /* Match the horizontal span of the 3 frames */
+            height: 40%;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            z-index: 1001;
+        }
+        .frame-slot {
+            width: 28%;
+            height: 100%;
             background-size: cover;
-            background-repeat: no-repeat;
             background-position: center;
+            background-repeat: no-repeat;
         }
     </style>
 </head>
 <body>
 
 <div id="immersive-space" onclick="nextWalkthroughStep()">
-    <div id="frame-content"></div>
+    <div id="frame-container">
+        <div id="slot-1" class="frame-slot"></div>
+        <div id="slot-2" class="frame-slot"></div>
+        <div id="slot-3" class="frame-slot"></div>
+    </div>
     <div id="hands-overlay"></div>
 </div>
 
@@ -333,43 +347,45 @@
 <script>
     let currentWalkStep = 0;
     
+    // Logic: Taps through Rain backgrounds, then Gold Hands appear with frame images.
     const walkScenes = [
-        { bg: 'rain1.jpg', frame: '', showHands: false },
-        { bg: 'rain2.jpg', frame: '', showHands: false },
-        { bg: 'roomwalkthrough.jpg', frame: 'colorvibes.jpg', showHands: true },
-        { bg: 'roomwalkthrough.jpg', frame: 'colorvibes1.jpg', showHands: true },
-        { bg: 'roomwalkthrough.jpg', frame: 'colorvibes2.jpg', showHands: true }
+        { bg: 'rain1.jpg', images: [], showHands: false },
+        { bg: 'rain2.jpg', images: [], showHands: false },
+        { bg: 'roomwalkthrough.jpg', images: ['colorvibes.jpg', 'colorvibes1.jpg', 'colorvibes2.jpg'], showHands: true }
     ]; 
 
     function startWalkthrough() {
         const wrapper = document.getElementById('site-wrapper');
         const space = document.getElementById('immersive-space');
-        const frame = document.getElementById('frame-content');
+        const slots = document.querySelectorAll('.frame-slot');
         const hands = document.getElementById('hands-overlay');
 
+        currentWalkStep = 0;
         wrapper.style.display = 'none'; 
         space.style.display = 'block';
         
-        space.style.backgroundImage = `url('Assets/${walkScenes[0].bg}')`;
-        frame.style.backgroundImage = 'none';
+        space.style.backgroundImage = "url('Assets/rain1.jpg')";
+        slots.forEach(s => s.style.backgroundImage = 'none');
         hands.style.opacity = '0';
     }
 
     function nextWalkthroughStep() {
         currentWalkStep++;
         const space = document.getElementById('immersive-space');
-        const frame = document.getElementById('frame-content');
         const hands = document.getElementById('hands-overlay');
         const wrapper = document.getElementById('site-wrapper');
+        const slots = document.querySelectorAll('.frame-slot');
 
         if (currentWalkStep < walkScenes.length) {
             const scene = walkScenes[currentWalkStep];
             space.style.backgroundImage = `url('Assets/${scene.bg}')`;
             
-            if (scene.frame) {
-                frame.style.backgroundImage = `url('Assets/${scene.frame}')`;
+            if (scene.images.length > 0) {
+                scene.images.forEach((img, index) => {
+                    document.getElementById(`slot-${index+1}`).style.backgroundImage = `url('Assets/${img}')`;
+                });
             } else {
-                frame.style.backgroundImage = 'none';
+                slots.forEach(s => s.style.backgroundImage = 'none');
             }
 
             hands.style.opacity = scene.showHands ? '1' : '0';
