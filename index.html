@@ -13,17 +13,17 @@
             --glow-teal: #00f2ff;
         }
 
-        /* MASTER RULE: CONTAINED & RESIZED PHYSICS */
+        /* MASTER RULE: STRICT CONTAINED PHYSICS */
         body, html {
             margin: 0;
             padding: 0;
             min-height: 100vh;
             background-color: #000; 
-            background-image: url('Assets/mainbackground.jpg');
+            background-image: url('Assets/backgroundG&Blk.jpg');
             background-repeat: no-repeat;
             background-position: center center;
             background-attachment: fixed;
-            background-size: 80%; 
+            background-size: contain; 
             overflow: hidden;
         }
 
@@ -124,7 +124,7 @@
             text-align: center;
         }
 
-        /* IMMERSIVE SPACE - RESIZED PHYSICS */
+        /* IMMERSIVE SPACE - FIXED ZOOM / CONTAINED */
         #immersive-space {
             position: fixed;
             top: 0;
@@ -133,7 +133,7 @@
             height: 100vh;
             background-color: #000; 
             background-repeat: no-repeat;
-            background-size: 80%; 
+            background-size: contain; 
             background-position: center;
             z-index: 9999;
             display: none;
@@ -158,8 +158,8 @@
             top: 41%;
             left: 50%;
             transform: translate(-50%, -50%);
-            width: 60%; 
-            height: 35%;
+            width: 72%; /* Inched inward from 78% for better framing */
+            height: 42%;
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -167,7 +167,7 @@
         }
 
         .frame-slot {
-            width: 30%;
+            width: 31%; /* Slightly adjusted to accommodate narrower container */
             height: 100%;
             background-size: cover;
             background-position: center;
