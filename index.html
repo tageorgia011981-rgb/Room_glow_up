@@ -3,273 +3,83 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Room Glow Up - Your Dream Space Come To Life</title>
+    <title>Room Glow Up - Natural Frame Fit</title>
     <link href="https://fonts.googleapis.com/css2?family=Limelight&display=swap" rel="stylesheet">
     <style>
         :root {
-            --gunmetal-bg: linear-gradient(145deg, #162127, #0C1519);
-            --brushed-bronze: #CF9D7B;
-            --silver-header: linear-gradient(to bottom, #ffffff 0%, #a6a6a6 45%, #4d4d4d 50%, #ffffff 55%, #808080 100%);
-            --glow-teal: #00f2ff;
             --gold-leaf: linear-gradient(135deg, #bf953f 0%, #fcf6ba 45%, #b38728 50%, #fbf5b7 55%, #aa771c 100%);
         }
 
         body, html {
-            margin: 0;
-            padding: 0;
-            min-height: 100vh;
-            background-color: #000; 
-            background-image: url('Assets/mainbackground.jpg');
-            background-repeat: no-repeat;
-            background-position: center center;
-            background-attachment: fixed;
-            background-size: contain; 
+            margin: 0; padding: 0;
+            background-color: #000;
             overflow: hidden;
         }
 
-        #site-wrapper {
-            width: 100%;
-            height: 100vh;
-            position: relative;
-            z-index: 10;
-        }
-
-        #main-site-container {
-            width: 100%;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-
-        header {
-            text-align: center;
-            padding: 60px 0 30px 0;
-        }
-
-        h1 {
-            font-family: 'Limelight', cursive;
-            font-size: 100px;
-            margin: 0;
-            background: var(--silver-header);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            filter: drop-shadow(5px 5px 8px rgba(0,0,0,0.8));
-            text-transform: uppercase;
-            letter-spacing: 4px;
-        }
-
-        h2 {
-            font-family: 'Limelight', cursive;
-            font-size: 36px;
-            margin: -5px 0 0 0;
-            color: #e0e0e0;
-            letter-spacing: 3px;
-            text-shadow: 3px 3px 6px #000;
-        }
-
-        .nav-container {
-            display: flex;
-            gap: 25px;
-            margin-top: 40px;
-        }
-
-        .label-holder {
-            width: 210px;
-            height: 105px;
-            background: var(--gunmetal-bg);
-            border: 2px solid #000;
-            position: relative;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            box-shadow: inset 0 0 15px #000, 8px 8px 20px rgba(0,0,0,0.9);
-            cursor: pointer;
-        }
-
-        .screw {
-            position: absolute;
-            width: 8px;
-            height: 8px;
-            background: var(--brushed-bronze);
-            border-radius: 50%;
-            box-shadow: inset 1px 1px 2px #000;
-        }
-
-        .s-tl { top: 8px; left: 8px; }
-        .s-tr { top: 8px; right: 8px; }
-        .s-bl { bottom: 25px; left: 8px; }
-        .s-br { bottom: 25px; right: 8px; }
-
-        .white-card {
-            width: 85%;
-            height: 60%;
-            background: #fff;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            transition: 0.4s;
-        }
-
-        .label-holder:hover .white-card {
-            background: var(--glow-teal);
-            box-shadow: 0 0 30px var(--glow-teal);
-        }
-
-        .label-text {
-            font-family: 'Courier New', Courier, monospace;
-            font-weight: 900;
-            font-size: 16px;
-            color: #000;
-            text-transform: uppercase;
-            text-align: center;
-        }
-
         #immersive-space {
-            position: fixed;
-            top: 0;
-            left: 0;
             width: 100vw;
             height: 100vh;
-            background-color: #000; 
-            background-repeat: no-repeat;
-            background-size: contain; 
+            background-size: contain;
             background-position: center;
-            z-index: 9999;
-            display: none;
-            cursor: pointer;
+            background-repeat: no-repeat;
+            position: relative;
         }
 
-        #lookbook-container {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 10001;
-        }
-
-        /* MASTER FRAME WRAPPER */
+        /* THE FIX: The frame is applied to the image's natural size */
         .museum-piece {
             position: absolute;
-            /* This creates the gold frame */
-            border: 18px solid transparent; 
+            display: inline-block;
+            line-height: 0; /* Prevents tiny gaps at the bottom of the image */
+            
+            /* The Gold Frame */
+            border: 15px solid transparent; 
             border-image: var(--gold-leaf) 1;
-            box-shadow: 0 30px 60px rgba(0,0,0,0.9);
-            background-color: #000;
-            display: flex;
-            overflow: hidden; /* Clips the image inside the border */
+            
+            /* Shadow on the wall */
+            box-shadow: 0 30px 60px rgba(0,0,0,0.8);
         }
 
-        /* IMAGE INSIDE THE FRAME */
-        .framed-photo {
-            width: 100%;
-            height: 100%;
-            background-size: cover;
-            background-position: center;
-            background-repeat: no-repeat;
-            box-shadow: inset 0 0 20px #000; /* Depth shadow on the photo */
+        .museum-piece img {
+            /* The photo dictates the size of the container */
+            max-width: 30vw; /* Keeps it from getting too huge on the wall */
+            height: auto;
+            display: block;
         }
-
     </style>
 </head>
 <body>
 
-<div id="immersive-space" onclick="nextWalkthroughStep()">
-    <div id="lookbook-container"></div>
-</div>
-
-<div id="site-wrapper">
-    <div id="main-site-container">
-        <header>
-            <h1>Room Glow Up</h1>
-            <h2>Where Your Dream Space Comes To Life</h2>
-        </header>
-        <nav class="nav-container">
-            <div class="label-holder"><div class="screw s-tl"></div><div class="screw s-tr"></div><div class="white-card"><span class="label-text">Rooms</span></div><div class="screw s-bl"></div><div class="screw s-br"></div></div>
-            <div class="label-holder"><div class="screw s-tl"></div><div class="screw s-tr"></div><div class="white-card"><span class="label-text">Furniture Catalog</span></div><div class="screw s-bl"></div><div class="screw s-br"></div></div>
-            <div class="label-holder" onclick="startWalkthrough(event)"><div class="screw s-tl"></div><div class="screw s-tr"></div><div class="white-card"><span class="label-text">Inspirational Walkthrough</span></div><div class="screw s-bl"></div><div class="screw s-br"></div></div>
-            <div class="label-holder"><div class="screw s-tl"></div><div class="screw s-tr"></div><div class="white-card"><span class="label-text">Decor Closet</span></div><div class="screw s-bl"></div><div class="screw s-br"></div></div>
-            <div class="label-holder"><div class="screw s-tl"></div><div class="screw s-tr"></div><div class="white-card"><span class="label-text">Save / Checkout</span></div><div class="screw s-bl"></div><div class="screw s-br"></div></div>
-        </nav>
-    </div>
-</div>
+<div id="immersive-space"></div>
 
 <script>
-    let currentWalkStep = 0;
-    
-    const walkScenes = [
-        { bg: 'rain1.jpg', mode: 'empty', assets: [] },
-        { bg: 'rain2.jpg', mode: 'empty', assets: [] },
-        { 
-            bg: 'lookbook1.jpg', 
-            mode: 'lookbook', 
-            assets: [
-                { img: 'insp17.jpg', top: '15%', left: '12%', w: '35%', h: '35%' },
-                { img: 'insp20.jpg', top: '15%', left: '53%', w: '35%', h: '35%' },
-                { img: 'insp18.jpg', top: '55%', left: '32%', w: '36%', h: '35%' }
-            ] 
-        },
-        { 
-            bg: 'lookbook1.jpg', 
-            mode: 'lookbook', 
-            assets: [
-                { img: 'insp16.jpg', top: '12%', left: '10%', w: '38%', h: '38%' },
-                { img: 'insp21.jpg', top: '12%', left: '52%', w: '38%', h: '38%' },
-                { img: 'placeholder.jpg', top: '52%', left: '31%', w: '38%', h: '38%' }
-            ] 
-        }
-    ]; 
+    const wallContainer = document.getElementById('immersive-space');
 
-    function startWalkthrough(e) {
-        if(e) e.stopPropagation();
-        const space = document.getElementById('immersive-space');
-        const wrapper = document.getElementById('site-wrapper');
-        currentWalkStep = 0;
-        wrapper.style.display = 'none';
-        space.style.display = 'block';
-        renderScene();
+    const wall1Assets = [
+        { src: 'Assets/insp17.jpg', top: '15%', left: '10%' },
+        { src: 'Assets/insp20.jpg', top: '15%', left: '45%' },
+        { src: 'Assets/insp18.jpg', top: '50%', left: '30%' }
+    ];
+
+    function renderWall() {
+        wallContainer.style.backgroundImage = "url('Assets/lookbook1.jpg')";
+        
+        wall1Assets.forEach(asset => {
+            // Create a wrapper for the frame
+            const frame = document.createElement('div');
+            frame.className = 'museum-piece';
+            frame.style.top = asset.top;
+            frame.style.left = asset.left;
+            
+            // Create the actual image
+            const img = document.createElement('img');
+            img.src = asset.src;
+            
+            frame.appendChild(img);
+            wallContainer.appendChild(frame);
+        });
     }
 
-    function renderScene() {
-        const space = document.getElementById('immersive-space');
-        const container = document.getElementById('lookbook-container');
-        const scene = walkScenes[currentWalkStep];
-
-        space.style.backgroundImage = `url('Assets/${scene.bg}')`;
-        container.innerHTML = ''; 
-        container.style.display = (scene.mode === 'lookbook') ? 'block' : 'none';
-
-        if (scene.mode === 'lookbook') {
-            scene.assets.forEach(item => {
-                // Create the physical frame
-                const frame = document.createElement('div');
-                frame.className = 'museum-piece';
-                frame.style.top = item.top;
-                frame.style.left = item.left;
-                frame.style.width = item.w;
-                frame.style.height = item.h;
-
-                // Create the photo inside the frame
-                const photo = document.createElement('div');
-                photo.className = 'framed-photo';
-                photo.style.backgroundImage = `url('Assets/${item.img}')`;
-                
-                frame.appendChild(photo);
-                container.appendChild(frame);
-            });
-        }
-    }
-
-    function nextWalkthroughStep() {
-        currentWalkStep++;
-        if (currentWalkStep < walkScenes.length) {
-            renderScene();
-        } else {
-            document.getElementById('immersive-space').style.display = 'none';
-            document.getElementById('site-wrapper').style.display = 'block';
-            currentWalkStep = 0;
-        }
-    }
+    renderWall();
 </script>
 </body>
 </html>
