@@ -10,6 +10,7 @@
             --metal-shine: linear-gradient(145deg, #bdc3c7, #2c3e50, #95a5a6, #000);
             --silver-header: linear-gradient(to bottom, #ffffff 0%, #a6a6a6 45%, #4d4d4d 50%, #ffffff 55%, #808080 100%);
             --glow-teal: #00f2ff;
+            --tag-beige: #f5f5dc;
         }
         body, html {
             margin: 0; padding: 0; min-height: 100vh;
@@ -17,7 +18,6 @@
             background-size: cover; scroll-behavior: smooth; overflow-x: hidden;
         }
         #main-site-container { width: 100%; display: flex; flex-direction: column; align-items: center; padding-bottom: 200px; }
-        
         header { text-align: center; padding: 60px 0 30px 0; }
         h1 { font-family: 'Limelight', cursive; font-size: 100px; margin: 0; background: var(--silver-header); -webkit-background-clip: text; -webkit-text-fill-color: transparent; filter: drop-shadow(5px 5px 8px rgba(0,0,0,0.8)); text-transform: uppercase; }
         h2 { font-family: 'Limelight', cursive; font-size: 34px; margin: -10px 0 0 0; color: #e0e0e0; text-shadow: 3px 3px 6px #000; }
@@ -29,9 +29,6 @@
             position: relative; display: flex; justify-content: center; align-items: center; cursor: pointer;
             box-shadow: 8px 8px 20px rgba(0,0,0,0.8);
         }
-        .screw { position: absolute; width: 8px; height: 8px; background: #111; border-radius: 50%; box-shadow: inset 1px 1px 2px #777; }
-        .s-tl { top: 8px; left: 8px; } .s-tr { top: 8px; right: 8px; } .s-bl { bottom: 25px; left: 8px; } .s-br { bottom: 25px; right: 8px; }
-        .lip-pull { position: absolute; bottom: 0; width: 85%; height: 15px; background: #0a0a0a; border-radius: 0 0 10px 10px; border: 1px solid #444; }
         .white-card { width: 85%; height: 55%; background: #fff; display: flex; justify-content: center; align-items: center; transition: 0.4s; }
         .label-holder:hover .white-card { background: var(--glow-teal); box-shadow: 0 0 25px var(--glow-teal); }
         .label-text { font-family: 'Courier New', monospace; font-weight: 900; font-size: 15px; color: #000; text-transform: uppercase; text-align: center; }
@@ -43,34 +40,31 @@
         #rooms-cabinet-container.glided-in { transform: translateX(0); }
         #rooms-cabinet-container.glided-out { transform: translateX(-200%); }
         #furniture-cases-container.glided-in { transform: translateX(0); }
-        .asset-img { width: 100%; filter: drop-shadow(15px 15px 30px #000); }
 
         /* --- DRAWER LABELS --- */
         .drawer-labels-overlay { position: absolute; top: 132px; left: 98px; display: flex; flex-direction: column; gap: 26px; }
-        .small-pull-tab { width: 158px; height: 63px; background: var(--metal-shine); display: flex; justify-content: center; align-items: center; cursor: pointer; box-shadow: inset 0 0 10px #000; }
+        .small-pull-tab { width: 158px; height: 63px; background: var(--metal-shine); display: flex; justify-content: center; align-items: center; cursor: pointer; }
         .drawer-white-card { width: 82%; height: 60%; background: #fff; display: flex; justify-content: center; align-items: center; font-family: 'Courier New', monospace; font-size: 13px; font-weight: bold; text-transform: uppercase; }
         .small-pull-tab:hover .drawer-white-card { background: var(--glow-teal); box-shadow: 0 0 15px var(--glow-teal); }
 
-        /* --- HANGING TAGS FOR FURNITURE CASES --- */
-        .furniture-tags-overlay { position: absolute; top: 100px; left: 50px; display: flex; flex-direction: column; gap: 40px; }
-        .hanging-tag { width: 80px; height: 120px; cursor: pointer; transition: transform 0.3s; transform-origin: top; }
-        .hanging-tag:hover { transform: rotate(5deg); }
-        .hanging-tag img { width: 100%; height: auto; filter: drop-shadow(5px 5px 10px #000); }
-
-        /* --- THEATER STAGE --- */
-        #theater-container { width: 950px; height: 600px; border: 25px solid #000; background: #000; box-shadow: 0 0 60px #000; z-index: 5; overflow: hidden; }
-        #room-display { width: 100%; height: 100%; background-size: cover; background-position: center; transition: background 0.5s ease; cursor: pointer; }
-
         /* --- DECOR CLOSET --- */
-        #closet-entrance { position: fixed; right: -500px; top: 150px; width: 450px; height: 600px; z-index: 400; transition: right 1.5s; perspective: 2000px; cursor: pointer; }
+        #closet-entrance { 
+            position: fixed; right: -600px; top: 150px; width: 450px; height: 600px; 
+            z-index: 400; transition: right 1.5s cubic-bezier(0.23, 1, 0.32, 1); 
+            perspective: 2000px; cursor: pointer; 
+        }
         #closet-entrance.active { right: 40px; }
         .closet-interior { position: absolute; width: 100%; height: 100%; background: url('Assets/decorclosetbackground.jpg') no-repeat center; background-size: cover; border: 4px solid #222; z-index: 1; }
         .door-wing { position: absolute; width: 50%; height: 100%; transition: 1.5s; z-index: 5; overflow: hidden; }
         .wing-l { left: 0; transform-origin: left; } .wing-r { right: 0; transform-origin: right; }
-        .wing-l img, .wing-r img { width: 200%; height: 100%; object-fit: cover; }
+        .door-wing img { width: 200%; height: 100%; object-fit: cover; pointer-events: none; }
         .wing-r img { object-position: right; } .wing-l img { object-position: left; }
-        #closet-entrance.open .wing-l { transform: rotateY(-120deg); }
-        #closet-entrance.open .wing-r { transform: rotateY(120deg); }
+        #closet-entrance.open .wing-l { transform: rotateY(-130deg); }
+        #closet-entrance.open .wing-r { transform: rotateY(130deg); }
+
+        /* --- THEATER STAGE --- */
+        #theater-container { width: 950px; height: 600px; border: 25px solid #000; background: #000; z-index: 5; overflow: hidden; }
+        #room-display { width: 100%; height: 100%; background-size: cover; background-position: center; transition: 0.5s; }
     </style>
 </head>
 <body>
@@ -82,38 +76,29 @@
     </header>
 
     <nav class="nav-container">
-        <div class="label-holder" onclick="triggerCabinet()"><div class="white-card"><span class="label-text">Rooms</span></div><div class="lip-pull"></div></div>
-        <div class="label-holder"><div class="white-card"><span class="label-text">Furniture<br>Catalog</span></div><div class="lip-pull"></div></div>
-        <div class="label-holder" onclick="triggerCloset()"><div class="white-card"><span class="label-text">Decor<br>Closet</span></div><div class="lip-pull"></div></div>
-        <div class="label-holder"><div class="white-card"><span class="label-text">Inspirational<br>Walkthrough</span></div><div class="lip-pull"></div></div>
-        <div class="label-holder"><div class="white-card"><span class="label-text">Save /<br>Checkout</span></div><div class="lip-pull"></div></div>
+        <div class="label-holder" onclick="triggerCabinet()"><div class="white-card"><span class="label-text">Rooms</span></div></div>
+        <div class="label-holder"><div class="white-card"><span class="label-text">Furniture Catalog</span></div></div>
+        <div class="label-holder" onclick="toggleCloset()"><div class="white-card"><span class="label-text">Decor Closet</span></div></div>
+        <div class="label-holder"><div class="white-card"><span class="label-text">Inspirational Walkthrough</span></div></div>
+        <div class="label-holder"><div class="white-card"><span class="label-text">Save / Checkout</span></div></div>
     </nav>
 
     <div id="interaction-zone">
         <div class="cabinet-space">
             <div id="rooms-cabinet-container" class="asset-side-container">
-                <img src="Assets/cabinet.png" class="asset-img">
+                <img src="Assets/cabinet.png" style="width:100%">
                 <div class="drawer-labels-overlay">
                     <div class="small-pull-tab" onmouseover="previewRoom('livingroom1.jpg')" onclick="cycle('livingroom')"><div class="drawer-white-card">livingroom</div></div>
                     <div class="small-pull-tab" onmouseover="previewRoom('bedroom.jpg')" onclick="cycle('bedroom')"><div class="drawer-white-card">bedroom</div></div>
                     <div class="small-pull-tab" onmouseover="previewRoom('diningroom.jpg')" onclick="cycle('diningroom')"><div class="drawer-white-card">diningroom</div></div>
                     <div class="small-pull-tab" onmouseover="previewRoom('foyer.jpg')" onclick="cycle('extra')"><div class="drawer-white-card">extra rooms</div></div>
                     <div class="small-pull-tab" onclick="document.getElementById('file-up').click()"><div class="drawer-white-card">upload yours</div></div>
-                    <input type="file" id="file-up" style="display:none" onchange="handleUpload(this)">
                 </div>
             </div>
-
             <div id="furniture-cases-container" class="asset-side-container">
-                <img src="Assets/furniturecases.png" class="asset-img">
-                <div class="furniture-tags-overlay">
-                    <div class="hanging-tag" onclick="showSubTags('seating')"><img src="Assets/iconseating.png"></div>
-                    <div class="hanging-tag" onclick="showSubTags('tables')"><img src="Assets/icontables.png"></div>
-                    <div class="hanging-tag" onclick="showSubTags('storage')"><img src="Assets/iconstorage.png"></div>
-                    <div class="hanging-tag" onclick="showSubTags('beds')"><img src="Assets/iconbeds.png"></div>
-                </div>
+                <img src="Assets/furniturecases.png" style="width:100%">
             </div>
         </div>
-
         <div id="theater-container">
             <div id="room-display" onclick="confirmRoom()"></div>
         </div>
@@ -121,50 +106,21 @@
 </div>
 
 <div id="closet-entrance" onclick="this.classList.toggle('open')">
-    <div class="door-wing wing-l"><img src="Assets/decorclosetdoors.png"></div>
-    <div class="door-wing wing-r"><img src="Assets/decorclosetdoors.png"></div>
+    <div class="door-wing wing-l"><img src="Assets/closetdoors.jpg"></div>
+    <div class="door-wing wing-r"><img src="Assets/closetdoors.jpg"></div>
     <div class="closet-interior"></div>
 </div>
 
 <script>
-    const inventory = {
-        livingroom: ['livingroom1.jpg', 'livingroom3.jpg'],
-        bedroom: ['bedroom.jpg', 'bedroom2.jpg'],
-        diningroom: ['diningroom.jpg'],
-        extra: ['foyer.jpg', 'office.jpg', 'kitchen.jpg', 'kitchen2.jpg']
-    };
+    const inventory = { livingroom: ['livingroom1.jpg', 'livingroom3.jpg'], bedroom: ['bedroom.jpg', 'bedroom2.jpg'], diningroom: ['diningroom.jpg'], extra: ['foyer.jpg', 'office.jpg', 'kitchen.jpg', 'kitchen2.jpg'] };
     let counts = { livingroom: 0, bedroom: 0, diningroom: 0, extra: 0 };
 
-    function triggerCabinet() {
-        window.scrollTo({ top: document.getElementById('interaction-zone').offsetTop - 30, behavior: 'smooth' });
-        document.getElementById('rooms-cabinet-container').classList.add('glided-in');
-    }
-
+    function triggerCabinet() { document.getElementById('rooms-cabinet-container').classList.add('glided-in'); }
     function previewRoom(img) { document.getElementById('room-display').style.backgroundImage = `url('Assets/${img}')`; }
-
-    function cycle(type) {
-        counts[type] = (counts[type] + 1) % inventory[type].length;
-        previewRoom(inventory[type][counts[type]]);
-    }
-
-    function confirmRoom() {
-        const cab = document.getElementById('rooms-cabinet-container');
-        cab.classList.remove('glided-in');
-        cab.classList.add('glided-out');
-        setTimeout(() => { document.getElementById('furniture-cases-container').classList.add('glided-in'); }, 1500);
-    }
-
-    function triggerCloset() { document.getElementById('closet-entrance').classList.add('active'); }
-
-    function showSubTags(category) { console.log("Category picked: " + category); }
-
-    function handleUpload(input) {
-        if (input.files && input.files[0]) {
-            let reader = new FileReader();
-            reader.onload = (e) => { document.getElementById('room-display').style.backgroundImage = `url(${e.target.result})`; };
-            reader.readAsDataURL(input.files[0]);
-        }
-    }
+    function cycle(type) { counts[type] = (counts[type] + 1) % inventory[type].length; previewRoom(inventory[type][counts[type]]); }
+    function confirmRoom() { document.getElementById('rooms-cabinet-container').classList.add('glided-out'); setTimeout(() => { document.getElementById('furniture-cases-container').classList.add('glided-in'); }, 1500); }
+    
+    function toggleCloset() { document.getElementById('closet-entrance').classList.toggle('active'); }
 </script>
 </body>
 </html>
