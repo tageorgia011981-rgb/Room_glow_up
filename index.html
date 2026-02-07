@@ -3,90 +3,303 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Room Glow Up Walkthrough</title>
+    <title>Room Glow Up - Your Dream Space Come To Life</title>
+    <link href="https://fonts.googleapis.com/css2?family=Limelight&display=swap" rel="stylesheet">
     <style>
-        /* MASTER PALETTE */
         :root {
-            --gunmetal: #162127;
-            --bronze: #CF9D7B;
-            --studio-black: #000;
+            --gunmetal-bg: linear-gradient(145deg, #162127, #0C1519);
+            --brushed-bronze: #CF9D7B;
+            --silver-header: linear-gradient(to bottom, #ffffff 0%, #a6a6a6 45%, #4d4d4d 50%, #ffffff 55%, #808080 100%);
+            --glow-teal: #00f2ff;
         }
 
-        body, html { margin: 0; padding: 0; width: 100%; height: 100%; overflow: hidden; background: var(--studio-black); font-family: sans-serif; }
+        /* MASTER RULE: STRICT CONTAINED PHYSICS */
+        body, html {
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            background-color: #000; 
+            background-image: url('Assets/mainbackground.jpg');
+            background-repeat: no-repeat;
+            background-position: center center;
+            background-attachment: fixed;
+            background-size: contain; 
+            overflow: hidden;
+        }
 
-        .room {
+        #site-wrapper {
+            width: 100%;
+            height: 100vh;
+            position: relative;
+            z-index: 10;
+        }
+
+        #main-site-container {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        header {
+            text-align: center;
+            padding: 60px 0 30px 0;
+        }
+
+        h1 {
+            font-family: 'Limelight', cursive;
+            font-size: 100px;
+            margin: 0;
+            background: var(--silver-header);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            filter: drop-shadow(5px 5px 8px rgba(0,0,0,0.8));
+            text-transform: uppercase;
+            letter-spacing: 4px;
+        }
+
+        h2 {
+            font-family: 'Limelight', cursive;
+            font-size: 36px;
+            margin: -5px 0 0 0;
+            color: #e0e0e0;
+            letter-spacing: 3px;
+            text-shadow: 3px 3px 6px #000;
+        }
+
+        .nav-container {
+            display: flex;
+            gap: 25px;
+            margin-top: 40px;
+        }
+
+        .label-holder {
+            width: 210px;
+            height: 105px;
+            background: var(--gunmetal-bg);
+            border: 2px solid #000;
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: inset 0 0 15px #000, 8px 8px 20px rgba(0,0,0,0.9);
+            cursor: pointer;
+        }
+
+        .screw {
             position: absolute;
-            top: 0; left: 0;
+            width: 8px;
+            height: 8px;
+            background: var(--brushed-bronze);
+            border-radius: 50%;
+            box-shadow: inset 1px 1px 2px #000;
+        }
+
+        .s-tl { top: 8px; left: 8px; }
+        .s-tr { top: 8px; right: 8px; }
+        .s-bl { bottom: 25px; left: 8px; }
+        .s-br { bottom: 25px; right: 8px; }
+
+        .white-card {
+            width: 85%;
+            height: 60%;
+            background: #fff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: 0.4s;
+        }
+
+        .label-holder:hover .white-card {
+            background: var(--glow-teal);
+            box-shadow: 0 0 30px var(--glow-teal);
+        }
+
+        .label-text {
+            font-family: 'Courier New', Courier, monospace;
+            font-weight: 900;
+            font-size: 16px;
+            color: #000;
+            text-transform: uppercase;
+            text-align: center;
+        }
+
+        /* IMMERSIVE SPACE */
+        #immersive-space {
+            position: fixed;
+            top: 0;
+            left: 0;
             width: 100vw;
             height: 100vh;
+            background-color: #000; 
+            background-repeat: no-repeat;
+            background-size: contain; 
+            background-position: center;
+            z-index: 9999;
             display: none;
+            cursor: pointer;
+        }
+
+        #hands-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('Assets/goldhands.jpg') no-repeat center center;
+            background-size: contain;
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.8s ease;
+        }
+
+        /* SIGNATURE GALLERY */
+        #gallery-frames {
+            position: absolute;
+            top: 42.5%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 62%; 
+            height: 42%;
+            display: none;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 10000;
+        }
+
+        .frame-slot {
+            height: 100%;
             background-position: center;
             background-repeat: no-repeat;
         }
 
-        .active { display: flex; justify-content: center; align-items: center; }
+        #g-slot-1, #g-slot-3 { width: 28%; background-size: 78%; }
+        #g-slot-2 { width: 32%; background-size: 85%; }
 
-        /* RAIN HALLWAY PHYSICS (Locked to Contain/Black) */
-        .rain-room { background-size: contain; background-color: var(--studio-black); }
-        .rain-room img { max-height: 90vh; width: auto; }
-
-        /* GALLERY WALLS (Full Screen) */
-        .gallery-room { background-size: cover; }
-
-        /* NAVIGATION BUTTONS (Brushed Bronze) */
-        .nav-ui {
-            position: fixed;
-            bottom: 30px;
-            width: 100%;
-            display: flex;
-            justify-content: space-between;
-            padding: 0 40px;
-            box-sizing: border-box;
-            z-index: 1000;
+        /* LOOKBOOK PRECISION MAPPING */
+        #lookbook-container {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 100%; 
+            max-width: 1920px;
+            height: 100%;
+            display: none;
+            z-index: 10001;
         }
 
-        .btn-bronze {
-            padding: 12px 24px;
-            background: var(--bronze);
-            color: var(--gunmetal);
-            border: none;
-            font-weight: bold;
-            cursor: pointer;
-            text-transform: uppercase;
-            box-shadow: 0 4px 0px #8e6a52; /* "Screw-head" depth effect */
+        .museum-piece {
+            position: absolute;
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            box-shadow: inset 0 0 10px rgba(0,0,0,0.5);
         }
+
+        /* Coordinates for ornate frame alignment */
+        #l-slot-1 { top: 12%; left: 14%; width: 24%; height: 26%; }
+        #l-slot-2 { top: 11%; left: 62%; width: 23%; height: 23%; }
+        #l-slot-3 { top: 38%; left: 62%; width: 25%; height: 19%; }
+        #l-slot-4 { top: 52%; left: 14%; width: 24%; height: 35%; }
+        #l-slot-5 { top: 62%; left: 62%; width: 23%; height: 26%; }
     </style>
 </head>
 <body>
 
-    <div id="room-1" class="room rain-room active" style="background-image: url('Assets/rain1.jpg');"></div>
-
-    <div id="room-2" class="room rain-room" style="background-image: url('Assets/rain2.jpg');"></div>
-
-    <div id="room-3" class="room gallery-room" style="background-image: url('Assets/goldhands.jpg');"></div>
-
-    <div id="room-4" class="room gallery-room" style="background-image: url('Assets/galleryframes1.jpg');"></div>
-
-    <div id="room-5" class="room gallery-room" style="background-image: url('Assets/inspwalkthrough5.jpg');"></div>
-
-    <div class="nav-ui">
-        <button class="btn-bronze" onclick="nav(-1)">Previous</button>
-        <button class="btn-bronze" onclick="nav(1)">Next</button>
+<div id="immersive-space" onclick="nextWalkthroughStep()">
+    <div id="gallery-frames">
+        <div id="g-slot-1" class="frame-slot"></div>
+        <div id="g-slot-2" class="frame-slot"></div>
+        <div id="g-slot-3" class="frame-slot"></div>
+    </div>
+    
+    <div id="lookbook-container">
+        <div id="l-slot-1" class="museum-piece"></div>
+        <div id="l-slot-2" class="museum-piece"></div>
+        <div id="l-slot-3" class="museum-piece"></div>
+        <div id="l-slot-4" class="museum-piece"></div>
+        <div id="l-slot-5" class="museum-piece"></div>
     </div>
 
-    <script>
-        let current = 1;
-        const total = 5;
+    <div id="hands-overlay"></div>
+</div>
 
-        function nav(dir) {
-            let next = current + dir;
-            if (next < 1 || next > total) return;
-            
-            document.getElementById(`room-${current}`).classList.remove('active');
-            document.getElementById(`room-${next}`).classList.add('active');
-            
-            current = next;
+<div id="site-wrapper">
+    <div id="main-site-container">
+        <header>
+            <h1>Room Glow Up</h1>
+            <h2>Where Your Dream Space Comes To Life</h2>
+        </header>
+        <nav class="nav-container">
+            <div class="label-holder"><div class="screw s-tl"></div><div class="screw s-tr"></div><div class="white-card"><span class="label-text">Rooms</span></div><div class="screw s-bl"></div><div class="screw s-br"></div></div>
+            <div class="label-holder"><div class="screw s-tl"></div><div class="screw s-tr"></div><div class="white-card"><span class="label-text">Furniture Catalog</span></div><div class="screw s-bl"></div><div class="screw s-br"></div></div>
+            <div class="label-holder" onclick="startWalkthrough(event)"><div class="screw s-tl"></div><div class="screw s-tr"></div><div class="white-card"><span class="label-text">Inspirational Walkthrough</span></div><div class="screw s-bl"></div><div class="screw s-br"></div></div>
+            <div class="label-holder"><div class="screw s-tl"></div><div class="screw s-tr"></div><div class="white-card"><span class="label-text">Decor Closet</span></div><div class="screw s-bl"></div><div class="screw s-br"></div></div>
+            <div class="label-holder"><div class="screw s-tl"></div><div class="screw s-tr"></div><div class="white-card"><span class="label-text">Save / Checkout</span></div><div class="screw s-bl"></div><div class="screw s-br"></div></div>
+        </nav>
+    </div>
+</div>
+
+<script>
+    let currentWalkStep = 0;
+    
+    const walkScenes = [
+        { bg: 'rain1.jpg', mode: 'empty', images: [], showHands: false },
+        { bg: 'rain2.jpg', mode: 'empty', images: [], showHands: false },
+        { bg: 'goldhands.jpg', mode: 'gallery', images: ['colorvibes.jpg', 'colorvibes1.jpg', 'colorvibes2.jpg'], showHands: true },
+        /* Swapped top-right (insp16) with bottom-left (insp20) */
+        { bg: 'lookbook.jpg', mode: 'lookbook', images: ['insp17.jpg', 'insp20.jpg', 'insp18.jpg', 'insp16.jpg', 'insp21.jpg'], showHands: false }
+    ]; 
+
+    function startWalkthrough(e) {
+        if(e) e.stopPropagation();
+        const space = document.getElementById('immersive-space');
+        const wrapper = document.getElementById('site-wrapper');
+        currentWalkStep = 0;
+        wrapper.style.display = 'none';
+        space.style.display = 'block';
+        renderScene();
+    }
+
+    function renderScene() {
+        const space = document.getElementById('immersive-space');
+        const hands = document.getElementById('hands-overlay');
+        const gallery = document.getElementById('gallery-frames');
+        const lookbook = document.getElementById('lookbook-container');
+        const scene = walkScenes[currentWalkStep];
+
+        space.style.backgroundImage = `url('Assets/${scene.bg}')`;
+        hands.style.opacity = scene.showHands ? '1' : '0';
+        
+        gallery.style.display = (scene.mode === 'gallery') ? 'flex' : 'none';
+        lookbook.style.display = (scene.mode === 'lookbook') ? 'block' : 'none';
+
+        if (scene.mode === 'gallery') {
+            scene.images.forEach((img, i) => {
+                const slot = document.getElementById(`g-slot-${i+1}`);
+                if(slot) slot.style.backgroundImage = `url('Assets/${img}')`;
+            });
         }
-    </script>
+
+        if (scene.mode === 'lookbook') {
+            scene.images.forEach((img, i) => {
+                const slot = document.getElementById(`l-slot-${i+1}`);
+                if (slot) slot.style.backgroundImage = `url('Assets/${img}')`;
+            });
+        }
+    }
+
+    function nextWalkthroughStep() {
+        currentWalkStep++;
+        if (currentWalkStep < walkScenes.length) {
+            renderScene();
+        } else {
+            document.getElementById('immersive-space').style.display = 'none';
+            document.getElementById('site-wrapper').style.display = 'block';
+            currentWalkStep = 0;
+        }
+    }
+</script>
 </body>
 </html>
