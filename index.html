@@ -1,43 +1,150 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Furniture Walkthrough</title>
     <style>
-        body, html { margin: 0; padding: 0; overflow: hidden; background: #000; }
+        * { box-sizing: border-box; }
+        body, html { 
+            margin: 0; padding: 0; 
+            width: 100%; height: 100%; 
+            overflow: hidden; 
+            background: #111; 
+            font-family: 'Segoe UI', sans-serif; 
+        }
 
-        #room-background {
+        .walkthrough-container { width: 100%; height: 100%; position: relative; }
+
+        .room {
+            display: none;
             width: 100vw;
             height: 100vh;
-            background: url('galleryframes1.jpg') center/cover no-repeat;
-            display: flex;
-            justify-content: center; 
+            background-position: center;
+            background-size: cover;
+            background-repeat: no-repeat;
+            justify-content: center;
             align-items: center;
-            gap: 5%;
         }
 
-        .attached-art {
+        .active { display: flex; }
+
+        /* ENLARGING RAIN IMAGES IN ROOM 1 & 2 */
+        .framed-photo {
             line-height: 0;
-            display: inline-block;
-            /* Frame wraps image perfectly */
-            border: 16px solid transparent;
-            border-image: linear-gradient(145deg, #e6b800, #fff58f, #8a6d3b, #bf953f) 1;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.6);
-            background: #000;
+            border: 12px solid #b8860b; /* Simple gold border */
+            box-shadow: 0 20px 40px rgba(0,0,0,0.8);
         }
 
-        .attached-art img {
-            max-height: 55vh;
+        .framed-photo img {
+            /* Increased from 50vh to 75vh to make them "a little bigger" */
+            max-height: 75vh; 
             width: auto;
             display: block;
+        }
+
+        /* ROOM 4: THE BAKED-IN GALLERY */
+        #room-4 {
+            background-image: url('galleryframes1.jpg');
+            display: none; /* Controlled by JS */
+        }
+        #room-4.active { display: block; }
+
+        .hotspot {
+            position: absolute;
+            cursor: pointer;
+            z-index: 10;
+        }
+
+        /* UI ELEMENTS */
+        .nav-controls {
+            position: absolute;
+            bottom: 30px;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            padding: 0 50px;
+            z-index: 100;
+        }
+
+        button { 
+            padding: 12px 25px; 
+            cursor: pointer; 
+            background: rgba(184, 134, 11, 0.9); 
+            color: white; 
+            border: none;
+            font-weight: bold;
+        }
+
+        #info-modal, #overlay { display: none; position: fixed; z-index: 200; }
+        #overlay { top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); }
+        #info-modal { 
+            top: 50%; left: 50%; transform: translate(-50%, -50%);
+            background: white; padding: 30px; width: 350px; text-align: center; 
         }
     </style>
 </head>
 <body>
 
-<div id="room-background">
-    <div class="attached-art"><img src="Assets/chair1.jpg"></div>
-    <div class="attached-art"><img src="Assets/dresser1.jpg"></div>
-    <div class="attached-art"><img src="Assets/chair2.jpg"></div>
+<div class="walkthrough-container">
+    
+    <div id="room-1" class="room active" style="background-image: url('room1-bg.jpg');">
+        <div class="framed-photo">
+            <img src="rain-image-1.jpg" alt="Rain in Room 1">
+        </div>
+    </div>
+
+    <div id="room-2" class="room" style="background-image: url('room2-bg.jpg');">
+        <div class="framed-photo">
+            <img src="rain-image-2.jpg" alt="Rain in Room 2">
+        </div>
+    </div>
+
+    <div id="room-3" class="room" style="background-image: url('room3-bg.jpg');"></div>
+
+    <div id="room-4" class="room">
+        <div class="hotspot" style="top: 22%; left: 10%; width: 25%; height: 55%;" onclick="openItem('Piece 1', 'Detailed description.')"></div>
+        <div class="hotspot" style="top: 18%; left: 38%; width: 24%; height: 65%;" onclick="openItem('Piece 2', 'Detailed description.')"></div>
+        <div class="hotspot" style="top: 22%; left: 65%; width: 25%; height: 55%;" onclick="openItem('Piece 3', 'Detailed description.')"></div>
+    </div>
+
+    <div class="nav-controls">
+        <button onclick="changeRoom(-1)">PREVIOUS</button>
+        <button onclick="changeRoom(1)">NEXT</button>
+    </div>
 </div>
+
+<div id="overlay" onclick="closeModal()"></div>
+<div id="info-modal">
+    <h3 id="modal-title"></h3>
+    <p id="modal-desc"></p>
+    <button onclick="closeModal()">CLOSE</button>
+</div>
+
+<script>
+    let currentRoom = 1;
+    const totalRooms = 4;
+
+    function changeRoom(dir) {
+        document.getElementById(`room-${currentRoom}`).classList.remove('active');
+        currentRoom += dir;
+        if (currentRoom < 1) currentRoom = 1;
+        if (currentRoom > totalRooms) currentRoom = totalRooms;
+        document.getElementById(`room-${currentRoom}`).classList.add('active');
+    }
+
+    function openItem(title, desc) {
+        document.getElementById('modal-title').innerText = title;
+        document.getElementById('modal-desc').innerText = desc;
+        document.getElementById('info-modal').style.display = 'block';
+        document.getElementById('overlay').style.display = 'block';
+    }
+
+    function closeModal() {
+        document.getElementById('info-modal').style.display = 'none';
+        document.getElementById('overlay').style.display = 'none';
+    }
+</script>
 
 </body>
 </html>
