@@ -153,18 +153,36 @@
             transition: opacity 0.8s ease;
         }
 
-        /* CENTERED GALLERY ALIGNMENT */
+        /* CENTERED GALLERY - INCHED INWARD */
         #gallery-frames {
             position: absolute;
-            top: 42.5%; /* Lowered slightly to hit center of gold hands framing */
-            left: 50.5%; /* Micro-adjustment to the right */
+            top: 42.5%;
+            left: 50%;
             transform: translate(-50%, -50%);
-            width: 70%; 
+            width: 62%; /* Narrowed from 70% to move side images inward */
             height: 42%;
             display: none;
             justify-content: space-between;
             align-items: center;
             z-index: 10000;
+        }
+
+        .frame-slot {
+            height: 100%;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+
+        /* SHRUNK SIDE SLOTS */
+        #g-slot-1, #g-slot-3 {
+            width: 28%; 
+            background-size: 78%; /* Shrunk a tad as requested */
+        }
+
+        /* PERFECT MIDDLE SLOT */
+        #g-slot-2 {
+            width: 32%;
+            background-size: 85%; 
         }
 
         /* LOOKBOOK 5-FRAME ALIGNMENT */
@@ -180,14 +198,6 @@
             gap: 15px;
             padding: 20px;
             z-index: 10001;
-        }
-
-        .frame-slot {
-            width: 31%; 
-            height: 100%;
-            background-size: 85%; /* Shrunk slightly more to ensure it fits the hand framing */
-            background-position: center;
-            background-repeat: no-repeat;
         }
 
         .museum-frame {
