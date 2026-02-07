@@ -7,18 +7,17 @@
     <link href="https://fonts.googleapis.com/css2?family=Limelight&display=swap" rel="stylesheet">
     <style>
         :root {
-            --metal-shine: linear-gradient(145deg, #bdc3c7, #2c3e50, #95a5a6, #000);
+            --gunmetal-bg: linear-gradient(145deg, #162127, #0C1519);
+            --brushed-bronze: #CF9D7B;
             --silver-header: linear-gradient(to bottom, #ffffff 0%, #a6a6a6 45%, #4d4d4d 50%, #ffffff 55%, #808080 100%);
             --glow-teal: #00f2ff;
-            --tag-gold: #d4af37;
         }
         body, html {
             margin: 0;
             padding: 0;
             min-height: 100vh;
-            background: url('Assets/mainbackground.jpg') no-repeat center center fixed;
+            background: url('Assets/backgroundG&Blk.jpg') no-repeat center center fixed;
             background-size: cover;
-            scroll-behavior: smooth;
             overflow-x: hidden;
         }
         #site-wrapper {
@@ -35,7 +34,6 @@
         header {
             text-align: center;
             padding: 60px 0 30px 0;
-            z-index: 50;
         }
         h1 {
             font-family: 'Limelight', cursive;
@@ -61,12 +59,11 @@
             gap: 25px;
             margin-top: 40px;
             margin-bottom: 100px;
-            z-index: 50;
         }
         .label-holder {
             width: 210px;
             height: 105px;
-            background: var(--metal-shine);
+            background: var(--gunmetal-bg);
             border: 2px solid #000;
             position: relative;
             display: flex;
@@ -74,15 +71,14 @@
             align-items: center;
             box-shadow: inset 0 0 15px #000, 8px 8px 20px rgba(0,0,0,0.9);
             cursor: pointer;
-            transition: transform 0.3s ease;
         }
         .screw {
             position: absolute;
             width: 8px;
             height: 8px;
-            background: #111;
+            background: var(--brushed-bronze);
             border-radius: 50%;
-            box-shadow: inset 1px 1px 2px #777;
+            box-shadow: inset 1px 1px 2px #000;
         }
         .s-tl { top: 8px; left: 8px; }
         .s-tr { top: 8px; right: 8px; }
@@ -95,7 +91,7 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            transition: background 0.4s ease, box-shadow 0.4s ease;
+            transition: 0.4s;
         }
         .label-holder:hover .white-card {
             background: var(--glow-teal);
@@ -117,136 +113,6 @@
             border-radius: 0 0 15px 15px;
             border: 1px solid #444;
         }
-        #interaction-zone {
-            display: flex;
-            justify-content: center;
-            align-items: flex-start;
-            gap: 40px;
-            width: 1540px;
-            height: 750px;
-            position: relative;
-            margin: 0 auto;
-        }
-        .cabinet-space {
-            position: relative;
-            width: 550px;
-            height: 650px;
-        }
-        .asset-side-container {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 550px;
-            transform: translateX(-200%);
-            transition: transform 3s cubic-bezier(0.23, 1, 0.32, 1);
-            z-index: 30;
-        }
-        #rooms-cabinet-container.glided-in { transform: translateX(0); }
-        #rooms-cabinet-container.glided-out { transform: translateX(-200%); }
-        #furniture-cases-container.glided-in { transform: translateX(0); }
-        .asset-img {
-            width: 100%;
-            filter: drop-shadow(15px 15px 30px #000);
-        }
-        .drawer-labels-overlay {
-            position: absolute;
-            top: 135px;
-            left: 95px;
-            display: flex;
-            flex-direction: column;
-            gap: 28px;
-        }
-        .small-pull-tab {
-            width: 160px;
-            height: 65px;
-            background: var(--metal-shine);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            position: relative;
-            cursor: pointer;
-            box-shadow: inset 0 0 8px #000, 3px 3px 10px rgba(0,0,0,0.5);
-            transition: transform 0.3s ease;
-        }
-        .drawer-white-card {
-            width: 80%;
-            height: 60%;
-            background: #fff;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-family: 'Courier New', Courier, monospace;
-            font-size: 14px;
-            font-weight: bold;
-            text-transform: uppercase;
-            transition: 0.3s;
-        }
-        .small-pull-tab:hover .drawer-white-card {
-            background: var(--glow-teal);
-            box-shadow: 0 0 15px var(--glow-teal);
-        }
-        .furniture-tags-overlay {
-            position: absolute;
-            top: 135px; 
-            left: 105px;
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-        }
-        .tag-hanger {
-            position: relative;
-            width: 160px;
-            height: 70px;
-            display: flex;
-            justify-content: center;
-        }
-        .icon-tag {
-            width: 110px;
-            height: 65px;
-            background: #000;
-            border: 1px solid var(--tag-gold);
-            clip-path: polygon(15% 0%, 85% 0%, 100% 25%, 100% 100%, 0% 100%, 0% 25%);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            box-shadow: 4px 4px 10px rgba(0,0,0,0.8);
-            transform: rotate(-3deg);
-            transition: transform 0.3s ease;
-            cursor: pointer;
-            z-index: 40;
-        }
-        .icon-tag img {
-            width: 65%;
-            height: auto;
-            max-height: 80%;
-        }
-        .tag-text {
-            font-family: 'Courier New', Courier, monospace;
-            color: var(--tag-gold);
-            font-size: 13px;
-            font-weight: bold;
-            text-transform: uppercase;
-            text-align: center;
-            padding: 0 5px;
-        }
-        #theater-container {
-            width: 950px;
-            height: 600px;
-            border: 25px solid #000;
-            overflow: hidden;
-            background: #000;
-            box-shadow: 0 0 60px rgba(0,0,0,1);
-            z-index: 5;
-            flex-shrink: 0;
-        }
-        #room-display {
-            width: 100%;
-            height: 100%;
-            background-size: cover;
-            background-position: center;
-            transition: background-image 0.5s ease;
-            cursor: pointer;
-        }
 
         /* IMMERSIVE SPACE ELEMENTS */
         #immersive-space {
@@ -255,10 +121,11 @@
             left: 0;
             width: 100vw;
             height: 100vh;
+            background-color: #000; 
             background-repeat: no-repeat;
-            background-size: cover;
+            background-size: contain; 
             background-position: center;
-            z-index: 1000;
+            z-index: 9999;
             display: none;
             cursor: pointer;
         }
@@ -273,24 +140,22 @@
             pointer-events: none;
             opacity: 0;
             transition: opacity 0.5s ease;
-            z-index: 1002; /* Sits on top of images */
         }
         #frame-container {
             position: absolute;
-            top: 52%; /* Better alignment for the frames in the hands */
+            top: 41%;
             left: 50%;
             transform: translate(-50%, -50%);
-            width: 75%; 
-            height: 45%;
+            width: 78%; 
+            height: 42%;
             display: flex;
-            justify-content: space-around;
+            justify-content: space-between;
             align-items: center;
-            z-index: 1001; /* Behind the hands */
         }
         .frame-slot {
-            width: 25%;
-            height: 65%;
-            background-size: contain; /* Keeps colorvibes images from being too big */
+            width: 32%;
+            height: 100%;
+            background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
         }
@@ -314,55 +179,37 @@
             <h2>Where Your Dream Space Comes To Life</h2>
         </header>
         <nav class="nav-container">
-            <div class="label-holder" onclick="roomsAction()"><div class="screw s-tl"></div><div class="screw s-tr"></div><div class="white-card"><span class="label-text">Rooms</span></div><div class="screw s-bl"></div><div class="screw s-br"></div><div class="lip-pull"></div></div>
+            <div class="label-holder"><div class="screw s-tl"></div><div class="screw s-tr"></div><div class="white-card"><span class="label-text">Rooms</span></div><div class="screw s-bl"></div><div class="screw s-br"></div><div class="lip-pull"></div></div>
             <div class="label-holder"><div class="screw s-tl"></div><div class="screw s-tr"></div><div class="white-card"><span class="label-text">Furniture Catalog</span></div><div class="screw s-bl"></div><div class="screw s-br"></div><div class="lip-pull"></div></div>
             <div class="label-holder"><div class="screw s-tl"></div><div class="screw s-tr"></div><div class="white-card"><span class="label-text">Decor Closet</span></div><div class="screw s-bl"></div><div class="screw s-br"></div><div class="lip-pull"></div></div>
             <div class="label-holder" onclick="startWalkthrough()"><div class="screw s-tl"></div><div class="screw s-tr"></div><div class="white-card"><span class="label-text">Inspirational Walkthrough</span></div><div class="screw s-bl"></div><div class="screw s-br"></div><div class="lip-pull"></div></div>
             <div class="label-holder"><div class="screw s-tl"></div><div class="screw s-tr"></div><div class="white-card"><span class="label-text">Save / Checkout</span></div><div class="screw s-bl"></div><div class="screw s-br"></div><div class="lip-pull"></div></div>
         </nav>
-        <div id="interaction-zone">
-            <div class="cabinet-space">
-                <div id="rooms-cabinet-container" class="asset-side-container">
-                    <img src="Assets/cabinet.png" class="asset-img" alt="Storage Cabinet">
-                    <div class="drawer-labels-overlay">
-                        <div class="small-pull-tab" onmouseover="peekRoom('livingroom1.jpg')" onclick="cycleRoom('livingroom')"><div class="drawer-white-card">livingroom</div></div>
-                        <div class="small-pull-tab" onmouseover="peekRoom('bedroom.jpg')" onclick="cycleRoom('bedroom')"><div class="drawer-white-card">bedroom</div></div>
-                        <div class="small-pull-tab" onmouseover="peekRoom('diningroom.jpg')" onclick="cycleRoom('diningroom')"><div class="drawer-white-card">diningroom</div></div>
-                        <div class="small-pull-tab" onmouseover="peekRoom('foyer.jpg')" onclick="cycleRoom('extra')"><div class="drawer-white-card">extra rooms</div></div>
-                        <div class="small-pull-tab"><input type="file" id="room-upload" style="display:none" onchange="uploadRoom(this)"><div class="drawer-white-card" onclick="document.getElementById('room-upload').click()">upload yours</div></div>
-                    </div>
-                </div>
-                <div id="furniture-cases-container" class="asset-side-container">
-                    <img src="Assets/furniturecases.png" class="asset-img" alt="Furniture Cases">
-                    <div id="dynamic-tags-container" class="furniture-tags-overlay"></div>
-                </div>
-            </div>
-            <div id="theater-container">
-                <div id="room-display" onclick="commitSelection()"></div>
-            </div>
-        </div>
     </div>
 </div>
 
 <script>
     let currentWalkStep = 0;
     
+    // Aligned with Project Manifest
     const walkScenes = [
         { bg: 'rain1.jpg', images: [], showHands: false },
-        { bg: 'rain2.jpg', images: [], showHands: false },
+        { bg: 'rain2.jpg', images: [], showHands: false }, // Gold Rain Scene
         { bg: 'roomwalkthrough.jpg', images: ['colorvibes.jpg', 'colorvibes1.jpg', 'colorvibes2.jpg'], showHands: true }
     ]; 
 
     function startWalkthrough() {
-        const wrapper = document.getElementById('site-wrapper');
         const space = document.getElementById('immersive-space');
-        const slots = document.querySelectorAll('.frame-slot');
+        const wrapper = document.getElementById('site-wrapper');
         const hands = document.getElementById('hands-overlay');
+        const slots = document.querySelectorAll('.frame-slot');
 
         currentWalkStep = 0;
-        wrapper.style.display = 'none'; 
+        
+        wrapper.style.display = 'none';
         space.style.display = 'block';
         
+        // Initial Scene: Rain 1
         space.style.backgroundImage = "url('Assets/rain1.jpg')";
         slots.forEach(s => s.style.backgroundImage = 'none');
         hands.style.opacity = '0';
@@ -379,6 +226,7 @@
             const scene = walkScenes[currentWalkStep];
             space.style.backgroundImage = `url('Assets/${scene.bg}')`;
             
+            // Set gallery images if available
             if (scene.images.length > 0) {
                 scene.images.forEach((img, index) => {
                     const slot = document.getElementById(`slot-${index+1}`);
@@ -387,65 +235,16 @@
             } else {
                 slots.forEach(s => s.style.backgroundImage = 'none');
             }
-
+            
+            // Toggle the signature gold hands
             hands.style.opacity = scene.showHands ? '1' : '0';
         } else {
+            // End of sequence, return to main studio
             space.style.display = 'none';
             wrapper.style.display = 'block';
             currentWalkStep = 0;
         }
     }
-
-    const subCategories = {
-        seating: ['couches', 'chairs', 'dining chairs', 'benches', 'stools'],
-        tables: ['coffee', 'end', 'dining table'],
-        storage: ['armoire', 'dressers', 'buffet'],
-        beds: ['beds']
-    };
-    const mainCategories = [
-        { id: 'seating', img: 'iconseating.png' },
-        { id: 'tables', img: 'icontables.png' },
-        { id: 'storage', img: 'iconstorage.png' },
-        { id: 'beds', img: 'iconbeds.png' }
-    ];
-    function renderMainTags() {
-        const container = document.getElementById('dynamic-tags-container');
-        if (!container) return;
-        container.innerHTML = mainCategories.map(cat => `
-            <div class="tag-hanger">
-                <div class="icon-tag" onclick="showSubTags('${cat.id}')">
-                    <img src="Assets/${cat.img}" alt="${cat.id}">
-                </div>
-            </div>
-        `).join('');
-    }
-    function showSubTags(id) {
-        const container = document.getElementById('dynamic-tags-container');
-        let tagsHTML = subCategories[id].map(sub => `
-            <div class="tag-hanger">
-                <div class="icon-tag" onclick="openCatalog('${sub}')">
-                    <span class="tag-text">${sub}</span>
-                </div>
-            </div>
-        `).join('');
-        tagsHTML += `
-            <div class="tag-hanger">
-                <div class="icon-tag" onclick="renderMainTags()" style="border-color:#ff4444">
-                    <span class="tag-text">← Back</span>
-                </div>
-            </div>
-        `;
-        container.innerHTML = tagsHTML;
-    }
-    renderMainTags();
-
-    const roomInventory = { livingroom: ['livingroom1.jpg', 'livingroom3.jpg'], bedroom: ['bedroom.jpg', 'bedroom2.jpg'], diningroom: ['diningroom.jpg'], extra: ['foyer.jpg', 'officeroom.jpg', 'kitchen.jpg', 'kitchen2.jpg'] };
-    let indices = { livingroom: 0, bedroom: 0, diningroom: 0, extra: 0 };
-    function roomsAction() { window.scrollTo({ top: document.getElementById('interaction-zone').offsetTop - 20, behavior: 'smooth' }); document.getElementById('rooms-cabinet-container').classList.add('glided-in'); }
-    function peekRoom(img) { document.getElementById('room-display').style.backgroundImage = `url('Assets/${img}')`; }
-    function cycleRoom(type) { let list = roomInventory[type]; indices[type] = (indices[type] + 1) % list.length; peekRoom(list[indices[type]]); }
-    function commitSelection() { document.getElementById('rooms-cabinet-container').classList.remove('glided-in'); document.getElementById('rooms-cabinet-container').classList.add('glided-out'); setTimeout(() => { document.getElementById('furniture-cases-container').classList.add('glided-in'); }, 1000); }
-    function uploadRoom(input) { if (input.files && input.files[0]) { let reader = new FileReader(); reader.onload = function(e) { document.getElementById('room-display').style.backgroundImage = `url(${e.target.result})`; }; reader.readAsDataURL(input.files[0]); } }
 </script>
 </body>
 </html>
