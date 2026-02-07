@@ -11,6 +11,7 @@
             --brushed-bronze: #CF9D7B;
             --silver-header: linear-gradient(to bottom, #ffffff 0%, #a6a6a6 45%, #4d4d4d 50%, #ffffff 55%, #808080 100%);
             --glow-teal: #00f2ff;
+            --gold-frame: linear-gradient(135deg, #bf953f, #fcf6ba, #b38728, #fbf5b7, #aa771c);
         }
 
         /* MASTER RULE: STRICT CONTAINED PHYSICS */
@@ -153,30 +154,7 @@
             transition: opacity 0.8s ease;
         }
 
-        /* SIGNATURE GALLERY */
-        #gallery-frames {
-            position: absolute;
-            top: 42.5%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 62%; 
-            height: 42%;
-            display: none;
-            justify-content: space-between;
-            align-items: center;
-            z-index: 10000;
-        }
-
-        .frame-slot {
-            height: 100%;
-            background-position: center;
-            background-repeat: no-repeat;
-        }
-
-        #g-slot-1, #g-slot-3 { width: 28%; background-size: 78%; }
-        #g-slot-2 { width: 32%; background-size: 85%; }
-
-        /* LOOKBOOK PRECISION MAPPING */
+        /* LOOKBOOK PRECISION MAPPING - ENLARGED */
         #lookbook-container {
             position: absolute;
             top: 0;
@@ -189,32 +167,29 @@
 
         .museum-piece {
             position: absolute;
-            background-size: contain; /* PREVENTS STRETCHING */
+            background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
-            background-color: #1a1a1a; /* Acts as a dark matte behind the image */
-            border: 2px solid #8b6b3e; /* Inner gold frame */
-            box-sizing: border-box;
-            box-shadow: inset 0 0 15px #000;
+            /* Enhanced CSS Frame */
+            border: 15px solid transparent;
+            border-image: var(--gold-frame) 1;
+            box-shadow: 
+                0 15px 45px rgba(0,0,0,0.9),
+                inset 0 0 20px rgba(0,0,0,0.7);
+            outline: 3px solid #3d2b10;
         }
 
-        /* Adjusted coordinates for lookbook.jpg frames */
-        #l-slot-1 { top: 12.8%; left: 14.8%; width: 22.4%; height: 24.8%; }
-        #l-slot-2 { top: 11.8%; left: 62.8%; width: 21.4%; height: 21.4%; }
-        #l-slot-3 { top: 38.8%; left: 62.8%; width: 23.4%; height: 17.4%; }
-        #l-slot-4 { top: 53.5%; left: 14.8%; width: 22.4%; height: 32.4%; }
-        #l-slot-5 { top: 62.8%; left: 62.8%; width: 21.4%; height: 24.4%; }
+        /* Enlarged coordinates for lookbook.jpg */
+        #l-slot-1 { top: 10%; left: 10%; width: 32%; height: 35%; }
+        #l-slot-2 { top: 8%; left: 58%; width: 30%; height: 28%; }
+        #l-slot-3 { top: 40%; left: 58%; width: 34%; height: 22%; }
+        #l-slot-4 { top: 50%; left: 10%; width: 32%; height: 42%; }
+        #l-slot-5 { top: 66%; left: 58%; width: 30%; height: 28%; }
     </style>
 </head>
 <body>
 
 <div id="immersive-space" onclick="nextWalkthroughStep()">
-    <div id="gallery-frames">
-        <div id="g-slot-1" class="frame-slot"></div>
-        <div id="g-slot-2" class="frame-slot"></div>
-        <div id="g-slot-3" class="frame-slot"></div>
-    </div>
-    
     <div id="lookbook-container">
         <div id="l-slot-1" class="museum-piece"></div>
         <div id="l-slot-2" class="museum-piece"></div>
@@ -222,7 +197,6 @@
         <div id="l-slot-4" class="museum-piece"></div>
         <div id="l-slot-5" class="museum-piece"></div>
     </div>
-
     <div id="hands-overlay"></div>
 </div>
 
@@ -248,7 +222,6 @@
     const walkScenes = [
         { bg: 'rain1.jpg', mode: 'empty', images: [], showHands: false },
         { bg: 'rain2.jpg', mode: 'empty', images: [], showHands: false },
-        { bg: 'goldhands.jpg', mode: 'gallery', images: ['colorvibes.jpg', 'colorvibes1.jpg', 'colorvibes2.jpg'], showHands: true },
         { bg: 'lookbook.jpg', mode: 'lookbook', images: ['insp17.jpg', 'insp20.jpg', 'insp18.jpg', 'insp16.jpg', 'insp21.jpg'], showHands: false }
     ]; 
 
@@ -265,22 +238,12 @@
     function renderScene() {
         const space = document.getElementById('immersive-space');
         const hands = document.getElementById('hands-overlay');
-        const gallery = document.getElementById('gallery-frames');
         const lookbook = document.getElementById('lookbook-container');
         const scene = walkScenes[currentWalkStep];
 
         space.style.backgroundImage = `url('Assets/${scene.bg}')`;
         hands.style.opacity = scene.showHands ? '1' : '0';
-        
-        gallery.style.display = (scene.mode === 'gallery') ? 'flex' : 'none';
         lookbook.style.display = (scene.mode === 'lookbook') ? 'block' : 'none';
-
-        if (scene.mode === 'gallery') {
-            scene.images.forEach((img, i) => {
-                const slot = document.getElementById(`g-slot-${i+1}`);
-                if(slot) slot.style.backgroundImage = `url('Assets/${img}')`;
-            });
-        }
 
         if (scene.mode === 'lookbook') {
             scene.images.forEach((img, i) => {
