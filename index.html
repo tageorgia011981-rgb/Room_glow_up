@@ -3,148 +3,90 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Furniture Walkthrough</title>
+    <title>Room Glow Up Walkthrough</title>
     <style>
-        * { box-sizing: border-box; }
-        body, html { 
-            margin: 0; padding: 0; 
-            width: 100%; height: 100%; 
-            overflow: hidden; 
-            background: #111; 
-            font-family: 'Segoe UI', sans-serif; 
+        /* MASTER PALETTE */
+        :root {
+            --gunmetal: #162127;
+            --bronze: #CF9D7B;
+            --studio-black: #000;
         }
 
-        .walkthrough-container { width: 100%; height: 100%; position: relative; }
+        body, html { margin: 0; padding: 0; width: 100%; height: 100%; overflow: hidden; background: var(--studio-black); font-family: sans-serif; }
 
         .room {
-            display: none;
+            position: absolute;
+            top: 0; left: 0;
             width: 100vw;
             height: 100vh;
+            display: none;
             background-position: center;
-            background-size: cover;
             background-repeat: no-repeat;
-            justify-content: center;
-            align-items: center;
         }
 
-        .active { display: flex; }
+        .active { display: flex; justify-content: center; align-items: center; }
 
-        /* ENLARGING RAIN IMAGES IN ROOM 1 & 2 */
-        .framed-photo {
-            line-height: 0;
-            border: 12px solid #b8860b; /* Simple gold border */
-            box-shadow: 0 20px 40px rgba(0,0,0,0.8);
-        }
+        /* RAIN HALLWAY PHYSICS (Locked to Contain/Black) */
+        .rain-room { background-size: contain; background-color: var(--studio-black); }
+        .rain-room img { max-height: 90vh; width: auto; }
 
-        .framed-photo img {
-            /* Increased from 50vh to 75vh to make them "a little bigger" */
-            max-height: 75vh; 
-            width: auto;
-            display: block;
-        }
+        /* GALLERY WALLS (Full Screen) */
+        .gallery-room { background-size: cover; }
 
-        /* ROOM 4: THE BAKED-IN GALLERY */
-        #room-4 {
-            background-image: url('galleryframes1.jpg');
-            display: none; /* Controlled by JS */
-        }
-        #room-4.active { display: block; }
-
-        .hotspot {
-            position: absolute;
-            cursor: pointer;
-            z-index: 10;
-        }
-
-        /* UI ELEMENTS */
-        .nav-controls {
-            position: absolute;
+        /* NAVIGATION BUTTONS (Brushed Bronze) */
+        .nav-ui {
+            position: fixed;
             bottom: 30px;
             width: 100%;
             display: flex;
             justify-content: space-between;
-            padding: 0 50px;
-            z-index: 100;
+            padding: 0 40px;
+            box-sizing: border-box;
+            z-index: 1000;
         }
 
-        button { 
-            padding: 12px 25px; 
-            cursor: pointer; 
-            background: rgba(184, 134, 11, 0.9); 
-            color: white; 
+        .btn-bronze {
+            padding: 12px 24px;
+            background: var(--bronze);
+            color: var(--gunmetal);
             border: none;
             font-weight: bold;
-        }
-
-        #info-modal, #overlay { display: none; position: fixed; z-index: 200; }
-        #overlay { top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); }
-        #info-modal { 
-            top: 50%; left: 50%; transform: translate(-50%, -50%);
-            background: white; padding: 30px; width: 350px; text-align: center; 
+            cursor: pointer;
+            text-transform: uppercase;
+            box-shadow: 0 4px 0px #8e6a52; /* "Screw-head" depth effect */
         }
     </style>
 </head>
 <body>
 
-<div class="walkthrough-container">
-    
-    <div id="room-1" class="room active" style="background-image: url('room1-bg.jpg');">
-        <div class="framed-photo">
-            <img src="rain-image-1.jpg" alt="Rain in Room 1">
-        </div>
+    <div id="room-1" class="room rain-room active" style="background-image: url('Assets/rain1.jpg');"></div>
+
+    <div id="room-2" class="room rain-room" style="background-image: url('Assets/rain2.jpg');"></div>
+
+    <div id="room-3" class="room gallery-room" style="background-image: url('Assets/goldhands.jpg');"></div>
+
+    <div id="room-4" class="room gallery-room" style="background-image: url('Assets/galleryframes1.jpg');"></div>
+
+    <div id="room-5" class="room gallery-room" style="background-image: url('Assets/inspwalkthrough5.jpg');"></div>
+
+    <div class="nav-ui">
+        <button class="btn-bronze" onclick="nav(-1)">Previous</button>
+        <button class="btn-bronze" onclick="nav(1)">Next</button>
     </div>
 
-    <div id="room-2" class="room" style="background-image: url('room2-bg.jpg');">
-        <div class="framed-photo">
-            <img src="rain-image-2.jpg" alt="Rain in Room 2">
-        </div>
-    </div>
+    <script>
+        let current = 1;
+        const total = 5;
 
-    <div id="room-3" class="room" style="background-image: url('room3-bg.jpg');"></div>
-
-    <div id="room-4" class="room">
-        <div class="hotspot" style="top: 22%; left: 10%; width: 25%; height: 55%;" onclick="openItem('Piece 1', 'Detailed description.')"></div>
-        <div class="hotspot" style="top: 18%; left: 38%; width: 24%; height: 65%;" onclick="openItem('Piece 2', 'Detailed description.')"></div>
-        <div class="hotspot" style="top: 22%; left: 65%; width: 25%; height: 55%;" onclick="openItem('Piece 3', 'Detailed description.')"></div>
-    </div>
-
-    <div class="nav-controls">
-        <button onclick="changeRoom(-1)">PREVIOUS</button>
-        <button onclick="changeRoom(1)">NEXT</button>
-    </div>
-</div>
-
-<div id="overlay" onclick="closeModal()"></div>
-<div id="info-modal">
-    <h3 id="modal-title"></h3>
-    <p id="modal-desc"></p>
-    <button onclick="closeModal()">CLOSE</button>
-</div>
-
-<script>
-    let currentRoom = 1;
-    const totalRooms = 4;
-
-    function changeRoom(dir) {
-        document.getElementById(`room-${currentRoom}`).classList.remove('active');
-        currentRoom += dir;
-        if (currentRoom < 1) currentRoom = 1;
-        if (currentRoom > totalRooms) currentRoom = totalRooms;
-        document.getElementById(`room-${currentRoom}`).classList.add('active');
-    }
-
-    function openItem(title, desc) {
-        document.getElementById('modal-title').innerText = title;
-        document.getElementById('modal-desc').innerText = desc;
-        document.getElementById('info-modal').style.display = 'block';
-        document.getElementById('overlay').style.display = 'block';
-    }
-
-    function closeModal() {
-        document.getElementById('info-modal').style.display = 'none';
-        document.getElementById('overlay').style.display = 'none';
-    }
-</script>
-
+        function nav(dir) {
+            let next = current + dir;
+            if (next < 1 || next > total) return;
+            
+            document.getElementById(`room-${current}`).classList.remove('active');
+            document.getElementById(`room-${next}`).classList.add('active');
+            
+            current = next;
+        }
+    </script>
 </body>
 </html>
