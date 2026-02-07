@@ -14,7 +14,6 @@
             --gold-leaf: linear-gradient(135deg, #bf953f 0%, #fcf6ba 45%, #b38728 50%, #fbf5b7 55%, #aa771c 100%);
         }
 
-        /* MASTER RULE: STRICT CONTAINED PHYSICS */
         body, html {
             margin: 0;
             padding: 0;
@@ -125,7 +124,6 @@
             text-align: center;
         }
 
-        /* IMMERSIVE SPACE */
         #immersive-space {
             position: fixed;
             top: 0;
@@ -147,36 +145,37 @@
             left: 0;
             width: 100%;
             height: 100%;
-            display: none;
             z-index: 10001;
         }
 
+        /* MASTER FRAME WRAPPER */
         .museum-piece {
             position: absolute;
-            background-size: contain; 
-            background-position: center;
-            background-repeat: no-repeat;
-            background-color: #050505; 
+            /* This creates the gold frame */
             border: 18px solid transparent; 
             border-image: var(--gold-leaf) 1;
-            box-shadow: 0 30px 60px rgba(0,0,0,0.9), inset 0 0 20px #000;
-            transition: opacity 0.5s ease-in-out;
+            box-shadow: 0 30px 60px rgba(0,0,0,0.9);
+            background-color: #000;
+            display: flex;
+            overflow: hidden; /* Clips the image inside the border */
         }
 
-        /* GALLERY WALL MAPPING (3-IMAGE GRID) */
-        #l-slot-1 { top: 12%; left: 10%; width: 38%; height: 38%; }
-        #l-slot-2 { top: 12%; left: 52%; width: 38%; height: 38%; }
-        #l-slot-3 { top: 54%; left: 31%; width: 38%; height: 38%; }
+        /* IMAGE INSIDE THE FRAME */
+        .framed-photo {
+            width: 100%;
+            height: 100%;
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            box-shadow: inset 0 0 20px #000; /* Depth shadow on the photo */
+        }
+
     </style>
 </head>
 <body>
 
 <div id="immersive-space" onclick="nextWalkthroughStep()">
-    <div id="lookbook-container">
-        <div id="l-slot-1" class="museum-piece"></div>
-        <div id="l-slot-2" class="museum-piece"></div>
-        <div id="l-slot-3" class="museum-piece"></div>
-    </div>
+    <div id="lookbook-container"></div>
 </div>
 
 <div id="site-wrapper">
@@ -198,16 +197,27 @@
 <script>
     let currentWalkStep = 0;
     
-    /* To add more images, just copy the {bg: '...', mode: 'lookbook', images: [...]} line 
-       and change the filenames. 
-    */
     const walkScenes = [
-        { bg: 'rain1.jpg', mode: 'empty', images: [] },
-        { bg: 'rain2.jpg', mode: 'empty', images: [] },
-        // Wall 1
-        { bg: 'lookbook1.jpg', mode: 'lookbook', images: ['insp17.jpg', 'insp20.jpg', 'insp18.jpg'] },
-        // Wall 2 (Remaining leftovers + the 3rd one you are sending)
-        { bg: 'lookbook1.jpg', mode: 'lookbook', images: ['insp16.jpg', 'insp21.jpg', 'NEXT_IMAGE.jpg'] }
+        { bg: 'rain1.jpg', mode: 'empty', assets: [] },
+        { bg: 'rain2.jpg', mode: 'empty', assets: [] },
+        { 
+            bg: 'lookbook1.jpg', 
+            mode: 'lookbook', 
+            assets: [
+                { img: 'insp17.jpg', top: '15%', left: '12%', w: '35%', h: '35%' },
+                { img: 'insp20.jpg', top: '15%', left: '53%', w: '35%', h: '35%' },
+                { img: 'insp18.jpg', top: '55%', left: '32%', w: '36%', h: '35%' }
+            ] 
+        },
+        { 
+            bg: 'lookbook1.jpg', 
+            mode: 'lookbook', 
+            assets: [
+                { img: 'insp16.jpg', top: '12%', left: '10%', w: '38%', h: '38%' },
+                { img: 'insp21.jpg', top: '12%', left: '52%', w: '38%', h: '38%' },
+                { img: 'placeholder.jpg', top: '52%', left: '31%', w: '38%', h: '38%' }
+            ] 
+        }
     ]; 
 
     function startWalkthrough(e) {
@@ -222,28 +232,30 @@
 
     function renderScene() {
         const space = document.getElementById('immersive-space');
-        const lookbook = document.getElementById('lookbook-container');
+        const container = document.getElementById('lookbook-container');
         const scene = walkScenes[currentWalkStep];
 
-        // Fade effect for background change
         space.style.backgroundImage = `url('Assets/${scene.bg}')`;
-        lookbook.style.display = (scene.mode === 'lookbook') ? 'block' : 'none';
+        container.innerHTML = ''; 
+        container.style.display = (scene.mode === 'lookbook') ? 'block' : 'none';
 
         if (scene.mode === 'lookbook') {
-            // Reset slots
-            for(let i=1; i<=3; i++) {
-                const slot = document.getElementById(`l-slot-${i}`);
-                slot.style.backgroundImage = '';
-                slot.style.opacity = '0';
-            }
-            
-            // Map current wall images
-            scene.images.forEach((img, i) => {
-                const slot = document.getElementById(`l-slot-${i+1}`);
-                if (slot && img) {
-                    slot.style.backgroundImage = `url('Assets/${img}')`;
-                    slot.style.opacity = '1';
-                }
+            scene.assets.forEach(item => {
+                // Create the physical frame
+                const frame = document.createElement('div');
+                frame.className = 'museum-piece';
+                frame.style.top = item.top;
+                frame.style.left = item.left;
+                frame.style.width = item.w;
+                frame.style.height = item.h;
+
+                // Create the photo inside the frame
+                const photo = document.createElement('div');
+                photo.className = 'framed-photo';
+                photo.style.backgroundImage = `url('Assets/${item.img}')`;
+                
+                frame.appendChild(photo);
+                container.appendChild(frame);
             });
         }
     }
@@ -253,7 +265,6 @@
         if (currentWalkStep < walkScenes.length) {
             renderScene();
         } else {
-            // Exit walkthrough
             document.getElementById('immersive-space').style.display = 'none';
             document.getElementById('site-wrapper').style.display = 'block';
             currentWalkStep = 0;
