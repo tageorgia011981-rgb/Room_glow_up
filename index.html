@@ -2,49 +2,41 @@
 <html lang="en">
 <head>
     <style>
-        body, html { margin: 0; padding: 0; overflow: hidden; }
+        body, html { margin: 0; padding: 0; overflow: hidden; background: #000; }
 
-        /* The background you provided */
-        #wall {
+        #room-background {
             width: 100vw;
             height: 100vh;
             background: url('galleryframes1.jpg') center/cover no-repeat;
             display: flex;
-            justify-content: center;
+            justify-content: center; 
             align-items: center;
-            gap: 40px;
+            gap: 5%;
         }
 
-        /* The Frame: It wraps around the <img> size */
-        .frame-wrapper {
-            display: inline-block;
+        .attached-art {
             line-height: 0;
-            border: 18px solid transparent;
-            /* Using a gold gradient to simulate the ornate frame look */
-            border-image: linear-gradient(135deg, #bf953f, #fcf6ba, #b38728, #fbf5b7, #aa771c) 1;
-            box-shadow: 0 25px 50px rgba(0,0,0,0.7);
+            display: inline-block;
+            /* Frame wraps image perfectly */
+            border: 16px solid transparent;
+            border-image: linear-gradient(145deg, #e6b800, #fff58f, #8a6d3b, #bf953f) 1;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.6);
             background: #000;
         }
 
-        .frame-wrapper img {
-            max-height: 50vh; /* Keeps them scaled to the wall height */
-            width: auto;      /* Photo keeps its natural proportions */
+        .attached-art img {
+            max-height: 55vh;
+            width: auto;
             display: block;
         }
     </style>
 </head>
 <body>
 
-<div id="wall">
-    <div class="frame-wrapper">
-        <img src="Assets/yellow-chair.jpg">
-    </div>
-    <div class="frame-wrapper">
-        <img src="Assets/dresser.jpg">
-    </div>
-    <div class="frame-wrapper">
-        <img src="Assets/purple-chair.jpg">
-    </div>
+<div id="room-background">
+    <div class="attached-art"><img src="Assets/chair1.jpg"></div>
+    <div class="attached-art"><img src="Assets/dresser1.jpg"></div>
+    <div class="attached-art"><img src="Assets/chair2.jpg"></div>
 </div>
 
 </body>
