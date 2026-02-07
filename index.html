@@ -1,85 +1,51 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Room Glow Up - Natural Frame Fit</title>
-    <link href="https://fonts.googleapis.com/css2?family=Limelight&display=swap" rel="stylesheet">
     <style>
-        :root {
-            --gold-leaf: linear-gradient(135deg, #bf953f 0%, #fcf6ba 45%, #b38728 50%, #fbf5b7 55%, #aa771c 100%);
-        }
+        body, html { margin: 0; padding: 0; overflow: hidden; }
 
-        body, html {
-            margin: 0; padding: 0;
-            background-color: #000;
-            overflow: hidden;
-        }
-
-        #immersive-space {
+        /* The background you provided */
+        #wall {
             width: 100vw;
             height: 100vh;
-            background-size: contain;
-            background-position: center;
-            background-repeat: no-repeat;
-            position: relative;
+            background: url('galleryframes1.jpg') center/cover no-repeat;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 40px;
         }
 
-        /* THE FIX: The frame is applied to the image's natural size */
-        .museum-piece {
-            position: absolute;
+        /* The Frame: It wraps around the <img> size */
+        .frame-wrapper {
             display: inline-block;
-            line-height: 0; /* Prevents tiny gaps at the bottom of the image */
-            
-            /* The Gold Frame */
-            border: 15px solid transparent; 
-            border-image: var(--gold-leaf) 1;
-            
-            /* Shadow on the wall */
-            box-shadow: 0 30px 60px rgba(0,0,0,0.8);
+            line-height: 0;
+            border: 18px solid transparent;
+            /* Using a gold gradient to simulate the ornate frame look */
+            border-image: linear-gradient(135deg, #bf953f, #fcf6ba, #b38728, #fbf5b7, #aa771c) 1;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.7);
+            background: #000;
         }
 
-        .museum-piece img {
-            /* The photo dictates the size of the container */
-            max-width: 30vw; /* Keeps it from getting too huge on the wall */
-            height: auto;
+        .frame-wrapper img {
+            max-height: 50vh; /* Keeps them scaled to the wall height */
+            width: auto;      /* Photo keeps its natural proportions */
             display: block;
         }
     </style>
 </head>
 <body>
 
-<div id="immersive-space"></div>
+<div id="wall">
+    <div class="frame-wrapper">
+        <img src="Assets/yellow-chair.jpg">
+    </div>
+    <div class="frame-wrapper">
+        <img src="Assets/dresser.jpg">
+    </div>
+    <div class="frame-wrapper">
+        <img src="Assets/purple-chair.jpg">
+    </div>
+</div>
 
-<script>
-    const wallContainer = document.getElementById('immersive-space');
-
-    const wall1Assets = [
-        { src: 'Assets/insp17.jpg', top: '15%', left: '10%' },
-        { src: 'Assets/insp20.jpg', top: '15%', left: '45%' },
-        { src: 'Assets/insp18.jpg', top: '50%', left: '30%' }
-    ];
-
-    function renderWall() {
-        wallContainer.style.backgroundImage = "url('Assets/lookbook1.jpg')";
-        
-        wall1Assets.forEach(asset => {
-            // Create a wrapper for the frame
-            const frame = document.createElement('div');
-            frame.className = 'museum-piece';
-            frame.style.top = asset.top;
-            frame.style.left = asset.left;
-            
-            // Create the actual image
-            const img = document.createElement('img');
-            img.src = asset.src;
-            
-            frame.appendChild(img);
-            wallContainer.appendChild(frame);
-        });
-    }
-
-    renderWall();
-</script>
 </body>
 </html>
