@@ -7,10 +7,10 @@
 <link href="https://fonts.googleapis.com/css2?family=Limelight&display=swap" rel="stylesheet">
 <style>
 :root {
---metal-shine: linear-gradient(180deg, #e6e6e6 0%, #999 40%, #555 50%, #888 60%, #333 100%);
+/* Gunmetal Metallic Theme */
+--gunmetal: linear-gradient(180deg, #535c68 0%, #2c3e50 40%, #000000 100%);
 --silver-header: linear-gradient(to bottom, #ffffff 0%, #a6a6a6 45%, #4d4d4d 50%, #ffffff 55%, #808080 100%);
---glow-white: #ffffff;
---tag-gold: #d4af37;
+--glow-white: rgba(255, 255, 255, 0.9);
 }
 
 body, html {
@@ -58,7 +58,7 @@ letter-spacing: 3px;
 text-shadow: 3px 3px 6px #000;
 }
 
-/* --- VINTAGE LIBRARY LABEL HOLDERS --- */
+/* --- VINTAGE GUNMETAL LABEL HOLDERS --- */
 .nav-container {
 display: flex;
 gap: 25px;
@@ -68,84 +68,90 @@ z-index: 50;
 }
 
 .label-holder {
-width: 210px;
-height: 105px;
-background: var(--metal-shine);
-border: 1px solid #222;
+width: 230px; /* Slightly wider for longer text */
+height: 115px;
+background: var(--gunmetal);
+border: 1px solid #111;
 border-radius: 4px 4px 0 0;
 position: relative;
 display: flex;
 justify-content: center;
 align-items: center;
-box-shadow: 0 10px 20px rgba(0,0,0,0.8), inset 0 2px 2px rgba(255,255,255,0.3);
+box-shadow: 0 10px 25px rgba(0,0,0,0.9), inset 0 1px 3px rgba(255,255,255,0.2);
 cursor: pointer;
 transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.3s ease;
 }
 
-/* THE LIFT ACTION */
 .label-holder:hover {
-transform: translateY(-12px) scale(1.02);
-box-shadow: 0 25px 35px rgba(0,0,0,0.9), inset 0 2px 5px rgba(255,255,255,0.4);
+transform: translateY(-12px);
+box-shadow: 0 25px 40px rgba(0,0,0,1);
 }
 
 .screw {
 position: absolute;
 width: 10px;
 height: 10px;
-background: radial-gradient(circle at 3px 3px, #888, #111);
+background: radial-gradient(circle at 3px 3px, #666, #000);
 border-radius: 50%;
 box-shadow: 1px 1px 2px #000;
 }
 .s-tl { top: 10px; left: 10px; }
 .s-tr { top: 10px; right: 10px; }
-.s-bl { bottom: 30px; left: 10px; }
-.s-br { bottom: 30px; right: 10px; }
+.s-bl { bottom: 35px; left: 10px; }
+.s-br { bottom: 35px; right: 10px; }
 
+/* RECESSED CARD EFFECT */
 .white-card {
-width: 75%;
-height: 50%;
-background: #fdfdfd;
+width: 80%;
+height: 55%;
+background: #eee;
 display: flex;
 justify-content: center;
 align-items: center;
-border: 1px solid #999;
-box-shadow: inset 2px 2px 5px rgba(0,0,0,0.1);
+border-top: 3px solid #333; /* Shadow for recession */
+border-left: 3px solid #333;
+border-right: 1px solid #888;
+border-bottom: 1px solid #888;
+box-shadow: inset 4px 4px 8px rgba(0,0,0,0.5);
 transition: background 0.4s ease, box-shadow 0.4s ease;
 }
 
-/* WHITE GLOW ON HOVER */
 .label-holder:hover .white-card {
 background: var(--glow-white);
-box-shadow: 0 0 25px rgba(255, 255, 255, 0.8);
+box-shadow: inset 2px 2px 5px rgba(0,0,0,0.3), 0 0 20px #fff;
 }
 
+/* BIGGER BOLDER DARKER TYPEWRITER */
 .label-text {
 font-family: 'Courier New', Courier, monospace;
 font-weight: 900;
-font-size: 15px;
-color: #333;
+font-size: 18px; 
+color: #000;
 text-transform: uppercase;
-letter-spacing: 1px;
+letter-spacing: 0.5px;
+text-align: center;
+padding: 0 5px;
 }
 
 .lip-pull {
 position: absolute;
-bottom: -5px;
-width: 90%;
-height: 22px;
-background: linear-gradient(180deg, #666 0%, #222 100%);
-border-radius: 0 0 25px 25px;
-border: 1px solid #111;
-box-shadow: 0 5px 10px rgba(0,0,0,0.6);
+bottom: -8px;
+width: 92%;
+height: 25px;
+background: linear-gradient(180deg, #444 0%, #111 100%);
+border-radius: 0 0 30px 30px;
+border: 1px solid #000;
+box-shadow: 0 6px 12px rgba(0,0,0,0.7);
 }
 
+/* --- INTERACTION ZONE --- */
 #interaction-zone {
 display: flex;
 justify-content: center;
 align-items: flex-start;
 gap: 40px;
-width: 1540px;
-height: 750px;
+width: 1600px;
+height: 850px;
 position: relative;
 margin: 0 auto;
 }
@@ -153,7 +159,7 @@ margin: 0 auto;
 .cabinet-space {
 position: relative;
 width: 550px;
-height: 650px;
+height: 800px;
 }
 
 .asset-side-container {
@@ -166,58 +172,62 @@ transition: transform 2s cubic-bezier(0.23, 1, 0.32, 1);
 z-index: 30;
 }
 
-#rooms-cabinet-container.glided-in, 
-#furniture-cases-container.glided-in,
-#decor-closet-container.glided-in { transform: translateX(0); }
+.asset-side-container.glided-in { transform: translateX(0); }
 
 .asset-img {
 width: 100%;
 filter: drop-shadow(15px 15px 30px #000);
 }
 
+/* DRAWER TABS SPACED TO CABINET DRAWERS */
 .drawer-labels-overlay {
 position: absolute;
-top: 135px;
+top: 135px; /* Aligned to first drawer */
 left: 95px;
 display: flex;
 flex-direction: column;
-gap: 15px;
+gap: 32px; /* Increased gap to match cabinet image drawers */
 }
 
+/* SUB-DRAWER TABS MATCH TOP NAV */
 .small-pull-tab {
-width: 160px;
-height: 55px;
-background: var(--metal-shine);
+width: 170px;
+height: 60px;
+background: var(--gunmetal);
 display: flex;
 justify-content: center;
 align-items: center;
 position: relative;
 cursor: pointer;
-box-shadow: inset 0 0 8px #000, 3px 3px 10px rgba(0,0,0,0.5);
-transition: transform 0.2s ease;
+border: 1px solid #111;
+box-shadow: 0 5px 10px rgba(0,0,0,0.5), inset 0 1px 2px rgba(255,255,255,0.2);
+transition: transform 0.3s ease;
 }
 
 .small-pull-tab:hover {
-transform: translateX(8px);
+transform: translateX(10px) translateY(-5px); /* Lifts and slides */
 }
 
 .drawer-white-card {
-width: 80%;
-height: 60%;
-background: #fff;
+width: 85%;
+height: 65%;
+background: #eee;
 display: flex;
 justify-content: center;
 align-items: center;
 font-family: 'Courier New', Courier, monospace;
-font-size: 12px;
-font-weight: bold;
+font-size: 14px;
+font-weight: 900;
+color: #000;
 text-transform: uppercase;
-transition: background 0.3s ease;
+border-top: 2px solid #333;
+border-left: 2px solid #333;
+box-shadow: inset 3px 3px 6px rgba(0,0,0,0.4);
 }
 
 .small-pull-tab:hover .drawer-white-card {
-background: var(--glow-white);
-box-shadow: 0 0 15px rgba(255, 255, 255, 0.6);
+background: #fff;
+box-shadow: 0 0 10px #fff;
 }
 
 #theater-container {
@@ -231,6 +241,7 @@ z-index: 5;
 flex-shrink: 0;
 position: relative;
 perspective: 1200px;
+margin-top: 50px;
 }
 
 #room-display {
@@ -259,11 +270,36 @@ filter: drop-shadow(5px 10px 15px rgba(0,0,0,0.5));
 </header>
 
 <nav class="nav-container">
-<div class="label-holder" onclick="showAsset('rooms-cabinet-container')"><div class="screw s-tl"></div><div class="screw s-tr"></div><div class="white-card"><span class="label-text">Rooms</span></div><div class="screw s-bl"></div><div class="screw s-br"></div><div class="lip-pull"></div></div>
-<div class="label-holder" onclick="showAsset('furniture-cases-container')"><div class="screw s-tl"></div><div class="screw s-tr"></div><div class="white-card"><span class="label-text">Furniture</span></div><div class="screw s-bl"></div><div class="screw s-br"></div><div class="lip-pull"></div></div>
-<div class="label-holder" onclick="showAsset('decor-closet-container')"><div class="screw s-tl"></div><div class="screw s-tr"></div><div class="white-card"><span class="label-text">Decor Closet</span></div><div class="screw s-bl"></div><div class="screw s-br"></div><div class="lip-pull"></div></div>
-<div class="label-holder"><div class="screw s-tl"></div><div class="screw s-tr"></div><div class="white-card"><span class="label-text">Walkthrough</span></div><div class="screw s-bl"></div><div class="screw s-br"></div><div class="lip-pull"></div></div>
-<div class="label-holder"><div class="screw s-tl"></div><div class="screw s-tr"></div><div class="white-card"><span class="label-text">Save</span></div><div class="screw s-bl"></div><div class="screw s-br"></div><div class="lip-pull"></div></div>
+<div class="label-holder" onclick="showAsset('rooms-cabinet-container')">
+    <div class="screw s-tl"></div><div class="screw s-tr"></div>
+    <div class="white-card"><span class="label-text">Rooms</span></div>
+    <div class="screw s-bl"></div><div class="screw s-br"></div>
+    <div class="lip-pull"></div>
+</div>
+<div class="label-holder" onclick="showAsset('furniture-cases-container')">
+    <div class="screw s-tl"></div><div class="screw s-tr"></div>
+    <div class="white-card"><span class="label-text">Furniture Catalog</span></div>
+    <div class="screw s-bl"></div><div class="screw s-br"></div>
+    <div class="lip-pull"></div>
+</div>
+<div class="label-holder" onclick="showAsset('decor-closet-container')">
+    <div class="screw s-tl"></div><div class="screw s-tr"></div>
+    <div class="white-card"><span class="label-text">Decor Closet</span></div>
+    <div class="screw s-bl"></div><div class="screw s-br"></div>
+    <div class="lip-pull"></div>
+</div>
+<div class="label-holder">
+    <div class="screw s-tl"></div><div class="screw s-tr"></div>
+    <div class="white-card"><span class="label-text">Inspirational Gallery</span></div>
+    <div class="screw s-bl"></div><div class="screw s-br"></div>
+    <div class="lip-pull"></div>
+</div>
+<div class="label-holder">
+    <div class="screw s-tl"></div><div class="screw s-tr"></div>
+    <div class="white-card"><span class="label-text">Save / Check Out</span></div>
+    <div class="screw s-bl"></div><div class="screw s-br"></div>
+    <div class="lip-pull"></div>
+</div>
 </nav>
 
 <div id="interaction-zone">
@@ -274,7 +310,7 @@ filter: drop-shadow(5px 10px 15px rgba(0,0,0,0.5));
 <div class="small-pull-tab" onclick="cycleRoom('livingroom')"><div class="drawer-white-card">Living</div></div>
 <div class="small-pull-tab" onclick="cycleRoom('bedroom')"><div class="drawer-white-card">Bedroom</div></div>
 <div class="small-pull-tab" onclick="cycleRoom('diningroom')"><div class="drawer-white-card">Dining</div></div>
-<div class="small-pull-tab" onclick="document.getElementById('room-upload').click()"><input type="file" id="room-upload" style="display:none" onchange="uploadRoom(this)"><div class="drawer-white-card">Upload</div></div>
+<div class="small-pull-tab" onclick="cycleRoom('extra')"><div class="drawer-white-card">Extra Rooms</div></div>
 </div>
 </div>
 
@@ -283,6 +319,8 @@ filter: drop-shadow(5px 10px 15px rgba(0,0,0,0.5));
 <div class="drawer-labels-overlay">
 <div class="small-pull-tab" ondblclick="addItem('seating1.png', 280, false, 15)"><div class="drawer-white-card">Seating</div></div>
 <div class="small-pull-tab" ondblclick="addItem('table1.png', 220, false, 14)"><div class="drawer-white-card">Tables</div></div>
+<div class="small-pull-tab"><div class="drawer-white-card">Storage</div></div>
+<div class="small-pull-tab"><div class="drawer-white-card">Beds</div></div>
 </div>
 </div>
 
@@ -303,12 +341,18 @@ filter: drop-shadow(5px 10px 15px rgba(0,0,0,0.5));
 </div>
 
 <script>
-const roomInventory = { livingroom: ['livingroom1.jpg', 'livingroom3.jpg'], bedroom: ['bedroom.jpg', 'bedroom2.jpg'], diningroom: ['diningroom.jpg'] };
-let indices = { livingroom: 0, bedroom: 0, diningroom: 0 };
+const roomInventory = { livingroom: ['livingroom1.jpg'], bedroom: ['bedroom.jpg'], diningroom: ['diningroom.jpg'], extra: ['extra1.jpg'] };
+let indices = { livingroom: 0, bedroom: 0, diningroom: 0, extra: 0 };
 
 function showAsset(id) {
 document.querySelectorAll('.asset-side-container').forEach(c => c.classList.remove('glided-in'));
-document.getElementById(id).classList.add('glided-in');
+const target = document.getElementById(id);
+target.classList.add('glided-in');
+
+// AUTO-SCROLL TO CABINET
+setTimeout(() => {
+    target.scrollIntoView({ behavior: 'smooth', block: 'center' });
+}, 500);
 }
 
 function cycleRoom(type) {
@@ -339,14 +383,6 @@ e.preventDefault(); p1 = p3 - e.clientX; p2 = p4 - e.clientY; p3 = e.clientX; p4
 el.style.top = (el.offsetTop - p2) + "px"; el.style.left = (el.offsetLeft - p1) + "px";
 };
 };
-}
-
-function uploadRoom(input) {
-if (input.files && input.files[0]) {
-let r = new FileReader();
-r.onload = e => document.getElementById('room-display').style.backgroundImage = `url(${e.target.result})`;
-r.readAsDataURL(input.files[0]);
-}
 }
 </script>
 </body>
