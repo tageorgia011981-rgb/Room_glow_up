@@ -18,56 +18,88 @@
             margin: 0; 
             font-family: 'Segoe UI', sans-serif; 
             overflow-x: hidden;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
 
-        /* --- THE DESIGN STAGE (TOP) --- */
+        /* --- THE VOGUE HEADER --- */
+        header {
+            text-align: center;
+            padding: 40px 0 20px 0;
+        }
+
+        h1 {
+            font-family: 'Limelight', cursive;
+            font-size: 4rem;
+            margin: 0;
+            letter-spacing: 12px;
+            color: var(--silver);
+            text-shadow: 2px 2px 15px rgba(255,255,255,0.1);
+        }
+
+        h2 {
+            font-family: 'Limelight', cursive;
+            font-size: 1.2rem;
+            letter-spacing: 4px;
+            font-weight: normal;
+            margin-top: 10px;
+            color: #888;
+        }
+
+        /* --- THE DESIGN THEATER (TOP) --- */
         #stage-container {
-            width: 100%; height: 600px;
-            display: flex; flex-direction: column; align-items: center;
-            padding-top: 20px;
+            width: 100%;
+            display: flex;
+            justify-content: center;
             perspective: 1200px;
+            margin-bottom: 50px;
         }
 
         #theater-stage {
-            width: 1100px; height: 500px;
+            width: 1100px;
+            height: 550px;
             background: #000;
-            border: 12px solid var(--gunmetal);
+            border: 15px solid var(--gunmetal);
             position: relative;
             overflow: hidden;
-            box-shadow: 0 0 50px rgba(255,255,255,0.05);
+            box-shadow: 0 0 60px rgba(255,255,255,0.03);
         }
 
         .stage-item {
             position: absolute;
             cursor: move;
             transition: transform 0.3s;
-            filter: drop-shadow(0 10px 15px rgba(0,0,0,0.6));
+            filter: drop-shadow(0 15px 20px rgba(0,0,0,0.8));
         }
 
-        /* The styles we talked about */
+        /* Item Logic: Rugs tilt, others stay vertical */
         .lay-flat { transform: rotateX(55deg); transform-origin: bottom; }
         .upright { transform: rotateX(0deg); }
 
         /* --- THE BOUTIQUE CLOSET (BOTTOM) --- */
         #closet-window {
-            width: 1150px; height: 750px;
-            margin: 40px auto;
+            width: 1150px;
+            height: 750px;
             position: relative;
-            border: 15px solid #111;
+            border: 20px solid #111;
             overflow: hidden;
             background: #000;
+            margin-bottom: 100px;
         }
 
         #closet-slider {
             display: flex;
             width: 2300px; 
             height: 100%;
-            transition: transform 1s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: transform 1.2s cubic-bezier(0.45, 0.05, 0.55, 0.95);
         }
 
         .room {
-            width: 1150px; height: 100%;
-            background-size: contain; background-repeat: no-repeat;
+            width: 1150px;
+            height: 100%;
+            background-size: cover;
+            background-repeat: no-repeat;
             background-position: center;
             position: relative;
             flex-shrink: 0;
@@ -76,51 +108,69 @@
         .closet-item { 
             position: absolute; 
             cursor: pointer; 
-            transition: 0.2s; 
+            transition: transform 0.3s ease;
             z-index: 10;
         }
-        .closet-item:hover { transform: scale(1.1); filter: brightness(1.2); }
+        .closet-item:hover { transform: scale(1.15) translateY(-5px); filter: brightness(1.2); }
 
-        /* --- SILVER HANDLES --- */
+        /* --- SILVER NAVIGATION HANDLES --- */
         .nav-bar {
-            position: absolute; bottom: 30px; width: 100%;
-            display: flex; justify-content: center; gap: 60px;
+            position: absolute;
+            bottom: 40px;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            gap: 100px;
             z-index: 100;
         }
+
         .handle {
-            width: 70px; height: 20px;
-            background: linear-gradient(#eee, #888);
-            border-radius: 0 0 10px 10px;
+            width: 80px;
+            height: 25px;
+            background: linear-gradient(to bottom, #f0f0f0, #777);
+            border-radius: 0 0 15px 15px;
             cursor: pointer;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.5);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.6);
+            border: 1px solid #444;
         }
+        .handle:hover { filter: brightness(1.3); transform: translateY(2px); }
+
     </style>
 </head>
 <body>
 
+    <header>
+        <h1>ROOM GLOW UP</h1>
+        <h2>Where Your Dream Space Comes To Life</h2>
+    </header>
+
     <div id="stage-container">
-        <h1 style="font-family: 'Limelight'; font-size: 2.8rem; letter-spacing: 8px; margin-bottom: 10px;">ROOM GLOW UP</h1>
-        <div id="theater-stage"></div>
+        <div id="theater-stage">
+            </div>
     </div>
 
     <div id="closet-window">
         <div id="closet-slider">
+            
             <div class="room" style="background-image: url('Assets/pillowcloset.jpg');">
-                <img src="Assets/emptypillowrack.png" style="width: 550px; bottom: 20px; left: 300px; position:absolute; pointer-events: none;">
+                <img src="Assets/emptypillowrack.png" style="width: 580px; bottom: 30px; left: 285px; position:absolute; pointer-events: none;">
                 
-                <img src="Assets/pillow1.png" class="closet-item" style="width:110px; top:350px; left:350px;" ondblclick="addToStage(this.src, 140, 'upright')">
-                <img src="Assets/plant.png" class="closet-item" style="width:130px; top:480px; left:750px;" ondblclick="addToStage(this.src, 220, 'upright')">
+                <img src="Assets/pillow1.png" class="closet-item" style="width:110px; top:360px; left:360px;" ondblclick="addToStage(this.src, 140, 'upright')">
+                <img src="Assets/plant.png" class="closet-item" style="width:140px; top:470px; left:740px;" ondblclick="addToStage(this.src, 230, 'upright')">
+                <img src="Assets/blanket1.png" class="closet-item" style="width:130px; top:360px; left:550px;" ondblclick="addToStage(this.src, 180, 'upright')">
             </div>
 
             <div class="room" style="background-image: url('Assets/carpetshowroom.jpg');">
-                <img src="Assets/mirror1.png" class="closet-item" style="width:160px; top:120px; left:200px;" ondblclick="addToStage(this.src, 200, 'upright')">
-                <img src="Assets/rug1.png" class="closet-item" style="width:220px; top:420px; left:460px;" ondblclick="addToStage(this.src, 450, 'lay-flat')">
+                <img src="Assets/rug1.png" class="closet-item" style="width:220px; top:420px; left:460px;" ondblclick="addToStage(this.src, 480, 'lay-flat')">
+                
+                <img src="Assets/mirror1.png" class="closet-item" style="width:160px; top:120px; left:200px;" ondblclick="addToStage(this.src, 220, 'upright')">
             </div>
+
         </div>
 
         <div class="nav-bar">
-            <div class="handle" onclick="moveRoom(0)" title="Pillow Studio"></div>
-            <div class="handle" onclick="moveRoom(-1150)" title="Carpet Gallery"></div>
+            <div class="handle" onclick="moveRoom(0)" title="Decor Studio"></div>
+            <div class="handle" onclick="moveRoom(-1150)" title="Textile Gallery"></div>
         </div>
     </div>
 
@@ -128,33 +178,49 @@
         const slider = document.getElementById('closet-slider');
         const stage = document.getElementById('theater-stage');
 
-        function moveRoom(pos) { slider.style.transform = `translateX(${pos}px)`; }
+        // Navigation for the slider
+        function moveRoom(pos) { 
+            slider.style.transform = `translateX(${pos}px)`; 
+        }
 
+        // Engine to add items to the stage
         function addToStage(src, w, styleClass) {
             const img = document.createElement('img');
             img.src = src;
             img.className = 'stage-item ' + styleClass;
             img.style.width = w + 'px';
-            img.style.left = '400px'; 
-            img.style.top = '100px';
+            img.style.left = '450px'; 
+            img.style.top = '150px';
 
+            // Dbl Click to Remove
             img.ondblclick = function() { this.remove(); };
 
+            // Drag and Drop Logic
             img.onmousedown = function(e) {
                 let rect = stage.getBoundingClientRect();
                 let shiftX = e.clientX - img.getBoundingClientRect().left;
                 let shiftY = e.clientY - img.getBoundingClientRect().top;
+
                 function moveAt(pageX, pageY) {
-                    img.style.left = (pageX - rect.left - shiftX) + 'px';
-                    img.style.top = (pageY - rect.top - shiftY) + 'px';
+                    let newX = pageX - rect.left - shiftX;
+                    let newY = pageY - rect.top - shiftY;
+                    img.style.left = newX + 'px';
+                    img.style.top = newY + 'px';
                 }
+
                 function onMouseMove(e) { moveAt(e.pageX, e.pageY); }
                 document.addEventListener('mousemove', onMouseMove);
-                img.onmouseup = function() { document.removeEventListener('mousemove', onMouseMove); };
+                
+                document.onmouseup = function() {
+                    document.removeEventListener('mousemove', onMouseMove);
+                    document.onmouseup = null;
+                };
             };
 
             img.ondragstart = function() { return false; };
             stage.appendChild(img);
+            
+            // Smooth scroll back to top so you see the item on the stage
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
     </script>
