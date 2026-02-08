@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Room Glow Up - Boutique Interior</title>
+    <title>Room Glow Up</title>
     <link href="https://fonts.googleapis.com/css2?family=Limelight&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -11,189 +11,118 @@
             --metallic-silver: linear-gradient(145deg, #e0e0e0, #888888);
             --silver-ink: #C0C0C0;
             --flat-black: #111111;
+            --gunmetal: #2a2a2a;
         }
 
         body {
             background-color: var(--perfect-teal);
-            margin: 0;
-            padding: 0;
+            margin: 0; padding: 0;
             overflow-x: hidden;
             font-family: 'Segoe UI', sans-serif;
             scroll-behavior: smooth;
         }
 
-        /* --- FURNITURE CABINET (TOP) --- */
-        #cabinet-section {
-            width: 100%;
-            background: var(--flat-black);
-            border-bottom: 2px solid #333;
-            transition: height 1.2s cubic-bezier(0.4, 0, 0.2, 1);
-            height: 100px; 
-            overflow: hidden;
-            position: relative;
-        }
-
-        #cabinet-section.open { height: 600px; }
-
-        #case-glide-container {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 500px;
-            transform: translateX(100%); 
-            transition: transform 1.2s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-
-        #cabinet-section.open #case-glide-container { transform: translateX(0); }
-
-        .furniture-case {
-            width: 320px;
-            height: 420px;
-            background: #000;
-            border: 1px solid #444;
-            margin: 0 20px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-        }
-
-        /* --- THEATER STAGE (MIDDLE) --- */
+        /* --- THEATER STAGE --- */
         #theater-container {
             width: 100%;
             padding: 60px 0;
-            display: flex;
-            justify-content: center;
+            display: flex; justify-content: center;
         }
 
         #room-display {
-            width: 1100px;
-            height: 650px;
-            background: #000; 
-            border: 15px solid #1a1a1a;
+            width: 1100px; height: 650px;
+            background: #000; border: 15px solid #1a1a1a;
             position: relative;
             box-shadow: 0 50px 100px rgba(0,0,0,0.8);
             overflow: hidden;
-            background-size: contain;
-            background-repeat: no-repeat;
-            background-position: center;
         }
 
-        /* --- DECOR CLOSET (BOTTOM) --- */
+        /* --- THE BOUTIQUE CLOSET --- */
         #closet-box {
-            width: 1150px;
-            height: 780px;
+            width: 1150px; height: 780px;
             margin: 0 auto 200px auto;
             position: relative;
             perspective: 3000px;
             border: 18px solid #1a1a1a;
             background: #000;
+            overflow: hidden;
         }
 
-        #closet-interior {
+        #closet-interior-flow {
             position: absolute;
-            width: 100%;
+            display: flex;
+            width: 3450px; 
             height: 100%;
-            background-color: black;
-            background-size: contain; 
-            background-repeat: no-repeat;
-            background-position: center;
+            transition: transform 1.2s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .closet-section {
+            width: 1150px; height: 100%;
+            background-size: contain; background-repeat: no-repeat;
+            background-position: center; background-color: black;
+            position: relative;
+            flex-shrink: 0;
         }
 
         .closet-door {
             position: absolute;
             width: 50%; height: 100%;
             transition: 2.2s cubic-bezier(0.4, 0, 0.2, 1);
-            z-index: 500;
-            cursor: pointer;
+            z-index: 500; cursor: pointer;
         }
         .door-left { left: 0; transform-origin: left; }
         .door-right { right: 0; transform-origin: right; }
         #closet-box.open .door-left { transform: rotateY(-155deg); }
         #closet-box.open .door-right { transform: rotateY(155deg); }
 
-        /* --- HARDWARE TABS --- */
-        .hardware-tab {
-            width: 140px;
-            height: 45px;
-            cursor: pointer;
-            transition: 0.3s;
-        }
-
-        .silver-bracket {
-            width: 100%;
-            height: 100%;
-            background: var(--metallic-silver);
-            border-radius: 2px 2px 15px 15px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 2px;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.5);
-        }
-
-        .white-insert {
-            width: 92%;
-            height: 75%;
-            background: white;
-            color: #111;
-            font-family: 'Georgia', serif;
-            font-size: 11px;
-            font-style: italic;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        /* --- SCROLL RECEIPT --- */
-        #receipt-container {
+        /* --- HOVER PREVIEW WINDOW --- */
+        #preview-window {
             position: fixed;
-            right: -320px;
-            top: 100px;
-            width: 300px;
-            height: 600px;
-            background: url('Assets/scrollreceipt.png') no-repeat center;
-            background-size: contain;
-            transition: right 0.8s ease;
-            z-index: 2000;
-            padding: 90px 45px;
+            width: 200px; height: 200px;
+            background: var(--flat-black);
+            border: 2px solid var(--silver-ink);
+            display: none;
+            pointer-events: none;
+            z-index: 1000;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.8);
+            padding: 10px;
+            border-radius: 4px;
         }
-        #receipt-container.visible { right: 20px; }
-
-        .silver-typewriter {
-            font-family: 'Courier New', Courier, monospace;
-            color: var(--silver-ink);
-            font-size: 13px;
-            text-transform: uppercase;
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 8px;
+        #preview-window img {
+            width: 100%; height: 100%; object-fit: contain;
         }
 
-        /* --- INTERACTIVE ITEMS --- */
-        .placed-item-container { position: absolute; cursor: move; }
-        .rug-item { transform: rotateX(55deg); transform-origin: center bottom; }
-        .decor-item { position: absolute; cursor: pointer; transition: 0.3s; }
-        .decor-item:hover { transform: scale(1.05); filter: brightness(1.2); }
+        /* --- INTERACTIVE --- */
+        .closet-item {
+            position: absolute;
+            cursor: pointer;
+        }
+
+        .stage-item {
+            position: absolute;
+            cursor: move;
+            z-index: 100;
+        }
+
+        .closet-nav {
+            position: absolute;
+            bottom: 35px; width: 100%;
+            display: flex; justify-content: center; gap: 60px;
+            z-index: 600;
+        }
+
+        .hardware-handle {
+            width: 70px; height: 22px;
+            background: var(--metallic-silver);
+            border-radius: 2px 2px 10px 10px;
+            cursor: pointer;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.7);
+        }
     </style>
 </head>
 <body>
 
-    <section id="cabinet-section">
-        <div style="text-align:center; padding: 25px;">
-            <button onclick="toggleCabinet()" style="background:none; border: 1px solid var(--silver-ink); color: var(--silver-ink); padding: 8px 25px; cursor:pointer; font-size:12px; letter-spacing:3px; font-family:'Limelight';">FURNITURE CATALOG</button>
-        </div>
-        <div id="case-glide-container">
-            <div class="furniture-case">
-                <img src="Assets/sofa1.png" style="width:85%;" ondblclick="addItemToRoom({img:'sofa1.png', name:'Vogue Sofa', price:'$1,800', w:380, type:'furniture'})">
-                <div class="hardware-tab"><div class="silver-bracket"><div class="white-insert">Sofa Gallery</div></div></div>
-            </div>
-            <div class="furniture-case">
-                <img src="Assets/table1.png" style="width:85%;" ondblclick="addItemToRoom({img:'table1.png', name:'Marble Dining', price:'$950', w:260, type:'furniture'})">
-                <div class="hardware-tab"><div class="silver-bracket"><div class="white-insert">Table Case</div></div></div>
-            </div>
-        </div>
-    </section>
+    <div id="preview-window"><img id="preview-img" src=""></div>
 
     <div id="theater-container">
         <div id="room-display"></div>
@@ -203,100 +132,84 @@
         <div class="closet-door door-left" onclick="toggleCloset()"><img src="Assets/closetdoors.jpg" style="width:100%; height:100%;"></div>
         <div class="closet-door door-right" onclick="toggleCloset()"><img src="Assets/closetdoors.jpg" style="width:100%; height:100%;"></div>
         
-        <div id="closet-interior">
-            <div id="shelf-items-container"></div>
-            
-            <div style="display:flex; justify-content:center; gap:50px; position:absolute; bottom:40px; width:100%;">
-                <div class="hardware-tab" onclick="swapShelf(1)"><div class="silver-bracket"><div class="white-insert">The Decor Closet</div></div></div>
-                <div class="hardware-tab" onclick="swapShelf(2)"><div class="silver-bracket"><div class="white-insert">The Lighting Gallery</div></div></div>
+        <div id="closet-interior-flow">
+            <div class="closet-section" style="background-image: url('Assets/Untitled project (4).jpg');">
+                <img src="Assets/pillow1.png" class="closet-item" style="width:110px; top:210px; left:440px;" 
+                     onmouseover="showPreview(this.src)" onmouseout="hidePreview()" onmousemove="movePreview(event)"
+                     ondblclick="moveToStage('Assets/pillow1.png', 120, 'decor')">
             </div>
+            
+            <div class="closet-section" style="background-image: url('Assets/decorcloset.jpg');">
+                <img src="Assets/rug_folded.png" class="closet-item" style="width:180px; top:60px; left:320px;" 
+                     onmouseover="showPreview('Assets/rug_unfolded.png')" onmouseout="hidePreview()" onmousemove="movePreview(event)"
+                     ondblclick="moveToStage('Assets/rug_unfolded.png', 380, 'rug')">
+            </div>
+
+            <div class="closet-section" style="background-image: url('Assets/lampshelf.jpg');">
+                <img src="Assets/lamp_striped.png" class="closet-item" style="width:90px; top:180px; left:230px;" 
+                     onmouseover="showPreview(this.src)" onmouseout="hidePreview()" onmousemove="movePreview(event)"
+                     ondblclick="moveToStage('Assets/lamp_striped.png', 100, 'decor')">
+            </div>
+        </div>
+
+        <div class="closet-nav">
+            <div class="hardware-handle" onclick="glide(0)"></div>
+            <div class="hardware-handle" onclick="glide(-1150)"></div>
+            <div class="hardware-handle" onclick="glide(-2300)"></div>
         </div>
     </div>
 
-    <div id="receipt-container">
-        <div id="receipt-items"></div>
-    </div>
-
     <script>
-        function toggleCabinet() {
-            const cab = document.getElementById('cabinet-section');
-            cab.classList.toggle('open');
-            if(cab.classList.contains('open')) cab.scrollIntoView({ behavior: 'smooth' });
+        const preview = document.getElementById('preview-window');
+        const previewImg = document.getElementById('preview-img');
+
+        function toggleCloset() { document.getElementById('closet-box').classList.toggle('open'); }
+        function glide(pos) { document.getElementById('closet-interior-flow').style.transform = `translateX(${pos}px)`; }
+
+        // Preview Logic
+        function showPreview(src) {
+            previewImg.src = src;
+            preview.style.display = 'block';
+        }
+        function hidePreview() { preview.style.display = 'none'; }
+        function movePreview(e) {
+            preview.style.left = (e.clientX + 20) + 'px';
+            preview.style.top = (e.clientY + 20) + 'px';
         }
 
-        function toggleCloset() {
-            const box = document.getElementById('closet-box');
-            box.classList.toggle('open');
-            if(box.classList.contains('open')) box.scrollIntoView({ behavior: 'smooth', block: 'center' });
-        }
-
-        function swapShelf(num) {
-            const interior = document.getElementById('closet-interior');
-            const container = document.getElementById('shelf-items-container');
-            
-            const rooms = {
-                1: { bg: 'decorcloset.jpg', items: [
-                    {img:'rug_hanging.png', name:'Velvet Rug', price:'$850', w:150, t:50, l:300, type:'rug'},
-                    {img:'curtain_sample.png', name:'Silk Drapes', price:'$300', w:120, t:50, l:500, type:'decor'}
-                ]},
-                2: { bg: 'lampshelf.jpg', items: [
-                    {img:'striped_lamp.png', name:'Striped Lamp', price:'$145', w:85, t:180, l:230, type:'decor'},
-                    {img:'gold_lamp.png', name:'Gold Lamp', price:'$210', w:80, t:460, l:810, type:'decor'}
-                ]}
-            };
-
-            interior.style.backgroundImage = `url('Assets/${rooms[num].bg}')`;
-            container.innerHTML = '';
-
-            rooms[num].items.forEach(item => {
-                const el = document.createElement('img');
-                el.src = `Assets/${item.img}`;
-                el.className = 'decor-item';
-                el.style.cssText = `width:${item.w}px; top:${item.t}px; left:${item.l}px;`;
-                el.ondblclick = () => addItemToRoom(item);
-                container.appendChild(el);
-            });
-        }
-
-        function addItemToRoom(item) {
+        function moveToStage(src, w, type) {
+            hidePreview(); // Close preview when item moves
             const stage = document.getElementById('room-display');
-            const box = document.createElement('div');
-            box.className = 'placed-item-container' + (item.type === 'rug' ? ' rug-item' : '');
-            box.style.cssText = `top:150px; left:200px; width:${item.w}px; z-index:${item.type === 'rug' ? 1 : 10};`;
+            const item = document.createElement('img');
+            item.src = src;
+            item.className = 'stage-item';
+            if(type === 'rug') item.style.transform = "rotateX(55deg)";
+            item.style.width = w + 'px';
+            item.style.left = '480px';
+            item.style.top = '200px';
 
-            const img = document.createElement('img');
-            img.src = `Assets/${item.img}`;
-            img.style.width = '100%';
-            
-            box.appendChild(img);
-            stage.appendChild(box);
+            item.ondblclick = function() { this.remove(); };
 
-            box.onmousedown = (e) => {
-                let shiftX = e.clientX - box.getBoundingClientRect().left;
-                let shiftY = e.clientY - box.getBoundingClientRect().top;
-                function move(px, py) {
-                    box.style.left = px - stage.getBoundingClientRect().left - shiftX + 'px';
-                    box.style.top = py - stage.getBoundingClientRect().top - shiftY + 'px';
+            item.onmousedown = function(e) {
+                let rect = stage.getBoundingClientRect();
+                let shiftX = e.clientX - item.getBoundingClientRect().left;
+                let shiftY = e.clientY - item.getBoundingClientRect().top;
+                function move(mx, my) {
+                    item.style.left = mx - rect.left - shiftX + 'px';
+                    item.style.top = my - rect.top - shiftY + 'px';
                 }
                 function onMouseMove(e) { move(e.pageX, e.pageY); }
                 document.addEventListener('mousemove', onMouseMove);
-                document.onmouseup = () => {
+                item.onmouseup = function() {
                     document.removeEventListener('mousemove', onMouseMove);
-                    jotOnReceipt(item.name, item.price);
+                    item.onmouseup = null;
                 };
             };
-        }
 
-        function jotOnReceipt(name, price) {
-            const receipt = document.getElementById('receipt-items');
-            const entry = document.createElement('div');
-            entry.className = 'silver-typewriter';
-            entry.innerHTML = `<span>${name}</span><span>${price}</span>`;
-            receipt.appendChild(entry);
-            document.getElementById('receipt-container').classList.add('visible');
+            item.ondragstart = function() { return false; };
+            stage.appendChild(item);
+            window.scrollTo({ top: 0, behavior: 'smooth' });
         }
-        
-        swapShelf(1);
     </script>
 </body>
 </html>
