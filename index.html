@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Room Glow Up | Official Build</title>
+    <title>Room Glow Up - Production Build</title>
     <link href="https://fonts.googleapis.com/css2?family=Limelight&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -15,113 +15,163 @@
         body, html {
             margin: 0; padding: 0; min-height: 100vh;
             background: url('Assets/mainbackground.jpg') no-repeat center center fixed;
-            background-size: cover; overflow: hidden; font-family: 'Courier New', monospace;
+            background-size: cover; scroll-behavior: smooth; overflow-x: hidden;
         }
 
-        #main-site-container { width: 100%; display: flex; flex-direction: column; align-items: center; padding-bottom: 100px; }
+        #main-site-container { 
+            width: 100%; display: flex; flex-direction: column; align-items: center; 
+            padding-bottom: 200px; /* Preventing scrunched bottom */
+        }
 
-        header { text-align: center; padding: 40px 0; }
-        h1 { font-family: 'Limelight', cursive; font-size: 85px; margin: 0; background: var(--silver-header); -webkit-background-clip: text; -webkit-text-fill-color: transparent; filter: drop-shadow(5px 5px 8px rgba(0,0,0,0.8)); text-transform: uppercase; }
+        /* --- HEADER SECTION (Restored) --- */
+        header { text-align: center; padding: 80px 0 50px 0; }
+        h1 { 
+            font-family: 'Limelight', cursive; font-size: 110px; margin: 0; 
+            background: var(--silver-header); -webkit-background-clip: text; 
+            -webkit-text-fill-color: transparent; filter: drop-shadow(5px 5px 8px rgba(0,0,0,0.8)); 
+            text-transform: uppercase; 
+        }
+        h2 { 
+            font-family: 'Limelight', cursive; font-size: 38px; margin: 10px 0 0 0; 
+            color: #e0e0e0; text-shadow: 3px 3px 6px #000; letter-spacing: 2px;
+        }
 
-        /* --- NAVIGATION TABS --- */
-        .nav-container { display: flex; gap: 15px; margin-bottom: 40px; z-index: 1000; }
+        /* --- NAVIGATION TABS (Restored Vintage Pulls) --- */
+        .nav-container { display: flex; gap: 25px; margin: 60px 0 100px 0; z-index: 100; }
         .label-holder { 
-            width: 190px; height: 95px; background: var(--metal-shine); border: 2px solid #000; 
+            width: 220px; height: 110px; background: var(--metal-shine); border: 2px solid #000; 
             position: relative; display: flex; justify-content: center; align-items: center; cursor: pointer;
-            box-shadow: 6px 6px 18px rgba(0,0,0,0.7);
+            box-shadow: 10px 10px 25px rgba(0,0,0,0.9); transition: transform 0.3s;
         }
-        .white-card { width: 85%; height: 55%; background: #fff; display: flex; justify-content: center; align-items: center; transition: 0.3s; }
-        .label-holder:hover .white-card { background: var(--glow-teal); box-shadow: 0 0 20px var(--glow-teal); }
-        .label-text { font-weight: 900; font-size: 14px; color: #000; text-transform: uppercase; text-align: center; }
+        .label-holder:hover { transform: translateY(-5px); }
+        .white-card { 
+            width: 85%; height: 55%; background: #fff; display: flex; 
+            justify-content: center; align-items: center; transition: 0.4s; 
+        }
+        .label-holder:hover .white-card { background: var(--glow-teal); box-shadow: 0 0 30px var(--glow-teal); }
+        .label-text { 
+            font-family: 'Courier New', monospace; font-weight: 900; font-size: 16px; 
+            color: #000; text-transform: uppercase; text-align: center; 
+        }
 
         /* --- INTERACTION ZONE --- */
-        #interaction-zone { display: flex; justify-content: center; align-items: flex-start; gap: 40px; width: 100%; max-width: 1700px; position: relative; }
-        
-        .sidebar-space { width: 550px; height: 750px; position: relative; }
-        
-        .asset-container { 
-            position: absolute; top: 0; left: 0; width: 100%; 
-            transform: translateX(-200%); transition: transform 2.2s cubic-bezier(0.23, 1, 0.32, 1); 
+        #interaction-zone { 
+            display: flex; justify-content: center; align-items: flex-start; 
+            gap: 60px; width: 1600px; height: 800px; margin: 0 auto; position: relative; 
         }
-        .asset-container.glided-in { transform: translateX(0); }
-        .asset-container.glided-out { transform: translateX(-200%); }
 
-        /* --- CABINET CONTROLS --- */
-        .drawer-labels { position: absolute; top: 135px; left: 100px; display: flex; flex-direction: column; gap: 26px; }
-        .drawer-btn { width: 158px; height: 62px; background: var(--metal-shine); display: flex; justify-content: center; align-items: center; cursor: pointer; }
-        .drawer-btn .white-card { width: 85%; height: 60%; font-weight: bold; font-size: 12px; }
+        /* --- CABINET & DRAWERS --- */
+        .cabinet-space { position: relative; width: 550px; height: 750px; }
+        .asset-side-container { 
+            position: absolute; top: 0; left: 0; width: 550px; 
+            transform: translateX(-200%); transition: transform 2.5s cubic-bezier(0.23, 1, 0.32, 1); 
+            z-index: 30; 
+        }
+        .asset-side-container.glided-in { transform: translateX(0); }
+        .asset-side-container.glided-out { transform: translateX(-200%); }
+
+        .drawer-labels-overlay { 
+            position: absolute; top: 132px; left: 98px; 
+            display: flex; flex-direction: column; gap: 26px; 
+        }
+        .small-pull-tab { 
+            width: 158px; height: 63px; background: var(--metal-shine); 
+            display: flex; justify-content: center; align-items: center; 
+            cursor: pointer; transition: transform 0.3s, box-shadow 0.3s;
+        }
+        .drawer-white-card { 
+            width: 82%; height: 60%; background: #fff; display: flex; 
+            justify-content: center; align-items: center; font-family: 'Courier New', monospace; 
+            font-size: 14px; font-weight: bold; text-transform: uppercase; transition: 0.3s;
+        }
+        
+        /* Hover Behavior: Lift and Glow */
+        .small-pull-tab:hover { transform: translateY(-3px) scale(1.02); }
+        .small-pull-tab:hover .drawer-white-card { background: var(--glow-teal); box-shadow: 0 0 15px var(--glow-teal); }
 
         /* --- THEATER STAGE --- */
-        #theater-container { width: 950px; height: 650px; border: 22px solid #000; background: #111; position: relative; overflow: hidden; box-shadow: 0 0 60px #000; }
-        #room-display { width: 100%; height: 100%; background-size: cover; background-position: center; transition: background 0.6s ease; }
+        #theater-container { 
+            width: 950px; height: 650px; border: 25px solid #000; 
+            background: #000; z-index: 5; overflow: hidden; 
+            box-shadow: 0 0 50px rgba(0,0,0,0.8); position: relative;
+        }
+        #room-display { 
+            width: 100%; height: 100%; background-size: cover; 
+            background-position: center; transition: background-image 0.5s ease-in-out; 
+            cursor: cell; /* Indicates click to work on room */
+        }
 
-        /* --- DECOR CLOSET (Fixed Right-Side) --- */
+        /* --- DECOR CLOSET --- */
         #closet-entrance { 
-            position: fixed; right: -650px; top: 150px; width: 480px; height: 680px; 
-            z-index: 500; transition: right 1.6s cubic-bezier(0.23, 1, 0.32, 1); perspective: 2000px; 
+            position: fixed; right: -600px; top: 150px; width: 500px; height: 700px; 
+            z-index: 400; transition: right 1.5s cubic-bezier(0.23, 1, 0.32, 1); 
+            perspective: 2000px; 
         }
         #closet-entrance.active { right: 40px; }
-        .closet-interior { position: absolute; width: 100%; height: 100%; border: 4px solid #333; background-size: cover; background-position: center; }
-        
-        .door-wing { position: absolute; width: 50%; height: 100%; transition: 1.6s ease-in-out; z-index: 5; cursor: pointer; overflow: hidden; }
+        .closet-interior { 
+            position: absolute; width: 100%; height: 100%; 
+            background: url('Assets/decorclosetbackground.jpg') no-repeat center; 
+            background-size: cover; border: 4px solid #222; z-index: 1; 
+        }
+        .door-wing { 
+            position: absolute; width: 50%; height: 100%; transition: 1.5s; 
+            z-index: 5; overflow: hidden; cursor: pointer; 
+        }
         .wing-l { left: 0; transform-origin: left; } .wing-r { right: 0; transform-origin: right; }
-        .door-wing img { width: 200%; height: 100%; object-fit: cover; pointer-events: none; }
+        .door-wing img { width: 200%; height: 100%; object-fit: cover; }
         .wing-r img { object-position: right; } .wing-l img { object-position: left; }
         
-        #closet-entrance.open .wing-l { transform: rotateY(-135deg); }
-        #closet-entrance.open .wing-r { transform: rotateY(135deg); }
+        #closet-entrance.open .wing-l { transform: rotateY(-130deg); }
+        #closet-entrance.open .wing-r { transform: rotateY(130deg); }
 
-        /* --- DRAGGABLE BOXES --- */
-        .item-box { position: absolute; cursor: grab; z-index: 100; display: flex; justify-content: center; align-items: center; }
-        .item-box img { width: 100%; height: auto; pointer-events: none; }
-        .item-box:active { cursor: grabbing; }
-
-        /* Rug Morphing */
-        .rug-item { width: 80px; height: 190px; transition: width 0.4s, height 0.4s, transform 0.4s; }
+        /* --- DRAGGABLE RUGS & ITEMS --- */
+        .item-box { position: absolute; cursor: grab; z-index: 10; }
+        .rug-hanging { width: 80px; height: 200px; transition: transform 0.5s, width 0.5s, height 0.5s; }
         .rug-flat { 
-            width: 350px !important; height: 160px !important; 
-            transform: rotateX(65deg) !important; 
-            filter: drop-shadow(0 20px 10px rgba(0,0,0,0.6));
+            width: 380px !important; height: 180px !important; 
+            transform: rotateX(60deg) !important; filter: drop-shadow(0 20px 15px #000); 
         }
 
-        .decor-piece { width: 90px; height: 120px; }
-
-        /* Navigation Arrows */
-        .closet-nav { position: absolute; bottom: 20px; width: 100%; display: flex; justify-content: center; gap: 30px; }
-        .c-btn { background: #000; color: #fff; border: 1px solid #fff; padding: 8px 15px; cursor: pointer; text-transform: uppercase; font-size: 11px; }
-        .c-btn:hover { background: var(--glow-teal); color: #000; }
+        /* File Upload Hidden */
+        #file-up { display: none; }
     </style>
 </head>
 <body>
 
 <div id="main-site-container">
-    <header><h1>Room Glow Up</h1></header>
+    <header>
+        <h1>Room Glow Up</h1>
+        <h2>Where Your Dream Space Comes To Life</h2>
+    </header>
 
     <nav class="nav-container">
-        <div class="label-holder" onclick="toggleUI('rooms-cabinet')"><div class="white-card"><span class="label-text">Rooms</span></div></div>
+        <div class="label-holder" onclick="triggerCabinet()"><div class="white-card"><span class="label-text">Rooms</span></div></div>
         <div class="label-holder"><div class="white-card"><span class="label-text">Furniture Catalog</span></div></div>
-        <div class="label-holder" onclick="toggleUI('closet-entrance')"><div class="white-card"><span class="label-text">Decor Closet</span></div></div>
-        <div class="label-holder"><div class="white-card"><span class="label-text">Inspiration</span></div></div>
-        <div class="label-holder"><div class="white-card"><span class="label-text">Save</span></div></div>
+        <div class="label-holder" onclick="toggleCloset()"><div class="white-card"><span class="label-text">Decor Closet</span></div></div>
+        <div class="label-holder"><div class="white-card"><span class="label-text">Inspirational Walkthrough</span></div></div>
+        <div class="label-holder"><div class="white-card"><span class="label-text">Save / Checkout</span></div></div>
     </nav>
 
     <div id="interaction-zone">
-        <div class="sidebar-space">
-            <div id="rooms-cabinet" class="asset-container">
+        <div class="cabinet-space">
+            <div id="rooms-cabinet-container" class="asset-side-container">
                 <img src="Assets/cabinet.png" style="width:100%">
-                <div class="drawer-labels">
-                    <div class="drawer-btn" onclick="setRoom('livingroom')"><div class="white-card">Living Room</div></div>
-                    <div class="drawer-btn" onclick="setRoom('bedroom')"><div class="white-card">Bedroom</div></div>
-                    <div class="drawer-btn" onclick="setRoom('dining')"><div class="white-card">Dining Room</div></div>
+                <div class="drawer-labels-overlay">
+                    <div class="small-pull-tab" onmouseover="peekRoom('livingroom')" onclick="cycle('livingroom')"><div class="drawer-white-card">livingroom</div></div>
+                    <div class="small-pull-tab" onmouseover="peekRoom('bedroom')" onclick="cycle('bedroom')"><div class="drawer-white-card">bedroom</div></div>
+                    <div class="small-pull-tab" onmouseover="peekRoom('diningroom')" onclick="cycle('diningroom')"><div class="drawer-white-card">diningroom</div></div>
+                    <div class="small-pull-tab" onmouseover="peekRoom('extra')" onclick="cycle('extra')"><div class="drawer-white-card">extra rooms</div></div>
+                    <div class="small-pull-tab" onclick="document.getElementById('file-up').click()"><div class="drawer-white-card">upload yours</div></div>
                 </div>
             </div>
-            <div id="furniture-cases" class="asset-container">
+            
+            <div id="furniture-cases-container" class="asset-side-container">
                 <img src="Assets/furniturecases.png" style="width:100%">
             </div>
         </div>
 
         <div id="theater-container">
-            <div id="room-display" onclick="confirmChoice()"></div>
+            <div id="room-display" onclick="confirmRoom()"></div>
         </div>
     </div>
 </div>
@@ -129,93 +179,100 @@
 <div id="closet-entrance">
     <div class="door-wing wing-l" onclick="this.parentElement.classList.toggle('open')"><img src="Assets/closetdoors.jpg"></div>
     <div class="door-wing wing-r" onclick="this.parentElement.classList.toggle('open')"><img src="Assets/closetdoors.jpg"></div>
-    
-    <div id="closet-view" class="closet-interior">
-        <div class="item-box rug-item" data-ox="50" data-oy="80" style="top:80px; left:50px;" ondblclick="snapBack(this)">
-            <img src="Assets/rug1.png">
-        </div>
-        <div class="item-box decor-piece" data-ox="180" data-oy="200" style="top:200px; left:180px;" ondblclick="snapBack(this)">
-            <img src="Assets/lamp1.png">
-        </div>
-
-        <div class="closet-nav">
-            <div class="c-btn" onclick="moveShelf(-1)">Prev</div>
-            <div class="c-btn" onclick="moveShelf(1)">Next</div>
+    <div class="closet-interior">
+        <div class="item-box rug-hanging" data-ox="60" data-oy="100" style="top:100px; left:60px;" ondblclick="snapBack(this)">
+            <img src="Assets/rug1.png" style="width:100%; height:100%;">
         </div>
     </div>
 </div>
 
+<input type="file" id="file-up" accept="image/*" onchange="handleUpload(event)">
+
 <script>
-    const db = {
-        livingroom: ['livingroom1.jpg', 'livingroom3.jpg'],
-        bedroom: ['bedroom.jpg', 'bedroom2.jpg'],
-        dining: ['diningroom.jpg'],
-        shelves: ['Assets/decorclosetbackground.jpg', 'Assets/decorshelves2.jpg']
+    const inventory = { 
+        livingroom: ['livingroom1.jpg', 'livingroom3.jpg'], 
+        bedroom: ['bedroom.jpg', 'bedroom2.jpg'], 
+        diningroom: ['diningroom.jpg'], 
+        extra: ['foyer.jpg', 'office.jpg', 'kitchen.jpg'] 
     };
-    
-    let shelfIdx = 0;
-    let roomIdx = 0;
+    let counts = { livingroom: 0, bedroom: 0, diningroom: 0, extra: 0 };
 
-    // UI Orchestration
-    function toggleUI(id) { document.getElementById(id).classList.toggle('active') || document.getElementById(id).classList.toggle('glided-in'); }
-
-    function setRoom(cat) {
-        roomIdx = (roomIdx + 1) % db[cat].length;
-        document.getElementById('room-display').style.backgroundImage = `url('Assets/${db[cat][roomIdx]}')`;
+    function triggerCabinet() {
+        const cab = document.getElementById('rooms-cabinet-container');
+        cab.classList.add('glided-in');
+        // Smooth Auto-Scroll to Cabinet
+        window.scrollTo({ top: document.getElementById('interaction-zone').offsetTop - 50, behavior: 'smooth' });
     }
 
-    function confirmChoice() {
-        document.getElementById('rooms-cabinet').classList.replace('glided-in', 'glided-out');
-        setTimeout(() => document.getElementById('furniture-cases').classList.add('glided-in'), 800);
+    function peekRoom(type) {
+        document.getElementById('room-display').style.backgroundImage = `url('Assets/${inventory[type][counts[type]]}')`;
     }
 
-    function moveShelf(n) {
-        shelfIdx = (shelfIdx + n + db.shelves.length) % db.shelves.length;
-        document.getElementById('closet-view').style.backgroundImage = `url('${db.shelves[shelfIdx]}')`;
+    function cycle(type) {
+        counts[type] = (counts[type] + 1) % inventory[type].length;
+        peekRoom(type);
     }
 
-    // Drag System
-    let dragTarget = null;
-    let dragOffset = { x: 0, y: 0 };
+    function confirmRoom() {
+        document.getElementById('rooms-cabinet-container').classList.add('glided-out');
+        setTimeout(() => {
+            document.getElementById('furniture-cases-container').classList.add('glided-in');
+        }, 1500);
+    }
+
+    function toggleCloset() {
+        document.getElementById('closet-entrance').classList.toggle('active');
+    }
+
+    function snapBack(el) {
+        el.style.transition = "all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275)";
+        el.classList.remove('rug-flat');
+        el.style.left = el.dataset.ox + "px";
+        el.style.top = el.dataset.oy + "px";
+    }
+
+    // Drag & Transform Logic
+    let activeItem = null;
+    let offset = { x: 0, y: 0 };
 
     document.addEventListener('mousedown', (e) => {
-        const box = e.target.closest('.item-box');
-        if (box) {
-            dragTarget = box;
-            dragTarget.style.transition = 'none';
-            const r = dragTarget.getBoundingClientRect();
-            dragOffset.x = e.clientX - r.left;
-            dragOffset.y = e.clientY - r.top;
+        const target = e.target.closest('.item-box');
+        if (target) {
+            activeItem = target;
+            activeItem.style.transition = "none";
+            const rect = activeItem.getBoundingClientRect();
+            offset.x = e.clientX - rect.left;
+            offset.y = e.clientY - rect.top;
         }
     });
 
     document.addEventListener('mousemove', (e) => {
-        if (dragTarget) {
-            const area = document.getElementById('closet-view').getBoundingClientRect();
-            const x = e.clientX - area.left - dragOffset.x;
-            const y = e.clientY - area.top - dragOffset.y;
+        if (activeItem) {
+            const stage = document.getElementById('main-site-container').getBoundingClientRect();
+            const x = e.clientX - offset.x;
+            const y = e.clientY - offset.y;
             
-            dragTarget.style.left = x + 'px';
-            dragTarget.style.top = y + 'px';
+            activeItem.style.position = 'fixed';
+            activeItem.style.left = x + 'px';
+            activeItem.style.top = y + 'px';
 
-            // Transform rug to floor perspective if dragged out
-            if (dragTarget.classList.contains('rug-item')) {
-                (x < -30) ? dragTarget.classList.add('rug-flat') : dragTarget.classList.remove('rug-flat');
+            // Check if item is over the Theater Stage to flatten rug
+            const theater = document.getElementById('theater-container').getBoundingClientRect();
+            if (x > theater.left && x < theater.right && y > theater.top && y < theater.bottom) {
+                if (activeItem.classList.contains('rug-hanging')) activeItem.classList.add('rug-flat');
             }
         }
     });
 
-    document.addEventListener('mouseup', () => dragTarget = null);
+    document.addEventListener('mouseup', () => { activeItem = null; });
 
-    function snapBack(el) {
-        el.style.transition = 'all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275)';
-        el.classList.remove('rug-flat');
-        el.style.left = el.dataset.ox + 'px';
-        el.style.top = el.dataset.oy + 'px';
+    function handleUpload(e) {
+        const reader = new FileReader();
+        reader.onload = function(event) {
+            document.getElementById('room-display').style.backgroundImage = `url('${event.target.result}')`;
+        }
+        reader.readAsDataURL(e.target.files[0]);
     }
-
-    // Set default view
-    moveShelf(0);
 </script>
 </body>
 </html>
