@@ -8,119 +8,119 @@
     <style>
         :root {
             --metal-shine: linear-gradient(145deg, #bdc3c7, #2c3e50, #95a5a6, #000);
-            --silver-header: linear-gradient(to bottom, #ffffff 0%, #a6a6a6 45%, #4d4d4d 50%, #ffffff 55%, #808080 100%);
             --glow-teal: #00f2ff;
-            --tag-beige: #f5f5dc;
         }
         body, html {
             margin: 0; padding: 0; min-height: 100vh;
             background: url('Assets/mainbackground.jpg') no-repeat center center fixed;
-            background-size: cover; scroll-behavior: smooth; overflow-x: hidden;
+            background-size: cover; overflow: hidden;
         }
-        #main-site-container { width: 100%; display: flex; flex-direction: column; align-items: center; padding-bottom: 200px; }
-        header { text-align: center; padding: 60px 0 30px 0; }
-        h1 { font-family: 'Limelight', cursive; font-size: 100px; margin: 0; background: var(--silver-header); -webkit-background-clip: text; -webkit-text-fill-color: transparent; filter: drop-shadow(5px 5px 8px rgba(0,0,0,0.8)); text-transform: uppercase; }
-        h2 { font-family: 'Limelight', cursive; font-size: 34px; margin: -10px 0 0 0; color: #e0e0e0; text-shadow: 3px 3px 6px #000; }
 
-        /* --- NAVIGATION TABS --- */
-        .nav-container { display: flex; gap: 20px; margin: 50px 0; z-index: 100; }
-        .label-holder { 
-            width: 210px; height: 105px; background: var(--metal-shine); border: 2px solid #000; 
-            position: relative; display: flex; justify-content: center; align-items: center; cursor: pointer;
-            box-shadow: 8px 8px 20px rgba(0,0,0,0.8);
-        }
-        .white-card { width: 85%; height: 55%; background: #fff; display: flex; justify-content: center; align-items: center; transition: 0.4s; }
-        .label-holder:hover .white-card { background: var(--glow-teal); box-shadow: 0 0 25px var(--glow-teal); }
-        .label-text { font-family: 'Courier New', monospace; font-weight: 900; font-size: 15px; color: #000; text-transform: uppercase; text-align: center; }
-
-        /* --- INTERACTION ZONE --- */
-        #interaction-zone { display: flex; justify-content: center; align-items: flex-start; gap: 40px; width: 1540px; height: 700px; margin: 0 auto; position: relative; }
-        .cabinet-space { position: relative; width: 550px; height: 650px; }
-        .asset-side-container { position: absolute; top: 0; left: 0; width: 550px; transform: translateX(-200%); transition: transform 2.5s cubic-bezier(0.23, 1, 0.32, 1); z-index: 30; }
-        #rooms-cabinet-container.glided-in { transform: translateX(0); }
-        #rooms-cabinet-container.glided-out { transform: translateX(-200%); }
-        #furniture-cases-container.glided-in { transform: translateX(0); }
-
-        /* --- DRAWER LABELS --- */
-        .drawer-labels-overlay { position: absolute; top: 132px; left: 98px; display: flex; flex-direction: column; gap: 26px; }
-        .small-pull-tab { width: 158px; height: 63px; background: var(--metal-shine); display: flex; justify-content: center; align-items: center; cursor: pointer; }
-        .drawer-white-card { width: 82%; height: 60%; background: #fff; display: flex; justify-content: center; align-items: center; font-family: 'Courier New', monospace; font-size: 13px; font-weight: bold; text-transform: uppercase; }
-        .small-pull-tab:hover .drawer-white-card { background: var(--glow-teal); box-shadow: 0 0 15px var(--glow-teal); }
-
-        /* --- DECOR CLOSET --- */
+        /* --- DECOR CLOSET SYSTEM --- */
         #closet-entrance { 
-            position: fixed; right: -600px; top: 150px; width: 450px; height: 600px; 
+            position: fixed; right: -600px; top: 120px; width: 550px; height: 700px; 
             z-index: 400; transition: right 1.5s cubic-bezier(0.23, 1, 0.32, 1); 
-            perspective: 2000px; cursor: pointer; 
+            perspective: 2000px; 
         }
         #closet-entrance.active { right: 40px; }
-        .closet-interior { position: absolute; width: 100%; height: 100%; background: url('Assets/decorclosetbackground.jpg') no-repeat center; background-size: cover; border: 4px solid #222; z-index: 1; }
-        .door-wing { position: absolute; width: 50%; height: 100%; transition: 1.5s; z-index: 5; overflow: hidden; }
+        
+        .closet-interior { 
+            position: absolute; width: 100%; height: 100%; 
+            background: url('Assets/decorclosetbackground.jpg') no-repeat center;
+            background-size: cover; border: 4px solid #222; z-index: 1;
+        }
+
+        .door-wing { position: absolute; width: 50%; height: 100%; transition: 1.5s; z-index: 5; overflow: hidden; cursor: pointer; }
         .wing-l { left: 0; transform-origin: left; } .wing-r { right: 0; transform-origin: right; }
         .door-wing img { width: 200%; height: 100%; object-fit: cover; pointer-events: none; }
         .wing-r img { object-position: right; } .wing-l img { object-position: left; }
-        #closet-entrance.open .wing-l { transform: rotateY(-130deg); }
-        #closet-entrance.open .wing-r { transform: rotateY(130deg); }
+        
+        #closet-entrance.open .wing-l { transform: rotateY(-135deg); }
+        #closet-entrance.open .wing-r { transform: rotateY(135deg); }
 
-        /* --- THEATER STAGE --- */
-        #theater-container { width: 950px; height: 600px; border: 25px solid #000; background: #000; z-index: 5; overflow: hidden; }
-        #room-display { width: 100%; height: 100%; background-size: cover; background-position: center; transition: 0.5s; }
+        /* --- RUG ITEM BOXES --- */
+        .rug-box {
+            position: absolute; width: 80px; height: 180px; /* Hanging look */
+            cursor: grab; z-index: 10; transition: transform 0.4s ease, width 0.4s ease, height 0.4s ease;
+            display: flex; justify-content: center; align-items: center;
+        }
+        .rug-box img { width: 100%; height: 100%; pointer-events: none; object-fit: cover; box-shadow: 5px 5px 15px rgba(0,0,0,0.5); }
+
+        /* Class added when rug leaves the closet area */
+        .rug-flat {
+            width: 300px !important; height: 150px !important;
+            transform: rotateX(60deg) rotateZ(0deg) !important; /* Lays it flat in perspective */
+        }
+
+        #theater-stage {
+            position: absolute; left: 50px; top: 150px;
+            width: 900px; height: 600px; border: 10px solid #000;
+            background: rgba(0,0,0,0.2); pointer-events: none;
+        }
     </style>
 </head>
 <body>
 
-<div id="main-site-container">
-    <header>
-        <h1>Room Glow Up</h1>
-        <h2>Where Your Dream Space Comes To Life</h2>
-    </header>
-
-    <nav class="nav-container">
-        <div class="label-holder" onclick="triggerCabinet()"><div class="white-card"><span class="label-text">Rooms</span></div></div>
-        <div class="label-holder"><div class="white-card"><span class="label-text">Furniture Catalog</span></div></div>
-        <div class="label-holder" onclick="toggleCloset()"><div class="white-card"><span class="label-text">Decor Closet</span></div></div>
-        <div class="label-holder"><div class="white-card"><span class="label-text">Inspirational Walkthrough</span></div></div>
-        <div class="label-holder"><div class="white-card"><span class="label-text">Save / Checkout</span></div></div>
+    <nav style="display: flex; justify-content: center; margin-top: 20px;">
+        <button onclick="document.getElementById('closet-entrance').classList.toggle('active')" style="padding: 15px 30px; font-family: 'Limelight'; cursor: pointer;">DECOR CLOSET</button>
     </nav>
 
-    <div id="interaction-zone">
-        <div class="cabinet-space">
-            <div id="rooms-cabinet-container" class="asset-side-container">
-                <img src="Assets/cabinet.png" style="width:100%">
-                <div class="drawer-labels-overlay">
-                    <div class="small-pull-tab" onmouseover="previewRoom('livingroom1.jpg')" onclick="cycle('livingroom')"><div class="drawer-white-card">livingroom</div></div>
-                    <div class="small-pull-tab" onmouseover="previewRoom('bedroom.jpg')" onclick="cycle('bedroom')"><div class="drawer-white-card">bedroom</div></div>
-                    <div class="small-pull-tab" onmouseover="previewRoom('diningroom.jpg')" onclick="cycle('diningroom')"><div class="drawer-white-card">diningroom</div></div>
-                    <div class="small-pull-tab" onmouseover="previewRoom('foyer.jpg')" onclick="cycle('extra')"><div class="drawer-white-card">extra rooms</div></div>
-                    <div class="small-pull-tab" onclick="document.getElementById('file-up').click()"><div class="drawer-white-card">upload yours</div></div>
-                </div>
+    <div id="theater-stage"></div>
+
+    <div id="closet-entrance">
+        <div class="door-wing wing-l" onclick="this.parentElement.classList.toggle('open')"><img src="Assets/closetdoors.jpg"></div>
+        <div class="door-wing wing-r" onclick="this.parentElement.classList.toggle('open')"><img src="Assets/closetdoors.jpg"></div>
+        
+        <div id="closet-view" class="closet-interior">
+            <div class="rug-box" data-ox="60" data-oy="100" style="top: 100px; left: 60px;" ondblclick="returnRug(this)">
+                <img src="Assets/rug1.png">
             </div>
-            <div id="furniture-cases-container" class="asset-side-container">
-                <img src="Assets/furniturecases.png" style="width:100%">
+            <div class="rug-box" data-ox="200" data-oy="100" style="top: 100px; left: 200px;" ondblclick="returnRug(this)">
+                <img src="Assets/rug2.png">
             </div>
-        </div>
-        <div id="theater-container">
-            <div id="room-display" onclick="confirmRoom()"></div>
         </div>
     </div>
-</div>
-
-<div id="closet-entrance" onclick="this.classList.toggle('open')">
-    <div class="door-wing wing-l"><img src="Assets/closetdoors.jpg"></div>
-    <div class="door-wing wing-r"><img src="Assets/closetdoors.jpg"></div>
-    <div class="closet-interior"></div>
-</div>
 
 <script>
-    const inventory = { livingroom: ['livingroom1.jpg', 'livingroom3.jpg'], bedroom: ['bedroom.jpg', 'bedroom2.jpg'], diningroom: ['diningroom.jpg'], extra: ['foyer.jpg', 'office.jpg', 'kitchen.jpg', 'kitchen2.jpg'] };
-    let counts = { livingroom: 0, bedroom: 0, diningroom: 0, extra: 0 };
+    let activeRug = null;
+    let offset = { x: 0, y: 0 };
 
-    function triggerCabinet() { document.getElementById('rooms-cabinet-container').classList.add('glided-in'); }
-    function previewRoom(img) { document.getElementById('room-display').style.backgroundImage = `url('Assets/${img}')`; }
-    function cycle(type) { counts[type] = (counts[type] + 1) % inventory[type].length; previewRoom(inventory[type][counts[type]]); }
-    function confirmRoom() { document.getElementById('rooms-cabinet-container').classList.add('glided-out'); setTimeout(() => { document.getElementById('furniture-cases-container').classList.add('glided-in'); }, 1500); }
-    
-    function toggleCloset() { document.getElementById('closet-entrance').classList.toggle('active'); }
+    document.addEventListener('mousedown', (e) => {
+        const target = e.target.closest('.rug-box');
+        if (target) {
+            activeRug = target;
+            const rect = activeRug.getBoundingClientRect();
+            offset.x = e.clientX - rect.left;
+            offset.y = e.clientY - rect.top;
+            activeRug.style.zIndex = 1000;
+        }
+    });
+
+    document.addEventListener('mousemove', (e) => {
+        if (activeRug) {
+            const closetRect = document.getElementById('closet-view').getBoundingClientRect();
+            const x = e.clientX - closetRect.left - offset.x;
+            const y = e.clientY - closetRect.top - offset.y;
+            
+            activeRug.style.left = x + 'px';
+            activeRug.style.top = y + 'px';
+
+            // Logic to flatten rug if dragged left out of the closet
+            if (x < -50) {
+                activeRug.classList.add('rug-flat');
+            } else {
+                activeRug.classList.remove('rug-flat');
+            }
+        }
+    });
+
+    document.addEventListener('mouseup', () => { activeRug = null; });
+
+    function returnRug(el) {
+        el.classList.remove('rug-flat');
+        el.style.left = el.getAttribute('data-ox') + 'px';
+        el.style.top = el.getAttribute('data-oy') + 'px';
+    }
 </script>
 </body>
 </html>
