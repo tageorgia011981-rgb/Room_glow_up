@@ -17,8 +17,9 @@ body, html {
 margin: 0;
 padding: 0;
 min-height: 100vh;
-background: url('Assets/mainbackground.jpg') no-repeat center center fixed;
-background-size: cover;
+/* BACKGROUND FIX: Contain makes it vivid, black fills the sides */
+background: #000 url('Assets/mainbackground.jpg') no-repeat center top fixed;
+background-size: contain;
 scroll-behavior: smooth;
 overflow-x: hidden;
 }
@@ -150,7 +151,7 @@ top: 0;
 left: 0;
 width: 550px;
 transform: translateX(-200%);
-transition: transform 2.5s cubic-bezier(0.23, 1, 0.32, 1);
+transition: transform 2s cubic-bezier(0.23, 1, 0.32, 1);
 z-index: 30;
 }
 
@@ -163,19 +164,18 @@ width: 100%;
 filter: drop-shadow(15px 15px 30px #000);
 }
 
-/* --- OVERLAYS --- */
-.drawer-labels-overlay, .furniture-tags-overlay, .decor-items-overlay {
+.drawer-labels-overlay {
 position: absolute;
 top: 135px;
 left: 95px;
 display: flex;
 flex-direction: column;
-gap: 20px;
+gap: 15px;
 }
 
 .small-pull-tab {
 width: 160px;
-height: 65px;
+height: 55px;
 background: var(--metal-shine);
 display: flex;
 justify-content: center;
@@ -193,7 +193,7 @@ display: flex;
 justify-content: center;
 align-items: center;
 font-family: 'Courier New', Courier, monospace;
-font-size: 14px;
+font-size: 12px;
 font-weight: bold;
 text-transform: uppercase;
 }
@@ -203,7 +203,6 @@ background: var(--glow-teal);
 box-shadow: 0 0 15px var(--glow-teal);
 }
 
-/* --- STAGE ITEMS --- */
 #theater-container {
 width: 950px;
 height: 600px;
@@ -228,9 +227,7 @@ transition: background-image 0.5s ease;
 .placed-item {
 position: absolute;
 cursor: move;
-transition: transform 0.3s;
-filter: drop-shadow(0 10px 15px rgba(0,0,0,0.7));
-z-index: 10;
+filter: drop-shadow(5px 10px 15px rgba(0,0,0,0.5));
 }
 
 .lay-flat { transform: rotateX(55deg); transform-origin: bottom; }
@@ -266,15 +263,18 @@ z-index: 10;
 
 <div id="furniture-cases-container" class="asset-side-container">
 <img src="Assets/furniturecases.png" class="asset-img">
-<div id="dynamic-tags-container" class="furniture-tags-overlay"></div>
+<div class="drawer-labels-overlay">
+<div class="small-pull-tab" ondblclick="addItem('seating1.png', 280, false, 15)"><div class="drawer-white-card">Seating</div></div>
+<div class="small-pull-tab" ondblclick="addItem('table1.png', 220, false, 14)"><div class="drawer-white-card">Tables</div></div>
+</div>
 </div>
 
 <div id="decor-closet-container" class="asset-side-container">
 <img src="Assets/emptypillowrack.png" class="asset-img">
-<div class="decor-items-overlay">
-<div class="small-pull-tab" ondblclick="addItem('pillow1.png', 120, false)"><div class="drawer-white-card">Pillow</div></div>
-<div class="small-pull-tab" ondblclick="addItem('rug1.png', 300, true)"><div class="drawer-white-card">Rug</div></div>
-<div class="small-pull-tab" ondblclick="addItem('plant.png', 180, false)"><div class="drawer-white-card">Plant</div></div>
+<div class="drawer-labels-overlay">
+<div class="small-pull-tab" ondblclick="addItem('pillow1.png', 100, false, 20)"><div class="drawer-white-card">Pillow</div></div>
+<div class="small-pull-tab" ondblclick="addItem('rug1.png', 450, true, 10)"><div class="drawer-white-card">Rug</div></div>
+<div class="small-pull-tab" ondblclick="addItem('plant1.png', 160, false, 18)"><div class="drawer-white-card">Plant</div></div>
 </div>
 </div>
 </div>
@@ -300,43 +300,35 @@ indices[type] = (indices[type] + 1) % list.length;
 document.getElementById('room-display').style.backgroundImage = `url('Assets/${list[indices[type]]}')`;
 }
 
-function addItem(src, width, isRug) {
+function addItem(src, width, isRug, zIndex) {
 const img = document.createElement('img');
 img.src = 'Assets/' + src;
 img.className = 'placed-item' + (isRug ? ' lay-flat' : '');
 img.style.width = width + 'px';
-img.style.left = '100px'; img.style.top = '100px';
+img.style.left = '200px'; img.style.top = '200px';
+img.style.zIndex = zIndex;
 img.ondblclick = function() { this.remove(); };
 makeDraggable(img);
 document.getElementById('theater-container').appendChild(img);
 }
 
 function makeDraggable(el) {
-let pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
-el.onmousedown = dragMouseDown;
-function dragMouseDown(e) {
-e.preventDefault();
-pos3 = e.clientX; pos4 = e.clientY;
-document.onmouseup = closeDragElement;
-document.onmousemove = elementDrag;
-}
-function elementDrag(e) {
-e.preventDefault();
-pos1 = pos3 - e.clientX; pos2 = pos4 - e.clientY;
-pos3 = e.clientX; pos4 = e.clientY;
-el.style.top = (el.offsetTop - pos2) + "px";
-el.style.left = (el.offsetLeft - pos1) + "px";
-}
-function closeDragElement() {
-document.onmouseup = null; document.onmousemove = null;
-}
+let p1 = 0, p2 = 0, p3 = 0, p4 = 0;
+el.onmousedown = (e) => {
+e.preventDefault(); p3 = e.clientX; p4 = e.clientY;
+document.onmouseup = () => { document.onmouseup = null; document.onmousemove = null; };
+document.onmousemove = (e) => {
+e.preventDefault(); p1 = p3 - e.clientX; p2 = p4 - e.clientY; p3 = e.clientX; p4 = e.clientY;
+el.style.top = (el.offsetTop - p2) + "px"; el.style.left = (el.offsetLeft - p1) + "px";
+};
+};
 }
 
 function uploadRoom(input) {
 if (input.files && input.files[0]) {
-let reader = new FileReader();
-reader.onload = e => document.getElementById('room-display').style.backgroundImage = `url(${e.target.result})`;
-reader.readAsDataURL(input.files[0]);
+let r = new FileReader();
+r.onload = e => document.getElementById('room-display').style.backgroundImage = `url(${e.target.result})`;
+r.readAsDataURL(input.files[0]);
 }
 }
 </script>
