@@ -3,13 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Room Glow Up - Polished Hardware</title>
+    <title>Room Glow Up - Clean Reset</title>
     <link href="https://fonts.googleapis.com/css2?family=Limelight&display=swap" rel="stylesheet">
     <style>
         :root {
-            --metal-shine: linear-gradient(145deg, #e6e6e6, #8c8c8c, #4d4d4d, #000);
-            --silver-header: linear-gradient(to bottom, #ffffff 0%, #a6a6a6 45%, #4d4d4d 50%, #ffffff 55%, #808080 100%);
-            --glow-teal: #00f2ff;
+            --metal: linear-gradient(145deg, #e6e6e6, #8c8c8c, #4d4d4d, #000);
+            --glow: #00f2ff;
         }
 
         body, html {
@@ -19,103 +18,109 @@
             overflow-x: hidden;
         }
 
-        #site-anchor { width: 100%; display: flex; flex-direction: column; align-items: center; }
+        #master-anchor { width: 100%; display: flex; flex-direction: column; align-items: center; }
 
-        header { text-align: center; padding: 60px 0 40px 0; }
-        h1 { font-family: 'Limelight', cursive; font-size: 100px; margin: 0; background: var(--silver-header); -webkit-background-clip: text; -webkit-text-fill-color: transparent; filter: drop-shadow(5px 5px 8px #000); text-transform: uppercase; }
-        h2 { font-family: 'Limelight', cursive; font-size: 35px; margin: 10px 0 0 0; color: #e0e0e0; text-shadow: 3px 3px 6px #000; letter-spacing: 2px; }
+        header { text-align: center; padding: 80px 0 40px 0; }
+        h1 { font-family: 'Limelight', cursive; font-size: 100px; color: #fff; margin: 0; text-transform: uppercase; letter-spacing: 5px; }
 
-        .nav-row { display: flex; gap: 30px; margin-bottom: 80px; }
-
-        /* --- THE MASTER PULL TAB COMPONENT --- */
-        .library-tab { 
-            width: 220px; height: 105px; background: var(--metal-shine); border: 2.5px solid #000; 
+        /* --- STABLE LIBRARY HARDWARE --- */
+        .pull-tab { 
+            width: 210px; height: 95px; background: var(--metal); border: 2.5px solid #000; 
             display: flex; justify-content: center; align-items: center; cursor: pointer;
-            box-shadow: 10px 15px 30px rgba(0,0,0,0.8); transition: 0.3s;
+            box-shadow: 10px 10px 25px rgba(0,0,0,0.7); transition: 0.3s;
         }
-        .white-insert { 
-            width: 86%; height: 58%; background: #fff; display: flex; justify-content: center; 
-            align-items: center; box-shadow: inset 4px 4px 10px rgba(0,0,0,0.5); transition: 0.4s; 
+        .white-card { 
+            width: 85%; height: 55%; background: #fff; display: flex; justify-content: center; 
+            align-items: center; font-family: 'Courier New', monospace; font-weight: 900; font-size: 14px;
+            box-shadow: inset 4px 4px 10px rgba(0,0,0,0.4); color: #000;
         }
-        .library-tab:hover .white-insert { background: var(--glow-teal); box-shadow: inset 2px 2px 4px rgba(0,0,0,0.2), 0 0 35px var(--glow-teal); }
-        .label-style { font-family: 'Courier New', monospace; font-weight: 900; font-size: 15px; color: #000; text-transform: uppercase; letter-spacing: 1px; }
+        .pull-tab:hover .white-card { background: var(--glow); box-shadow: 0 0 25px var(--glow); }
 
-        /* --- STAGE FLOOR --- */
-        #stage-floor { display: flex; justify-content: center; align-items: flex-start; gap: 80px; width: 100%; max-width: 1700px; padding-bottom: 150px; position: relative; }
-        .cabinet-tower { position: relative; width: 550px; height: 750px; }
-        .cab-slide { position: absolute; top: 0; width: 100%; transform: translateX(-200%); transition: transform 1.2s cubic-bezier(0.23, 1, 0.32, 1); }
-        .cab-slide.glided-in { transform: translateX(0); }
+        /* --- THE STAGE (TOP ISLAND) --- */
+        #stage-island { 
+            display: flex; justify-content: center; align-items: flex-start; gap: 80px; 
+            width: 100%; max-width: 1700px; padding-bottom: 200px; position: relative;
+        }
+
+        .tower { position: relative; width: 520px; height: 780px; }
+        .cab-slide { position: absolute; top: 0; width: 100%; transform: translateX(-200%); transition: 1.2s cubic-bezier(0.23, 1, 0.32, 1); }
+        .cab-slide.active { transform: translateX(0); }
 
         .drawer-overlay { position: absolute; top: 135px; left: 100px; display: flex; flex-direction: column; gap: 26px; }
-        .mini-pull { width: 160px; height: 64px; }
-        .mini-insert { font-size: 13px !important; }
+        .mini { width: 160px; height: 64px; }
 
-        #theater { width: 950px; height: 650px; border: 35px solid #000; background: #111; box-shadow: 0 0 100px #000; position: relative; overflow: hidden; z-index: 5; }
-        #room-display { width: 100%; height: 100%; background-size: cover; background-position: center; transition: 0.8s; }
+        #theater { 
+            width: 950px; height: 650px; border: 35px solid #000; background: #000; 
+            position: relative; overflow: hidden; box-shadow: 0 0 100px #000; z-index: 5;
+        }
+        #room-view { width: 100%; height: 100%; background-size: cover; background-position: center; transition: 0.8s; }
 
-        /* --- THE VAULT --- */
-        #vault-island { width: 100%; padding: 100px 0; display: flex; flex-direction: column; align-items: center; }
-        #closet-box { width: 1200px; height: 800px; position: relative; perspective: 3000px; border: 15px solid #1a1a1a; background: #000; }
-        .vault-bg { position: absolute; width: 100%; height: 100%; transition: background-image 0.5s ease; background-size: cover; }
+        /* --- THE VAULT (BOTTOM ISLAND) --- */
+        #vault-island { 
+            margin-top: 400px; width: 100%; display: flex; flex-direction: column; align-items: center; padding-bottom: 200px;
+            border-top: 4px solid rgba(255,255,255,0.1); padding-top: 100px;
+        }
+        #closet-box { 
+            width: 1200px; height: 800px; position: relative; perspective: 3000px; 
+            border: 15px solid #1a1a1a; background: #111;
+        }
         
         .wing { position: absolute; width: 50%; height: 100%; transition: 1.8s; z-index: 500; cursor: pointer; }
-        .wing-l { left: 0; transform-origin: left; } .wing-r { right: 0; transform-origin: right; }
+        .wing-l { left: 0; transform-origin: left; }
+        .wing-r { right: 0; transform-origin: right; }
         .wing img { width: 100%; height: 100%; object-fit: cover; }
         #closet-box.open .wing-l { transform: rotateY(-145deg); }
         #closet-box.open .wing-r { transform: rotateY(145deg); }
 
-        /* ITEMS */
-        .item-box { position: absolute; cursor: grab; z-index: 1000; }
-        .item-box img { width: 120px; height: auto; pointer-events: none; }
-        .rug-f { width: 500px !important; transform: rotateX(65deg) !important; filter: drop-shadow(0 30px 40px #000); }
+        #vault-view { position: absolute; width: 100%; height: 100%; background-size: cover; }
+        .shelf-nav { position: absolute; bottom: 30px; width: 100%; display: flex; justify-content: center; gap: 15px; z-index: 600; }
     </style>
 </head>
 <body>
 
-<div id="site-anchor">
-    <header>
-        <h1>Room Glow Up</h1>
-        <h2>Where Your Dream Space Comes To Life</h2>
-    </header>
+<div id="master-anchor">
+    <header><h1>Room Glow Up</h1></header>
 
-    <nav class="nav-row">
-        <div class="library-tab" onclick="reveal('rooms-cab')"><div class="white-insert"><span class="label-style">Rooms</span></div></div>
-        <div class="library-tab" onclick="reveal('furn-cab')"><div class="white-insert"><span class="label-style">Furniture</span></div></div>
-        <div class="library-tab" onclick="jumpToVault()"><div class="white-insert"><span class="label-style">Decor Closet</span></div></div>
+    <nav style="display:flex; gap:30px; margin-bottom:100px;">
+        <div class="pull-tab" onclick="reveal('rooms-cab')"><div class="white-card">ROOMS</div></div>
+        <div class="pull-tab" onclick="reveal('furn-cab')"><div class="white-card">FURNITURE</div></div>
+        <div class="pull-tab" onclick="jumpToVault()"><div class="white-card">VAULT</div></div>
     </nav>
 
-    <section id="stage-floor">
-        <div class="cabinet-tower">
-            <div id="rooms-cab" class="cab-slide glided-in">
+    <section id="stage-island">
+        <div class="tower">
+            <div id="rooms-cab" class="cab-slide active">
                 <img src="Assets/cabinet.png" style="width:100%">
                 <div class="drawer-overlay">
-                    <div class="library-tab mini-pull" onclick="pre('livingroom1.jpg')"><div class="white-insert mini-insert"><span class="label-style">Living Room</span></div></div>
-                    <div class="library-tab mini-pull" onclick="pre('bedroom.jpg')"><div class="white-insert mini-insert"><span class="label-style">Bedroom</span></div></div>
-                    <div class="library-tab mini-pull" onclick="pre('foyer.jpg')"><div class="white-insert mini-insert"><span class="label-style">Extra Rooms</span></div></div>
+                    <div class="pull-tab mini" onclick="pre('livingroom1.jpg')"><div class="white-card">Living Room</div></div>
+                    <div class="pull-tab mini" onclick="pre('bedroom.jpg')"><div class="white-card">Bedroom</div></div>
+                    <div class="pull-tab mini" onclick="pre('foyer.jpg')"><div class="white-card">Extra Rooms</div></div>
                 </div>
             </div>
             <div id="furn-cab" class="cab-slide">
                 <img src="Assets/furniturecases.png" style="width:100%">
                 <div class="drawer-overlay">
-                    <div class="library-tab mini-pull"><div class="white-insert mini-insert"><span class="label-style">Sofas</span></div></div>
-                    <div class="library-tab mini-pull"><div class="white-insert mini-insert"><span class="label-style">Tables</span></div></div>
-                    <div class="library-tab mini-pull" onclick="reveal('rooms-cab')"><div class="white-insert mini-insert"><span class="label-style">Back</span></div></div>
+                    <div class="pull-tab mini"><div class="white-card">Sofas</div></div>
+                    <div class="pull-tab mini"><div class="white-card">Tables</div></div>
+                    <div class="pull-tab mini"><div class="white-card">Rugs</div></div>
                 </div>
             </div>
         </div>
-        <div id="theater"><div id="room-display"></div></div>
+        <div id="theater">
+            <div id="room-view" style="background-image: url('Assets/livingroom1.jpg');"></div>
+        </div>
     </section>
 
     <section id="vault-island">
         <div id="closet-box">
             <div class="wing wing-l" onclick="this.parentElement.classList.toggle('open')"><img src="Assets/closetdoors.jpg"></div>
             <div class="wing wing-r" onclick="this.parentElement.classList.toggle('open')"><img src="Assets/closetdoors.jpg"></div>
-            <div id="vault-view" class="vault-bg"></div>
-
-            <div style="position:absolute; bottom:30px; left:50%; transform:translateX(-50%); display:flex; gap:15px; z-index:600;">
-                <div class="library-tab mini-pull" onclick="loadShelf(1)"><div class="white-insert mini-insert"><span class="label-style">Shelf 1</span></div></div>
-                <div class="library-tab mini-pull" onclick="loadShelf(2)"><div class="white-insert mini-insert"><span class="label-style">Shelf 2</span></div></div>
-                <div class="library-tab mini-pull" onclick="loadShelf(3)"><div class="white-insert mini-insert"><span class="label-style">Shelf 3</span></div></div>
+            <div id="vault-view" style="background-image: url('Assets/decorclosetbackground.jpg');"></div>
+            
+            <div class="shelf-nav">
+                <div class="pull-tab mini" onclick="swap(1)"><div class="white-card">Shelf 1</div></div>
+                <div class="pull-tab mini" onclick="swap(2)"><div class="white-card">Shelf 2</div></div>
+                <div class="pull-tab mini" onclick="swap(3)"><div class="white-card">Shelf 3</div></div>
             </div>
         </div>
     </section>
@@ -123,26 +128,16 @@
 
 <script>
     function reveal(id) {
-        document.querySelectorAll('.cab-slide').forEach(c => c.classList.remove('glided-in'));
-        document.getElementById(id).classList.add('glided-in');
+        document.querySelectorAll('.cab-slide').forEach(c => c.classList.remove('active'));
+        document.getElementById(id).classList.add('active');
     }
-
-    function pre(img) { 
-        document.getElementById('room-display').style.backgroundImage = `url('Assets/${img}')`; 
+    function pre(img) { document.getElementById('room-view').style.backgroundImage = `url('Assets/${img}')`; }
+    function jumpToVault() { window.scrollTo({ top: document.getElementById('vault-island').offsetTop, behavior: 'smooth' }); }
+    function swap(num) {
+        const bg = document.getElementById('vault-view');
+        const shelfImages = ['decorclosetbackground.jpg', 'decorshelves2.jpg', 'decorshelves3.jpg'];
+        bg.style.backgroundImage = `url('Assets/${shelfImages[num-1]}')`;
     }
-
-    function jumpToVault() { window.scrollTo({ top: document.getElementById('vault-island').offsetTop - 20, behavior: 'smooth' }); }
-
-    function loadShelf(num) {
-        const vault = document.getElementById('vault-view');
-        const img = num === 1 ? 'decorclosetbackground.jpg' : num === 2 ? 'decorshelves2.jpg' : 'decorshelves3.jpg';
-        vault.style.backgroundImage = `url('Assets/${img}')`;
-        // Inventory logic remains here...
-    }
-
-    // Initial State
-    pre('livingroom1.jpg');
-    loadShelf(1);
 </script>
 </body>
 </html>
