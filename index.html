@@ -7,207 +7,154 @@
     <link href="https://fonts.googleapis.com/css2?family=Limelight&display=swap" rel="stylesheet">
     <style>
         :root {
-            --perfect-teal: #008080;
-            --metallic-silver: linear-gradient(145deg, #e0e0e0, #888888);
-            --silver-ink: #C0C0C0;
-            --flat-black: #111111;
+            --vogue-black: #050505;
+            --silver: #C0C0C0;
             --gunmetal: #2a2a2a;
         }
 
-        body {
-            background-color: var(--perfect-teal);
-            margin: 0; padding: 0;
+        body { 
+            background-color: var(--vogue-black); 
+            color: var(--silver); 
+            margin: 0; 
+            font-family: 'Segoe UI', sans-serif; 
             overflow-x: hidden;
-            font-family: 'Segoe UI', sans-serif;
-            scroll-behavior: smooth;
         }
 
-        /* --- THEATER STAGE --- */
-        #theater-container {
-            width: 100%;
-            padding: 60px 0;
-            display: flex; justify-content: center;
+        /* --- THE DESIGN STAGE (TOP) --- */
+        #stage-container {
+            width: 100%; height: 600px;
+            display: flex; flex-direction: column; align-items: center;
+            padding-top: 20px;
+            perspective: 1200px;
         }
 
-        #room-display {
-            width: 1100px; height: 650px;
-            background: #000; border: 15px solid #1a1a1a;
-            position: relative;
-            box-shadow: 0 50px 100px rgba(0,0,0,0.8);
-            overflow: hidden;
-        }
-
-        /* --- THE BOUTIQUE CLOSET --- */
-        #closet-box {
-            width: 1150px; height: 780px;
-            margin: 0 auto 200px auto;
-            position: relative;
-            perspective: 3000px;
-            border: 18px solid #1a1a1a;
+        #theater-stage {
+            width: 1100px; height: 500px;
             background: #000;
-            overflow: hidden;
-        }
-
-        #closet-interior-flow {
-            position: absolute;
-            display: flex;
-            width: 3450px; 
-            height: 100%;
-            transition: transform 1.2s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-
-        .closet-section {
-            width: 1150px; height: 100%;
-            background-size: contain; background-repeat: no-repeat;
-            background-position: center; background-color: black;
+            border: 12px solid var(--gunmetal);
             position: relative;
-            flex-shrink: 0;
-        }
-
-        .closet-door {
-            position: absolute;
-            width: 50%; height: 100%;
-            transition: 2.2s cubic-bezier(0.4, 0, 0.2, 1);
-            z-index: 500; cursor: pointer;
-        }
-        .door-left { left: 0; transform-origin: left; }
-        .door-right { right: 0; transform-origin: right; }
-        #closet-box.open .door-left { transform: rotateY(-155deg); }
-        #closet-box.open .door-right { transform: rotateY(155deg); }
-
-        /* --- HOVER PREVIEW WINDOW --- */
-        #preview-window {
-            position: fixed;
-            width: 200px; height: 200px;
-            background: var(--flat-black);
-            border: 2px solid var(--silver-ink);
-            display: none;
-            pointer-events: none;
-            z-index: 1000;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.8);
-            padding: 10px;
-            border-radius: 4px;
-        }
-        #preview-window img {
-            width: 100%; height: 100%; object-fit: contain;
-        }
-
-        /* --- INTERACTIVE --- */
-        .closet-item {
-            position: absolute;
-            cursor: pointer;
+            overflow: hidden;
+            box-shadow: 0 0 50px rgba(255,255,255,0.05);
         }
 
         .stage-item {
             position: absolute;
             cursor: move;
+            transition: transform 0.3s;
+            filter: drop-shadow(0 10px 15px rgba(0,0,0,0.6));
+        }
+
+        /* The styles we talked about */
+        .lay-flat { transform: rotateX(55deg); transform-origin: bottom; }
+        .upright { transform: rotateX(0deg); }
+
+        /* --- THE BOUTIQUE CLOSET (BOTTOM) --- */
+        #closet-window {
+            width: 1150px; height: 750px;
+            margin: 40px auto;
+            position: relative;
+            border: 15px solid #111;
+            overflow: hidden;
+            background: #000;
+        }
+
+        #closet-slider {
+            display: flex;
+            width: 2300px; 
+            height: 100%;
+            transition: transform 1s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .room {
+            width: 1150px; height: 100%;
+            background-size: contain; background-repeat: no-repeat;
+            background-position: center;
+            position: relative;
+            flex-shrink: 0;
+        }
+
+        .closet-item { 
+            position: absolute; 
+            cursor: pointer; 
+            transition: 0.2s; 
+            z-index: 10;
+        }
+        .closet-item:hover { transform: scale(1.1); filter: brightness(1.2); }
+
+        /* --- SILVER HANDLES --- */
+        .nav-bar {
+            position: absolute; bottom: 30px; width: 100%;
+            display: flex; justify-content: center; gap: 60px;
             z-index: 100;
         }
-
-        .closet-nav {
-            position: absolute;
-            bottom: 35px; width: 100%;
-            display: flex; justify-content: center; gap: 60px;
-            z-index: 600;
-        }
-
-        .hardware-handle {
-            width: 70px; height: 22px;
-            background: var(--metallic-silver);
-            border-radius: 2px 2px 10px 10px;
+        .handle {
+            width: 70px; height: 20px;
+            background: linear-gradient(#eee, #888);
+            border-radius: 0 0 10px 10px;
             cursor: pointer;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.7);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.5);
         }
     </style>
 </head>
 <body>
 
-    <div id="preview-window"><img id="preview-img" src=""></div>
-
-    <div id="theater-container">
-        <div id="room-display"></div>
+    <div id="stage-container">
+        <h1 style="font-family: 'Limelight'; font-size: 2.8rem; letter-spacing: 8px; margin-bottom: 10px;">ROOM GLOW UP</h1>
+        <div id="theater-stage"></div>
     </div>
 
-    <div id="closet-box">
-        <div class="closet-door door-left" onclick="toggleCloset()"><img src="Assets/closetdoors.jpg" style="width:100%; height:100%;"></div>
-        <div class="closet-door door-right" onclick="toggleCloset()"><img src="Assets/closetdoors.jpg" style="width:100%; height:100%;"></div>
-        
-        <div id="closet-interior-flow">
-            <div class="closet-section" style="background-image: url('Assets/Untitled project (4).jpg');">
-                <img src="Assets/pillow1.png" class="closet-item" style="width:110px; top:210px; left:440px;" 
-                     onmouseover="showPreview(this.src)" onmouseout="hidePreview()" onmousemove="movePreview(event)"
-                     ondblclick="moveToStage('Assets/pillow1.png', 120, 'decor')">
-            </div>
-            
-            <div class="closet-section" style="background-image: url('Assets/decorcloset.jpg');">
-                <img src="Assets/rug_folded.png" class="closet-item" style="width:180px; top:60px; left:320px;" 
-                     onmouseover="showPreview('Assets/rug_unfolded.png')" onmouseout="hidePreview()" onmousemove="movePreview(event)"
-                     ondblclick="moveToStage('Assets/rug_unfolded.png', 380, 'rug')">
+    <div id="closet-window">
+        <div id="closet-slider">
+            <div class="room" style="background-image: url('Assets/pillowcloset.jpg');">
+                <img src="Assets/emptypillowrack.png" style="width: 550px; bottom: 20px; left: 300px; position:absolute; pointer-events: none;">
+                
+                <img src="Assets/pillow1.png" class="closet-item" style="width:110px; top:350px; left:350px;" ondblclick="addToStage(this.src, 140, 'upright')">
+                <img src="Assets/plant.png" class="closet-item" style="width:130px; top:480px; left:750px;" ondblclick="addToStage(this.src, 220, 'upright')">
             </div>
 
-            <div class="closet-section" style="background-image: url('Assets/lampshelf.jpg');">
-                <img src="Assets/lamp_striped.png" class="closet-item" style="width:90px; top:180px; left:230px;" 
-                     onmouseover="showPreview(this.src)" onmouseout="hidePreview()" onmousemove="movePreview(event)"
-                     ondblclick="moveToStage('Assets/lamp_striped.png', 100, 'decor')">
+            <div class="room" style="background-image: url('Assets/carpetshowroom.jpg');">
+                <img src="Assets/mirror1.png" class="closet-item" style="width:160px; top:120px; left:200px;" ondblclick="addToStage(this.src, 200, 'upright')">
+                <img src="Assets/rug1.png" class="closet-item" style="width:220px; top:420px; left:460px;" ondblclick="addToStage(this.src, 450, 'lay-flat')">
             </div>
         </div>
 
-        <div class="closet-nav">
-            <div class="hardware-handle" onclick="glide(0)"></div>
-            <div class="hardware-handle" onclick="glide(-1150)"></div>
-            <div class="hardware-handle" onclick="glide(-2300)"></div>
+        <div class="nav-bar">
+            <div class="handle" onclick="moveRoom(0)" title="Pillow Studio"></div>
+            <div class="handle" onclick="moveRoom(-1150)" title="Carpet Gallery"></div>
         </div>
     </div>
 
     <script>
-        const preview = document.getElementById('preview-window');
-        const previewImg = document.getElementById('preview-img');
+        const slider = document.getElementById('closet-slider');
+        const stage = document.getElementById('theater-stage');
 
-        function toggleCloset() { document.getElementById('closet-box').classList.toggle('open'); }
-        function glide(pos) { document.getElementById('closet-interior-flow').style.transform = `translateX(${pos}px)`; }
+        function moveRoom(pos) { slider.style.transform = `translateX(${pos}px)`; }
 
-        // Preview Logic
-        function showPreview(src) {
-            previewImg.src = src;
-            preview.style.display = 'block';
-        }
-        function hidePreview() { preview.style.display = 'none'; }
-        function movePreview(e) {
-            preview.style.left = (e.clientX + 20) + 'px';
-            preview.style.top = (e.clientY + 20) + 'px';
-        }
+        function addToStage(src, w, styleClass) {
+            const img = document.createElement('img');
+            img.src = src;
+            img.className = 'stage-item ' + styleClass;
+            img.style.width = w + 'px';
+            img.style.left = '400px'; 
+            img.style.top = '100px';
 
-        function moveToStage(src, w, type) {
-            hidePreview(); // Close preview when item moves
-            const stage = document.getElementById('room-display');
-            const item = document.createElement('img');
-            item.src = src;
-            item.className = 'stage-item';
-            if(type === 'rug') item.style.transform = "rotateX(55deg)";
-            item.style.width = w + 'px';
-            item.style.left = '480px';
-            item.style.top = '200px';
+            img.ondblclick = function() { this.remove(); };
 
-            item.ondblclick = function() { this.remove(); };
-
-            item.onmousedown = function(e) {
+            img.onmousedown = function(e) {
                 let rect = stage.getBoundingClientRect();
-                let shiftX = e.clientX - item.getBoundingClientRect().left;
-                let shiftY = e.clientY - item.getBoundingClientRect().top;
-                function move(mx, my) {
-                    item.style.left = mx - rect.left - shiftX + 'px';
-                    item.style.top = my - rect.top - shiftY + 'px';
+                let shiftX = e.clientX - img.getBoundingClientRect().left;
+                let shiftY = e.clientY - img.getBoundingClientRect().top;
+                function moveAt(pageX, pageY) {
+                    img.style.left = (pageX - rect.left - shiftX) + 'px';
+                    img.style.top = (pageY - rect.top - shiftY) + 'px';
                 }
-                function onMouseMove(e) { move(e.pageX, e.pageY); }
+                function onMouseMove(e) { moveAt(e.pageX, e.pageY); }
                 document.addEventListener('mousemove', onMouseMove);
-                item.onmouseup = function() {
-                    document.removeEventListener('mousemove', onMouseMove);
-                    item.onmouseup = null;
-                };
+                img.onmouseup = function() { document.removeEventListener('mousemove', onMouseMove); };
             };
 
-            item.ondragstart = function() { return false; };
-            stage.appendChild(item);
+            img.ondragstart = function() { return false; };
+            stage.appendChild(img);
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
     </script>
