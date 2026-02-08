@@ -247,16 +247,22 @@
         .tag-text {
             font-family: 'Courier New', Courier, monospace;
             color: var(--tag-gold);
-            font-size: 13px;
-            font-weight: bold;
+            font-size: 12px;
+            font-weight: 900;
             text-transform: uppercase;
             text-align: center;
             padding: 0 5px;
+            line-height: 1.1;
         }
 
         .icon-tag:hover {
             transform: rotate(0deg) scale(1.1);
             border-color: var(--glow-teal);
+        }
+
+        .back-tag {
+            border-color: #ff4444 !important;
+            margin-top: 5px;
         }
 
         #theater-container {
@@ -311,8 +317,7 @@
 
             <div id="furniture-cases-container" class="asset-side-container">
                 <img src="Assets/furniturecases.png" class="asset-img" alt="Furniture Cases">
-                <div id="dynamic-tags-container" class="furniture-tags-overlay">
-                    </div>
+                <div id="dynamic-tags-container" class="furniture-tags-overlay"></div>
             </div>
         </div>
 
@@ -323,6 +328,13 @@
 </div>
 
 <script>
+    const subCategories = {
+        seating: ['couches', 'chairs', 'diningroom', 'benches', 'stools', 'ottomans'],
+        tables: ['dining', 'coffee', 'end'],
+        storage: ['dressers', 'cabinets', 'armoires'],
+        beds: ['beds']
+    };
+
     const roomInventory = { livingroom: ['livingroom1.jpg', 'livingroom3.jpg'], bedroom: ['bedroom.jpg', 'bedroom2.jpg'], diningroom: ['diningroom.jpg'], extra: ['foyer.jpg', 'officeroom.jpg', 'kitchen.jpg', 'kitchen2.jpg'] };
     let indices = { livingroom: 0, bedroom: 0, diningroom: 0, extra: 0 };
 
@@ -361,19 +373,43 @@
         const container = document.getElementById('dynamic-tags-container');
         container.innerHTML = mainCategories.map(cat => `
             <div class="tag-hanger">
-                <div class="icon-tag">
+                <div class="icon-tag" onclick="showSubTags('${cat.id}')">
                     <img src="Assets/${cat.img}" alt="${cat.id}">
                 </div>
             </div>
         `).join('');
     }
 
+    function showSubTags(id) {
+        const container = document.getElementById('dynamic-tags-container');
+        let tagsHTML = subCategories[id].map(sub => `
+            <div class="tag-hanger">
+                <div class="icon-tag" onclick="openCatalog('${sub}')">
+                    <span class="tag-text">${sub}</span>
+                </div>
+            </div>
+        `).join('');
+        
+        tagsHTML += `
+            <div class="tag-hanger">
+                <div class="icon-tag back-tag" onclick="renderMainTags()">
+                    <span class="tag-text">← BACK</span>
+                </div>
+            </div>
+        `;
+        
+        container.innerHTML = tagsHTML;
+    }
+
+    function openCatalog(item) {
+        console.log("Opening catalog for: " + item);
+        // This will trigger the catalog book logic next
+    }
+
     function uploadRoom(input) { 
         if (input.files && input.files[0]) { 
             let reader = new FileReader(); 
-            reader.onload = function(e) { 
-                document.getElementById('room-display').style.backgroundImage = `url(${e.target.result})`; 
-            }; 
+            reader.onload = function(e) { document.getElementById('room-display').style.backgroundImage = `url(${e.target.result})`; }; 
             reader.readAsDataURL(input.files[0]); 
         } 
     }
