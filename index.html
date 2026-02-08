@@ -3,140 +3,171 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Room Glow Up - Clean Reset</title>
+    <title>Room Glow Up - Decor Closet Edition</title>
     <link href="https://fonts.googleapis.com/css2?family=Limelight&display=swap" rel="stylesheet">
     <style>
         :root {
-            --metal: linear-gradient(145deg, #e6e6e6, #8c8c8c, #4d4d4d, #000);
-            --glow: #00f2ff;
+            --metal-shine: linear-gradient(145deg, #bdc3c7, #2c3e50, #95a5a6, #000);
+            --silver-header: linear-gradient(to bottom, #ffffff 0%, #a6a6a6 45%, #4d4d4d 50%, #ffffff 55%, #808080 100%);
+            --glow-teal: #00f2ff;
         }
 
         body, html {
-            margin: 0; padding: 0;
+            margin: 0; padding: 0; min-height: 100vh;
             background: url('Assets/mainbackground.jpg') no-repeat center center fixed;
-            background-size: cover; scroll-behavior: smooth;
-            overflow-x: hidden;
+            background-size: cover; scroll-behavior: smooth; overflow-x: hidden;
         }
 
-        #master-anchor { width: 100%; display: flex; flex-direction: column; align-items: center; }
+        #main-site-container { width: 100%; display: flex; flex-direction: column; align-items: center; }
 
-        header { text-align: center; padding: 80px 0 40px 0; }
-        h1 { font-family: 'Limelight', cursive; font-size: 100px; color: #fff; margin: 0; text-transform: uppercase; letter-spacing: 5px; }
+        header { text-align: center; padding: 60px 0 30px 0; }
+        h1 { font-family: 'Limelight', cursive; font-size: 80px; margin: 0; background: var(--silver-header); -webkit-background-clip: text; -webkit-text-fill-color: transparent; filter: drop-shadow(5px 5px 8px rgba(0,0,0,0.8)); text-transform: uppercase; letter-spacing: 4px; }
 
-        /* --- STABLE LIBRARY HARDWARE --- */
-        .pull-tab { 
-            width: 210px; height: 95px; background: var(--metal); border: 2.5px solid #000; 
-            display: flex; justify-content: center; align-items: center; cursor: pointer;
-            box-shadow: 10px 10px 25px rgba(0,0,0,0.7); transition: 0.3s;
+        /* --- NAVIGATION --- */
+        .nav-container { display: flex; gap: 25px; margin-bottom: 80px; }
+        .label-holder {
+            width: 210px; height: 100px; background: var(--metal-shine); border: 2px solid #000;
+            position: relative; display: flex; justify-content: center; align-items: center;
+            box-shadow: 8px 8px 20px rgba(0,0,0,0.9); cursor: pointer;
         }
-        .white-card { 
-            width: 85%; height: 55%; background: #fff; display: flex; justify-content: center; 
-            align-items: center; font-family: 'Courier New', monospace; font-weight: 900; font-size: 14px;
-            box-shadow: inset 4px 4px 10px rgba(0,0,0,0.4); color: #000;
-        }
-        .pull-tab:hover .white-card { background: var(--glow); box-shadow: 0 0 25px var(--glow); }
+        .white-card { width: 85%; height: 60%; background: #fff; display: flex; justify-content: center; align-items: center; transition: 0.4s; }
+        .label-holder:hover .white-card { background: var(--glow-teal); box-shadow: 0 0 30px var(--glow-teal); }
+        .label-text { font-family: 'Courier New', monospace; font-weight: 900; font-size: 14px; color: #000; text-transform: uppercase; }
 
-        /* --- THE STAGE (TOP ISLAND) --- */
-        #stage-island { 
-            display: flex; justify-content: center; align-items: flex-start; gap: 80px; 
-            width: 100%; max-width: 1700px; padding-bottom: 200px; position: relative;
-        }
+        /* --- THE STAGE --- */
+        #interaction-zone { display: flex; justify-content: center; align-items: flex-start; gap: 40px; width: 1540px; height: 700px; position: relative; }
+        .cabinet-space { position: relative; width: 520px; height: 650px; }
+        .asset-side-container { position: absolute; top: 0; left: 0; width: 100%; transform: translateX(-200%); transition: transform 1.5s cubic-bezier(0.23, 1, 0.32, 1); z-index: 30; }
+        .asset-side-container.glided-in { transform: translateX(0); }
+        .asset-img { width: 100%; filter: drop-shadow(15px 15px 30px #000); }
 
-        .tower { position: relative; width: 520px; height: 780px; }
-        .cab-slide { position: absolute; top: 0; width: 100%; transform: translateX(-200%); transition: 1.2s cubic-bezier(0.23, 1, 0.32, 1); }
-        .cab-slide.active { transform: translateX(0); }
+        .drawer-overlay { position: absolute; top: 135px; left: 95px; display: flex; flex-direction: column; gap: 28px; }
+        .small-pull { width: 160px; height: 65px; background: var(--metal-shine); display: flex; justify-content: center; align-items: center; cursor: pointer; }
+        .small-card { width: 80%; height: 60%; background: #fff; display: flex; justify-content: center; align-items: center; font-family: 'Courier New'; font-weight: bold; font-size: 12px; text-transform: uppercase; }
 
-        .drawer-overlay { position: absolute; top: 135px; left: 100px; display: flex; flex-direction: column; gap: 26px; }
-        .mini { width: 160px; height: 64px; }
+        #theater-container { width: 950px; height: 600px; border: 25px solid #000; background: #000; box-shadow: 0 0 60px #000; overflow: hidden; position: relative; }
+        #room-display { width: 100%; height: 100%; background-size: cover; background-position: center; }
 
-        #theater { 
-            width: 950px; height: 650px; border: 35px solid #000; background: #000; 
-            position: relative; overflow: hidden; box-shadow: 0 0 100px #000; z-index: 5;
-        }
-        #room-view { width: 100%; height: 100%; background-size: cover; background-position: center; transition: 0.8s; }
-
-        /* --- THE VAULT (BOTTOM ISLAND) --- */
-        #vault-island { 
-            margin-top: 400px; width: 100%; display: flex; flex-direction: column; align-items: center; padding-bottom: 200px;
-            border-top: 4px solid rgba(255,255,255,0.1); padding-top: 100px;
-        }
-        #closet-box { 
-            width: 1200px; height: 800px; position: relative; perspective: 3000px; 
-            border: 15px solid #1a1a1a; background: #111;
-        }
+        /* --- THE DECOR CLOSET --- */
+        #closet-section { margin-top: 400px; width: 100%; display: flex; flex-direction: column; align-items: center; padding-bottom: 200px; }
+        #closet-exterior { width: 1100px; height: 750px; position: relative; perspective: 3000px; border: 15px solid #1a1a1a; background: #111; }
         
-        .wing { position: absolute; width: 50%; height: 100%; transition: 1.8s; z-index: 500; cursor: pointer; }
-        .wing-l { left: 0; transform-origin: left; }
-        .wing-r { right: 0; transform-origin: right; }
-        .wing img { width: 100%; height: 100%; object-fit: cover; }
-        #closet-box.open .wing-l { transform: rotateY(-145deg); }
-        #closet-box.open .wing-r { transform: rotateY(145deg); }
+        .closet-door { position: absolute; width: 50%; height: 100%; transition: 1.8s cubic-bezier(0.4, 0, 0.2, 1); z-index: 500; cursor: pointer; }
+        .door-left { left: 0; transform-origin: left; border-right: 1px solid rgba(255,255,255,0.1); } 
+        .door-right { right: 0; transform-origin: right; border-left: 1px solid rgba(255,255,255,0.1); }
+        .closet-door img { width: 100%; height: 100%; object-fit: cover; }
+        
+        #closet-exterior.open .door-left { transform: rotateY(-145deg); }
+        #closet-exterior.open .door-right { transform: rotateY(145deg); }
+        
+        #closet-interior { position: absolute; width: 100%; height: 100%; background-size: cover; background-position: center; }
+        .shelf-nav { position: absolute; bottom: 30px; left: 50%; transform: translateX(-50%); display: flex; gap: 15px; z-index: 600; }
 
-        #vault-view { position: absolute; width: 100%; height: 100%; background-size: cover; }
-        .shelf-nav { position: absolute; bottom: 30px; width: 100%; display: flex; justify-content: center; gap: 15px; z-index: 600; }
+        /* ITEMS */
+        .decor-item { position: absolute; cursor: pointer; transition: transform 0.2s; }
+        .decor-item:hover { transform: scale(1.1); }
+        .placed-decor { position: absolute; cursor: grab; z-index: 100; }
     </style>
 </head>
 <body>
 
-<div id="master-anchor">
+<div id="main-site-container">
     <header><h1>Room Glow Up</h1></header>
 
-    <nav style="display:flex; gap:30px; margin-bottom:100px;">
-        <div class="pull-tab" onclick="reveal('rooms-cab')"><div class="white-card">ROOMS</div></div>
-        <div class="pull-tab" onclick="reveal('furn-cab')"><div class="white-card">FURNITURE</div></div>
-        <div class="pull-tab" onclick="jumpToVault()"><div class="white-card">VAULT</div></div>
+    <nav class="nav-container">
+        <div class="label-holder" onclick="showCab('rooms-cab')"><div class="white-card"><span class="label-text">Rooms</span></div></div>
+        <div class="label-holder" onclick="showCab('furn-cab')"><div class="white-card"><span class="label-text">Furniture</span></div></div>
+        <div class="label-holder" onclick="goToCloset()"><div class="white-card"><span class="label-text">Decor Closet</span></div></div>
     </nav>
 
-    <section id="stage-island">
-        <div class="tower">
-            <div id="rooms-cab" class="cab-slide active">
-                <img src="Assets/cabinet.png" style="width:100%">
+    <div id="interaction-zone">
+        <div class="cabinet-space">
+            <div id="rooms-cab" class="asset-side-container glided-in">
+                <img src="Assets/cabinet.png" class="asset-img">
                 <div class="drawer-overlay">
-                    <div class="pull-tab mini" onclick="pre('livingroom1.jpg')"><div class="white-card">Living Room</div></div>
-                    <div class="pull-tab mini" onclick="pre('bedroom.jpg')"><div class="white-card">Bedroom</div></div>
-                    <div class="pull-tab mini" onclick="pre('foyer.jpg')"><div class="white-card">Extra Rooms</div></div>
+                    <div class="small-pull" onclick="setRoom('livingroom1.jpg')"><div class="small-card">Living</div></div>
+                    <div class="small-pull" onclick="setRoom('bedroom.jpg')"><div class="small-card">Bedroom</div></div>
+                    <div class="small-pull" onclick="setRoom('foyer.jpg')"><div class="small-card">Extra</div></div>
                 </div>
             </div>
-            <div id="furn-cab" class="cab-slide">
-                <img src="Assets/furniturecases.png" style="width:100%">
+            <div id="furn-cab" class="asset-side-container">
+                <img src="Assets/furniturecases.png" class="asset-img">
                 <div class="drawer-overlay">
-                    <div class="pull-tab mini"><div class="white-card">Sofas</div></div>
-                    <div class="pull-tab mini"><div class="white-card">Tables</div></div>
-                    <div class="pull-tab mini"><div class="white-card">Rugs</div></div>
+                    <div class="small-pull"><div class="small-card">Sofas</div></div>
+                    <div class="small-pull"><div class="small-card">Tables</div></div>
+                    <div class="small-pull"><div class="small-card">Rugs</div></div>
                 </div>
             </div>
         </div>
-        <div id="theater">
-            <div id="room-view" style="background-image: url('Assets/livingroom1.jpg');"></div>
+        <div id="theater-container">
+            <div id="room-display" style="background-image: url('Assets/livingroom1.jpg');"></div>
         </div>
-    </section>
+    </div>
 
-    <section id="vault-island">
-        <div id="closet-box">
-            <div class="wing wing-l" onclick="this.parentElement.classList.toggle('open')"><img src="Assets/closetdoors.jpg"></div>
-            <div class="wing wing-r" onclick="this.parentElement.classList.toggle('open')"><img src="Assets/closetdoors.jpg"></div>
-            <div id="vault-view" style="background-image: url('Assets/decorclosetbackground.jpg');"></div>
+    <section id="closet-section">
+        <div id="closet-exterior">
+            <div class="closet-door door-left" onclick="toggleCloset()"><img src="Assets/closetdoors.jpg"></div>
+            <div class="closet-door door-right" onclick="toggleCloset()"><img src="Assets/closetdoors.jpg"></div>
             
+            <div id="closet-interior" style="background-image: url('Assets/decorclosetbackground.jpg');">
+                <div id="shelf-3-content" style="display:none; position:relative; width:100%; height:100%;">
+                    <img src="Assets/purplejar.png" class="decor-item" ondblclick="teleport('purplejar.png')" style="bottom:20%; left:20%; width:100px;">
+                    <img src="Assets/pillows.png" class="decor-item" ondblclick="teleport('pillows.png')" style="bottom:25%; left:50%; width:120px;">
+                </div>
+            </div>
+
             <div class="shelf-nav">
-                <div class="pull-tab mini" onclick="swap(1)"><div class="white-card">Shelf 1</div></div>
-                <div class="pull-tab mini" onclick="swap(2)"><div class="white-card">Shelf 2</div></div>
-                <div class="pull-tab mini" onclick="swap(3)"><div class="white-card">Shelf 3</div></div>
+                <div class="small-pull" onclick="swapShelf(1)"><div class="small-card">Shelf 1</div></div>
+                <div class="small-pull" onclick="swapShelf(2)"><div class="small-card">Shelf 2</div></div>
+                <div class="small-pull" onclick="swapShelf(3)"><div class="small-card">Shelf 3</div></div>
             </div>
         </div>
     </section>
 </div>
 
 <script>
-    function reveal(id) {
-        document.querySelectorAll('.cab-slide').forEach(c => c.classList.remove('active'));
-        document.getElementById(id).classList.add('active');
+    function showCab(id) {
+        document.querySelectorAll('.asset-side-container').forEach(c => c.classList.remove('glided-in'));
+        document.getElementById(id).classList.add('glided-in');
     }
-    function pre(img) { document.getElementById('room-view').style.backgroundImage = `url('Assets/${img}')`; }
-    function jumpToVault() { window.scrollTo({ top: document.getElementById('vault-island').offsetTop, behavior: 'smooth' }); }
-    function swap(num) {
-        const bg = document.getElementById('vault-view');
-        const shelfImages = ['decorclosetbackground.jpg', 'decorshelves2.jpg', 'decorshelves3.jpg'];
-        bg.style.backgroundImage = `url('Assets/${shelfImages[num-1]}')`;
+    function setRoom(img) { document.getElementById('room-display').style.backgroundImage = `url('Assets/${img}')`; }
+    function goToCloset() { window.scrollTo({ top: document.getElementById('closet-section').offsetTop, behavior: 'smooth' }); }
+    function toggleCloset() { document.getElementById('closet-exterior').classList.toggle('open'); }
+
+    function swapShelf(num) {
+        const interior = document.getElementById('closet-interior');
+        const s3 = document.getElementById('shelf-3-content');
+        const backgrounds = ['decorclosetbackground.jpg', 'decorshelves2.jpg', 'decorshelves3.jpg'];
+        
+        interior.style.backgroundImage = `url('Assets/${backgrounds[num-1]}')`;
+        s3.style.display = (num === 3) ? 'block' : 'none';
+    }
+
+    function teleport(imgSrc) {
+        const theater = document.getElementById('theater-container');
+        const item = document.createElement('div');
+        item.className = 'placed-decor';
+        item.style.left = '45%'; item.style.top = '45%';
+        item.innerHTML = `<img src="Assets/${imgSrc}" style="width:130px; height:auto;">`;
+        theater.appendChild(item);
+        setupDrag(item);
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function setupDrag(el) {
+        let p1 = 0, p2 = 0, p3 = 0, p4 = 0;
+        el.onmousedown = (e) => {
+            e.preventDefault();
+            p3 = e.clientX; p4 = e.clientY;
+            document.onmouseup = () => { document.onmouseup = null; document.onmousemove = null; };
+            document.onmousemove = (e) => {
+                e.preventDefault();
+                p1 = p3 - e.clientX; p2 = p4 - e.clientY;
+                p3 = e.clientX; p4 = e.clientY;
+                el.style.top = (el.offsetTop - p2) + "px";
+                el.style.left = (el.offsetLeft - p1) + "px";
+            };
+        };
     }
 </script>
 </body>
