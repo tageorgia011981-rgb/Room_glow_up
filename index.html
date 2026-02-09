@@ -238,7 +238,7 @@ h2 {
     width: 1050px;
     height: 700px;
     border: 25px solid #000;
-    overflow: hidden;
+    overflow: visible; /* Changed to visible for rising closet */
     background: #111;
     box-shadow: 0 0 80px rgba(0,0,0,1);
     z-index: 5;
@@ -252,7 +252,89 @@ h2 {
     background-size: cover;
     background-position: center;
     transition: background-image 0.3s ease;
+    position: relative;
 }
+
+/* --- DECOR CLOSET (RISING FROM BOTTOM) --- */
+#decor-closet-zone {
+    position: fixed;
+    bottom: -600px; /* Hidden below stage */
+    left: 50%;
+    transform: translateX(-50%);
+    width: 1100px;
+    height: 550px;
+    z-index: 100;
+    transition: bottom 1.5s cubic-bezier(0.23, 1, 0.32, 1);
+    perspective: 2000px; /* For the 3D swing */
+}
+
+#decor-closet-zone.risen {
+    bottom: 20px;
+}
+
+.closet-interior {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: url('Assets/decorclosetbackground.jpg') center center;
+    background-size: cover;
+    border: 10px solid #222;
+    box-shadow: inset 0 0 50px #000;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+.closet-door {
+    position: absolute;
+    top: 0;
+    width: 50%;
+    height: 100%;
+    background: url('Assets/closetdoors.jpg') no-repeat;
+    background-size: 200% 100%;
+    z-index: 2;
+    transition: transform 1.2s ease-in-out;
+    border: 2px solid #111;
+}
+
+.door-left {
+    left: 0;
+    background-position: left;
+    transform-origin: left;
+}
+
+.door-right {
+    right: 0;
+    background-position: right;
+    transform-origin: right;
+}
+
+/* Opening the doors */
+#decor-closet-zone.open .door-left { transform: rotateY(-110deg); }
+#decor-closet-zone.open .door-right { transform: rotateY(110deg); }
+
+.shelf {
+    width: 100%;
+    height: 120px;
+    background: rgba(0,0,0,0.3);
+    border-bottom: 4px solid #444;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    padding: 0 20px;
+}
+
+.decor-item {
+    width: 80px;
+    height: 80px;
+    cursor: pointer;
+    transition: transform 0.2s;
+}
+
+.decor-item:hover { transform: scale(1.1); }
+
 </style>
 </head>
 <body>
@@ -266,7 +348,7 @@ h2 {
     <nav class="nav-container">
         <div class="label-holder" onclick="showCabinet()"><div class="screw s-tl"></div><div class="screw s-tr"></div><div class="white-card"><span class="label-text">Rooms</span></div><div class="screw s-bl"></div><div class="screw s-br"></div><div class="lip-pull"></div></div>
         <div class="label-holder"><div class="screw s-tl"></div><div class="screw s-tr"></div><div class="white-card"><span class="label-text">Furniture Catalog</span></div><div class="screw s-bl"></div><div class="screw s-br"></div><div class="lip-pull"></div></div>
-        <div class="label-holder"><div class="screw s-tl"></div><div class="screw s-tr"></div><div class="white-card"><span class="label-text">Decor Closet</span></div><div class="screw s-bl"></div><div class="screw s-br"></div><div class="lip-pull"></div></div>
+        <div class="label-holder" onclick="triggerDecorCloset()"><div class="screw s-tl"></div><div class="screw s-tr"></div><div class="white-card"><span class="label-text">Decor Closet</span></div><div class="screw s-bl"></div><div class="screw s-br"></div><div class="lip-pull"></div></div>
         <div class="label-holder"><div class="screw s-tl"></div><div class="screw s-tr"></div><div class="white-card"><span class="label-text">Inspirational Gallery</span></div><div class="screw s-bl"></div><div class="screw s-br"></div><div class="lip-pull"></div></div>
         <div class="label-holder"><div class="screw s-tl"></div><div class="screw s-tr"></div><div class="white-card"><span class="label-text">Save / Check Out</span></div><div class="screw s-bl"></div><div class="screw s-br"></div><div class="lip-pull"></div></div>
     </nav>
@@ -299,6 +381,19 @@ h2 {
             <div id="room-display"></div>
         </div>
     </div>
+
+    <div id="decor-closet-zone">
+        <div class="closet-door door-left"></div>
+        <div class="closet-door door-right"></div>
+        <div class="closet-interior">
+            <div class="shelf" id="shelf-1">
+                <div class="decor-item" ondblclick="sendFirstClass(this, 'stage')"><img src="Assets/pillow1.png" width="100%"></div>
+            </div>
+            <div class="shelf" id="shelf-2"></div>
+            <div class="shelf" id="shelf-3"></div>
+        </div>
+    </div>
+
 </div>
 
 <script>
@@ -332,6 +427,28 @@ function triggerFurnitureGlide() {
         setTimeout(() => {
             cases.classList.add('glided-in');
         }, 1200);
+    }
+}
+
+function triggerDecorCloset() {
+    const zone = document.getElementById('decor-closet-zone');
+    zone.classList.add('risen');
+    setTimeout(() => {
+        zone.classList.add('open');
+    }, 1500);
+}
+
+function sendFirstClass(element, destination) {
+    if (destination === 'stage') {
+        document.getElementById('room-display').appendChild(element);
+        element.setAttribute('ondblclick', "sendFirstClass(this, 'closet')");
+        element.style.position = "absolute";
+        element.style.top = "50%";
+        element.style.left = "50%";
+    } else {
+        document.getElementById('shelf-1').appendChild(element);
+        element.setAttribute('ondblclick', "sendFirstClass(this, 'stage')");
+        element.style.position = "static";
     }
 }
 </script>
