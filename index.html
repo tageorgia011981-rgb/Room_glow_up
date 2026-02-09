@@ -3,199 +3,220 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Room Glow Up</title>
-    <link href="https://fonts.googleapis.com/css2?family=Limelight&display=swap" rel="stylesheet">
+    <title>Room Glow Up - Premium</title>
+    <link href="https://fonts.googleapis.com/css2?family=Limelight&family=Great+Vibes&display=swap" rel="stylesheet">
     <style>
         :root {
-            --metal-shine: linear-gradient(145deg, #bdc3c7, #2c3e50, #95a5a6, #000);
-            --silver-header: linear-gradient(to bottom, #ffffff 0%, #a6a6a6 45%, #4d4d4d 50%, #ffffff 55%, #808080 100%);
-            --glow-red: #ff0000;
-            --tag-gold: #d4af37;
+            --gunmetal: #2a3439;
+            --silver: #c0c0c0;
+            --teal: #008080;
+            --black: #000000;
         }
 
-        body, html {
+        body {
+            background-color: var(--black);
+            color: white;
+            font-family: 'Limelight', cursive;
             margin: 0;
             padding: 0;
-            min-height: 100vh;
-            background: #000;
-            overflow-x: hidden;
+            overflow-y: auto; /* FIXED: Scroll enabled */
+            min-height: 150vh;
         }
 
-        #main-site-container {
-            width: 100%;
-            max-width: 1600px;
-            margin: 0 auto;
-            background: url('Assets/mainbackground.jpg') no-repeat center center fixed;
-            background-size: cover;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            min-height: 100vh;
-            padding-bottom: 200px;
+        /* --- HEADER SECTION --- */
+        header {
+            text-align: center;
+            padding: 40px 20px;
+            background: radial-gradient(circle, var(--gunmetal), var(--black));
+            border-bottom: 3px solid var(--silver);
         }
 
-        header { text-align: center; padding: 60px 0; }
         h1 {
-            font-family: 'Limelight', cursive;
-            font-size: 100px;
+            font-size: 4rem;
             margin: 0;
-            background: var(--silver-header);
+            background: linear-gradient(to bottom, #ffffff 20%, var(--silver) 50%, #808080 80%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             text-transform: uppercase;
+            letter-spacing: 5px;
         }
 
-        /* --- NAVIGATION --- */
-        .nav-container { display: flex; gap: 20px; margin-bottom: 80px; }
-        .label-holder {
-            width: 180px; height: 90px;
-            background: var(--metal-shine);
+        .sub-header {
+            font-family: 'Great Vibes', cursive; /* FIXED: Restored */
+            font-size: 2rem;
+            color: var(--silver);
+            margin-top: 10px;
+        }
+
+        /* --- TOP VINTAGE TABS --- */
+        .tab-container {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 30px;
+        }
+
+        .metal-lip-tab {
+            background: linear-gradient(to bottom, #7a7a7a, #333, #000);
+            border: 1px solid var(--silver);
+            border-radius: 5px 5px 0 0;
+            padding: 12px 25px;
+            font-family: 'Limelight', sans-serif;
+            font-size: 1rem;
+            color: var(--silver);
+            text-transform: uppercase;
+            cursor: pointer;
+            box-shadow: 0 -2px 5px rgba(255,255,255,0.2);
+            transition: transform 0.2s;
+        }
+
+        .metal-lip-tab:hover {
+            transform: translateY(-5px);
+            color: white;
+        }
+
+        /* --- MAIN INTERACTION AREA --- */
+        .main-container {
+            display: flex;
+            justify-content: space-around;
+            padding: 50px 5%;
+            align-items: flex-start;
+        }
+
+        /* --- THE CABINET --- */
+        .quilted-cabinet {
+            width: 350px;
+            background: var(--gunmetal);
+            border: 10px solid #1a1a1a;
+            box-shadow: inset 0 0 50px rgba(0,0,0,0.8), 5px 15px 30px rgba(0,0,0,0.5);
+            padding: 20px;
+            border-radius: 10px;
+        }
+
+        .drawer {
+            height: 100px;
+            background: #222;
+            margin-bottom: 15px;
+            border: 2px solid #333;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             position: relative;
-            display: flex; justify-content: center; align-items: center;
-            cursor: pointer; transition: 0.3s;
-        }
-        .label-holder:hover { transform: translateY(-5px); }
-        .white-card {
-            width: 85%; height: 60%; background: #fff;
-            display: flex; justify-content: center; align-items: center;
-            font-family: 'Courier New', monospace; font-weight: 900;
-        }
-        .label-holder:hover .white-card { box-shadow: 0 0 20px var(--glow-red); }
-
-        /* --- INTERACTION ZONE --- */
-        #interaction-zone {
-            display: flex; width: 100%; justify-content: center; gap: 40px;
-            min-height: 1200px; position: relative;
+            box-shadow: inset 0 0 15px rgba(0,0,0,0.5);
         }
 
-        .asset-side-container {
-            position: absolute; left: 50px; top: 0;
-            width: 850px; /* SCALED FORWARD/LARGE */
-            transition: transform 1.5s ease-in-out;
-            transform: translateX(-150%);
-            z-index: 20;
+        /* FIXED: Drawer Pulls */
+        .pull-handle {
+            width: 80px;
+            height: 20px;
+            background: linear-gradient(to bottom, var(--silver), #555);
+            border-radius: 3px 3px 10px 10px;
+            cursor: pointer;
+            border: 1px solid #1a1a1a;
+            box-shadow: 0 4px 2px rgba(0,0,0,0.6);
         }
-        .asset-side-container.active { transform: translateX(0); }
-        .asset-side-container.exit { transform: translateX(-150%); }
 
-        .main-asset-img { width: 100%; filter: drop-shadow(10px 10px 30px #000); }
+        .drawer-label {
+            position: absolute;
+            top: 10px;
+            font-size: 0.8rem;
+            color: var(--teal);
+            letter-spacing: 2px;
+        }
 
-        /* --- DRAWER LABELS (CABINET) --- */
-        .drawer-overlay {
-            position: absolute; top: 180px; left: 120px;
-            display: flex; flex-direction: column; gap: 52px;
+        /* --- THE CANVAS --- */
+        .canvas-area {
+            width: 800px;
+            height: 500px;
+            background: var(--black);
+            border: 5px solid var(--gunmetal);
+            box-shadow: 0 0 40px rgba(0,128,128,0.2);
+            position: relative; /* FIXED: Prevent overlap */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
         }
-        .drawer-tab {
-            width: 220px; height: 75px; background: var(--metal-shine);
-            display: flex; justify-content: center; align-items: center; cursor: pointer;
-        }
-        .drawer-tab:hover .white-card { box-shadow: 0 0 20px var(--glow-red); }
 
-        /* --- HANGING TAGS (CASES) --- */
-        .tags-overlay {
-            position: absolute; top: 150px; left: 130px;
-            display: flex; flex-direction: column; gap: 40px;
+        #room-stage {
+            width: 100%;
+            height: 100%;
+            background-size: cover;
+            background-position: center;
+            transition: opacity 0.5s ease;
         }
-        .hanging-tag {
-            width: 100px; height: 60px; /* SMALL DAINTY TAGS */
-            background: #000; border: 1px solid var(--tag-gold);
-            clip-path: polygon(15% 0%, 85% 0%, 100% 25%, 100% 100%, 0% 100%, 0% 25%);
-            display: flex; justify-content: center; align-items: center;
-            cursor: pointer; transition: 0.3s;
-        }
-        .hanging-tag:hover { transform: rotate(-3deg) scale(1.1); border-color: var(--glow-red); }
-        .hanging-tag img { width: 70%; }
-        .tag-text { color: #fff; font-family: 'Courier New'; font-size: 12px; text-transform: uppercase; font-weight: 900; }
 
-        /* --- STAGE --- */
-        #stage {
-            width: 900px; height: 600px; border: 20px solid #000;
-            margin-left: 600px; background: #111;
-            background-size: cover; cursor: pointer;
+        .placeholder-text {
+            color: #444;
+            font-size: 2rem;
+            text-transform: uppercase;
         }
     </style>
 </head>
 <body>
 
-<div id="main-site-container">
-    <header><h1>Room Glow Up</h1></header>
+<header>
+    <h1>Room Glow Up</h1>
+    <div class="sub-header">Where Your Dream Space Comes To Life</div>
 
-    <nav class="nav-container">
-        <div class="label-holder" onclick="showCabinet()"><div class="white-card">ROOMS</div></div>
-        <div class="label-holder"><div class="white-card">CATALOG</div></div>
-        <div class="label-holder"><div class="white-card">DECOR</div></div>
-        <div class="label-holder"><div class="white-card">GALLERY</div></div>
-        <div class="label-holder"><div class="white-card">CHECKOUT</div></div>
-    </nav>
+    <div class="tab-container">
+        <div class="metal-lip-tab">Furniture Catalog</div>
+        <div class="metal-lip-tab">Decor Closet</div>
+        <div class="metal-lip-tab">Inspirational Gallery</div>
+        <div class="metal-lip-tab">Save/Checkout</div>
+    </div>
+</header>
 
-    <div id="interaction-zone">
-        <div id="cab-container" class="asset-side-container">
-            <img src="Assets/cabinet.png" class="main-asset-img">
-            <div class="drawer-overlay">
-                <div class="drawer-tab" onclick="cycle('living')"><div class="white-card">LIVING ROOM</div></div>
-                <div class="drawer-tab" onclick="cycle('bed')"><div class="white-card">BEDROOM</div></div>
-                <div class="drawer-tab" onclick="cycle('dining')"><div class="white-card">DINING ROOM</div></div>
-                <div class="drawer-tab" onclick="cycle('extra')"><div class="white-card">EXTRA ROOMS</div></div>
-                <div class="drawer-tab"><div class="white-card">UPLOAD YOURS</div></div>
-            </div>
+<div class="main-container">
+    <div class="quilted-cabinet">
+        <div class="drawer">
+            <span class="drawer-label">LIVING ROOM</span>
+            <div class="pull-handle" onclick="loadRoom('living')"></div>
         </div>
-
-        <div id="cases-container" class="asset-side-container">
-            <img src="Assets/furniturecases.png" class="main-asset-img">
-            <div id="tag-zone" class="tags-overlay">
-                </div>
+        <div class="drawer">
+            <span class="drawer-label">BEDROOM</span>
+            <div class="pull-handle" onclick="loadRoom('bedroom')"></div>
         </div>
+        <div class="drawer">
+            <span class="drawer-label">DINING ROOM</span>
+            <div class="pull-handle" onclick="loadRoom('dining')"></div>
+        </div>
+        <div class="drawer">
+            <span class="drawer-label">EXTRA ROOMS</span>
+            <div class="pull-handle" onclick="loadRoom('extra')"></div>
+        </div>
+    </div>
 
-        <div id="stage" onclick="lockRoom()"></div>
+    <div class="canvas-area">
+        <div id="room-stage">
+            <div class="placeholder-text" id="status">Select a Room</div>
+        </div>
     </div>
 </div>
 
 <script>
-    const rooms = { living: ['l1.jpg','l2.jpg'], bed: ['b1.jpg'], dining: ['d1.jpg'], extra: ['e1.jpg'] };
-    let cur = { living: 0, bed: 0, dining: 0, extra: 0 };
+    function loadRoom(type) {
+        const stage = document.getElementById('room-stage');
+        const status = document.getElementById('status');
+        
+        // Hide placeholder
+        status.style.display = 'none';
 
-    function showCabinet() { document.getElementById('cab-container').classList.add('active'); }
+        // Map room types to your specific image paths
+        const rooms = {
+            'living': 'living-room.jpg',
+            'bedroom': 'bedroom.jpg',
+            'dining': 'dining-room.jpg',
+            'extra': 'extra-room.jpg'
+        };
 
-    function cycle(type) {
-        let img = rooms[type][cur[type]];
-        document.getElementById('stage').style.backgroundImage = `url('Assets/${img}')`;
-        cur[type] = (cur[type] + 1) % rooms[type].length;
-    }
-
-    function lockRoom() {
-        const cab = document.getElementById('cab-container');
-        cab.classList.remove('active');
-        cab.classList.add('exit');
-        setTimeout(() => {
-            document.getElementById('cases-container').classList.add('active');
-            loadMainTags();
-        }, 1000);
-    }
-
-    function loadMainTags() {
-        const zone = document.getElementById('tag-zone');
-        zone.innerHTML = `
-            <div class="hanging-tag" onclick="swapTags('seating')"><img src="Assets/iconseating.png"></div>
-            <div class="hanging-tag" onclick="swapTags('tables')"><img src="Assets/icontables.png"></div>
-            <div class="hanging-tag" onclick="swapTags('storage')"><img src="Assets/iconstorage.png"></div>
-            <div class="hanging-tag" onclick="swapTags('beds')"><img src="Assets/iconbeds.png"></div>
-        `;
-    }
-
-    function swapTags(cat) {
-        const zone = document.getElementById('tag-zone');
-        let html = '';
-        if(cat === 'seating') {
-            ['COUCH','CHAIR','STOOL','BENCHES'].forEach(t => html += `<div class="hanging-tag"><span class="tag-text">${t}</span></div>`);
-        } else if(cat === 'tables') {
-            ['END','DINING','COFFEE'].forEach(t => html += `<div class="hanging-tag"><span class="tag-text">${t}</span></div>`);
-        } else if(cat === 'storage') {
-            ['CABINETS','DRESSERS','ARMOIRES'].forEach(t => html += `<div class="hanging-tag"><span class="tag-text">${t}</span></div>`);
-        } else if(cat === 'beds') {
-            html = `<div class="hanging-tag"><span class="tag-text">BEDS</span></div>`;
-        }
-        zone.innerHTML = html + `<div class="hanging-tag" onclick="loadMainTags()" style="border-color:white"><span class="tag-text">BACK</span></div>`;
+        // FIXED: Connection Logic
+        stage.style.backgroundImage = `url('${rooms[type]}')`;
+        stage.style.opacity = '1';
+        
+        console.log("Loading " + type + " onto Canvas");
     }
 </script>
+
 </body>
 </html>
