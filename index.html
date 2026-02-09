@@ -6,15 +6,18 @@
     <title>Room Glow Up</title>
     <link href="https://fonts.googleapis.com/css2?family=Limelight&family=Special+Elite&display=swap" rel="stylesheet">
     <style>
+        /* 1. Base Setup */
+        * { box-sizing: border-box; }
         body, html {
             margin: 0;
             padding: 0;
             height: 100%;
-            overflow: hidden;
+            background: #000;
             font-family: 'Limelight', cursive;
+            overflow: hidden; /* Prevent main page scroll, we use internal scroll */
         }
 
-        /* Main Background */
+        /* 2. Background Layer */
         .main-wrapper {
             background: url('Assets/mainbackground.jpg') no-repeat center center fixed;
             background-size: cover;
@@ -22,23 +25,22 @@
             width: 100vw;
             display: flex;
             flex-direction: column;
-            align-items: center;
-            position: relative;
         }
 
-        /* Header Section */
-        .header-container {
+        /* 3. Fixed Header - This NEVER moves or changes size */
+        .fixed-header {
+            flex-shrink: 0;
             text-align: center;
-            margin-top: 50px;
+            padding: 40px 0 20px 0;
+            z-index: 1000;
+            position: relative;
         }
 
         h1 {
             font-size: 80px;
             margin: 0;
-            color: #C0C0C0; /* Silver */
-            text-shadow: 
-                2px 2px 0px #000, 
-                4px 4px 8px #2C3539; /* Gunmetal Shine */
+            color: #C0C0C0;
+            text-shadow: 2px 2px 0px #000, 4px 4px 8px #2C3539;
             text-transform: uppercase;
             letter-spacing: 5px;
         }
@@ -50,17 +52,18 @@
             text-shadow: 1px 1px 4px #000;
         }
 
-        /* Pull Tab Navigation */
+        /* 4. Pull Tab Navigation */
         .nav-container {
             display: flex;
+            justify-content: center;
             gap: 20px;
-            margin-top: 40px;
+            margin-top: 20px;
         }
 
         .pull-tab {
             width: 160px;
             height: 80px;
-            background: #2C3539; /* Gunmetal industrial */
+            background: #2C3539;
             border: 2px solid #1a1a1a;
             position: relative;
             border-radius: 5px 5px 0 0;
@@ -71,21 +74,17 @@
             align-items: center;
         }
 
-        /* Decorative Screws for Library Label Style */
         .pull-tab::before, .pull-tab::after {
             content: '';
             position: absolute;
-            width: 6px;
-            height: 6px;
+            width: 6px; height: 6px;
             background: #555;
             border-radius: 50%;
             top: 10px;
-            box-shadow: inset 1px 1px 1px #000;
         }
         .pull-tab::before { left: 10px; }
         .pull-tab::after { right: 10px; }
 
-        /* The Lip Pull at bottom */
         .lip-pull {
             position: absolute;
             bottom: -10px;
@@ -93,10 +92,8 @@
             height: 15px;
             background: #1a1a1a;
             border-radius: 0 0 10px 10px;
-            box-shadow: 0 4px 5px rgba(0,0,0,0.5);
         }
 
-        /* The Card Inside */
         .label-card {
             width: 130px;
             height: 50px;
@@ -104,7 +101,7 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            transition: all 0.3s ease;
+            transition: 0.3s;
         }
 
         .pull-tab:hover .label-card {
@@ -114,90 +111,101 @@
         }
 
         .label-text {
-            font-family: 'Special Elite', system-ui; /* Old Typewriter */
+            font-family: 'Special Elite', typewriter;
             font-weight: bold;
             color: #000;
-            font-size: 14px;
+            font-size: 13px;
             text-align: center;
         }
 
-        /* Assets Canvas Area (The Stage) */
-        #stage {
+        /* 5. Scrolling Workspace Stage */
+        #scrolling-stage {
             flex-grow: 1;
-            width: 80%;
-            margin: 40px auto;
+            overflow-y: auto; /* Internal scrolling for large cabinet */
             position: relative;
-            overflow: hidden;
+            display: flex;
         }
 
-        /* Cabinet (Rooms Menu) */
+        /* 6. Big Bold Cabinet */
         #rooms-cabinet {
             position: absolute;
-            left: -500px; /* Hidden off left */
-            top: 20px;
-            width: 400px;
-            height: 600px;
+            left: -650px; /* Glides in from here */
+            top: 0;
+            width: 600px; /* Big scale */
+            height: 1200px; /* Tall to accommodate all drawers and scroll */
             background: url('Assets/cabinet.png') no-repeat;
             background-size: contain;
-            transition: left 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            padding-top: 50px;
-        }
-
-        #rooms-cabinet.active {
-            left: 20px;
-        }
-
-        .drawer-trigger {
-            width: 100%;
-            height: 80px;
-            margin-bottom: 30px;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            padding-left: 60px;
-        }
-
-        /* Furniture Cases */
-        #furniture-cases {
-            position: absolute;
-            left: -500px;
-            top: 20px;
-            width: 450px;
-            height: 600px;
-            background: url('Assets/furniturecases.png') no-repeat;
-            background-size: contain;
-            transition: left 0.6s ease;
-        }
-
-        #furniture-cases.active {
-            left: 20px;
-        }
-
-        /* Scroll Receipt */
-        #receipt-scroll {
-            position: absolute;
-            right: -600px;
-            top: 50px;
-            width: 400px;
-            height: 700px;
-            background: url('Assets/scrollreceipt.jpg') no-repeat;
-            background-size: contain;
-            transition: right 0.8s ease;
+            transition: left 0.8s cubic-bezier(0.15, 0.85, 0.35, 1);
             z-index: 100;
         }
 
-        #receipt-scroll.active {
-            right: 50px;
+        #rooms-cabinet.active {
+            left: 0;
         }
 
-        /* Preview Room Image */
-        #room-preview {
-            width: 100%;
-            height: 100%;
-            object-fit: contain;
-            opacity: 0;
-            transition: opacity 0.5s;
+        /* 7. Drawer Zones - Line these up with cabinet.png */
+        .drawer-zone {
+            position: absolute;
+            width: 400px;
+            left: 100px;
+            height: 140px; /* Height of drawer front */
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            align-items: center;
         }
+
+        /* Specific positions for each drawer */
+        #dr-living { top: 120px; }
+        #dr-bed    { top: 300px; }
+        #dr-dining { top: 480px; }
+        #dr-extra  { top: 660px; }
+        #dr-upload { top: 840px; }
+
+        .drawer-zone .label-card {
+            background: #ccc;
+            opacity: 0.9;
+        }
+
+        .drawer-zone:hover .label-card {
+            background: #fff;
+            box-shadow: 0 0 15px #fff;
+            transform: translateY(-5px);
+        }
+
+        /* 8. Main Viewing Area (Stage) */
+        #viewing-area {
+            flex-grow: 1;
+            margin-left: 600px; /* Keeps stage to the right of cabinet */
+            height: 100%;
+            min-height: 800px;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            padding-top: 50px;
+        }
+
+        #current-room-image {
+            max-width: 90%;
+            max-height: 90%;
+            border: 8px solid #333;
+            box-shadow: 0 0 40px #000;
+            display: none;
+        }
+
+        /* 9. Scroll Receipt */
+        #receipt-scroll {
+            position: fixed;
+            right: -500px;
+            top: 200px;
+            width: 350px;
+            height: 500px;
+            background: url('Assets/scrollreceipt.jpg') no-repeat;
+            background-size: contain;
+            transition: right 0.6s ease;
+            z-index: 2000;
+        }
+        #receipt-scroll.active { right: 20px; }
 
     </style>
 </head>
@@ -205,91 +213,88 @@
 
 <div class="main-wrapper">
     
-    <div class="header-container">
+    <div class="fixed-header">
         <h1>Room Glow Up</h1>
         <h2>Where Your Dream Space Comes To Life</h2>
+
+        <div class="nav-container">
+            <div class="pull-tab" onclick="toggleCabinet()">
+                <div class="label-card"><span class="label-text">Rooms</span></div>
+                <div class="lip-pull"></div>
+            </div>
+            <div class="pull-tab">
+                <div class="label-card"><span class="label-text">Furniture Catalog</span></div>
+                <div class="lip-pull"></div>
+            </div>
+            <div class="pull-tab">
+                <div class="label-card"><span class="label-text">Decor Closet</span></div>
+                <div class="lip-pull"></div>
+            </div>
+            <div class="pull-tab">
+                <div class="label-card"><span class="label-text">Inspirational Gallery</span></div>
+                <div class="lip-pull"></div>
+            </div>
+            <div class="pull-tab" onclick="toggleReceipt()">
+                <div class="label-card"><span class="label-text">Save/Checkout</span></div>
+                <div class="lip-pull"></div>
+            </div>
+        </div>
     </div>
 
-    <div class="nav-container">
-        <div class="pull-tab" onclick="toggleRooms()">
-            <div class="label-card"><span class="label-text">Rooms</span></div>
-            <div class="lip-pull"></div>
-        </div>
-        <div class="pull-tab" onclick="toggleFurniture()">
-            <div class="label-card"><span class="label-text">Furniture Catalog</span></div>
-            <div class="lip-pull"></div>
-        </div>
-        <div class="pull-tab">
-            <div class="label-card"><span class="label-text">Decor Closet</span></div>
-            <div class="lip-pull"></div>
-        </div>
-        <div class="pull-tab">
-            <div class="label-card"><span class="label-text">Inspirational Gallery</span></div>
-            <div class="lip-pull"></div>
-        </div>
-        <div class="pull-tab" onclick="toggleReceipt()">
-            <div class="label-card"><span class="label-text">Save/Checkout</span></div>
-            <div class="lip-pull"></div>
-        </div>
-    </div>
-
-    <div id="stage">
-        <img id="room-preview" src="" alt="Room Preview">
-
+    <div id="scrolling-stage">
+        
         <div id="rooms-cabinet">
-            <div class="drawer-trigger" onmouseover="previewRoom('livingroom1.jpg')" onclick="selectRoom('Living Room')">
+            <div id="dr-living" class="drawer-zone" onmouseover="previewRoom('livingroom1.jpg')" onclick="cycleRoom('living')">
                 <div class="label-card"><span class="label-text">Living Room</span></div>
             </div>
-            <div class="drawer-trigger" onmouseover="previewRoom('bedroom.jpg')" onclick="selectRoom('Bedroom')">
+            <div id="dr-bed" class="drawer-zone" onmouseover="previewRoom('bedroom.jpg')" onclick="cycleRoom('bedroom')">
                 <div class="label-card"><span class="label-text">Bedroom</span></div>
             </div>
-            <div class="drawer-trigger" onmouseover="previewRoom('diningroom.jpg')" onclick="selectRoom('Dining Room')">
+            <div id="dr-dining" class="drawer-zone" onmouseover="previewRoom('diningroom.jpg')">
                 <div class="label-card"><span class="label-text">Dining Room</span></div>
             </div>
-            <div class="drawer-trigger" onmouseover="previewRoom('office.jpg')" onclick="selectRoom('Extra Rooms')">
+            <div id="dr-extra" class="drawer-zone" onmouseover="previewRoom('foyer.jpg')" onclick="cycleRoom('extra')">
                 <div class="label-card"><span class="label-text">Extra Rooms</span></div>
             </div>
-            <div class="drawer-trigger">
+            <div id="dr-upload" class="drawer-zone">
                 <div class="label-card"><span class="label-text">Upload Yours</span></div>
             </div>
         </div>
 
-        <div id="furniture-cases">
-            </div>
+        <div id="viewing-area">
+            <img id="current-room-image" src="" alt="Room Preview">
+        </div>
 
-        <div id="receipt-scroll"></div>
     </div>
+
+    <div id="receipt-scroll"></div>
 
 </div>
 
 <script>
-    function toggleRooms() {
-        const cabinet = document.getElementById('rooms-cabinet');
-        const furniture = document.getElementById('furniture-cases');
-        cabinet.classList.toggle('active');
-        furniture.classList.remove('active');
+    // Room Image Lists
+    const roomFiles = {
+        living: ['livingroom1.jpg', 'livingroom3.jpg'],
+        bedroom: ['bedroom.jpg', 'bedroom2.jpg'],
+        extra: ['foyer.jpg', 'office.jpg', 'kitchen.jpg', 'kitchen2.jpg']
+    };
+    
+    let currentIndices = { living: 0, bedroom: 0, extra: 0 };
+
+    function toggleCabinet() {
+        document.getElementById('rooms-cabinet').classList.toggle('active');
     }
 
-    function selectRoom(roomType) {
-        const cabinet = document.getElementById('rooms-cabinet');
-        const furniture = document.getElementById('furniture-cases');
-        // Glide cabinet back out
-        cabinet.classList.remove('active');
-        // Bring furniture cases in
-        setTimeout(() => {
-            furniture.classList.add('active');
-        }, 600);
+    function previewRoom(fileName) {
+        const img = document.getElementById('current-room-image');
+        img.src = 'Assets/' + fileName;
+        img.style.display = 'block';
     }
 
-    function toggleFurniture() {
-        document.getElementById('furniture-cases').classList.toggle('active');
-        document.getElementById('rooms-cabinet').classList.remove('active');
-    }
-
-    function previewRoom(imgName) {
-        const preview = document.getElementById('room-preview');
-        preview.src = 'Assets/' + imgName;
-        preview.style.opacity = '1';
+    function cycleRoom(category) {
+        currentIndices[category] = (currentIndices[category] + 1) % roomFiles[category].length;
+        const nextFile = roomFiles[category][currentIndices[category]];
+        previewRoom(nextFile);
     }
 
     function toggleReceipt() {
