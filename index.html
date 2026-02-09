@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -10,207 +9,68 @@
 :root {
     --gunmetal: linear-gradient(180deg, #535c68 0%, #2c3e50 40%, #000000 100%);
     --silver-header: linear-gradient(to bottom, #ffffff 0%, #a6a6a6 45%, #4d4d4d 50%, #ffffff 55%, #808080 100%);
-    --glow-white: rgba(255, 255, 255, 0.9);
+    --luggage-tan: linear-gradient(135deg, #bf953f, #fcf6ba, #b38728, #fbf5b7, #aa771c);
 }
 
 body, html {
-    margin: 0;
-    padding: 0;
-    min-height: 100vh;
+    margin: 0; padding: 0; min-height: 100vh;
     background: #000 url('Assets/mainbackground.jpg') no-repeat center top fixed;
     background-size: contain;
-    scroll-behavior: smooth;
     overflow-x: hidden;
 }
 
-#main-site-container {
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding-bottom: 200px;
-}
+#main-site-container { width: 100%; display: flex; flex-direction: column; align-items: center; padding-bottom: 200px; }
 
-header {
-    text-align: center;
-    padding: 60px 0 30px 0;
-    z-index: 50;
-}
+header { text-align: center; padding: 60px 0 30px 0; z-index: 50; }
+h1 { font-family: 'Limelight', cursive; font-size: 100px; margin: 0; background: var(--silver-header); -webkit-background-clip: text; -webkit-text-fill-color: transparent; filter: drop-shadow(5px 5px 8px rgba(0,0,0,0.8)); text-transform: uppercase; letter-spacing: 4px; }
+h2 { font-family: 'Limelight', cursive; font-size: 36px; margin: -5px 0 0 0; color: #e0e0e0; letter-spacing: 3px; text-shadow: 3px 3px 6px #000; }
 
-h1 {
-    font-family: 'Limelight', cursive;
-    font-size: 100px;
-    margin: 0;
-    background: var(--silver-header);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    filter: drop-shadow(5px 5px 8px rgba(0,0,0,0.8));
-    text-transform: uppercase;
-    letter-spacing: 4px;
-}
-
-h2 {
-    font-family: 'Limelight', cursive;
-    font-size: 36px;
-    margin: -5px 0 0 0;
-    color: #e0e0e0;
-    letter-spacing: 3px;
-    text-shadow: 3px 3px 6px #000;
-}
-
-/* --- NAV HOLDERS --- */
-.nav-container {
-    display: flex;
-    gap: 25px;
-    margin-top: 40px;
-    margin-bottom: 100px;
-    z-index: 50;
-}
-
-.label-holder {
-    width: 230px;
-    height: 115px;
-    background: var(--gunmetal);
-    border: 1px solid #111;
-    border-radius: 4px 4px 0 0;
-    position: relative;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    box-shadow: 0 10px 25px rgba(0,0,0,0.9), inset 0 1px 3px rgba(255,255,255,0.2);
-    cursor: pointer;
-    transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-}
-
+/* --- NAV --- */
+.nav-container { display: flex; gap: 25px; margin-top: 40px; margin-bottom: 100px; z-index: 50; }
+.label-holder { width: 230px; height: 115px; background: var(--gunmetal); border: 1px solid #111; border-radius: 4px 4px 0 0; position: relative; display: flex; justify-content: center; align-items: center; box-shadow: 0 10px 25px rgba(0,0,0,0.9); cursor: pointer; transition: transform 0.3s; }
 .label-holder:hover { transform: translateY(-12px); }
 
-/* ANTIQUE BRASS HARDWARE */
-.screw {
-    position: absolute;
-    width: 10px;
-    height: 10px;
-    background: radial-gradient(circle at 3px 3px, #888, #000);
-    border-radius: 50%;
-    box-shadow: 1px 1px 2px #000;
-}
-.s-tl { top: 10px; left: 10px; }
-.s-tr { top: 10px; right: 10px; }
-.s-bl { bottom: 35px; left: 10px; }
-.s-br { bottom: 35px; right: 10px; }
+/* --- ASSET CONTAINERS --- */
+#interaction-zone { display: flex; justify-content: flex-start; align-items: flex-start; gap: 80px; width: 1800px; height: 900px; position: relative; margin-left: 100px; }
 
-.white-card {
-    width: 80%;
-    height: 55%;
-    background: #eee;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border-top: 3px solid #333;
-    border-left: 3px solid #333;
-    box-shadow: inset 4px 4px 8px rgba(0,0,0,0.5);
-}
-
-.label-text {
-    font-family: 'Courier New', Courier, monospace;
-    font-weight: 900;
-    font-size: 20px; /* BIGGER FONT */
-    color: #000;
-    text-transform: uppercase;
-    text-align: center;
-}
-
-.lip-pull {
-    position: absolute;
-    bottom: -8px;
-    width: 92%;
-    height: 25px;
-    background: linear-gradient(180deg, #444 0%, #111 100%);
-    border-radius: 0 0 30px 30px;
-    border: 1px solid #000;
-    box-shadow: 0 6px 12px rgba(0,0,0,0.7);
-}
-
-/* --- INTERACTION ZONE --- */
-#interaction-zone {
-    display: flex;
-    justify-content: flex-start; /* SHIFTED LEFT */
-    align-items: flex-start;
-    gap: 80px;
-    width: 1800px;
-    height: 900px;
-    position: relative;
-    margin-left: 100px; /* BREATHING ROOM */
-}
-
-.cabinet-space {
-    position: relative;
-    width: 700px; 
-    height: 850px;
-}
-
-.asset-side-container {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 650px; /* LARGER CABINET */
-    transform: translateX(-220%);
-    transition: transform 1.5s cubic-bezier(0.23, 1, 0.32, 1);
-    z-index: 30;
-}
-
+.asset-side-container { position: absolute; top: 0; left: 0; width: 650px; transform: translateX(-220%); transition: transform 1.5s cubic-bezier(0.23, 1, 0.32, 1); z-index: 30; }
 .asset-side-container.glided-in { transform: translateX(0); }
+.asset-img { width: 100%; filter: drop-shadow(20px 20px 40px #000); }
 
-.asset-img {
-    width: 100%;
-    filter: drop-shadow(20px 20px 40px #000);
-}
+/* --- ROOM CABINET TABS (Library Style) --- */
+.drawer-labels-overlay { position: absolute; top: 155px; left: 110px; display: flex; flex-direction: column; gap: 42px; }
+.small-pull-tab { width: 190px; height: 70px; background: var(--gunmetal); display: flex; justify-content: center; align-items: center; position: relative; cursor: pointer; border: 1px solid #111; box-shadow: 0 5px 15px rgba(0,0,0,0.6); }
+.white-card { width: 80%; height: 55%; background: #eee; display: flex; justify-content: center; align-items: center; border-top: 3px solid #333; border-left: 3px solid #333; box-shadow: inset 4px 4px 8px rgba(0,0,0,0.5); }
+.label-text { font-family: 'Courier New', Courier, monospace; font-weight: 900; font-size: 14px; color: #000; text-transform: uppercase; }
 
-/* DRAWER TABS ALIGNMENT */
-.drawer-labels-overlay {
-    position: absolute;
-    top: 155px; 
-    left: 110px;
-    display: flex;
-    flex-direction: column;
-    gap: 42px; /* CALIBRATED SPACING */
-}
-
-.small-pull-tab {
-    width: 190px;
-    height: 70px;
-    background: var(--gunmetal);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    position: relative;
+/* --- FURNITURE CASE TAGS (Luggage Style) --- */
+.luggage-tags-overlay { position: absolute; top: 120px; left: 120px; display: flex; flex-direction: column; gap: 55px; }
+.luggage-tag { 
+    width: 100px; height: 140px; 
+    background: var(--luggage-tan); 
+    border-radius: 8px; 
+    position: relative; 
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    box-shadow: 3px 5px 10px rgba(0,0,0,0.5);
+    border: 1px solid #8a6d3b;
     cursor: pointer;
-    border: 1px solid #111;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.6);
-    transition: transform 0.3s ease;
+    transition: transform 0.3s;
 }
-
-.small-pull-tab:hover { transform: translateX(12px); }
-
-/* STAGE / THEATER */
-#theater-container {
-    width: 1050px;
-    height: 700px;
-    border: 25px solid #000;
-    overflow: hidden;
-    background: #111;
-    box-shadow: 0 0 80px rgba(0,0,0,1);
-    z-index: 5;
-    position: relative;
-    margin-top: 50px;
+.luggage-tag:hover { transform: scale(1.1) rotate(2deg); }
+.tag-strap { 
+    position: absolute; top: -20px; width: 12px; height: 30px; 
+    background: #4d2600; border-radius: 4px; border: 1px solid #222; 
 }
+.tag-icon { width: 60px; height: 60px; object-fit: contain; filter: drop-shadow(1px 1px 2px rgba(0,0,0,0.5)); }
 
-#room-display {
-    width: 100%;
-    height: 100%;
-    background-size: cover;
-    background-position: center;
-    transition: background-image 0.3s ease;
-}
+/* --- STAGE --- */
+#theater-container { width: 1050px; height: 700px; border: 25px solid #000; background: #111; position: relative; margin-top: 50px; cursor: pointer; }
+#room-display { width: 100%; height: 100%; background-size: cover; background-position: center; transition: background-image 0.3s ease; }
+
+/* REUSABLE HARDWARE */
+.screw { position: absolute; width: 8px; height: 8px; background: radial-gradient(circle at 2px 2px, #888, #000); border-radius: 50%; }
+.s-tl { top: 5px; left: 5px; } .s-tr { top: 5px; right: 5px; }
+.lip-pull { position: absolute; bottom: -5px; width: 90%; height: 15px; background: #222; border-radius: 0 0 15px 15px; }
 </style>
 </head>
 <body>
@@ -222,28 +82,30 @@ h2 {
     </header>
 
     <nav class="nav-container">
-        <div class="label-holder" onclick="showCabinet()"><div class="screw s-tl"></div><div class="screw s-tr"></div><div class="white-card"><span class="label-text">Rooms</span></div><div class="screw s-bl"></div><div class="screw s-br"></div><div class="lip-pull"></div></div>
-        <div class="label-holder"><div class="screw s-tl"></div><div class="screw s-tr"></div><div class="white-card"><span class="label-text">Furniture Catalog</span></div><div class="screw s-bl"></div><div class="screw s-br"></div><div class="lip-pull"></div></div>
-        <div class="label-holder"><div class="screw s-tl"></div><div class="screw s-tr"></div><div class="white-card"><span class="label-text">Decor Closet</span></div><div class="screw s-bl"></div><div class="screw s-br"></div><div class="lip-pull"></div></div>
-        <div class="label-holder"><div class="screw s-tl"></div><div class="screw s-tr"></div><div class="white-card"><span class="label-text">Inspirational Gallery</span></div><div class="screw s-bl"></div><div class="screw s-br"></div><div class="lip-pull"></div></div>
-        <div class="label-holder"><div class="screw s-tl"></div><div class="screw s-tr"></div><div class="white-card"><span class="label-text">Save / Check Out</span></div><div class="screw s-bl"></div><div class="screw s-br"></div><div class="lip-pull"></div></div>
-    </nav>
+        <div class="label-holder" onclick="showCabinet()"><div class="white-card"><span class="label-text" style="font-size:20px;">Rooms</span></div><div class="lip-pull"></div></div>
+        </nav>
 
     <div id="interaction-zone">
         <div class="cabinet-space">
             <div id="rooms-cabinet-container" class="asset-side-container">
                 <img src="Assets/cabinet.png" class="asset-img">
                 <div class="drawer-labels-overlay">
-                    <div class="small-pull-tab" onmouseover="cycleRoom('livingroom')"><div class="screw s-tl"></div><div class="screw s-tr"></div><div class="white-card"><span class="label-text" style="font-size:14px;">Living</span></div><div class="lip-pull"></div></div>
-                    <div class="small-pull-tab" onmouseover="cycleRoom('bedroom')"><div class="screw s-tl"></div><div class="screw s-tr"></div><div class="white-card"><span class="label-text" style="font-size:14px;">Bedroom</span></div><div class="lip-pull"></div></div>
-                    <div class="small-pull-tab" onmouseover="cycleRoom('diningroom')"><div class="screw s-tl"></div><div class="screw s-tr"></div><div class="white-card"><span class="label-text" style="font-size:14px;">Dining</span></div><div class="lip-pull"></div></div>
-                    <div class="small-pull-tab" onmouseover="cycleRoom('extra')"><div class="screw s-tl"></div><div class="screw s-tr"></div><div class="white-card"><span class="label-text" style="font-size:14px;">Extra Rooms</span></div><div class="lip-pull"></div></div>
-                    <div class="small-pull-tab"><div class="screw s-tl"></div><div class="screw s-tr"></div><div class="white-card"><span class="label-text" style="font-size:14px;">Upload Yours</span></div><div class="lip-pull"></div></div>
+                    <div class="small-pull-tab" onmouseover="cycleRoom('livingroom')"><div class="screw s-tl"></div><div class="screw s-tr"></div><div class="white-card"><span class="label-text">Living</span></div><div class="lip-pull"></div></div>
+                    <div class="small-pull-tab" onmouseover="cycleRoom('bedroom')"><div class="screw s-tl"></div><div class="screw s-tr"></div><div class="white-card"><span class="label-text">Bedroom</span></div><div class="lip-pull"></div></div>
+                    <div class="small-pull-tab" onmouseover="cycleRoom('diningroom')"><div class="screw s-tl"></div><div class="screw s-tr"></div><div class="white-card"><span class="label-text">Dining</span></div><div class="lip-pull"></div></div>
+                    <div class="small-pull-tab" onmouseover="cycleRoom('extra')"><div class="screw s-tl"></div><div class="screw s-tr"></div><div class="white-card"><span class="label-text">Extra Rooms</span></div><div class="lip-pull"></div></div>
+                    <div class="small-pull-tab"><div class="screw s-tl"></div><div class="screw s-tr"></div><div class="white-card"><span class="label-text">Upload Yours</span></div><div class="lip-pull"></div></div>
                 </div>
             </div>
 
             <div id="furniture-cases-container" class="asset-side-container">
                 <img src="Assets/furniturecases.png" class="asset-img">
+                <div class="luggage-tags-overlay">
+                    <div class="luggage-tag"><div class="tag-strap"></div><img src="Assets/iconseating.png" class="tag-icon"></div>
+                    <div class="luggage-tag"><div class="tag-strap"></div><img src="Assets/icontables.png" class="tag-icon"></div>
+                    <div class="luggage-tag"><div class="tag-strap"></div><img src="Assets/iconbeds.png" class="tag-icon"></div>
+                    <div class="luggage-tag"><div class="tag-strap"></div><img src="Assets/iconstorage.png" class="tag-icon"></div>
+                </div>
             </div>
         </div>
 
@@ -254,18 +116,10 @@ h2 {
 </div>
 
 <script>
-const roomImages = {
-    livingroom: ['livingroom1.jpg', 'livingroom2.jpg'],
-    bedroom: ['bedroom.jpg', 'bedroom2.jpg'],
-    diningroom: ['diningroom.jpg'],
-    extra: ['extra1.jpg']
-};
+const roomImages = { livingroom: ['livingroom1.jpg', 'livingroom2.jpg'], bedroom: ['bedroom.jpg'], diningroom: ['diningroom.jpg'], extra: ['extra1.jpg'] };
 let roomIndices = { livingroom: 0, bedroom: 0, diningroom: 0, extra: 0 };
 
-function showCabinet() {
-    document.getElementById('rooms-cabinet-container').classList.add('glided-in');
-    document.getElementById('rooms-cabinet-container').scrollIntoView({ behavior: 'smooth', block: 'center' });
-}
+function showCabinet() { document.getElementById('rooms-cabinet-container').classList.add('glided-in'); }
 
 function cycleRoom(category) {
     const list = roomImages[category];
@@ -278,12 +132,9 @@ function cycleRoom(category) {
 function triggerFurnitureGlide() {
     const cabinet = document.getElementById('rooms-cabinet-container');
     const cases = document.getElementById('furniture-cases-container');
-
     if(cabinet.classList.contains('glided-in')) {
         cabinet.classList.remove('glided-in');
-        setTimeout(() => {
-            cases.classList.add('glided-in');
-        }, 1200);
+        setTimeout(() => { cases.classList.add('glided-in'); }, 1200);
     }
 }
 </script>
