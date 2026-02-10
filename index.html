@@ -1,126 +1,257 @@
-<style>
-    #decor-closet-section {
-        margin-top: 150px;
-        width: 100%;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        padding-bottom: 250px;
-    }
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Room Glow Up</title>
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 200%; 
+            background-color: #f4f4f4;
+            font-family: Arial, sans-serif;
+        }
 
-    #closet-box { 
-        width: 1150px; 
-        height: 780px; 
-        position: relative; 
-        perspective: 3500px; 
-        border: 18px solid #1a1a1a; 
-        background: #111; 
-        box-shadow: 0 60px 120px rgba(0,0,0,0.9); 
-    }
+        #main-stage {
+            width: 100%;
+            height: 600px;
+            background: #ffffff;
+            position: relative;
+            overflow: hidden;
+            border-bottom: 4px solid #222;
+        }
 
-    /* DOUBLE DOORS */
-    .closet-door { 
-        position: absolute; 
-        width: 50%; 
-        height: 100%; 
-        transition: 2.2s cubic-bezier(0.4, 0, 0.2, 1); 
-        z-index: 500; 
-        cursor: pointer; 
-    }
-    .door-left { left: 0; transform-origin: left; } 
-    .door-right { right: 0; transform-origin: right; }
-    .closet-door img { width: 100%; height: 100%; object-fit: cover; }
-    
-    #closet-box.open .door-left { transform: rotateY(-155deg); }
-    #closet-box.open .door-right { transform: rotateY(155deg); }
-    
-    /* INTERIOR SYSTEM */
-    #closet-interior { 
-        position: absolute; 
-        width: 100%; 
-        height: 100%; 
-        background: url('Assets/decorclosetbackground.jpg') no-repeat center;
-        background-size: cover; 
-    }
+        #header-area {
+            text-align: center;
+            padding: 20px;
+        }
 
-    /* SHELF NAVIGATION (Library Style) */
-    .closet-nav { 
-        position: absolute; 
-        bottom: 35px; 
-        left: 50%; 
-        transform: translateX(-50%); 
-        display: flex; 
-        gap: 25px; 
-        z-index: 600; 
-    }
+        /* The Closet Container - Slides up from below stage */
+        #closet-container {
+            position: fixed;
+            bottom: -500px; 
+            left: 50%;
+            transform: translateX(-50%);
+            width: 900px;
+            height: 480px;
+            transition: bottom 0.8s ease-in-out;
+            z-index: 1000;
+        }
 
-    /* DECOR PRODUCTS */
-    .decor-item {
-        position: absolute;
-        cursor: pointer;
-        transition: transform 0.3s ease, filter 0.3s ease;
-        z-index: 10;
-    }
-    .decor-item:hover {
-        transform: scale(1.1);
-        filter: brightness(1.3) drop-shadow(0 0 15px var(--glow-teal));
-    }
-</style>
+        #closet-container.active {
+            bottom: 20px;
+        }
 
-<section id="decor-closet-section">
-    <div id="closet-box">
-        <div class="closet-door door-left" onclick="toggleCloset()"><img src="Assets/closetdoors.jpg"></div>
-        <div class="closet-door door-right" onclick="toggleCloset()"><img src="Assets/closetdoors.jpg"></div>
-        
-        <div id="closet-interior">
-            <div id="shelf-items-container">
-                <img src="Assets/purplejar.png" class="decor-item" 
-                     style="bottom: 180px; left: 150px; width: 100px;" 
-                     onmouseover="peekDecor('purplejar.png')" 
-                     onclick="addToRoom('purplejar.png', 'Purple Vintage Jar', '$24.00')">
-            </div>
+        /* Closet Doors */
+        .door {
+            position: absolute;
+            top: 0;
+            width: 50%;
+            height: 100%;
+            background-image: url('closetdoors.jpg');
+            background-size: 200% 100%;
+            transition: transform 1.2s ease-in-out;
+            z-index: 10;
+        }
+
+        #door-left {
+            left: 0;
+            background-position: left;
+            transform-origin: left;
+        }
+
+        #door-right {
+            right: 0;
+            background-position: right;
+            transform-origin: right;
+        }
+
+        /* Doors Open Animation */
+        .active.open #door-left { transform: perspective(1200px) rotateY(-110deg); }
+        .active.open #door-right { transform: perspective(1200px) rotateY(110deg); }
+
+        /* Closet Interior */
+        #closet-interior {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #333;
+            z-index: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        #room-display {
+            width: 100%;
+            height: 100%;
+            background-size: cover;
+            background-position: center;
+            position: relative;
+            transition: background-image 0.5s ease;
+        }
+
+        /* Directional Sign */
+        #dept-sign {
+            position: absolute;
+            top: 20px;
+            background: rgba(0, 0, 0, 0.8);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 5px;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            z-index: 15;
+            border: 1px solid #ffcc00;
+        }
+
+        .arrow {
+            cursor: pointer;
+            font-size: 24px;
+            user-select: none;
+        }
+
+        .arrow:hover { color: #ffcc00; }
+
+        /* PNG Decor Items */
+        .decor-png {
+            width: 100px;
+            position: absolute;
+            cursor: grab;
+            z-index: 20;
+        }
+
+        .on-stage {
+            position: absolute;
+            z-index: 50;
+        }
+    </style>
+</head>
+<body>
+
+<div id="header-area">
+    <button id="closet-toggle" style="padding: 15px 30px; font-size: 18px; cursor: pointer;">Top Decor Closet</button>
+</div>
+
+<div id="main-stage"></div>
+
+<div id="closet-container">
+    <div id="door-left" class="door"></div>
+    <div id="door-right" class="door"></div>
+
+    <div id="closet-interior">
+        <div id="dept-sign">
+            <div class="arrow" onclick="moveRoom(-1)">⬅</div>
+            <div id="dept-name">Lighting</div>
+            <div class="arrow" onclick="moveRoom(1)">➡</div>
         </div>
-
-        <div class="closet-nav">
-            <div class="label-holder" style="width: 140px; height: 75px;" onclick="swapClosetShelf(1)">
-                <div class="white-card"><span class="label-text" style="font-size: 11px;">Shelf 1</span></div>
-                <div class="lip-pull"></div>
+        <div id="room-display">
             </div>
-            <div class="label-holder" style="width: 140px; height: 75px;" onclick="swapClosetShelf(2)">
-                <div class="white-card"><span class="label-text" style="font-size: 11px;">Shelf 2</span></div>
-                <div class="lip-pull"></div>
-            </div>
-            <div class="label-holder" style="width: 140px; height: 75px;" onclick="swapClosetShelf(3)">
-                <div class="white-card"><span class="label-text" style="font-size: 11px;">Shelf 3</span></div>
-                <div class="lip-pull"></div>
-            </div>
-        </div>
     </div>
-</section>
+</div>
 
 <script>
-    function toggleCloset() {
-        document.getElementById('closet-box').classList.toggle('open');
+    const container = document.getElementById('closet-container');
+    const toggleBtn = document.getElementById('closet-toggle');
+    const roomDisplay = document.getElementById('room-display');
+    const deptName = document.getElementById('dept-name');
+    const stage = document.getElementById('main-stage');
+
+    const rooms = [
+        { name: 'Pillows', img: 'pillowsclosets.jpg' },
+        { name: 'Lighting', img: 'lightingcloset.jpg' },
+        { name: 'Plants', img: 'plantscloset.jpg' },
+        { name: 'Misc Decor', img: 'miscdecorcloset.jpg' },
+        { name: 'Rugs', img: 'ruggallery.jpg' },
+        { name: 'Curtains', img: 'curtaincloset.jpg' }
+    ];
+
+    let currentIdx = 1; // Starts at Lighting
+
+    // 1. Trigger Closet Slide and Door Open
+    toggleBtn.addEventListener('click', () => {
+        if (!container.classList.contains('active')) {
+            container.classList.add('active');
+            setTimeout(() => container.classList.add('open'), 800);
+        } else {
+            container.classList.remove('open');
+            setTimeout(() => container.classList.remove('active'), 1200);
+        }
+        updateRoom();
+    });
+
+    // 2. Navigation Logic
+    function moveRoom(dir) {
+        let newIdx = currentIdx + dir;
+        if (newIdx >= 0 && newIdx < rooms.length) {
+            currentIdx = newIdx;
+            updateRoom();
+        }
     }
 
-    function swapClosetShelf(num) {
-        const interior = document.getElementById('closet-interior');
-        const backgrounds = [
-            'decorclosetbackground.jpg', 
-            'decorshelves2.jpg', 
-            'decorshelves3.jpg'
-        ];
-        interior.style.backgroundImage = `url('Assets/${backgrounds[num-1]}')`;
-        // Logic to clear and repopulate decor-items based on personality goes here
+    function updateRoom() {
+        roomDisplay.style.backgroundImage = `url('${rooms[currentIdx].img}')`;
+        deptName.innerText = rooms[currentIdx].name;
     }
 
-    function peekDecor(img) {
-        // Mirrors the Room peek logic
-        document.getElementById('room-display').style.backgroundImage = `url('Assets/${img}')`;
+    // 3. Interaction Logic for PNGs
+    function setupInteraction(el) {
+        // Double Click Logic (To Stage and Back)
+        el.addEventListener('dblclick', function(e) {
+            if (el.parentNode === roomDisplay) {
+                stage.appendChild(el);
+                el.classList.add('on-stage');
+                el.style.left = "50px"; 
+                el.style.top = "50px";
+            } else {
+                roomDisplay.appendChild(el);
+                el.classList.remove('on-stage');
+                el.style.left = "20px";
+                el.style.top = "100px";
+            }
+        });
+
+        // Drag and Drop Logic
+        el.onmousedown = function(event) {
+            event.preventDefault();
+            let shiftX = event.clientX - el.getBoundingClientRect().left;
+            let shiftY = event.clientY - el.getBoundingClientRect().top;
+
+            function moveAt(pageX, pageY) {
+                el.style.left = pageX - shiftX + 'px';
+                el.style.top = pageY - shiftY + 'px';
+            }
+
+            function onMouseMove(event) {
+                moveAt(event.pageX, event.pageY);
+            }
+
+            document.addEventListener('mousemove', onMouseMove);
+
+            el.onmouseup = function() {
+                document.removeEventListener('mousemove', onMouseMove);
+                el.onmouseup = null;
+            };
+        };
+
+        el.ondragstart = function() { return false; };
     }
 
-    function addToRoom(img, name, price) {
-        console.log("Added to Bill: " + name + " at " + price);
-        // This is where the click commits the item to the bill
-    }
+    // Initialize Room 
+    updateRoom();
+
+    /* To add items, you would use:
+       let item = document.createElement('img');
+       item.src = 'item_name.png';
+       item.className = 'decor-png';
+       setupInteraction(item);
+       roomDisplay.appendChild(item);
+    */
 </script>
+
+</body>
+</html>
