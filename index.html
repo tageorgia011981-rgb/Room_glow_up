@@ -7,32 +7,96 @@
     <link href="https://fonts.googleapis.com/css2?family=Limelight&display=swap" rel="stylesheet">
     <style>
         :root {
+            --metal-shine: linear-gradient(145deg, #bdc3c7, #2c3e50, #95a5a6, #000);
+            --silver-header: linear-gradient(to bottom, #ffffff 0%, #a6a6a6 45%, #4d4d4d 50%, #ffffff 55%, #808080 100%);
+            --glow-teal: #00f2ff;
             --gunmetal-dark: #0C1519;
             --gunmetal-light: #162127;
             --bronze-screw: #CF9D7B;
-            --glow-teal: #00f2ff;
         }
 
         body, html {
             margin: 0;
             padding: 0;
-            height: 100%;
-            background-color: #000;
-            font-family: 'Arial', sans-serif;
-            overflow-x: hidden;
-        }
-
-        /* --- MAIN BACKGROUND --- */
-        #site-wrapper {
-            position: relative;
-            width: 100%;
             min-height: 100vh;
             background: url('Assets/mainbackground.jpg') no-repeat center center fixed;
             background-size: cover;
-            transition: opacity 0.8s ease;
+            scroll-behavior: smooth;
+            overflow-x: hidden;
+            background-color: #000;
         }
 
-        /* --- WALKTHROUGH OVERLAY --- */
+        #main-site-container {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding-bottom: 200px;
+        }
+
+        header {
+            text-align: center;
+            padding: 60px 0 30px 0;
+            z-index: 50;
+        }
+
+        h1 {
+            font-family: 'Limelight', cursive;
+            font-size: 100px;
+            margin: 0;
+            background: var(--silver-header);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            filter: drop-shadow(5px 5px 8px rgba(0,0,0,0.8));
+            text-transform: uppercase;
+            letter-spacing: 4px;
+        }
+
+        /* --- NAVIGATION --- */
+        .nav-container {
+            display: flex;
+            gap: 25px;
+            margin-top: 40px;
+            margin-bottom: 100px;
+            z-index: 50;
+        }
+
+        .label-holder {
+            width: 210px;
+            height: 105px;
+            background: linear-gradient(145deg, var(--gunmetal-light), var(--gunmetal-dark));
+            border: 2px solid #000;
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            box-shadow: 5px 5px 15px rgba(0,0,0,0.7);
+            transition: transform 0.2s;
+        }
+
+        .label-holder:hover { transform: translateY(-3px); }
+
+        .label-text {
+            color: #fff;
+            font-family: 'Arial', sans-serif;
+            font-weight: bold;
+            font-size: 14px;
+            text-align: center;
+            letter-spacing: 1px;
+            text-shadow: 1px 1px 2px #000;
+        }
+
+        .screw {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background: var(--bronze-screw);
+            border-radius: 50%;
+            box-shadow: inset 1px 1px 2px #000, 1px 1px 1px rgba(255,255,255,0.2);
+        }
+
+        /* --- WALKTHROUGH OVERLAY SYSTEM --- */
         #walkthrough-overlay {
             position: fixed;
             top: 0;
@@ -40,170 +104,134 @@
             width: 100%;
             height: 100%;
             background-color: #000;
-            z-index: 1000;
+            z-index: 9999;
             display: none;
-            justify-content: center;
-            align-items: center;
+            cursor: pointer;
         }
 
-        .walkthrough-scene {
+        .walk-scene {
             position: absolute;
             width: 100%;
             height: 100%;
             background-size: contain !important;
             background-position: center !important;
             background-repeat: no-repeat !important;
-            display: none;
             background-color: #000;
+            display: none;
+            opacity: 0;
+            transition: opacity 0.8s ease-in-out;
         }
 
-        /* --- GALLERY FRAMES LAYOUT --- */
-        #gallery-container {
+        .walk-scene.active {
+            display: block;
+            opacity: 1;
+        }
+
+        /* --- GALLERY FRAME MAPPING (SCENE 8) --- */
+        #gallery-frames-wrapper {
             position: relative;
             width: 100%;
             height: 100%;
         }
 
-        .frame-piece {
+        .insp-piece {
             position: absolute;
             object-fit: cover;
-            box-shadow: 0 0 15px rgba(0,0,0,0.5);
+            border: 1px solid rgba(255,255,255,0.1);
         }
 
-        /* Frame 1: Tall (insp9.jpg) */
-        #frame1 { top: 15%; left: 10%; width: 12%; height: 60%; }
-        /* Frame 2: Square (insp11.jpg) */
-        #frame2 { top: 20%; left: 25%; width: 15%; height: 25%; }
-        /* Frame 3: Wide (insp16.jpg) */
-        #frame3 { top: 50%; left: 25%; width: 30%; height: 25%; }
-        /* Frame 4: Large Tall (insp17.jpg) */
-        #frame4 { top: 10%; left: 60%; width: 20%; height: 75%; }
-        /* Frame 5: Medium (insp18.jpg) */
-        #frame5 { top: 15%; left: 82%; width: 10%; height: 40%; }
+        /* Approximate mappings for galleryframes1.jpg */
+        #insp-tall { top: 18%; left: 12%; width: 11%; height: 55%; }
+        #insp-square { top: 22%; left: 26%; width: 14%; height: 23%; }
+        #insp-wide { top: 48%; left: 26%; width: 28%; height: 25%; }
+        #insp-large-tall { top: 12%; left: 58%; width: 19%; height: 72%; }
+        #insp-medium { top: 18%; left: 81%; width: 10%; height: 38%; }
 
-        /* --- UI ELEMENTS --- */
-        header {
-            text-align: center;
-            padding: 40px 0;
-            position: relative;
-            z-index: 10;
-        }
-
-        h1 {
-            font-family: 'Limelight', cursive;
-            font-size: 80px;
-            color: #fff;
-            text-transform: uppercase;
-            margin: 0;
-            text-shadow: 4px 4px 10px #000;
-        }
-
-        .nav-tab {
-            background: linear-gradient(145deg, var(--gunmetal-light), var(--gunmetal-dark));
-            border: 2px solid #000;
-            color: #fff;
-            padding: 15px 30px;
-            cursor: pointer;
-            font-weight: bold;
-            position: relative;
-            display: inline-block;
-            margin: 10px;
-        }
-
-        .screw {
+        .close-walk {
             position: absolute;
-            width: 8px;
-            height: 8px;
-            background: var(--bronze-screw);
-            border-radius: 50%;
-            box-shadow: inset 1px 1px 2px #000;
+            top: 20px;
+            right: 20px;
+            background: var(--gunmetal-dark);
+            color: var(--bronze-screw);
+            border: 2px solid var(--bronze-screw);
+            padding: 10px 20px;
+            font-weight: bold;
+            z-index: 10001;
+            cursor: pointer;
         }
 
-        .exit-button {
-            position: fixed;
-            bottom: 30px;
-            right: 30px;
-            z-index: 2000;
-            background: var(--gunmetal-dark);
-            color: #fff;
-            border: 1px solid var(--bronze-screw);
-            padding: 10px 20px;
-            cursor: pointer;
-            display: none;
-        }
     </style>
 </head>
 <body>
 
-    <div id="site-wrapper">
-        <header>
-            <h1>Room Glow Up</h1>
-            <div class="nav-tab" onclick="startWalkthrough()">
-                <div class="screw" style="top:5px; left:5px;"></div>
-                <div class="screw" style="top:5px; right:5px;"></div>
-                <div class="screw" style="bottom:5px; left:5px;"></div>
-                <div class="screw" style="bottom:5px; right:5px;"></div>
-                INSPIRATIONAL WALKTHROUGH
-            </div>
-        </header>
-    </div>
+<div id="main-site-container">
+    <header>
+        <h1>Room Glow Up</h1>
+    </header>
 
-    <div id="walkthrough-overlay">
-        <div id="scene1" class="walkthrough-scene" style="background-image: url('Assets/rain1.jpg'); display: block;"></div>
-        <div id="scene2" class="walkthrough-scene" style="background-image: url('Assets/rain2.jpg');"></div>
-        <div id="scene3" class="walkthrough-scene" style="background-image: url('Assets/goldhands.jpg');"></div>
-        <div id="scene4" class="walkthrough-scene" style="background-image: url('Assets/gallerywalkthrough5.jpg');"></div>
-        <div id="scene5" class="walkthrough-scene" style="background-image: url('Assets/galleryframes1.jpg');">
-            <div id="gallery-container">
-                <img src="Assets/insp9.jpg" id="frame1" class="frame-piece">
-                <img src="Assets/insp11.jpg" id="frame2" class="frame-piece">
-                <img src="Assets/insp16.jpg" id="frame3" class="frame-piece">
-                <img src="Assets/insp17.jpg" id="frame4" class="frame-piece">
-                <img src="Assets/insp18.jpg" id="frame5" class="frame-piece">
-            </div>
+    <div class="nav-container">
+        <div class="label-holder" onclick="openWalkthrough()">
+            <div class="screw" style="top:5px; left:5px;"></div>
+            <div class="screw" style="top:5px; right:5px;"></div>
+            <div class="screw" style="bottom:5px; left:5px;"></div>
+            <div class="screw" style="bottom:5px; right:5px;"></div>
+            <span class="label-text">INSPIRATIONAL<br>WALKTHROUGH</span>
         </div>
-        
-        <button class="exit-button" id="exit-walk" onclick="exitWalkthrough()">EXIT GALLERY</button>
+    </div>
+    
     </div>
 
-    <script>
-        let currentScene = 1;
-        const totalScenes = 5;
+<div id="walkthrough-overlay" onclick="nextScene()">
+    <div class="close-walk" onclick="closeWalkthrough(event)">EXIT GALLERY</div>
 
-        function startWalkthrough() {
-            document.getElementById('walkthrough-overlay').style.display = 'flex';
-            document.getElementById('exit-button').style.display = 'block';
-            
-            // Auto-transition logic for the first 4 scenes
-            const sequenceInterval = setInterval(() => {
-                if (currentScene < totalScenes) {
-                    document.getElementById(`scene${currentScene}`).style.display = 'none';
-                    currentScene++;
-                    document.getElementById(`scene${currentScene}`).style.display = 'block';
-                } else {
-                    clearInterval(sequenceInterval);
-                }
-            }, 3000); // 3 seconds per background
+    <div id="scene1" class="walk-scene active" style="background-image: url('Assets/rain1.jpg');"></div>
+    <div id="scene2" class="walk-scene" style="background-image: url('Assets/rain2.jpg');"></div>
+    <div id="scene3" class="walk-scene" style="background-image: url('Assets/goldhands.jpg');"></div>
+    <div id="scene4" class="walk-scene" style="background-image: url('Assets/gallerywalkthrough5.jpg');"></div>
+    <div id="scene5" class="walk-scene" style="background-image: url('Assets/gallerywall2.jpg');"></div>
+    <div id="scene6" class="walk-scene" style="background-image: url('Assets/gallerywall3.jpg');"></div>
+    <div id="scene7" class="walk-scene" style="background-image: url('Assets/gallerywall4.jpg');"></div>
+    <div id="scene8" class="walk-scene" style="background-image: url('Assets/galleryframes1.jpg');">
+        <div id="gallery-frames-wrapper">
+            <img src="Assets/insp9.jpg" id="insp-tall" class="insp-piece">
+            <img src="Assets/insp11.jpg" id="insp-square" class="insp-piece">
+            <img src="Assets/insp16.jpg" id="insp-wide" class="insp-piece">
+            <img src="Assets/insp17.jpg" id="insp-large-tall" class="insp-piece">
+            <img src="Assets/insp18.jpg" id="insp-medium" class="insp-piece">
+        </div>
+    </div>
+</div>
+
+<script>
+    let currentIdx = 1;
+    const totalScenes = 8;
+
+    function openWalkthrough() {
+        document.getElementById('walkthrough-overlay').style.display = 'block';
+    }
+
+    function closeWalkthrough(e) {
+        e.stopPropagation();
+        document.getElementById('walkthrough-overlay').style.display = 'none';
+        resetWalkthrough();
+    }
+
+    function nextScene() {
+        if (currentIdx < totalScenes) {
+            document.getElementById(`scene${currentIdx}`).classList.remove('active');
+            currentIdx++;
+            document.getElementById(`scene${currentIdx}`).classList.add('active');
         }
+    }
 
-        function exitWalkthrough() {
-            document.getElementById('walkthrough-overlay').style.display = 'none';
-            document.getElementById('exit-walk').style.display = 'none';
-            // Reset scenes
-            for(let i=1; i<=totalScenes; i++) {
-                document.getElementById(`scene${i}`).style.display = i === 1 ? 'block' : 'none';
-            }
-            currentScene = 1;
+    function resetWalkthrough() {
+        for(let i=1; i<=totalScenes; i++) {
+            document.getElementById(`scene${i}`).classList.remove('active');
         }
+        currentIdx = 1;
+        document.getElementById('scene1').classList.add('active');
+    }
+</script>
 
-        // Allow clicking the scene to skip forward
-        document.getElementById('walkthrough-overlay').onclick = function() {
-            if (currentScene < totalScenes) {
-                document.getElementById(`scene${currentScene}`).style.display = 'none';
-                currentScene++;
-                document.getElementById(`scene${currentScene}`).style.display = 'block';
-            }
-        };
-    </script>
 </body>
 </html>
