@@ -12,7 +12,6 @@ body, html {margin: 0;padding: 0;min-height: 100vh;background: url('Assets/mainb
 header {text-align: center;padding: 60px 0 30px 0;z-index: 50;}
 h1 {font-family: 'Limelight', cursive;font-size: 100px;margin: 0;background: var(--silver-header);-webkit-background-clip: text;-webkit-text-fill-color: transparent;filter: drop-shadow(5px 5px 8px rgba(0,0,0,0.8));text-transform: uppercase;letter-spacing: 4px;}
 h2 {font-family: 'Limelight', cursive;font-size: 36px;margin: -5px 0 0 0;color: #e0e0e0;letter-spacing: 3px;text-shadow: 3px 3px 6px #000;}
-/* --- NAVIGATION TABS --- */
 .nav-container {display: flex;gap: 25px;margin-top: 40px;margin-bottom: 100px;z-index: 50;}
 .label-holder {width: 210px;height: 105px;background: var(--metal-shine);border: 2px solid #000;position: relative;display: flex;justify-content: center;align-items: center;box-shadow: inset 0 0 15px #000, 8px 8px 20px rgba(0,0,0,0.9);cursor: pointer;transition: transform 0.3s ease;}
 .screw {position: absolute;width: 8px;height: 8px;background: #111;border-radius: 50%;box-shadow: inset 1px 1px 2px #777;}.s-tl { top: 8px; left: 8px; }.s-tr { top: 8px; right: 8px; }.s-bl { bottom: 25px; left: 8px; }.s-br { bottom: 25px; right: 8px; }
@@ -29,27 +28,16 @@ h2 {font-family: 'Limelight', cursive;font-size: 36px;margin: -5px 0 0 0;color: 
 .small-pull-tab {width: 160px;height: 65px;background: var(--metal-shine);display: flex;justify-content: center;align-items: center;position: relative;cursor: pointer;box-shadow: inset 0 0 8px #000, 3px 3px 10px rgba(0,0,0,0.5);transition: transform 0.3s ease;}
 .drawer-white-card {width: 80%;height: 60%;background: #fff;display: flex;justify-content: center;align-items: center;font-family: 'Courier New', Courier, monospace;font-size: 14px;font-weight: bold;text-transform: uppercase;transition: 0.3s;}
 .small-pull-tab:hover .drawer-white-card {background: var(--glow-teal);box-shadow: 0 0 15px var(--glow-teal);}
-/* --- FURNITURE TAGS SYSTEM --- */
 .furniture-tags-overlay {position: absolute;top: 135px;left: 105px;display: flex;flex-direction: column;gap: 15px;}
 .tag-hanger {position: relative;width: 160px;height: 70px;display: flex;justify-content: center;}
 .icon-tag {width: 110px;height: 65px;background: #000;border: 1px solid var(--tag-gold);clip-path: polygon(15% 0%, 85% 0%, 100% 25%, 100% 100%, 0% 100%, 0% 25%);display: flex;justify-content: center;align-items: center;box-shadow: 4px 4px 10px rgba(0,0,0,0.8);transform: rotate(-3deg);transition: transform 0.3s ease;cursor: pointer;z-index: 40;}
 .icon-tag img {width: 65%;height: auto;max-height: 80%;}
 #theater-container {width: 950px;height: 600px;border: 25px solid #000;overflow: hidden;background: #000;box-shadow: 0 0 60px rgba(0,0,0,1);z-index: 5;flex-shrink: 0;}
 #room-display {width: 100%;height: 100%;background-size: cover;background-position: center;transition: background-image 0.5s ease;cursor: pointer;}
-
-/* --- INSPIRATIONAL WALKTHROUGH OVERLAY --- */
 #walkthrough-overlay {position: fixed;top: 0;left: 0;width: 100%;height: 100%;background-color: #000;z-index: 9999;display: none;cursor: pointer;}
 .walk-scene {position: absolute;top: 0;left: 0;width: 100%;height: 100%;background-size: contain !important;background-position: center !important;background-repeat: no-repeat !important;background-color: #000;display: none;opacity: 0;transition: opacity 0.8s ease-in-out;}
 .walk-scene.active {display: block;opacity: 1;}
 .close-walk {position: absolute;top: 20px;right: 20px;background: #000;color: var(--tag-gold);border: 2px solid var(--tag-gold);padding: 10px 20px;font-family: 'Courier New', monospace;font-weight: bold;z-index: 10001;cursor: pointer;}
-#gallery-overlay-container {position: relative;width: 100%;height: 100%;}
-.insp-art {position: absolute;object-fit: cover;}
-/* Map to galleryframes1.jpg */
-#art1 { top: 18%; left: 12%; width: 11%; height: 55%; }
-#art2 { top: 22%; left: 26%; width: 14%; height: 23%; }
-#art3 { top: 48%; left: 26%; width: 28%; height: 25%; }
-#art4 { top: 12%; left: 58%; width: 19%; height: 72%; }
-#art5 { top: 18%; left: 81%; width: 10%; height: 38%; }
 </style>
 </head>
 <body>
@@ -70,41 +58,25 @@ h2 {font-family: 'Limelight', cursive;font-size: 36px;margin: -5px 0 0 0;color: 
 <div id="theater-container"><div id="room-display" onclick="commitSelection()"></div></div>
 </div>
 </div>
-
 <div id="walkthrough-overlay" onclick="nextWalkScene()">
 <div class="close-walk" onclick="stopWalkthrough(event)">EXIT GALLERY</div>
 <div id="ws1" class="walk-scene active" style="background-image: url('Assets/rain1.jpg');"></div>
 <div id="ws2" class="walk-scene" style="background-image: url('Assets/rain2.jpg');"></div>
-<div id="ws3" class="walk-scene" style="background-image: url('Assets/goldhands.jpg');"></div>
-<div id="ws4" class="walk-scene" style="background-image: url('Assets/gallerywalkthrough5.jpg');"></div>
-<div id="ws5" class="walk-scene" style="background-image: url('Assets/gallerywall2.jpg');"></div>
-<div id="ws6" class="walk-scene" style="background-image: url('Assets/gallerywall3.jpg');"></div>
-<div id="ws7" class="walk-scene" style="background-image: url('Assets/gallerywall4.jpg');"></div>
-<div id="ws8" class="walk-scene" style="background-image: url('Assets/galleryframes1.jpg');">
-<div id="gallery-overlay-container">
-<img src="Assets/insp9.jpg" id="art1" class="insp-art">
-<img src="Assets/insp11.jpg" id="art2" class="insp-art">
-<img src="Assets/insp16.jpg" id="art3" class="insp-art">
-<img src="Assets/insp17.jpg" id="art4" class="insp-art">
-<img src="Assets/insp18.jpg" id="art5" class="insp-art">
+<div id="ws3" class="walk-scene" style="background-image: url('Assets/galleryframes1.jpg');"></div>
+<div id="ws4" class="walk-scene" style="background-image: url('Assets/gallerywall2.jpg');"></div>
 </div>
-</div>
-</div>
-
 <script>
 const roomInventory = { livingroom: ['livingroom1.jpg', 'livingroom3.jpg'], bedroom: ['bedroom.jpg', 'bedroom2.jpg'], diningroom: ['diningroom.jpg'], extra: ['foyer.jpg', 'officeroom.jpg', 'kitchen.jpg', 'kitchen2.jpg'] };let indices = { livingroom: 0, bedroom: 0, diningroom: 0, extra: 0 };
 const mainCategories = [{ id: 'seating', img: 'iconseating.png' },{ id: 'tables', img: 'icontables.png' },{ id: 'storage', img: 'iconstorage.png' },{ id: 'beds', img: 'iconbeds.png' }];
-let walkIdx = 1; const totalWalk = 8;
-
+let walkIdx = 1; const totalWalk = 4;
 function roomsAction() {window.scrollTo({ top: document.getElementById('interaction-zone').offsetTop - 20, behavior: 'smooth' });document.getElementById('rooms-cabinet-container').classList.add('glided-in');}
 function peekRoom(img) {document.getElementById('room-display').style.backgroundImage = `url('Assets/${img}')`;}
 function cycleRoom(type) {let list = roomInventory[type];indices[type] = (indices[type] + 1) % list.length;peekRoom(list[indices[type]]);}
 function commitSelection() {document.getElementById('rooms-cabinet-container').classList.remove('glided-in');document.getElementById('rooms-cabinet-container').classList.add('glided-out');setTimeout(() => {document.getElementById('furniture-cases-container').classList.add('glided-in');renderMainTags();}, 1000);}
 function renderMainTags() {const container = document.getElementById('dynamic-tags-container');container.innerHTML = mainCategories.map(cat => `<div class="tag-hanger"><div class="icon-tag"><img src="Assets/${cat.img}" alt="${cat.id}"></div></div>`).join('');}
 function uploadRoom(input) {if (input.files && input.files[0]) {let reader = new FileReader();reader.onload = function(e) {document.getElementById('room-display').style.backgroundImage = `url(${e.target.result})`;};reader.readAsDataURL(input.files[0]);}}
-
 function startWalkthrough() { document.getElementById('walkthrough-overlay').style.display = 'block'; }
 function stopWalkthrough(e) { e.stopPropagation(); document.getElementById('walkthrough-overlay').style.display = 'none'; resetWalk(); }
-function nextWalkScene() { if(walkIdx < totalWalk) { document.getElementById(`ws${walkIdx}`).classList.remove('active'); walkIdx++; document.getElementById(`ws${walkIdx}`).classList.add('active'); } }
+function nextWalkScene() { if(walkIdx < totalWalk) { document.getElementById(`ws${walkIdx}`).classList.remove('active'); walkIdx++; document.getElementById(`ws${walkIdx}`).classList.add('active'); } else { stopWalkthrough({stopPropagation:()=>{} }); } }
 function resetWalk() { for(let i=1; i<=totalWalk; i++) { document.getElementById(`ws${i}`).classList.remove('active'); } walkIdx=1; document.getElementById('ws1').classList.add('active'); }
 </script></body></html>
