@@ -1,222 +1,315 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Room Glow Up - Premium</title>
-    <link href="https://fonts.googleapis.com/css2?family=Limelight&family=Great+Vibes&display=swap" rel="stylesheet">
-    <style>
-        :root {
-            --gunmetal: #2a3439;
-            --silver: #c0c0c0;
-            --teal: #008080;
-            --black: #000000;
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Room Glow Up</title>
+<style>
+body {
+margin: 0;
+padding: 0;
+background-color: #121212;
+background-image: url('https://www.transparenttextures.com/patterns/dark-matter.png');
+font-family: 'Playfair Display', serif;
+color: white;
+display: flex;
+flex-direction: column;
+height: 100vh;
+}
 
-        body {
-            background-color: var(--black);
-            color: white;
-            font-family: 'Limelight', cursive;
-            margin: 0;
-            padding: 0;
-            overflow-y: auto; /* FIXED: Scroll enabled */
-            min-height: 150vh;
-        }
+/* Top Navigation */
+header {
+display: flex;
+justify-content: space-between;
+align-items: center;
+padding: 20px 50px;
+background: rgba(0, 0, 0, 0.8);
+border-bottom: 1px solid #333;
+}
 
-        /* --- HEADER SECTION --- */
-        header {
-            text-align: center;
-            padding: 40px 20px;
-            background: radial-gradient(circle, var(--gunmetal), var(--black));
-            border-bottom: 3px solid var(--silver);
-        }
+.logo {
+font-size: 24px;
+letter-spacing: 2px;
+text-transform: uppercase;
+}
 
-        h1 {
-            font-size: 4rem;
-            margin: 0;
-            background: linear-gradient(to bottom, #ffffff 20%, var(--silver) 50%, #808080 80%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            text-transform: uppercase;
-            letter-spacing: 5px;
-        }
+nav ul {
+list-style: none;
+display: flex;
+gap: 30px;
+margin: 0;
+padding: 0;
+}
 
-        .sub-header {
-            font-family: 'Great Vibes', cursive; /* FIXED: Restored */
-            font-size: 2rem;
-            color: var(--silver);
-            margin-top: 10px;
-        }
+nav ul li {
+cursor: pointer;
+font-size: 16px;
+text-transform: uppercase;
+letter-spacing: 1px;
+transition: color 0.3s;
+}
 
-        /* --- TOP VINTAGE TABS --- */
-        .tab-container {
-            display: flex;
-            justify-content: center;
-            gap: 15px;
-            margin-top: 30px;
-        }
+nav ul li:hover {
+color: #d4af37; /* Gold accent */
+}
 
-        .metal-lip-tab {
-            background: linear-gradient(to bottom, #7a7a7a, #333, #000);
-            border: 1px solid var(--silver);
-            border-radius: 5px 5px 0 0;
-            padding: 12px 25px;
-            font-family: 'Limelight', sans-serif;
-            font-size: 1rem;
-            color: var(--silver);
-            text-transform: uppercase;
-            cursor: pointer;
-            box-shadow: 0 -2px 5px rgba(255,255,255,0.2);
-            transition: transform 0.2s;
-        }
+/* Main Layout */
+.container {
+display: flex;
+flex: 1;
+}
 
-        .metal-lip-tab:hover {
-            transform: translateY(-5px);
-            color: white;
-        }
+/* Sidebar */
+aside {
+width: 200px;
+background: rgba(0, 0, 0, 0.6);
+padding: 40px 20px;
+border-right: 1px solid #333;
+}
 
-        /* --- MAIN INTERACTION AREA --- */
-        .main-container {
-            display: flex;
-            justify-content: space-around;
-            padding: 50px 5%;
-            align-items: flex-start;
-        }
+aside ul {
+list-style: none;
+padding: 0;
+}
 
-        /* --- THE CABINET --- */
-        .quilted-cabinet {
-            width: 350px;
-            background: var(--gunmetal);
-            border: 10px solid #1a1a1a;
-            box-shadow: inset 0 0 50px rgba(0,0,0,0.8), 5px 15px 30px rgba(0,0,0,0.5);
-            padding: 20px;
-            border-radius: 10px;
-        }
+aside ul li {
+padding: 15px 0;
+cursor: pointer;
+border-bottom: 1px solid #222;
+transition: padding-left 0.3s;
+}
 
-        .drawer {
-            height: 100px;
-            background: #222;
-            margin-bottom: 15px;
-            border: 2px solid #333;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            position: relative;
-            box-shadow: inset 0 0 15px rgba(0,0,0,0.5);
-        }
+aside ul li:hover {
+padding-left: 10px;
+color: #d4af37;
+}
 
-        /* FIXED: Drawer Pulls */
-        .pull-handle {
-            width: 80px;
-            height: 20px;
-            background: linear-gradient(to bottom, var(--silver), #555);
-            border-radius: 3px 3px 10px 10px;
-            cursor: pointer;
-            border: 1px solid #1a1a1a;
-            box-shadow: 0 4px 2px rgba(0,0,0,0.6);
-        }
+/* Content Area & Cabinet Labels */
+main {
+flex: 1;
+display: flex;
+justify-content: center;
+align-items: center;
+padding: 50px;
+}
 
-        .drawer-label {
-            position: absolute;
-            top: 10px;
-            font-size: 0.8rem;
-            color: var(--teal);
-            letter-spacing: 2px;
-        }
+.cabinet {
+width: 100%;
+max-width: 800px;
+background: #000;
+border: 2px solid #333;
+height: 500px;
+position: relative;
+display: flex;
+flex-direction: column;
+justify-content: flex-start;
+padding-top: 40px;
+}
 
-        /* --- THE CANVAS --- */
-        .canvas-area {
-            width: 800px;
-            height: 500px;
-            background: var(--black);
-            border: 5px solid var(--gunmetal);
-            box-shadow: 0 0 40px rgba(0,128,128,0.2);
-            position: relative; /* FIXED: Prevent overlap */
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            overflow: hidden;
-        }
+/* Styled Labels */
+.label-container {
+display: flex;
+flex-direction: column;
+gap: 20px;
+align-items: center;
+}
 
-        #room-stage {
-            width: 100%;
-            height: 100%;
-            background-size: cover;
-            background-position: center;
-            transition: opacity 0.5s ease;
-        }
+.custom-label {
+background-color: #1a1a1a;
+color: white;
+padding: 12px 40px;
+border: 1px solid #d4af37; /* Gold border */
+border-radius: 4px;
+font-size: 18px;
+text-transform: uppercase;
+letter-spacing: 2px;
+width: 250px;
+text-align: center;
+cursor: pointer;
+transition: all 0.3s ease;
+box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+}
 
-        .placeholder-text {
-            color: #444;
-            font-size: 2rem;
-            text-transform: uppercase;
-        }
-    </style>
+.custom-label:hover {
+background-color: #d4af37;
+color: black;
+transform: scale(1.05);
+}
+
+.upload-label {
+margin-top: 30px;
+border-style: dashed;
+background-color: #0a0a0a;
+}
+</style>
 </head>
 <body>
 
 <header>
-    <h1>Room Glow Up</h1>
-    <div class="sub-header">Where Your Dream Space Comes To Life</div>
-
-    <div class="tab-container">
-        <div class="metal-lip-tab">Furniture Catalog</div>
-        <div class="metal-lip-tab">Decor Closet</div>
-        <div class="metal-lip-tab">Inspirational Gallery</div>
-        <div class="metal-lip-tab">Save/Checkout</div>
-    </div>
+<div class="logo">Room Glow Up</div>
+<nav>
+<ul>
+<li>Rooms</li>
+<li>Furniture</li>
+<li>Decor</li>
+<li>Inspiration</li>
+</ul>
+</nav>
 </header>
 
-<div class="main-container">
-    <div class="quilted-cabinet">
-        <div class="drawer">
-            <span class="drawer-label">LIVING ROOM</span>
-            <div class="pull-handle" onclick="loadRoom('living')"></div>
-        </div>
-        <div class="drawer">
-            <span class="drawer-label">BEDROOM</span>
-            <div class="pull-handle" onclick="loadRoom('bedroom')"></div>
-        </div>
-        <div class="drawer">
-            <span class="drawer-label">DINING ROOM</span>
-            <div class="pull-handle" onclick="loadRoom('dining')"></div>
-        </div>
-        <div class="drawer">
-            <span class="drawer-label">EXTRA ROOMS</span>
-            <div class="pull-handle" onclick="loadRoom('extra')"></div>
-        </div>
-    </div>
+<div class="container">
+<aside>
+<ul>
+<li>Seating</li>
+<li>Tables</li>
+<li>Storage</li>
+</ul>
+</aside>
 
-    <div class="canvas-area">
-        <div id="room-stage">
-            <div class="placeholder-text" id="status">Select a Room</div>
-        </div>
-    </div>
+<main>
+<div class="cabinet">
+<div class="label-container">
+<div class="custom-label">Livingroom</div>
+<div class="custom-label">Diningroom</div>
+<div class="custom-label">Bedroom</div>
+<div class="custom-label upload-label">Upload</div>
 </div>
-
-<script>
-    function loadRoom(type) {
-        const stage = document.getElementById('room-stage');
-        const status = document.getElementById('status');
-        
-        // Hide placeholder
-        status.style.display = 'none';
-
-        // Map room types to your specific image paths
-        const rooms = {
-            'living': 'living-room.jpg',
-            'bedroom': 'bedroom.jpg',
-            'dining': 'dining-room.jpg',
-            'extra': 'extra-room.jpg'
-        };
-
-        // FIXED: Connection Logic
-        stage.style.backgroundImage = `url('${rooms[type]}')`;
-        stage.style.opacity = '1';
-        
-        console.log("Loading " + type + " onto Canvas");
-    }
-</script>
+</div>
+</main>
+</div>
 
 </body>
 </html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Room Glow Up
+
+
+Your Dream Space Come To Life
+
+
+
+
+
+
+
+Rooms
+
+
+Furniture
+
+
+Decor
+
+
+Inspiration
+
+
+
+
+
+
+
+
+
+
+ 
+
+
+
+
+
+
+
+ 
+
+
+
+ 
+
+
+
+ 
+
+
+
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+×
+
+
+
+
+
+Index
+
+
+Furniture
+
+
+Decor
+
+
+Inspiration
+
+
+
+
+Classification
+ 
+
+
+
+
+
+Inventory
+
+
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
