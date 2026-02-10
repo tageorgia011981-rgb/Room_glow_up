@@ -27,7 +27,7 @@
             padding: 20px;
         }
 
-        /* The Closet Container - Slides up from below stage */
+        /* The Closet Container */
         #closet-container {
             position: fixed;
             bottom: -500px; 
@@ -43,13 +43,13 @@
             bottom: 20px;
         }
 
-        /* Closet Doors */
+        /* Closet Doors - Pointing to Assets folder */
         .door {
             position: absolute;
             top: 0;
             width: 50%;
             height: 100%;
-            background-image: url('closetdoors.jpg');
+            background-image: url('Assets/closetdoors.jpg');
             background-size: 200% 100%;
             transition: transform 1.2s ease-in-out;
             z-index: 10;
@@ -67,18 +67,16 @@
             transform-origin: right;
         }
 
-        /* Doors Open Animation */
         .active.open #door-left { transform: perspective(1200px) rotateY(-110deg); }
         .active.open #door-right { transform: perspective(1200px) rotateY(110deg); }
 
-        /* Closet Interior */
         #closet-interior {
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background-color: #333;
+            background-color: #555;
             z-index: 1;
             display: flex;
             flex-direction: column;
@@ -90,11 +88,11 @@
             height: 100%;
             background-size: cover;
             background-position: center;
+            background-repeat: no-repeat;
             position: relative;
-            transition: background-image 0.5s ease;
+            transition: background-image 0.3s ease;
         }
 
-        /* Directional Sign */
         #dept-sign {
             position: absolute;
             top: 20px;
@@ -117,7 +115,6 @@
 
         .arrow:hover { color: #ffcc00; }
 
-        /* PNG Decor Items */
         .decor-png {
             width: 100px;
             position: absolute;
@@ -149,8 +146,7 @@
             <div id="dept-name">Lighting</div>
             <div class="arrow" onclick="moveRoom(1)">➡</div>
         </div>
-        <div id="room-display">
-            </div>
+        <div id="room-display"></div>
     </div>
 </div>
 
@@ -161,18 +157,18 @@
     const deptName = document.getElementById('dept-name');
     const stage = document.getElementById('main-stage');
 
+    // Updated paths to include Assets/ folder
     const rooms = [
-        { name: 'Pillows', img: 'pillowsclosets.jpg' },
-        { name: 'Lighting', img: 'lightingcloset.jpg' },
-        { name: 'Plants', img: 'plantscloset.jpg' },
-        { name: 'Misc Decor', img: 'miscdecorcloset.jpg' },
-        { name: 'Rugs', img: 'ruggallery.jpg' },
-        { name: 'Curtains', img: 'curtaincloset.jpg' }
+        { name: 'Pillows', img: 'Assets/pillowsclosets.jpg' },
+        { name: 'Lighting', img: 'Assets/lightingcloset.jpg' },
+        { name: 'Plants', img: 'Assets/plantscloset.jpg' },
+        { name: 'Misc Decor', img: 'Assets/miscdecorcloset.jpg' },
+        { name: 'Rugs', img: 'Assets/ruggallery.jpg' },
+        { name: 'Curtains', img: 'Assets/curtaincloset.jpg' }
     ];
 
-    let currentIdx = 1; // Starts at Lighting
+    let currentIdx = 1; 
 
-    // 1. Trigger Closet Slide and Door Open
     toggleBtn.addEventListener('click', () => {
         if (!container.classList.contains('active')) {
             container.classList.add('active');
@@ -184,7 +180,6 @@
         updateRoom();
     });
 
-    // 2. Navigation Logic
     function moveRoom(dir) {
         let newIdx = currentIdx + dir;
         if (newIdx >= 0 && newIdx < rooms.length) {
@@ -194,13 +189,12 @@
     }
 
     function updateRoom() {
-        roomDisplay.style.backgroundImage = `url('${rooms[currentIdx].img}')`;
+        const imagePath = rooms[currentIdx].img;
+        roomDisplay.style.backgroundImage = `url('${imagePath}')`;
         deptName.innerText = rooms[currentIdx].name;
     }
 
-    // 3. Interaction Logic for PNGs
     function setupInteraction(el) {
-        // Double Click Logic (To Stage and Back)
         el.addEventListener('dblclick', function(e) {
             if (el.parentNode === roomDisplay) {
                 stage.appendChild(el);
@@ -210,47 +204,27 @@
             } else {
                 roomDisplay.appendChild(el);
                 el.classList.remove('on-stage');
-                el.style.left = "20px";
-                el.style.top = "100px";
             }
         });
 
-        // Drag and Drop Logic
         el.onmousedown = function(event) {
-            event.preventDefault();
             let shiftX = event.clientX - el.getBoundingClientRect().left;
             let shiftY = event.clientY - el.getBoundingClientRect().top;
-
             function moveAt(pageX, pageY) {
                 el.style.left = pageX - shiftX + 'px';
                 el.style.top = pageY - shiftY + 'px';
             }
-
-            function onMouseMove(event) {
-                moveAt(event.pageX, event.pageY);
-            }
-
+            function onMouseMove(event) { moveAt(event.pageX, event.pageY); }
             document.addEventListener('mousemove', onMouseMove);
-
             el.onmouseup = function() {
                 document.removeEventListener('mousemove', onMouseMove);
                 el.onmouseup = null;
             };
         };
-
         el.ondragstart = function() { return false; };
     }
 
-    // Initialize Room 
     updateRoom();
-
-    /* To add items, you would use:
-       let item = document.createElement('img');
-       item.src = 'item_name.png';
-       item.className = 'decor-png';
-       setupInteraction(item);
-       roomDisplay.appendChild(item);
-    */
 </script>
 
 </body>
