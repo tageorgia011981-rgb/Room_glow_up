@@ -1,237 +1,110 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Room Glow Up - Your Dream Space Come To Life</title>
-    <link href="https://fonts.googleapis.com/css2?family=Limelight&display=swap" rel="stylesheet">
-    <style>
-        :root {
-            --metal-shine: linear-gradient(145deg, #bdc3c7, #2c3e50, #95a5a6, #000);
-            --silver-header: linear-gradient(to bottom, #ffffff 0%, #a6a6a6 45%, #4d4d4d 50%, #ffffff 55%, #808080 100%);
-            --glow-teal: #00f2ff;
-            --gunmetal-dark: #0C1519;
-            --gunmetal-light: #162127;
-            --bronze-screw: #CF9D7B;
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Room Glow Up - Your Dream Space Come To Life</title>
+<link href="https://fonts.googleapis.com/css2?family=Limelight&display=swap" rel="stylesheet">
+<style>
+:root {--metal-shine: linear-gradient(145deg, #bdc3c7, #2c3e50, #95a5a6, #000);--silver-header: linear-gradient(to bottom, #ffffff 0%, #a6a6a6 45%, #4d4d4d 50%, #ffffff 55%, #808080 100%);--glow-teal: #00f2ff;--tag-gold: #d4af37;}
+body, html {margin: 0;padding: 0;min-height: 100vh;background: url('Assets/mainbackground.jpg') no-repeat center center fixed;background-size: cover;scroll-behavior: smooth;overflow-x: hidden;background-color: #000;}
+#main-site-container {width: 100%;display: flex;flex-direction: column;align-items: center;padding-bottom: 200px;}
+header {text-align: center;padding: 60px 0 30px 0;z-index: 50;}
+h1 {font-family: 'Limelight', cursive;font-size: 100px;margin: 0;background: var(--silver-header);-webkit-background-clip: text;-webkit-text-fill-color: transparent;filter: drop-shadow(5px 5px 8px rgba(0,0,0,0.8));text-transform: uppercase;letter-spacing: 4px;}
+h2 {font-family: 'Limelight', cursive;font-size: 36px;margin: -5px 0 0 0;color: #e0e0e0;letter-spacing: 3px;text-shadow: 3px 3px 6px #000;}
+/* --- NAVIGATION TABS --- */
+.nav-container {display: flex;gap: 25px;margin-top: 40px;margin-bottom: 100px;z-index: 50;}
+.label-holder {width: 210px;height: 105px;background: var(--metal-shine);border: 2px solid #000;position: relative;display: flex;justify-content: center;align-items: center;box-shadow: inset 0 0 15px #000, 8px 8px 20px rgba(0,0,0,0.9);cursor: pointer;transition: transform 0.3s ease;}
+.screw {position: absolute;width: 8px;height: 8px;background: #111;border-radius: 50%;box-shadow: inset 1px 1px 2px #777;}.s-tl { top: 8px; left: 8px; }.s-tr { top: 8px; right: 8px; }.s-bl { bottom: 25px; left: 8px; }.s-br { bottom: 25px; right: 8px; }
+.white-card {width: 85%;height: 60%;background: #fff;display: flex;justify-content: center;align-items: center;transition: background 0.4s ease, box-shadow 0.4s ease;}
+.label-holder:hover .white-card {background: var(--glow-teal);box-shadow: 0 0 30px var(--glow-teal);}
+.label-text {font-family: 'Courier New', Courier, monospace;font-weight: 900;font-size: 16px;color: #000;text-transform: uppercase;text-align: center;}
+.lip-pull {position: absolute;bottom: 0;width: 80%;height: 16px;background: #0a0a0a;border-radius: 0 0 15px 15px;border: 1px solid #444;}
+#interaction-zone {display: flex;justify-content: center;align-items: flex-start;gap: 40px;width: 1540px;height: 750px;position: relative;margin: 0 auto;}
+.cabinet-space {position: relative;width: 550px;height: 650px;}
+.asset-side-container {position: absolute;top: 0;left: 0;width: 550px;transform: translateX(-200%);transition: transform 3s cubic-bezier(0.23, 1, 0.32, 1);z-index: 30;}
+#rooms-cabinet-container.glided-in { transform: translateX(0); }#rooms-cabinet-container.glided-out { transform: translateX(-200%); }#furniture-cases-container.glided-in { transform: translateX(0); }
+.asset-img {width: 100%;filter: drop-shadow(15px 15px 30px #000);}
+.drawer-labels-overlay {position: absolute;top: 135px;left: 95px;display: flex;flex-direction: column;gap: 28px;}
+.small-pull-tab {width: 160px;height: 65px;background: var(--metal-shine);display: flex;justify-content: center;align-items: center;position: relative;cursor: pointer;box-shadow: inset 0 0 8px #000, 3px 3px 10px rgba(0,0,0,0.5);transition: transform 0.3s ease;}
+.drawer-white-card {width: 80%;height: 60%;background: #fff;display: flex;justify-content: center;align-items: center;font-family: 'Courier New', Courier, monospace;font-size: 14px;font-weight: bold;text-transform: uppercase;transition: 0.3s;}
+.small-pull-tab:hover .drawer-white-card {background: var(--glow-teal);box-shadow: 0 0 15px var(--glow-teal);}
+/* --- FURNITURE TAGS SYSTEM --- */
+.furniture-tags-overlay {position: absolute;top: 135px;left: 105px;display: flex;flex-direction: column;gap: 15px;}
+.tag-hanger {position: relative;width: 160px;height: 70px;display: flex;justify-content: center;}
+.icon-tag {width: 110px;height: 65px;background: #000;border: 1px solid var(--tag-gold);clip-path: polygon(15% 0%, 85% 0%, 100% 25%, 100% 100%, 0% 100%, 0% 25%);display: flex;justify-content: center;align-items: center;box-shadow: 4px 4px 10px rgba(0,0,0,0.8);transform: rotate(-3deg);transition: transform 0.3s ease;cursor: pointer;z-index: 40;}
+.icon-tag img {width: 65%;height: auto;max-height: 80%;}
+#theater-container {width: 950px;height: 600px;border: 25px solid #000;overflow: hidden;background: #000;box-shadow: 0 0 60px rgba(0,0,0,1);z-index: 5;flex-shrink: 0;}
+#room-display {width: 100%;height: 100%;background-size: cover;background-position: center;transition: background-image 0.5s ease;cursor: pointer;}
 
-        body, html {
-            margin: 0;
-            padding: 0;
-            min-height: 100vh;
-            background: url('Assets/mainbackground.jpg') no-repeat center center fixed;
-            background-size: cover;
-            scroll-behavior: smooth;
-            overflow-x: hidden;
-            background-color: #000;
-        }
-
-        #main-site-container {
-            width: 100%;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            padding-bottom: 200px;
-        }
-
-        header {
-            text-align: center;
-            padding: 60px 0 30px 0;
-            z-index: 50;
-        }
-
-        h1 {
-            font-family: 'Limelight', cursive;
-            font-size: 100px;
-            margin: 0;
-            background: var(--silver-header);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            filter: drop-shadow(5px 5px 8px rgba(0,0,0,0.8));
-            text-transform: uppercase;
-            letter-spacing: 4px;
-        }
-
-        /* --- NAVIGATION --- */
-        .nav-container {
-            display: flex;
-            gap: 25px;
-            margin-top: 40px;
-            margin-bottom: 100px;
-            z-index: 50;
-        }
-
-        .label-holder {
-            width: 210px;
-            height: 105px;
-            background: linear-gradient(145deg, var(--gunmetal-light), var(--gunmetal-dark));
-            border: 2px solid #000;
-            position: relative;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            cursor: pointer;
-            box-shadow: 5px 5px 15px rgba(0,0,0,0.7);
-            transition: transform 0.2s;
-        }
-
-        .label-holder:hover { transform: translateY(-3px); }
-
-        .label-text {
-            color: #fff;
-            font-family: 'Arial', sans-serif;
-            font-weight: bold;
-            font-size: 14px;
-            text-align: center;
-            letter-spacing: 1px;
-            text-shadow: 1px 1px 2px #000;
-        }
-
-        .screw {
-            position: absolute;
-            width: 10px;
-            height: 10px;
-            background: var(--bronze-screw);
-            border-radius: 50%;
-            box-shadow: inset 1px 1px 2px #000, 1px 1px 1px rgba(255,255,255,0.2);
-        }
-
-        /* --- WALKTHROUGH OVERLAY SYSTEM --- */
-        #walkthrough-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: #000;
-            z-index: 9999;
-            display: none;
-            cursor: pointer;
-        }
-
-        .walk-scene {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            background-size: contain !important;
-            background-position: center !important;
-            background-repeat: no-repeat !important;
-            background-color: #000;
-            display: none;
-            opacity: 0;
-            transition: opacity 0.8s ease-in-out;
-        }
-
-        .walk-scene.active {
-            display: block;
-            opacity: 1;
-        }
-
-        /* --- GALLERY FRAME MAPPING (SCENE 8) --- */
-        #gallery-frames-wrapper {
-            position: relative;
-            width: 100%;
-            height: 100%;
-        }
-
-        .insp-piece {
-            position: absolute;
-            object-fit: cover;
-            border: 1px solid rgba(255,255,255,0.1);
-        }
-
-        /* Approximate mappings for galleryframes1.jpg */
-        #insp-tall { top: 18%; left: 12%; width: 11%; height: 55%; }
-        #insp-square { top: 22%; left: 26%; width: 14%; height: 23%; }
-        #insp-wide { top: 48%; left: 26%; width: 28%; height: 25%; }
-        #insp-large-tall { top: 12%; left: 58%; width: 19%; height: 72%; }
-        #insp-medium { top: 18%; left: 81%; width: 10%; height: 38%; }
-
-        .close-walk {
-            position: absolute;
-            top: 20px;
-            right: 20px;
-            background: var(--gunmetal-dark);
-            color: var(--bronze-screw);
-            border: 2px solid var(--bronze-screw);
-            padding: 10px 20px;
-            font-weight: bold;
-            z-index: 10001;
-            cursor: pointer;
-        }
-
-    </style>
+/* --- INSPIRATIONAL WALKTHROUGH OVERLAY --- */
+#walkthrough-overlay {position: fixed;top: 0;left: 0;width: 100%;height: 100%;background-color: #000;z-index: 9999;display: none;cursor: pointer;}
+.walk-scene {position: absolute;top: 0;left: 0;width: 100%;height: 100%;background-size: contain !important;background-position: center !important;background-repeat: no-repeat !important;background-color: #000;display: none;opacity: 0;transition: opacity 0.8s ease-in-out;}
+.walk-scene.active {display: block;opacity: 1;}
+.close-walk {position: absolute;top: 20px;right: 20px;background: #000;color: var(--tag-gold);border: 2px solid var(--tag-gold);padding: 10px 20px;font-family: 'Courier New', monospace;font-weight: bold;z-index: 10001;cursor: pointer;}
+#gallery-overlay-container {position: relative;width: 100%;height: 100%;}
+.insp-art {position: absolute;object-fit: cover;}
+/* Map to galleryframes1.jpg */
+#art1 { top: 18%; left: 12%; width: 11%; height: 55%; }
+#art2 { top: 22%; left: 26%; width: 14%; height: 23%; }
+#art3 { top: 48%; left: 26%; width: 28%; height: 25%; }
+#art4 { top: 12%; left: 58%; width: 19%; height: 72%; }
+#art5 { top: 18%; left: 81%; width: 10%; height: 38%; }
+</style>
 </head>
 <body>
-
 <div id="main-site-container">
-    <header>
-        <h1>Room Glow Up</h1>
-    </header>
+<header><h1>Room Glow Up</h1><h2>Where Your Dream Space Comes To Life</h2></header>
+<nav class="nav-container">
+<div class="label-holder" onclick="roomsAction()"><div class="screw s-tl"></div><div class="screw s-tr"></div><div class="white-card"><span class="label-text">Rooms</span></div><div class="screw s-bl"></div><div class="screw s-br"></div><div class="lip-pull"></div></div>
+<div class="label-holder"><div class="screw s-tl"></div><div class="screw s-tr"></div><div class="white-card"><span class="label-text">Furniture Catalog</span></div><div class="screw s-bl"></div><div class="screw s-br"></div><div class="lip-pull"></div></div>
+<div class="label-holder"><div class="screw s-tl"></div><div class="screw s-tr"></div><div class="white-card"><span class="label-text">Decor Closet</span></div><div class="screw s-bl"></div><div class="screw s-br"></div><div class="lip-pull"></div></div>
+<div class="label-holder" onclick="startWalkthrough()"><div class="screw s-tl"></div><div class="screw s-tr"></div><div class="white-card"><span class="label-text">Inspirational Walkthrough</span></div><div class="screw s-bl"></div><div class="screw s-br"></div><div class="lip-pull"></div></div>
+<div class="label-holder"><div class="screw s-tl"></div><div class="screw s-tr"></div><div class="white-card"><span class="label-text">Save / Checkout</span></div><div class="screw s-bl"></div><div class="screw s-br"></div><div class="lip-pull"></div></div>
+</nav>
+<div id="interaction-zone">
+<div class="cabinet-space">
+<div id="rooms-cabinet-container" class="asset-side-container"><img src="Assets/cabinet.png" class="asset-img" alt="Storage Cabinet"><div class="drawer-labels-overlay"><div class="small-pull-tab" onmouseover="peekRoom('livingroom1.jpg')" onclick="cycleRoom('livingroom')"><div class="drawer-white-card">livingroom</div></div><div class="small-pull-tab" onmouseover="peekRoom('bedroom.jpg')" onclick="cycleRoom('bedroom')"><div class="drawer-white-card">bedroom</div></div><div class="small-pull-tab" onmouseover="peekRoom('diningroom.jpg')" onclick="cycleRoom('diningroom')"><div class="drawer-white-card">diningroom</div></div><div class="small-pull-tab" onmouseover="peekRoom('foyer.jpg')" onclick="cycleRoom('extra')"><div class="drawer-white-card">extra rooms</div></div><div class="small-pull-tab"><input type="file" id="room-upload" style="display:none" onchange="uploadRoom(this)"><div class="drawer-white-card" onclick="document.getElementById('room-upload').click()">upload yours</div></div></div></div>
+<div id="furniture-cases-container" class="asset-side-container"><img src="Assets/furniturecases.png" class="asset-img" alt="Furniture Cases"><div id="dynamic-tags-container" class="furniture-tags-overlay"></div></div>
+</div>
+<div id="theater-container"><div id="room-display" onclick="commitSelection()"></div></div>
+</div>
+</div>
 
-    <div class="nav-container">
-        <div class="label-holder" onclick="openWalkthrough()">
-            <div class="screw" style="top:5px; left:5px;"></div>
-            <div class="screw" style="top:5px; right:5px;"></div>
-            <div class="screw" style="bottom:5px; left:5px;"></div>
-            <div class="screw" style="bottom:5px; right:5px;"></div>
-            <span class="label-text">INSPIRATIONAL<br>WALKTHROUGH</span>
-        </div>
-    </div>
-    
-    </div>
-
-<div id="walkthrough-overlay" onclick="nextScene()">
-    <div class="close-walk" onclick="closeWalkthrough(event)">EXIT GALLERY</div>
-
-    <div id="scene1" class="walk-scene active" style="background-image: url('Assets/rain1.jpg');"></div>
-    <div id="scene2" class="walk-scene" style="background-image: url('Assets/rain2.jpg');"></div>
-    <div id="scene3" class="walk-scene" style="background-image: url('Assets/goldhands.jpg');"></div>
-    <div id="scene4" class="walk-scene" style="background-image: url('Assets/gallerywalkthrough5.jpg');"></div>
-    <div id="scene5" class="walk-scene" style="background-image: url('Assets/gallerywall2.jpg');"></div>
-    <div id="scene6" class="walk-scene" style="background-image: url('Assets/gallerywall3.jpg');"></div>
-    <div id="scene7" class="walk-scene" style="background-image: url('Assets/gallerywall4.jpg');"></div>
-    <div id="scene8" class="walk-scene" style="background-image: url('Assets/galleryframes1.jpg');">
-        <div id="gallery-frames-wrapper">
-            <img src="Assets/insp9.jpg" id="insp-tall" class="insp-piece">
-            <img src="Assets/insp11.jpg" id="insp-square" class="insp-piece">
-            <img src="Assets/insp16.jpg" id="insp-wide" class="insp-piece">
-            <img src="Assets/insp17.jpg" id="insp-large-tall" class="insp-piece">
-            <img src="Assets/insp18.jpg" id="insp-medium" class="insp-piece">
-        </div>
-    </div>
+<div id="walkthrough-overlay" onclick="nextWalkScene()">
+<div class="close-walk" onclick="stopWalkthrough(event)">EXIT GALLERY</div>
+<div id="ws1" class="walk-scene active" style="background-image: url('Assets/rain1.jpg');"></div>
+<div id="ws2" class="walk-scene" style="background-image: url('Assets/rain2.jpg');"></div>
+<div id="ws3" class="walk-scene" style="background-image: url('Assets/goldhands.jpg');"></div>
+<div id="ws4" class="walk-scene" style="background-image: url('Assets/gallerywalkthrough5.jpg');"></div>
+<div id="ws5" class="walk-scene" style="background-image: url('Assets/gallerywall2.jpg');"></div>
+<div id="ws6" class="walk-scene" style="background-image: url('Assets/gallerywall3.jpg');"></div>
+<div id="ws7" class="walk-scene" style="background-image: url('Assets/gallerywall4.jpg');"></div>
+<div id="ws8" class="walk-scene" style="background-image: url('Assets/galleryframes1.jpg');">
+<div id="gallery-overlay-container">
+<img src="Assets/insp9.jpg" id="art1" class="insp-art">
+<img src="Assets/insp11.jpg" id="art2" class="insp-art">
+<img src="Assets/insp16.jpg" id="art3" class="insp-art">
+<img src="Assets/insp17.jpg" id="art4" class="insp-art">
+<img src="Assets/insp18.jpg" id="art5" class="insp-art">
+</div>
+</div>
 </div>
 
 <script>
-    let currentIdx = 1;
-    const totalScenes = 8;
+const roomInventory = { livingroom: ['livingroom1.jpg', 'livingroom3.jpg'], bedroom: ['bedroom.jpg', 'bedroom2.jpg'], diningroom: ['diningroom.jpg'], extra: ['foyer.jpg', 'officeroom.jpg', 'kitchen.jpg', 'kitchen2.jpg'] };let indices = { livingroom: 0, bedroom: 0, diningroom: 0, extra: 0 };
+const mainCategories = [{ id: 'seating', img: 'iconseating.png' },{ id: 'tables', img: 'icontables.png' },{ id: 'storage', img: 'iconstorage.png' },{ id: 'beds', img: 'iconbeds.png' }];
+let walkIdx = 1; const totalWalk = 8;
 
-    function openWalkthrough() {
-        document.getElementById('walkthrough-overlay').style.display = 'block';
-    }
+function roomsAction() {window.scrollTo({ top: document.getElementById('interaction-zone').offsetTop - 20, behavior: 'smooth' });document.getElementById('rooms-cabinet-container').classList.add('glided-in');}
+function peekRoom(img) {document.getElementById('room-display').style.backgroundImage = `url('Assets/${img}')`;}
+function cycleRoom(type) {let list = roomInventory[type];indices[type] = (indices[type] + 1) % list.length;peekRoom(list[indices[type]]);}
+function commitSelection() {document.getElementById('rooms-cabinet-container').classList.remove('glided-in');document.getElementById('rooms-cabinet-container').classList.add('glided-out');setTimeout(() => {document.getElementById('furniture-cases-container').classList.add('glided-in');renderMainTags();}, 1000);}
+function renderMainTags() {const container = document.getElementById('dynamic-tags-container');container.innerHTML = mainCategories.map(cat => `<div class="tag-hanger"><div class="icon-tag"><img src="Assets/${cat.img}" alt="${cat.id}"></div></div>`).join('');}
+function uploadRoom(input) {if (input.files && input.files[0]) {let reader = new FileReader();reader.onload = function(e) {document.getElementById('room-display').style.backgroundImage = `url(${e.target.result})`;};reader.readAsDataURL(input.files[0]);}}
 
-    function closeWalkthrough(e) {
-        e.stopPropagation();
-        document.getElementById('walkthrough-overlay').style.display = 'none';
-        resetWalkthrough();
-    }
-
-    function nextScene() {
-        if (currentIdx < totalScenes) {
-            document.getElementById(`scene${currentIdx}`).classList.remove('active');
-            currentIdx++;
-            document.getElementById(`scene${currentIdx}`).classList.add('active');
-        }
-    }
-
-    function resetWalkthrough() {
-        for(let i=1; i<=totalScenes; i++) {
-            document.getElementById(`scene${i}`).classList.remove('active');
-        }
-        currentIdx = 1;
-        document.getElementById('scene1').classList.add('active');
-    }
-</script>
-
-</body>
-</html>
+function startWalkthrough() { document.getElementById('walkthrough-overlay').style.display = 'block'; }
+function stopWalkthrough(e) { e.stopPropagation(); document.getElementById('walkthrough-overlay').style.display = 'none'; resetWalk(); }
+function nextWalkScene() { if(walkIdx < totalWalk) { document.getElementById(`ws${walkIdx}`).classList.remove('active'); walkIdx++; document.getElementById(`ws${walkIdx}`).classList.add('active'); } }
+function resetWalk() { for(let i=1; i<=totalWalk; i++) { document.getElementById(`ws${i}`).classList.remove('active'); } walkIdx=1; document.getElementById('ws1').classList.add('active'); }
+</script></body></html>
