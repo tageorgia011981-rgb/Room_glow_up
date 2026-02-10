@@ -6,123 +6,169 @@
     <title>Rooms Glow Up - Decor Closet</title>
     <link href="https://fonts.googleapis.com/css2?family=Limelight&display=swap" rel="stylesheet">
     <style>
+        /* Smooth scrolling for the whole page */
+        html {
+            scroll-behavior: smooth;
+        }
+
         body {
             margin: 0;
             padding: 0;
-            background: #000 url('Assets/Untitled project (7).jpg') center/cover no-repeat;
-            height: 100vh;
-            width: 100vw;
-            display: flex;
-            justify-content: center;
+            background-color: #000;
             font-family: 'Limelight', cursive;
             color: #fff;
-            overflow: hidden;
+            overflow-x: hidden;
         }
 
-        /* Positions text exactly over the square sign on the brick wall */
+        /* SECTION 1: THE MAIN ROOM */
+        .room-canvas {
+            height: 100vh;
+            width: 100vw;
+            background: url('Assets/Untitled project (7).jpg') center/cover no-repeat;
+            display: flex;
+            justify-content: center;
+            position: relative;
+        }
+
+        /* The Backlit Wall Sign Overlay */
         .sign-overlay {
             position: absolute;
             top: 155px; 
             width: 200px;
             text-align: center;
-            pointer-events: none;
+            z-index: 5;
         }
 
-        h1 {
-            margin: 0;
-            font-size: 1.1rem;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
+        h1 { margin: 0; font-size: 1.1rem; text-transform: uppercase; letter-spacing: 1px; }
+        .line { height: 1px; background: #fff; margin: 5px auto; width: 85%; opacity: 0.6; }
+        h2 { margin: 0 0 15px 0; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1px; }
 
-        .line {
-            height: 1px;
-            background: #fff;
-            margin: 5px auto;
-            width: 80%;
-            opacity: 0.6;
-        }
-
-        h2 {
-            margin: 0 0 15px 0;
-            font-size: 0.8rem;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-
-        .room-stack {
-            display: flex;
-            flex-direction: column;
-            gap: 6px;
-        }
-
+        .room-stack { display: flex; flex-direction: column; gap: 8px; }
         .room-row {
             display: flex;
             justify-content: center;
             align-items: center;
-            font-size: 0.75rem;
+            font-size: 0.8rem;
             text-transform: uppercase;
-            height: 18px;
+            height: 22px;
+            text-decoration: none;
+            color: #fff;
+            transition: 0.3s;
         }
+        .room-row:hover { color: #f0e68c; text-shadow: 0 0 8px #fff; }
+        .arrow { width: 25px; display: flex; justify-content: center; }
+        .room-name { min-width: 90px; }
 
-        .arrow {
-            width: 25px;
+        /* SECTION 2: THE CLOSET DOORS (Under the Canvas) */
+        .closet-section {
+            height: 100vh;
+            width: 100vw;
+            background: #111;
             display: flex;
+            flex-direction: column;
+            align-items: center;
             justify-content: center;
+            border-top: 4px solid #333;
+            position: relative;
         }
 
-        .room-name {
-            min-width: 90px;
+        .door-frame {
+            display: flex;
+            width: 80%;
+            height: 70%;
+            border: 10px solid #222;
+            background: #000;
+            box-shadow: inset 0 0 50px #000;
         }
 
-        .exit-sign {
-            position: absolute;
-            top: 20px;
-            right: 20px;
+        .door {
+            flex: 1;
+            background: #1a1a1a;
+            border: 2px solid #333;
+            margin: 5px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            letter-spacing: 3px;
+            transition: 0.5s;
+            cursor: pointer;
+        }
+
+        .door:hover {
+            background: #222;
+            border-color: #f0e68c;
+        }
+
+        /* UI ELEMENTS: FIXED POSITIONING */
+        .decor-tab-trigger {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0, 0, 0, 0.9);
+            border: 1px solid #f0e68c;
+            color: #f0e68c;
+            padding: 12px 35px;
+            text-transform: uppercase;
+            font-size: 0.9rem;
+            letter-spacing: 2px;
+            cursor: pointer;
+            z-index: 100;
+            text-decoration: none;
+            transition: 0.3s;
+        }
+
+        .decor-tab-trigger:hover {
+            background: #f0e68c;
+            color: #000;
+        }
+
+        .exit-link {
+            position: fixed;
+            top: 25px;
+            right: 25px;
             background-color: #b00;
             color: #fff;
-            padding: 6px 15px;
+            padding: 8px 18px;
             font-family: sans-serif;
             font-weight: bold;
             font-size: 0.8rem;
             text-transform: uppercase;
-            border-radius: 2px;
-            box-shadow: 0 0 10px rgba(255, 0, 0, 0.5);
-            cursor: pointer;
-            pointer-events: auto;
+            text-decoration: none;
+            z-index: 100;
+            box-shadow: 0 0 10px rgba(255,0,0,0.5);
         }
     </style>
 </head>
 <body>
 
-    <div class="exit-sign">Exit</div>
+    <a href="index.html" class="exit-link">Exit</a>
 
-    <div class="sign-overlay">
-        <h1>Rooms Glow Up</h1>
-        <div class="line"></div>
-        <h2>Decor Closet</h2>
-
-        <div class="room-stack">
-            <div class="room-row">
-                <span class="arrow">←</span> <span class="room-name">Pillows</span> <span class="arrow"></span>
-            </div>
-            <div class="room-row">
-                <span class="arrow"></span> <span class="room-name">Lighting</span> <span class="arrow">→</span>
-            </div>
-            <div class="room-row">
-                <span class="arrow">←</span> <span class="room-name">Plants</span> <span class="arrow"></span>
-            </div>
-            <div class="room-row">
-                <span class="arrow"></span> <span class="room-name">Mirrors</span> <span class="arrow">→</span>
-            </div>
-            <div class="room-row">
-                <span class="arrow">←</span> <span class="room-name">Rugs</span> <span class="arrow"></span>
-            </div>
-            <div class="room-row">
-                <span class="arrow"></span> <span class="room-name">Curtains</span> <span class="arrow">→</span>
+    <section class="room-canvas">
+        <div class="sign-overlay">
+            <h1>Rooms Glow Up</h1>
+            <div class="line"></div>
+            <h2>Decor Closet</h2>
+            <div class="room-stack">
+                <a href="pillows.html" class="room-row"><span class="arrow">←</span> <span class="room-name">Pillows</span> <span class="arrow"></span></a>
+                <a href="lighting.html" class="room-row"><span class="arrow"></span> <span class="room-name">Lighting</span> <span class="arrow">→</span></a>
+                <a href="plants.html" class="room-row"><span class="arrow">←</span> <span class="room-name">Plants</span> <span class="arrow"></span></a>
+                <a href="mirrors.html" class="room-row"><span class="arrow"></span> <span class="room-name">Mirrors</span> <span class="arrow">→</span></a>
+                <a href="rugs.html" class="room-row"><span class="arrow">←</span> <span class="room-name">Rugs</span> <span class="arrow"></span></a>
+                <a href="curtains.html" class="room-row"><span class="arrow"></span> <span class="room-name">Curtains</span> <span class="arrow">→</span></a>
             </div>
         </div>
-    </div>
+    </section>
+
+    <section id="closetSection" class="closet-section">
+        <div class="door-frame">
+            <div class="door" onclick="alert('Opening Left Closet...')">L-STORAGE</div>
+            <div class="door" onclick="alert('Opening Right Closet...')">R-STORAGE</div>
+        </div>
+    </section>
+
+    <a href="#closetSection" class="decor-tab-trigger">Open Decor Menu</a>
 
 </body>
 </html>
