@@ -4,13 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Room Glow Up - Your Dream Space Come To Life</title>
-    <link href="https://fonts.googleapis.com/css2?family=Limelight&family=Special+Elite&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Limelight&display=swap" rel="stylesheet">
     <style>
         :root {
-            --metal-shine: linear-gradient(145deg, #bdc3c7, #2c3e50, #95a5a6, #000);
+            /* Weathered, gritty metal gradient */
+            --metal-shine: linear-gradient(145deg, #7f8c8d 0%, #2c3e50 40%, #4d5d6d 60%, #1a252f 100%);
             --silver-header: linear-gradient(to bottom, #ffffff 0%, #a6a6a6 45%, #4d4d4d 50%, #ffffff 55%, #808080 100%);
-            --glow-teal: #00f2ff;
             --tag-gold: #d4af37;
+            --dusty-white: #e8e8e8;
         }
 
         body, html {
@@ -58,7 +59,7 @@
             text-shadow: 3px 3px 6px #000;
         }
 
-        /* --- RECESSED NAVIGATION TABS --- */
+        /* --- UNIFIED VINTAGE HARDWARE LABELS --- */
         .nav-container {
             display: flex;
             gap: 25px;
@@ -67,82 +68,82 @@
             z-index: 50;
         }
 
-        .label-holder {
-            width: 210px;
-            height: 105px;
+        /* Common hardware frame style for Top Nav and Drawers */
+        .label-holder, .small-pull-tab {
             background: var(--metal-shine);
-            border: 2px solid #000;
+            border: 2px solid #111;
             position: relative;
             display: flex;
             justify-content: center;
             align-items: center;
-            box-shadow: inset 0 0 15px #000, 8px 8px 20px rgba(0,0,0,0.9);
+            box-shadow: inset 0 0 12px #000, 8px 8px 20px rgba(0,0,0,0.8);
             cursor: pointer;
-            transition: transform 0.3s ease;
+            transition: transform 0.2s ease;
         }
 
+        .label-holder { width: 210px; height: 105px; }
+        .small-pull-tab { width: 180px; height: 85px; } /* Sized to fit the cabinet drawers */
+
+        /* Vintage Screw Holes with Depth */
         .screw {
             position: absolute;
-            width: 8px;
-            height: 8px;
-            background: #111;
+            width: 7px;
+            height: 7px;
+            background: radial-gradient(circle at 30% 30%, #444, #000);
             border-radius: 50%;
-            box-shadow: inset 1px 1px 2px #777;
+            box-shadow: 1px 1px 1px rgba(255,255,255,0.1);
         }
         .s-tl { top: 8px; left: 8px; }
         .s-tr { top: 8px; right: 8px; }
         .s-bl { bottom: 25px; left: 8px; }
         .s-br { bottom: 25px; right: 8px; }
 
-        /* The Recessed Window for Depth */
+        /* The Recessed Window */
         .drawer-window {
-            width: 160px;
-            height: 52px;
-            background: #000;
-            box-shadow: inset 0 4px 10px rgba(0,0,0,1);
+            width: 85%;
+            height: 55%;
+            background: #050505;
+            box-shadow: inset 0 3px 8px rgba(0,0,0,1);
             display: flex;
             align-items: center;
             justify-content: center;
-            border-radius: 2px;
-            overflow: hidden;
-            border: 1px solid #444;
+            border: 1px solid #333;
         }
 
         .white-card {
             width: 95%;
-            height: 85%;
-            background: #fff;
+            height: 90%;
+            background: var(--dusty-white);
             display: flex;
             justify-content: center;
             align-items: center;
-            transition: background 0.4s ease, box-shadow 0.4s ease, transform 0.4s ease;
-            box-shadow: inset 0 0 10px rgba(0,0,0,0.2);
-            transform: rotate(-0.5deg);
+            transition: filter 0.3s ease;
+            box-shadow: inset 0 0 5px rgba(0,0,0,0.3);
         }
 
-        .label-holder:hover .white-card {
-            background: var(--glow-teal);
-            box-shadow: 0 0 25px var(--glow-teal);
-            transform: rotate(0deg);
+        .label-holder:hover .white-card, .small-pull-tab:hover .white-card {
+            filter: brightness(1.1);
         }
 
         .label-text {
             font-family: 'Courier New', Courier, monospace;
             font-weight: 900;
             font-size: 15px;
-            color: #000;
+            color: #111;
             text-transform: uppercase;
+            text-align: center;
         }
 
+        /* The Bottom Lip Pull */
         .lip-pull {
             position: absolute;
-            bottom: -5px;
-            width: 110px;
-            height: 18px;
-            background: linear-gradient(#444, #111, #000);
-            border-radius: 0 0 15px 15px;
-            border: 1px solid #111;
-            box-shadow: 0 5px 10px rgba(0,0,0,0.6);
+            bottom: -2px;
+            width: 60%;
+            height: 14px;
+            background: linear-gradient(to bottom, #444, #111, #000);
+            border-radius: 0 0 10px 10px;
+            border: 1px solid #000;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.7);
         }
 
         /* --- INTERACTION ZONE --- */
@@ -184,49 +185,124 @@
 
         .drawer-labels-overlay {
             position: absolute;
-            top: 135px;
-            left: 95px;
+            top: 130px; /* Aligned to your cabinet image drawers */
+            left: 85px;
             display: flex;
             flex-direction: column;
-            gap: 28px;
+            gap: 15px;
         }
 
-        .small-pull-tab {
-            width: 160px;
-            height: 65px;
-            background: var(--metal-shine);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            position: relative;
-            cursor: pointer;
-            box-shadow: inset 0 0 8px #000, 3px 3px 10px rgba(0,0,0,0.5);
-            transition: transform 0.3s ease;
-        }
-
-        .drawer-white-card {
-            width: 80%;
-            height: 60%;
-            background: #fff;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-family: 'Courier New', Courier, monospace;
-            font-size: 14px;
-            font-weight: bold;
-            text-transform: uppercase;
-            transition: 0.3s;
-        }
-
-        .small-pull-tab:hover .drawer-white-card {
-            background: var(--glow-teal);
-            box-shadow: 0 0 15px var(--glow-teal);
-        }
-
-        /* --- FURNITURE TAGS SYSTEM --- */
+        /* --- FURNITURE TAGS --- */
         .furniture-tags-overlay {
             position: absolute;
             top: 135px;
             left: 105px;
             display: flex;
             flex-direction: column;
+            gap: 15px;
+        }
+
+        .tag-hanger {
+            position: relative;
+            width: 160px;
+            height: 70px;
+            display: flex;
+            justify-content: center;
+        }
+
+        .icon-tag {
+            width: 110px;
+            height: 65px;
+            background: #000;
+            border: 1px solid var(--tag-gold);
+            clip-path: polygon(15% 0%, 85% 0%, 100% 25%, 100% 100%, 0% 100%, 0% 25%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 4px 4px 10px rgba(0,0,0,0.8);
+            transform: rotate(-3deg);
+            transition: transform 0.3s ease;
+            cursor: pointer;
+            z-index: 40;
+        }
+
+        .icon-tag img { width: 65%; height: auto; max-height: 80%; }
+        .icon-tag:hover { transform: rotate(0deg) scale(1.1); border-color: #fff; }
+
+        #theater-container {
+            width: 950px;
+            height: 600px;
+            border: 25px solid #000;
+            overflow: hidden;
+            background: #000;
+            box-shadow: 0 0 60px rgba(0,0,0,1);
+            z-index: 5;
+            flex-shrink: 0;
+        }
+
+        #room-display {
+            width: 100%;
+            height: 100%;
+            background-size: cover;
+            background-position: center;
+            transition: background-image 0.5s ease;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+<div id="main-site-container">
+    <header>
+        <h1>Room Glow Up</h1>
+        <h2>Where Your Dream Space Comes To Life</h2>
+    </header>
+
+    <nav class="nav-container">
+        <div class="label-holder" onclick="roomsAction()">
+            <div class="screw s-tl"></div><div class="screw s-tr"></div>
+            <div class="drawer-window"><div class="white-card"><span class="label-text">Rooms</span></div></div>
+            <div class="screw s-bl"></div><div class="screw s-br"></div>
+            <div class="lip-pull"></div>
+        </div>
+        <div class="label-holder">
+            <div class="screw s-tl"></div><div class="screw s-tr"></div>
+            <div class="drawer-window"><div class="white-card"><span class="label-text">Furniture Catalog</span></div></div>
+            <div class="screw s-bl"></div><div class="screw s-br"></div>
+            <div class="lip-pull"></div>
+        </div>
+        <div class="label-holder">
+            <div class="screw s-tl"></div><div class="screw s-tr"></div>
+            <div class="drawer-window"><div class="white-card"><span class="label-text">Decor Closet</span></div></div>
+            <div class="screw s-bl"></div><div class="screw s-br"></div>
+            <div class="lip-pull"></div>
+        </div>
+        <div class="label-holder">
+            <div class="screw s-tl"></div><div class="screw s-tr"></div>
+            <div class="drawer-window"><div class="white-card"><span class="label-text">Inspirational Walkthrough</span></div></div>
+            <div class="screw s-bl"></div><div class="screw s-br"></div>
+            <div class="lip-pull"></div>
+        </div>
+        <div class="label-holder">
+            <div class="screw s-tl"></div><div class="screw s-tr"></div>
+            <div class="drawer-window"><div class="white-card"><span class="label-text">Save / Checkout</span></div></div>
+            <div class="screw s-bl"></div><div class="screw s-br"></div>
+            <div class="lip-pull"></div>
+        </div>
+    </nav>
+
+    <div id="interaction-zone">
+        <div class="cabinet-space">
+            <div id="rooms-cabinet-container" class="asset-side-container">
+                <img src="Assets/cabinet.png" class="asset-img" alt="Storage Cabinet">
+                <div class="drawer-labels-overlay">
+                    <div class="small-pull-tab" onmouseover="peekRoom('livingroom1.jpg')" onclick="cycleRoom('livingroom')">
+                        <div class="screw s-tl"></div><div class="screw s-tr"></div>
+                        <div class="drawer-window"><div class="white-card"><span class="label-text">livingroom</span></div></div>
+                        <div class="screw s-bl"></div><div class="screw s-br"></div>
+                        <div class="lip-pull"></div>
+                    </div>
+                    <div class="small-pull-tab" onmouseover="peekRoom('bedroom.jpg')" onclick="cycleRoom('bedroom')">
+                        <div class="screw s-tl"></div><div class="screw s-tr"></div>
+                        <div class="drawer-window"><div class="white-card"><span class="label-text">bedroom</span></div></div>
+                        <div class="screw s-bl"></div><div class
