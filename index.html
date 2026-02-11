@@ -3,172 +3,248 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Rooms Glow Up - Decor Closet</title>
-    <link href="https://fonts.googleapis.com/css2?family=Limelight&display=swap" rel="stylesheet">
+    <title>Room Glow Up - Designer Studio</title>
     <style>
-        /* Smooth scrolling for the whole page */
-        html {
-            scroll-behavior: smooth;
+        :root {
+            --silver: #C0C0C0;
+            --gold: #D4AF37;
         }
 
-        body {
+        body, html {
             margin: 0;
             padding: 0;
-            background-color: #000;
-            font-family: 'Limelight', cursive;
-            color: #fff;
-            overflow-x: hidden;
+            height: 100%;
+            overflow: hidden;
+            background-color: #1a1a1a;
+            font-family: 'Courier New', Courier, monospace;
         }
 
-        /* SECTION 1: THE MAIN ROOM */
-        .room-canvas {
-            height: 100vh;
+        /* --- THE THEATER STAGE (CANVAS) --- */
+        #theater-stage {
+            position: relative;
             width: 100vw;
-            background: url('Assets/Untitled project (7).jpg') center/cover no-repeat;
+            height: 100vh;
             display: flex;
             justify-content: center;
-            position: relative;
+            align-items: center;
+            perspective: 1000px;
         }
 
-        /* The Backlit Wall Sign Overlay */
-        .sign-overlay {
-            position: absolute;
-            top: 155px; 
-            width: 200px;
-            text-align: center;
+        #room-canvas {
+            width: 800px;
+            height: 500px;
+            background: #333; /* Placeholder for room background */
+            border: 5px solid #000;
+            position: relative;
+            box-shadow: 0 0 50px rgba(0,0,0,0.5);
             z-index: 5;
         }
 
-        h1 { margin: 0; font-size: 1.1rem; text-transform: uppercase; letter-spacing: 1px; }
-        .line { height: 1px; background: #fff; margin: 5px auto; width: 85%; opacity: 0.6; }
-        h2 { margin: 0 0 15px 0; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1px; }
-
-        .room-stack { display: flex; flex-direction: column; gap: 8px; }
-        .room-row {
+        /* --- CATALOG BOOKS (TOP) --- */
+        .catalog-container {
+            position: absolute;
+            top: 20px;
             display: flex;
-            justify-content: center;
-            align-items: center;
-            font-size: 0.8rem;
-            text-transform: uppercase;
-            height: 22px;
-            text-decoration: none;
-            color: #fff;
-            transition: 0.3s;
-        }
-        .room-row:hover { color: #f0e68c; text-shadow: 0 0 8px #fff; }
-        .arrow { width: 25px; display: flex; justify-content: center; }
-        .room-name { min-width: 90px; }
-
-        /* SECTION 2: THE CLOSET DOORS (Under the Canvas) */
-        .closet-section {
-            height: 100vh;
-            width: 100vw;
-            background: #111;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            border-top: 4px solid #333;
-            position: relative;
+            gap: 50px;
+            z-index: 10;
         }
 
-        .door-frame {
-            display: flex;
-            width: 80%;
-            height: 70%;
-            border: 10px solid #222;
-            background: #000;
-            box-shadow: inset 0 0 50px #000;
-        }
-
-        .door {
-            flex: 1;
-            background: #1a1a1a;
-            border: 2px solid #333;
-            margin: 5px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.5rem;
-            letter-spacing: 3px;
-            transition: 0.5s;
+        .book {
+            width: 150px;
             cursor: pointer;
+            transition: transform 0.3s;
         }
 
-        .door:hover {
-            background: #222;
-            border-color: #f0e68c;
-        }
+        .book:hover { transform: scale(1.1); }
 
-        /* UI ELEMENTS: FIXED POSITIONING */
-        .decor-tab-trigger {
-            position: fixed;
-            bottom: 30px;
+        /* --- THE DECOR CLOSET (BOTTOM RISING) --- */
+        #decor-closet-unit {
+            position: absolute;
+            bottom: -350px; /* Hidden state */
             left: 50%;
             transform: translateX(-50%);
-            background: rgba(0, 0, 0, 0.9);
-            border: 1px solid #f0e68c;
-            color: #f0e68c;
-            padding: 12px 35px;
-            text-transform: uppercase;
-            font-size: 0.9rem;
-            letter-spacing: 2px;
+            width: 600px;
+            height: 450px;
+            transition: bottom 0.8s ease-in-out;
+            z-index: 20;
+        }
+
+        #decor-closet-unit.active { bottom: 20px; }
+
+        .door-frame {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            perspective: 1500px;
+        }
+
+        /* 3D Swinging Doors */
+        .door {
+            position: absolute;
+            width: 50%;
+            height: 100%;
+            background-image: url('image_49ac01.jpg'); /* Black and Silver Doors */
+            background-size: cover;
+            transition: transform 1.2s;
+            transform-style: preserve-3d;
+            z-index: 25;
+        }
+
+        .door.left { left: 0; transform-origin: left; }
+        .door.right { right: 0; transform-origin: right; }
+
+        #decor-closet-unit.open .door.left { transform: rotateY(-110deg); }
+        #decor-closet-unit.open .door.right { transform: rotateY(110deg); }
+
+        /* Closet Interior (The Rooms) */
+        #closet-interior {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background-color: #000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+        }
+
+        .closet-room {
+            width: 100%;
+            height: 100%;
+            background-size: cover;
+            background-position: center;
+            position: absolute;
+            display: none;
+        }
+
+        .closet-room.active { display: block; }
+
+        /* Nav Arrows */
+        .nav-arrow {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(0,0,0,0.5);
+            color: var(--gold);
+            padding: 15px;
             cursor: pointer;
-            z-index: 100;
-            text-decoration: none;
-            transition: 0.3s;
+            z-index: 30;
+            border: 1px solid var(--gold);
         }
 
-        .decor-tab-trigger:hover {
-            background: #f0e68c;
-            color: #000;
+        .arrow-left { left: 10px; }
+        .arrow-right { right: 10px; }
+
+        /* --- THE GOLD SCROLL (RECEIPT) --- */
+        #gold-scroll {
+            position: absolute;
+            top: -100%;
+            right: 50px;
+            width: 300px;
+            background-image: url('image_4995db.png');
+            background-size: 100% 100%;
+            padding: 60px 20px 40px 20px;
+            transition: top 1s ease-in-out;
+            z-index: 15;
+            min-height: 400px;
         }
 
-        .exit-link {
-            position: fixed;
-            top: 25px;
-            right: 25px;
-            background-color: #b00;
-            color: #fff;
-            padding: 8px 18px;
-            font-family: sans-serif;
-            font-weight: bold;
-            font-size: 0.8rem;
-            text-transform: uppercase;
-            text-decoration: none;
-            z-index: 100;
-            box-shadow: 0 0 10px rgba(255,0,0,0.5);
+        #receipt-content {
+            color: var(--silver);
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+        #gold-scroll.roll-down { top: 20px; }
+
+        /* Draggable/Sent Items */
+        .placed-item {
+            position: absolute;
+            cursor: move;
+            max-width: 150px;
         }
     </style>
 </head>
 <body>
 
-    <a href="index.html" class="exit-link">Exit</a>
+    <div id="theater-stage">
+        <div class="catalog-container">
+            <img src="image_499dbb.png" class="book" id="furniture-book" title="Furniture Catalog">
+            <img src="image_4a0dfc.jpg" class="book" id="decor-book" title="Decor Catalog">
+        </div>
 
-    <section class="room-canvas">
-        <div class="sign-overlay">
-            <h1>Rooms Glow Up</h1>
-            <div class="line"></div>
-            <h2>Decor Closet</h2>
-            <div class="room-stack">
-                <a href="pillows.html" class="room-row"><span class="arrow">←</span> <span class="room-name">Pillows</span> <span class="arrow"></span></a>
-                <a href="lighting.html" class="room-row"><span class="arrow"></span> <span class="room-name">Lighting</span> <span class="arrow">→</span></a>
-                <a href="plants.html" class="room-row"><span class="arrow">←</span> <span class="room-name">Plants</span> <span class="arrow"></span></a>
-                <a href="mirrors.html" class="room-row"><span class="arrow"></span> <span class="room-name">Mirrors</span> <span class="arrow">→</span></a>
-                <a href="rugs.html" class="room-row"><span class="arrow">←</span> <span class="room-name">Rugs</span> <span class="arrow"></span></a>
-                <a href="curtains.html" class="room-row"><span class="arrow"></span> <span class="room-name">Curtains</span> <span class="arrow">→</span></a>
+        <div id="room-canvas"></div>
+
+        <div id="gold-scroll">
+            <div id="receipt-content">
+                <center><strong>DESIGN LEDGER</strong></center><br>
+                <div id="item-list"></div>
             </div>
         </div>
-    </section>
 
-    <section id="closetSection" class="closet-section">
-        <div class="door-frame">
-            <div class="door" onclick="alert('Opening Left Closet...')">L-STORAGE</div>
-            <div class="door" onclick="alert('Opening Right Closet...')">R-STORAGE</div>
+        <div id="decor-closet-unit">
+            <div class="door-frame">
+                <div class="door left"></div>
+                <div class="door right"></div>
+                
+                <div id="closet-interior">
+                    <div class="nav-arrow arrow-left" onclick="changeRoom(-1)">&#10094;</div>
+                    <div class="nav-arrow arrow-right" onclick="changeRoom(1)">&#10095;</div>
+
+                    <div class="closet-room active" id="room-0" style="background-image: url('image_4a063f.jpg');" onclick="handleItemClick('Plant', 'image_4a063f.jpg')"></div>
+                    <div class="closet-room" id="room-1" style="background-image: url('image_4a1923.jpg');" onclick="handleItemClick('Lamp', 'image_4a1923.jpg')"></div>
+                    <div class="closet-room" id="room-2" style="background-image: url('image_4a15f5.jpg');" onclick="handleItemClick('Pillow', 'image_4a15f5.jpg')"></div>
+                    <div class="closet-room" id="room-3" style="background-image: url('image_4a8d5e.jpg');" onclick="handleItemClick('Vase', 'image_4a8d5e.jpg')"></div>
+                    <div class="closet-room" id="room-4" style="background-image: url('image_4a94df.jpg');" onclick="handleItemClick('Rug', 'image_4a94df.jpg')"></div>
+                </div>
+            </div>
         </div>
-    </section>
 
-    <a href="#closetSection" class="decor-tab-trigger">Open Decor Menu</a>
+        <button style="position:absolute; bottom:0; left:50%; transform:translateX(-50%); z-index:100;" onclick="toggleCloset()">OPEN DECOR CLOSET</button>
+        <button style="position:absolute; top:10px; right:10px; z-index:100;" onclick="toggleScroll()">FINALIZE GLOW UP</button>
+    </div>
 
+    <script>
+        let currentRoom = 0;
+        const totalRooms = 5;
+
+        function toggleCloset() {
+            const closet = document.getElementById('decor-closet-unit');
+            closet.classList.toggle('active');
+            setTimeout(() => {
+                closet.classList.toggle('open');
+            }, 800);
+        }
+
+        function changeRoom(dir) {
+            document.getElementById(`room-${currentRoom}`).classList.remove('active');
+            currentRoom = (currentRoom + dir + totalRooms) % totalRooms;
+            document.getElementById(`room-${currentRoom}`).classList.add('active');
+        }
+
+        function handleItemClick(name, imgSrc) {
+            // Double-click logic to send to room
+            const canvas = document.getElementById('room-canvas');
+            const newItem = document.createElement('div');
+            newItem.className = 'placed-item';
+            newItem.style.left = '50px';
+            newItem.style.top = '50px';
+            newItem.innerHTML = `<img src="${imgSrc}" style="width:100px;">`;
+            canvas.appendChild(newItem);
+
+            // Add to unified scroll
+            const itemList = document.getElementById('item-list');
+            const entry = document.createElement('div');
+            entry.innerHTML = `- ${name.toUpperCase()} ... <a href="#" style="color:var(--silver); text-decoration:none;">[BUY]</a>`;
+            itemList.appendChild(entry);
+            
+            // Open Purple Book
+            document.getElementById('decor-book').style.transform = 'scale(1.2) rotate(-5deg)';
+        }
+
+        function toggleScroll() {
+            document.getElementById('gold-scroll').classList.toggle('roll-down');
+        }
+    </script>
 </body>
 </html>
