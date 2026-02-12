@@ -7,101 +7,116 @@
     <link href="https://fonts.googleapis.com/css2?family=Limelight&display=swap" rel="stylesheet">
     <style>
         :root {
-            /* SHINY BLACK WITH DYNAMIC SHIMMER */
-            --shiny-black: linear-gradient(120deg, #000 30%, #444 45%, #fff 50%, #444 55%, #000 70%);
-            --glow-warm: 0 0 20px rgba(255, 200, 100, 0.6);
-            --glow-teal: 0 0 25px #008080;
+            --metal-shine: linear-gradient(145deg, #bdc3c7, #2c3e50, #95a5a6, #000);
+            --shiny-black: linear-gradient(to bottom, #444 0%, #000 45%, #111 50%, #000 55%, #222 100%);
+            --glow-teal: #008080;
         }
 
         body, html {
-            margin: 0; padding: 0; min-height: 300vh;
+            margin: 0; padding: 0; min-height: 250vh;
             background: url('Assets/mainbackground.jpg') no-repeat center center fixed;
             background-size: cover; scroll-behavior: smooth; overflow-x: hidden;
         }
 
         #main-site-container { width: 100%; display: flex; flex-direction: column; align-items: center; }
 
-        header { text-align: center; padding: 40px 0 10px 0; }
+        header { text-align: center; padding: 60px 0 30px 0; }
 
         h1 {
             font-family: 'Limelight', cursive; font-size: 100px; margin: 0;
-            background: var(--shiny-black); background-size: 200% auto;
-            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-            filter: drop-shadow(5px 5px 8px rgba(0,0,0,0.8));
+            background: var(--shiny-black); -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent; filter: drop-shadow(5px 5px 8px rgba(0,0,0,0.8));
             text-transform: uppercase; letter-spacing: 4px;
-            animation: textShine 5s linear infinite;
         }
 
-        @keyframes textShine { to { background-position: 200% center; } }
+        h2 {
+            font-family: 'Limelight', cursive; font-size: 36px; margin: -5px 0 0 0;
+            color: #e0e0e0; letter-spacing: 3px; text-shadow: 3px 3px 6px #000;
+        }
 
-        /* --- THEATER STAGE (The Canvas) --- */
+        /* --- NAVIGATION TABS --- */
+        .nav-container { display: flex; gap: 25px; margin-top: 40px; margin-bottom: 100px; z-index: 100; }
+
+        .label-holder {
+            width: 210px; height: 110px; background: var(--metal-shine);
+            border: 2px solid #000; position: relative; display: flex;
+            justify-content: center; align-items: center;
+            box-shadow: inset 0 0 15px #000, 8px 8px 20px rgba(0,0,0,0.9); cursor: pointer;
+        }
+
+        .white-card {
+            width: 85%; height: 60%; background: #fff;
+            display: flex; justify-content: center; align-items: center;
+            transition: all 0.3s ease;
+        }
+
+        .label-holder:hover .white-card { box-shadow: 0 0 30px var(--glow-teal); }
+
+        .label-text {
+            font-family: 'Courier New', Courier, monospace; font-weight: 900;
+            font-size: 16px; color: #000; text-transform: uppercase; text-align: center;
+        }
+
+        .lip-pull {
+            position: absolute; bottom: 0; width: 80%; height: 18px;
+            background: #0a0a0a; border-radius: 0 0 15px 15px; border: 1px solid #444;
+        }
+
+        /* --- THEATER ZONE --- */
+        #interaction-zone {
+            display: flex; justify-content: center; width: 1540px; height: 650px;
+            margin-bottom: 250px;
+        }
+
         #theater-container {
-            width: 1000px; height: 600px; border: 25px solid #000;
-            background: #111; overflow: hidden; box-shadow: 0 0 50px rgba(0,0,0,1);
-            position: relative; margin: 20px 0 60px 0;
+            width: 950px; height: 550px; border: 25px solid #000;
+            background: #111; overflow: hidden; box-shadow: 0 0 60px rgba(0,0,0,1);
+            position: relative;
         }
 
-        /* --- MASSIVE CLOSET SYSTEM: 1400x1000 --- */
-        #decor-section { width: 100%; display: flex; flex-direction: column; align-items: center; padding-bottom: 200px; }
+        #room-display { width: 100%; height: 100%; background-size: cover; background-position: center; }
+
+        /* --- DECOR CLOSET SECTION --- */
+        #decor-section { width: 100%; display: flex; flex-direction: column; align-items: center; padding-bottom: 300px; }
 
         #closet-frame {
-            position: relative; 
-            width: 1400px; 
-            height: 1000px; 
-            background: #000; 
-            overflow: hidden; 
-            box-shadow: 0 0 80px rgba(0,0,0,1);
+            position: relative; width: 800px; height: 600px;
+            background: #111; overflow: hidden; box-shadow: 0 0 40px rgba(0,0,0,0.5);
         }
 
-        .closet-interior {
-            width: 1400px; height: 1000px; position: absolute; z-index: 5;
-            display: none; background-size: 100% 100%; background-repeat: no-repeat;
-        }
-        .closet-interior.active { display: block; }
-
-        /* --- BACKLIT DIRECTORY (MOUNTED ON LEFT DOOR) --- */
-        #directory-sign {
-            position: absolute; 
-            top: 150px; 
-            left: 80px; 
-            z-index: 100;
-            display: flex; flex-direction: column; gap: 12px;
-            background: rgba(0,0,0,0.9);
-            padding: 20px;
-            border: 1px solid #333;
-            box-shadow: 15px 15px 30px rgba(0,0,0,0.8);
-            transition: opacity 0.5s, transform 1.5s ease-in-out;
+        #closet-interior {
+            width: 100%; height: 100%; background: url('Assets/plant_pillow.jpg') no-repeat center center;
+            background-size: cover; position: absolute; z-index: 10;
         }
 
-        .dir-panel {
-            width: 240px; height: 55px; background: #000;
-            cursor: pointer; display: flex; justify-content: center; align-items: center;
-            box-shadow: var(--glow-warm); border: 1px solid #222; transition: 0.3s;
+        .closet-item {
+            position: absolute; cursor: pointer; z-index: 100;
+            filter: drop-shadow(5px 5px 5px rgba(0,0,0,0.5));
+            transition: transform 0.2s;
         }
 
-        .dir-panel:hover { box-shadow: var(--glow-teal); transform: scale(1.05); }
-        .dir-panel span {
-            color: #fff; font-family: 'Courier New', Courier, monospace; font-size: 14px;
-            text-transform: uppercase; letter-spacing: 2px; font-weight: bold;
-        }
+        .closet-item:hover { transform: scale(1.1); }
 
-        /* --- DOORS (FORCED COVERAGE) --- */
+        /* SLIDING DOORS */
         .door-panel {
-            position: absolute; top: 0; width: 710px; height: 1000px; z-index: 50;
-            background: url('Assets/closetdoor2.png'); background-size: 1420px 1000px;
+            position: absolute; top: 0; width: 50%; height: 100%; z-index: 50;
+            background: url('Assets/closetdoor2.png'); background-size: 200% 100%;
             transition: transform 1.5s cubic-bezier(0.4, 0, 0.2, 1);
-            cursor: pointer;
         }
-        #door-left { left: 0; background-position: left center; border-right: 2px solid #111; }
+
+        #door-left { left: 0; background-position: left center; }
         #door-right { right: 0; background-position: right center; }
 
         #closet-frame.is-open #door-left { transform: translateX(-100%); }
         #closet-frame.is-open #door-right { transform: translateX(100%); }
-        #closet-frame.is-open #directory-sign { transform: translateX(-800px); opacity: 0; }
 
-        /* --- ITEMS --- */
-        .closet-item { position: absolute; cursor: pointer; z-index: 10; filter: drop-shadow(5px 5px 10px #000); }
-        .on-stage { position: absolute; cursor: move; z-index: 200; user-select: none; }
+        /* ACTIVE ITEMS ON STAGE */
+        .on-stage {
+            position: absolute;
+            cursor: move;
+            z-index: 200;
+            user-select: none;
+        }
     </style>
 </head>
 <body>
@@ -109,45 +124,40 @@
 <div id="main-site-container">
     <header>
         <h1>Room Glow Up</h1>
+        <h2>Where Your Dream Space Comes To Life</h2>
     </header>
 
-    <div id="theater-container">
-        <div id="room-display"></div>
+    <nav class="nav-container">
+        <div class="label-holder"><div class="white-card"><span class="label-text">Rooms</span></div><div class="lip-pull"></div></div>
+        <div class="label-holder"><div class="white-card"><span class="label-text">Furniture Catalog</span></div><div class="lip-pull"></div></div>
+        <div class="label-holder" onclick="glidetocloset()"><div class="white-card"><span class="label-text">Decor Closet</span></div><div class="lip-pull"></div></div>
+        <div class="label-holder"><div class="white-card"><span class="label-text">Inspirational Walkthrough</span></div><div class="lip-pull"></div></div>
+        <div class="label-holder"><div class="white-card"><span class="label-text">Save / Checkout</span></div><div class="lip-pull"></div></div>
+    </nav>
+
+    <div id="interaction-zone">
+        <div id="theater-container">
+            <div id="room-display"></div>
+            </div>
     </div>
 
     <div id="decor-section">
-        <div id="closet-frame">
-            <div id="directory-sign">
-                <div class="dir-panel" onclick="selectRoom(0)"><span>Pillows & Plants</span></div>
-                <div class="dir-panel" onclick="selectRoom(1)"><span>Lamps & Lighting</span></div>
-                <div class="dir-panel" onclick="selectRoom(2)"><span>Curtains</span></div>
-                <div class="dir-panel" onclick="selectRoom(3)"><span>Rugs</span></div>
-                <div class="dir-panel" onclick="slidedoors()"><span>OPEN</span></div>
+        <div id="closet-frame" onclick="slidedoors()">
+            <div id="closet-interior">
+                <img id="item_plant" src="Assets/plant_item.png" class="closet-item" style="top:320px; left:80px; width:120px;" ondblclick="sendToRoom(this)">
+                <img id="item_pillow" src="Assets/pillow_item.png" class="closet-item" style="top:180px; left:580px; width:90px;" ondblclick="sendToRoom(this)">
             </div>
-
-            <div id="room-0" class="closet-interior active" style="background-image: url('Assets/plant_pillow.jpg');">
-                <img src="Assets/plant_item.png" class="closet-item" style="top:500px; left:250px; width:250px;" ondblclick="sendToRoom(this)">
-            </div>
-            <div id="room-1" class="closet-interior" style="background-image: url('Assets/lighting_lamps.jpg');">
-                <img src="Assets/chair_item.png" class="closet-item" style="top:550px; left:200px; width:350px;" ondblclick="sendToRoom(this)">
-            </div>
-            <div id="room-2" class="closet-interior" style="background-image: url('Assets/curtaincloset.jpg');"></div>
-            <div id="room-3" class="closet-interior" style="background-image: url('Assets/rug_room.jpg');"></div>
-
-            <div id="door-left" class="door-panel" onclick="slidedoors()"></div>
-            <div id="door-right" class="door-panel" onclick="slidedoors()"></div>
+            <div id="door-left" class="door-panel"></div>
+            <div id="door-right" class="door-panel"></div>
         </div>
     </div>
 </div>
 
 <script>
-    function selectRoom(index) {
-        const rooms = document.querySelectorAll('.closet-interior');
-        rooms.forEach(r => r.classList.remove('active'));
-        document.getElementById('room-' + index).classList.add('active');
-        slidedoors();
+    function glidetocloset() { 
+        document.getElementById('decor-section').scrollIntoView({ behavior: 'smooth' }); 
     }
-
+    
     function slidedoors() { 
         document.getElementById('closet-frame').classList.add('is-open'); 
     }
@@ -155,29 +165,54 @@
     function sendToRoom(item) {
         const theater = document.getElementById('theater-container');
         const newItem = item.cloneNode(true);
+        
         newItem.classList.remove('closet-item');
         newItem.classList.add('on-stage');
-        newItem.ondblclick = function() { this.remove(); };
+        
+        // Change double click behavior for the stage version
+        newItem.ondblclick = function() {
+            this.remove(); // Removes it from the stage
+        };
+        
         newItem.style.top = "150px";
         newItem.style.left = "400px";
+        
         makeElementDraggable(newItem);
         theater.appendChild(newItem);
+        
+        // Confirm action and glide back up
+        item.style.filter = "drop-shadow(0 0 15px #008080)";
+        setTimeout(() => { item.style.filter = "drop-shadow(5px 5px 5px rgba(0,0,0,0.5))"; }, 500);
         window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
     function makeElementDraggable(elmnt) {
         var pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
-        elmnt.onmousedown = function(e) {
+        elmnt.onmousedown = dragMouseDown;
+
+        function dragMouseDown(e) {
+            e = e || window.event;
             e.preventDefault();
-            pos3 = e.clientX; pos4 = e.clientY;
-            document.onmouseup = function() { document.onmouseup = null; document.onmousemove = null; };
-            document.onmousemove = function(e) {
-                e.preventDefault();
-                pos1 = pos3 - e.clientX; pos2 = pos4 - e.clientY;
-                pos3 = e.clientX; pos4 = e.clientY;
-                elmnt.style.top = (elmnt.offsetTop - pos2) + "px";
-                elmnt.style.left = (elmnt.offsetLeft - pos1) + "px";
-            };
+            pos3 = e.clientX;
+            pos4 = e.clientY;
+            document.onmouseup = closeDragElement;
+            document.onmousemove = elementDrag;
+        }
+
+        function elementDrag(e) {
+            e = e || window.event;
+            e.preventDefault();
+            pos1 = pos3 - e.clientX;
+            pos2 = pos4 - e.clientY;
+            pos3 = e.clientX;
+            pos4 = e.clientY;
+            elmnt.style.top = (elmnt.offsetTop - pos2) + "px";
+            elmnt.style.left = (elmnt.offsetLeft - pos1) + "px";
+        }
+
+        function closeDragElement() {
+            document.onmouseup = null;
+            document.onmousemove = null;
         }
     }
 </script>
