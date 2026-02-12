@@ -8,8 +8,8 @@
     <style>
         :root {
             --metal-shine: linear-gradient(145deg, #bdc3c7, #2c3e50, #95a5a6, #000);
-            --silver-header: linear-gradient(to bottom, #ffffff 0%, #a6a6a6 black 45%, #4d4d4d 50%, #ffffff 55%, #808080 100%);
-            --glow-teal: #00f2ff;
+            --black-shine-header: linear-gradient(to bottom, #444 0%, #000 45%, #111 50%, #000 55%, #222 100%);
+            --glow-white: #ffffff;
             --tag-gold: #d4af37;
         }
 
@@ -41,10 +41,10 @@
             font-family: 'Limelight', cursive;
             font-size: 100px;
             margin: 0;
-            background: var(--silver-header);
+            background: var(--black-shine-header);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            filter: drop-shadow(5px 5px 8px rgba(0,0,0,0.8));
+            filter: drop-shadow(5px 5px 8px rgba(0,0,0,0.9));
             text-transform: uppercase;
             letter-spacing: 4px;
         }
@@ -106,8 +106,8 @@
         }
 
         .label-holder:hover .white-card {
-            background: var(--glow-teal);
-            box-shadow: 0 0 30px var(--glow-teal);
+            background: #fff;
+            box-shadow: 0 0 30px var(--glow-white);
         }
 
         .label-text {
@@ -164,19 +164,19 @@
             filter: drop-shadow(15px 15px 30px #000);
         }
 
-        /* --- UPDATED CABINET LABELS ALIGNMENT --- */
+        /* --- 6-DOOR CABINET LABELS ALIGNMENT --- */
         .drawer-labels-overlay {
             position: absolute;
-            top: 70px;
+            top: 60px;
             left: 140px;
             display: flex;
             flex-direction: column;
-            gap: 55px; /* Increased gap to match vertical doors */
+            gap: 45px;
         }
 
         .small-pull-tab {
-            width: 180px;
-            height: 75px;
+            width: 170px;
+            height: 70px;
             background: var(--metal-shine);
             display: flex;
             justify-content: center;
@@ -195,18 +195,18 @@
             justify-content: center;
             align-items: center;
             font-family: 'Courier New', Courier, monospace;
-            font-size: 14px;
+            font-size: 13px;
             font-weight: bold;
             text-transform: uppercase;
             transition: 0.3s;
         }
 
         .small-pull-tab:hover .drawer-white-card {
-            background: var(--glow-teal);
-            box-shadow: 0 0 15px var(--glow-teal);
+            background: #fff;
+            box-shadow: 0 0 15px var(--glow-white);
         }
 
-        /* --- FURNITURE TAGS SYSTEM --- */
+        /* --- FURNITURE TAGS SYSTEM - BLACK BOXES REMOVED --- */
         .furniture-tags-overlay {
             position: absolute;
             top: 135px;
@@ -227,13 +227,12 @@
         .icon-tag {
             width: 110px;
             height: 65px;
-            background: #000;
-            border: 1px solid var(--tag-gold);
-            clip-path: polygon(15% 0%, 85% 0%, 100% 25%, 100% 100%, 0% 100%, 0% 25%);
+            background: transparent; /* Black background removed */
+            border: none; /* Border removed */
+            clip-path: none; /* Clip-path removed */
             display: flex;
             justify-content: center;
             align-items: center;
-            box-shadow: 4px 4px 10px rgba(0,0,0,0.8);
             transform: rotate(-3deg);
             transition: transform 0.3s ease;
             cursor: pointer;
@@ -241,9 +240,15 @@
         }
 
         .icon-tag img {
-            width: 65%;
+            width: 100%; /* Image fills the space since box is gone */
             height: auto;
-            max-height: 80%;
+            max-height: 100%;
+            filter: drop-shadow(5px 5px 5px rgba(0,0,0,0.5));
+        }
+
+        .icon-tag:hover {
+            transform: rotate(0deg) scale(1.1);
+            filter: drop-shadow(0 0 10px var(--glow-white)); /* White glow on hover */
         }
 
         #theater-container {
@@ -314,13 +319,20 @@
                 <img src="Assets/roomscabinet.png" class="asset-img" alt="Storage Cabinet">
                 <div class="drawer-labels-overlay">
                     <div class="small-pull-tab" onmouseover="peekRoom('livingroom1.jpg')" onclick="cycleRoom('livingroom')">
-                        <div class="drawer-white-card">Living Spaces</div>
+                        <div class="drawer-white-card">Livingroom</div>
                     </div>
                     <div class="small-pull-tab" onmouseover="peekRoom('bedroom.jpg')" onclick="cycleRoom('bedroom')">
-                        <div class="drawer-white-card">Sleep & Eat</div>
+                        <div class="drawer-white-card">Bedroom</div>
+                    </div>
+                    <div class="small-pull-tab" onmouseover="peekRoom('diningroom.jpg')" onclick="cycleRoom('diningroom')">
+                        <div class="drawer-white-card">Diningroom</div>
                     </div>
                     <div class="small-pull-tab" onmouseover="peekRoom('foyer.jpg')" onclick="cycleRoom('extra')">
-                        <div class="drawer-white-card">Misc & Upload</div>
+                        <div class="drawer-white-card">Extra Rooms</div>
+                    </div>
+                    <div class="small-pull-tab">
+                        <input type="file" id="room-upload" style="display:none" onchange="uploadRoom(this)">
+                        <div class="drawer-white-card" onclick="document.getElementById('room-upload').click()">Upload Yours</div>
                     </div>
                 </div>
             </div>
@@ -340,10 +352,11 @@
 <script>
     const roomInventory = {
         livingroom: ['livingroom1.jpg', 'livingroom3.jpg'],
-        bedroom: ['bedroom.jpg', 'bedroom2.jpg', 'diningroom.jpg'],
+        bedroom: ['bedroom.jpg', 'bedroom2.jpg'],
+        diningroom: ['diningroom.jpg'],
         extra: ['foyer.jpg', 'officeroom.jpg', 'kitchen.jpg']
     };
-    let indices = { livingroom: 0, bedroom: 0, extra: 0 };
+    let indices = { livingroom: 0, bedroom: 0, diningroom: 0, extra: 0 };
 
     const mainCategories = [
         { id: 'seating', img: 'iconseating.png' },
@@ -386,6 +399,16 @@
                 </div>
             </div>
         `).join('');
+    }
+
+    function uploadRoom(input) {
+        if (input.files && input.files[0]) {
+            let reader = new FileReader();
+            reader.onload = function(e) {
+                document.getElementById('room-display').style.backgroundImage = `url(${e.target.result})`;
+            };
+            reader.readAsDataURL(input.files[0]);
+        }
     }
 </script>
 
