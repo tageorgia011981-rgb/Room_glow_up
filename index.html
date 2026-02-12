@@ -82,23 +82,23 @@
 
         #closet-frame {
             position: relative; 
-            width: 700px; 
-            height: 500px; 
+            width: 800px; 
+            height: 600px; 
             background: #000; 
             overflow: hidden; 
             box-shadow: 0 0 40px rgba(0,0,0,0.8);
         }
 
         .closet-interior {
-            width: 700px; height: 500px; position: absolute; z-index: 5;
-            display: none; background-size: 700px 500px; background-repeat: no-repeat;
+            width: 800px; height: 600px; position: absolute; z-index: 5;
+            display: none; background-size: cover; background-repeat: no-repeat;
             background-position: center;
         }
 
         .closet-interior.active { display: block; }
 
         #room-plants { background-image: url('Assets/plant_pillow.jpg'); }
-        #room-lighting { background-image: url('Assets/lighting_decor.jpg'); }
+        #room-lighting { background-image: url('Assets/lighting_lamps.jpg'); }
 
         .closet-item {
             position: absolute; cursor: pointer; z-index: 10;
@@ -108,24 +108,24 @@
 
         /* NAVIGATION SIGN */
         .room-sign {
-            position: absolute; bottom: 20px; right: 20px;
+            position: absolute; bottom: 30px; right: 30px;
             display: flex; flex-direction: column; align-items: center;
             cursor: pointer; z-index: 20; transition: transform 0.3s;
         }
         .room-sign:hover { transform: scale(1.1); }
-        .sign-arrow { color: var(--gold-text); font-size: 24px; font-weight: bold; }
+        .sign-arrow { color: var(--gold-text); font-size: 28px; font-weight: bold; }
         .sign-text { 
             font-family: 'Courier New', Courier, monospace; 
-            color: #fff; font-size: 12px; font-weight: bold; 
+            color: #fff; font-size: 14px; font-weight: bold; 
             text-transform: uppercase; background: rgba(0,0,0,0.7); 
-            padding: 2px 6px; border: 1px solid var(--gold-text);
+            padding: 4px 8px; border: 1px solid var(--gold-text);
         }
 
         /* SLIDING DOORS */
         .door-panel {
-            position: absolute; top: 0; width: 350px; 
-            height: 500px; z-index: 50;
-            background: url('Assets/closetdoor2.png'); background-size: 700px 500px;
+            position: absolute; top: 0; width: 400px; 
+            height: 600px; z-index: 50;
+            background: url('Assets/closetdoor2.png'); background-size: 800px 600px;
             transition: transform 1.5s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
@@ -137,7 +137,6 @@
 
         .on-stage { position: absolute; cursor: move; z-index: 200; user-select: none; }
         
-        /* SHADOWS */
         .grounded { filter: drop-shadow(0px 15px 10px rgba(0,0,0,0.7)); }
     </style>
 </head>
@@ -167,9 +166,6 @@
         <div id="closet-frame">
             
             <div id="room-plants" class="closet-interior active">
-                <img src="Assets/plant_item.png" class="closet-item" style="top:250px; left:50px; width:100px;" ondblclick="sendToRoom(this)">
-                <img src="Assets/pillow_item.png" class="closet-item" style="top:150px; left:500px; width:80px;" ondblclick="sendToRoom(this)">
-                
                 <div class="room-sign" onclick="changeClosetRoom(1)">
                     <span class="sign-arrow">&#10142;</span>
                     <span class="sign-text">Lighting</span>
@@ -177,10 +173,7 @@
             </div>
 
             <div id="room-lighting" class="closet-interior">
-                <img src="Assets/chair_item.png" class="closet-item grounded" style="top:280px; left:80px; width:180px;" ondblclick="sendToRoom(this)">
-                <img src="Assets/table_item.png" class="closet-item grounded" style="top:300px; left:420px; width:140px;" ondblclick="sendToRoom(this)">
-                
-                <div class="room-sign" style="left:20px; right:auto;" onclick="changeClosetRoom(-1)">
+                 <div class="room-sign" style="left:30px; right:auto;" onclick="changeClosetRoom(-1)">
                     <span class="sign-arrow" style="transform: rotate(180deg);">&#10142;</span>
                     <span class="sign-text">Plants</span>
                 </div>
