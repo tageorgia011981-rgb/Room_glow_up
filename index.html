@@ -3,11 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Room Glow Up | Master Build</title>
+    <title>Room Glow Up | Master Framework</title>
     <link href="https://fonts.googleapis.com/css2?family=Limelight&display=swap" rel="stylesheet">
     <style>
         :root {
-            --gunmetal-depth: linear-gradient(145deg, #162127, #0C1519);
+            --gunmetal: linear-gradient(145deg, #162127, #0C1519);
             --brushed-bronze: #CF9D7B;
             --white-glow: 0 0 25px rgba(255, 255, 255, 0.9);
             --shiny-black: linear-gradient(180deg, #333 0%, #000 50%, #111 100%);
@@ -55,21 +55,21 @@
             font-weight: bold;
         }
 
-        /* --- METAL LIBRARY TABS --- */
+        /* --- THE 5 TABS NAVIGATION --- */
         #nav-row {
             position: fixed;
             top: 260px;
             width: 100%;
             display: flex;
             justify-content: center;
-            gap: 20px;
+            gap: 15px;
             z-index: 3000;
         }
 
         .label-holder {
-            width: 200px;
+            width: 190px;
             height: 100px;
-            background: var(--gunmetal-depth);
+            background: var(--gunmetal);
             border-radius: 4px;
             position: relative;
             box-shadow: 5px 5px 15px rgba(0,0,0,0.9);
@@ -93,7 +93,7 @@
             top: 18px;
             left: 50%;
             transform: translateX(-50%);
-            width: 160px;
+            width: 140px;
             height: 50px;
             background: #fff;
             color: #000;
@@ -102,19 +102,35 @@
             justify-content: center;
             font-family: 'Courier New', Courier, monospace;
             font-weight: 900;
-            font-size: 1.1rem;
+            font-size: 0.9rem;
             text-align: center;
             transition: 0.3s;
+            z-index: 2;
         }
 
-        .label-holder:hover .white-card { box-shadow: var(--white-glow); }
+        /* METAL SIDE HOUSING */
+        .metal-side {
+            position: absolute;
+            top: 18px;
+            width: 15px;
+            height: 50px;
+            background: var(--gunmetal);
+            border: 1px solid #000;
+            z-index: 3;
+        }
+        .side-l { left: 10px; }
+        .side-r { right: 10px; }
+
+        .label-holder:hover .white-card, .door-target:hover .white-card { 
+            box-shadow: var(--white-glow); 
+        }
 
         .lip-pull {
             position: absolute;
             bottom: 0;
             left: 50%;
             transform: translateX(-50%);
-            width: 120px;
+            width: 110px;
             height: 20px;
             background: #111;
             border-radius: 12px 12px 0 0;
@@ -135,7 +151,7 @@
             display: grid;
             grid-template-columns: 1fr 1fr;
             grid-template-rows: repeat(3, 1fr);
-            padding: 90px 60px;
+            padding: 100px 70px;
             box-sizing: border-box;
         }
 
@@ -148,72 +164,53 @@
         }
 
         .door-label-frame {
-            width: 160px;
-            height: 80px;
-            background: var(--gunmetal-depth);
+            width: 170px;
+            height: 85px;
+            background: var(--gunmetal);
             border-radius: 3px;
             position: relative;
-            box-shadow: 3px 3px 10px rgba(0,0,0,0.8);
+            box-shadow: 4px 4px 10px rgba(0,0,0,0.8);
         }
 
-        .door-target:hover .white-card { box-shadow: var(--white-glow); }
-
-        /* --- DECOR CLOSET & DOOR --- */
-        #closet-gate {
-            position: fixed;
-            top: 0;
-            left: 0;
+        /* --- LOWER STAGE (image_5c123f.png) --- */
+        #lower-section {
+            position: absolute;
+            top: 100vh;
             width: 100%;
-            height: 100%;
-            background: url('Assets/closetdoor2.png') no-repeat center center;
-            background-size: cover;
-            z-index: 2000;
-            transition: transform 1.2s cubic-bezier(0.7, 0, 0.3, 1);
-            display: none;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
         }
 
-        #closet-interior {
-            position: fixed;
-            top: 0;
-            left: 0;
+        #decor-interior {
             width: 100%;
             height: 100%;
             background: url('Assets/decorcloset.jpg') no-repeat center center;
             background-size: cover;
-            display: none;
-            z-index: 500;
+            position: relative;
         }
 
-        /* --- HANGING GALLERY ART --- */
-        .hanging-rug {
+        .sliding-door-container {
             position: absolute;
-            cursor: pointer;
-            filter: drop-shadow(5px 15px 20px rgba(0,0,0,0.8));
+            width: 100%;
+            height: 100%;
+            display: flex;
+            z-index: 1000;
+            transition: 1.2s cubic-bezier(0.7, 0, 0.3, 1);
         }
 
-        .gallery-cord {
-            width: 3px;
-            height: 70px;
-            background: #111;
-            position: absolute;
-            top: -70px;
-            left: 50%;
-            transform: translateX(-50%);
+        .door-half {
+            width: 50%;
+            height: 100%;
+            background: url('Assets/image_5c123f.png') no-repeat;
+            background-size: 200% 100%;
+            transition: transform 1.2s;
         }
 
-        /* --- TEXTURE ZOOM --- */
-        #texture-zoom {
-            position: fixed;
-            bottom: 30px;
-            right: 30px;
-            width: 320px;
-            height: 320px;
-            background: #000;
-            border: 3px solid #fff;
-            display: none;
-            z-index: 4000;
-            background-size: 350%;
-        }
+        #door-left { background-position: left; }
+        #door-right { background-position: right; }
 
     </style>
 </head>
@@ -227,12 +224,24 @@
 <nav id="nav-row">
     <div class="label-holder" onclick="toggleCabinet()">
         <div class="screw s-tl"></div><div class="screw s-tr"></div><div class="screw s-bl"></div><div class="screw s-br"></div>
+        <div class="metal-side side-l"></div><div class="metal-side side-r"></div>
         <div class="white-card">Rooms</div>
         <div class="lip-pull"></div>
     </div>
-    <div class="label-holder" onclick="openCloset()">
-        <div class="screw s-tl"></div><div class="screw s-tr"></div><div class="screw s-bl"></div><div class="screw s-br"></div>
+    <div class="label-holder">
+        <div class="white-card">Furniture Catalog</div>
+        <div class="lip-pull"></div>
+    </div>
+    <div class="label-holder" onclick="scrollDownToCloset()">
         <div class="white-card">Decor Closet</div>
+        <div class="lip-pull"></div>
+    </div>
+    <div class="label-holder">
+        <div class="white-card">Inspirational</div>
+        <div class="lip-pull"></div>
+    </div>
+    <div class="label-holder">
+        <div class="white-card">Checkout</div>
         <div class="lip-pull"></div>
     </div>
 </nav>
@@ -240,108 +249,92 @@
 <div id="roomscabinet">
     <div class="door-target" onclick="cycleRoom('livingroom')">
         <div class="door-label-frame">
-            <div class="screw s-tl"></div><div class="screw s-tr"></div>
+            <div class="metal-side side-l"></div><div class="metal-side side-r"></div>
             <div class="white-card">LIVING ROOM</div>
             <div class="lip-pull"></div>
         </div>
     </div>
     <div class="door-target" onclick="cycleRoom('bedroom')">
         <div class="door-label-frame">
-            <div class="screw s-tl"></div><div class="screw s-tr"></div>
+            <div class="metal-side side-l"></div><div class="metal-side side-r"></div>
             <div class="white-card">BEDROOM</div>
             <div class="lip-pull"></div>
         </div>
     </div>
     <div class="door-target" onclick="cycleRoom('diningroom')">
         <div class="door-label-frame">
-            <div class="screw s-tl"></div><div class="screw s-tr"></div>
+            <div class="metal-side side-l"></div><div class="metal-side side-r"></div>
             <div class="white-card">DINING ROOM</div>
             <div class="lip-pull"></div>
         </div>
     </div>
     <div class="door-target" onclick="cycleRoom('extras')">
         <div class="door-label-frame">
-            <div class="screw s-tl"></div><div class="screw s-tr"></div>
+            <div class="metal-side side-l"></div><div class="metal-side side-r"></div>
             <div class="white-card">EXTRAS</div>
             <div class="lip-pull"></div>
         </div>
     </div>
-    <div class="door-target" onclick="handleUploadClick()">
+    <div class="door-target" onclick="handleUpload()">
         <div class="door-label-frame">
-            <div class="screw s-tl"></div><div class="screw s-tr"></div>
+            <div class="metal-side side-l"></div><div class="metal-side side-r"></div>
             <div class="white-card">UPLOAD YOURS</div>
             <div class="lip-pull"></div>
         </div>
     </div>
     <div class="door-target" onclick="toggleCabinet()">
         <div class="door-label-frame">
-            <div class="screw s-tl"></div><div class="screw s-tr"></div>
+            <div class="metal-side side-l"></div><div class="metal-side side-r"></div>
             <div class="white-card">EXIT</div>
             <div class="lip-pull"></div>
         </div>
     </div>
 </div>
 
-<div id="closet-interior">
-    <div class="hanging-rug" style="top:35%; left:15%; width:250px;" onmouseover="triggerZoom(this.children[1].src)">
-        <div class="gallery-cord"></div>
-        <img src="Assets/rug-preview.jpg" style="width:100%">
-    </div>
+<div id="lower-section">
+    <div id="decor-interior">
+        <div class="sliding-door-container" id="gate">
+            <div class="door-half" id="door-left"></div>
+            <div class="door-half" id="door-right"></div>
+        </div>
+        </div>
 </div>
-
-<div id="closet-gate"></div>
-<div id="texture-zoom"></div>
 
 <script>
     const cabinet = document.getElementById('roomscabinet');
-    const gate = document.getElementById('closet-gate');
-    const interior = document.getElementById('closet-interior');
-    const zoom = document.getElementById('texture-zoom');
+    const gateLeft = document.getElementById('door-left');
+    const gateRight = document.getElementById('door-right');
 
     const roomAssets = {
         livingroom: ['livingroom1.jpg', 'livingroom3.jpg'],
         bedroom: ['bedroom.jpg', 'bedroom2.jpg'],
         diningroom: ['diningroom.jpg'],
-        extras: ['foyer.jpg', 'office.jpg', 'kitchen.jpg', 'kitchen2.jpg']
+        extras: ['foyer.jpg', 'office.jpg', 'kitchen.jpg']
     };
     let indices = { livingroom: 0, bedroom: 0, diningroom: 0, extras: 0 };
 
-    // GLIDE IN TRIGGER
     function toggleCabinet() {
         cabinet.style.left = cabinet.style.left === '0px' ? '-750px' : '0px';
     }
 
-    // CLICK TO CYCLE CANVAS
     function cycleRoom(type) {
         const list = roomAssets[type];
         document.body.style.backgroundImage = `url('Assets/${list[indices[type]]}')`;
         indices[type] = (indices[type] + 1) % list.length;
     }
 
-    function handleUploadClick() {
-        toggleCabinet();
+    function scrollDownToCloset() {
         window.scrollTo(0, document.body.scrollHeight);
+        setTimeout(() => {
+            gateLeft.style.transform = 'translateX(-100%)';
+            gateRight.style.transform = 'translateX(100%)';
+        }, 800);
     }
 
-    function openCloset() {
-        gate.style.display = 'block';
-        interior.style.display = 'block';
-        setTimeout(() => { gate.style.transform = 'translateX(-100%)'; }, 100);
+    function handleUpload() {
+        toggleCabinet();
+        scrollDownToCloset();
     }
-
-    function triggerZoom(src) {
-        zoom.style.display = 'block';
-        zoom.style.backgroundImage = `url('${src}')`;
-    }
-
-    document.addEventListener('mouseover', (e) => {
-        if (!e.target.closest('.hanging-rug')) zoom.style.display = 'none';
-    });
-
-    interior.addEventListener('dblclick', () => {
-        gate.style.transform = 'translateX(0)';
-        setTimeout(() => { gate.style.display = 'none'; interior.style.display = 'none'; }, 1200);
-    });
 </script>
 
 </body>
