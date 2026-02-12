@@ -10,7 +10,7 @@
             --metal-shine: linear-gradient(145deg, #bdc3c7, #2c3e50, #95a5a6, #000);
             --black-shine-header: linear-gradient(to bottom, #444 0%, #000 45%, #111 50%, #000 55%, #222 100%);
             --glow-white: #ffffff;
-            --tag-gold: #d4af37;
+            --brass-plate: linear-gradient(180deg, #bf953f, #fcf6ba, #b38728, #fbf5b7, #aa771c);
         }
 
         body, html {
@@ -164,72 +164,77 @@
             filter: drop-shadow(15px 15px 30px #000);
         }
 
-        /* --- 6-DOOR CABINET LABELS ALIGNMENT --- */
+        /* --- VINTAGE BRASS DOOR PLATES --- */
         .drawer-labels-overlay {
             position: absolute;
-            top: 60px;
-            left: 140px;
+            top: 45px;
+            left: 105px;
             display: flex;
             flex-direction: column;
-            gap: 45px;
+            gap: 32px;
         }
 
-        .small-pull-tab {
-            width: 170px;
-            height: 70px;
-            background: var(--metal-shine);
+        .brass-plate-tab {
+            width: 175px;
+            height: 65px;
+            background: var(--brass-plate);
+            border: 2px solid #5d4037;
+            border-radius: 10px;
             display: flex;
             justify-content: center;
             align-items: center;
             position: relative;
             cursor: pointer;
-            box-shadow: inset 0 0 8px #000, 3px 3px 10px rgba(0,0,0,0.5);
+            box-shadow: 2px 2px 5px rgba(0,0,0,0.5), inset 0 0 10px rgba(0,0,0,0.2);
             transition: transform 0.3s ease;
         }
 
-        .drawer-white-card {
-            width: 80%;
-            height: 60%;
-            background: #fff;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-family: 'Courier New', Courier, monospace;
-            font-size: 13px;
-            font-weight: bold;
+        .brass-plate-tab:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 20px var(--glow-white);
+        }
+
+        .brass-text {
+            font-family: 'Limelight', cursive;
+            font-size: 16px;
+            color: #3e2723;
             text-transform: uppercase;
-            transition: 0.3s;
+            letter-spacing: 1px;
+            text-shadow: 1px 1px 0px rgba(255,255,255,0.3);
         }
 
-        .small-pull-tab:hover .drawer-white-card {
-            background: #fff;
-            box-shadow: 0 0 15px var(--glow-white);
+        .rivet {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: #5d4037;
+            border-radius: 50%;
         }
+        .r-tl { top: 5px; left: 5px; } .r-tr { top: 5px; right: 5px; }
+        .r-bl { bottom: 5px; left: 5px; } .r-br { bottom: 5px; right: 5px; }
 
-        /* --- FURNITURE TAGS SYSTEM - BLACK BOXES REMOVED --- */
+        /* --- FURNITURE TAGS SYSTEM - MASSIVE SCALE --- */
         .furniture-tags-overlay {
             position: absolute;
-            top: 135px;
-            left: 105px;
+            top: 40px; 
+            left: 20px;  
             display: flex;
             flex-direction: column;
-            gap: 15px;
+            gap: 25px;
         }
 
         .tag-hanger {
             position: relative;
-            width: 160px;
-            height: 70px;
+            width: 350px; 
+            height: 150px; 
             display: flex;
             justify-content: center;
         }
 
         .icon-tag {
-            width: 110px;
-            height: 65px;
-            background: transparent; /* Black background removed */
-            border: none; /* Border removed */
-            clip-path: none; /* Clip-path removed */
+            width: 310px; 
+            height: 140px; 
+            background: transparent;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -240,15 +245,15 @@
         }
 
         .icon-tag img {
-            width: 100%; /* Image fills the space since box is gone */
+            width: 100%;
             height: auto;
             max-height: 100%;
-            filter: drop-shadow(5px 5px 5px rgba(0,0,0,0.5));
+            filter: drop-shadow(8px 8px 12px rgba(0,0,0,0.7));
         }
 
         .icon-tag:hover {
             transform: rotate(0deg) scale(1.1);
-            filter: drop-shadow(0 0 10px var(--glow-white)); /* White glow on hover */
+            filter: drop-shadow(0 0 30px var(--glow-white));
         }
 
         #theater-container {
@@ -318,21 +323,31 @@
             <div id="rooms-cabinet-container" class="asset-side-container">
                 <img src="Assets/roomscabinet.png" class="asset-img" alt="Storage Cabinet">
                 <div class="drawer-labels-overlay">
-                    <div class="small-pull-tab" onmouseover="peekRoom('livingroom1.jpg')" onclick="cycleRoom('livingroom')">
-                        <div class="drawer-white-card">Livingroom</div>
+                    <div class="brass-plate-tab" onmouseover="peekRoom('livingroom1.jpg')" onclick="cycleRoom('livingroom')">
+                        <div class="rivet r-tl"></div><div class="rivet r-tr"></div>
+                        <span class="brass-text">Livingroom</span>
+                        <div class="rivet r-bl"></div><div class="rivet r-br"></div>
                     </div>
-                    <div class="small-pull-tab" onmouseover="peekRoom('bedroom.jpg')" onclick="cycleRoom('bedroom')">
-                        <div class="drawer-white-card">Bedroom</div>
+                    <div class="brass-plate-tab" onmouseover="peekRoom('bedroom.jpg')" onclick="cycleRoom('bedroom')">
+                        <div class="rivet r-tl"></div><div class="rivet r-tr"></div>
+                        <span class="brass-text">Bedroom</span>
+                        <div class="rivet r-bl"></div><div class="rivet r-br"></div>
                     </div>
-                    <div class="small-pull-tab" onmouseover="peekRoom('diningroom.jpg')" onclick="cycleRoom('diningroom')">
-                        <div class="drawer-white-card">Diningroom</div>
+                    <div class="brass-plate-tab" onmouseover="peekRoom('diningroom.jpg')" onclick="cycleRoom('diningroom')">
+                        <div class="rivet r-tl"></div><div class="rivet r-tr"></div>
+                        <span class="brass-text">Diningroom</span>
+                        <div class="rivet r-bl"></div><div class="rivet r-br"></div>
                     </div>
-                    <div class="small-pull-tab" onmouseover="peekRoom('foyer.jpg')" onclick="cycleRoom('extra')">
-                        <div class="drawer-white-card">Extra Rooms</div>
+                    <div class="brass-plate-tab" onmouseover="peekRoom('foyer.jpg')" onclick="cycleRoom('extra')">
+                        <div class="rivet r-tl"></div><div class="rivet r-tr"></div>
+                        <span class="brass-text">Extra Rooms</span>
+                        <div class="rivet r-bl"></div><div class="rivet r-br"></div>
                     </div>
-                    <div class="small-pull-tab">
+                    <div class="brass-plate-tab">
                         <input type="file" id="room-upload" style="display:none" onchange="uploadRoom(this)">
-                        <div class="drawer-white-card" onclick="document.getElementById('room-upload').click()">Upload Yours</div>
+                        <div class="rivet r-tl"></div><div class="rivet r-tr"></div>
+                        <span class="brass-text" onclick="document.getElementById('room-upload').click()">Upload Yours</span>
+                        <div class="rivet r-bl"></div><div class="rivet r-br"></div>
                     </div>
                 </div>
             </div>
