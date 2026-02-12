@@ -18,7 +18,7 @@
             min-height: 250vh;
             background: url('Assets/mainbackground.jpg') no-repeat center center fixed;
             background-size: cover;
-            scroll-behavior: smooth;
+            scroll-behavior: smooth; /* Enables the smooth gliding scroll */
             overflow-x: hidden;
         }
 
@@ -29,10 +29,9 @@
             align-items: center;
         }
 
-        /* --- PRIMARY HEADERS --- */
         header { text-align: center; padding: 60px 0 30px 0; }
 
-        h1.main-title {
+        h1 {
             font-family: 'Limelight', cursive;
             font-size: 100px;
             margin: 0;
@@ -44,7 +43,7 @@
             letter-spacing: 4px;
         }
 
-        h2.sub-title {
+        h2 {
             font-family: 'Limelight', cursive;
             font-size: 36px;
             margin: -5px 0 0 0;
@@ -53,12 +52,12 @@
             text-shadow: 3px 3px 6px #000;
         }
 
-        /* --- LIBRARY LABEL TABS --- */
+        /* --- NAVIGATION TABS --- */
         .nav-container {
             display: flex;
             gap: 25px;
             margin-top: 40px;
-            margin-bottom: 60px;
+            margin-bottom: 100px;
             z-index: 100;
         }
 
@@ -75,150 +74,150 @@
             cursor: pointer;
         }
 
-        .screw {
-            position: absolute;
-            width: 8px;
-            height: 8px;
-            background: #111;
-            border-radius: 50%;
-            box-shadow: inset 1px 1px 2px #777;
-        }
-        .s-tl { top: 8px; left: 8px; } .s-tr { top: 8px; right: 8px; }
-        .s-bl { bottom: 25px; left: 8px; } .s-br { bottom: 25px; right: 8px; }
-
         .white-card {
-            width: 85%; height: 60%; background: #fff;
-            display: flex; justify-content: center; align-items: center;
+            width: 85%;
+            height: 60%;
+            background: #fff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
             transition: all 0.3s ease;
         }
 
         .label-holder:hover .white-card {
-            box-shadow: 0 0 25px var(--glow-teal);
+            box-shadow: 0 0 30px var(--glow-teal);
         }
 
         .label-text {
             font-family: 'Courier New', Courier, monospace;
-            font-weight: 900; font-size: 16px; color: #000;
-            text-transform: uppercase; text-align: center;
+            font-weight: 900;
+            font-size: 16px;
+            color: #000;
+            text-transform: uppercase;
+            text-align: center;
         }
 
         .lip-pull {
-            position: absolute; bottom: 0; width: 80%; height: 18px;
-            background: #0a0a0a; border-radius: 0 0 15px 15px; border: 1px solid #444;
+            position: absolute;
+            bottom: 0;
+            width: 80%;
+            height: 18px;
+            background: #0a0a0a;
+            border-radius: 0 0 15px 15px;
+            border: 1px solid #444;
         }
 
         /* --- UPPER THEATER ZONE --- */
         #interaction-zone {
-            display: flex; justify-content: center; align-items: flex-start;
-            gap: 40px; width: 1540px; height: 750px; position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            gap: 40px;
+            width: 1540px;
+            height: 650px;
+            margin-bottom: 200px;
         }
 
         #theater-container {
-            width: 950px; height: 600px; border: 25px solid #000;
-            background: #111; overflow: hidden; box-shadow: 0 0 60px rgba(0,0,0,1);
+            width: 950px;
+            height: 550px;
+            border: 25px solid #000;
+            background: #111;
+            overflow: hidden;
+            box-shadow: 0 0 60px rgba(0,0,0,1);
         }
 
         #room-display { width: 100%; height: 100%; background-size: cover; background-position: center; }
 
-        /* --- LOWER DECOR CLOSET SECTION --- */
+        /* --- DECOR CLOSET SECTION --- */
         #decor-section {
             width: 100%;
             display: flex;
             flex-direction: column;
             align-items: center;
-            margin-top: 200px;
             padding-bottom: 300px;
         }
 
-        #closet-entrance {
+        #closet-frame {
             position: relative;
-            width: 1000px;
-            height: 800px;
+            width: 800px; /* Reduced size as requested */
+            height: 600px;
             border: 20px solid #000;
             background: #000;
             overflow: hidden;
-            box-shadow: 0 0 100px #000;
-            cursor: pointer;
+            box-shadow: 0 0 80px #000;
         }
 
-        .closet-door-img {
-            width: 100%; height: 100%; object-fit: cover;
-            transition: transform 1.5s ease-in-out, opacity 1s;
-        }
-
-        .closet-door-img.open {
-            transform: scale(1.5);
-            opacity: 0;
-            pointer-events: none;
-        }
-
-        #interior-content {
+        /* SLIDING DOORS */
+        .door-panel {
             position: absolute;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
-            opacity: 0;
-            transition: opacity 1.5s ease;
+            top: 0;
+            width: 50%;
+            height: 100%;
+            z-index: 50;
+            background: url('Assets/closetdoor2.png');
+            background-size: 200% 100%;
+            transition: transform 1.5s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
-        #interior-content.visible { opacity: 1; }
+        #door-left {
+            left: 0;
+            background-position: left center;
+        }
+
+        #door-right {
+            right: 0;
+            background-position: right center;
+        }
+
+        /* Reveal Interior on Class Trigger */
+        #closet-frame.is-open #door-left { transform: translateX(-100%); }
+        #closet-frame.is-open #door-right { transform: translateX(100%); }
+
+        #closet-interior {
+            width: 100%;
+            height: 100%;
+            background: url('Assets/plants_pillows.jpg') no-repeat center center;
+            background-size: cover;
+            position: relative;
+        }
 
         .tap-zone {
-            position: absolute; background: rgba(255,255,255,0.01);
-            cursor: pointer; z-index: 100;
+            position: absolute;
+            background: rgba(255,255,255,0.01);
+            cursor: pointer;
+            z-index: 20;
         }
         .tap-zone:hover { background: rgba(255,255,255,0.05); border: 2px dashed #fff; }
-
-        /* --- MODAL --- */
-        .modal {
-            display: none; position: fixed; z-index: 2000;
-            left: 0; top: 0; width: 100%; height: 100%;
-            background-color: rgba(0,0,0,0.9); backdrop-filter: blur(8px);
-        }
-
-        .modal-content {
-            background: var(--metal-shine); margin: 5% auto;
-            padding: 30px; border: 10px solid #000; width: 600px;
-            text-align: center; box-shadow: 0 0 50px #fff;
-        }
     </style>
 </head>
 <body>
 
 <div id="main-site-container">
     <header>
-        <h1 class="main-title">Room Glow Up</h1>
-        <h2 class="sub-title">Where Your Dream Space Comes To Life</h2>
+        <h1>Room Glow Up</h1>
+        <h2>Where Your Dream Space Comes To Life</h2>
     </header>
 
     <nav class="nav-container">
         <div class="label-holder">
-            <div class="screw s-tl"></div><div class="screw s-tr"></div>
             <div class="white-card"><span class="label-text">Rooms</span></div>
-            <div class="screw s-bl"></div><div class="screw s-br"></div>
             <div class="lip-pull"></div>
         </div>
         <div class="label-holder">
-            <div class="screw s-tl"></div><div class="screw s-tr"></div>
             <div class="white-card"><span class="label-text">Furniture Catalog</span></div>
-            <div class="screw s-bl"></div><div class="screw s-br"></div>
             <div class="lip-pull"></div>
         </div>
-        <div class="label-holder" onclick="scrollToCloset()">
-            <div class="screw s-tl"></div><div class="screw s-tr"></div>
+        <div class="label-holder" onclick="glidetocloset()">
             <div class="white-card"><span class="label-text">Decor Closet</span></div>
-            <div class="screw s-bl"></div><div class="screw s-br"></div>
             <div class="lip-pull"></div>
         </div>
         <div class="label-holder">
-            <div class="screw s-tl"></div><div class="screw s-tr"></div>
             <div class="white-card"><span class="label-text">Inspirational Walkthrough</span></div>
-            <div class="screw s-bl"></div><div class="screw s-br"></div>
             <div class="lip-pull"></div>
         </div>
         <div class="label-holder">
-            <div class="screw s-tl"></div><div class="screw s-tr"></div>
             <div class="white-card"><span class="label-text">Save / Checkout</span></div>
-            <div class="screw s-bl"></div><div class="screw s-br"></div>
             <div class="lip-pull"></div>
         </div>
     </nav>
@@ -230,46 +229,31 @@
     </div>
 
     <div id="decor-section">
-        <h1 class="main-title" style="font-size: 60px; margin-bottom: 40px;">Decor Closet</h1>
-        <div id="closet-entrance" onclick="openCloset()">
-            <img src="Assets/closetdoor2.png" id="main-door" class="closet-door-img">
+        <h1 style="font-family:'Limelight'; font-size:60px; color:#fff; margin-bottom:50px;">The Decor Closet</h1>
+        <div id="closet-frame" onclick="slidedoors()">
+            <div id="door-left" class="door-panel"></div>
+            <div id="door-right" class="door-panel"></div>
             
-            <div id="interior-content">
-                <img src="Assets/plants_pillows.jpg" style="width:100%; height:100%; object-fit:cover;">
-                <div class="tap-zone" style="top:250px; left:20px; width:450px; height:450px;" onclick="openModal('Plants')"></div>
-                <div class="tap-zone" style="top:100px; right:20px; width:410px; height:680px;" onclick="openModal('Pillows')"></div>
+            <div id="closet-interior">
+                <div class="tap-zone" style="top:250px; left:20px; width:400px; height:400px;" onclick="opendetails('Plants')"></div>
+                <div class="tap-zone" style="top:100px; right:20px; width:400px; height:600px;" onclick="opendetails('Pillows')"></div>
             </div>
         </div>
     </div>
 </div>
 
-<div id="infoModal" class="modal">
-    <div class="modal-content">
-        <h2 id="modalTitle" style="font-family:'Limelight'; color:#000;">Section</h2>
-        <button onclick="closeModal()">Close</button>
-    </div>
-</div>
-
 <script>
-    function scrollToCloset() {
+    function glidetocloset() {
         document.getElementById('decor-section').scrollIntoView({ behavior: 'smooth' });
     }
 
-    function openCloset() {
-        document.getElementById('main-door').classList.add('open');
-        setTimeout(() => {
-            document.getElementById('interior-content').classList.add('visible');
-        }, 500);
+    function slidedoors() {
+        document.getElementById('closet-frame').classList.add('is-open');
     }
 
-    function openModal(title) {
-        event.stopPropagation(); // Prevents re-triggering door logic
-        document.getElementById('modalTitle').innerText = title;
-        document.getElementById('infoModal').style.display = "block";
-    }
-
-    function closeModal() {
-        document.getElementById('infoModal').style.display = "none";
+    function opendetails(cat) {
+        event.stopPropagation();
+        console.log("Exploring: " + cat);
     }
 </script>
 
