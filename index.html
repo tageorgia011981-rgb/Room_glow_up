@@ -1,355 +1,186 @@
 <!DOCTYPE html>
-
 <html lang="en">
-
 <head>
-
     <meta charset="UTF-8">
-
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
     <title>Room Glow Up - Your Dream Space Come To Life</title>
-
     <link href="https://fonts.googleapis.com/css2?family=Limelight&display=swap" rel="stylesheet">
-
     <style>
-
         :root {
-
+            /* SHINY BLACK WITH DYNAMIC SHIMMER */
             --shiny-black: linear-gradient(120deg, #000 30%, #444 45%, #fff 50%, #444 55%, #000 70%);
-
-            --glow-warm: 0 0 15px rgba(255, 200, 100, 0.6);
-
-            --glow-teal: #008080;
-
-            --gold-text: #d4af37;
-
+            --glow-warm: 0 0 20px rgba(255, 200, 100, 0.6);
+            --glow-teal: 0 0 25px #008080;
         }
-
-
 
         body, html {
-
-            margin: 0; padding: 0; min-height: 200vh;
-
+            margin: 0; padding: 0; min-height: 300vh;
             background: url('Assets/mainbackground.jpg') no-repeat center center fixed;
-
             background-size: cover; scroll-behavior: smooth; overflow-x: hidden;
-
         }
-
-
 
         #main-site-container { width: 100%; display: flex; flex-direction: column; align-items: center; }
 
-
-
         header { text-align: center; padding: 40px 0 10px 0; }
 
-
-
-        /* SHIMMERING BLACK HEADER */
-
         h1 {
-
             font-family: 'Limelight', cursive; font-size: 100px; margin: 0;
-
             background: var(--shiny-black); background-size: 200% auto;
-
             -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-
             filter: drop-shadow(5px 5px 8px rgba(0,0,0,0.8));
-
             text-transform: uppercase; letter-spacing: 4px;
-
             animation: textShine 5s linear infinite;
-
         }
-
-
 
         @keyframes textShine { to { background-position: 200% center; } }
 
-
-
-        /* THEATER STAGE */
-
+        /* --- THEATER STAGE (The Canvas) --- */
         #theater-container {
-
-            width: 900px; height: 500px; border: 20px solid #000;
-
+            width: 1000px; height: 600px; border: 25px solid #000;
             background: #111; overflow: hidden; box-shadow: 0 0 50px rgba(0,0,0,1);
-
-            position: relative; margin-bottom: 20px;
-
+            position: relative; margin: 20px 0 60px 0;
         }
 
-
-
-        /* CLOSET SYSTEM - FIXED 800x600 */
+        /* --- MASSIVE CLOSET SYSTEM: 1400x1000 --- */
+        #decor-section { width: 100%; display: flex; flex-direction: column; align-items: center; padding-bottom: 200px; }
 
         #closet-frame {
-
-            position: relative; width: 800px; height: 600px;
-
-            background: #000; overflow: hidden; box-shadow: 0 0 40px rgba(0,0,0,0.8);
-
+            position: relative; 
+            width: 1400px; 
+            height: 1000px; 
+            background: #000; 
+            overflow: hidden; 
+            box-shadow: 0 0 80px rgba(0,0,0,1);
         }
-
-
 
         .closet-interior {
-
-            width: 800px; height: 600px; position: absolute; z-index: 5;
-
-            display: none; background-size: cover; background-position: center;
-
+            width: 1400px; height: 1000px; position: absolute; z-index: 5;
+            display: none; background-size: 100% 100%; background-repeat: no-repeat;
         }
-
         .closet-interior.active { display: block; }
 
-
-
-        /* DIRECTORY MENU ON DOOR */
-
-        #directory-container {
-
-            position: absolute; top: 100px; left: 50%;
-
-            transform: translateX(-50%); z-index: 60;
-
-            display: flex; flex-direction: column; gap: 10px;
-
-            transition: opacity 0.5s;
-
+        /* --- BACKLIT DIRECTORY (MOUNTED ON LEFT DOOR) --- */
+        #directory-sign {
+            position: absolute; 
+            top: 150px; 
+            left: 80px; 
+            z-index: 100;
+            display: flex; flex-direction: column; gap: 12px;
+            background: rgba(0,0,0,0.9);
+            padding: 20px;
+            border: 1px solid #333;
+            box-shadow: 15px 15px 30px rgba(0,0,0,0.8);
+            transition: opacity 0.5s, transform 1.5s ease-in-out;
         }
 
-
-
-        .directory-panel {
-
-            width: 320px; height: 60px; background: #000;
-
-            border: 1px solid #222; cursor: pointer;
-
-            display: flex; justify-content: center; align-items: center;
-
-            box-shadow: var(--glow-warm); transition: all 0.3s;
-
+        .dir-panel {
+            width: 240px; height: 55px; background: #000;
+            cursor: pointer; display: flex; justify-content: center; align-items: center;
+            box-shadow: var(--glow-warm); border: 1px solid #222; transition: 0.3s;
         }
 
-
-
-        .directory-panel:hover { box-shadow: 0 0 20px var(--glow-teal); transform: scale(1.05); }
-
-
-
-        .directory-panel span {
-
-            color: #fff; font-family: Arial, sans-serif; font-weight: bold;
-
-            text-transform: uppercase; letter-spacing: 1px; font-size: 14px;
-
+        .dir-panel:hover { box-shadow: var(--glow-teal); transform: scale(1.05); }
+        .dir-panel span {
+            color: #fff; font-family: 'Courier New', Courier, monospace; font-size: 14px;
+            text-transform: uppercase; letter-spacing: 2px; font-weight: bold;
         }
 
-
-
-        /* SLIDING DOORS */
-
+        /* --- DOORS (FORCED COVERAGE) --- */
         .door-panel {
-
-            position: absolute; top: 0; width: 400px; height: 600px; z-index: 50;
-
-            background: url('Assets/closetdoor2.png'); background-size: 800px 600px;
-
+            position: absolute; top: 0; width: 710px; height: 1000px; z-index: 50;
+            background: url('Assets/closetdoor2.png'); background-size: 1420px 1000px;
             transition: transform 1.5s cubic-bezier(0.4, 0, 0.2, 1);
-
+            cursor: pointer;
         }
-
-        #door-left { left: 0; background-position: left center; }
-
+        #door-left { left: 0; background-position: left center; border-right: 2px solid #111; }
         #door-right { right: 0; background-position: right center; }
 
-
-
         #closet-frame.is-open #door-left { transform: translateX(-100%); }
-
         #closet-frame.is-open #door-right { transform: translateX(100%); }
+        #closet-frame.is-open #directory-sign { transform: translateX(-800px); opacity: 0; }
 
-        #closet-frame.is-open #directory-container { opacity: 0; pointer-events: none; }
-
-
-
-        /* INTERACTIVE ITEMS */
-
-        .closet-item { position: absolute; cursor: pointer; z-index: 10; filter: drop-shadow(5px 5px 5px #000); }
-
-        .on-stage { position: absolute; cursor: move; z-index: 200; }
-
-        .grounded { filter: drop-shadow(0px 15px 10px rgba(0,0,0,0.7)); }
-
+        /* --- ITEMS --- */
+        .closet-item { position: absolute; cursor: pointer; z-index: 10; filter: drop-shadow(5px 5px 10px #000); }
+        .on-stage { position: absolute; cursor: move; z-index: 200; user-select: none; }
     </style>
-
 </head>
-
 <body>
 
-
-
 <div id="main-site-container">
-
     <header>
-
         <h1>Room Glow Up</h1>
-
     </header>
 
-
-
     <div id="theater-container">
-
         <div id="room-display"></div>
-
     </div>
-
-
 
     <div id="decor-section">
-
         <div id="closet-frame">
-
-            <div id="directory-container">
-
-                <div class="directory-panel" onclick="selectRoom(0)"><span>Pillows & Plants</span></div>
-
-                <div class="directory-panel" onclick="selectRoom(1)"><span>Lamps & Lighting</span></div>
-
-                <div class="directory-panel" onclick="selectRoom(2)"><span>Curtains</span></div>
-
-                <div class="directory-panel" onclick="selectRoom(3)"><span>Rugs</span></div>
-
-                <div class="directory-panel" onclick="slidedoors()"><span>Open Closet</span></div>
-
+            <div id="directory-sign">
+                <div class="dir-panel" onclick="selectRoom(0)"><span>Pillows & Plants</span></div>
+                <div class="dir-panel" onclick="selectRoom(1)"><span>Lamps & Lighting</span></div>
+                <div class="dir-panel" onclick="selectRoom(2)"><span>Curtains</span></div>
+                <div class="dir-panel" onclick="selectRoom(3)"><span>Rugs</span></div>
+                <div class="dir-panel" onclick="slidedoors()"><span>OPEN</span></div>
             </div>
-
-
 
             <div id="room-0" class="closet-interior active" style="background-image: url('Assets/plant_pillow.jpg');">
-
-                <img src="Assets/plant_item.png" class="closet-item" style="top:250px; left:50px; width:120px;" ondblclick="sendToRoom(this)">
-
+                <img src="Assets/plant_item.png" class="closet-item" style="top:500px; left:250px; width:250px;" ondblclick="sendToRoom(this)">
             </div>
-
             <div id="room-1" class="closet-interior" style="background-image: url('Assets/lighting_lamps.jpg');">
-
-                <img src="Assets/chair_item.png" class="closet-item grounded" style="top:300px; left:80px; width:200px;" ondblclick="sendToRoom(this)">
-
+                <img src="Assets/chair_item.png" class="closet-item" style="top:550px; left:200px; width:350px;" ondblclick="sendToRoom(this)">
             </div>
-
             <div id="room-2" class="closet-interior" style="background-image: url('Assets/curtaincloset.jpg');"></div>
-
             <div id="room-3" class="closet-interior" style="background-image: url('Assets/rug_room.jpg');"></div>
 
-
-
-            <div id="door-left" class="door-panel"></div>
-
-            <div id="door-right" class="door-panel"></div>
-
+            <div id="door-left" class="door-panel" onclick="slidedoors()"></div>
+            <div id="door-right" class="door-panel" onclick="slidedoors()"></div>
         </div>
-
     </div>
-
 </div>
 
-
-
 <script>
-
     function selectRoom(index) {
-
         const rooms = document.querySelectorAll('.closet-interior');
-
         rooms.forEach(r => r.classList.remove('active'));
-
         document.getElementById('room-' + index).classList.add('active');
-
         slidedoors();
-
     }
-
-
 
     function slidedoors() { 
-
         document.getElementById('closet-frame').classList.add('is-open'); 
-
     }
-
-
 
     function sendToRoom(item) {
-
         const theater = document.getElementById('theater-container');
-
         const newItem = item.cloneNode(true);
-
-        newItem.classList.remove('closet-item', 'grounded');
-
+        newItem.classList.remove('closet-item');
         newItem.classList.add('on-stage');
-
         newItem.ondblclick = function() { this.remove(); };
-
-        
-
-        newItem.style.top = "100px";
-
-        newItem.style.left = "300px";
-
+        newItem.style.top = "150px";
+        newItem.style.left = "400px";
         makeElementDraggable(newItem);
-
         theater.appendChild(newItem);
-
         window.scrollTo({ top: 0, behavior: 'smooth' });
-
     }
-
-
 
     function makeElementDraggable(elmnt) {
-
         var pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
-
         elmnt.onmousedown = function(e) {
-
             e.preventDefault();
-
             pos3 = e.clientX; pos4 = e.clientY;
-
             document.onmouseup = function() { document.onmouseup = null; document.onmousemove = null; };
-
             document.onmousemove = function(e) {
-
                 e.preventDefault();
-
                 pos1 = pos3 - e.clientX; pos2 = pos4 - e.clientY;
-
                 pos3 = e.clientX; pos4 = e.clientY;
-
                 elmnt.style.top = (elmnt.offsetTop - pos2) + "px";
-
                 elmnt.style.left = (elmnt.offsetLeft - pos1) + "px";
-
             };
-
         }
-
     }
-
 </script>
 
-
-
 </body>
-
 </html>
