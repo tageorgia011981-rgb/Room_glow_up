@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Room Glow Up | Master Framework</title>
+    <title>Room Glow Up | Master Build</title>
     <link href="https://fonts.googleapis.com/css2?family=Limelight&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -18,18 +18,25 @@
             padding: 0;
             width: 100%;
             height: 200vh;
-            background: url('Assets/mainbackground2.jpg') no-repeat center center fixed;
-            background-size: cover;
+            background: #000;
             color: white;
             font-family: Arial, sans-serif;
             scroll-behavior: smooth;
             overflow-x: hidden;
         }
 
-        /* --- SHINY BLACK HEADERS --- */
+        /* --- SECTION 1: TOP LANDING --- */
+        #top-landing {
+            width: 100%;
+            height: 100vh;
+            background: url('Assets/mainbackground2.jpg') no-repeat center center;
+            background-size: cover;
+            position: relative;
+        }
+
         .header-stack {
-            position: fixed;
-            top: 20px;
+            position: absolute;
+            top: 40px;
             width: 100%;
             text-align: center;
             z-index: 3000;
@@ -55,10 +62,9 @@
             font-weight: bold;
         }
 
-        /* --- THE 5 TABS NAVIGATION --- */
         #nav-row {
-            position: fixed;
-            top: 260px;
+            position: absolute;
+            top: 280px;
             width: 100%;
             display: flex;
             justify-content: center;
@@ -77,17 +83,6 @@
             cursor: pointer;
         }
 
-        .screw {
-            width: 9px;
-            height: 9px;
-            background: var(--brushed-bronze);
-            border-radius: 50%;
-            position: absolute;
-            box-shadow: inset 1px 1px 2px #000;
-        }
-        .s-tl { top: 8px; left: 8px; } .s-tr { top: 8px; right: 8px; }
-        .s-bl { bottom: 8px; left: 8px; } .s-br { bottom: 8px; right: 8px; }
-
         .white-card {
             position: absolute;
             top: 18px;
@@ -104,11 +99,9 @@
             font-weight: 900;
             font-size: 0.9rem;
             text-align: center;
-            transition: 0.3s;
             z-index: 2;
         }
 
-        /* METAL SIDE HOUSING */
         .metal-side {
             position: absolute;
             top: 18px;
@@ -120,10 +113,6 @@
         }
         .side-l { left: 10px; }
         .side-r { right: 10px; }
-
-        .label-holder:hover .white-card, .door-target:hover .white-card { 
-            box-shadow: var(--white-glow); 
-        }
 
         .lip-pull {
             position: absolute;
@@ -137,21 +126,66 @@
             border-top: 1px solid #333;
         }
 
-        /* --- 6-DOOR CABINET (roomscabinet.png) --- */
+        .label-holder:hover .white-card { box-shadow: var(--white-glow); }
+
+        /* --- SECTION 2: DESIGN STAGE (Lower Page) --- */
+        #design-stage {
+            width: 100%;
+            height: 100vh;
+            position: relative;
+            background: #222; /* Fallback */
+            overflow: hidden;
+        }
+
+        #room-canvas {
+            width: 100%;
+            height: 100%;
+            background: url('Assets/livingroom1.jpg') no-repeat center center;
+            background-size: cover;
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+
+        /* THE GATE ON THE LOWER STAGE */
+        .sliding-gate-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            z-index: 4000;
+            pointer-events: none;
+        }
+
+        .gate-half {
+            width: 50%;
+            height: 100%;
+            background: url('Assets/image_5c123f.png') no-repeat;
+            background-size: 200% 100%;
+            transition: transform 1.5s cubic-bezier(0.7, 0, 0.3, 1);
+            pointer-events: auto;
+        }
+
+        #gate-left { background-position: left; }
+        #gate-right { background-position: right; }
+
+        /* CABINET POSITIONED ON LOWER STAGE */
         #roomscabinet {
-            position: fixed;
+            position: absolute;
             left: -750px;
-            top: 15%;
+            top: 10%;
             width: 650px;
             height: 850px;
             background: url('Assets/roomscabinet.png') no-repeat;
             background-size: contain;
             transition: left 0.8s cubic-bezier(0.19, 1, 0.22, 1);
-            z-index: 2500;
+            z-index: 5000;
             display: grid;
             grid-template-columns: 1fr 1fr;
             grid-template-rows: repeat(3, 1fr);
-            padding: 100px 70px;
+            padding: 110px 80px;
             box-sizing: border-box;
         }
 
@@ -169,171 +203,107 @@
             background: var(--gunmetal);
             border-radius: 3px;
             position: relative;
-            box-shadow: 4px 4px 10px rgba(0,0,0,0.8);
         }
 
-        /* --- LOWER STAGE (image_5c123f.png) --- */
-        #lower-section {
-            position: absolute;
-            top: 100vh;
-            width: 100%;
-            height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            overflow: hidden;
-        }
-
-        #decor-interior {
-            width: 100%;
-            height: 100%;
-            background: url('Assets/decorcloset.jpg') no-repeat center center;
-            background-size: cover;
-            position: relative;
-        }
-
-        .sliding-door-container {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            display: flex;
-            z-index: 1000;
-            transition: 1.2s cubic-bezier(0.7, 0, 0.3, 1);
-        }
-
-        .door-half {
-            width: 50%;
-            height: 100%;
-            background: url('Assets/image_5c123f.png') no-repeat;
-            background-size: 200% 100%;
-            transition: transform 1.2s;
-        }
-
-        #door-left { background-position: left; }
-        #door-right { background-position: right; }
+        .door-target:hover .white-card { box-shadow: var(--white-glow); }
 
     </style>
 </head>
 <body>
 
-<div class="header-stack">
-    <h1>Room Glow Up</h1>
-    <h2>Where Your Dream Space Comes To Life</h2>
+<div id="top-landing">
+    <div class="header-stack">
+        <h1>Room Glow Up</h1>
+        <h2>Where Your Dream Space Comes To Life</h2>
+    </div>
+
+    <nav id="nav-row">
+        <div class="label-holder" onclick="goToDesignStage()">
+            <div class="metal-side side-l"></div><div class="metal-side side-r"></div>
+            <div class="white-card">Rooms</div>
+            <div class="lip-pull"></div>
+        </div>
+        <div class="label-holder"><div class="white-card">Furniture</div><div class="lip-pull"></div></div>
+        <div class="label-holder" onclick="goToDesignStage()">
+            <div class="metal-side side-l"></div><div class="metal-side side-r"></div>
+            <div class="white-card">Decor Closet</div>
+            <div class="lip-pull"></div>
+        </div>
+        <div class="label-holder"><div class="white-card">Inspiration</div><div class="lip-pull"></div></div>
+        <div class="label-holder"><div class="white-card">Checkout</div><div class="lip-pull"></div></div>
+    </nav>
 </div>
 
-<nav id="nav-row">
-    <div class="label-holder" onclick="toggleCabinet()">
-        <div class="screw s-tl"></div><div class="screw s-tr"></div><div class="screw s-bl"></div><div class="screw s-br"></div>
-        <div class="metal-side side-l"></div><div class="metal-side side-r"></div>
-        <div class="white-card">Rooms</div>
-        <div class="lip-pull"></div>
-    </div>
-    <div class="label-holder">
-        <div class="white-card">Furniture Catalog</div>
-        <div class="lip-pull"></div>
-    </div>
-    <div class="label-holder" onclick="scrollDownToCloset()">
-        <div class="white-card">Decor Closet</div>
-        <div class="lip-pull"></div>
-    </div>
-    <div class="label-holder">
-        <div class="white-card">Inspirational</div>
-        <div class="lip-pull"></div>
-    </div>
-    <div class="label-holder">
-        <div class="white-card">Checkout</div>
-        <div class="lip-pull"></div>
-    </div>
-</nav>
+<div id="design-stage">
+    <div id="room-canvas"></div>
 
-<div id="roomscabinet">
-    <div class="door-target" onclick="cycleRoom('livingroom')">
-        <div class="door-label-frame">
-            <div class="metal-side side-l"></div><div class="metal-side side-r"></div>
-            <div class="white-card">LIVING ROOM</div>
-            <div class="lip-pull"></div>
+    <div id="roomscabinet">
+        <div class="door-target" onclick="cycleRoom('livingroom')">
+            <div class="door-label-frame"><div class="metal-side side-l"></div><div class="metal-side side-r"></div><div class="white-card">LIVING ROOM</div><div class="lip-pull"></div></div>
+        </div>
+        <div class="door-target" onclick="cycleRoom('bedroom')">
+            <div class="door-label-frame"><div class="metal-side side-l"></div><div class="metal-side side-r"></div><div class="white-card">BEDROOM</div><div class="lip-pull"></div></div>
+        </div>
+        <div class="door-target" onclick="cycleRoom('diningroom')">
+            <div class="door-label-frame"><div class="metal-side side-l"></div><div class="metal-side side-r"></div><div class="white-card">DINING ROOM</div><div class="lip-pull"></div></div>
+        </div>
+        <div class="door-target" onclick="cycleRoom('extras')">
+            <div class="door-label-frame"><div class="metal-side side-l"></div><div class="metal-side side-r"></div><div class="white-card">EXTRAS</div><div class="lip-pull"></div></div>
+        </div>
+        <div class="door-target" onclick="handleExitDesign()">
+            <div class="door-label-frame"><div class="metal-side side-l"></div><div class="metal-side side-r"></div><div class="white-card">UPLOAD YOURS</div><div class="lip-pull"></div></div>
+        </div>
+        <div class="door-target" onclick="toggleCabinet()">
+            <div class="door-label-frame"><div class="metal-side side-l"></div><div class="metal-side side-r"></div><div class="white-card">EXIT</div><div class="lip-pull"></div></div>
         </div>
     </div>
-    <div class="door-target" onclick="cycleRoom('bedroom')">
-        <div class="door-label-frame">
-            <div class="metal-side side-l"></div><div class="metal-side side-r"></div>
-            <div class="white-card">BEDROOM</div>
-            <div class="lip-pull"></div>
-        </div>
-    </div>
-    <div class="door-target" onclick="cycleRoom('diningroom')">
-        <div class="door-label-frame">
-            <div class="metal-side side-l"></div><div class="metal-side side-r"></div>
-            <div class="white-card">DINING ROOM</div>
-            <div class="lip-pull"></div>
-        </div>
-    </div>
-    <div class="door-target" onclick="cycleRoom('extras')">
-        <div class="door-label-frame">
-            <div class="metal-side side-l"></div><div class="metal-side side-r"></div>
-            <div class="white-card">EXTRAS</div>
-            <div class="lip-pull"></div>
-        </div>
-    </div>
-    <div class="door-target" onclick="handleUpload()">
-        <div class="door-label-frame">
-            <div class="metal-side side-l"></div><div class="metal-side side-r"></div>
-            <div class="white-card">UPLOAD YOURS</div>
-            <div class="lip-pull"></div>
-        </div>
-    </div>
-    <div class="door-target" onclick="toggleCabinet()">
-        <div class="door-label-frame">
-            <div class="metal-side side-l"></div><div class="metal-side side-r"></div>
-            <div class="white-card">EXIT</div>
-            <div class="lip-pull"></div>
-        </div>
-    </div>
-</div>
 
-<div id="lower-section">
-    <div id="decor-interior">
-        <div class="sliding-door-container" id="gate">
-            <div class="door-half" id="door-left"></div>
-            <div class="door-half" id="door-right"></div>
-        </div>
-        </div>
+    <div class="sliding-gate-container" id="gate-wrap">
+        <div class="gate-half" id="gate-left"></div>
+        <div class="gate-half" id="gate-right"></div>
+    </div>
 </div>
 
 <script>
     const cabinet = document.getElementById('roomscabinet');
-    const gateLeft = document.getElementById('door-left');
-    const gateRight = document.getElementById('door-right');
+    const gateL = document.getElementById('gate-left');
+    const gateR = document.getElementById('gate-right');
+    const canvas = document.getElementById('room-canvas');
 
     const roomAssets = {
         livingroom: ['livingroom1.jpg', 'livingroom3.jpg'],
         bedroom: ['bedroom.jpg', 'bedroom2.jpg'],
         diningroom: ['diningroom.jpg'],
-        extras: ['foyer.jpg', 'office.jpg', 'kitchen.jpg']
+        extras: ['foyer.jpg', 'office.jpg']
     };
     let indices = { livingroom: 0, bedroom: 0, diningroom: 0, extras: 0 };
 
     function toggleCabinet() {
-        cabinet.style.left = cabinet.style.left === '0px' ? '-750px' : '0px';
+        cabinet.style.left = cabinet.style.left === '40px' ? '-750px' : '40px';
     }
 
     function cycleRoom(type) {
         const list = roomAssets[type];
-        document.body.style.backgroundImage = `url('Assets/${list[indices[type]]}')`;
+        canvas.style.backgroundImage = `url('Assets/${list[indices[type]]}')`;
         indices[type] = (indices[type] + 1) % list.length;
     }
 
-    function scrollDownToCloset() {
+    function goToDesignStage() {
         window.scrollTo(0, document.body.scrollHeight);
         setTimeout(() => {
-            gateLeft.style.transform = 'translateX(-100%)';
-            gateRight.style.transform = 'translateX(100%)';
+            gateL.style.transform = 'translateX(-100%)';
+            gateR.style.transform = 'translateX(100%)';
+            setTimeout(toggleCabinet, 1200);
         }, 800);
     }
 
-    function handleUpload() {
+    function handleExitDesign() {
         toggleCabinet();
-        scrollDownToCloset();
+        setTimeout(() => {
+            gateL.style.transform = 'translateX(0)';
+            gateR.style.transform = 'translateX(0)';
+            window.scrollTo(0, 0);
+        }, 800);
     }
 </script>
 
