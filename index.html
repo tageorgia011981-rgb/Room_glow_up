@@ -8,20 +8,19 @@
     <style>
         :root {
             --shiny-black: linear-gradient(to bottom, #444 0%, #000 45%, #111 50%, #000 55%, #222 100%);
-            --header-shine: linear-gradient(120deg, transparent 30%, rgba(255,255,255,0.8) 50%, transparent 70%);
+            --header-shine: linear-gradient(120deg, transparent 30%, rgba(255,255,255,0.9) 50%, transparent 70%);
             --metal-dark: linear-gradient(145deg, #2c2c2c, #000, #1a1a1a, #333);
             --glow-white: rgba(255, 255, 255, 1);
         }
 
         body, html {
             margin: 0; padding: 0; min-height: 250vh;
-            background: url('Assets/mainbackground.jpg') no-repeat center center fixed;
+            background: url('Assets/mainbackground2.jpg') no-repeat center center fixed;
             background-size: cover; scroll-behavior: smooth; overflow-x: hidden;
         }
 
         #main-site-container { width: 100%; display: flex; flex-direction: column; align-items: center; }
 
-        /* --- HEADERS --- */
         header { text-align: center; padding: 60px 0 30px 0; position: relative; }
         
         h1 {
@@ -31,22 +30,17 @@
             text-transform: uppercase; letter-spacing: 4px; position: relative;
         }
 
-        /* Shiny Sweep Effect */
         h1::after {
             content: "Room Glow Up"; position: absolute; left: 0; top: 0; width: 100%;
             background: var(--header-shine); background-size: 200% 100%;
             -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-            animation: shine 4s infinite linear;
+            animation: shine 3s infinite linear;
         }
 
         @keyframes shine { 0% { background-position: -200%; } 100% { background-position: 200%; } }
 
-        h2 {
-            font-family: 'Limelight', cursive; font-size: 36px; margin: -5px 0 0 0;
-            color: #000; letter-spacing: 3px; text-shadow: 1px 1px 1px rgba(255,255,255,0.1);
-        }
+        h2 { font-family: 'Limelight', cursive; font-size: 36px; margin: -5px 0 0 0; color: #000; letter-spacing: 3px; font-weight: bold; }
 
-        /* --- NAVIGATION TABS (LIBRARY STYLE) --- */
         .nav-container { display: flex; gap: 25px; margin-top: 40px; margin-bottom: 50px; z-index: 100; }
 
         .label-holder {
@@ -57,60 +51,46 @@
             cursor: pointer; transition: transform 0.3s ease;
         }
 
-        /* Screws */
         .label-holder::before, .label-holder::after {
-            content: ''; position: absolute; width: 6px; height: 6px; 
-            background: #444; border-radius: 50%; box-shadow: inset 1px 1px 1px #000, 1px 1px 1px #666;
+            content: ''; position: absolute; width: 7px; height: 7px; 
+            background: #333; border-radius: 50%; box-shadow: inset 1px 1px 1px #000, 1px 1px 1px #555;
         }
-        .label-holder::before { top: 8px; left: 8px; } 
-        .label-holder::after { top: 8px; right: 8px; }
+        .label-holder::before { top: 8px; left: 8px; } .label-holder::after { top: 8px; right: 8px; }
 
         .white-card {
             width: 82%; height: 58%; background: #ccc;
             display: flex; justify-content: center; align-items: center;
-            box-shadow: inset 4px 4px 8px rgba(0,0,0,0.8), inset -2px -2px 5px rgba(255,255,255,0.2);
+            box-shadow: inset 5px 5px 10px rgba(0,0,0,0.8), inset -2px -2px 5px rgba(255,255,255,0.1);
             transition: all 0.3s ease;
         }
 
         .label-holder:hover { transform: translateY(-8px); }
-        .label-holder:hover .white-card { background: #fff; box-shadow: 0 0 25px var(--glow-white), inset 2px 2px 4px rgba(0,0,0,0.5); }
+        .label-holder:hover .white-card { background: #fff; box-shadow: 0 0 25px var(--glow-white), inset 2px 2px 4px rgba(0,0,0,0.4); }
 
-        .label-text {
-            font-family: 'Courier New', Courier, monospace; font-weight: 900;
-            font-size: 16px; color: #000; text-transform: uppercase; text-align: center;
-        }
+        .label-text { font-family: 'Courier New', Courier, monospace; font-weight: 900; font-size: 16px; color: #000; text-transform: uppercase; text-align: center; }
 
-        .lip-pull {
-            position: absolute; bottom: 4px; width: 75%; height: 14px;
-            background: #050505; border-radius: 0 0 12px 12px;
-            border: 1px solid #222; box-shadow: 0 3px 5px #000;
-        }
+        .lip-pull { position: absolute; bottom: 4px; width: 75%; height: 14px; background: #050505; border-radius: 0 0 12px 12px; border: 1px solid #222; box-shadow: 0 3px 5px #000; }
 
-        /* --- INTERACTION ZONE --- */
-        #interaction-zone {
-            display: flex; flex-direction: row; align-items: center;
-            width: 1540px; height: 650px; position: relative; margin-top: 50px;
-        }
+        #interaction-zone { display: flex; flex-direction: row; align-items: center; width: 1540px; height: 650px; position: relative; margin-top: 50px; }
 
-        #asset-slider {
-            width: 450px; height: 100%; position: relative;
-            transform: translateX(-550px); transition: transform 1.2s cubic-bezier(0.4, 0, 0.2, 1);
-        }
+        #asset-slider { width: 450px; height: 100%; position: relative; transform: translateX(-550px); transition: transform 1.2s cubic-bezier(0.4, 0, 0.2, 1); }
 
         .cabinet-image { width: 100%; height: auto; display: block; }
 
-        /* Cabinet Door Overlays */
-        .drawer-trigger {
-            position: absolute; width: 42%; height: 28%; cursor: pointer;
+        /* Permanent Plaques on Cabinet Doors */
+        .drawer-plaque {
+            position: absolute; width: 38%; height: 20%; 
+            background: #222; border: 1px solid #444; 
+            box-shadow: inset 0 0 5px #000, 2px 2px 5px rgba(0,0,0,0.5);
             display: flex; justify-content: center; align-items: center;
-            transition: all 0.3s ease;
+            cursor: pointer; transition: all 0.3s;
         }
-        .drawer-trigger span { 
-            font-family: 'Courier New', monospace; font-weight: bold; background: rgba(255,255,255,0.9);
-            padding: 4px 8px; visibility: hidden; color: #000;
+        .drawer-plaque span { 
+            font-family: 'Courier New', monospace; font-weight: bold; font-size: 12px;
+            color: #bbb; text-transform: uppercase; text-align: center; pointer-events: none;
         }
-        .drawer-trigger:hover { transform: scale(1.05); filter: drop-shadow(0 0 15px #fff); }
-        .drawer-trigger:hover span { visibility: visible; }
+        .drawer-plaque:hover { background: #444; box-shadow: 0 0 15px var(--glow-white); }
+        .drawer-plaque:hover span { color: #fff; }
 
         #theater-container {
             width: 950px; height: 550px; border: 25px solid #000;
@@ -119,10 +99,12 @@
         }
 
         #room-display { 
-            width: 100%; height: 100%; background-size: cover; background-position: center; 
+            width: 100%; height: 100%; 
+            background-size: contain; /* Changed from cover to show full floor/ceiling */
+            background-repeat: no-repeat;
+            background-position: bottom center; /* Keeps floor grounded */
             cursor: pointer; transition: transform 0.3s;
         }
-        #room-display:hover { transform: scale(1.02); }
     </style>
 </head>
 <body>
@@ -134,39 +116,22 @@
     </header>
 
     <nav class="nav-container">
-        <div class="label-holder" onclick="triggerCabinet()">
-            <div class="white-card"><span class="label-text">Rooms</span></div>
-            <div class="lip-pull"></div>
-        </div>
-        <div class="label-holder">
-            <div class="white-card"><span class="label-text">Furniture Catalog</span></div>
-            <div class="lip-pull"></div>
-        </div>
-        <div class="label-holder" onclick="scrollToSection('decor-section')">
-            <div class="white-card"><span class="label-text">Decor Closet</span></div>
-            <div class="lip-pull"></div>
-        </div>
-        <div class="label-holder">
-            <div class="white-card"><span class="label-text">Inspirational Gallery</span></div>
-            <div class="lip-pull"></div>
-        </div>
-        <div class="label-holder">
-            <div class="white-card"><span class="label-text">Save / Checkout</span></div>
-            <div class="lip-pull"></div>
-        </div>
+        <div class="label-holder" onclick="triggerCabinet()"><div class="white-card"><span class="label-text">Rooms</span></div><div class="lip-pull"></div></div>
+        <div class="label-holder"><div class="white-card"><span class="label-text">Furniture Catalog</span></div><div class="lip-pull"></div></div>
+        <div class="label-holder" onclick="scrollToSection('decor-section')"><div class="white-card"><span class="label-text">Decor Closet</span></div><div class="lip-pull"></div></div>
+        <div class="label-holder"><div class="white-card"><span class="label-text">Inspirational Gallery</span></div><div class="lip-pull"></div></div>
+        <div class="label-holder"><div class="white-card"><span class="label-text">Save / Checkout</span></div><div class="lip-pull"></div></div>
     </nav>
 
     <div id="interaction-zone">
         <div id="asset-slider">
             <img id="main-asset" src="Assets/roomscabinet.png" class="cabinet-image">
             
-            <div class="drawer-trigger" style="top:5%; left:6%;" onmouseover="previewRoom('livingroom1.jpg')" onclick="cycleRoom('livingroom')"><span>Living Room</span></div>
-            <div class="drawer-trigger" style="top:5%; right:6%;" onmouseover="previewRoom('bedroom.jpg')" onclick="cycleRoom('bedroom')"><span>Bedroom</span></div>
-            
-            <div class="drawer-trigger" style="top:36%; left:6%;" onmouseover="previewRoom('diningroom.jpg')" onclick="cycleRoom('diningroom')"><span>Dining Room</span></div>
-            <div class="drawer-trigger" style="top:36%; right:6%;" onmouseover="previewRoom('foyer.jpg')" onclick="cycleRoom('extra')"><span>Extra Rooms</span></div>
-            
-            <div class="drawer-trigger" style="top:67%; left:25%; width:50%;" onclick="alert('Upload Trigger')"><span>Upload Yours</span></div>
+            <div class="drawer-plaque" style="top:10%; left:8%;" onmouseover="previewRoom('livingroom1.jpg')" onclick="cycleRoom('livingroom')"><span>Living Room</span></div>
+            <div class="drawer-plaque" style="top:10%; right:8%;" onmouseover="previewRoom('bedroom.jpg')" onclick="cycleRoom('bedroom')"><span>Bedroom</span></div>
+            <div class="drawer-plaque" style="top:41%; left:8%;" onmouseover="previewRoom('diningroom.jpg')" onclick="cycleRoom('diningroom')"><span>Dining Room</span></div>
+            <div class="drawer-plaque" style="top:41%; right:8%;" onmouseover="previewRoom('foyer.jpg')" onclick="cycleRoom('extra')"><span>Extra Rooms</span></div>
+            <div class="drawer-plaque" style="top:72%; left:25%; width:50%;" onclick="alert('Upload Trigger')"><span>Upload Yours</span></div>
         </div>
 
         <div id="theater-container">
@@ -175,8 +140,7 @@
     </div>
 
     <div id="decor-section" style="height: 800px;">
-        <div id="closet-frame">
-            </div>
+        <div id="closet-frame"></div>
     </div>
 </div>
 
@@ -190,39 +154,27 @@
 
     let currentRoomIndices = { livingroom: 0, bedroom: 0, diningroom: 0, extra: 0 };
 
-    function scrollToSection(id) {
-        document.getElementById(id).scrollIntoView({ behavior: 'smooth' });
-    }
+    function scrollToSection(id) { document.getElementById(id).scrollIntoView({ behavior: 'smooth' }); }
 
     function triggerCabinet() {
         scrollToSection('interaction-zone');
-        const slider = document.getElementById('asset-slider');
-        slider.style.transform = "translateX(0)";
+        document.getElementById('asset-slider').style.transform = "translateX(0)";
     }
 
-    function previewRoom(img) {
-        document.getElementById('room-display').style.backgroundImage = `url('Assets/${img}')`;
-    }
+    function previewRoom(img) { document.getElementById('room-display').style.backgroundImage = `url('Assets/${img}')`; }
 
     function cycleRoom(category) {
         currentRoomIndices[category] = (currentRoomIndices[category] + 1) % roomData[category].length;
-        const nextImg = roomData[category][currentRoomIndices[category]];
-        previewRoom(nextImg);
+        previewRoom(roomData[category][currentRoomIndices[category]]);
     }
 
     function lockInRoom() {
         const slider = document.getElementById('asset-slider');
-        const assetImg = document.getElementById('main-asset');
-        
-        // Glide cabinet out
         slider.style.transform = "translateX(-550px)";
-        
         setTimeout(() => {
-            // Swap to furniture cases asset
-            assetImg.src = "Assets/furniturecases.png";
+            document.getElementById('main-asset').src = "Assets/furniturecases.png";
             slider.style.transform = "translateX(0)";
-            // Hide the room-specific triggers to prevent overlapping clicks on the new asset
-            document.querySelectorAll('.drawer-trigger').forEach(el => el.style.display = 'none');
+            document.querySelectorAll('.drawer-plaque').forEach(el => el.style.display = 'none');
         }, 1200);
     }
 </script>
