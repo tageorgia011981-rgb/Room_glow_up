@@ -9,7 +9,8 @@
         :root {
             --shiny-black: linear-gradient(to bottom, #444 0%, #000 45%, #111 50%, #000 55%, #222 100%);
             --header-shine: linear-gradient(120deg, transparent 30%, rgba(255,255,255,0.9) 50%, transparent 70%);
-            --metal-dark: linear-gradient(145deg, #2c2c2c, #000, #1a1a1a, #333);
+            --metal-dark: linear-gradient(145deg, #1a1a1a, #000, #222, #0a0a0a);
+            --pewter-metal: linear-gradient(145deg, #7f8c8d, #bdc3c7, #95a5a6, #2c3e50);
             --glow-white: rgba(255, 255, 255, 1);
         }
 
@@ -21,6 +22,7 @@
 
         #main-site-container { width: 100%; display: flex; flex-direction: column; align-items: center; }
 
+        /* --- HEADERS --- */
         header { text-align: center; padding: 60px 0 30px 0; position: relative; }
         
         h1 {
@@ -41,6 +43,7 @@
 
         h2 { font-family: 'Limelight', cursive; font-size: 36px; margin: -5px 0 0 0; color: #000; letter-spacing: 3px; font-weight: bold; }
 
+        /* --- NAVIGATION TABS --- */
         .nav-container { display: flex; gap: 25px; margin-top: 40px; margin-bottom: 50px; z-index: 100; }
 
         .label-holder {
@@ -71,39 +74,48 @@
 
         .lip-pull { position: absolute; bottom: 4px; width: 75%; height: 14px; background: #050505; border-radius: 0 0 12px 12px; border: 1px solid #222; box-shadow: 0 3px 5px #000; }
 
-        #interaction-zone { display: flex; flex-direction: row; align-items: center; width: 1540px; height: 650px; position: relative; margin-top: 50px; }
+        /* --- INTERACTION ZONE --- */
+        #interaction-zone { display: flex; flex-direction: row; align-items: center; width: 1540px; height: 750px; position: relative; margin-top: 50px; }
 
-        #asset-slider { width: 450px; height: 100%; position: relative; transform: translateX(-550px); transition: transform 1.2s cubic-bezier(0.4, 0, 0.2, 1); }
+        #asset-slider { width: 550px; height: 100%; position: relative; transform: translateX(-600px); transition: transform 1.2s cubic-bezier(0.4, 0, 0.2, 1); }
 
         .cabinet-image { width: 100%; height: auto; display: block; }
+        .case-image { width: 125%; height: auto; margin-left: -12.5%; filter: drop-shadow(10px 10px 30px rgba(0,0,0,0.8)); }
 
-        /* Permanent Plaques on Cabinet Doors */
+        /* Pewter Room Plaques */
         .drawer-plaque {
-            position: absolute; width: 38%; height: 20%; 
-            background: #222; border: 1px solid #444; 
-            box-shadow: inset 0 0 5px #000, 2px 2px 5px rgba(0,0,0,0.5);
+            position: absolute; width: 40%; height: 18%; 
+            background: var(--pewter-metal); border: 1px solid #2c3e50; 
+            box-shadow: inset 1px 1px 2px rgba(255,255,255,0.3), 2px 2px 5px rgba(0,0,0,0.7);
             display: flex; justify-content: center; align-items: center;
             cursor: pointer; transition: all 0.3s;
         }
         .drawer-plaque span { 
-            font-family: 'Courier New', monospace; font-weight: bold; font-size: 12px;
-            color: #bbb; text-transform: uppercase; text-align: center; pointer-events: none;
+            font-family: 'Courier New', monospace; font-weight: 900; font-size: 13px;
+            color: #222; text-transform: uppercase; text-align: center; pointer-events: none;
+            text-shadow: 1px 1px 0px rgba(255,255,255,0.2);
         }
-        .drawer-plaque:hover { background: #444; box-shadow: 0 0 15px var(--glow-white); }
-        .drawer-plaque:hover span { color: #fff; }
+        .drawer-plaque:hover { filter: brightness(1.2); box-shadow: 0 0 20px var(--glow-white); }
+
+        /* Handle-Hanging Tags */
+        .hanging-tag {
+            position: absolute; width: 110px; height: auto; cursor: pointer;
+            transition: transform 0.3s ease, filter 0.3s; z-index: 500;
+            transform-origin: top center;
+        }
+        .hanging-tag img { width: 100%; height: auto; display: block; }
+        .hanging-tag:hover { transform: rotate(5deg) scale(1.1); filter: drop-shadow(0 0 15px #fff); }
 
         #theater-container {
             width: 950px; height: 550px; border: 25px solid #000;
             background: #111; overflow: hidden; box-shadow: 0 0 60px rgba(0,0,0,1);
-            position: relative; margin-left: 50px;
+            position: relative; margin-left: 80px;
         }
 
         #room-display { 
-            width: 100%; height: 100%; 
-            background-size: contain; /* Changed from cover to show full floor/ceiling */
-            background-repeat: no-repeat;
-            background-position: bottom center; /* Keeps floor grounded */
-            cursor: pointer; transition: transform 0.3s;
+            width: 100%; height: 100%; background-size: contain; 
+            background-repeat: no-repeat; background-position: bottom center; 
+            cursor: pointer;
         }
     </style>
 </head>
@@ -127,11 +139,22 @@
         <div id="asset-slider">
             <img id="main-asset" src="Assets/roomscabinet.png" class="cabinet-image">
             
-            <div class="drawer-plaque" style="top:10%; left:8%;" onmouseover="previewRoom('livingroom1.jpg')" onclick="cycleRoom('livingroom')"><span>Living Room</span></div>
-            <div class="drawer-plaque" style="top:10%; right:8%;" onmouseover="previewRoom('bedroom.jpg')" onclick="cycleRoom('bedroom')"><span>Bedroom</span></div>
-            <div class="drawer-plaque" style="top:41%; left:8%;" onmouseover="previewRoom('diningroom.jpg')" onclick="cycleRoom('diningroom')"><span>Dining Room</span></div>
-            <div class="drawer-plaque" style="top:41%; right:8%;" onmouseover="previewRoom('foyer.jpg')" onclick="cycleRoom('extra')"><span>Extra Rooms</span></div>
-            <div class="drawer-plaque" style="top:72%; left:25%; width:50%;" onclick="alert('Upload Trigger')"><span>Upload Yours</span></div>
+            <div id="cabinet-controls">
+                <div class="drawer-plaque" style="top:12%; left:7%;" onmouseover="previewRoom('livingroom1.jpg')" onclick="cycleRoom('livingroom')"><span>Living Room</span></div>
+                <div class="drawer-plaque" style="top:12%; right:7%;" onmouseover="previewRoom('bedroom.jpg')" onclick="cycleRoom('bedroom')"><span>Bedroom</span></div>
+                <div class="drawer-plaque" style="top:42%; left:7%;" onmouseover="previewRoom('diningroom.jpg')" onclick="cycleRoom('diningroom')"><span>Dining Room</span></div>
+                <div class="drawer-plaque" style="top:42%; right:7%;" onmouseover="previewRoom('foyer.jpg')" onclick="cycleRoom('extra')"><span>Extra Rooms</span></div>
+                <div class="drawer-plaque" style="top:73%; left:25%; width:50%;" onclick="alert('Upload Trigger')"><span>Upload Yours</span></div>
+            </div>
+
+            <div id="case-controls" style="display:none;">
+                <div class="hanging-tag" style="top:12%; left:5%;" onclick="openSubCategory('seating')"><img src="Assets/iconseating.png"></div>
+                <div class="hanging-tag" style="top:12%; right:-5%;" onclick="openSubCategory('tables')"><img src="Assets/icontable.png"></div>
+                <div class="hanging-tag" style="top:48%; left:5%;" onclick="openSubCategory('storage')"><img src="Assets/iconstorage.png"></div>
+                <div class="hanging-tag" style="top:48%; right:-5%;" onclick="openSubCategory('beds')"><img src="Assets/iconbeds.png"></div>
+            </div>
+
+            <div id="sub-controls" style="display:none;"></div>
         </div>
 
         <div id="theater-container">
@@ -139,9 +162,7 @@
         </div>
     </div>
 
-    <div id="decor-section" style="height: 800px;">
-        <div id="closet-frame"></div>
-    </div>
+    <div id="decor-section" style="height: 800px;"></div>
 </div>
 
 <script>
@@ -150,6 +171,13 @@
         bedroom: ['bedroom.jpg', 'bedroom2.jpg'],
         diningroom: ['diningroom.jpg'],
         extra: ['foyer.jpg', 'office.jpg', 'kitchen.jpg', 'kitchen2.jpg']
+    };
+
+    const subCategories = {
+        seating: ['couches', 'chairs', 'benches', 'stools', 'ottomans', 'diningchairs'],
+        tables: ['diningtable', 'endtable', 'coffeetable', 'sofatable'],
+        storage: ['dresser', 'cabinets', 'sideboard'],
+        beds: ['bed']
     };
 
     let currentRoomIndices = { livingroom: 0, bedroom: 0, diningroom: 0, extra: 0 };
@@ -170,12 +198,37 @@
 
     function lockInRoom() {
         const slider = document.getElementById('asset-slider');
-        slider.style.transform = "translateX(-550px)";
+        const mainImg = document.getElementById('main-asset');
+        slider.style.transform = "translateX(-600px)";
         setTimeout(() => {
-            document.getElementById('main-asset').src = "Assets/furniturecases.png";
+            mainImg.src = "Assets/furniturecases.png";
+            mainImg.className = "cabinet-image case-image";
+            document.getElementById('cabinet-controls').style.display = 'none';
+            document.getElementById('case-controls').style.display = 'block';
             slider.style.transform = "translateX(0)";
-            document.querySelectorAll('.drawer-plaque').forEach(el => el.style.display = 'none');
         }, 1200);
+    }
+
+    function openSubCategory(cat) {
+        document.getElementById('case-controls').style.display = 'none';
+        const subCont = document.getElementById('sub-controls');
+        subCont.innerHTML = '';
+        subCont.style.display = 'block';
+        
+        subCategories[cat].forEach((name, index) => {
+            const tag = document.createElement('div');
+            tag.className = 'hanging-tag';
+            tag.style.top = (12 + (index * 15)) + "%";
+            tag.style.left = index % 2 === 0 ? "5%" : "auto";
+            tag.style.right = index % 2 !== 0 ? "-5%" : "auto";
+            
+            const img = document.createElement('img');
+            img.src = `Assets/icon${name}.png`;
+            tag.appendChild(img);
+            
+            tag.onclick = () => alert('Catalog Book Opening for ' + name);
+            subCont.appendChild(tag);
+        });
     }
 </script>
 
