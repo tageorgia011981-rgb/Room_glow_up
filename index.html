@@ -79,7 +79,6 @@
         .cabinet-image { width: 100%; height: auto; display: block; }
         .case-image { width: 130%; height: auto; margin-left: -15%; filter: drop-shadow(10px 10px 30px rgba(0,0,0,0.8)); }
 
-        /* Metallic Door Plaques */
         .drawer-plaque {
             position: absolute; width: 42%; height: 12%; 
             background: var(--pewter-plate); border: 2px solid #2c3e50; 
@@ -101,7 +100,6 @@
         }
         .drawer-plaque:hover { filter: brightness(1.15); transform: scale(1.02); box-shadow: 0 0 15px var(--glow-white); }
 
-        /* Hanging Tags Style */
         .hanging-tag {
             position: absolute; width: 120px; height: auto; cursor: pointer;
             transition: transform 0.4s ease-in-out, filter 0.3s; z-index: 500;
@@ -118,7 +116,6 @@
 
         .hanging-tag:hover { transform: rotate(8deg) scale(1.1); filter: drop-shadow(0 0 20px #fff); }
 
-        /* Theater Box & Image Scaling */
         #theater-container {
             width: 950px; height: 550px; border: 25px solid #000;
             background: #111; overflow: hidden; box-shadow: 0 0 60px rgba(0,0,0,1);
@@ -246,24 +243,18 @@
             const tag = document.createElement('div');
             tag.className = 'hanging-tag';
             
-            // Reusing handle positions for the sub-tags
             tag.style.top = (index < 2) ? "15%" : "50%";
             tag.style.left = index % 2 === 0 ? "15%" : "auto";
             tag.style.right = index % 2 !== 0 ? "5%" : "auto";
             
             const img = document.createElement('img');
-            img.src = `Assets/icon${name}.png`;
+            // Using the requested naming: iconseatingcouches.png, etc.
+            img.src = `Assets/icon${cat}${name}.png`;
             tag.appendChild(img);
             
-            // This is where the catalog will eventually open
-            tag.onclick = () => openCatalog(name);
+            tag.onclick = () => alert('Opening Catalog: ' + name);
             subCont.appendChild(tag);
         });
-    }
-
-    function openCatalog(itemName) {
-        console.log("Catalog Triggered for: " + itemName);
-        // We will build this logic once we finish the visual fixes
     }
 </script>
 
