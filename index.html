@@ -7,9 +7,10 @@
     <link href="https://fonts.googleapis.com/css2?family=Limelight&display=swap" rel="stylesheet">
     <style>
         :root {
-            --metal-shine: linear-gradient(145deg, #bdc3c7, #2c3e50, #95a5a6, #000);
+            --metal-shine: linear-gradient(145deg, #444, #888, #222, #666);
             --shiny-black: linear-gradient(to bottom, #444 0%, #000 45%, #111 50%, #000 55%, #222 100%);
-            --glow-teal: #008080;
+            --header-shine: linear-gradient(120deg, transparent 30%, rgba(255,255,255,0.8) 50%, transparent 70%);
+            --glow-white: rgba(255, 255, 255, 0.9);
         }
 
         body, html {
@@ -20,37 +21,57 @@
 
         #main-site-container { width: 100%; display: flex; flex-direction: column; align-items: center; }
 
-        header { text-align: center; padding: 60px 0 30px 0; }
-
+        /* --- HEADERS --- */
+        header { text-align: center; padding: 60px 0 30px 0; position: relative; }
+        
         h1 {
             font-family: 'Limelight', cursive; font-size: 100px; margin: 0;
             background: var(--shiny-black); -webkit-background-clip: text;
             -webkit-text-fill-color: transparent; filter: drop-shadow(5px 5px 8px rgba(0,0,0,0.8));
-            text-transform: uppercase; letter-spacing: 4px;
+            text-transform: uppercase; letter-spacing: 4px; position: relative;
         }
+
+        /* Shiny Sweep Effect */
+        h1::after {
+            content: "Room Glow Up"; position: absolute; left: 0; top: 0; width: 100%;
+            background: var(--header-shine); background-size: 200% 100%;
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            animation: shine 4s infinite linear;
+        }
+
+        @keyframes shine { 0% { background-position: -200%; } 100% { background-position: 200%; } }
 
         h2 {
             font-family: 'Limelight', cursive; font-size: 36px; margin: -5px 0 0 0;
-            color: #e0e0e0; letter-spacing: 3px; text-shadow: 3px 3px 6px #000;
+            color: #000; letter-spacing: 3px; text-shadow: 1px 1px 2px rgba(255,255,255,0.3);
         }
 
-        /* --- NAVIGATION TABS --- */
-        .nav-container { display: flex; gap: 25px; margin-top: 40px; margin-bottom: 100px; z-index: 100; }
+        /* --- NAVIGATION TABS (LIBRARY STYLE) --- */
+        .nav-container { display: flex; gap: 25px; margin-top: 40px; margin-bottom: 50px; z-index: 100; }
 
         .label-holder {
-            width: 210px; height: 110px; background: var(--metal-shine);
-            border: 2px solid #000; position: relative; display: flex;
+            width: 210px; height: 110px; background: #222; 
+            border: 2px solid #111; position: relative; display: flex;
             justify-content: center; align-items: center;
-            box-shadow: inset 0 0 15px #000, 8px 8px 20px rgba(0,0,0,0.9); cursor: pointer;
+            box-shadow: inset 0 0 10px #000, 5px 5px 15px rgba(0,0,0,0.8);
+            cursor: pointer; transition: transform 0.3s ease;
         }
 
+        /* Screws */
+        .label-holder::before, .label-holder::after {
+            content: '•'; position: absolute; font-size: 12px; color: #555; text-shadow: 1px 1px #000;
+        }
+        .label-holder::before { top: 5px; left: 5px; } .label-holder::after { top: 5px; right: 5px; }
+
         .white-card {
-            width: 85%; height: 60%; background: #fff;
+            width: 80%; height: 55%; background: #e0e0e0;
             display: flex; justify-content: center; align-items: center;
+            box-shadow: inset 3px 3px 5px rgba(0,0,0,0.5); /* Depth Effect */
             transition: all 0.3s ease;
         }
 
-        .label-holder:hover .white-card { box-shadow: 0 0 30px var(--glow-teal); }
+        .label-holder:hover { transform: translateY(-10px); }
+        .label-holder:hover .white-card { background: #fff; box-shadow: 0 0 20px var(--glow-white); }
 
         .label-text {
             font-family: 'Courier New', Courier, monospace; font-weight: 900;
@@ -58,64 +79,52 @@
         }
 
         .lip-pull {
-            position: absolute; bottom: 0; width: 80%; height: 18px;
-            background: #0a0a0a; border-radius: 0 0 15px 15px; border: 1px solid #444;
+            position: absolute; bottom: 5px; width: 70%; height: 12px;
+            background: #111; border-radius: 0 0 10px 10px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.8), inset 0 1px 2px #444;
         }
 
-        /* --- THEATER ZONE --- */
+        /* --- INTERACTION ZONE --- */
         #interaction-zone {
-            display: flex; justify-content: center; width: 1540px; height: 650px;
-            margin-bottom: 250px;
+            display: flex; flex-direction: row; align-items: center;
+            width: 1540px; height: 650px; position: relative; margin-top: 50px;
         }
+
+        #asset-slider {
+            width: 450px; height: 100%; position: relative;
+            transform: translateX(-500px); transition: transform 1s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .cabinet-image { width: 100%; height: auto; display: block; }
+
+        /* Cabinet Label Overlay Points */
+        .drawer-trigger {
+            position: absolute; width: 45%; height: 28%; cursor: pointer;
+            display: flex; justify-content: center; align-items: center;
+        }
+        .drawer-trigger span { 
+            font-family: 'Courier New', monospace; font-weight: bold; background: rgba(255,255,255,0.8);
+            padding: 2px 5px; visibility: hidden;
+        }
+        .drawer-trigger:hover span { visibility: visible; box-shadow: 0 0 10px #fff; }
 
         #theater-container {
             width: 950px; height: 550px; border: 25px solid #000;
             background: #111; overflow: hidden; box-shadow: 0 0 60px rgba(0,0,0,1);
-            position: relative;
+            position: relative; margin-left: 50px;
         }
 
-        #room-display { width: 100%; height: 100%; background-size: cover; background-position: center; }
+        #room-display { 
+            width: 100%; height: 100%; background-size: cover; background-position: center; 
+            cursor: pointer; transition: outline 0.3s;
+        }
+        #room-display:active { outline: 5px solid #fff; }
 
-        /* --- DECOR CLOSET SECTION --- */
-        #decor-section { width: 100%; display: flex; flex-direction: column; align-items: center; padding-bottom: 300px; }
-
+        /* --- DECOR SECTION --- */
+        #decor-section { width: 100%; display: flex; flex-direction: column; align-items: center; padding-top: 100px; padding-bottom: 300px; }
         #closet-frame {
             position: relative; width: 800px; height: 600px;
             background: #111; overflow: hidden; box-shadow: 0 0 40px rgba(0,0,0,0.5);
-        }
-
-        #closet-interior {
-            width: 100%; height: 100%; background: url('Assets/plant_pillow.jpg') no-repeat center center;
-            background-size: cover; position: absolute; z-index: 10;
-        }
-
-        .closet-item {
-            position: absolute; cursor: pointer; z-index: 100;
-            filter: drop-shadow(5px 5px 5px rgba(0,0,0,0.5));
-            transition: transform 0.2s;
-        }
-
-        .closet-item:hover { transform: scale(1.1); }
-
-        /* SLIDING DOORS */
-        .door-panel {
-            position: absolute; top: 0; width: 50%; height: 100%; z-index: 50;
-            background: url('Assets/closetdoor2.png'); background-size: 200% 100%;
-            transition: transform 1.5s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-
-        #door-left { left: 0; background-position: left center; }
-        #door-right { right: 0; background-position: right center; }
-
-        #closet-frame.is-open #door-left { transform: translateX(-100%); }
-        #closet-frame.is-open #door-right { transform: translateX(100%); }
-
-        /* ACTIVE ITEMS ON STAGE */
-        .on-stage {
-            position: absolute;
-            cursor: move;
-            z-index: 200;
-            user-select: none;
         }
     </style>
 </head>
@@ -128,92 +137,94 @@
     </header>
 
     <nav class="nav-container">
-        <div class="label-holder"><div class="white-card"><span class="label-text">Rooms</span></div><div class="lip-pull"></div></div>
-        <div class="label-holder"><div class="white-card"><span class="label-text">Furniture Catalog</span></div><div class="lip-pull"></div></div>
-        <div class="label-holder" onclick="glidetocloset()"><div class="white-card"><span class="label-text">Decor Closet</span></div><div class="lip-pull"></div></div>
-        <div class="label-holder"><div class="white-card"><span class="label-text">Inspirational Walkthrough</span></div><div class="lip-pull"></div></div>
-        <div class="label-holder"><div class="white-card"><span class="label-text">Save / Checkout</span></div><div class="lip-pull"></div></div>
+        <div class="label-holder" onclick="triggerCabinet()">
+            <div class="white-card"><span class="label-text">Rooms</span></div>
+            <div class="lip-pull"></div>
+        </div>
+        <div class="label-holder">
+            <div class="white-card"><span class="label-text">Furniture Catalog</span></div>
+            <div class="lip-pull"></div>
+        </div>
+        <div class="label-holder" onclick="scrollToSection('decor-section')">
+            <div class="white-card"><span class="label-text">Decor Closet</span></div>
+            <div class="lip-pull"></div>
+        </div>
+        <div class="label-holder">
+            <div class="white-card"><span class="label-text">Inspirational Gallery</span></div>
+            <div class="lip-pull"></div>
+        </div>
+        <div class="label-holder">
+            <div class="white-card"><span class="label-text">Save / Checkout</span></div>
+            <div class="lip-pull"></div>
+        </div>
     </nav>
 
     <div id="interaction-zone">
+        <div id="asset-slider">
+            <img id="main-asset" src="Assets/roomcabinet.png" class="cabinet-image">
+            
+            <div class="drawer-trigger" style="top:5%; left:5%;" onmouseover="previewRoom('livingroom1.jpg')" onclick="cycleRoom('livingroom')"><span>Living Room</span></div>
+            <div class="drawer-trigger" style="top:5%; right:5%;" onmouseover="previewRoom('bedroom.jpg')" onclick="cycleRoom('bedroom')"><span>Bedroom</span></div>
+            <div class="drawer-trigger" style="top:35%; left:5%;" onmouseover="previewRoom('diningroom.jpg')" onclick="cycleRoom('diningroom')"><span>Dining Room</span></div>
+            <div class="drawer-trigger" style="top:35%; right:5%;" onmouseover="previewRoom('foyer.jpg')" onclick="cycleRoom('extra')"><span>Extra Rooms</span></div>
+            <div class="drawer-trigger" style="top:65%; left:25%; width:50%;" onclick="alert('Upload Trigger')"><span>Upload Yours</span></div>
+        </div>
+
         <div id="theater-container">
-            <div id="room-display"></div>
-            </div>
+            <div id="room-display" onclick="lockInRoom()"></div>
+        </div>
     </div>
 
     <div id="decor-section">
-        <div id="closet-frame" onclick="slidedoors()">
-            <div id="closet-interior">
-                <img id="item_plant" src="Assets/plant_item.png" class="closet-item" style="top:320px; left:80px; width:120px;" ondblclick="sendToRoom(this)">
-                <img id="item_pillow" src="Assets/pillow_item.png" class="closet-item" style="top:180px; left:580px; width:90px;" ondblclick="sendToRoom(this)">
-            </div>
-            <div id="door-left" class="door-panel"></div>
-            <div id="door-right" class="door-panel"></div>
+        <div id="closet-frame">
+            <div style="color:white; text-align:center; padding-top:250px;">Decor Closet Content Area</div>
         </div>
     </div>
 </div>
 
 <script>
-    function glidetocloset() { 
-        document.getElementById('decor-section').scrollIntoView({ behavior: 'smooth' }); 
-    }
-    
-    function slidedoors() { 
-        document.getElementById('closet-frame').classList.add('is-open'); 
-    }
+    const roomData = {
+        livingroom: ['livingroom1.jpg', 'livingroom3.jpg'],
+        bedroom: ['bedroom.jpg', 'bedroom2.jpg'],
+        diningroom: ['diningroom.jpg'],
+        extra: ['foyer.jpg', 'office.jpg', 'kitchen.jpg', 'kitchen2.jpg']
+    };
 
-    function sendToRoom(item) {
-        const theater = document.getElementById('theater-container');
-        const newItem = item.cloneNode(true);
-        
-        newItem.classList.remove('closet-item');
-        newItem.classList.add('on-stage');
-        
-        // Change double click behavior for the stage version
-        newItem.ondblclick = function() {
-            this.remove(); // Removes it from the stage
-        };
-        
-        newItem.style.top = "150px";
-        newItem.style.left = "400px";
-        
-        makeElementDraggable(newItem);
-        theater.appendChild(newItem);
-        
-        // Confirm action and glide back up
-        item.style.filter = "drop-shadow(0 0 15px #008080)";
-        setTimeout(() => { item.style.filter = "drop-shadow(5px 5px 5px rgba(0,0,0,0.5))"; }, 500);
-        window.scrollTo({ top: 0, behavior: 'smooth' });
+    let currentRoomIndices = { livingroom: 0, bedroom: 0, diningroom: 0, extra: 0 };
+
+    function scrollToSection(id) {
+        document.getElementById(id).scrollIntoView({ behavior: 'smooth' });
     }
 
-    function makeElementDraggable(elmnt) {
-        var pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
-        elmnt.onmousedown = dragMouseDown;
+    function triggerCabinet() {
+        scrollToSection('interaction-zone');
+        const slider = document.getElementById('asset-slider');
+        slider.style.transform = "translateX(0)";
+    }
 
-        function dragMouseDown(e) {
-            e = e || window.event;
-            e.preventDefault();
-            pos3 = e.clientX;
-            pos4 = e.clientY;
-            document.onmouseup = closeDragElement;
-            document.onmousemove = elementDrag;
-        }
+    function previewRoom(img) {
+        document.getElementById('room-display').style.backgroundImage = `url('Assets/${img}')`;
+    }
 
-        function elementDrag(e) {
-            e = e || window.event;
-            e.preventDefault();
-            pos1 = pos3 - e.clientX;
-            pos2 = pos4 - e.clientY;
-            pos3 = e.clientX;
-            pos4 = e.clientY;
-            elmnt.style.top = (elmnt.offsetTop - pos2) + "px";
-            elmnt.style.left = (elmnt.offsetLeft - pos1) + "px";
-        }
+    function cycleRoom(category) {
+        currentRoomIndices[category] = (currentRoomIndices[category] + 1) % roomData[category].length;
+        const nextImg = roomData[category][currentRoomIndices[category]];
+        previewRoom(nextImg);
+    }
 
-        function closeDragElement() {
-            document.onmouseup = null;
-            document.onmousemove = null;
-        }
+    function lockInRoom() {
+        const slider = document.getElementById('asset-slider');
+        const assetImg = document.getElementById('main-asset');
+        
+        // Glide cabinet out
+        slider.style.transform = "translateX(-500px)";
+        
+        setTimeout(() => {
+            // Swap asset and glide furniture cases in
+            assetImg.src = "Assets/furniturecases.png";
+            slider.style.transform = "translateX(0)";
+            // Note: Drawer triggers would need to be updated for the tags here
+        }, 1000);
     }
 </script>
 
