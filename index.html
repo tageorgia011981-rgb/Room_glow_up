@@ -10,7 +10,7 @@
             --shiny-black: linear-gradient(to bottom, #444 0%, #000 45%, #111 50%, #000 55%, #222 100%);
             --header-shine: linear-gradient(120deg, transparent 30%, rgba(255,255,255,0.9) 50%, transparent 70%);
             --metal-dark: linear-gradient(145deg, #1a1a1a, #000, #222, #0a0a0a);
-            --pewter-metal: linear-gradient(145deg, #7f8c8d, #bdc3c7, #95a5a6, #2c3e50);
+            --pewter-plate: linear-gradient(180deg, #bdc3c7 0%, #95a5a6 45%, #7f8c8d 50%, #95a5a6 55%, #bdc3c7 100%);
             --glow-white: rgba(255, 255, 255, 1);
         }
 
@@ -79,47 +79,59 @@
         .cabinet-image { width: 100%; height: auto; display: block; }
         .case-image { width: 130%; height: auto; margin-left: -15%; filter: drop-shadow(10px 10px 30px rgba(0,0,0,0.8)); }
 
+        /* Metallic Door Plaques */
         .drawer-plaque {
-            position: absolute; width: 38%; height: 15%; 
-            background: var(--pewter-metal); border: 1px solid #2c3e50; 
-            box-shadow: inset 1px 1px 1px rgba(255,255,255,0.4), 2px 2px 4px rgba(0,0,0,0.8);
+            position: absolute; width: 42%; height: 12%; 
+            background: var(--pewter-plate); border: 2px solid #2c3e50; 
+            border-radius: 15px;
+            box-shadow: inset 0px 2px 2px rgba(255,255,255,0.5), 3px 3px 6px rgba(0,0,0,0.6);
             display: flex; justify-content: center; align-items: center;
             cursor: pointer; transition: all 0.3s;
         }
         .drawer-plaque::before, .drawer-plaque::after {
-            content: ''; position: absolute; width: 4px; height: 4px; background: #222; border-radius: 50%;
+            content: ''; position: absolute; width: 5px; height: 5px; background: #222; border-radius: 50%;
+            box-shadow: 1px 1px 1px rgba(255,255,255,0.3);
         }
-        .drawer-plaque::before { left: 5px; } .drawer-plaque::after { right: 5px; }
+        .drawer-plaque::before { left: 8px; } .drawer-plaque::after { right: 8px; }
 
         .drawer-plaque span { 
-            font-family: 'Courier New', monospace; font-weight: 900; font-size: 12px;
+            font-family: 'Courier New', monospace; font-weight: 900; font-size: 14px;
             color: #111; text-transform: uppercase; pointer-events: none;
+            letter-spacing: 1px;
         }
-        .drawer-plaque:hover { filter: brightness(1.1); box-shadow: 0 0 15px var(--glow-white); }
+        .drawer-plaque:hover { filter: brightness(1.15); transform: scale(1.02); box-shadow: 0 0 15px var(--glow-white); }
 
-        .case-label {
-            position: absolute; font-family: 'Limelight', cursive; font-size: 18px;
-            color: rgba(255,255,255,0.7); text-transform: uppercase; pointer-events: none;
-        }
-
+        /* Hanging Tags Style */
         .hanging-tag {
-            position: absolute; width: 140px; height: auto; cursor: pointer;
-            transition: transform 0.3s ease, filter 0.3s; z-index: 500;
+            position: absolute; width: 120px; height: auto; cursor: pointer;
+            transition: transform 0.4s ease-in-out, filter 0.3s; z-index: 500;
             transform-origin: top center;
+            filter: drop-shadow(5px 5px 10px rgba(0,0,0,0.5));
         }
         .hanging-tag img { width: 100%; height: auto; display: block; }
-        .hanging-tag:hover { transform: rotate(4deg) scale(1.05); filter: drop-shadow(0 0 20px #fff); }
+        
+        .hanging-tag::before {
+            content: ''; position: absolute; top: -20px; left: 50%;
+            width: 2px; height: 25px; background: #222;
+            transform: translateX(-50%);
+        }
 
+        .hanging-tag:hover { transform: rotate(8deg) scale(1.1); filter: drop-shadow(0 0 20px #fff); }
+
+        /* Theater Box & Image Scaling */
         #theater-container {
             width: 950px; height: 550px; border: 25px solid #000;
-            background: #000; overflow: hidden; box-shadow: 0 0 60px rgba(0,0,0,1);
+            background: #111; overflow: hidden; box-shadow: 0 0 60px rgba(0,0,0,1);
             position: relative; margin-left: 80px;
+            display: flex; justify-content: center; align-items: center;
         }
 
         #room-display { 
-            width: 100%; height: 100%; background-size: cover; 
-            background-repeat: no-repeat; background-position: center; 
-            cursor: pointer;
+            width: 100%; height: 100%; 
+            background-size: contain; 
+            background-repeat: no-repeat; 
+            background-position: center; 
+            transition: background-image 0.5s ease-in-out;
         }
     </style>
 </head>
@@ -133,7 +145,7 @@
 
     <nav class="nav-container">
         <div class="label-holder" onclick="triggerCabinet()"><div class="white-card"><span class="label-text">Rooms</span></div><div class="lip-pull"></div></div>
-        <div class="label-holder"><div class="white-card"><span class="label-text">Furniture Catalog</span></div><div class="lip-pull"></div></div>
+        <div class="label-holder" onclick="switchToFurniture()"><div class="white-card"><span class="label-text">Furniture Catalog</span></div><div class="lip-pull"></div></div>
         <div class="label-holder" onclick="scrollToSection('decor-section')"><div class="white-card"><span class="label-text">Decor Closet</span></div><div class="lip-pull"></div></div>
         <div class="label-holder"><div class="white-card"><span class="label-text">Inspirational Gallery</span></div><div class="lip-pull"></div></div>
         <div class="label-holder"><div class="white-card"><span class="label-text">Save / Checkout</span></div><div class="lip-pull"></div></div>
@@ -144,32 +156,25 @@
             <img id="main-asset" src="Assets/roomscabinet.png" class="cabinet-image">
             
             <div id="cabinet-controls">
-                <div class="drawer-plaque" style="top:12%; left:8%;" onmouseover="previewRoom('livingroom1.jpg')" onclick="cycleRoom('livingroom')"><span>Living Room</span></div>
-                <div class="drawer-plaque" style="top:12%; right:8%;" onmouseover="previewRoom('bedroom.jpg')" onclick="cycleRoom('bedroom')"><span>Bedroom</span></div>
-                <div class="drawer-plaque" style="top:42%; left:8%;" onmouseover="previewRoom('diningroom.jpg')" onclick="cycleRoom('diningroom')"><span>Dining Room</span></div>
-                <div class="drawer-plaque" style="top:42%; right:8%;" onmouseover="previewRoom('foyer.jpg')" onclick="cycleRoom('extra')"><span>Extra Rooms</span></div>
+                <div class="drawer-plaque" style="top:12%; left:6%;" onmouseover="previewRoom('livingroom1.jpg')" onclick="cycleRoom('livingroom')"><span>Living Room</span></div>
+                <div class="drawer-plaque" style="top:12%; right:6%;" onmouseover="previewRoom('bedroom.jpg')" onclick="cycleRoom('bedroom')"><span>Bedroom</span></div>
+                <div class="drawer-plaque" style="top:42%; left:6%;" onmouseover="previewRoom('diningroom.jpg')" onclick="cycleRoom('diningroom')"><span>Dining Room</span></div>
+                <div class="drawer-plaque" style="top:42%; right:6%;" onmouseover="previewRoom('foyer.jpg')" onclick="cycleRoom('extra')"><span>Extra Rooms</span></div>
                 <div class="drawer-plaque" style="top:73%; left:25%; width:50%;" onclick="alert('Upload Trigger')"><span>Upload Yours</span></div>
             </div>
 
             <div id="case-controls" style="display:none;">
-                <div class="case-label" style="top:8%; left:15%;">Seating</div>
-                <div class="hanging-tag" style="top:12%; left:12%;" onclick="openSubCategory('seating')"><img src="Assets/iconseating.png"></div>
-                
-                <div class="case-label" style="top:8%; right:15%;">Tables</div>
-                <div class="hanging-tag" style="top:12%; right:0%;" onclick="openSubCategory('tables')"><img src="Assets/icontable.png"></div>
-                
-                <div class="case-label" style="top:44%; left:15%;">Storage</div>
-                <div class="hanging-tag" style="top:48%; left:12%;" onclick="openSubCategory('storage')"><img src="Assets/iconstorage.png"></div>
-                
-                <div class="case-label" style="top:44%; right:15%;">Beds</div>
-                <div class="hanging-tag" style="top:48%; right:0%;" onclick="openSubCategory('beds')"><img src="Assets/iconbeds.png"></div>
+                <div class="hanging-tag" style="top:15%; left:15%;" onclick="openSubCategory('seating')"><img src="Assets/iconseating.png"></div>
+                <div class="hanging-tag" style="top:15%; right:5%;" onclick="openSubCategory('tables')"><img src="Assets/icontable.png"></div>
+                <div class="hanging-tag" style="top:50%; left:15%;" onclick="openSubCategory('storage')"><img src="Assets/iconstorage.png"></div>
+                <div class="hanging-tag" style="top:50%; right:5%;" onclick="openSubCategory('beds')"><img src="Assets/iconbeds.png"></div>
             </div>
 
             <div id="sub-controls" style="display:none;"></div>
         </div>
 
         <div id="theater-container">
-            <div id="room-display" onclick="lockInRoom()"></div>
+            <div id="room-display"></div>
         </div>
     </div>
 
@@ -197,24 +202,35 @@
 
     function triggerCabinet() {
         scrollToSection('interaction-zone');
+        const mainImg = document.getElementById('main-asset');
+        mainImg.src = "Assets/roomscabinet.png";
+        mainImg.className = "cabinet-image";
+        document.getElementById('cabinet-controls').style.display = 'block';
+        document.getElementById('case-controls').style.display = 'none';
+        document.getElementById('sub-controls').style.display = 'none';
         document.getElementById('asset-slider').style.transform = "translateX(0)";
     }
 
-    function previewRoom(img) { document.getElementById('room-display').style.backgroundImage = `url('Assets/${img}')`; }
+    function previewRoom(img) { 
+        document.getElementById('room-display').style.backgroundImage = `url('Assets/${img}')`; 
+    }
 
     function cycleRoom(category) {
         currentRoomIndices[category] = (currentRoomIndices[category] + 1) % roomData[category].length;
         previewRoom(roomData[category][currentRoomIndices[category]]);
     }
 
-    function lockInRoom() {
+    function switchToFurniture() {
         const slider = document.getElementById('asset-slider');
         const mainImg = document.getElementById('main-asset');
+        scrollToSection('interaction-zone');
         slider.style.transform = "translateX(-650px)";
+        
         setTimeout(() => {
             mainImg.src = "Assets/furniturecases.png";
             mainImg.className = "cabinet-image case-image";
             document.getElementById('cabinet-controls').style.display = 'none';
+            document.getElementById('sub-controls').style.display = 'none';
             document.getElementById('case-controls').style.display = 'block';
             slider.style.transform = "translateX(0)";
         }, 1200);
@@ -229,17 +245,25 @@
         subCategories[cat].forEach((name, index) => {
             const tag = document.createElement('div');
             tag.className = 'hanging-tag';
-            tag.style.top = (12 + (index * 12)) + "%";
-            tag.style.left = index % 2 === 0 ? "12%" : "auto";
-            tag.style.right = index % 2 !== 0 ? "0%" : "auto";
+            
+            // Reusing handle positions for the sub-tags
+            tag.style.top = (index < 2) ? "15%" : "50%";
+            tag.style.left = index % 2 === 0 ? "15%" : "auto";
+            tag.style.right = index % 2 !== 0 ? "5%" : "auto";
             
             const img = document.createElement('img');
             img.src = `Assets/icon${name}.png`;
             tag.appendChild(img);
             
-            tag.onclick = () => alert('Catalog Book Opening for ' + name);
+            // This is where the catalog will eventually open
+            tag.onclick = () => openCatalog(name);
             subCont.appendChild(tag);
         });
+    }
+
+    function openCatalog(itemName) {
+        console.log("Catalog Triggered for: " + itemName);
+        // We will build this logic once we finish the visual fixes
     }
 </script>
 
