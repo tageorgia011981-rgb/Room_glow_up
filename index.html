@@ -4,257 +4,215 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Room Glow Up</title>
-    <link href="https://fonts.googleapis.com/css2?family=Limelight&display=swap" rel="stylesheet">
     <style>
-        /* Global & Background */
-        * { box-sizing: border-box; }
-        body, html {
+        /* General Styles */
+        body {
             margin: 0;
-            padding: 0;
-            width: 100%;
-            height: 300vh; 
-            background: url('Assets/mainbackground3.jpg') no-repeat center center fixed;
-            background-size: cover;
-            font-family: sans-serif;
-            scroll-behavior: smooth;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f9f9f9;
             overflow-x: hidden;
         }
 
-        /* HEADER */
         header {
-            width: 100%;
-            height: 100vh;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            background: rgba(0, 0, 0, 0.4);
+            background-color: #333;
+            color: #fff;
+            padding: 20px;
             text-align: center;
         }
 
-        h1 {
-            font-family: 'Limelight', cursive;
-            font-size: clamp(4rem, 12vw, 8rem);
-            background: linear-gradient(to right, #004d4d 0%, #008080 25%, #e0f2f2 50%, #008080 75%, #004d4d 100%);
-            background-size: 200% auto;
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            animation: metalShine 4s linear infinite;
-            filter: drop-shadow(4px 4px 0px #1a1f1e) drop-shadow(8px 8px 15px rgba(0,0,0,0.8));
-            margin: 0;
-            text-transform: uppercase;
-            letter-spacing: 5px;
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 20px auto;
         }
 
-        @keyframes metalShine {
-            to { background-position: 200% center; }
+        /* Rug Gallery Section */
+        .rug-gallery-section {
+            padding: 60px 0;
+            text-align: center;
+            background-color: #fff;
+            border-bottom: 2px solid #eee;
         }
 
-        h2 {
-            font-family: 'Limelight', cursive;
-            font-size: 1.8rem;
-            color: #008080;
-            margin-top: 10px;
-            margin-bottom: 50px;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
-        }
-
-        /* INDUSTRIAL LIBRARY PULL TABS */
-        .nav-container {
+        .rug-container {
             display: flex;
             justify-content: center;
-            gap: 25px;
+            flex-wrap: wrap;
+            gap: 40px;
+            padding-top: 60px;
         }
 
-        .pull-tab {
-            width: 190px;
-            height: 90px;
-            /* Brushed Gunmetal Texture */
-            background: linear-gradient(135deg, #535d5c 0%, #2c3534 50%, #1a1f1e 100%);
-            border: 1px solid #111;
-            border-radius: 3px;
+        .hanging-rug-wrapper {
             position: relative;
-            cursor: pointer;
-            /* Heavy Inset and Drop Shadows for Depth */
-            box-shadow: 
-                inset 2px 2px 3px rgba(255,255,255,0.1),
-                inset -2px -2px 5px rgba(0,0,0,0.5),
-                8px 10px 20px rgba(0,0,0,0.7);
-            display: flex;
-            justify-content: center;
-            transition: transform 0.2s ease;
+            display: inline-block;
+            box-shadow: 0 15px 30px rgba(0,0,0,0.2);
+            border: 5px solid #fff;
+            line-height: 0;
         }
 
-        .pull-tab:active {
-            transform: translateY(2px);
-            box-shadow: 4px 5px 10px rgba(0,0,0,0.7);
-        }
-
-        /* Industrial Screws */
-        .screw {
+        .hanging-rug-wrapper::before,
+        .hanging-rug-wrapper::after {
+            content: "";
             position: absolute;
-            width: 8px;
-            height: 8px;
-            background: radial-gradient(circle, #717d7e 0%, #2c3534 100%);
-            border-radius: 50%;
-            box-shadow: 1px 1px 2px rgba(0,0,0,0.8);
+            top: -60px;
+            width: 2px;
+            height: 60px;
+            background-color: #444;
         }
-        .s-tl { top: 6px; left: 6px; }
-        .s-tr { top: 6px; right: 6px; }
-        .s-bl { bottom: 20px; left: 6px; }
-        .s-br { bottom: 20px; right: 6px; }
 
-        .label-card {
-            width: 150px;
-            height: 45px;
-            background: #d4d4d4;
-            margin-top: 18px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            /* Old Typewriter Font Style */
-            font-family: 'Courier New', Courier, monospace;
-            font-weight: 900;
+        .hanging-rug-wrapper::before { left: 20%; }
+        .hanging-rug-wrapper::after { right: 20%; }
+
+        .rug-image {
+            width: 250px;
+            height: auto;
+            display: block;
+        }
+
+        /* Button to Trigger Decor Closet */
+        .controls {
+            text-align: center;
+            margin: 30px 0;
+        }
+
+        .decor-btn {
+            background-color: #d4af37;
+            color: #fff;
+            padding: 12px 30px;
+            border: none;
             font-size: 1.1rem;
-            color: #111;
-            border: 1px solid #888;
-            box-shadow: inset 2px 2px 5px rgba(0,0,0,0.3);
-            transition: all 0.4s ease;
+            font-weight: bold;
+            cursor: pointer;
             text-transform: uppercase;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            transition: background 0.3s;
         }
 
-        /* Hover Glow Effect */
-        .pull-tab:hover .label-card {
-            background: #fff;
-            color: #000;
-            box-shadow: 0 0 20px 5px rgba(255, 255, 255, 0.8);
-            transform: scale(1.02);
+        .decor-btn:hover {
+            background-color: #b8962e;
         }
 
-        /* The Metal Lip Pull */
-        .lip-pull {
-            width: 100px;
-            height: 12px;
-            background: linear-gradient(to bottom, #1a1f1e, #000);
-            border-radius: 0 0 15px 15px;
-            position: absolute;
-            bottom: 6px;
-            border: 1px solid #333;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.5);
-        }
-
-        /* WORKSTATION AREA */
-        .work-zone {
-            width: 100%;
-            height: 100vh;
+        /* Decor Closet (The Cabinet) */
+        .cabinet-section {
             display: flex;
-            align-items: center;
             justify-content: center;
+            gap: 15px;
+            padding: 40px 0;
+            transform: translateX(100%); 
+            opacity: 0;
+            transition: transform 0.8s ease-in-out, opacity 0.5s ease;
+            visibility: hidden;
+        }
+
+        .cabinet-section.active {
+            transform: translateX(0);
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .cabinet-door {
+            width: 180px;
+            height: 350px;
+            background-color: #4a3728; /* Solid Wood Color */
+            background-image: linear-gradient(to right, #4a3728, #3e2e22); /* Adds a slight wood grain depth */
+            border: 4px solid #36281d;
             position: relative;
-        }
-
-        .stage-container {
-            width: 900px;
-            height: 600px;
-            background: #000;
-            border: 15px solid #2c3534;
-            box-shadow: 0 0 60px rgba(0,0,0,0.9);
             display: flex;
             justify-content: center;
             align-items: center;
-            z-index: 5;
+            box-shadow: 8px 8px 20px rgba(0,0,0,0.4);
+            opacity: 1 !important; /* Forces full opacity */
         }
 
-        #stage-image { width: 100%; height: 100%; object-fit: contain; }
+        /* Room Name Plates */
+        .name-plate {
+            background: linear-gradient(145deg, #d4af37, #f9e27d);
+            color: #333;
+            padding: 5px 15px;
+            font-size: 0.8rem;
+            font-weight: bold;
+            text-transform: uppercase;
+            border: 1px solid #aa8a2e;
+            box-shadow: 2px 2px 5px rgba(0,0,0,0.4);
+            border-radius: 2px;
+            letter-spacing: 1px;
+            min-width: 90px;
+            text-align: center;
+            z-index: 2; /* Ensures it sits on top of the door */
+        }
 
-        #rooms-cabinet {
+        /* Door Handle */
+        .handle {
             position: absolute;
-            left: -600px; 
-            transition: left 1.2s cubic-bezier(0.17, 0.67, 0.83, 0.67);
-            z-index: 10;
+            right: 15px;
+            top: 50%;
+            width: 8px;
+            height: 40px;
+            background-color: #1a1a1a;
+            border-radius: 2px;
+            box-shadow: 1px 1px 2px rgba(255,255,255,0.1);
         }
 
-        #rooms-cabinet.glide-in { left: 40px; }
-        .cabinet-asset { width: 450px; filter: drop-shadow(10px 10px 20px black); }
-
-        /* DECOR CLOSET */
-        #decor-section { width: 100%; height: 100vh; display: flex; justify-content: center; align-items: center; }
-        .closet-box { width: 800px; height: 600px; background: #111; position: relative; border: 12px solid #2c3534; display: flex; perspective: 1500px; }
-        .c-door { width: 50%; height: 100%; background: url('Assets/closetdoor.png') no-repeat center center; background-size: cover; transition: transform 1.5s ease; z-index: 10; cursor: pointer; }
-        .d-left { transform-origin: left; border-right: 1px solid #000; }
-        .d-right { transform-origin: right; border-left: 1px solid #000; }
-        .open-l { transform: rotateY(-115deg); }
-        .open-r { transform: rotateY(115deg); }
+        footer {
+            text-align: center;
+            padding: 20px;
+            background: #333;
+            color: white;
+            margin-top: 40px;
+        }
     </style>
 </head>
 <body>
 
-    <header>
-        <h1>Room Glow Up</h1>
-        <h2>Where Your Dream Space Comes To Life</h2>
-        <div class="nav-container">
-            <div class="pull-tab" onclick="triggerRooms()">
-                <div class="screw s-tl"></div><div class="screw s-tr"></div>
-                <div class="label-card">Rooms</div>
-                <div class="lip-pull"></div>
-                <div class="screw s-bl"></div><div class="screw s-br"></div>
-            </div>
-            <div class="pull-tab">
-                <div class="screw s-tl"></div><div class="screw s-tr"></div>
-                <div class="label-card">Furniture</div>
-                <div class="lip-pull"></div>
-                <div class="screw s-bl"></div><div class="screw s-br"></div>
-            </div>
-            <div class="pull-tab" onclick="triggerDecor()">
-                <div class="screw s-tl"></div><div class="screw s-tr"></div>
-                <div class="label-card">Decor</div>
-                <div class="lip-pull"></div>
-                <div class="screw s-bl"></div><div class="screw s-br"></div>
-            </div>
-            <div class="pull-tab">
-                <div class="screw s-tl"></div><div class="screw s-tr"></div>
-                <div class="label-card">Gallery</div>
-                <div class="lip-pull"></div>
-                <div class="screw s-bl"></div><div class="screw s-br"></div>
-            </div>
-            <div class="pull-tab">
-                <div class="screw s-tl"></div><div class="screw s-tr"></div>
-                <div class="label-card">Checkout</div>
-                <div class="lip-pull"></div>
-                <div class="screw s-bl"></div><div class="screw s-br"></div>
-            </div>
-        </div>
-    </header>
+<header>
+    <h1>Room Glow Up</h1>
+</header>
 
-    <section id="work-rooms" class="work-zone">
-        <div id="rooms-cabinet">
-            <img src="Assets/roomscabinet.png" class="cabinet-asset">
-        </div>
-        <div class="stage-container">
-            <img src="" id="stage-image">
-        </div>
-    </section>
-
-    <section id="decor-section">
-        <div class="closet-box">
-            <div class="c-door d-left" onclick="openCloset()"></div>
-            <div class="c-door d-right" onclick="openCloset()"></div>
-            <div style="position:absolute; width:100%; height:100%; display:flex; justify-content:center; align-items:center;">
-                <img src="Assets/plant_pillow.jpg" style="max-height: 70%;">
+<div class="container">
+    
+    <section class="rug-gallery-section">
+        <h2>Our Rug Collection</h2>
+        <div class="rug-container">
+            <div class="hanging-rug-wrapper">
+                <img src="rugsgallery.jpg" alt="Rug Style 1" class="rug-image">
+            </div>
+            <div class="hanging-rug-wrapper">
+                <img src="rugsgallery.jpg" alt="Rug Style 2" class="rug-image">
             </div>
         </div>
     </section>
 
-    <script>
-        function triggerRooms() {
-            window.scrollTo({ top: window.innerHeight, behavior: 'smooth' });
-            setTimeout(() => { document.getElementById('rooms-cabinet').classList.add('glide-in'); }, 600);
-        }
-        function triggerDecor() { window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' }); }
-        function openCloset() {
-            document.querySelector('.d-left').classList.toggle('open-l');
-            document.querySelector('.d-right').classList.toggle('open-r');
-        }
-    </script>
+    <div class="controls">
+        <button class="decor-btn" onclick="toggleCloset()">Decor</button>
+    </div>
+
+    <section class="cabinet-section" id="decorCloset">
+        <div class="cabinet-door">
+            <div class="name-plate">Kitchen</div>
+            <div class="handle"></div>
+        </div>
+        <div class="cabinet-door">
+            <div class="name-plate">Living Room</div>
+            <div class="handle"></div>
+        </div>
+        <div class="cabinet-door">
+            <div class="name-plate">Bedroom</div>
+            <div class="handle"></div>
+        </div>
+    </section>
+
+</div>
+
+<footer>
+    <p>&copy; 2026 Room Glow Up - Interior Design</p>
+</footer>
+
+<script>
+    function toggleCloset() {
+        const closet = document.getElementById('decorCloset');
+        closet.classList.toggle('active');
+    }
+</script>
+
 </body>
 </html>
