@@ -12,14 +12,15 @@
             margin: 0;
             padding: 0;
             width: 100%;
-            height: 100%;
+            height: 300vh; 
             background: url('Assets/mainbackground3.jpg') no-repeat center center fixed;
             background-size: cover;
             font-family: sans-serif;
-            overflow: hidden; /* Strict containment */
+            scroll-behavior: smooth;
+            overflow-x: hidden;
         }
 
-        /* Header Area */
+        /* HEADER */
         header {
             width: 100%;
             height: 100vh;
@@ -28,209 +29,162 @@
             align-items: center;
             justify-content: center;
             background: rgba(0, 0, 0, 0.4);
-            position: relative;
-            z-index: 10;
+            text-align: center;
         }
 
         h1 {
             font-family: 'Limelight', cursive;
-            font-size: clamp(3rem, 10vw, 6rem);
-            color: #008080;
-            text-shadow: 3px 3px 6px rgba(0,0,0,0.8);
+            font-size: clamp(4rem, 12vw, 8rem);
+            background: linear-gradient(to right, #004d4d 0%, #008080 25%, #e0f2f2 50%, #008080 75%, #004d4d 100%);
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: metalShine 4s linear infinite;
+            filter: drop-shadow(4px 4px 0px #1a1f1e) drop-shadow(8px 8px 15px rgba(0,0,0,0.8));
             margin: 0;
             text-transform: uppercase;
+            letter-spacing: 5px;
+        }
+
+        @keyframes metalShine {
+            to { background-position: 200% center; }
         }
 
         h2 {
             font-family: 'Limelight', cursive;
-            font-size: 1.5rem;
+            font-size: 1.8rem;
             color: #008080;
+            margin-top: 10px;
             margin-bottom: 50px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
         }
 
-        /* Navigation */
+        /* INDUSTRIAL LIBRARY PULL TABS */
         .nav-container {
             display: flex;
             justify-content: center;
-            gap: 15px;
+            gap: 25px;
         }
 
         .pull-tab {
-            width: 180px;
-            height: 80px;
-            background: linear-gradient(145deg, #465352, #2c3534);
-            border: 2px solid #1a1f1e;
-            border-radius: 4px;
+            width: 190px;
+            height: 90px;
+            /* Brushed Gunmetal Texture */
+            background: linear-gradient(135deg, #535d5c 0%, #2c3534 50%, #1a1f1e 100%);
+            border: 1px solid #111;
+            border-radius: 3px;
             position: relative;
             cursor: pointer;
-            box-shadow: 5px 5px 15px rgba(0,0,0,0.6);
+            /* Heavy Inset and Drop Shadows for Depth */
+            box-shadow: 
+                inset 2px 2px 3px rgba(255,255,255,0.1),
+                inset -2px -2px 5px rgba(0,0,0,0.5),
+                8px 10px 20px rgba(0,0,0,0.7);
             display: flex;
             justify-content: center;
+            transition: transform 0.2s ease;
         }
+
+        .pull-tab:active {
+            transform: translateY(2px);
+            box-shadow: 4px 5px 10px rgba(0,0,0,0.7);
+        }
+
+        /* Industrial Screws */
+        .screw {
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            background: radial-gradient(circle, #717d7e 0%, #2c3534 100%);
+            border-radius: 50%;
+            box-shadow: 1px 1px 2px rgba(0,0,0,0.8);
+        }
+        .s-tl { top: 6px; left: 6px; }
+        .s-tr { top: 6px; right: 6px; }
+        .s-bl { bottom: 20px; left: 6px; }
+        .s-br { bottom: 20px; right: 6px; }
 
         .label-card {
-            width: 140px;
-            height: 40px;
-            background: #e0e0e0;
-            margin-top: 15px;
+            width: 150px;
+            height: 45px;
+            background: #d4d4d4;
+            margin-top: 18px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-family: 'Courier New', monospace;
-            font-weight: bold;
-            font-size: 1rem;
-            color: #000;
-            transition: 0.3s;
+            /* Old Typewriter Font Style */
+            font-family: 'Courier New', Courier, monospace;
+            font-weight: 900;
+            font-size: 1.1rem;
+            color: #111;
+            border: 1px solid #888;
+            box-shadow: inset 2px 2px 5px rgba(0,0,0,0.3);
+            transition: all 0.4s ease;
+            text-transform: uppercase;
         }
 
+        /* Hover Glow Effect */
         .pull-tab:hover .label-card {
-            background: #ffffff;
-            box-shadow: 0 0 15px 5px rgba(255, 255, 255, 0.7);
+            background: #fff;
+            color: #000;
+            box-shadow: 0 0 20px 5px rgba(255, 255, 255, 0.8);
+            transform: scale(1.02);
         }
 
+        /* The Metal Lip Pull */
         .lip-pull {
-            width: 80px;
-            height: 10px;
-            background: #1a1f1e;
-            border-radius: 0 0 10px 10px;
+            width: 100px;
+            height: 12px;
+            background: linear-gradient(to bottom, #1a1f1e, #000);
+            border-radius: 0 0 15px 15px;
             position: absolute;
-            bottom: 5px;
+            bottom: 6px;
+            border: 1px solid #333;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.5);
         }
 
-        /* Workstation Layouts - Absolute Containment */
+        /* WORKSTATION AREA */
         .work-zone {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
-            display: none; 
-            background: rgba(0, 0, 0, 0.7);
-            z-index: 20;
-            overflow: hidden;
-        }
-
-        .layout-container {
-            display: flex;
             width: 100%;
-            height: 100%;
+            height: 100vh;
+            display: flex;
             align-items: center;
             justify-content: center;
-            gap: 40px;
-            padding: 40px;
-        }
-
-        /* Sidebar UI */
-        .ui-sidebar {
-            flex: 0 0 300px;
             position: relative;
         }
 
-        .sidebar-asset {
-            width: 100%;
-            height: auto;
-            filter: drop-shadow(10px 10px 20px black);
-        }
-
-        .tag-list {
-            position: absolute;
-            top: 15%;
-            width: 100%;
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-            align-items: center;
-        }
-
-        .tag-item {
-            background: #d1d1d1;
-            padding: 10px;
-            font-family: 'Courier New', monospace;
-            font-weight: bold;
-            border: 2px solid #222;
-            cursor: pointer;
-            transition: 0.3s;
-            width: 80%;
-            text-align: center;
-        }
-
-        .tag-item:hover {
-            background: #fff;
-            transform: scale(1.05);
-        }
-
-        /* THE STAGE */
-        .main-stage-display {
-            flex: 1;
-            max-width: 1000px;
-            height: 80%;
+        .stage-container {
+            width: 900px;
+            height: 600px;
             background: #000;
             border: 15px solid #2c3534;
             box-shadow: 0 0 60px rgba(0,0,0,0.9);
             display: flex;
             justify-content: center;
             align-items: center;
+            z-index: 5;
         }
 
-        #stage-image {
-            width: 100%;
-            height: 100%;
-            object-fit: contain;
-        }
+        #stage-image { width: 100%; height: 100%; object-fit: contain; }
 
-        .close-btn {
+        #rooms-cabinet {
             position: absolute;
-            top: 20px;
-            right: 40px;
-            color: #008080;
-            font-family: 'Limelight';
-            font-size: 1.2rem;
-            cursor: pointer;
-            background: rgba(0,0,0,0.5);
-            padding: 10px;
-            border: 1px solid #008080;
-        }
-
-        /* DECOR CLOSET - New Bifold Logic */
-        .closet-frame {
-            width: 800px;
-            height: 600px;
-            background: #111;
-            position: relative;
-            border: 12px solid #2c3534;
-            overflow: hidden;
-            perspective: 2000px;
-        }
-
-        .bifold-door {
-            width: 50%;
-            height: 100%;
-            background: url('Assets/closetdoor.png') no-repeat center center;
-            background-size: cover;
-            position: absolute;
-            top: 0;
+            left: -600px; 
+            transition: left 1.2s cubic-bezier(0.17, 0.67, 0.83, 0.67);
             z-index: 10;
-            transition: transform 1.5s cubic-bezier(0.4, 0, 0.2, 1);
-            cursor: pointer;
         }
 
-        .door-left { left: 0; transform-origin: left; border-right: 1px solid #000; }
-        .door-right { right: 0; transform-origin: right; border-left: 1px solid #000; }
+        #rooms-cabinet.glide-in { left: 40px; }
+        .cabinet-asset { width: 450px; filter: drop-shadow(10px 10px 20px black); }
 
-        /* Bifold Folding Animation */
-        .open-left { transform: rotateY(-105deg) scaleX(0.4); }
-        .open-right { transform: rotateY(105deg) scaleX(0.4); }
-
-        .interior {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            z-index: 1;
-        }
-
+        /* DECOR CLOSET */
+        #decor-section { width: 100%; height: 100vh; display: flex; justify-content: center; align-items: center; }
+        .closet-box { width: 800px; height: 600px; background: #111; position: relative; border: 12px solid #2c3534; display: flex; perspective: 1500px; }
+        .c-door { width: 50%; height: 100%; background: url('Assets/closetdoor.png') no-repeat center center; background-size: cover; transition: transform 1.5s ease; z-index: 10; cursor: pointer; }
+        .d-left { transform-origin: left; border-right: 1px solid #000; }
+        .d-right { transform-origin: right; border-left: 1px solid #000; }
+        .open-l { transform: rotateY(-115deg); }
+        .open-r { transform: rotateY(115deg); }
     </style>
 </head>
 <body>
@@ -239,93 +193,67 @@
         <h1>Room Glow Up</h1>
         <h2>Where Your Dream Space Comes To Life</h2>
         <div class="nav-container">
-            <div class="pull-tab" onclick="openZone('rooms-section')"><div class="label-card">Rooms</div><div class="lip-pull"></div></div>
-            <div class="pull-tab" onclick="openZone('furniture-section')"><div class="label-card">Furniture Catalog</div><div class="lip-pull"></div></div>
-            <div class="pull-tab" onclick="openZone('decor-section')"><div class="label-card">Decor Closet</div><div class="lip-pull"></div></div>
-            <div class="pull-tab"><div class="label-card">Inspirational Gallery</div><div class="lip-pull"></div></div>
-            <div class="pull-tab"><div class="label-card">Save/Checkout</div><div class="lip-pull"></div></div>
+            <div class="pull-tab" onclick="triggerRooms()">
+                <div class="screw s-tl"></div><div class="screw s-tr"></div>
+                <div class="label-card">Rooms</div>
+                <div class="lip-pull"></div>
+                <div class="screw s-bl"></div><div class="screw s-br"></div>
+            </div>
+            <div class="pull-tab">
+                <div class="screw s-tl"></div><div class="screw s-tr"></div>
+                <div class="label-card">Furniture</div>
+                <div class="lip-pull"></div>
+                <div class="screw s-bl"></div><div class="screw s-br"></div>
+            </div>
+            <div class="pull-tab" onclick="triggerDecor()">
+                <div class="screw s-tl"></div><div class="screw s-tr"></div>
+                <div class="label-card">Decor</div>
+                <div class="lip-pull"></div>
+                <div class="screw s-bl"></div><div class="screw s-br"></div>
+            </div>
+            <div class="pull-tab">
+                <div class="screw s-tl"></div><div class="screw s-tr"></div>
+                <div class="label-card">Gallery</div>
+                <div class="lip-pull"></div>
+                <div class="screw s-bl"></div><div class="screw s-br"></div>
+            </div>
+            <div class="pull-tab">
+                <div class="screw s-tl"></div><div class="screw s-tr"></div>
+                <div class="label-card">Checkout</div>
+                <div class="lip-pull"></div>
+                <div class="screw s-bl"></div><div class="screw s-br"></div>
+            </div>
         </div>
     </header>
 
-    <section id="rooms-section" class="work-zone">
-        <div class="close-btn" onclick="closeZone()">[ RETURN TO MAIN ]</div>
-        <div class="layout-container">
-            <div class="ui-sidebar">
-                <img src="Assets/roomscabinet.png" class="sidebar-asset">
-                <div class="tag-list">
-                    <div class="tag-item" onmouseover="preview('livingroom')" onclick="cycle('livingroom')">Living Room</div>
-                    <div class="tag-item" onmouseover="preview('bedroom')" onclick="cycle('bedroom')">Bedroom</div>
-                    <div class="tag-item" onmouseover="preview('diningroom')" onclick="cycle('diningroom')">Dining Room</div>
-                    <div class="tag-item" onmouseover="preview('extras')" onclick="cycle('extras')">Extra Rooms</div>
-                </div>
-            </div>
-            <div class="main-stage-display">
-                <img src="" id="stage-image">
-            </div>
+    <section id="work-rooms" class="work-zone">
+        <div id="rooms-cabinet">
+            <img src="Assets/roomscabinet.png" class="cabinet-asset">
+        </div>
+        <div class="stage-container">
+            <img src="" id="stage-image">
         </div>
     </section>
 
-    <section id="furniture-section" class="work-zone">
-        <div class="close-btn" onclick="closeZone()">[ RETURN TO MAIN ]</div>
-        <div class="layout-container">
-            <div class="ui-sidebar">
-                <img src="Assets/furniturecases.png" class="sidebar-asset">
-                <div class="tag-list">
-                    <div class="tag-item">Seating</div>
-                    <div class="tag-item">Tables</div>
-                    <div class="tag-item">Storage</div>
-                    <div class="tag-item">Beds</div>
-                </div>
-            </div>
-            <div class="main-stage-display">
-                <p style="color:white; font-family:'Limelight'; font-size:2rem;">Furniture Stage</p>
-            </div>
-        </div>
-    </section>
-
-    <section id="decor-section" class="work-zone">
-        <div class="close-btn" onclick="closeZone()">[ RETURN TO MAIN ]</div>
-        <div class="layout-container">
-            <div class="closet-frame">
-                <div class="bifold-door door-left" onclick="toggleCloset()"></div>
-                <div class="bifold-door door-right" onclick="toggleCloset()"></div>
-                <div class="interior">
-                    <img src="Assets/plant_pillow.jpg" style="max-height: 70%;" alt="Decor Item">
-                </div>
+    <section id="decor-section">
+        <div class="closet-box">
+            <div class="c-door d-left" onclick="openCloset()"></div>
+            <div class="c-door d-right" onclick="openCloset()"></div>
+            <div style="position:absolute; width:100%; height:100%; display:flex; justify-content:center; align-items:center;">
+                <img src="Assets/plant_pillow.jpg" style="max-height: 70%;">
             </div>
         </div>
     </section>
 
     <script>
-        const roomDB = {
-            livingroom: ['Assets/livingroom1.jpg', 'Assets/livingroom3.jpg'],
-            bedroom: ['Assets/bedroom.jpg', 'Assets/bedroom2.jpg'],
-            diningroom: ['Assets/diningroom.jpg'],
-            extras: ['Assets/foyer.jpg', 'Assets/bathroom.jpg', 'Assets/office.jpg', 'Assets/kitchen.jpg', 'Assets/kitchen2.jpg']
-        };
-        let roomIdx = { livingroom: 0, bedroom: 0, diningroom: 0, extras: 0 };
-
-        function openZone(id) {
-            document.querySelectorAll('.work-zone').forEach(z => z.style.display = 'none');
-            document.getElementById(id).style.display = 'block';
+        function triggerRooms() {
+            window.scrollTo({ top: window.innerHeight, behavior: 'smooth' });
+            setTimeout(() => { document.getElementById('rooms-cabinet').classList.add('glide-in'); }, 600);
         }
-
-        function closeZone() {
-            document.querySelectorAll('.work-zone').forEach(z => z.style.display = 'none');
-        }
-
-        function preview(type) {
-            document.getElementById('stage-image').src = roomDB[type][roomIdx[type]];
-        }
-
-        function cycle(type) {
-            roomIdx[type] = (roomIdx[type] + 1) % roomDB[type].length;
-            preview(type);
-        }
-
-        function toggleCloset() {
-            document.querySelector('.door-left').classList.toggle('open-left');
-            document.querySelector('.door-right').classList.toggle('open-right');
+        function triggerDecor() { window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' }); }
+        function openCloset() {
+            document.querySelector('.d-left').classList.toggle('open-l');
+            document.querySelector('.d-right').classList.toggle('open-r');
         }
     </script>
 </body>
