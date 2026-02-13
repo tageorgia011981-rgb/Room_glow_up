@@ -15,11 +15,10 @@
         }
 
         body, html {
-            margin: 0; padding: 0; 
-            min-height: 250vh; /* Ensures there is room to scroll */
+            margin: 0; padding: 0; min-height: 250vh;
             background: url('Assets/mainbackground2.jpg') no-repeat center center fixed;
             background-size: cover; scroll-behavior: smooth;
-            overflow-x: hidden; overflow-y: auto; /* Fixed scrolling */
+            overflow-x: hidden; overflow-y: auto;
         }
 
         #main-site-container { width: 100%; display: flex; flex-direction: column; align-items: center; }
@@ -54,12 +53,6 @@
             cursor: pointer; transition: transform 0.3s ease;
         }
 
-        .label-holder::before, .label-holder::after {
-            content: ''; position: absolute; width: 7px; height: 7px; 
-            background: #333; border-radius: 50%; box-shadow: inset 1px 1px 1px #000, 1px 1px 1px #555;
-        }
-        .label-holder::before { top: 8px; left: 8px; } .label-holder::after { top: 8px; right: 8px; }
-
         .white-card {
             width: 82%; height: 58%; background: #ccc;
             display: flex; justify-content: center; align-items: center;
@@ -81,32 +74,39 @@
         .cabinet-image { width: 100%; height: auto; display: block; }
         .case-image { width: 130%; height: auto; margin-left: -15%; filter: drop-shadow(10px 10px 30px rgba(0,0,0,0.8)); }
 
+        /* NOTCHED METALLIC PLAQUES */
         .drawer-plaque {
             position: absolute; width: 38%; height: 8%; 
-            background: var(--pewter-plate); border: 1px solid #2c3e50; border-radius: 4px;
+            background: var(--pewter-plate); border: 1px solid #2c3e50;
+            clip-path: polygon(5% 0%, 95% 0%, 100% 25%, 100% 75%, 95% 100%, 5% 100%, 0% 75%, 0% 25%);
             box-shadow: inset 1px 1px 1px rgba(255,255,255,0.4), 2px 2px 4px rgba(0,0,0,0.7);
             display: flex; justify-content: center; align-items: center;
             cursor: pointer; transition: all 0.2s;
         }
+        
         .drawer-plaque::before, .drawer-plaque::after {
-            content: ''; position: absolute; width: 3px; height: 3px; background: #222; border-radius: 50%;
+            content: ''; position: absolute; width: 4px; height: 4px; background: #222; border-radius: 50%;
+            box-shadow: 0.5px 0.5px 0.5px rgba(255,255,255,0.3);
         }
-        .drawer-plaque::before { left: 5px; } .drawer-plaque::after { right: 5px; }
+        .drawer-plaque::before { left: 8px; } .drawer-plaque::after { right: 8px; }
 
         .drawer-plaque span { 
-            font-family: 'Courier New', monospace; font-weight: 900; font-size: 12px;
+            font-family: 'Courier New', monospace; font-weight: 900; font-size: 13px;
             color: #111; text-transform: uppercase; pointer-events: none;
         }
 
+        /* CENTERED HANGING TAGS */
         .hanging-tag {
-            position: absolute; width: 120px; height: auto; cursor: pointer;
+            position: absolute; width: 125px; height: auto; cursor: pointer;
             transition: transform 0.4s ease-in-out, filter 0.3s; z-index: 500;
             transform-origin: top center; filter: drop-shadow(5px 5px 10px rgba(0,0,0,0.5));
+            display: flex; flex-direction: column; align-items: center;
         }
         .hanging-tag img { width: 100%; height: auto; display: block; }
+        
         .hanging-tag::before {
-            content: ''; position: absolute; top: -20px; left: 50%;
-            width: 2px; height: 25px; background: #222; transform: translateX(-50%);
+            content: ''; position: absolute; top: -15px; left: 50%;
+            width: 2px; height: 18px; background: #222; transform: translateX(-50%);
         }
 
         #theater-container {
@@ -120,7 +120,7 @@
             width: 100%; height: 100%; background-size: contain; 
             background-repeat: no-repeat; background-position: center; 
             transition: background-image 0.5s ease-in-out;
-            cursor: cell; /* Indicates you can click to lock in */
+            cursor: cell;
         }
     </style>
 </head>
@@ -143,27 +143,31 @@
     <div id="interaction-zone">
         <div id="asset-slider">
             <img id="main-asset" src="Assets/roomscabinet.png" class="cabinet-image">
+            
             <div id="cabinet-controls">
-                <div class="drawer-plaque" style="top:12.5%; left:10%;" onmouseover="previewRoom('livingroom1.jpg')" onclick="cycleRoom('livingroom')"><span>Living Room</span></div>
-                <div class="drawer-plaque" style="top:12.5%; right:10%;" onmouseover="previewRoom('bedroom.jpg')" onclick="cycleRoom('bedroom')"><span>Bedroom</span></div>
-                <div class="drawer-plaque" style="top:42.5%; left:10%;" onmouseover="previewRoom('diningroom.jpg')" onclick="cycleRoom('diningroom')"><span>Dining Room</span></div>
-                <div class="drawer-plaque" style="top:42.5%; right:10%;" onmouseover="previewRoom('foyer.jpg')" onclick="cycleRoom('extra')"><span>Extra Rooms</span></div>
+                <div class="drawer-plaque" style="top:12%; left:10%;" onmouseover="previewRoom('livingroom1.jpg')" onclick="cycleRoom('livingroom')"><span>Living Room</span></div>
+                <div class="drawer-plaque" style="top:12%; right:10%;" onmouseover="previewRoom('bedroom.jpg')" onclick="cycleRoom('bedroom')"><span>Bedroom</span></div>
+                <div class="drawer-plaque" style="top:42%; left:10%;" onmouseover="previewRoom('diningroom.jpg')" onclick="cycleRoom('diningroom')"><span>Dining Room</span></div>
+                <div class="drawer-plaque" style="top:42%; right:10%;" onmouseover="previewRoom('foyer.jpg')" onclick="cycleRoom('extra')"><span>Extra Rooms</span></div>
                 <div class="drawer-plaque" style="top:73%; left:25%; width:50%;" onclick="alert('Upload')"><span>Upload Yours</span></div>
             </div>
+
             <div id="case-controls" style="display:none;">
-                <div class="hanging-tag" style="top:15%; left:15%;" onclick="openSubCategory('seating')"><img src="Assets/iconseating.png"></div>
-                <div class="hanging-tag" style="top:15%; right:5%;" onclick="openSubCategory('tables')"><img src="Assets/icontable.png"></div>
-                <div class="hanging-tag" style="top:50%; left:15%;" onclick="openSubCategory('storage')"><img src="Assets/iconstorage.png"></div>
-                <div class="hanging-tag" style="top:50%; right:5%;" onclick="openSubCategory('beds')"><img src="Assets/iconbeds.png"></div>
+                <div class="hanging-tag" style="top:16%; left:38%;" onclick="openSubCategory('seating')"><img src="Assets/iconseating.png"></div>
+                <div class="hanging-tag" style="top:31%; left:38%;" onclick="openSubCategory('tables')"><img src="Assets/icontable.png"></div>
+                <div class="hanging-tag" style="top:46%; left:38%;" onclick="openSubCategory('storage')"><img src="Assets/iconstorage.png"></div>
+                <div class="hanging-tag" style="top:61%; left:38%;" onclick="openSubCategory('beds')"><img src="Assets/iconbeds.png"></div>
             </div>
+
             <div id="sub-controls" style="display:none;"></div>
         </div>
+
         <div id="theater-container">
             <div id="room-display" onclick="switchToFurniture()"></div>
         </div>
     </div>
-    <div id="decor-section" style="height: 1000px; background: rgba(0,0,0,0.2); margin-top: 100px; width: 80%; border: 2px dashed #333;">
-        </div>
+    
+    <div id="decor-section" style="height: 1000px; margin-top: 200px;"></div>
 </div>
 
 <script>
@@ -176,9 +180,7 @@
         if(el) el.scrollIntoView({ behavior: 'smooth' }); 
     }
 
-    function previewRoom(img) { 
-        document.getElementById('room-display').style.backgroundImage = `url('Assets/${img}')`; 
-    }
+    function previewRoom(img) { document.getElementById('room-display').style.backgroundImage = `url('Assets/${img}')`; }
 
     function cycleRoom(cat) { 
         currentRoomIndices[cat] = (currentRoomIndices[cat] + 1) % roomData[cat].length; 
@@ -189,27 +191,21 @@
         const slider = document.getElementById('asset-slider');
         const mainImg = document.getElementById('main-asset');
         mainImg.src = "Assets/roomscabinet.png";
-        mainImg.className = "cabinet-image";
         document.getElementById('cabinet-controls').style.display = 'block';
         document.getElementById('case-controls').style.display = 'none';
         document.getElementById('sub-controls').style.display = 'none';
         slider.style.transform = "translateX(0)";
-        scrollToSection('interaction-zone');
     }
 
     function switchToFurniture() {
         const slider = document.getElementById('asset-slider');
         const mainImg = document.getElementById('main-asset');
-        
-        // Only switch if we aren't already looking at furniture
         if (!mainImg.src.includes("furniturecases.png")) {
             slider.style.transform = "translateX(-650px)";
             setTimeout(() => {
                 mainImg.src = "Assets/furniturecases.png";
-                mainImg.className = "cabinet-image case-image";
                 document.getElementById('cabinet-controls').style.display = 'none';
                 document.getElementById('case-controls').style.display = 'block';
-                document.getElementById('sub-controls').style.display = 'none';
                 slider.style.transform = "translateX(0)";
             }, 1200);
         }
@@ -220,17 +216,19 @@
         const subCont = document.getElementById('sub-controls');
         subCont.innerHTML = '';
         subCont.style.display = 'block';
+        const hPositions = ["16%", "31%", "46%", "61%"];
         subCategories[cat].forEach((name, index) => {
-            const tag = document.createElement('div');
-            tag.className = 'hanging-tag';
-            tag.style.top = (index < 2) ? "15%" : "50%";
-            tag.style.left = index % 2 === 0 ? "15%" : "auto";
-            tag.style.right = index % 2 !== 0 ? "5%" : "auto";
-            const img = document.createElement('img');
-            img.src = `Assets/icon${cat}${name}.png`;
-            tag.appendChild(img);
-            tag.onclick = () => alert('Catalog opening for ' + name);
-            subCont.appendChild(tag);
+            if (index < 4) {
+                const tag = document.createElement('div');
+                tag.className = 'hanging-tag';
+                tag.style.top = hPositions[index];
+                tag.style.left = "38%";
+                const img = document.createElement('img');
+                img.src = `Assets/icon${cat}${name}.png`;
+                tag.appendChild(img);
+                tag.onclick = () => alert('Catalog opening for ' + name);
+                subCont.appendChild(tag);
+            }
         });
     }
 </script>
