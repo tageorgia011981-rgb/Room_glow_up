@@ -3,25 +3,24 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Room Glow Up - Your Dream Space Come To Life</title>
+    <title>Room Glow Up</title>
     <link href="https://fonts.googleapis.com/css2?family=Limelight&family=Crimson+Text:wght@600&display=swap" rel="stylesheet">
     <style>
         :root {
             --shiny-black: linear-gradient(to bottom, #444 0%, #000 45%, #111 50%, #000 55%, #222 100%);
             --header-shine: linear-gradient(120deg, transparent 30%, rgba(255,255,255,0.9) 50%, transparent 70%);
             --brass-cast: linear-gradient(145deg, #e5c47c, #b89130, #d4af37, #8a6d1a);
-            --metal-dark: linear-gradient(145deg, #1a1a1a, #000, #222, #0a0a0a);
         }
 
         body, html {
-            margin: 0; padding: 0; min-height: 300vh;
+            margin: 0; padding: 0; min-height: 250vh;
             background: url('Assets/mainbackground2.jpg') no-repeat center center fixed;
             background-size: cover; scroll-behavior: smooth; overflow-x: hidden;
         }
 
-        #main-site-container { width: 100%; display: flex; flex-direction: column; align-items: center; }
+        #main-site-container { width: 100%; display: flex; flex-direction: column; align-items: center; position: relative; }
 
-        header { text-align: center; padding: 60px 0 30px 0; position: relative; }
+        header { text-align: center; padding: 100px 0 30px 0; position: relative; }
         
         h1 {
             font-family: 'Limelight', cursive; font-size: 100px; margin: 0;
@@ -39,215 +38,139 @@
 
         @keyframes shine { 0% { background-position: -200%; } 100% { background-position: 200%; } }
 
-        h2 { font-family: 'Limelight', cursive; font-size: 36px; margin: -5px 0 0 0; color: #000; letter-spacing: 3px; font-weight: bold; }
-
-        .nav-container { display: flex; gap: 25px; margin-top: 40px; margin-bottom: 50px; z-index: 100; }
-
-        .label-holder {
-            width: 210px; height: 110px; background: var(--metal-dark); 
-            border: 1px solid #000; position: relative; display: flex;
-            justify-content: center; align-items: center;
-            box-shadow: inset 0 0 15px #000, 8px 8px 20px rgba(0,0,0,0.9);
-            cursor: pointer; transition: transform 0.3s ease;
+        /* Catalog positioned at the very top, hidden above the screen */
+        #furniture-catalog-container {
+            width: 1100px; height: 550px; position: absolute; top: -600px; 
+            left: 50%; transform: translateX(-50%); z-index: 1000;
+            transition: top 1s cubic-bezier(0.17, 0.67, 0.83, 0.67);
         }
 
-        .white-card {
-            width: 82%; height: 58%; background: #ccc;
-            display: flex; justify-content: center; align-items: center;
-            box-shadow: inset 5px 5px 10px rgba(0,0,0,0.8);
-            transition: all 0.3s ease;
-        }
-
-        .label-holder:hover { transform: translateY(-8px); }
-        .label-holder:hover .white-card { background: #fff; box-shadow: 0 0 25px rgba(255,255,255,1), inset 2px 2px 4px rgba(0,0,0,0.4); }
-
-        .label-text { font-family: 'Courier New', Courier, monospace; font-weight: 900; font-size: 16px; color: #000; text-transform: uppercase; }
-
-        .lip-pull { position: absolute; bottom: 4px; width: 75%; height: 14px; background: #050505; border-radius: 0 0 12px 12px; border: 1px solid #222; box-shadow: 0 3px 5px #000; }
-
-        #interaction-zone { display: flex; flex-direction: row; align-items: flex-end; width: 1540px; height: 750px; position: relative; margin-top: 50px; padding-bottom: 50px; }
-
-        #asset-slider { width: 550px; height: 100%; position: relative; transform: translateX(-600px); transition: transform 1.2s cubic-bezier(0.4, 0, 0.2, 1); }
-
-        .cabinet-image { width: 100%; height: auto; display: block; }
-        .case-image { width: 130%; height: auto; margin-left: -15%; filter: drop-shadow(10px 10px 30px rgba(0,0,0,0.8)); }
-
-        .brass-plaque {
-            position: absolute; width: 42%; height: 14%; 
-            background: var(--brass-cast);
-            border-radius: 8px; /* For the scalloped look logic */
-            clip-path: polygon(10% 0, 90% 0, 100% 25%, 100% 75%, 90% 100%, 10% 100%, 0 75%, 0 25%);
-            box-shadow: inset 0 0 10px rgba(0,0,0,0.5), 2px 2px 5px rgba(0,0,0,0.8);
-            display: flex; justify-content: center; align-items: center;
-            cursor: pointer; transition: transform 0.2s;
-            background-image: url('https://www.transparenttextures.com/patterns/pitted-metal.png'); /* Sand-cast texture */
-        }
-
-        .brass-plaque span { 
-            font-family: 'Crimson Text', serif; font-weight: 600; font-size: 16px;
-            color: #3d2b00; text-transform: uppercase; letter-spacing: 1px;
-            text-shadow: 1px 1px 0px rgba(255,255,255,0.3); /* Raised effect */
-        }
-
-        .brass-plaque::before, .brass-plaque::after {
-            content: ''; position: absolute; width: 5px; height: 5px; background: #222; border-radius: 50%; box-shadow: inset 1px 1px 1px #000;
-        }
-        .brass-plaque::before { left: 8px; } .brass-plaque::after { right: 8px; }
-
-        .case-id-label {
-            position: absolute; font-family: 'Limelight', cursive; font-size: 20px;
-            color: rgba(255,255,255,0.8); text-transform: uppercase; pointer-events: none;
-            text-shadow: 2px 2px 4px #000;
-        }
-
-        .hanging-tag {
-            position: absolute; width: 160px; height: auto; cursor: pointer;
-            transition: transform 0.3s ease, filter 0.3s; z-index: 500;
-            transform-origin: top center;
-        }
-        .hanging-tag img { width: 100%; height: auto; display: block; }
-        .hanging-tag:hover { transform: rotate(5deg) scale(1.05); filter: drop-shadow(0 0 15px #fff); }
-
+        /* Enlarged Theater Stage - No Border */
         #theater-container {
-            width: 950px; height: 550px; background: #000; overflow: visible; 
-            position: relative; margin-left: 80px;
+            width: 1200px; height: 850px; background: #000; 
+            position: relative; margin-top: 60px; box-shadow: 0 30px 60px rgba(0,0,0,0.9);
         }
 
         #room-display { 
-            width: 100%; height: 100%; background-size: cover; 
-            background-repeat: no-repeat; background-position: bottom center; 
+            width: 100%; height: 100%; background-size: 100% 100%; 
+            background-repeat: no-repeat; background-position: center; 
         }
 
-        #furniture-catalog-container {
-            position: absolute; top: -450px; left: 50%; transform: translateX(-50%);
-            width: 800px; height: 450px; z-index: 1000;
-            transition: top 1s cubic-bezier(0.175, 0.885, 0.32, 1.1);
-            display: none;
+        /* Asset Slider & Interaction Area */
+        #interaction-zone { display: flex; width: 1750px; margin-top: 50px; align-items: flex-end; justify-content: center; }
+        #asset-slider { width: 550px; position: relative; transition: transform 1.2s ease; margin-right: 40px; }
+        .cabinet-image { width: 100%; height: auto; display: block; }
+        .case-image { width: 135%; margin-left: -17.5%; filter: drop-shadow(15px 15px 30px #000); }
+
+        /* Brass Scalloped Nameplates */
+        .brass-plaque {
+            position: absolute; width: 42%; height: 12%; background: var(--brass-cast);
+            clip-path: polygon(10% 0, 90% 0, 100% 25%, 100% 75%, 90% 100%, 10% 100%, 0 75%, 0 25%);
+            background-image: url('https://www.transparenttextures.com/patterns/pitted-metal.png');
+            display: flex; justify-content: center; align-items: center; cursor: pointer;
+            box-shadow: inset 0 0 10px rgba(0,0,0,0.5), 3px 3px 6px rgba(0,0,0,0.8);
         }
 
-        .catalog-book { width: 100%; height: 100%; filter: drop-shadow(0 20px 40px rgba(0,0,0,0.9)); }
-
-        #catalog-content {
-            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-            display: flex; justify-content: space-around; align-items: center;
-            padding: 40px; box-sizing: border-box; color: #fff; font-family: 'Crimson Text', serif;
+        .brass-plaque span { 
+            font-family: 'Crimson Text', serif; font-size: 18px; color: #3d2b00; 
+            text-transform: uppercase; text-shadow: 1px 1px 0px rgba(255,255,255,0.3); font-weight: 600;
         }
 
-        .index-page { text-align: center; width: 100%; }
-        .index-page h3 { font-size: 32px; border-bottom: 1px solid #444; margin-bottom: 20px; }
-        .index-list { list-style: none; padding: 0; font-size: 22px; display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
-        .index-list li { cursor: pointer; transition: color 0.3s; }
-        .index-list li:hover { color: #d4af37; text-decoration: underline; }
+        .brass-plaque::before, .brass-plaque::after {
+            content: ''; position: absolute; width: 5px; height: 5px; background: #1a1a1a; border-radius: 50%;
+        }
+        .brass-plaque::before { left: 8px; } .brass-plaque::after { right: 8px; }
+
+        /* Oversized Tags anchored to leather handles */
+        .hanging-tag {
+            position: absolute; width: 180px; height: auto; cursor: pointer;
+            z-index: 500; filter: drop-shadow(8px 8px 15px rgba(0,0,0,0.8));
+            transform-origin: top center; transition: transform 0.3s ease;
+        }
+        .hanging-tag:hover { transform: rotate(3deg) scale(1.05); }
+
+        .tag-label {
+            position: absolute; width: 100%; text-align: center; top: 52%;
+            font-family: 'Limelight', cursive; font-size: 20px; color: #000;
+            pointer-events: none;
+        }
     </style>
 </head>
 <body>
 
 <div id="main-site-container">
-    <header>
-        <h1>Room Glow Up</h1>
-        <h2>Where Your Dream Space Comes To Life</h2>
-    </header>
+    <div id="furniture-catalog-container">
+        <img src="Assets/furniturecatalog.png" style="width:100%; height:100%;">
+    </div>
 
-    <nav class="nav-container">
-        <div class="label-holder" onclick="triggerCabinet()"><div class="white-card"><span class="label-text">Rooms</span></div><div class="lip-pull"></div></div>
-        <div class="label-holder"><div class="white-card"><span class="label-text">Furniture Catalog</span></div><div class="lip-pull"></div></div>
-        <div class="label-holder" onclick="scrollToSection('decor-section')"><div class="white-card"><span class="label-text">Decor Closet</span></div><div class="lip-pull"></div></div>
-        <div class="label-holder"><div class="white-card"><span class="label-text">Inspirational Gallery</span></div><div class="lip-pull"></div></div>
-        <div class="label-holder"><div class="white-card"><span class="label-text">Save / Checkout</span></div><div class="lip-pull"></div></div>
-    </nav>
+    <header><h1>Room Glow Up</h1></header>
 
     <div id="interaction-zone">
         <div id="asset-slider">
             <img id="main-asset" src="Assets/roomscabinet.png" class="cabinet-image">
             
             <div id="cabinet-controls">
-                <div class="brass-plaque" style="top:11%; left:6%;" onmouseover="previewRoom('livingroom1.jpg')" onclick="cycleRoom('livingroom')"><span>Living Room</span></div>
-                <div class="brass-plaque" style="top:11%; right:6%;" onmouseover="previewRoom('bedroom.jpg')" onclick="cycleRoom('bedroom')"><span>Bedroom</span></div>
-                <div class="brass-plaque" style="top:41%; left:6%;" onmouseover="previewRoom('diningroom.jpg')" onclick="cycleRoom('diningroom')"><span>Dining Room</span></div>
-                <div class="brass-plaque" style="top:41%; right:6%;" onmouseover="previewRoom('foyer.jpg')" onclick="cycleRoom('extra')"><span>Extra Rooms</span></div>
-                <div class="brass-plaque" style="top:72%; left:25%; width:50%;" onclick="alert('Upload Trigger')"><span>Upload Yours</span></div>
+                <div class="brass-plaque" style="top:11%; left:6%;" onclick="cycleRoom('livingroom')"><span>Living Room</span></div>
+                <div class="brass-plaque" style="top:11%; right:6%;" onclick="cycleRoom('bedroom')"><span>Bedroom</span></div>
+                <div class="brass-plaque" style="top:41%; left:6%;" onclick="cycleRoom('diningroom')"><span>Dining Room</span></div>
+                <div class="brass-plaque" style="top:41%; right:6%;" onclick="cycleRoom('extra')"><span>Extra Rooms</span></div>
             </div>
 
             <div id="case-controls" style="display:none;">
-                <div class="case-id-label" style="top:10%; left:18%;">Seating</div>
-                <div class="hanging-tag" style="top:12%; left:12%;" onclick="openCatalog('Seating')"><img src="Assets/iconseating.png"></div>
-                
-                <div class="case-id-label" style="top:10%; right:18%;">Tables</div>
-                <div class="hanging-tag" style="top:12%; right:0%;" onclick="openCatalog('Tables')"><img src="Assets/icontable.png"></div>
-                
-                <div class="case-id-label" style="top:44%; left:18%;">Storage</div>
-                <div class="hanging-tag" style="top:48%; left:12%;" onclick="openCatalog('Storage')"><img src="Assets/iconstorage.png"></div>
-                
-                <div class="case-id-label" style="top:44%; right:18%;">Beds</div>
-                <div class="hanging-tag" style="top:48%; right:0%;" onclick="openCatalog('Beds')"><img src="Assets/iconbeds.png"></div>
+                <div class="hanging-tag" id="tag-left" style="top:12%; left:10%;" onclick="revealSubTags('Seating')">
+                    <img src="Assets/tag_base.png" style="width:100%;">
+                    <div class="tag-label" id="label-left">Seating</div>
+                </div>
+                <div class="hanging-tag" id="tag-right" style="top:12%; right:0%;" onclick="revealSubTags('Tables')">
+                    <img src="Assets/tag_base.png" style="width:100%;">
+                    <div class="tag-label" id="label-right">Tables</div>
+                </div>
             </div>
         </div>
 
         <div id="theater-container">
-            <div id="furniture-catalog-container">
-                <img src="Assets/furniturecatalog.png" class="catalog-book">
-                <div id="catalog-content">
-                    <div class="index-page">
-                        <h3>Catalog Index</h3>
-                        <ul class="index-list">
-                            <li>Ottomans</li><li>Chairs</li><li>Couches</li><li>Tables</li>
-                            <li>Dressers</li><li>Beds</li><li>Sideboards</li><li>Cabinets</li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
             <div id="room-display"></div>
         </div>
     </div>
-
-    <div id="decor-section" style="height: 800px;"></div>
 </div>
 
 <script>
-    const roomData = {
-        livingroom: ['livingroom1.jpg', 'livingroom3.jpg'],
-        bedroom: ['bedroom.jpg', 'bedroom2.jpg'],
-        diningroom: ['diningroom.jpg'],
-        extra: ['foyer.jpg', 'office.jpg', 'kitchen.jpg']
-    };
+    const roomData = { livingroom: ['livingroom1.jpg'], bedroom: ['bedroom.jpg'], diningroom: ['diningroom.jpg'], extra: ['foyer.jpg'] };
+    let subTierActive = false;
 
-    let currentRoomIndices = { livingroom: 0, bedroom: 0, diningroom: 0, extra: 0 };
-
-    function scrollToSection(id) { document.getElementById(id).scrollIntoView({ behavior: 'smooth' }); }
-
-    function triggerCabinet() {
-        scrollToSection('interaction-zone');
-        document.getElementById('asset-slider').style.transform = "translateX(0)";
-    }
-
-    function previewRoom(img) { document.getElementById('room-display').style.backgroundImage = `url('Assets/${img}')`; }
-
-    function cycleRoom(category) {
-        currentRoomIndices[category] = (currentRoomIndices[category] + 1) % roomData[category].length;
-        previewRoom(roomData[category][currentRoomIndices[category]]);
-        lockInRoom();
-    }
-
-    function lockInRoom() {
+    function cycleRoom(cat) {
+        document.getElementById('room-display').style.backgroundImage = `url('Assets/${roomData[cat][0]}')`;
         const slider = document.getElementById('asset-slider');
-        const mainImg = document.getElementById('main-asset');
         slider.style.transform = "translateX(-650px)";
         setTimeout(() => {
-            mainImg.src = "Assets/furniturecases.png";
-            mainImg.className = "cabinet-image case-image";
+            document.getElementById('main-asset').src = "Assets/furniturecases.png";
+            document.getElementById('main-asset').classList.add('case-image');
             document.getElementById('cabinet-controls').style.display = 'none';
             document.getElementById('case-controls').style.display = 'block';
             slider.style.transform = "translateX(0)";
         }, 1200);
     }
 
-    function openCatalog(category) {
+    function revealSubTags(category) {
+        if (!subTierActive) {
+            if (category === 'Seating') {
+                document.getElementById('label-left').innerText = "Ottomans";
+                document.getElementById('label-right').innerText = "Couches";
+            } else if (category === 'Tables') {
+                document.getElementById('label-left').innerText = "Coffee Tables";
+                document.getElementById('label-right').innerText = "Side Tables";
+            }
+            subTierActive = true;
+            // Now clicking these triggers the Catalog
+            document.getElementById('tag-left').onclick = triggerCatalog;
+            document.getElementById('tag-right').onclick = triggerCatalog;
+        }
+    }
+
+    function triggerCatalog() {
         const catalog = document.getElementById('furniture-catalog-container');
-        catalog.style.display = 'block';
-        setTimeout(() => {
-            catalog.style.top = "0px";
-            scrollToSection('interaction-zone');
-        }, 50);
+        catalog.style.top = "20px"; // Slides down to top of screen
+        window.scrollTo({ top: 0, behavior: 'smooth' }); // Scrolls back up to meet it
     }
 </script>
 
