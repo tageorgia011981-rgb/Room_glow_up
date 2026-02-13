@@ -10,14 +10,16 @@
             --shiny-black: linear-gradient(to bottom, #444 0%, #000 45%, #111 50%, #000 55%, #222 100%);
             --header-shine: linear-gradient(120deg, transparent 30%, rgba(255,255,255,0.9) 50%, transparent 70%);
             --metal-dark: linear-gradient(145deg, #1a1a1a, #000, #222, #0a0a0a);
-            --pewter-plate: linear-gradient(180deg, #bdc3c7 0%, #95a5a6 45%, #7f8c8d 50%, #95a5a6 55%, #bdc3c7 100%);
+            --pewter-plate: linear-gradient(180deg, #d1d5d8 0%, #a0aab0 45%, #7f8c8d 50%, #a0aab0 55%, #d1d5d8 100%);
             --glow-white: rgba(255, 255, 255, 1);
         }
 
         body, html {
-            margin: 0; padding: 0; min-height: 250vh;
+            margin: 0; padding: 0; 
+            min-height: 250vh; /* Ensures there is room to scroll */
             background: url('Assets/mainbackground2.jpg') no-repeat center center fixed;
-            background-size: cover; scroll-behavior: smooth; overflow-x: hidden;
+            background-size: cover; scroll-behavior: smooth;
+            overflow-x: hidden; overflow-y: auto; /* Fixed scrolling */
         }
 
         #main-site-container { width: 100%; display: flex; flex-direction: column; align-items: center; }
@@ -80,19 +82,19 @@
         .case-image { width: 130%; height: auto; margin-left: -15%; filter: drop-shadow(10px 10px 30px rgba(0,0,0,0.8)); }
 
         .drawer-plaque {
-            position: absolute; width: 42%; height: 12%; 
-            background: var(--pewter-plate); border: 2px solid #2c3e50; border-radius: 15px;
-            box-shadow: inset 0px 2px 2px rgba(255,255,255,0.5), 3px 3px 6px rgba(0,0,0,0.6);
+            position: absolute; width: 38%; height: 8%; 
+            background: var(--pewter-plate); border: 1px solid #2c3e50; border-radius: 4px;
+            box-shadow: inset 1px 1px 1px rgba(255,255,255,0.4), 2px 2px 4px rgba(0,0,0,0.7);
             display: flex; justify-content: center; align-items: center;
-            cursor: pointer; transition: all 0.3s;
+            cursor: pointer; transition: all 0.2s;
         }
         .drawer-plaque::before, .drawer-plaque::after {
-            content: ''; position: absolute; width: 5px; height: 5px; background: #222; border-radius: 50%;
+            content: ''; position: absolute; width: 3px; height: 3px; background: #222; border-radius: 50%;
         }
-        .drawer-plaque::before { left: 8px; } .drawer-plaque::after { right: 8px; }
+        .drawer-plaque::before { left: 5px; } .drawer-plaque::after { right: 5px; }
 
         .drawer-plaque span { 
-            font-family: 'Courier New', monospace; font-weight: 900; font-size: 14px;
+            font-family: 'Courier New', monospace; font-weight: 900; font-size: 12px;
             color: #111; text-transform: uppercase; pointer-events: none;
         }
 
@@ -118,6 +120,7 @@
             width: 100%; height: 100%; background-size: contain; 
             background-repeat: no-repeat; background-position: center; 
             transition: background-image 0.5s ease-in-out;
+            cursor: cell; /* Indicates you can click to lock in */
         }
     </style>
 </head>
@@ -141,10 +144,10 @@
         <div id="asset-slider">
             <img id="main-asset" src="Assets/roomscabinet.png" class="cabinet-image">
             <div id="cabinet-controls">
-                <div class="drawer-plaque" style="top:12%; left:6%;" onmouseover="previewRoom('livingroom1.jpg')" onclick="cycleRoom('livingroom')"><span>Living Room</span></div>
-                <div class="drawer-plaque" style="top:12%; right:6%;" onmouseover="previewRoom('bedroom.jpg')" onclick="cycleRoom('bedroom')"><span>Bedroom</span></div>
-                <div class="drawer-plaque" style="top:42%; left:6%;" onmouseover="previewRoom('diningroom.jpg')" onclick="cycleRoom('diningroom')"><span>Dining Room</span></div>
-                <div class="drawer-plaque" style="top:42%; right:6%;" onmouseover="previewRoom('foyer.jpg')" onclick="cycleRoom('extra')"><span>Extra Rooms</span></div>
+                <div class="drawer-plaque" style="top:12.5%; left:10%;" onmouseover="previewRoom('livingroom1.jpg')" onclick="cycleRoom('livingroom')"><span>Living Room</span></div>
+                <div class="drawer-plaque" style="top:12.5%; right:10%;" onmouseover="previewRoom('bedroom.jpg')" onclick="cycleRoom('bedroom')"><span>Bedroom</span></div>
+                <div class="drawer-plaque" style="top:42.5%; left:10%;" onmouseover="previewRoom('diningroom.jpg')" onclick="cycleRoom('diningroom')"><span>Dining Room</span></div>
+                <div class="drawer-plaque" style="top:42.5%; right:10%;" onmouseover="previewRoom('foyer.jpg')" onclick="cycleRoom('extra')"><span>Extra Rooms</span></div>
                 <div class="drawer-plaque" style="top:73%; left:25%; width:50%;" onclick="alert('Upload')"><span>Upload Yours</span></div>
             </div>
             <div id="case-controls" style="display:none;">
@@ -156,10 +159,11 @@
             <div id="sub-controls" style="display:none;"></div>
         </div>
         <div id="theater-container">
-            <div id="room-display"></div>
+            <div id="room-display" onclick="switchToFurniture()"></div>
         </div>
     </div>
-    <div id="decor-section" style="height: 800px;"></div>
+    <div id="decor-section" style="height: 1000px; background: rgba(0,0,0,0.2); margin-top: 100px; width: 80%; border: 2px dashed #333;">
+        </div>
 </div>
 
 <script>
@@ -167,31 +171,48 @@
     const subCategories = { seating: ['couches', 'chairs', 'benches', 'stools'], tables: ['diningtable', 'endtable', 'coffeetable'], storage: ['dresser', 'cabinets'], beds: ['bed'] };
     let currentRoomIndices = { livingroom: 0, bedroom: 0, diningroom: 0, extra: 0 };
 
-    function scrollToSection(id) { document.getElementById(id).scrollIntoView({ behavior: 'smooth' }); }
-    function previewRoom(img) { document.getElementById('room-display').style.backgroundImage = `url('Assets/${img}')`; }
-    function cycleRoom(cat) { currentRoomIndices[cat] = (currentRoomIndices[cat] + 1) % roomData[cat].length; previewRoom(roomData[cat][currentRoomIndices[cat]]); }
+    function scrollToSection(id) { 
+        const el = document.getElementById(id);
+        if(el) el.scrollIntoView({ behavior: 'smooth' }); 
+    }
+
+    function previewRoom(img) { 
+        document.getElementById('room-display').style.backgroundImage = `url('Assets/${img}')`; 
+    }
+
+    function cycleRoom(cat) { 
+        currentRoomIndices[cat] = (currentRoomIndices[cat] + 1) % roomData[cat].length; 
+        previewRoom(roomData[cat][currentRoomIndices[cat]]); 
+    }
 
     function triggerCabinet() {
+        const slider = document.getElementById('asset-slider');
         const mainImg = document.getElementById('main-asset');
         mainImg.src = "Assets/roomscabinet.png";
         mainImg.className = "cabinet-image";
         document.getElementById('cabinet-controls').style.display = 'block';
         document.getElementById('case-controls').style.display = 'none';
         document.getElementById('sub-controls').style.display = 'none';
-        document.getElementById('asset-slider').style.transform = "translateX(0)";
+        slider.style.transform = "translateX(0)";
+        scrollToSection('interaction-zone');
     }
 
     function switchToFurniture() {
         const slider = document.getElementById('asset-slider');
         const mainImg = document.getElementById('main-asset');
-        slider.style.transform = "translateX(-650px)";
-        setTimeout(() => {
-            mainImg.src = "Assets/furniturecases.png";
-            mainImg.className = "cabinet-image case-image";
-            document.getElementById('cabinet-controls').style.display = 'none';
-            document.getElementById('case-controls').style.display = 'block';
-            slider.style.transform = "translateX(0)";
-        }, 1200);
+        
+        // Only switch if we aren't already looking at furniture
+        if (!mainImg.src.includes("furniturecases.png")) {
+            slider.style.transform = "translateX(-650px)";
+            setTimeout(() => {
+                mainImg.src = "Assets/furniturecases.png";
+                mainImg.className = "cabinet-image case-image";
+                document.getElementById('cabinet-controls').style.display = 'none';
+                document.getElementById('case-controls').style.display = 'block';
+                document.getElementById('sub-controls').style.display = 'none';
+                slider.style.transform = "translateX(0)";
+            }, 1200);
+        }
     }
 
     function openSubCategory(cat) {
@@ -208,7 +229,7 @@
             const img = document.createElement('img');
             img.src = `Assets/icon${cat}${name}.png`;
             tag.appendChild(img);
-            tag.onclick = () => alert('Catalog for ' + name);
+            tag.onclick = () => alert('Catalog opening for ' + name);
             subCont.appendChild(tag);
         });
     }
