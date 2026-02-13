@@ -4,18 +4,17 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Room Glow Up - Your Dream Space Come To Life</title>
-    <link href="https://fonts.googleapis.com/css2?family=Limelight&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Limelight&family=Crimson+Text:wght@600&display=swap" rel="stylesheet">
     <style>
         :root {
             --shiny-black: linear-gradient(to bottom, #444 0%, #000 45%, #111 50%, #000 55%, #222 100%);
             --header-shine: linear-gradient(120deg, transparent 30%, rgba(255,255,255,0.9) 50%, transparent 70%);
+            --brass-cast: linear-gradient(145deg, #e5c47c, #b89130, #d4af37, #8a6d1a);
             --metal-dark: linear-gradient(145deg, #1a1a1a, #000, #222, #0a0a0a);
-            --pewter-metal: linear-gradient(145deg, #7f8c8d, #bdc3c7, #95a5a6, #2c3e50);
-            --glow-white: rgba(255, 255, 255, 1);
         }
 
         body, html {
-            margin: 0; padding: 0; min-height: 250vh;
+            margin: 0; padding: 0; min-height: 300vh;
             background: url('Assets/mainbackground2.jpg') no-repeat center center fixed;
             background-size: cover; scroll-behavior: smooth; overflow-x: hidden;
         }
@@ -52,75 +51,93 @@
             cursor: pointer; transition: transform 0.3s ease;
         }
 
-        .label-holder::before, .label-holder::after {
-            content: ''; position: absolute; width: 7px; height: 7px; 
-            background: #333; border-radius: 50%; box-shadow: inset 1px 1px 1px #000, 1px 1px 1px #555;
-        }
-        .label-holder::before { top: 8px; left: 8px; } .label-holder::after { top: 8px; right: 8px; }
-
         .white-card {
             width: 82%; height: 58%; background: #ccc;
             display: flex; justify-content: center; align-items: center;
-            box-shadow: inset 5px 5px 10px rgba(0,0,0,0.8), inset -2px -2px 5px rgba(255,255,255,0.1);
+            box-shadow: inset 5px 5px 10px rgba(0,0,0,0.8);
             transition: all 0.3s ease;
         }
 
         .label-holder:hover { transform: translateY(-8px); }
-        .label-holder:hover .white-card { background: #fff; box-shadow: 0 0 25px var(--glow-white), inset 2px 2px 4px rgba(0,0,0,0.4); }
+        .label-holder:hover .white-card { background: #fff; box-shadow: 0 0 25px rgba(255,255,255,1), inset 2px 2px 4px rgba(0,0,0,0.4); }
 
-        .label-text { font-family: 'Courier New', Courier, monospace; font-weight: 900; font-size: 16px; color: #000; text-transform: uppercase; text-align: center; }
+        .label-text { font-family: 'Courier New', Courier, monospace; font-weight: 900; font-size: 16px; color: #000; text-transform: uppercase; }
 
         .lip-pull { position: absolute; bottom: 4px; width: 75%; height: 14px; background: #050505; border-radius: 0 0 12px 12px; border: 1px solid #222; box-shadow: 0 3px 5px #000; }
 
-        #interaction-zone { display: flex; flex-direction: row; align-items: center; width: 1540px; height: 750px; position: relative; margin-top: 50px; }
+        #interaction-zone { display: flex; flex-direction: row; align-items: flex-end; width: 1540px; height: 750px; position: relative; margin-top: 50px; padding-bottom: 50px; }
 
         #asset-slider { width: 550px; height: 100%; position: relative; transform: translateX(-600px); transition: transform 1.2s cubic-bezier(0.4, 0, 0.2, 1); }
 
         .cabinet-image { width: 100%; height: auto; display: block; }
         .case-image { width: 130%; height: auto; margin-left: -15%; filter: drop-shadow(10px 10px 30px rgba(0,0,0,0.8)); }
 
-        .drawer-plaque {
-            position: absolute; width: 38%; height: 15%; 
-            background: var(--pewter-metal); border: 1px solid #2c3e50; 
-            box-shadow: inset 1px 1px 1px rgba(255,255,255,0.4), 2px 2px 4px rgba(0,0,0,0.8);
+        .brass-plaque {
+            position: absolute; width: 42%; height: 14%; 
+            background: var(--brass-cast);
+            border-radius: 8px; /* For the scalloped look logic */
+            clip-path: polygon(10% 0, 90% 0, 100% 25%, 100% 75%, 90% 100%, 10% 100%, 0 75%, 0 25%);
+            box-shadow: inset 0 0 10px rgba(0,0,0,0.5), 2px 2px 5px rgba(0,0,0,0.8);
             display: flex; justify-content: center; align-items: center;
-            cursor: pointer; transition: all 0.3s;
+            cursor: pointer; transition: transform 0.2s;
+            background-image: url('https://www.transparenttextures.com/patterns/pitted-metal.png'); /* Sand-cast texture */
         }
-        .drawer-plaque::before, .drawer-plaque::after {
-            content: ''; position: absolute; width: 4px; height: 4px; background: #222; border-radius: 50%;
-        }
-        .drawer-plaque::before { left: 5px; } .drawer-plaque::after { right: 5px; }
 
-        .drawer-plaque span { 
-            font-family: 'Courier New', monospace; font-weight: 900; font-size: 12px;
-            color: #111; text-transform: uppercase; pointer-events: none;
+        .brass-plaque span { 
+            font-family: 'Crimson Text', serif; font-weight: 600; font-size: 16px;
+            color: #3d2b00; text-transform: uppercase; letter-spacing: 1px;
+            text-shadow: 1px 1px 0px rgba(255,255,255,0.3); /* Raised effect */
         }
-        .drawer-plaque:hover { filter: brightness(1.1); box-shadow: 0 0 15px var(--glow-white); }
 
-        .case-label {
-            position: absolute; font-family: 'Limelight', cursive; font-size: 18px;
-            color: rgba(255,255,255,0.7); text-transform: uppercase; pointer-events: none;
+        .brass-plaque::before, .brass-plaque::after {
+            content: ''; position: absolute; width: 5px; height: 5px; background: #222; border-radius: 50%; box-shadow: inset 1px 1px 1px #000;
+        }
+        .brass-plaque::before { left: 8px; } .brass-plaque::after { right: 8px; }
+
+        .case-id-label {
+            position: absolute; font-family: 'Limelight', cursive; font-size: 20px;
+            color: rgba(255,255,255,0.8); text-transform: uppercase; pointer-events: none;
+            text-shadow: 2px 2px 4px #000;
         }
 
         .hanging-tag {
-            position: absolute; width: 140px; height: auto; cursor: pointer;
+            position: absolute; width: 160px; height: auto; cursor: pointer;
             transition: transform 0.3s ease, filter 0.3s; z-index: 500;
             transform-origin: top center;
         }
         .hanging-tag img { width: 100%; height: auto; display: block; }
-        .hanging-tag:hover { transform: rotate(4deg) scale(1.05); filter: drop-shadow(0 0 20px #fff); }
+        .hanging-tag:hover { transform: rotate(5deg) scale(1.05); filter: drop-shadow(0 0 15px #fff); }
 
         #theater-container {
-            width: 950px; height: 550px; border: 25px solid #000;
-            background: #000; overflow: hidden; box-shadow: 0 0 60px rgba(0,0,0,1);
+            width: 950px; height: 550px; background: #000; overflow: visible; 
             position: relative; margin-left: 80px;
         }
 
         #room-display { 
             width: 100%; height: 100%; background-size: cover; 
-            background-repeat: no-repeat; background-position: center; 
-            cursor: pointer;
+            background-repeat: no-repeat; background-position: bottom center; 
         }
+
+        #furniture-catalog-container {
+            position: absolute; top: -450px; left: 50%; transform: translateX(-50%);
+            width: 800px; height: 450px; z-index: 1000;
+            transition: top 1s cubic-bezier(0.175, 0.885, 0.32, 1.1);
+            display: none;
+        }
+
+        .catalog-book { width: 100%; height: 100%; filter: drop-shadow(0 20px 40px rgba(0,0,0,0.9)); }
+
+        #catalog-content {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            display: flex; justify-content: space-around; align-items: center;
+            padding: 40px; box-sizing: border-box; color: #fff; font-family: 'Crimson Text', serif;
+        }
+
+        .index-page { text-align: center; width: 100%; }
+        .index-page h3 { font-size: 32px; border-bottom: 1px solid #444; margin-bottom: 20px; }
+        .index-list { list-style: none; padding: 0; font-size: 22px; display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
+        .index-list li { cursor: pointer; transition: color 0.3s; }
+        .index-list li:hover { color: #d4af37; text-decoration: underline; }
     </style>
 </head>
 <body>
@@ -144,32 +161,42 @@
             <img id="main-asset" src="Assets/roomscabinet.png" class="cabinet-image">
             
             <div id="cabinet-controls">
-                <div class="drawer-plaque" style="top:12%; left:8%;" onmouseover="previewRoom('livingroom1.jpg')" onclick="cycleRoom('livingroom')"><span>Living Room</span></div>
-                <div class="drawer-plaque" style="top:12%; right:8%;" onmouseover="previewRoom('bedroom.jpg')" onclick="cycleRoom('bedroom')"><span>Bedroom</span></div>
-                <div class="drawer-plaque" style="top:42%; left:8%;" onmouseover="previewRoom('diningroom.jpg')" onclick="cycleRoom('diningroom')"><span>Dining Room</span></div>
-                <div class="drawer-plaque" style="top:42%; right:8%;" onmouseover="previewRoom('foyer.jpg')" onclick="cycleRoom('extra')"><span>Extra Rooms</span></div>
-                <div class="drawer-plaque" style="top:73%; left:25%; width:50%;" onclick="alert('Upload Trigger')"><span>Upload Yours</span></div>
+                <div class="brass-plaque" style="top:11%; left:6%;" onmouseover="previewRoom('livingroom1.jpg')" onclick="cycleRoom('livingroom')"><span>Living Room</span></div>
+                <div class="brass-plaque" style="top:11%; right:6%;" onmouseover="previewRoom('bedroom.jpg')" onclick="cycleRoom('bedroom')"><span>Bedroom</span></div>
+                <div class="brass-plaque" style="top:41%; left:6%;" onmouseover="previewRoom('diningroom.jpg')" onclick="cycleRoom('diningroom')"><span>Dining Room</span></div>
+                <div class="brass-plaque" style="top:41%; right:6%;" onmouseover="previewRoom('foyer.jpg')" onclick="cycleRoom('extra')"><span>Extra Rooms</span></div>
+                <div class="brass-plaque" style="top:72%; left:25%; width:50%;" onclick="alert('Upload Trigger')"><span>Upload Yours</span></div>
             </div>
 
             <div id="case-controls" style="display:none;">
-                <div class="case-label" style="top:8%; left:15%;">Seating</div>
-                <div class="hanging-tag" style="top:12%; left:12%;" onclick="openSubCategory('seating')"><img src="Assets/iconseating.png"></div>
+                <div class="case-id-label" style="top:10%; left:18%;">Seating</div>
+                <div class="hanging-tag" style="top:12%; left:12%;" onclick="openCatalog('Seating')"><img src="Assets/iconseating.png"></div>
                 
-                <div class="case-label" style="top:8%; right:15%;">Tables</div>
-                <div class="hanging-tag" style="top:12%; right:0%;" onclick="openSubCategory('tables')"><img src="Assets/icontable.png"></div>
+                <div class="case-id-label" style="top:10%; right:18%;">Tables</div>
+                <div class="hanging-tag" style="top:12%; right:0%;" onclick="openCatalog('Tables')"><img src="Assets/icontable.png"></div>
                 
-                <div class="case-label" style="top:44%; left:15%;">Storage</div>
-                <div class="hanging-tag" style="top:48%; left:12%;" onclick="openSubCategory('storage')"><img src="Assets/iconstorage.png"></div>
+                <div class="case-id-label" style="top:44%; left:18%;">Storage</div>
+                <div class="hanging-tag" style="top:48%; left:12%;" onclick="openCatalog('Storage')"><img src="Assets/iconstorage.png"></div>
                 
-                <div class="case-label" style="top:44%; right:15%;">Beds</div>
-                <div class="hanging-tag" style="top:48%; right:0%;" onclick="openSubCategory('beds')"><img src="Assets/iconbeds.png"></div>
+                <div class="case-id-label" style="top:44%; right:18%;">Beds</div>
+                <div class="hanging-tag" style="top:48%; right:0%;" onclick="openCatalog('Beds')"><img src="Assets/iconbeds.png"></div>
             </div>
-
-            <div id="sub-controls" style="display:none;"></div>
         </div>
 
         <div id="theater-container">
-            <div id="room-display" onclick="lockInRoom()"></div>
+            <div id="furniture-catalog-container">
+                <img src="Assets/furniturecatalog.png" class="catalog-book">
+                <div id="catalog-content">
+                    <div class="index-page">
+                        <h3>Catalog Index</h3>
+                        <ul class="index-list">
+                            <li>Ottomans</li><li>Chairs</li><li>Couches</li><li>Tables</li>
+                            <li>Dressers</li><li>Beds</li><li>Sideboards</li><li>Cabinets</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div id="room-display"></div>
         </div>
     </div>
 
@@ -181,14 +208,7 @@
         livingroom: ['livingroom1.jpg', 'livingroom3.jpg'],
         bedroom: ['bedroom.jpg', 'bedroom2.jpg'],
         diningroom: ['diningroom.jpg'],
-        extra: ['foyer.jpg', 'office.jpg', 'kitchen.jpg', 'kitchen2.jpg']
-    };
-
-    const subCategories = {
-        seating: ['couches', 'chairs', 'benches', 'stools', 'ottomans', 'diningchairs'],
-        tables: ['diningtable', 'endtable', 'coffeetable', 'sofatable'],
-        storage: ['dresser', 'cabinets', 'sideboard'],
-        beds: ['bed']
+        extra: ['foyer.jpg', 'office.jpg', 'kitchen.jpg']
     };
 
     let currentRoomIndices = { livingroom: 0, bedroom: 0, diningroom: 0, extra: 0 };
@@ -205,6 +225,7 @@
     function cycleRoom(category) {
         currentRoomIndices[category] = (currentRoomIndices[category] + 1) % roomData[category].length;
         previewRoom(roomData[category][currentRoomIndices[category]]);
+        lockInRoom();
     }
 
     function lockInRoom() {
@@ -220,26 +241,13 @@
         }, 1200);
     }
 
-    function openSubCategory(cat) {
-        document.getElementById('case-controls').style.display = 'none';
-        const subCont = document.getElementById('sub-controls');
-        subCont.innerHTML = '';
-        subCont.style.display = 'block';
-        
-        subCategories[cat].forEach((name, index) => {
-            const tag = document.createElement('div');
-            tag.className = 'hanging-tag';
-            tag.style.top = (12 + (index * 12)) + "%";
-            tag.style.left = index % 2 === 0 ? "12%" : "auto";
-            tag.style.right = index % 2 !== 0 ? "0%" : "auto";
-            
-            const img = document.createElement('img');
-            img.src = `Assets/icon${name}.png`;
-            tag.appendChild(img);
-            
-            tag.onclick = () => alert('Catalog Book Opening for ' + name);
-            subCont.appendChild(tag);
-        });
+    function openCatalog(category) {
+        const catalog = document.getElementById('furniture-catalog-container');
+        catalog.style.display = 'block';
+        setTimeout(() => {
+            catalog.style.top = "0px";
+            scrollToSection('interaction-zone');
+        }, 50);
     }
 </script>
 
