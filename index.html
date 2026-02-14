@@ -35,8 +35,7 @@
         h1 {
             font-family: 'Limelight', cursive;
             font-size: clamp(4rem, 12vw, 8rem);
-            /* Metal Shine: Silver, Black, and Gunmetal */
-            background: linear-gradient(to right, #1a1f1e 0%, #535d5c 25%, #e0f2f2 50%, #535d5c 75%, #1a1f1e 100%);
+            background: linear-gradient(to right, #004d4d 0%, #008080 25%, #e0f2f2 50%, #008080 75%, #004d4d 100%);
             background-size: 200% auto;
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
@@ -54,7 +53,7 @@
         h2 {
             font-family: 'Limelight', cursive;
             font-size: 1.8rem;
-            color: #535d5c; /* Gunmetal to match */
+            color: #008080;
             margin-top: 10px;
             margin-bottom: 50px;
             text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
@@ -164,8 +163,8 @@
 
         #stage-image { width: 100%; height: 100%; object-fit: cover; }
 
-        /* CABINET WITH NAME PLATES */
-        #rooms-cabinet {
+        /* CABINET & FURNITURE CASE ANIMATIONS */
+        #rooms-cabinet, #furniture-cases {
             position: absolute;
             left: -600px; 
             transition: left 1.2s cubic-bezier(0.17, 0.67, 0.83, 0.67);
@@ -175,11 +174,10 @@
             align-items: center;
         }
 
-        #rooms-cabinet.glide-in { left: 40px; }
+        .glide-in { left: 40px !important; }
         .cabinet-wrapper { position: relative; width: 450px; }
         .cabinet-asset { width: 100%; filter: drop-shadow(10px 10px 20px black); }
 
-        /* Door Interaction Zones & Name Plates */
         .door-plate {
             position: absolute;
             width: 120px;
@@ -205,7 +203,6 @@
             transform: scale(1.05);
         }
 
-        /* Positioning plates on the roomscabinet.png 6-door structure */
         .p-living { top: 15%; left: 10%; }
         .p-bedroom { top: 15%; right: 10%; }
         .p-dining  { top: 48%; left: 10%; }
@@ -266,14 +263,19 @@
         <div id="rooms-cabinet">
             <div class="cabinet-wrapper">
                 <img src="Assets/roomscabinet.png" class="cabinet-asset">
-                <div class="door-plate p-living" onmouseover="previewRoom('living')" onclick="cycleRoom('living')">Living Room</div>
-                <div class="door-plate p-bedroom" onmouseover="previewRoom('bedroom')" onclick="cycleRoom('bedroom')">Bedroom</div>
-                <div class="door-plate p-dining" onmouseover="previewRoom('dining')" onclick="cycleRoom('dining')">Dining Room</div>
-                <div class="door-plate p-extra" onmouseover="previewRoom('extra')" onclick="cycleRoom('extra')">Extra Rooms</div>
+                <div class="door-plate p-living" onmouseover="previewRoom('living')" onclick="cycleRoom('living')" ondblclick="selectRoom()">Living Room</div>
+                <div class="door-plate p-bedroom" onmouseover="previewRoom('bedroom')" onclick="cycleRoom('bedroom')" ondblclick="selectRoom()">Bedroom</div>
+                <div class="door-plate p-dining" onmouseover="previewRoom('dining')" onclick="cycleRoom('dining')" ondblclick="selectRoom()">Dining Room</div>
+                <div class="door-plate p-extra" onmouseover="previewRoom('extra')" onclick="cycleRoom('extra')" ondblclick="selectRoom()">Extra Rooms</div>
                 <div class="door-plate p-upload">Upload Yours</div>
                 <div class="door-plate p-blank"></div>
             </div>
         </div>
+
+        <div id="furniture-cases">
+             <img src="Assets/furniturecases.png" class="cabinet-asset">
+        </div>
+
         <div class="stage-container">
             <img src="" id="stage-image">
         </div>
@@ -283,9 +285,6 @@
         <div class="closet-box">
             <div class="c-door d-left" onclick="openCloset()"></div>
             <div class="c-door d-right" onclick="openCloset()"></div>
-            <div style="position:absolute; width:100%; height:100%; display:flex; justify-content:center; align-items:center;">
-                <img src="Assets/plant_pillow.jpg" style="max-height: 70%;">
-            </div>
         </div>
     </section>
 
@@ -306,12 +305,26 @@
 
         function previewRoom(type) {
             const stage = document.getElementById('stage-image');
-            stage.src = roomData[type][currentIndices[type]];
+            if(roomData[type]) {
+                stage.src = roomData[type][currentIndices[type]];
+            }
         }
 
         function cycleRoom(type) {
-            currentIndices[type] = (currentIndices[type] + 1) % roomData[type].length;
-            previewRoom(type);
+            if(roomData[type]) {
+                currentIndices[type] = (currentIndices[type] + 1) % roomData[type].length;
+                previewRoom(type);
+            }
+        }
+
+        function selectRoom() {
+            // Glide Cabinet Out
+            document.getElementById('rooms-cabinet').classList.remove('glide-in');
+            
+            // Glide Furniture Cases In after small delay
+            setTimeout(() => {
+                document.getElementById('furniture-cases').classList.add('glide-in');
+            }, 1200);
         }
 
         function triggerDecor() { 
