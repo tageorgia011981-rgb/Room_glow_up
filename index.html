@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Room Glow Up - Interactive Workstation</title>
+    <title>Room Glow Up - Full Workstation</title>
     <link href="https://fonts.googleapis.com/css2?family=Limelight&display=swap" rel="stylesheet">
     <style>
         * { box-sizing: border-box; }
@@ -13,77 +13,78 @@
             background-size: cover; font-family: sans-serif; overflow: hidden;
         }
 
-        /* HEADER & TABS */
-        header {
-            width: 100%; height: 15vh; display: flex; flex-direction: column;
-            align-items: center; justify-content: center; text-align: center;
-        }
+        /* --- THE TABS (RESTORED TO ORIGINAL) --- */
         .nav-tabs-top {
-            position: fixed; top: 0; left: 0; width: 100%; height: 80px;
-            display: flex; justify-content: center; gap: 10px; z-index: 100;
+            position: fixed; top: 0; left: 0; width: 100%; height: 90px;
+            display: flex; justify-content: center; gap: 15px; z-index: 100;
         }
         .pull-tab {
-            width: 140px; height: 60px; background: linear-gradient(135deg, #535d5c 0%, #1a1f1e 100%);
-            border-radius: 0 0 5px 5px; cursor: pointer; display: flex; align-items: center; justify-content: center;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+            width: 160px; height: 75px; background: linear-gradient(135deg, #535d5c 0%, #1a1f1e 100%);
+            border: 1px solid #111; border-radius: 0 0 5px 5px; position: relative; cursor: pointer;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.5); transition: transform 0.3s;
         }
+        .pull-tab:hover { transform: translateY(10px); }
         .label-card {
-            width: 110px; height: 25px; background: #d4d4d4; 
-            font-family: 'Courier New', monospace; font-weight: 900; font-size: 0.7rem; color: #111;
+            width: 130px; height: 35px; background: #d4d4d4; margin: 10px auto;
             display: flex; align-items: center; justify-content: center;
+            font-family: 'Courier New', monospace; font-weight: 900; font-size: 0.85rem; color: #111;
         }
 
+        /* --- HEADER --- */
+        header {
+            width: 100%; height: 20vh; display: flex; flex-direction: column;
+            align-items: center; justify-content: center; text-align: center; padding-top: 50px;
+        }
         h1 {
-            font-family: 'Limelight', cursive; font-size: 4rem;
+            font-family: 'Limelight', cursive; font-size: 4.5rem;
             background: linear-gradient(to right, #004d4d, #008080, #e0f2f2, #008080, #004d4d);
             background-size: 200% auto; -webkit-background-clip: text; -webkit-text-fill-color: transparent;
             animation: metalShine 4s linear infinite; margin: 0;
         }
         @keyframes metalShine { to { background-position: 200% center; } }
-        .sub-header { color: #e0f2f2; font-style: italic; font-size: 1rem; opacity: 0.8; }
+        .sub-header { color: #e0f2f2; font-style: italic; font-size: 1.1rem; opacity: 0.8; margin-top: 5px; }
 
-        /* WORK-ZONE SPLIT */
-        .work-zone { width: 100%; height: 85vh; display: flex; }
+        /* --- WORK-ZONE --- */
+        .work-zone { width: 100%; height: 80vh; display: flex; }
 
-        /* LEFT: THE TOOLS (40% width) */
+        /* LEFT: THE TOOLS (40%) */
         .tools-area { 
             width: 40%; height: 100%; display: flex; align-items: center; 
             justify-content: center; position: relative; 
         }
         #case-container {
-            width: 500px; height: 650px; position: relative;
-            filter: drop-shadow(20px 20px 40px rgba(0,0,0,0.8));
+            width: 520px; height: 680px; position: relative;
+            filter: drop-shadow(25px 25px 45px rgba(0,0,0,0.9));
+            transition: transform 0.8s ease-in-out, opacity 0.5s;
         }
         #display-case { width: 100%; height: 100%; object-fit: contain; }
+        .hotspot { position: absolute; cursor: pointer; background: rgba(255,0,0,0); z-index: 10; }
 
-        /* INVISIBLE HOTSPOTS (Anchored to handles on the flat images) */
-        .hotspot { position: absolute; cursor: pointer; background: rgba(255,0,0,0); }
-
-        /* RIGHT: THE GRAND STAGE (60% width) */
+        /* RIGHT: THE GRAND STAGE (60%) */
         .stage-area { 
             width: 60%; height: 100%; background: #000; 
-            border-left: 8px solid #2c3534; position: relative; 
+            border-left: 10px solid #2c3534; position: relative; 
         }
         #stage-image { width: 100%; height: 100%; object-fit: cover; }
 
-        /* OPEN BOOK CATALOG */
+        /* --- OPEN BOOK CATALOG --- */
         #book-catalog {
-            position: fixed; top: -700px; left: 50%; transform: translateX(-50%);
-            width: 800px; height: 500px; background: url('Assets/image_f86f3d.png') no-repeat center center;
+            position: fixed; top: -750px; left: 50%; transform: translateX(-50%);
+            width: 850px; height: 550px; background: url('Assets/image_f86f3d.png') no-repeat center center;
             background-size: contain; transition: top 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275); z-index: 500;
         }
-        #book-catalog.active { top: 100px; }
-        .close-book { position: absolute; bottom: 20px; right: 50px; color: white; cursor: pointer; font-weight: bold; }
+        #book-catalog.active { top: 120px; }
+        .close-book { position: absolute; bottom: 30px; right: 60px; color: white; cursor: pointer; font-weight: bold; font-family: 'Courier New', monospace; }
 
     </style>
 </head>
 <body>
 
     <div class="nav-tabs-top">
-        <div class="pull-tab"><div class="label-card">ROOMS</div></div>
+        <div class="pull-tab"><div class="label-card">ROOMS WITH COLOR</div></div>
         <div class="pull-tab"><div class="label-card">FURNITURE</div></div>
         <div class="pull-tab"><div class="label-card">DECOR</div></div>
-        <div class="pull-tab"><div class="label-card">SHOP LOOK</div></div>
+        <div class="pull-tab"><div class="label-card">SHOP THE LOOK</div></div>
     </div>
 
     <header>
@@ -92,13 +93,13 @@
     </header>
 
     <div id="book-catalog">
-        <div class="close-book" onclick="closeBook()">BACK TO TOOLS</div>
+        <div class="close-book" onclick="closeBook()">[ BACK TO TOOLS ]</div>
     </div>
 
     <section class="work-zone">
         <div class="tools-area">
             <div id="case-container">
-                <img src="Assets/furniturecases.png" id="display-case">
+                <img src="Assets/roomcabinet.png" id="display-case">
                 <div id="hotspot-overlay"></div>
             </div>
         </div>
@@ -111,9 +112,35 @@
     <script>
         const overlay = document.getElementById('hotspot-overlay');
         const displayCase = document.getElementById('display-case');
+        const stageImage = document.getElementById('stage-image');
+        const caseContainer = document.getElementById('case-container');
 
-        // Initial Hub Hotspots
-        function loadMainHub() {
+        // 1. Initial State
+        function loadRoomCabinet() {
+            displayCase.src = 'Assets/roomcabinet.png';
+            overlay.innerHTML = `
+                <div class="hotspot" style="top:15%; left:30%; width:40%; height:12%;" onclick="selectRoom('Assets/livingroom1.jpg')"></div>
+                <div class="hotspot" style="top:30%; left:30%; width:40%; height:12%;" onclick="selectRoom('Assets/bedroom1.jpg')"></div>
+                <div class="hotspot" style="top:45%; left:30%; width:40%; height:12%;" onclick="selectRoom('Assets/office1.jpg')"></div>
+                <div class="hotspot" style="top:60%; left:30%; width:40%; height:12%;" onclick="selectRoom('Assets/kitchen1.jpg')"></div>
+                <div class="hotspot" style="top:75%; left:30%; width:40%; height:12%;" onclick="alert('Upload Interface')"></div>
+            `;
+        }
+
+        function selectRoom(imgSrc) {
+            stageImage.src = imgSrc;
+            caseContainer.style.transform = "translateX(-150%)";
+            caseContainer.style.opacity = "0";
+            
+            setTimeout(() => {
+                loadFurnitureHub();
+                caseContainer.style.transform = "translateX(0)";
+                caseContainer.style.opacity = "1";
+            }, 800);
+        }
+
+        // 2. Furniture Logic
+        function loadFurnitureHub() {
             displayCase.src = 'Assets/furniturecases.png';
             overlay.innerHTML = `
                 <div class="hotspot" style="top:15%; left:30%; width:40%; height:15%;" onclick="loadSubSet('seating')"></div>
@@ -126,31 +153,20 @@
         function loadSubSet(category) {
             if(category === 'seating') {
                 displayCase.src = 'Assets/furniturecases_seating.png';
-                overlay.innerHTML = `
-                    <div class="hotspot" style="top:10%; left:25%; width:50%; height:12%;" onclick="openBook()"></div>
-                    <div class="hotspot" style="top:25%; left:25%; width:50%; height:12%;" onclick="openBook()"></div>
-                    <div class="hotspot" style="top:40%; left:25%; width:50%; height:12%;" onclick="openBook()"></div>
-                    <div class="hotspot" style="top:55%; left:25%; width:50%; height:12%;" onclick="openBook()"></div>
-                    <div class="hotspot" style="top:70%; left:25%; width:50%; height:12%;" onclick="openBook()"></div>
-                    <div class="hotspot" style="top:85%; left:25%; width:50%; height:12%;" onclick="openBook()"></div>
-                `;
             } else if(category === 'tables') {
                 displayCase.src = 'Assets/furniturecases_tables.png';
-                overlay.innerHTML = `
-                    <div class="hotspot" style="top:20%; left:25%; width:50%; height:15%;" onclick="openBook()"></div>
-                    <div class="hotspot" style="top:40%; left:25%; width:50%; height:15%;" onclick="openBook()"></div>
-                    <div class="hotspot" style="top:60%; left:25%; width:50%; height:15%;" onclick="openBook()"></div>
-                    <div class="hotspot" style="top:80%; left:25%; width:50%; height:15%;" onclick="openBook()"></div>
-                `;
             } else if(category === 'storage') {
                 displayCase.src = 'Assets/furniturecases_storage.png';
-                overlay.innerHTML = `
-                    <div class="hotspot" style="top:20%; left:25%; width:50%; height:15%;" onclick="openBook()"></div>
-                    <div class="hotspot" style="top:40%; left:25%; width:50%; height:15%;" onclick="openBook()"></div>
-                    <div class="hotspot" style="top:60%; left:25%; width:50%; height:15%;" onclick="openBook()"></div>
-                    <div class="hotspot" style="top:80%; left:25%; width:50%; height:15%;" onclick="openBook()"></div>
-                `;
             }
+            // All handles on sub-cases trigger the book
+            overlay.innerHTML = `
+                <div class="hotspot" style="top:10%; left:20%; width:60%; height:12%;" onclick="openBook()"></div>
+                <div class="hotspot" style="top:25%; left:20%; width:60%; height:12%;" onclick="openBook()"></div>
+                <div class="hotspot" style="top:40%; left:20%; width:60%; height:12%;" onclick="openBook()"></div>
+                <div class="hotspot" style="top:55%; left:20%; width:60%; height:12%;" onclick="openBook()"></div>
+                <div class="hotspot" style="top:70%; left:20%; width:60%; height:12%;" onclick="openBook()"></div>
+                <div class="hotspot" style="top:85%; left:20%; width:60%; height:12%;" onclick="openBook()"></div>
+            `;
         }
 
         function openBook() {
@@ -159,11 +175,10 @@
 
         function closeBook() {
             document.getElementById('book-catalog').classList.remove('active');
-            loadMainHub(); // Reset back to main hub when closing
+            loadFurnitureHub();
         }
 
-        // Initialize on load
-        window.onload = loadMainHub;
+        window.onload = loadRoomCabinet;
     </script>
 </body>
 </html>
