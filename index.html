@@ -43,56 +43,65 @@
             box-shadow: inset 2px 2px 3px rgba(255,255,255,0.1), inset -2px -2px 5px rgba(0,0,0,0.5), 8px 10px 20px rgba(0,0,0,0.7);
             display: flex; justify-content: center;
         }
-        .screw { position: absolute; width: 8px; height: 8px; background: radial-gradient(circle, #717d7e 0%, #2c3534 100%); border-radius: 50%; box-shadow: 1px 1px 2px rgba(0,0,0,0.8); }
-        .s-tl { top: 6px; left: 6px; } .s-tr { top: 6px; right: 6px; } .s-bl { bottom: 20px; left: 6px; } .s-br { bottom: 20px; right: 6px; }
-        
         .label-card {
             width: 200px; height: 50px; background: #d4d4d4; margin-top: 18px; display: flex; align-items: center; justify-content: center;
             font-family: 'Courier New', Courier, monospace; font-weight: 900; font-size: 0.85rem; color: #111; border: 1px solid #888;
             box-shadow: inset 2px 2px 5px rgba(0,0,0,0.3); transition: all 0.4s ease; text-transform: uppercase; text-align: center;
         }
         .pull-tab:hover .label-card { background: #fff; color: #000; box-shadow: 0 0 20px 5px rgba(255, 255, 255, 0.8); transform: scale(1.02); }
-        .lip-pull { width: 110px; height: 12px; background: linear-gradient(to bottom, #1a1f1e, #000); border-radius: 0 0 15px 15px; position: absolute; bottom: 6px; border: 1px solid #333; }
 
         /* --- 2. WORKSTATION LAYOUT --- */
         .work-zone { 
             width: 100%; height: 100vh; display: flex; align-items: center; justify-content: flex-end; 
             position: relative; padding-right: 40px; 
         }
-
         .stage-container {
-            width: 1100px; height: 600px; background: #000; border: 15px solid #2c3534;
-            box-shadow: 0 0 60px rgba(0,0,0,0.9); position: relative; overflow: hidden; cursor: pointer;
+            width: 1100px; height: 600px; background: radial-gradient(circle, #2c3534 0%, #000 100%);
+            border: 15px solid #2c3534; box-shadow: 0 0 60px rgba(0,0,0,0.9); 
+            position: relative; overflow: hidden; cursor: pointer;
         }
-        /* FIXED: Changed to contain so the floor is always visible */
-        #stage-image { width: 100%; height: 100%; object-fit: contain; }
+        
+        /* FIXED: Floor-pinned filling logic */
+        #stage-image { 
+            width: 100%; height: 100%; 
+            object-fit: cover;      /* Fills the frame */
+            object-position: bottom; /* Anchors the floor */
+        }
 
-        /* Draggable Furniture */
-        .furniture-item { position: absolute; cursor: move; width: 180px; z-index: 100; filter: drop-shadow(5px 10px 15px rgba(0,0,0,0.5)); }
+        .furniture-item { 
+            position: absolute; cursor: move; 
+            width: 320px; /* Scaled up for the zoomed room */
+            z-index: 100; filter: drop-shadow(0px 20px 15px rgba(0,0,0,0.5)); 
+        }
 
-        /* Tool Assets (Cabinet & Trunks) */
         #tool-container { 
-            position: absolute; left: -600px; 
+            position: absolute; left: -700px; 
             transition: left 1.2s cubic-bezier(0.17, 0.67, 0.83, 0.67); 
             z-index: 10; 
         }
         #tool-container.glide-in { left: 25px; }
-        .tool-asset { width: 380px; filter: drop-shadow(10px 10px 20px black); }
+        
+        /* ENLARGED TOOL ASSETS */
+        .tool-asset { width: 480px; filter: drop-shadow(10px 10px 20px black); }
 
         #hotspot-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 20; }
         .hotspot { position: absolute; cursor: pointer; transition: 0.3s; }
         .hotspot:hover { box-shadow: 0 0 15px 5px white; background: rgba(255,255,255,0.1); transform: scale(1.05); }
 
-        /* --- 3. CATALOG BOOK --- */
+        /* --- 3. OVERHEAD CATALOG BOOK --- */
         #book-catalog {
             position: fixed; top: -100%; left: 50%; transform: translateX(-50%);
-            width: 900px; height: 580px; background: url('Assets/image_ac4858.png') no-repeat center center;
-            background-size: contain; transition: top 0.8s ease-in-out; z-index: 500;
+            width: 900px; height: 320px; 
+            background: url('Assets/image_ac4858.png') no-repeat center center;
+            background-size: cover; transition: top 0.8s ease-in-out; z-index: 1000;
         }
-        #book-catalog.active { top: 100px; }
-        .catalog-content { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; padding: 60px; margin-top: 40px; }
+        #book-catalog.active { top: 0px; } 
+        .catalog-content { 
+            display: flex; gap: 20px; padding: 40px 60px; 
+            overflow-x: auto; height: 100%; align-items: center; 
+        }
+        .cat-item-container { min-width: 160px; background: rgba(0,0,0,0.4); padding: 10px; border-radius: 5px; flex-shrink: 0; }
         .cat-item { width: 100%; cursor: pointer; transition: 0.3s; }
-        .cat-item:hover { transform: scale(1.1); }
     </style>
 </head>
 <body>
@@ -101,37 +110,17 @@
         <h1>Room Glow Up</h1>
         <h2>Where Your Dream Space Comes To Life</h2>
         <div class="nav-container">
-            <div class="pull-tab" onclick="triggerRooms()">
-                <div class="screw s-tl"></div><div class="screw s-tr"></div>
-                <div class="label-card">Rooms</div><div class="lip-pull"></div>
-                <div class="screw s-bl"></div><div class="screw s-br"></div>
-            </div>
-            <div class="pull-tab" onclick="loadFurnitureHub()">
-                <div class="screw s-tl"></div><div class="screw s-tr"></div>
-                <div class="label-card">Furniture Catalog</div><div class="lip-pull"></div>
-                <div class="screw s-bl"></div><div class="screw s-br"></div>
-            </div>
-            <div class="pull-tab">
-                <div class="screw s-tl"></div><div class="screw s-tr"></div>
-                <div class="label-card">Decor Closet</div><div class="lip-pull"></div>
-                <div class="screw s-bl"></div><div class="screw s-br"></div>
-            </div>
-            <div class="pull-tab">
-                <div class="screw s-tl"></div><div class="screw s-tr"></div>
-                <div class="label-card">Inspirational Gallery</div><div class="lip-pull"></div>
-                <div class="screw s-bl"></div><div class="screw s-br"></div>
-            </div>
-            <div class="pull-tab">
-                <div class="screw s-tl"></div><div class="screw s-tr"></div>
-                <div class="label-card">Save/Checkout</div><div class="lip-pull"></div>
-                <div class="screw s-bl"></div><div class="screw s-br"></div>
-            </div>
+            <div class="pull-tab" onclick="triggerRooms()"><div class="label-card">Rooms</div></div>
+            <div class="pull-tab" onclick="loadFurnitureHub()"><div class="label-card">Furniture Catalog</div></div>
+            <div class="pull-tab"><div class="label-card">Decor Closet</div></div>
+            <div class="pull-tab"><div class="label-card">Inspirational Gallery</div></div>
+            <div class="pull-tab"><div class="label-card">Save/Checkout</div></div>
         </div>
     </header>
 
     <div id="book-catalog">
         <div class="catalog-content" id="cat-grid"></div>
-        <div style="position:absolute; bottom:30px; right:60px; color:white; cursor:pointer;" onclick="closeBook()">[ CLOSE CATALOG ]</div>
+        <div style="position:absolute; bottom:10px; right:40px; color:white; cursor:pointer; font-family:monospace; font-size:10px;" onclick="closeBook()">[ CLOSE CATALOG ]</div>
     </div>
 
     <section id="workstation" class="work-zone">
@@ -152,11 +141,19 @@
         const book = document.getElementById('book-catalog');
         const grid = document.getElementById('cat-grid');
 
+        // PRODUCT DATA
+        const furnitureInventory = {
+            seating_set1: [
+                { img: 'Assets/couch1.png', link: 'https://example.com/affiliate-1', name: 'Luxury Sofa', price: '$999' },
+                { img: 'Assets/chair1.png', link: 'https://example.com/affiliate-2', name: 'Accent Chair', price: '$299' }
+            ]
+        };
+
         const roomData = {
             living: ['Assets/livingroom1.jpg', 'Assets/livingroom2.jpg'],
             dining: ['Assets/diningroom.jpg'],
             bedroom: ['Assets/bedroom.jpg'],
-            extra: ['Assets/office.jpg', 'Assets/foyer.jpg', 'Assets/kitchen.jpg']
+            extra: ['Assets/office.jpg']
         };
         const indices = { living: 0, dining: 0, bedroom: 0, extra: 0 };
         let roomLocked = false;
@@ -175,20 +172,11 @@
                 <div class="hotspot" style="top:12%; left:53%; width:35%; height:25%;" onmouseover="peek('dining')" onclick="cycle('dining')"></div>
                 <div class="hotspot" style="top:42%; left:12%; width:35%; height:25%;" onmouseover="peek('bedroom')" onclick="cycle('bedroom')"></div>
                 <div class="hotspot" style="top:42%; left:53%; width:35%; height:25%;" onmouseover="peek('extra')" onclick="cycle('extra')"></div>
-                <div class="hotspot" style="top:72%; left:12%; width:76%; height:18%;" onclick="alert('Upload Triggered')"></div>
             `;
         }
 
-        function peek(cat) { 
-            if (!roomLocked) sImg.src = roomData[cat][indices[cat]]; 
-        }
-
-        function cycle(cat) { 
-            if (!roomLocked) {
-                indices[cat] = (indices[cat] + 1) % roomData[cat].length; 
-                sImg.src = roomData[cat][indices[cat]]; 
-            }
-        }
+        function peek(cat) { if (!roomLocked) sImg.src = roomData[cat][indices[cat]]; }
+        function cycle(cat) { if (!roomLocked) { indices[cat] = (indices[cat] + 1) % roomData[cat].length; sImg.src = roomData[cat][indices[cat]]; } }
 
         function lockInRoom() {
             if (roomLocked || !sImg.src) return;
@@ -198,12 +186,10 @@
         }
 
         function loadFurnitureHub() {
-            toolImg.src = 'Assets/furniturecases.png';
+            toolImg.src = 'Assets/furniturecatalog.png';
             overlay.innerHTML = `
                 <div class="hotspot" style="top:22%; left:32%; width:36%; height:12%;" onclick="loadSubTrunk('seating')"></div>
                 <div class="hotspot" style="top:38%; left:32%; width:36%; height:12%;" onclick="loadSubTrunk('storage')"></div>
-                <div class="hotspot" style="top:54%; left:32%; width:36%; height:12%;" onclick="loadSubTrunk('beds')"></div>
-                <div class="hotspot" style="top:70%; left:32%; width:36%; height:12%;" onclick="loadSubTrunk('tables')"></div>
             `;
             toolBox.classList.add('glide-in');
         }
@@ -212,30 +198,29 @@
             toolImg.src = 'Assets/furniturecases_' + cat + '.png';
             overlay.innerHTML = `
                 <div class="hotspot" style="top:15%; left:22%; width:56%; height:12%;" onclick="openBook('${cat}_set1')"></div>
-                <div class="hotspot" style="top:30%; left:22%; width:56%; height:12%;" onclick="openBook('${cat}_set2')"></div>
-                <div class="hotspot" style="top:45%; left:22%; width:56%; height:12%;" onclick="openBook('${cat}_set3')"></div>
-                <div class="hotspot" style="top:60%; left:22%; width:56%; height:12%;" onclick="openBook('${cat}_set4')"></div>
                 <div class="hotspot" style="bottom:5%; left:35%; width:30%; height:8%;" onclick="loadFurnitureHub()"></div>
             `;
         }
 
         function openBook(type) {
             book.classList.add('active');
-            grid.innerHTML = `
-                <img src="Assets/${type}_1.png" class="cat-item" onclick="drop('Assets/${type}_1.png')">
-                <img src="Assets/${type}_2.png" class="cat-item" onclick="drop('Assets/${type}_2.png')">
-            `;
+            const items = furnitureInventory[type] || [];
+            grid.innerHTML = items.map(p => `
+                <div class="cat-item-container">
+                    <img src="${p.img}" class="cat-item" onclick="drop('${p.img}', '${p.link}', '${p.name}')">
+                    <p style="color:white; font-family:monospace; font-size:10px; text-align:center; margin-top:5px;">${p.name}</p>
+                </div>
+            `).join('');
         }
 
         function closeBook() { book.classList.remove('active'); }
 
-        function drop(src) {
-            closeBook();
+        function drop(src, link, name) {
             const item = document.createElement('img');
-            item.src = src; 
-            item.className = 'furniture-item';
-            item.style.left = '200px'; 
-            item.style.top = '200px';
+            item.src = src; item.className = 'furniture-item';
+            item.setAttribute('data-link', link);
+            item.style.left = '200px'; item.style.top = '200px';
+            item.ondblclick = () => window.open(link, '_blank');
             document.querySelector('.stage-container').appendChild(item);
             makeDraggable(item);
         }
@@ -243,17 +228,11 @@
         function makeDraggable(el) {
             let p1=0, p2=0, p3=0, p4=0;
             el.onmousedown = (e) => {
-                e.preventDefault(); 
-                p3 = e.clientX; 
-                p4 = e.clientY;
+                e.preventDefault(); p3 = e.clientX; p4 = e.clientY;
                 document.onmouseup = () => { document.onmouseup = null; document.onmousemove = null; };
                 document.onmousemove = (e) => {
-                    p1 = p3 - e.clientX; 
-                    p2 = p4 - e.clientY; 
-                    p3 = e.clientX; 
-                    p4 = e.clientY;
-                    el.style.top = (el.offsetTop - p2) + "px"; 
-                    el.style.left = (el.offsetLeft - p1) + "px";
+                    p1 = p3 - e.clientX; p2 = p4 - e.clientY; p3 = e.clientX; p4 = e.clientY;
+                    el.style.top = (el.offsetTop - p2) + "px"; el.style.left = (el.offsetLeft - p1) + "px";
                 };
             };
         }
