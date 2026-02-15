@@ -143,92 +143,135 @@
         </div>
     </section>
 
-    <script>
-        const toolBox = document.getElementById('tool-container');
-        const toolImg = document.getElementById('tool-img');
-        const overlay = document.getElementById('hotspot-overlay');
-        const sImg = document.getElementById('stage-image');
-        const book = document.getElementById('book-catalog');
-        const grid = document.getElementById('cat-grid');
+  
+       
+           <script>
+    const toolBox = document.getElementById('tool-container');
+    const toolImg = document.getElementById('tool-img');
+    const overlay = document.getElementById('hotspot-overlay');
+    const sImg = document.getElementById('stage-image');
+    const book = document.getElementById('book-catalog');
+    const grid = document.getElementById('cat-grid');
 
-        const roomData = {
-            living: ['Assets/livingroom1.jpg', 'Assets/livingroom2.jpg'],
-            dining: ['Assets/diningroom.jpg'],
-            bedroom: ['Assets/bedroom.jpg'],
-            extra: ['Assets/office.jpg', 'Assets/foyer.jpg']
-        };
-        const indices = { living: 0, dining: 0, bedroom: 0, extra: 0 };
-        let roomLocked = false;
+    // PRE-LOADED ASSET DATA
+    const roomData = {
+        living: ['Assets/livingroom1.jpg', 'Assets/livingroom2.jpg'],
+        dining: ['Assets/diningroom.jpg'],
+        bedroom: ['Assets/bedroom.jpg'],
+        extra: ['Assets/office.jpg', 'Assets/foyer.jpg', 'Assets/kitchen.jpg']
+    };
+    const indices = { living: 0, dining: 0, bedroom: 0, extra: 0 };
+    let roomLocked = false;
 
-        function triggerRooms() {
-            window.scrollTo({ top: window.innerHeight, behavior: 'smooth' });
-            loadCabinetHotspots();
-            setTimeout(() => toolBox.classList.add('glide-in'), 600);
+    // 1. NAVIGATION TRIGGER
+    function triggerRooms() {
+        window.scrollTo({ top: window.innerHeight, behavior: 'smooth' });
+        loadCabinetHotspots();
+        setTimeout(() => toolBox.classList.add('glide-in'), 600);
+    }
+
+    // 2. ROOM CABINET LOGIC (HOVER TO PEEK, CLICK TO CYCLE)
+    function loadCabinetHotspots() {
+        roomLocked = false;
+        toolImg.src = 'Assets/roomscabinet.png';
+        overlay.innerHTML = `
+            <div class="hotspot" style="top:12%; left:12%; width:35%; height:25%;" onmouseover="peek('living')" onclick="cycle('living')"></div>
+            <div class="hotspot" style="top:12%; left:53%; width:35%; height:25%;" onmouseover="peek('dining')" onclick="cycle('dining')"></div>
+            <div class="hotspot" style="top:42%; left:12%; width:35%; height:25%;" onmouseover="peek('bedroom')" onclick="cycle('bedroom')"></div>
+            <div class="hotspot" style="top:42%; left:53%; width:35%; height:25%;" onmouseover="peek('extra')" onclick="cycle('extra')"></div>
+            <div class="hotspot" style="top:72%; left:12%; width:76%; height:18%;" onclick="alert('Upload Triggered')"></div>
+        `;
+    }
+
+    function peek(cat) { 
+        if (!roomLocked) sImg.src = roomData[cat][indices[cat]]; 
+    }
+
+    function cycle(cat) { 
+        if (!roomLocked) {
+            indices[cat] = (indices[cat] + 1) % roomData[cat].length; 
+            sImg.src = roomData[cat][indices[cat]]; 
         }
+    }
 
-        function loadCabinetHotspots() {
-            toolImg.src = 'Assets/roomscabinet.png';
-            overlay.innerHTML = `
-                <div class="hotspot" style="top:12%; left:12%; width:35%; height:25%;" onmouseover="peek('living')" onclick="cycle('living')"></div>
-                <div class="hotspot" style="top:12%; left:53%; width:35%; height:25%;" onmouseover="peek('dining')" onclick="cycle('dining')"></div>
-                <div class="hotspot" style="top:42%; left:12%; width:35%; height:25%;" onmouseover="peek('bedroom')" onclick="cycle('bedroom')"></div>
-                <div class="hotspot" style="top:42%; left:53%; width:35%; height:25%;" onmouseover="peek('extra')" onclick="cycle('extra')"></div>
-            `;
-        }
+    // 3. THE LOCK-IN (STAGE CLICK)
+    function lockInRoom() {
+        if (roomLocked || !sImg.src) return;
+        roomLocked = true;
+        
+        // Cabinet glides out
+        toolBox.classList.remove('glide-in');
+        
+        // Wait for clear, then glide in Furniture Trunks
+        setTimeout(loadFurnitureHub, 1200);
+    }
 
-        function peek(cat) { sImg.src = roomData[cat][indices[cat]]; }
-        function cycle(cat) { indices[cat] = (indices[cat] + 1) % roomData[cat].length; sImg.src = roomData[cat][indices[cat]]; }
+    // 4. FURNITURE HUB (SILVER TRUNKS)
+    function loadFurnitureHub() {
+        toolImg.src = 'Assets/furniturecases.png';
+        overlay.innerHTML = `
+            <div class="hotspot" style="top:22%; left:32%; width:36%; height:12%;" onclick="loadSubTrunk('seating')"></div>
+            <div class="hotspot" style="top:38%; left:32%; width:36%; height:12%;" onclick="loadSubTrunk('storage')"></div>
+            <div class="hotspot" style="top:54%; left:32%; width:36%; height:12%;" onclick="loadSubTrunk('beds')"></div>
+            <div class="hotspot" style="top:70%; left:32%; width:36%; height:12%;" onclick="loadSubTrunk('tables')"></div>
+        `;
+        toolBox.classList.add('glide-in');
+    }
 
-        function lockInRoom() {
-            if (roomLocked || !sImg.src) return;
-            roomLocked = true;
-            toolBox.classList.remove('glide-in');
-            setTimeout(loadFurnitureHub, 1200);
-        }
+    // 5. SUB-CATEGORY TRUNKS (PRE-LOADED)
+    function loadSubTrunk(cat) {
+        toolImg.src = 'Assets/furniturecases_' + cat + '.png';
+        overlay.innerHTML = `
+            <div class="hotspot" style="top:15%; left:22%; width:56%; height:12%;" onclick="openBook('${cat}_set1')"></div>
+            <div class="hotspot" style="top:30%; left:22%; width:56%; height:12%;" onclick="openBook('${cat}_set2')"></div>
+            <div class="hotspot" style="top:45%; left:22%; width:56%; height:12%;" onclick="openBook('${cat}_set3')"></div>
+            <div class="hotspot" style="top:60%; left:22%; width:56%; height:12%;" onclick="openBook('${cat}_set4')"></div>
+            <div class="hotspot" style="bottom:5%; left:35%; width:30%; height:8%;" onclick="loadFurnitureHub()"></div>
+        `;
+    }
 
-        function loadFurnitureHub() {
-            toolImg.src = 'Assets/furniturecases.png';
-            overlay.innerHTML = `
-                <div class="hotspot" style="top:25%; left:32%; width:35%; height:12%;" onclick="loadSubSet('seating')"></div>
-                <div class="hotspot" style="top:40%; left:32%; width:35%; height:12%;" onclick="loadSubSet('storage')"></div>
-            `;
-            toolBox.classList.add('glide-in');
-        }
+    // 6. THE CATALOG BOOK & DRAG/DROP
+    function openBook(type) {
+        book.classList.add('active');
+        // Example dynamic loading for the book content
+        grid.innerHTML = `
+            <img src="Assets/${type}_1.png" class="cat-item" onclick="drop('Assets/${type}_1.png')">
+            <img src="Assets/${type}_2.png" class="cat-item" onclick="drop('Assets/${type}_2.png')">
+        `;
+    }
 
-        function loadSubSet(cat) {
-            toolImg.src = 'Assets/furniturecases_' + cat + '.png';
-            overlay.innerHTML = `
-                <div class="hotspot" style="top:15%; left:25%; width:50%; height:15%;" onclick="openBook('couches')"></div>
-            `;
-        }
+    function closeBook() { book.classList.remove('active'); }
 
-        function openBook(type) {
-            book.classList.add('active');
-            grid.innerHTML = `<img src="Assets/${type}1.png" class="cat-item" onclick="drop('Assets/${type}1.png')">`;
-        }
+    function drop(src) {
+        closeBook();
+        const item = document.createElement('img');
+        item.src = src; 
+        item.className = 'furniture-item';
+        item.style.left = '200px'; 
+        item.style.top = '200px';
+        document.querySelector('.stage-container').appendChild(item);
+        makeDraggable(item);
+    }
 
-        function closeBook() { book.classList.remove('active'); }
-
-        function drop(src) {
-            closeBook();
-            const item = document.createElement('img');
-            item.src = src; item.className = 'furniture-item';
-            item.style.left = '100px'; item.style.top = '100px';
-            document.querySelector('.stage-container').appendChild(item);
-            makeDraggable(item);
-        }
-
-        function makeDraggable(el) {
-            let p1=0, p2=0, p3=0, p4=0;
-            el.onmousedown = (e) => {
-                e.preventDefault(); p3=e.clientX; p4=e.clientY;
-                document.onmouseup = () => { document.onmouseup = null; document.onmousemove = null; };
-                document.onmousemove = (e) => {
-                    p1=p3-e.clientX; p2=p4-e.clientY; p3=e.clientX; p4=e.clientY;
-                    el.style.top = (el.offsetTop - p2) + "px"; el.style.left = (el.offsetLeft - p1) + "px";
-                };
+    function makeDraggable(el) {
+        let p1=0, p2=0, p3=0, p4=0;
+        el.onmousedown = (e) => {
+            e.preventDefault(); 
+            p3 = e.clientX; 
+            p4 = e.clientY;
+            document.onmouseup = () => { document.onmouseup = null; document.onmousemove = null; };
+            document.onmousemove = (e) => {
+                p1 = p3 - e.clientX; 
+                p2 = p4 - e.clientY; 
+                p3 = e.clientX; 
+                p4 = e.clientY;
+                el.style.top = (el.offsetTop - p2) + "px"; 
+                el.style.left = (el.offsetLeft - p1) + "px";
             };
-        }
-    </script>
+        };
+    }
+</script> 
+           
 </body>
 </html>
+
