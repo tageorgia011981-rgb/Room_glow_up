@@ -6,7 +6,6 @@
     <title>Room Glow Up</title>
     <link href="https://fonts.googleapis.com/css2?family=Limelight&display=swap" rel="stylesheet">
     <style>
-        /* Global & Background */
         * { box-sizing: border-box; }
         body, html {
             margin: 0; padding: 0; width: 100%; height: 200vh; 
@@ -14,7 +13,7 @@
             background-size: cover; font-family: sans-serif; scroll-behavior: smooth; overflow-x: hidden;
         }
 
-        /* --- HEADER (FULL GRAND SIZE) --- */
+        /* --- 1. HEADER & NAVIGATION --- */
         header {
             width: 100%; height: 100vh; display: flex; flex-direction: column;
             align-items: center; justify-content: flex-start; padding-top: 60px;
@@ -30,58 +29,69 @@
         }
         @keyframes metalShine { to { background-position: 200% center; } }
         
-        /* SUB-HEADER WITH BLACK OUTLINE */
         h2 { 
             font-family: 'Limelight', cursive; font-size: 1.8rem; color: #008080; 
             margin-top: 10px; margin-bottom: 50px; 
-            /* Multi-directional shadow creates a clean black outline */
-            text-shadow: 
-                -2px -2px 0 #000,  
-                 2px -2px 0 #000,
-                -2px  2px 0 #000,
-                 2px  2px 0 #000,
-                 4px  4px 10px rgba(0,0,0,0.8); 
+            text-shadow: -2px -2px 0 #000, 2px -2px 0 #000, -2px  2px 0 #000, 2px  2px 0 #000, 4px  4px 10px rgba(0,0,0,0.8); 
         }
 
-        /* MASTER NAVIGATION TABS (EXACT FULL NAMES) */
         .nav-container { display: flex; justify-content: center; gap: 20px; }
         .pull-tab {
-            width: 220px; height: 95px; /* Widened to fit full names */
+            width: 230px; height: 100px;
             background: linear-gradient(135deg, #535d5c 0%, #2c3534 50%, #1a1f1e 100%);
             border: 1px solid #111; border-radius: 3px; position: relative; cursor: pointer;
             box-shadow: inset 2px 2px 3px rgba(255,255,255,0.1), inset -2px -2px 5px rgba(0,0,0,0.5), 8px 10px 20px rgba(0,0,0,0.7);
-            display: flex; justify-content: center; transition: transform 0.2s ease;
+            display: flex; justify-content: center;
         }
         .screw { position: absolute; width: 8px; height: 8px; background: radial-gradient(circle, #717d7e 0%, #2c3534 100%); border-radius: 50%; box-shadow: 1px 1px 2px rgba(0,0,0,0.8); }
         .s-tl { top: 6px; left: 6px; } .s-tr { top: 6px; right: 6px; } .s-bl { bottom: 20px; left: 6px; } .s-br { bottom: 20px; right: 6px; }
         
         .label-card {
-            width: 190px; height: 50px; background: #d4d4d4; margin-top: 15px; display: flex; align-items: center; justify-content: center;
-            font-family: 'Courier New', Courier, monospace; font-weight: 900; font-size: 0.95rem; color: #111; border: 1px solid #888;
-            box-shadow: inset 2px 2px 5px rgba(0,0,0,0.3); transition: all 0.4s ease; text-transform: uppercase;
-            padding: 5px; text-align: center;
+            width: 200px; height: 50px; background: #d4d4d4; margin-top: 18px; display: flex; align-items: center; justify-content: center;
+            font-family: 'Courier New', Courier, monospace; font-weight: 900; font-size: 0.85rem; color: #111; border: 1px solid #888;
+            box-shadow: inset 2px 2px 5px rgba(0,0,0,0.3); transition: all 0.4s ease; text-transform: uppercase; text-align: center;
         }
         .pull-tab:hover .label-card { background: #fff; color: #000; box-shadow: 0 0 20px 5px rgba(255, 255, 255, 0.8); transform: scale(1.02); }
-        .lip-pull { width: 110px; height: 12px; background: linear-gradient(to bottom, #1a1f1e, #000); border-radius: 0 0 15px 15px; position: absolute; bottom: 6px; border: 1px solid #333; box-shadow: 0 2px 4px rgba(0,0,0,0.5); }
+        .lip-pull { width: 110px; height: 12px; background: linear-gradient(to bottom, #1a1f1e, #000); border-radius: 0 0 15px 15px; position: absolute; bottom: 6px; border: 1px solid #333; }
 
-        /* --- WORKSTATION --- */
+        /* --- 2. WORKSTATION LAYOUT --- */
         .work-zone { 
-            width: 100%; height: 100vh; display: flex; align-items: center; justify-content: center; position: relative; 
+            width: 100%; height: 100vh; display: flex; align-items: center; justify-content: flex-end; 
+            position: relative; padding-right: 40px; 
         }
-        .stage-container {
-            width: 1200px; height: 650px; 
-            background: #000; border: 15px solid #2c3534;
-            box-shadow: 0 0 60px rgba(0,0,0,0.9); display: flex; justify-content: center; align-items: center; z-index: 5;
-        }
-        #stage-image { width: 100%; height: 100%; object-fit: contain; }
 
-        /* Cabinet Glide Logic */
-        #cabinet-container { position: absolute; left: -600px; transition: left 1.2s cubic-bezier(0.17, 0.67, 0.83, 0.67); z-index: 10; }
-        #cabinet-container.glide-in { left: 40px; }
-        .cabinet-asset { width: 450px; filter: drop-shadow(10px 10px 20px black); }
+        .stage-container {
+            width: 1100px; height: 600px; background: #000; border: 15px solid #2c3534;
+            box-shadow: 0 0 60px rgba(0,0,0,0.9); position: relative; overflow: hidden; cursor: pointer;
+        }
+        #stage-image { width: 100%; height: 100%; object-fit: cover; }
+
+        /* Draggable Furniture */
+        .furniture-item { position: absolute; cursor: move; width: 180px; z-index: 100; filter: drop-shadow(5px 10px 15px rgba(0,0,0,0.5)); }
+
+        /* Tool Assets (Cabinet & Trunks) */
+        #tool-container { 
+            position: absolute; left: -600px; 
+            transition: left 1.2s cubic-bezier(0.17, 0.67, 0.83, 0.67); 
+            z-index: 10; 
+        }
+        #tool-container.glide-in { left: 25px; }
+        .tool-asset { width: 380px; filter: drop-shadow(10px 10px 20px black); }
 
         #hotspot-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 20; }
-        .hotspot { position: absolute; cursor: pointer; background: rgba(0,0,0,0); }
+        .hotspot { position: absolute; cursor: pointer; transition: 0.3s; }
+        .hotspot:hover { box-shadow: 0 0 15px 5px white; background: rgba(255,255,255,0.1); transform: scale(1.05); }
+
+        /* --- 3. CATALOG BOOK --- */
+        #book-catalog {
+            position: fixed; top: -100%; left: 50%; transform: translateX(-50%);
+            width: 900px; height: 580px; background: url('Assets/image_ac4858.png') no-repeat center center;
+            background-size: contain; transition: top 0.8s ease-in-out; z-index: 500;
+        }
+        #book-catalog.active { top: 100px; }
+        .catalog-content { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; padding: 60px; margin-top: 40px; }
+        .cat-item { width: 100%; cursor: pointer; transition: 0.3s; }
+        .cat-item:hover { transform: scale(1.1); }
     </style>
 </head>
 <body>
@@ -118,28 +128,106 @@
         </div>
     </header>
 
+    <div id="book-catalog">
+        <div class="catalog-content" id="cat-grid"></div>
+        <div style="position:absolute; bottom:30px; right:60px; color:white; cursor:pointer;" onclick="closeBook()">[ CLOSE CATALOG ]</div>
+    </div>
+
     <section id="workstation" class="work-zone">
-        <div id="cabinet-container">
-            <img src="Assets/roomscabinet.png" id="cabinet-img" class="cabinet-asset">
-            <div id="hotspot-overlay">
-                <div class="hotspot" style="top:12%; left:12%; width:35%; height:25%;" onclick="sImg.src='Assets/livingroom1.jpg'"></div>
-                <div class="hotspot" style="top:12%; left:52%; width:35%; height:25%;" onclick="sImg.src='Assets/bedroom.jpg'"></div>
-                <div class="hotspot" style="top:42%; left:12%; width:35%; height:25%;" onclick="sImg.src='Assets/diningroom.jpg'"></div>
-                <div class="hotspot" style="top:42%; left:52%; width:35%; height:25%;" onclick="sImg.src='Assets/office.jpg'"></div>
-            </div>
+        <div id="tool-container">
+            <img src="Assets/roomscabinet.png" id="tool-img" class="tool-asset">
+            <div id="hotspot-overlay"></div>
         </div>
-        <div class="stage-container">
+        <div class="stage-container" onclick="lockInRoom()">
             <img src="" id="stage-image">
         </div>
     </section>
 
     <script>
-        const cabinet = document.getElementById('cabinet-container');
+        const toolBox = document.getElementById('tool-container');
+        const toolImg = document.getElementById('tool-img');
+        const overlay = document.getElementById('hotspot-overlay');
         const sImg = document.getElementById('stage-image');
+        const book = document.getElementById('book-catalog');
+        const grid = document.getElementById('cat-grid');
+
+        const roomData = {
+            living: ['Assets/livingroom1.jpg', 'Assets/livingroom2.jpg'],
+            dining: ['Assets/diningroom.jpg'],
+            bedroom: ['Assets/bedroom.jpg'],
+            extra: ['Assets/office.jpg', 'Assets/foyer.jpg']
+        };
+        const indices = { living: 0, dining: 0, bedroom: 0, extra: 0 };
+        let roomLocked = false;
 
         function triggerRooms() {
             window.scrollTo({ top: window.innerHeight, behavior: 'smooth' });
-            setTimeout(() => { cabinet.classList.add('glide-in'); }, 600);
+            loadCabinetHotspots();
+            setTimeout(() => toolBox.classList.add('glide-in'), 600);
+        }
+
+        function loadCabinetHotspots() {
+            toolImg.src = 'Assets/roomscabinet.png';
+            overlay.innerHTML = `
+                <div class="hotspot" style="top:12%; left:12%; width:35%; height:25%;" onmouseover="peek('living')" onclick="cycle('living')"></div>
+                <div class="hotspot" style="top:12%; left:53%; width:35%; height:25%;" onmouseover="peek('dining')" onclick="cycle('dining')"></div>
+                <div class="hotspot" style="top:42%; left:12%; width:35%; height:25%;" onmouseover="peek('bedroom')" onclick="cycle('bedroom')"></div>
+                <div class="hotspot" style="top:42%; left:53%; width:35%; height:25%;" onmouseover="peek('extra')" onclick="cycle('extra')"></div>
+            `;
+        }
+
+        function peek(cat) { sImg.src = roomData[cat][indices[cat]]; }
+        function cycle(cat) { indices[cat] = (indices[cat] + 1) % roomData[cat].length; sImg.src = roomData[cat][indices[cat]]; }
+
+        function lockInRoom() {
+            if (roomLocked || !sImg.src) return;
+            roomLocked = true;
+            toolBox.classList.remove('glide-in');
+            setTimeout(loadFurnitureHub, 1200);
+        }
+
+        function loadFurnitureHub() {
+            toolImg.src = 'Assets/furniturecases.png';
+            overlay.innerHTML = `
+                <div class="hotspot" style="top:25%; left:32%; width:35%; height:12%;" onclick="loadSubSet('seating')"></div>
+                <div class="hotspot" style="top:40%; left:32%; width:35%; height:12%;" onclick="loadSubSet('storage')"></div>
+            `;
+            toolBox.classList.add('glide-in');
+        }
+
+        function loadSubSet(cat) {
+            toolImg.src = 'Assets/furniturecases_' + cat + '.png';
+            overlay.innerHTML = `
+                <div class="hotspot" style="top:15%; left:25%; width:50%; height:15%;" onclick="openBook('couches')"></div>
+            `;
+        }
+
+        function openBook(type) {
+            book.classList.add('active');
+            grid.innerHTML = `<img src="Assets/${type}1.png" class="cat-item" onclick="drop('Assets/${type}1.png')">`;
+        }
+
+        function closeBook() { book.classList.remove('active'); }
+
+        function drop(src) {
+            closeBook();
+            const item = document.createElement('img');
+            item.src = src; item.className = 'furniture-item';
+            item.style.left = '100px'; item.style.top = '100px';
+            document.querySelector('.stage-container').appendChild(item);
+            makeDraggable(item);
+        }
+
+        function makeDraggable(el) {
+            let p1=0, p2=0, p3=0, p4=0;
+            el.onmousedown = (e) => {
+                e.preventDefault(); p3=e.clientX; p4=e.clientY;
+                document.onmouseup = () => { document.onmouseup = null; document.onmousemove = null; };
+                document.onmousemove = (e) => {
+                    p1=p3-e.clientX; p2=p4-e.clientY; p3=e.clientX; p4=e.clientY;
+                    el.style.top = (el.offsetTop - p2) + "px"; el.style.left = (el.offsetLeft - p1) + "px";
+                };
+            };
         }
     </script>
 </body>
