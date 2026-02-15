@@ -13,7 +13,7 @@
             background-size: cover; font-family: sans-serif; scroll-behavior: smooth; overflow-x: hidden;
         }
 
-        /* --- 1. HEADER & NAVIGATION --- */
+        /* --- 1. HEADER & REAL IMAGE NAVIGATION --- */
         header {
             width: 100%; height: 100vh; display: flex; flex-direction: column;
             align-items: center; justify-content: flex-start; padding-top: 60px;
@@ -32,40 +32,33 @@
         h2 { 
             font-family: 'Limelight', cursive; font-size: 1.8rem; color: #008080; 
             margin-top: 10px; margin-bottom: 50px; 
-            text-shadow: -2px -2px 0 #000, 2px -2px 0 #000, -2px  2px 0 #000, 2px  2px 0 #000, 4px  4px 10px rgba(0,0,0,0.8); 
+            text-shadow: -2px -2px 0 #000, 2px -2px 0 #000, -2px  2px 0 #000, 2px  2px 0 #000; 
         }
 
-        .nav-container { display: flex; justify-content: center; gap: 25px; }
-        .pull-tab {
-            width: 240px; height: 110px;
-            background: linear-gradient(135deg, #4a5453 0%, #2c3534 50%, #1a1f1e 100%);
-            border: 1px solid #000; border-radius: 4px; position: relative; cursor: pointer;
-            box-shadow: inset 1px 1px 2px rgba(255,255,255,0.1), 10px 12px 25px rgba(0,0,0,0.8);
-            display: flex; justify-content: center; transition: transform 0.3s ease;
-        }
+        .nav-container { display: flex; justify-content: center; gap: 20px; }
         
-        .label-card {
-            width: 210px; height: 60px; background: #e8e6e1; 
-            margin-top: 15px; display: flex; align-items: center; justify-content: center;
-            font-family: 'Special Elite', serif; 
-            font-weight: 900; font-size: 1.2rem; color: #222; border: 1px solid #bbb;
-            box-shadow: inset 0 0 10px rgba(0,0,0,0.1); text-transform: uppercase; text-align: center;
+        .pull-tab-img {
+            width: 220px; /* Adjust based on your actual image width */
+            cursor: pointer;
+            transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            filter: drop-shadow(10px 12px 20px rgba(0,0,0,0.8));
         }
-        .pull-tab:hover .label-card { background: #fff; box-shadow: 0 0 15px rgba(255,255,255,0.5); }
-        .lip-pull { width: 120px; height: 10px; background: #000; border-radius: 0 0 10px 10px; position: absolute; bottom: 8px; }
+        .pull-tab-img:hover { transform: translateY(-12px) scale(1.03); }
 
-        /* --- 2. WORKSTATION LAYOUT --- */
+        /* --- 2. WORKSTATION LAYOUT (THE NUDGE) --- */
         .work-zone { 
             width: 100%; height: 100vh; display: flex; align-items: center; justify-content: center; 
             position: relative;
         }
         
+        /* The Stage now shifts right to make room for the cabinet */
         .stage-container {
             width: 1000px; height: 600px; background: #000; 
             box-shadow: 0 0 80px rgba(0,0,0,1); 
             position: relative; overflow: hidden; border: none;
-            margin-left: 150px; 
+            transition: transform 1.2s cubic-bezier(0.17, 0.67, 0.83, 0.67);
         }
+        .stage-container.shifted { transform: translateX(200px); }
         
         #stage-image { width: 100%; height: 100%; object-fit: contain; }
 
@@ -75,14 +68,12 @@
             z-index: 10; 
         }
         #tool-container.glide-in { left: 40px; }
-
-        /* REFINED SCALE: Large but not "massive" */
         .tool-asset { width: 550px; filter: drop-shadow(20px 20px 35px black); }
 
+        /* Hotspot Blueprint Outlines */
         #hotspot-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 20; }
-        
         .hotspot { 
-            position: absolute; cursor: pointer; border: 2px solid transparent; 
+            position: absolute; cursor: pointer; border: 1px dashed transparent; 
             transition: border 0.3s ease, background 0.3s ease; 
         }
         .hotspot:hover { 
@@ -106,11 +97,10 @@
         <h1>Room Glow Up</h1>
         <h2>Where Your Dream Space Comes To Life</h2>
         <div class="nav-container">
-            <div class="pull-tab" onclick="triggerRooms()"><div class="label-card">Rooms</div><div class="lip-pull"></div></div>
-            <div class="pull-tab" onclick="loadFurnitureHub()"><div class="label-card">Furniture Catalog</div><div class="lip-pull"></div></div>
-            <div class="pull-tab"><div class="label-card">Decor Closet</div><div class="lip-pull"></div></div>
-            <div class="pull-tab"><div class="label-card">Inspirational Gallery</div><div class="lip-pull"></div></div>
-            <div class="pull-tab"><div class="label-card">Save/Checkout</div><div class="lip-pull"></div></div>
+            <img src="Assets/pulltabs_roms.png" class="pull-tab-img" onclick="triggerRooms()">
+            <img src="Assets/pulltabs_furnituregallery.png" class="pull-tab-img" onclick="loadFurnitureHub()">
+            <img src="Assets/pulltabs_decorcloset.png" class="pull-tab-img">
+            <img src="Assets/pulltabs_inspogallery.png" class="pull-tab-img">
         </div>
     </header>
 
@@ -124,13 +114,14 @@
             <img src="Assets/roomscabinet.png" id="tool-img" class="tool-asset">
             <div id="hotspot-overlay"></div>
         </div>
-        <div class="stage-container" onclick="lockInRoom()">
+        <div id="main-stage" class="stage-container" onclick="lockInRoom()">
             <img src="" id="stage-image">
         </div>
     </section>
 
     <script>
         const toolBox = document.getElementById('tool-container');
+        const stage = document.getElementById('main-stage');
         const toolImg = document.getElementById('tool-img');
         const overlay = document.getElementById('hotspot-overlay');
         const sImg = document.getElementById('stage-image');
@@ -146,9 +137,17 @@
         let roomLocked = false;
 
         function triggerRooms() {
+            // 1. Smooth Scroll to Workstation
             window.scrollTo({ top: window.innerHeight, behavior: 'smooth' });
+            
+            // 2. Prepare the Hotspots
             loadCabinetHotspots();
-            setTimeout(() => toolBox.classList.add('glide-in'), 600);
+
+            // 3. Nudge Stage & Glide Cabinet
+            setTimeout(() => {
+                stage.classList.add('shifted');
+                toolBox.classList.add('glide-in');
+            }, 600);
         }
 
         function loadCabinetHotspots() {
@@ -168,7 +167,9 @@
         function lockInRoom() {
             if (roomLocked || !sImg.src) return;
             roomLocked = true;
+            // Retract cabinet and reset stage position before moving to next step
             toolBox.classList.remove('glide-in');
+            stage.classList.remove('shifted');
             setTimeout(loadFurnitureHub, 1200);
         }
 
@@ -178,6 +179,8 @@
                 <div class="hotspot" style="top:22%; left:32%; width:36%; height:12%;" onclick="loadSubTrunk('seating')"></div>
                 <div class="hotspot" style="top:38%; left:32%; width:36%; height:12%;" onclick="loadSubTrunk('storage')"></div>
             `;
+            // Re-nudge and glide for the new toolset
+            stage.classList.add('shifted');
             toolBox.classList.add('glide-in');
         }
 
