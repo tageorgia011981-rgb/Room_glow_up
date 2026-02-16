@@ -10,38 +10,39 @@
         body, html {
             margin: 0;
             padding: 0;
-            height: 100%;
-            background-color: #003333; /* Dark Teal "Wings" */
+            background-color: #002d2d; /* Solid Dark Teal Wings */
             font-family: 'Courier New', Courier, monospace;
-            overflow-x: hidden;
+            scroll-behavior: smooth;
+            /* Allow scrolling */
+            overflow-y: auto; 
+            height: auto;
         }
 
         .main-wrapper {
-            max-width: 1200px; /* More Contained */
+            max-width: 1300px; /* Contained Stage */
             margin: 0 auto;
             background: url('Assets/mainbackground3.jpg') no-repeat center top;
             background-size: cover;
-            min-height: 250vh; 
+            min-height: 2000px; /* Ensure there is room to scroll down */
             position: relative;
-            box-shadow: 0 0 150px rgba(0,0,0,1);
+            box-shadow: 0 0 100px rgba(0,0,0,0.9);
         }
 
-        /* Header - Darker Teal with Shine */
+        /* Header - Darker Teal */
         header {
             text-align: center;
-            padding-top: 40px;
+            padding-top: 50px;
             z-index: 10;
-            position: relative;
         }
 
         h1 {
             font-family: 'Limelight', cursive;
-            font-size: 7rem; /* Substantial Size */
-            color: #004d4d; /* Specific Darker Teal */
+            font-size: 7.5rem; 
+            color: #004d4d; /* Darker Teal, No Green */
             margin: 0;
             text-transform: uppercase;
-            letter-spacing: 8px;
-            background: linear-gradient(to right, #002d2d, #008080, #002d2d);
+            letter-spacing: 10px;
+            background: linear-gradient(to right, #003333, #006666, #003333);
             background-size: 200% auto;
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
@@ -51,7 +52,7 @@
         h2 {
             font-family: 'Limelight', cursive;
             font-size: 2.2rem;
-            color: #e0f2f2;
+            color: #d1eaea;
             margin-top: 10px;
         }
 
@@ -61,36 +62,41 @@
         .nav-tabs {
             display: flex;
             justify-content: center;
-            gap: 20px;
-            margin-top: 50px;
+            gap: 25px;
+            margin-top: 60px;
         }
 
         .pull-tab {
-            width: 280px; /* Significantly Bigger */
+            width: 300px; /* Significant Size */
             cursor: pointer;
-            transition: transform 0.3s ease, filter 0.3s;
+            transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
 
         .pull-tab:hover {
-            filter: brightness(1.2) drop-shadow(0 0 20px white);
-            transform: translateY(15px);
+            filter: brightness(1.2) drop-shadow(0 0 15px #00ffff);
+            transform: translateY(20px);
         }
 
-        /* Workstation Layout - Preventing Overlap */
+        /* Work Zone - Side by Side, No Overlap */
         .work-zone {
             display: flex;
             justify-content: center;
             align-items: flex-start;
-            margin-top: 150px;
-            padding: 0 20px;
-            gap: 30px;
+            margin-top: 300px; /* Space for the scroll to land */
+            padding: 0 40px;
+            gap: 50px;
+            opacity: 0; /* Hidden until scroll */
+            transition: opacity 0.8s ease;
+        }
+
+        .work-zone.visible {
+            opacity: 1;
         }
 
         #room-cabinet {
-            width: 600px; /* Bigger Cabinet */
-            transform: translateX(-150%); /* Start off-screen */
-            transition: transform 1s cubic-bezier(0.19, 1, 0.22, 1);
-            flex-shrink: 0;
+            width: 550px; /* Bigger Cabinet */
+            transform: translateX(-200px);
+            transition: transform 1s ease-out;
         }
 
         #room-cabinet.active {
@@ -100,11 +106,10 @@
         #canvas-area {
             width: 1000px;
             height: 700px;
-            background: rgba(0,0,0,0.5);
-            border: 25px solid #1a1a1a; /* Gunmetal */
+            background: rgba(0,0,0,0.6);
+            border: 20px solid #1a1a1a; /* Gunmetal */
+            box-shadow: inset 0 0 50px #000;
             position: relative;
-            overflow: hidden;
-            flex-shrink: 0;
         }
 
         #stage-image {
@@ -116,14 +121,14 @@
         .hotspot {
             position: absolute;
             cursor: pointer;
+            /* background: rgba(255,0,0,0.2);  Debug zone */
         }
-
     </style>
 </head>
 <body>
 
 <div class="main-wrapper">
-    <header>
+    <header id="top">
         <h1>Room Glow Up</h1>
         <h2>Where Your Dream Space Comes To Life</h2>
         
@@ -164,14 +169,16 @@
     let counters = { livingroom: 0, bedroom: 0, diningroom: 0, extrarooms: 0 };
 
     function openRooms() {
-        // 1. Automatic Smooth Scroll Down
+        // Trigger the visual reveal
+        document.getElementById('work-zone').classList.add('visible');
+        document.getElementById('room-cabinet').classList.add('active');
+
+        // Forced Scroll Logic
+        const target = document.getElementById('work-zone').offsetTop;
         window.scrollTo({
-            top: 750, 
+            top: target - 100,
             behavior: 'smooth'
         });
-
-        // 2. Glide in the bigger cabinet
-        document.getElementById('room-cabinet').classList.add('active');
     }
 
     function preview(roomType) {
