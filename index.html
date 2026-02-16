@@ -6,188 +6,295 @@
     <title>Room Glow Up</title>
     <link href="https://fonts.googleapis.com/css2?family=Limelight&display=swap" rel="stylesheet">
     <style>
-        /* Contained Background & Dark Teal Framing */
+        :root {
+            --dark-teal: #004d4d;
+            --highlight: #008080;
+            --silver: #c0c0c0;
+        }
+
         body, html {
             margin: 0;
             padding: 0;
-            background-color: #002d2d; /* Solid Dark Teal Wings */
-            font-family: 'Courier New', Courier, monospace;
+            width: 100%;
+            height: 100%;
+            font-family: 'Limelight', cursive;
+            background-color: #000;
+            overflow-x: hidden;
             scroll-behavior: smooth;
-            /* Allow scrolling */
-            overflow-y: auto; 
-            height: auto;
         }
 
-        .main-wrapper {
-            max-width: 1300px; /* Contained Stage */
-            margin: 0 auto;
-            background: url('Assets/mainbackground3.jpg') no-repeat center top;
+        #main-site {
+            background: url('Assets/mainbackground3.jpg') no-repeat center center fixed;
             background-size: cover;
-            min-height: 2000px; /* Ensure there is room to scroll down */
-            position: relative;
-            box-shadow: 0 0 100px rgba(0,0,0,0.9);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            transition: background 0.5s ease;
         }
 
-        /* Header - Darker Teal */
+        /* Header Section */
         header {
             text-align: center;
-            padding-top: 50px;
-            z-index: 10;
+            padding: 50px 20px;
         }
 
         h1 {
-            font-family: 'Limelight', cursive;
-            font-size: 7.5rem; 
-            color: #004d4d; /* Darker Teal, No Green */
+            font-size: 5rem;
+            color: var(--dark-teal);
             margin: 0;
-            text-transform: uppercase;
-            letter-spacing: 10px;
-            background: linear-gradient(to right, #003333, #006666, #003333);
-            background-size: 200% auto;
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            animation: shine 5s linear infinite;
+            text-shadow: 0 0 10px rgba(255,255,255,0.5), 2px 2px 5px rgba(0,0,0,0.3);
+            animation: shining 3s infinite alternate;
+        }
+
+        @keyframes shining {
+            from { text-shadow: 0 0 5px #fff, 0 0 10px #fff, 0 0 15px var(--dark-teal); }
+            to { text-shadow: 0 0 20px #fff, 0 0 30px #00ffff, 0 0 40px var(--dark-teal); }
         }
 
         h2 {
-            font-family: 'Limelight', cursive;
-            font-size: 2.2rem;
-            color: #d1eaea;
+            font-size: 1.8rem;
+            color: var(--dark-teal);
             margin-top: 10px;
         }
 
-        @keyframes shine { to { background-position: 200% center; } }
-
-        /* Bigger Pull Tabs */
-        .nav-tabs {
+        /* Pull Tabs Navigation */
+        .pull-tabs-container {
             display: flex;
-            justify-content: center;
-            gap: 25px;
-            margin-top: 60px;
+            gap: 15px;
+            margin-top: 20px;
         }
 
         .pull-tab {
-            width: 300px; /* Significant Size */
             cursor: pointer;
-            transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            transition: transform 0.3s ease, filter 0.3s ease;
+            height: 120px;
         }
 
         .pull-tab:hover {
-            filter: brightness(1.2) drop-shadow(0 0 15px #00ffff);
-            transform: translateY(20px);
+            transform: translateY(-10px);
+            filter: brightness(1.2) drop-shadow(0 0 10px white);
         }
 
-        /* Work Zone - Side by Side, No Overlap */
-        .work-zone {
+        /* Canvas Area */
+        #design-area {
+            position: relative;
+            width: 90%;
+            max-width: 1200px;
+            height: 600px;
+            margin: 50px auto;
+            border: 10px solid var(--dark-teal);
+            background: rgba(255,255,255,0.1);
+            overflow: hidden;
             display: flex;
             justify-content: center;
-            align-items: flex-start;
-            margin-top: 300px; /* Space for the scroll to land */
-            padding: 0 40px;
-            gap: 50px;
-            opacity: 0; /* Hidden until scroll */
-            transition: opacity 0.8s ease;
+            align-items: center;
         }
 
-        .work-zone.visible {
-            opacity: 1;
-        }
-
-        #room-cabinet {
-            width: 550px; /* Bigger Cabinet */
-            transform: translateX(-200px);
-            transition: transform 1s ease-out;
-        }
-
-        #room-cabinet.active {
-            transform: translateX(0);
-        }
-
-        #canvas-area {
-            width: 1000px;
-            height: 700px;
-            background: rgba(0,0,0,0.6);
-            border: 20px solid #1a1a1a; /* Gunmetal */
-            box-shadow: inset 0 0 50px #000;
-            position: relative;
-        }
-
-        #stage-image {
+        #main-canvas {
             width: 100%;
             height: 100%;
-            object-fit: cover;
+            background-size: cover;
+            background-position: center;
         }
 
-        .hotspot {
+        /* Interactive Elements */
+        .cabinet {
             position: absolute;
+            left: -500px;
+            top: 10%;
+            width: 400px;
+            transition: left 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            z-index: 10;
+        }
+
+        .cabinet.active {
+            left: 20px;
+        }
+
+        .drawer-label {
+            display: block;
+            padding: 10px;
+            margin: 5px 0;
+            color: white;
+            text-align: center;
             cursor: pointer;
-            /* background: rgba(255,0,0,0.2);  Debug zone */
+            transition: all 0.3s;
+        }
+
+        .drawer-label:hover {
+            transform: scale(1.1);
+            text-shadow: 0 0 15px #fff;
+            color: var(--highlight);
+        }
+
+        .furniture-cases {
+            position: absolute;
+            right: -500px;
+            top: 10%;
+            width: 400px;
+            transition: right 0.8s ease;
+        }
+
+        .furniture-cases.active {
+            right: 20px;
+        }
+
+        /* The Receipt Scroll */
+        #receipt-scroll {
+            position: fixed;
+            top: -100%;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 300px;
+            transition: top 1s ease-in-out;
+            z-index: 100;
+        }
+
+        #receipt-scroll.active {
+            top: 0;
+        }
+
+        /* Decor Closet */
+        #closet-door {
+            position: fixed;
+            bottom: -100%;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 600px;
+            transition: bottom 1s ease;
+            z-index: 50;
+        }
+
+        #closet-door.active {
+            bottom: 0;
+        }
+
+        .draggable-item {
+            position: absolute;
+            cursor: move;
+            z-index: 20;
         }
     </style>
 </head>
-<body>
+<body id="body-bg">
 
-<div class="main-wrapper">
-    <header id="top">
+<div id="main-site">
+    <header>
         <h1>Room Glow Up</h1>
         <h2>Where Your Dream Space Comes To Life</h2>
-        
-        <nav class="nav-tabs">
-            <img src="Assets/pulltabs_rooms.png.jpg" class="pull-tab" onclick="openRooms()">
-            <img src="Assets/pulltabs_furniturecatalog.png.jpg" class="pull-tab">
-            <img src="Assets/pulltabs_decorcloset.png.jpg" class="pull-tab">
-            <img src="Assets/pulltabs_inspogallery.png.jpg" class="pull-tab">
-            <img src="Assets/pulltabs_savecheckout.png.jpg" class="pull-tab">
-        </nav>
     </header>
 
-    <div class="work-zone" id="work-zone">
-        <div id="room-cabinet">
-            <div style="position: relative;">
-                <img src="Assets/roomscabinet.png" style="width:100%;">
-                <div class="hotspot" style="top:12%; left:12%; width:38%; height:22%;" onmouseover="preview('livingroom')" onclick="cycle('livingroom')"></div>
-                <div class="hotspot" style="top:12%; right:12%; width:38%; height:22%;" onmouseover="preview('diningroom')" onclick="cycle('diningroom')"></div>
-                <div class="hotspot" style="top:38%; left:12%; width:38%; height:22%;" onmouseover="preview('bedroom')" onclick="cycle('bedroom')"></div>
-                <div class="hotspot" style="top:38%; right:12%; width:38%; height:22%;" onmouseover="preview('extrarooms')" onclick="cycle('extrarooms')"></div>
+    <nav class="pull-tabs-container">
+        <img src="Assets/pulltabs_rooms.png.jpg" class="pull-tab" alt="Rooms" onclick="triggerRooms()">
+        <img src="Assets/pulltabs_furniturecatalog.png.jpg" class="pull-tab" alt="Furniture Catalog" onclick="openCatalog()">
+        <img src="Assets/pulltabs_decorcloset.png.jpg" class="pull-tab" alt="Decor Closet" onclick="openCloset()">
+        <img src="Assets/pulltabs_inspogallery" class="pull-tab" alt="Inspirational Gallery" onclick="openGallery()">
+        <img src="Assets/pulltabs_savecheckout.png.jpg" class="pull-tab" alt="Save" onclick="toggleReceipt()">
+    </nav>
+
+    <div id="design-area">
+        <div id="rooms-cabinet" class="cabinet">
+            <img src="Assets/roomscabinet.png" style="width: 100%;">
+            <div style="position: absolute; top: 20%; width: 100%;">
+                <span class="drawer-label" onmouseover="previewRoom('livingroom1.jpg')" onclick="cycleRoom('livingroom')">Living Room</span>
+                <span class="drawer-label" onmouseover="previewRoom('bedroom.jpg')" onclick="cycleRoom('bedroom')">Bedroom</span>
+                <span class="drawer-label" onmouseover="previewRoom('diningroom.jpg')" onclick="cycleRoom('diningroom')">Dining Room</span>
+                <span class="drawer-label" onmouseover="previewRoom('kitchen.jpg')" onclick="cycleRoom('extra')">Extra Rooms</span>
+                <span class="drawer-label">Upload Yours</span>
             </div>
         </div>
 
-        <div id="canvas-area">
-            <img id="stage-image" src="" alt="">
-        </div>
+        <div id="furniture-cases" class="furniture-cases">
+            <img src="Assets/furniturecases.png" style="width: 100%;">
+            </div>
+
+        <div id="main-canvas" onclick="selectRoom()"></div>
     </div>
+
+    <img src="Assets/scrollreceipt.png" id="receipt-scroll">
+    <img src="Assets/closetdoor.png" id="closet-door">
 </div>
 
 <script>
-    const assets = {
-        livingroom: ['Assets/livingroom1.jpg', 'Assets/livingroom3.jpg'],
-        bedroom: ['Assets/bedroom.jpg', 'Assets/bedroom2.jpg'],
-        diningroom: ['Assets/diningroom.jpg'],
-        extrarooms: ['Assets/foyer.jpg', 'Assets/office.jpg', 'Assets/kitchen.jpg', 'Assets/kitchen2.jpg']
+    const rooms = {
+        livingroom: ['livingroom1.jpg', 'livingroom3.jpg'],
+        bedroom: ['bedroom.jpg', 'bedroom2.jpg'],
+        diningroom: ['diningroom.jpg'],
+        extra: ['foyer.jpg', 'office.jpg', 'kitchen.jpg', 'kitchen2.jpg']
     };
 
-    let counters = { livingroom: 0, bedroom: 0, diningroom: 0, extrarooms: 0 };
+    let currentRoomType = '';
+    let currentRoomIndex = 0;
 
-    function openRooms() {
-        // Trigger the visual reveal
-        document.getElementById('work-zone').classList.add('visible');
-        document.getElementById('room-cabinet').classList.add('active');
-
-        // Forced Scroll Logic
-        const target = document.getElementById('work-zone').offsetTop;
-        window.scrollTo({
-            top: target - 100,
-            behavior: 'smooth'
-        });
+    function triggerRooms() {
+        document.getElementById('body-bg').style.background = "url('Assets/rainbackground.jpg') center/cover fixed";
+        document.getElementById('rooms-cabinet').classList.add('active');
+        window.scrollTo(0, document.getElementById('design-area').offsetTop);
     }
 
-    function preview(roomType) {
-        document.getElementById('stage-image').src = assets[roomType][counters[roomType]];
+    function previewRoom(img) {
+        document.getElementById('main-canvas').style.backgroundImage = `url('Assets/${img}')`;
     }
 
-    function cycle(roomType) {
-        counters[roomType] = (counters[roomType] + 1) % assets[roomType].length;
-        preview(roomType);
+    function cycleRoom(type) {
+        currentRoomType = type;
+        currentRoomIndex = (currentRoomIndex + 1) % rooms[type].length;
+        previewRoom(rooms[type][currentRoomIndex]);
+    }
+
+    function selectRoom() {
+        if(document.getElementById('rooms-cabinet').classList.contains('active')) {
+            document.getElementById('rooms-cabinet').classList.remove('active');
+            document.getElementById('furniture-cases').classList.add('active');
+        }
+    }
+
+    function openCloset() {
+        document.getElementById('closet-door').classList.toggle('active');
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+
+    function toggleReceipt() {
+        document.getElementById('receipt-scroll').classList.toggle('active');
+    }
+
+    function openCatalog() {
+        // Logic for book opening animation
+        alert("Furniture Catalog Opening...");
+    }
+
+    function openGallery() {
+        document.getElementById('body-bg').style.background = "url('Assets/rain2background.jpg') center/cover fixed";
+    }
+
+    // Drag and Drop Base Logic
+    function makeDraggable(el) {
+        let pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
+        el.onmousedown = dragMouseDown;
+
+        function dragMouseDown(e) {
+            e.preventDefault();
+            pos3 = e.clientX;
+            pos4 = e.clientY;
+            document.onmouseup = closeDragElement;
+            document.onmousemove = elementDrag;
+        }
+
+        function elementDrag(e) {
+            e.preventDefault();
+            pos1 = pos3 - e.clientX;
+            pos2 = pos4 - e.clientY;
+            pos3 = e.clientX;
+            pos4 = e.clientY;
+            el.style.top = (el.offsetTop - pos2) + "px";
+            el.style.left = (el.offsetLeft - pos1) + "px";
+        }
+
+        function closeDragElement() {
+            document.onmouseup = null;
+            document.onmousemove = null;
+        }
     }
 </script>
 
