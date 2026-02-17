@@ -3,350 +3,195 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Room Glow Up</title>
+    <title>Furniture Catalog</title>
     <style>
-        body, html {
+        body {
             margin: 0;
-            padding: 0;
-            width: 100%;
-            height: 100%;
-            overflow: hidden;
-            background-color: #000;
-            font-family: serif;
+            padding: 20px;
+            background-color: #1a1a1a;
+            color: #ffffff;
+            font-family: sans-serif;
         }
 
-        #main-container {
-            position: relative;
-            width: 100vw;
-            height: 100vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
+        .catalog-container {
+            max-width: 1200px;
+            margin: 0 auto;
         }
 
-        #sub-header {
-            width: 800px;
-            height: 40px;
-            background: rgba(20, 20, 20, 0.9);
-            color: #d4af37;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-size: 1.1rem;
-            letter-spacing: 2px;
-            border: 2px solid #333;
-            border-bottom: none;
-            z-index: 10;
-        }
-
-        #room-canvas {
-            position: relative;
-            width: 800px;
-            height: 600px;
-            background-image: url('mainbackground3.jpg'); 
-            background-size: cover;
-            background-position: center;
-            border: 10px solid #222;
-            z-index: 5;
-            overflow: hidden;
-        }
-
-        .tab-container {
-            position: absolute;
-            top: 0;
-            left: 50%;
-            transform: translateX(-50%);
-            display: flex;
-            gap: 15px;
-            z-index: 150;
-        }
-
-        .pull-tab {
-            cursor: pointer;
-            width: 90px;
-            height: auto;
-            transition: transform 0.3s ease;
-        }
-        .pull-tab:hover { transform: translateY(15px); }
-
-        .sidebar-asset {
-            position: absolute;
-            left: 20px;
-            top: 50%;
-            transform: translateY(-50%);
-            width: 300px;
-            height: auto;
-            transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
-            z-index: 10;
-        }
-        .hidden { display: none; }
-        .slide-left { transform: translateY(-50%) translateX(-150%); }
-
-        /* Catalog & Index Tabs */
-        #furniture-catalog {
-            position: absolute;
-            top: -110%;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 750px;
-            height: 550px;
-            z-index: 100;
-            transition: top 0.7s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            background-image: url('furniturecatalog.png');
-            background-size: contain;
-            background-repeat: no-repeat;
-            background-position: center;
-            cursor: crosshair;
-        }
-        #furniture-catalog.open { top: 70px; }
-
-        .index-tabs {
-            position: absolute;
-            right: -45px;
-            top: 100px;
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-        }
-        .index-label {
-            background: #d4af37;
-            color: black;
-            padding: 10px 5px;
-            font-size: 10px;
-            font-weight: bold;
-            writing-mode: vertical-rl;
-            text-orientation: mixed;
-            border-radius: 0 5px 5px 0;
-            cursor: pointer;
-            border: 1px solid #000;
-            transition: transform 0.2s;
-        }
-        .index-label:hover { transform: translateX(5px); }
-
-        .catalog-nav {
-            position: absolute;
-            bottom: 20px;
-            width: 100%;
+        .header {
             display: flex;
             justify-content: space-between;
-            padding: 0 60px;
-            box-sizing: border-box;
+            align-items: center;
+            margin-bottom: 20px;
+            border-bottom: 2px solid #333;
+            padding-bottom: 10px;
         }
-        .nav-btn {
-            background: rgba(212, 175, 55, 0.8);
-            border: none;
-            color: black;
-            padding: 5px 15px;
-            cursor: pointer;
+
+        .page-info {
+            font-size: 1.2rem;
             font-weight: bold;
-            border-radius: 5px;
         }
 
-        #scroll-receipt {
-            position: absolute;
-            top: -650px;
-            right: 50px;
-            width: 250px;
-            height: 500px;
-            background-image: url('scrollreceipt.png');
-            background-size: 100% 100%;
-            z-index: 140;
-            transition: top 1s ease-in-out;
-            padding: 60px 30px;
-            box-sizing: border-box;
+        .category-label {
+            color: #aaa;
+            text-transform: uppercase;
+            letter-spacing: 2px;
         }
-        #scroll-receipt.rolled-out { top: 0; }
-        .receipt-list { list-style: none; padding: 0; font-family: 'Courier New', monospace; font-size: 13px; color: #333; margin-top: 20px; }
 
-        #gallery-overlay {
-            position: absolute;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background-size: cover;
-            background-position: center;
-            z-index: 200;
-            display: none;
-            transition: transform 1.5s ease-in-out, opacity 1s;
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            grid-template-rows: repeat(2, 300px);
+            gap: 20px;
         }
-        .door-zone { position: absolute; top: 25%; left: 35%; width: 30%; height: 50%; cursor: pointer; }
-        .zoom-in { transform: scale(4); opacity: 0; }
-        #nav-arrow { position: absolute; bottom: 30px; right: 30px; width: 50px; cursor: pointer; z-index: 300; }
 
-        .placed-furniture { position: absolute; cursor: move; user-select: none; z-index: 20; }
+        .grid-item {
+            background-color: #252525;
+            border: 1px solid #333;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: transform 0.2s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .grid-item:hover {
+            transform: scale(1.02);
+            border-color: #555;
+        }
+
+        .grid-item img {
+            max-width: 80%;
+            max-height: 70%;
+            object-fit: contain;
+        }
+
+        .item-name {
+            margin-top: 10px;
+            font-size: 0.9rem;
+            color: #888;
+        }
+
+        .controls {
+            margin-top: 30px;
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        button {
+            padding: 10px 25px;
+            background: #333;
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+
+        button:hover {
+            background: #444;
+        }
+
+        button:disabled {
+            opacity: 0.3;
+            cursor: not-allowed;
+        }
     </style>
 </head>
 <body>
 
-<div id="main-container">
-    <div class="tab-container">
-        <img src="pulltabs_rooms.png" class="pull-tab" onclick="resetView()">
-        <img src="pulltabs_furniturecatalog.png" class="pull-tab" onclick="showCatalog()">
-        <img src="pulltabs_decorcloset.png" class="pull-tab" onclick="openCases()">
-        <img src="pulltabs_inspogallery.png" class="pull-tab" onclick="startInspo()">
-        <img src="pulltabs_savecheckout.png" class="pull-tab" onclick="toggleReceipt()">
+<div class="catalog-container">
+    <div class="header">
+        <div class="category-label" id="categoryLabel">Loading...</div>
+        <div class="page-info" id="pageDisplay">Page 1 / 17</div>
     </div>
 
-    <div id="sub-header">ROOM GLOW UP: DESIGN MANIFEST</div>
-
-    <div id="room-canvas"></div>
-
-    <div id="scroll-receipt">
-        <h3 style="text-align:center; font-size: 16px;">MANIFEST</h3>
-        <ul id="item-list" class="receipt-list"></ul>
-    </div>
-
-    <div id="library-cabinet" class="sidebar-asset">
-        <img src="roomscabinet.png" style="width:100%">
-    </div>
-
-    <div id="furniture-trunks" class="sidebar-asset hidden">
-        <img src="furniturecases.png" style="width:100%">
-        <div style="position:absolute; top:20%; left:40%; width:60px; height:90px; cursor:pointer;" onclick="showCatalog()"></div>
-    </div>
-
-    <div id="furniture-catalog" ondblclick="identifyAndAddItem(event)">
-        <div class="index-tabs">
-            <div class="index-label" onclick="jumpToPage(1)">COUCHES</div>
-            <div class="index-label" onclick="jumpToPage(3)">ARMCHAIRS</div>
+    <div class="grid-container" id="catalogGrid">
         </div>
-        <div class="catalog-nav">
-            <button class="nav-btn" onclick="changePage(-1)">PREV</button>
-            <span id="page-indicator" style="color:white; font-size: 11px; background: rgba(0,0,0,0.6); padding: 2px 8px;">PAGE 1</span>
-            <button class="nav-btn" onclick="changePage(1)">NEXT</button>
-        </div>
-    </div>
 
-    <div id="gallery-overlay">
-        <div id="door-click" class="door-zone hidden" onclick="triggerZoomEntry()"></div>
-        <img id="nav-arrow" src="arrow.png" onclick="cycleGallery()">
+    <div class="controls">
+        <button id="prevBtn" onclick="changePage(-1)">Previous</button>
+        <button id="nextBtn" onclick="changePage(1)">Next</button>
     </div>
 </div>
 
 <script>
-    const cabinet = document.getElementById('library-cabinet');
-    const cases = document.getElementById('furniture-trunks');
-    const catalog = document.getElementById('furniture-catalog');
-    const receipt = document.getElementById('scroll-receipt');
-    const itemList = document.getElementById('item-list');
-    const canvas = document.getElementById('room-canvas');
-    const gallery = document.getElementById('gallery-overlay');
-    const doorClick = document.getElementById('door-click');
+    let currentPage = 1;
+    const totalPages = 17;
 
-    let galleryIdx = 0;
-    let catalogPage = 1;
+    // The Master Inventory Mapping
+    const inventory = {
+        1: { label: "Seating - Couches", items: ["seating_couch1.png", "seating_couch2.png", "seating_couch3.png", "seating_couch4.png", "seating_couch5.png", "seating_couch6.png"] },
+        2: { label: "Seating - Couches", items: ["seating_couch7.png"] },
+        3: { label: "Seating - Armchairs", items: ["seating_armchair.png", "seating_armchair1.png", "seating_armchair2.png", "seating_armchair3.png"] },
+        4: { label: "Seating - Barstools", items: ["seating_barstool.png", "seating_barstool1.png", "seating_barstool2.png", "seating_barstool3.png"] },
+        5: { label: "Seating - Benches", items: ["seating_benches1.png", "seating_benches2.png"] },
+        6: { label: "Seating - Dining Chairs", items: ["seating_diningchair1.png", "seating_diningchair2.png", "seating_diningchair3.png", "seating_diningchair4.png"] },
+        7: { label: "Storage - Dressers", items: ["storage_dresser1.png", "storage_dresser2.png", "storage_dresser3.png", "storage_dresser4.png", "storage_dresser5.png", "storage_dresser6.png"] },
+        8: { label: "Storage - Cabinets", items: ["storage_cabinet1.png", "storage_cabinet2.png"] },
+        9: { label: "Storage - Shelves", items: ["storage_shelf1.png", "storage_shelf2.png"] },
+        10: { label: "Storage - Sideboards", items: ["storage_sideboard1.png", "storage_sideboard2.png"] },
+        11: { label: "Storage - Vanity", items: ["storage_vanity1.png"] },
+        12: { label: "Seating - Ottoman", items: ["seating_ottoman.png"] },
+        13: { label: "Tables - Dining", items: ["tables_dining1.png", "tables_dining2.png"] },
+        14: { label: "Tables - End Tables", items: ["tables_endtable1.png", "tables_endtable2.png"] },
+        15: { label: "Tables - Sofa Table", items: ["tables_sofatable1.png"] },
+        16: { label: "Beds", items: ["beds_bed1.png", "beds_bed2.png", "beds_bed3.png", "beds_bed4.png", "beds_bed5.png", "beds_bed6.png"] },
+        17: { label: "Beds", items: ["beds_bed7.png"] }
+    };
 
-    const gallerySequence = ['rain.jpg', 'rain2.jpg', 'inspo_gallerydoors.jpg', 'inspo_gallery1.jpg', 'inspo_gallery2.jpg', 'inspo_gallery3.jpg', 'inspo_gallery4.jpg', 'inspo_gallery5.jpg', 'inspo_gallery6.jpg'];
-
-    function openCases() {
-        cabinet.classList.add('slide-left');
-        setTimeout(() => {
-            cabinet.classList.add('hidden');
-            cases.classList.remove('hidden');
-        }, 800);
-    }
-
-    function showCatalog() { catalog.classList.add('open'); }
-    function toggleReceipt() { receipt.classList.toggle('rolled-out'); }
-    function resetView() {
-        catalog.classList.remove('open');
-        gallery.style.display = 'none';
-        cabinet.classList.remove('slide-left', 'hidden');
-        cases.classList.add('hidden');
-    }
-
-    function changePage(dir) {
-        catalogPage += dir;
-        if (catalogPage < 1) catalogPage = 1;
-        if (catalogPage > 3) catalogPage = 3; 
-        updatePageIndicator();
-    }
-
-    function jumpToPage(p) {
-        catalogPage = p;
-        updatePageIndicator();
-    }
-
-    function updatePageIndicator() {
-        document.getElementById('page-indicator').innerText = "PAGE " + catalogPage;
-    }
-
-    function identifyAndAddItem(e) {
-        const rect = catalog.getBoundingClientRect();
-        const x = e.clientX - rect.left;
-        const y = e.clientY - rect.top;
-        let name = ""; let img = "";
-
-        const col = x < 375 ? 0 : 1; 
-        const row = y < 183 ? 0 : (y < 366 ? 1 : 2);
-        const index = col + (row * 2);
-
-        if (catalogPage === 1) {
-            switch(index) {
-                case 0: name = "Couch 1"; img = "couch1.png"; break;
-                case 1: name = "Couch 2"; img = "couch2.png"; break;
-                case 2: name = "Couch 3"; img = "couch3.png"; break;
-                case 3: name = "Couch 4"; img = "couch4.png"; break;
-                case 4: name = "Couch 5"; img = "couch5.png"; break;
-                case 5: name = "Couch 6"; img = "couch6.png"; break;
-            }
-        } else if (catalogPage === 2) {
-            if (index === 0) { name = "Couch 7"; img = "couch7.png"; }
-        } else if (catalogPage === 3) {
-            switch(index) {
-                case 0: name = "Armchair"; img = "armchair.png"; break;
-                case 1: name = "Armchair 1"; img = "armchair1.png"; break;
-                case 2: name = "Armchair 2"; img = "armchair2.png"; break;
-                case 3: name = "Armchair 3"; img = "armchair3.png"; break;
-            }
-        }
-
-        if (name && img) addItemToRoom(name, img);
-    }
-
-    function addItemToRoom(name, imgSrc) {
-        const item = document.createElement('img');
-        item.src = imgSrc; 
-        item.className = 'placed-furniture';
-        item.style.width = '200px'; 
-        item.style.left = '300px';  
-        item.style.top = '200px';
+    function renderPage() {
+        const grid = document.getElementById('catalogGrid');
+        const pageData = inventory[currentPage];
         
-        item.onmousedown = function(event) {
-            let shiftX = event.clientX - item.getBoundingClientRect().left;
-            let shiftY = event.clientY - item.getBoundingClientRect().top;
-            function moveAt(pageX, pageY) {
-                item.style.left = pageX - canvas.getBoundingClientRect().left - shiftX + 'px';
-                item.style.top = pageY - canvas.getBoundingClientRect().top - shiftY + 'px';
+        document.getElementById('pageDisplay').innerText = `Page ${currentPage} / ${totalPages}`;
+        document.getElementById('categoryLabel').innerText = pageData.label;
+        
+        grid.innerHTML = '';
+
+        // Generate 6 slots (2x3 grid)
+        for (let i = 0; i < 6; i++) {
+            const slot = document.createElement('div');
+            slot.className = 'grid-item';
+            
+            if (pageData.items[i]) {
+                const img = document.createElement('img');
+                img.src = pageData.items[i];
+                img.alt = pageData.items[i];
+                
+                const name = document.createElement('div');
+                name.className = 'item-name';
+                name.innerText = pageData.items[i];
+                
+                slot.appendChild(img);
+                slot.appendChild(name);
+                
+                slot.ondblclick = () => {
+                    console.log("Selected item:", pageData.items[i]);
+                    // Custom function for your site logic here
+                };
             }
-            function onMouseMove(event) { moveAt(event.clientX, event.clientY); }
-            document.addEventListener('mousemove', onMouseMove);
-            item.onmouseup = function() { document.removeEventListener('mousemove', onMouseMove); };
-        };
-        item.ondragstart = () => false;
-        canvas.appendChild(item);
-
-        const li = document.createElement('li');
-        li.textContent = "• " + name;
-        itemList.appendChild(li);
-    }
-
-    function startInspo() { galleryIdx = 0; gallery.style.display = 'block'; gallery.style.backgroundImage = `url(${gallerySequence[0]})`; }
-    function cycleGallery() {
-        galleryIdx++;
-        if (galleryIdx < gallerySequence.length) {
-            gallery.style.backgroundImage = `url(${gallerySequence[galleryIdx]})`;
-            gallerySequence[galleryIdx] === 'inspo_gallerydoors.jpg' ? doorClick.classList.remove('hidden') : doorClick.classList.add('hidden');
+            
+            grid.appendChild(slot);
         }
+
+        document.getElementById('prevBtn').disabled = (currentPage === 1);
+        document.getElementById('nextBtn').disabled = (currentPage === totalPages);
     }
-    function triggerZoomEntry() {
-        gallery.classList.add('zoom-in');
-        setTimeout(() => {
-            galleryIdx++;
-            gallery.classList.remove('zoom-in');
-            gallery.style.backgroundImage = `url(${gallerySequence[galleryIdx]})`;
-            doorClick.classList.add('hidden');
-        }, 1500);
+
+    function changePage(step) {
+        currentPage += step;
+        if (currentPage < 1) currentPage = 1;
+        if (currentPage > totalPages) currentPage = totalPages;
+        renderPage();
     }
+
+    // Initial load
+    renderPage();
 </script>
+
 </body>
 </html>
