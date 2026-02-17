@@ -102,3 +102,243 @@
         .tab-lip {
             position: absolute;
             bottom: -5px;
+            width: 60%;
+            height: 8px;
+            background: #222;
+            border-radius: 0 0 5px 5px;
+        }
+
+        #stage {
+            position: relative;
+            width: 100%;
+            height: calc(100vh - 250px);
+            margin-top: 20px;
+            overflow: hidden;
+        }
+
+        #cabinet {
+            position: absolute;
+            left: -100%;
+            top: 20px;
+            width: 400px;
+            height: 80%;
+            background: url('Assets/cabinet.png') no-repeat center;
+            background-size: contain;
+            transition: left 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        #cabinet.active { left: 50px; }
+
+        .drawer-handle {
+            width: 150px;
+            height: 40px;
+            background: var(--metal-shine);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #000;
+            font-family: 'Special Elite', serif;
+            font-size: 0.8rem;
+            cursor: pointer;
+            border: 1px solid #444;
+            transition: 0.3s;
+        }
+
+        .drawer-handle:hover {
+            background: var(--glow);
+            transform: translateY(-5px);
+        }
+
+        #room-preview {
+            position: absolute;
+            right: 50px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 600px;
+            height: 400px;
+            border: 10px solid #222;
+            box-shadow: 0 0 20px rgba(0,0,0,0.8);
+            background-color: #000;
+            display: none;
+        }
+
+        #room-preview img { width: 100%; height: 100%; object-fit: cover; }
+
+        /* Catalog Book Section */
+        #catalog-book {
+            position: absolute;
+            top: -100%;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80%;
+            max-width: 900px;
+            background: #252525;
+            border: 15px solid #333;
+            padding: 20px;
+            transition: top 0.8s;
+            z-index: 10;
+        }
+        #catalog-book.active { top: 20px; }
+
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            grid-template-rows: repeat(2, 200px);
+            gap: 15px;
+        }
+
+        .grid-item {
+            background: #1a1a1a;
+            border: 1px solid #444;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        .grid-item img { max-width: 90%; max-height: 90%; object-fit: contain; }
+
+        .book-controls {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 15px;
+        }
+
+        #receipt-scroll {
+            position: fixed;
+            right: -500px;
+            top: 100px;
+            width: 400px;
+            height: 600px;
+            background: url('Assets/scrollreceipt.jpg') no-repeat center;
+            background-size: contain;
+            transition: right 0.6s ease-in-out;
+            padding: 80px 40px;
+            color: #333;
+            font-family: 'Special Elite', serif;
+        }
+        #receipt-scroll.active { right: 50px; }
+    </style>
+</head>
+<body>
+
+<header class="site-header">
+    <h1 class="main-title">ROOM GLOW UP</h1>
+    <p class="sub-title">Where Your Dream Space Comes To Life</p>
+</header>
+
+<nav class="nav-container">
+    <div class="pull-tab" onclick="toggleCabinet()">
+        <div class="label-card">ROOMS</div>
+        <div class="tab-lip"></div>
+    </div>
+    <div class="pull-tab" onclick="toggleBook()">
+        <div class="label-card">FURNITURE CATALOG</div>
+        <div class="tab-lip"></div>
+    </div>
+    <div class="pull-tab">
+        <div class="label-card">DECOR CLOSET</div>
+        <div class="tab-lip"></div>
+    </div>
+    <div class="pull-tab">
+        <div class="label-card">INSPIRATIONAL GALLERY</div>
+        <div class="tab-lip"></div>
+    </div>
+    <div class="pull-tab" onclick="toggleReceipt()">
+        <div class="label-card">SAVE / CHECKOUT</div>
+        <div class="tab-lip"></div>
+    </div>
+</nav>
+
+<main id="stage">
+    <div id="cabinet">
+        <div class="drawer-handle" onmouseover="previewRoom('livingroom1.jpg')" onclick="cycleRoom('livingroom')">LIVING ROOM</div>
+        <div class="drawer-handle" onmouseover="previewRoom('bedroom.jpg')" onclick="cycleRoom('bedroom')">BEDROOM</div>
+        <div class="drawer-handle" onmouseover="previewRoom('diningroom.jpg')" onclick="cycleRoom('diningroom')">DINING ROOM</div>
+        <div class="drawer-handle" onmouseover="previewRoom('foyer.jpg')" onclick="cycleRoom('extras')">EXTRA ROOMS</div>
+        <div class="drawer-handle">UPLOAD YOURS</div>
+    </div>
+
+    <div id="room-preview">
+        <img id="preview-img" src="" alt="Room Preview">
+    </div>
+
+    <div id="catalog-book">
+        <h2 id="categoryLabel" style="font-family:'Special Elite'; color:var(--silver);">Seating - Couches</h2>
+        <div class="grid-container" id="catalogGrid"></div>
+        <div class="book-controls">
+            <button onclick="changePage(-1)">Previous</button>
+            <span id="pageDisplay">Page 1 / 18</span>
+            <button onclick="changePage(1)">Next</button>
+        </div>
+    </div>
+</main>
+
+<div id="receipt-scroll">
+    <h3 style="text-align:center">ESTIMATE</h3>
+    <div id="receipt-list"></div>
+</div>
+
+<script>
+    const assetPath = "Assets/";
+    let currentPage = 1;
+    const totalPages = 18;
+
+    const inventory = {
+        1: { label: "Seating - Couches", items: ["seating_couch1.png", "seating_couch2.png", "seating_couch3.png", "seating_couch4.png", "seating_couch5.png", "seating_couch6.png"] },
+        2: { label: "Seating - Couches", items: ["seating_couch7.png"] },
+        3: { label: "Seating - Armchairs", items: ["seating_armchair.png", "seating_armchair1.png", "seating_armchair2.png", "seating_armchair3.png"] },
+        4: { label: "Seating - Barstools", items: ["seating_barstool.png", "seating_barstool1.png", "seating_barstool2.png", "seating_barstool3.png"] },
+        5: { label: "Seating - Benches", items: ["seating_benches1.png", "seating_benches2.png"] },
+        6: { label: "Seating - Dining Chairs", items: ["seating_diningchair1.png", "seating_diningchair2.png", "seating_diningchair3.png", "seating_diningchair4.png"] },
+        7: { label: "Storage - Dressers", items: ["storage_dresser1.png", "storage_dresser2.png", "storage_dresser3.png", "storage_dresser4.png", "storage_dresser5.png", "storage_dresser6.png"] },
+        8: { label: "Storage - Cabinets", items: ["storage_cabinet1.png", "storage_cabinet2.png"] },
+        9: { label: "Storage - Shelves", items: ["storage_shelf1.png", "storage_shelf2.png"] },
+        10: { label: "Storage - Sideboards", items: ["storage_sideboard1.png", "storage_sideboard2.png"] },
+        11: { label: "Storage - Vanity", items: ["storage_vanity1.png"] },
+        12: { label: "Seating - Ottoman", items: ["seating_ottoman.png"] },
+        13: { label: "Tables - Dining", items: ["tables_dining1.png", "tables_dining2.png"] },
+        14: { label: "Tables - End Tables", items: ["tables_endtable1.png", "tables_endtable2.png"] },
+        15: { label: "Tables - Sofa Table", items: ["tables_sofatable1.png"] },
+        16: { label: "Tables - Coffee Table", items: ["tables_coffeetable1.png"] },
+        17: { label: "Beds", items: ["beds_bed1.png", "beds_bed2.png", "beds_bed3.png", "beds_bed4.png", "beds_bed5.png", "beds_bed6.png"] },
+        18: { label: "Beds", items: ["beds_bed7.png"] }
+    };
+
+    function toggleCabinet() { document.getElementById('cabinet').classList.toggle('active'); document.getElementById('room-preview').style.display = 'block'; }
+    function toggleBook() { document.getElementById('catalog-book').classList.toggle('active'); renderPage(); }
+    function toggleReceipt() { document.getElementById('receipt-scroll').classList.toggle('active'); }
+    function previewRoom(img) { document.getElementById('preview-img').src = assetPath + img; }
+    
+    function renderPage() {
+        const grid = document.getElementById('catalogGrid');
+        const data = inventory[currentPage];
+        document.getElementById('categoryLabel').innerText = data.label;
+        document.getElementById('pageDisplay').innerText = `Page ${currentPage} / ${totalPages}`;
+        grid.innerHTML = '';
+        for (let i = 0; i < 6; i++) {
+            const slot = document.createElement('div');
+            slot.className = 'grid-item';
+            if (data.items[i]) {
+                const img = document.createElement('img');
+                img.src = assetPath + data.items[i];
+                slot.appendChild(img);
+            }
+            grid.appendChild(slot);
+        }
+    }
+
+    function changePage(step) {
+        currentPage += step;
+        if (currentPage < 1) currentPage = 1;
+        if (currentPage > totalPages) currentPage = totalPages;
+        renderPage();
+    }
+</script>
+</body>
+</html>
