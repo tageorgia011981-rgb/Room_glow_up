@@ -7,339 +7,233 @@
     <link href="https://fonts.googleapis.com/css2?family=Limelight&family=Special+Elite&display=swap" rel="stylesheet">
     <style>
         :root {
-            --gunmetal: #2a2d2f;
-            --silver: #c0c0c0;
-            --metal-shine: linear-gradient(145deg, #3e4245, #1a1c1e);
-            --glow: #ffffff;
+            /* Colors set to a neutral high-end palette until background is finalized */
+            --header-color: #008080; 
+            --shine-highlight: #e0f2f2;
         }
 
         body, html {
             margin: 0;
             padding: 0;
+            width: 100%;
             height: 100%;
-            overflow: hidden;
-            font-family: 'Limelight', cursive;
             background: url('Assets/mainbackground3.jpg') no-repeat center center fixed;
             background-size: cover;
-            color: var(--silver);
+            font-family: 'Limelight', cursive;
+            scroll-behavior: smooth;
+            overflow-x: hidden;
         }
 
-        .site-header {
+        /* HEADER & SHINE EFFECT */
+        header {
+            width: 100%;
+            padding: 50px 0;
             text-align: center;
-            padding: 40px 0 10px 0;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.8);
         }
 
-        .main-title {
-            font-size: 5rem;
+        h1 {
+            font-size: clamp(4rem, 10vw, 7rem);
             margin: 0;
-            color: var(--silver);
-            font-weight: bold;
-            letter-spacing: 4px;
+            text-transform: uppercase;
+            letter-spacing: 5px;
+            /* The Shine Animation from your preferred code */
+            background: linear-gradient(to right, var(--header-color) 0%, #33a3a3 25%, var(--shine-highlight) 50%, #33a3a3 75%, var(--header-color) 100%);
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: metalShine 4s linear infinite;
+            filter: drop-shadow(4px 4px 0px rgba(0,0,0,0.5));
         }
 
-        .sub-title {
+        @keyframes metalShine {
+            to { background-position: 200% center; }
+        }
+
+        h2 {
             font-size: 1.8rem;
-            margin-top: -10px;
-            color: var(--silver);
-            opacity: 0.9;
+            color: var(--header-color);
+            margin-top: 5px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
         }
 
+        /* CUSTOM PULL TABS */
         .nav-container {
             display: flex;
             justify-content: center;
-            gap: 15px;
-            margin-top: 20px;
+            gap: 20px;
+            margin-top: 30px;
         }
 
         .pull-tab {
-            width: 180px;
-            height: 60px;
-            background: var(--metal-shine);
-            border: 2px solid #555;
-            position: relative;
             cursor: pointer;
-            box-shadow: inset 0 0 10px #000, 3px 5px 10px rgba(0,0,0,0.5);
+            transition: transform 0.3s ease, filter 0.3s ease;
+            width: 180px; /* Adjusting based on your image size */
+        }
+
+        .pull-tab:hover {
+            transform: translateY(-15px);
+            filter: drop-shadow(0px 0px 15px rgba(255,255,255,0.6));
+        }
+
+        /* DESIGN WORK ZONE */
+        .work-zone {
             display: flex;
-            align-items: center;
             justify-content: center;
-            transition: 0.3s;
-        }
-
-        .pull-tab::before, .pull-tab::after {
-            content: '';
-            position: absolute;
-            width: 6px;
-            height: 6px;
-            background: #111;
-            border-radius: 50%;
-            top: 5px;
-        }
-        .pull-tab::before { left: 5px; }
-        .pull-tab::after { right: 5px; }
-
-        .label-card {
-            width: 85%;
-            height: 70%;
-            background: #ddd;
-            color: #000;
-            font-family: 'Special Elite', typewriter;
-            font-weight: bold;
-            display: flex;
             align-items: center;
-            justify-content: center;
-            text-align: center;
-            font-size: 0.9rem;
-            transition: 0.3s;
-        }
-
-        .pull-tab:hover .label-card {
-            background: var(--glow);
-            box-shadow: 0 0 15px var(--glow);
-            transform: translateY(-2px);
-        }
-
-        .tab-lip {
-            position: absolute;
-            bottom: -5px;
-            width: 60%;
-            height: 8px;
-            background: #222;
-            border-radius: 0 0 5px 5px;
-        }
-
-        #stage {
+            height: 100vh;
             position: relative;
-            width: 100%;
-            height: calc(100vh - 250px);
-            margin-top: 20px;
+            margin-top: 50px;
+        }
+
+        #main-canvas {
+            width: 900px;
+            height: 600px;
+            background: rgba(0,0,0,0.2);
+            border: 10px solid #2a2d2f;
+            box-shadow: 0 0 50px rgba(0,0,0,0.8);
+            z-index: 5;
             overflow: hidden;
         }
 
-        #cabinet {
-            position: absolute;
-            left: -100%;
-            top: 20px;
-            width: 400px;
-            height: 80%;
-            background: url('Assets/cabinet.png') no-repeat center;
-            background-size: contain;
-            transition: left 0.8s cubic-bezier(0.4, 0, 0.2, 1);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
+        #canvas-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
         }
 
-        #cabinet.active { left: 50px; }
+        /* SUBSTANTIAL ROOMS CABINET */
+        #rooms-cabinet {
+            position: absolute;
+            left: -800px; /* Starts way off screen */
+            top: 50px;
+            width: 500px; /* Substantial size as requested */
+            transition: left 1.2s cubic-bezier(0.17, 0.67, 0.83, 0.67);
+            z-index: 10;
+        }
 
+        #rooms-cabinet.active {
+            left: 20px; /* Glides in to view */
+        }
+
+        .cabinet-img {
+            width: 100%;
+            filter: drop-shadow(15px 15px 30px black);
+        }
+
+        /* BRASS HANDLE HOTSPOTS */
         .drawer-handle {
+            position: absolute;
             width: 150px;
             height: 40px;
-            background: var(--metal-shine);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: #000;
-            font-family: 'Special Elite', serif;
-            font-size: 0.8rem;
             cursor: pointer;
-            border: 1px solid #444;
-            transition: 0.3s;
+            /* Debug colors removed - these align with your handle positions */
+            left: 50%;
+            transform: translateX(-50%);
         }
 
-        .drawer-handle:hover {
-            background: var(--glow);
-            transform: translateY(-5px);
-        }
+        .handle-living { top: 22%; }
+        .handle-bedroom { top: 35%; }
+        .handle-dining { top: 48%; }
+        .handle-extra { top: 61%; }
+        .handle-upload { top: 74%; }
 
-        #room-preview {
-            position: absolute;
-            right: 50px;
-            top: 50%;
-            transform: translateY(-50%);
-            width: 600px;
-            height: 400px;
-            border: 10px solid #222;
-            box-shadow: 0 0 20px rgba(0,0,0,0.8);
-            background-color: #000;
-            display: none;
-        }
-
-        #room-preview img { width: 100%; height: 100%; object-fit: cover; }
-
-        /* Catalog Book Section */
+        /* FURNITURE CATALOG BOOK */
         #catalog-book {
-            position: absolute;
+            position: fixed;
             top: -100%;
             left: 50%;
             transform: translateX(-50%);
             width: 80%;
-            max-width: 900px;
-            background: #252525;
-            border: 15px solid #333;
-            padding: 20px;
-            transition: top 0.8s;
-            z-index: 10;
+            max-width: 1000px;
+            z-index: 100;
+            transition: top 1s ease-in-out;
         }
-        #catalog-book.active { top: 20px; }
 
-        .grid-container {
+        #catalog-book.open {
+            top: 150px;
+        }
+
+        .book-img { width: 100%; }
+
+        .inventory-grid {
+            position: absolute;
+            top: 15%;
+            left: 10%;
+            width: 80%;
+            height: 70%;
             display: grid;
             grid-template-columns: repeat(3, 1fr);
-            grid-template-rows: repeat(2, 200px);
-            gap: 15px;
+            grid-template-rows: repeat(2, 1fr);
+            gap: 20px;
         }
 
-        .grid-item {
-            background: #1a1a1a;
-            border: 1px solid #444;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            overflow: hidden;
+        .grid-item img {
+            max-width: 100%;
+            max-height: 100%;
+            cursor: pointer;
+            transition: transform 0.2s;
         }
 
-        .grid-item img { max-width: 90%; max-height: 90%; object-fit: contain; }
+        .grid-item img:hover { transform: scale(1.1); }
 
-        .book-controls {
-            display: flex;
-            justify-content: space-between;
-            margin-top: 15px;
-        }
-
-        #receipt-scroll {
-            position: fixed;
-            right: -500px;
-            top: 100px;
-            width: 400px;
-            height: 600px;
-            background: url('Assets/scrollreceipt.jpg') no-repeat center;
-            background-size: contain;
-            transition: right 0.6s ease-in-out;
-            padding: 80px 40px;
-            color: #333;
-            font-family: 'Special Elite', serif;
-        }
-        #receipt-scroll.active { right: 50px; }
     </style>
 </head>
 <body>
 
-<header class="site-header">
-    <h1 class="main-title">ROOM GLOW UP</h1>
-    <p class="sub-title">Where Your Dream Space Comes To Life</p>
+<header>
+    <h1>Room Glow Up</h1>
+    <h2>Where Your Dream Space Comes To Life</h2>
+
+    <div class="nav-container">
+        <img src="Assets/pulltabs_rooms.png" class="pull-tab" onclick="triggerRooms()">
+        <img src="Assets/pulltabs_furniturecatalog.png" class="pull-tab" onclick="toggleCatalog()">
+        <img src="Assets/pulltabs_decorcloset.png" class="pull-tab">
+        <img src="Assets/pulltabs_inspogallery.png" class="pull-tab">
+        <img src="Assets/pulltabs_savecheckout.png" class="pull-tab">
+    </div>
 </header>
 
-<nav class="nav-container">
-    <div class="pull-tab" onclick="toggleCabinet()">
-        <div class="label-card">ROOMS</div>
-        <div class="tab-lip"></div>
-    </div>
-    <div class="pull-tab" onclick="toggleBook()">
-        <div class="label-card">FURNITURE CATALOG</div>
-        <div class="tab-lip"></div>
-    </div>
-    <div class="pull-tab">
-        <div class="label-card">DECOR CLOSET</div>
-        <div class="tab-lip"></div>
-    </div>
-    <div class="pull-tab">
-        <div class="label-card">INSPIRATIONAL GALLERY</div>
-        <div class="tab-lip"></div>
-    </div>
-    <div class="pull-tab" onclick="toggleReceipt()">
-        <div class="label-card">SAVE / CHECKOUT</div>
-        <div class="tab-lip"></div>
-    </div>
-</nav>
-
-<main id="stage">
-    <div id="cabinet">
-        <div class="drawer-handle" onmouseover="previewRoom('livingroom1.jpg')" onclick="cycleRoom('livingroom')">LIVING ROOM</div>
-        <div class="drawer-handle" onmouseover="previewRoom('bedroom.jpg')" onclick="cycleRoom('bedroom')">BEDROOM</div>
-        <div class="drawer-handle" onmouseover="previewRoom('diningroom.jpg')" onclick="cycleRoom('diningroom')">DINING ROOM</div>
-        <div class="drawer-handle" onmouseover="previewRoom('foyer.jpg')" onclick="cycleRoom('extras')">EXTRA ROOMS</div>
-        <div class="drawer-handle">UPLOAD YOURS</div>
+<main class="work-zone">
+    <div id="rooms-cabinet">
+        <img src="Assets/roomscabinet.png" class="cabinet-img">
+        <div class="drawer-handle handle-living" onmouseover="preview('livingroom1.jpg')" onclick="cycle('living')"></div>
+        <div class="drawer-handle handle-bedroom" onmouseover="preview('bedroom.jpg')" onclick="cycle('bed')"></div>
+        <div class="drawer-handle handle-dining" onmouseover="preview('diningroom.jpg')" onclick="cycle('dining')"></div>
+        <div class="drawer-handle handle-extra" onmouseover="preview('foyer.jpg')" onclick="cycle('extra')"></div>
+        <div class="drawer-handle handle-upload" onclick="alert('Upload Triggered')"></div>
     </div>
 
-    <div id="room-preview">
-        <img id="preview-img" src="" alt="Room Preview">
+    <div id="main-canvas">
+        <img id="canvas-img" src="" alt="Select a room">
     </div>
 
     <div id="catalog-book">
-        <h2 id="categoryLabel" style="font-family:'Special Elite'; color:var(--silver);">Seating - Couches</h2>
-        <div class="grid-container" id="catalogGrid"></div>
-        <div class="book-controls">
-            <button onclick="changePage(-1)">Previous</button>
-            <span id="pageDisplay">Page 1 / 18</span>
-            <button onclick="changePage(1)">Next</button>
-        </div>
+        <img src="Assets/furniturecatalog.png" class="book-img">
+        <div class="inventory-grid" id="catalog-grid">
+            </div>
     </div>
 </main>
 
-<div id="receipt-scroll">
-    <h3 style="text-align:center">ESTIMATE</h3>
-    <div id="receipt-list"></div>
-</div>
-
 <script>
     const assetPath = "Assets/";
-    let currentPage = 1;
-    const totalPages = 18;
 
-    const inventory = {
-        1: { label: "Seating - Couches", items: ["seating_couch1.png", "seating_couch2.png", "seating_couch3.png", "seating_couch4.png", "seating_couch5.png", "seating_couch6.png"] },
-        2: { label: "Seating - Couches", items: ["seating_couch7.png"] },
-        3: { label: "Seating - Armchairs", items: ["seating_armchair.png", "seating_armchair1.png", "seating_armchair2.png", "seating_armchair3.png"] },
-        4: { label: "Seating - Barstools", items: ["seating_barstool.png", "seating_barstool1.png", "seating_barstool2.png", "seating_barstool3.png"] },
-        5: { label: "Seating - Benches", items: ["seating_benches1.png", "seating_benches2.png"] },
-        6: { label: "Seating - Dining Chairs", items: ["seating_diningchair1.png", "seating_diningchair2.png", "seating_diningchair3.png", "seating_diningchair4.png"] },
-        7: { label: "Storage - Dressers", items: ["storage_dresser1.png", "storage_dresser2.png", "storage_dresser3.png", "storage_dresser4.png", "storage_dresser5.png", "storage_dresser6.png"] },
-        8: { label: "Storage - Cabinets", items: ["storage_cabinet1.png", "storage_cabinet2.png"] },
-        9: { label: "Storage - Shelves", items: ["storage_shelf1.png", "storage_shelf2.png"] },
-        10: { label: "Storage - Sideboards", items: ["storage_sideboard1.png", "storage_sideboard2.png"] },
-        11: { label: "Storage - Vanity", items: ["storage_vanity1.png"] },
-        12: { label: "Seating - Ottoman", items: ["seating_ottoman.png"] },
-        13: { label: "Tables - Dining", items: ["tables_dining1.png", "tables_dining2.png"] },
-        14: { label: "Tables - End Tables", items: ["tables_endtable1.png", "tables_endtable2.png"] },
-        15: { label: "Tables - Sofa Table", items: ["tables_sofatable1.png"] },
-        16: { label: "Tables - Coffee Table", items: ["tables_coffeetable1.png"] },
-        17: { label: "Beds", items: ["beds_bed1.png", "beds_bed2.png", "beds_bed3.png", "beds_bed4.png", "beds_bed5.png", "beds_bed6.png"] },
-        18: { label: "Beds", items: ["beds_bed7.png"] }
-    };
-
-    function toggleCabinet() { document.getElementById('cabinet').classList.toggle('active'); document.getElementById('room-preview').style.display = 'block'; }
-    function toggleBook() { document.getElementById('catalog-book').classList.toggle('active'); renderPage(); }
-    function toggleReceipt() { document.getElementById('receipt-scroll').classList.toggle('active'); }
-    function previewRoom(img) { document.getElementById('preview-img').src = assetPath + img; }
-    
-    function renderPage() {
-        const grid = document.getElementById('catalogGrid');
-        const data = inventory[currentPage];
-        document.getElementById('categoryLabel').innerText = data.label;
-        document.getElementById('pageDisplay').innerText = `Page ${currentPage} / ${totalPages}`;
-        grid.innerHTML = '';
-        for (let i = 0; i < 6; i++) {
-            const slot = document.createElement('div');
-            slot.className = 'grid-item';
-            if (data.items[i]) {
-                const img = document.createElement('img');
-                img.src = assetPath + data.items[i];
-                slot.appendChild(img);
-            }
-            grid.appendChild(slot);
-        }
+    function triggerRooms() {
+        // Auto-scroll to canvas and glide cabinet in
+        window.scrollTo({ top: 500, behavior: 'smooth' });
+        document.getElementById('rooms-cabinet').classList.add('active');
     }
 
-    function changePage(step) {
-        currentPage += step;
-        if (currentPage < 1) currentPage = 1;
-        if (currentPage > totalPages) currentPage = totalPages;
-        renderPage();
+    function preview(file) {
+        document.getElementById('canvas-img').src = assetPath + file;
     }
+
+    function toggleCatalog() {
+        document.getElementById('catalog-book').classList.toggle('open');
+    }
+
+    // This is ready for the inventory object logic we discussed earlier
 </script>
+
 </body>
 </html>
-
