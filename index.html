@@ -4,274 +4,273 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Room Glow Up</title>
-    <link href="https://fonts.googleapis.com/css2?family=Limelight&display=swap" rel="stylesheet">
     <style>
-        :root {
-            --dark-teal: #004d4d;
-        }
-
         body, html {
             margin: 0;
             padding: 0;
             width: 100%;
             height: 100%;
-            font-family: 'Limelight', cursive;
-            background-color: #002b2b;
-            scroll-behavior: smooth;
-            overflow-x: hidden;
+            overflow: hidden;
+            background-color: #000;
+            font-family: serif;
         }
 
-        #site-wrapper {
-            min-height: 200vh;
-            background-image: url('Assets/mainbackground3.jpg');
-            background-size: cover;
-            background-position: center;
-            background-attachment: fixed;
-            transition: background-image 0.8s ease-in-out;
-        }
-
-        /* HEADER & SHINING EFFECT */
-        header {
-            text-align: center;
-            padding: 60px 20px;
-        }
-
-        .main-header {
-            font-size: 90px;
-            color: var(--dark-teal);
-            margin: 0;
+        #main-container {
             position: relative;
-            display: inline-block;
-            text-transform: uppercase;
-        }
-
-        .main-header::after {
-            content: "Room Glow Up";
-            position: absolute;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
-            background: linear-gradient(120deg, transparent 30%, rgba(255,255,255,0.7) 50%, transparent 70%);
-            background-size: 200% 100%;
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            animation: shine 4s infinite;
-        }
-
-        @keyframes shine {
-            0% { background-position: -200% 0; }
-            100% { background-position: 200% 0; }
-        }
-
-        .sub-header {
-            display: block;
-            font-size: 30px;
-            color: var(--dark-teal);
-            margin-top: 5px;
-        }
-
-        /* PULL TABS SECTION */
-        .tab-row {
+            width: 100vw;
+            height: 100vh;
             display: flex;
             justify-content: center;
-            gap: 15px;
-            margin-top: 40px;
+            align-items: center;
         }
 
-        .pull-tab {
-            width: 200px;
-            cursor: pointer;
-            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), filter 0.3s;
-        }
-
-        .pull-tab:hover {
-            transform: translateY(-20px);
-            filter: drop-shadow(0 0 15px rgba(0, 255, 255, 0.8)) brightness(1.1);
-        }
-
-        /* WORKSPACE CANVAS */
-        #main-canvas {
-            width: 90%;
-            max-width: 1150px;
-            height: 650px;
-            margin: 80px auto;
-            border: 10px solid var(--dark-teal);
+        /* Workspace Canvas */
+        #room-canvas {
             position: relative;
+            width: 800px;
+            height: 600px;
+            background-size: cover;
+            background-position: center;
+            border: 10px solid #222;
+            z-index: 5;
             overflow: hidden;
-            background: rgba(0,0,0,0.3);
-            box-shadow: 0 40px 80px rgba(0,0,0,0.5);
         }
 
-        #canvas-view {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            cursor: pointer;
-        }
-
-        /* ANIMATED OVERLAYS */
-        .glide-overlay {
+        /* Pull Tabs (png assets) */
+        .pull-tab {
             position: absolute;
-            transition: all 0.9s cubic-bezier(0.4, 0, 0.2, 1);
-            z-index: 100;
+            cursor: pointer;
+            z-index: 150;
+            transition: transform 0.3s ease;
         }
+        #catalog-tab { top: 0; left: 100px; width: 80px; }
+        #save-checkout-tab { top: 0; right: 100px; width: 80px; }
+        .pull-tab:hover { transform: translateY(10px); }
 
-        #cabinet-asset {
-            left: -100%;
+        /* Sidebar: Cabinet & Cases */
+        .sidebar-asset {
+            position: absolute;
+            left: 20px;
             top: 50%;
             transform: translateY(-50%);
-            width: 420px;
+            width: 300px;
+            height: auto;
+            transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+            z-index: 10;
         }
+        .hidden { display: none; }
+        .slide-left { transform: translateY(-50%) translateX(-150%); }
 
-        #cabinet-asset.active {
-            left: 0;
-        }
-
-        #furniture-case-asset {
-            right: -100%;
-            top: 50%;
-            transform: translateY(-50%);
-            width: 420px;
-        }
-
-        #furniture-case-asset.active {
-            right: 0;
-        }
-
-        #closet-door-asset {
-            bottom: -100%;
+        /* Catalog Overlay (furniturecatalog.png) */
+        #furniture-catalog {
+            position: absolute;
+            top: -110%;
             left: 50%;
             transform: translateX(-50%);
-            width: 550px;
+            width: 750px;
+            height: 550px;
+            z-index: 100;
+            transition: top 0.7s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            background-image: url('furniturecatalog.png');
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center;
         }
+        #furniture-catalog.open { top: 40px; }
 
-        #closet-door-asset.active {
-            bottom: 0;
-        }
-
-        #receipt-asset {
-            top: -120%;
-            right: 5%;
-            width: 300px;
-        }
-
-        #receipt-asset.active {
-            top: 0;
-        }
-
-        .drawer-label {
+        /* Item Preview Window */
+        #item-preview {
             position: absolute;
-            width: 60%;
-            height: 40px;
-            left: 20%;
-            cursor: pointer;
-            text-align: center;
-            color: white;
-            transition: transform 0.3s;
+            bottom: 20px;
+            left: 20px;
+            width: 180px;
+            padding: 10px;
+            background: rgba(0, 0, 0, 0.9);
+            border: 1.5px solid #ffd700;
+            color: #fff;
+            font-size: 12px;
+            z-index: 110;
+            display: none;
+            pointer-events: none;
         }
+        #item-preview img { width: 100%; margin-bottom: 5px; }
 
-        .drawer-label:hover {
-            transform: scale(1.1);
-            text-shadow: 0 0 10px white;
+        /* Scroll Receipt */
+        #scroll-receipt {
+            position: absolute;
+            top: -650px;
+            right: 50px;
+            width: 250px;
+            height: 500px;
+            background-image: url('scroll_receipt.png');
+            background-size: 100% 100%;
+            z-index: 140;
+            transition: top 1s ease-in-out;
+            padding: 60px 30px;
+            box-sizing: border-box;
         }
+        #scroll-receipt.rolled-out { top: 0; }
+        .receipt-list { list-style: none; padding: 0; font-family: 'Courier New', monospace; font-size: 13px; color: #333; }
 
+        /* Gallery Overlays */
+        #gallery-overlay {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background-size: cover;
+            background-position: center;
+            z-index: 200;
+            display: none;
+            transition: transform 1.5s ease-in-out, opacity 1s;
+        }
+        .door-zone { position: absolute; top: 25%; left: 35%; width: 30%; height: 50%; cursor: pointer; }
+        .zoom-in { transform: scale(4); opacity: 0; }
+        #nav-arrow { position: absolute; bottom: 30px; right: 30px; width: 50px; cursor: pointer; z-index: 300; }
+
+        /* Placed Furniture */
+        .placed-furniture { position: absolute; cursor: move; user-select: none; }
     </style>
 </head>
 <body>
 
-<div id="site-wrapper">
-    <header>
-        <h1 class="main-header">Room Glow Up</h1>
-        <span class="sub-header">Where Your Dream Space Comes To Life</span>
+<div id="main-container">
+    <img src="catalog_tab.png" id="catalog-tab" class="pull-tab" onclick="openCases()">
+    <img src="save_tab.png" id="save-checkout-tab" class="pull-tab" onclick="toggleReceipt()">
 
-        <div class="tab-row">
-            <img src="Assets/pulltabs_rooms.png" class="pull-tab" onclick="openRooms()">
-            <img src="Assets/pulltabs_furniturecatalog.png" class="pull-tab" onclick="openCatalog()">
-            <img src="Assets/pulltabs_decorcloset.png" class="pull-tab" onclick="openCloset()">
-            <img src="Assets/pulltabs_inspogallery.png" class="pull-tab" onclick="openInspo()">
-            <img src="Assets/pulltabs_savecheckout.png" class="pull-tab" onclick="openSave()">
+    <div id="room-canvas"></div>
+
+    <div id="scroll-receipt">
+        <h3 style="text-align:center; font-size: 16px;">MANIFEST</h3>
+        <ul id="item-list" class="receipt-list"></ul>
+    </div>
+
+    <div id="library-cabinet" class="sidebar-asset">
+        <img src="cabinet.png" style="width:100%">
+    </div>
+
+    <div id="furniture-trunks" class="sidebar-asset hidden">
+        <img src="furniturecases.png" style="width:100%">
+        <div style="position:absolute; top:20%; left:40%; width:60px; height:90px; cursor:pointer;" onclick="showCatalog()"></div>
+        <div style="position:absolute; top:40%; left:40%; width:60px; height:90px; cursor:pointer;" onclick="showCatalog()"></div>
+    </div>
+
+    <div id="furniture-catalog" 
+         onmousemove="updatePreview(event)" 
+         onmouseleave="hidePreview()" 
+         ondblclick="addItemToRoom(event)">
+        
+        <div id="item-preview">
+            <img id="preview-img" src="preview_sample.jpg">
+            <div id="preview-name">Selected Item</div>
+            <div id="preview-price">$0.00</div>
         </div>
-    </header>
+    </div>
 
-    <div id="main-canvas">
-        <img id="canvas-view" src="Assets/livingroom1.jpg" onclick="roomConfirmed()">
-
-        <div id="cabinet-asset" class="glide-overlay">
-            <img src="Assets/roomscabinet.png" style="width:100%;">
-            <div class="drawer-label" style="top:25%;" onclick="cycle('living')">Living Room</div>
-            <div class="drawer-label" style="top:40%;" onclick="cycle('bed')">Bedroom</div>
-            <div class="drawer-label" style="top:55%;" onclick="cycle('dining')">Dining Room</div>
-            <div class="drawer-label" style="top:70%;" onclick="cycle('extra')">Extras</div>
-        </div>
-
-        <div id="furniture-case-asset" class="glide-overlay">
-            <img src="Assets/furniturecases.png" style="width:100%;">
-        </div>
-
-        <div id="closet-door-asset" class="glide-overlay">
-            <img src="Assets/closetdoor.png" style="width:100%;">
-        </div>
-
-        <div id="receipt-asset" class="glide-overlay">
-            <img src="Assets/scrollreceipt.png" style="width:100%;">
-        </div>
+    <div id="gallery-overlay">
+        <div id="door-click" class="door-zone hidden" onclick="triggerZoomEntry()"></div>
+        <img id="nav-arrow" src="arrow.png" onclick="cycleGallery()">
     </div>
 </div>
 
 <script>
-    const wrapper = document.getElementById('site-wrapper');
-    const canvas = document.getElementById('canvas-view');
-    
-    const library = {
-        living: ['Assets/livingroom1.jpg', 'Assets/livingroom3.jpg'],
-        bed: ['Assets/bedroom.jpg', 'Assets/bedroom2.jpg'],
-        dining: ['Assets/diningroom.jpg'],
-        extra: ['Assets/foyer.jpg', 'Assets/office.jpg', 'Assets/kitchen.jpg', 'Assets/kitchen2.jpg']
-    };
+    const cabinet = document.getElementById('library-cabinet');
+    const cases = document.getElementById('furniture-trunks');
+    const catalog = document.getElementById('furniture-catalog');
+    const receipt = document.getElementById('scroll-receipt');
+    const itemList = document.getElementById('item-list');
+    const canvas = document.getElementById('room-canvas');
+    const gallery = document.getElementById('gallery-overlay');
+    const doorClick = document.getElementById('door-click');
+    const preview = document.getElementById('item-preview');
 
-    let currentCat = 'living';
-    let idx = 0;
+    let galleryIdx = 0;
+    const gallerySequence = [
+        'rain.jpg', 'rain2.jpg', 'inspo_gallerydoors.jpg', 
+        'inspo_gallery1.jpg', 'inspo_gallery2.jpg', 'inspo_gallery3.jpg',
+        'inspo_gallery4.jpg', 'inspo_gallery5.jpg', 'inspo_gallery6.jpg'
+    ];
 
-    function openRooms() {
-        wrapper.style.backgroundImage = "url('Assets/rainbackground.jpg')";
-        document.getElementById('cabinet-asset').classList.add('active');
-        window.scrollTo(0, 800);
+    function openCases() {
+        cabinet.classList.add('slide-left');
+        setTimeout(() => {
+            cabinet.classList.add('hidden');
+            cases.classList.remove('hidden');
+        }, 800);
     }
 
-    function cycle(cat) {
-        if (currentCat !== cat) {
-            currentCat = cat;
-            idx = 0;
-        } else {
-            idx = (idx + 1) % library[cat].length;
+    function showCatalog() {
+        catalog.classList.add('open');
+    }
+
+    function toggleReceipt() {
+        receipt.classList.toggle('rolled-out');
+    }
+
+    function updatePreview(e) {
+        preview.style.display = 'block';
+        document.getElementById('preview-name').textContent = "Bespoke Furniture";
+        document.getElementById('preview-price').textContent = "$250.00";
+    }
+
+    function hidePreview() {
+        preview.style.display = 'none';
+    }
+
+    function addItemToRoom(e) {
+        const item = document.createElement('img');
+        item.src = 'furniture_asset.png'; 
+        item.className = 'placed-furniture';
+        item.style.width = '120px';
+        item.style.left = '200px';
+        item.style.top = '200px';
+        
+        item.onmousedown = function(event) {
+            let shiftX = event.clientX - item.getBoundingClientRect().left;
+            let shiftY = event.clientY - item.getBoundingClientRect().top;
+            function moveAt(pageX, pageY) {
+                item.style.left = pageX - canvas.getBoundingClientRect().left - shiftX + 'px';
+                item.style.top = pageY - canvas.getBoundingClientRect().top - shiftY + 'px';
+            }
+            function onMouseMove(event) { moveAt(event.clientX, event.clientY); }
+            document.addEventListener('mousemove', onMouseMove);
+            item.onmouseup = function() {
+                document.removeEventListener('mousemove', onMouseMove);
+            };
+        };
+        item.ondragstart = () => false;
+        canvas.appendChild(item);
+
+        const li = document.createElement('li');
+        li.textContent = "• Bespoke Furniture - $250.00";
+        itemList.appendChild(li);
+    }
+
+    function cycleGallery() {
+        galleryIdx++;
+        if (galleryIdx < gallerySequence.length) {
+            gallery.style.backgroundImage = `url(${gallerySequence[galleryIdx]})`;
+            if (gallerySequence[galleryIdx] === 'inspo_gallerydoors.jpg') {
+                doorClick.classList.remove('hidden');
+            } else {
+                doorClick.classList.add('hidden');
+            }
         }
-        canvas.src = library[cat][idx];
     }
 
-    function roomConfirmed() {
-        document.getElementById('cabinet-asset').classList.remove('active');
-        document.getElementById('furniture-case-asset').classList.add('active');
+    function triggerZoomEntry() {
+        gallery.classList.add('zoom-in');
+        setTimeout(() => {
+            galleryIdx++;
+            gallery.classList.remove('zoom-in');
+            gallery.style.backgroundImage = `url(${gallerySequence[galleryIdx]})`;
+            doorClick.classList.add('hidden');
+        }, 1500);
     }
 
-    function openCloset() {
-        document.getElementById('closet-door-asset').classList.toggle('active');
-        window.scrollTo(0, document.body.scrollHeight);
-    }
-
-    function openSave() {
-        document.getElementById('receipt-asset').classList.toggle('active');
-    }
-
-    function openInspo() {
-        wrapper.style.backgroundImage = "url('Assets/rain2background.jpg')";
-    }
-
-    function openCatalog() {
-        alert("Opening Furniture Catalog...");
+    function startInspo() {
+        gallery.style.display = 'block';
+        gallery.style.backgroundImage = `url(${gallerySequence[0]})`;
     }
 </script>
 
 </body>
 </html>
-
-
-
