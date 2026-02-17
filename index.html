@@ -25,22 +25,21 @@
             align-items: center;
         }
 
-        /* --- SUBHEADER SECTION --- */
         #sub-header {
             width: 800px;
             height: 40px;
-            background: rgba(34, 34, 34, 0.8);
-            color: gold;
+            background: rgba(20, 20, 20, 0.9);
+            color: #d4af37;
             display: flex;
             justify-content: center;
             align-items: center;
-            font-size: 1.2rem;
-            border: 2px solid #444;
+            font-size: 1.1rem;
+            letter-spacing: 2px;
+            border: 2px solid #333;
             border-bottom: none;
             z-index: 10;
         }
 
-        /* Workspace Canvas */
         #room-canvas {
             position: relative;
             width: 800px;
@@ -53,7 +52,6 @@
             overflow: hidden;
         }
 
-        /* Pull Tabs Group */
         .tab-container {
             position: absolute;
             top: 0;
@@ -72,7 +70,6 @@
         }
         .pull-tab:hover { transform: translateY(15px); }
 
-        /* Sidebar Assets */
         .sidebar-asset {
             position: absolute;
             left: 20px;
@@ -86,7 +83,7 @@
         .hidden { display: none; }
         .slide-left { transform: translateY(-50%) translateX(-150%); }
 
-        /* Catalog Overlay */
+        /* Catalog & Index Tabs */
         #furniture-catalog {
             position: absolute;
             top: -110%;
@@ -100,10 +97,52 @@
             background-size: contain;
             background-repeat: no-repeat;
             background-position: center;
+            cursor: crosshair;
         }
         #furniture-catalog.open { top: 70px; }
 
-        /* Scroll Receipt */
+        .index-tabs {
+            position: absolute;
+            right: -45px;
+            top: 100px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        .index-label {
+            background: #d4af37;
+            color: black;
+            padding: 10px 5px;
+            font-size: 10px;
+            font-weight: bold;
+            writing-mode: vertical-rl;
+            text-orientation: mixed;
+            border-radius: 0 5px 5px 0;
+            cursor: pointer;
+            border: 1px solid #000;
+            transition: transform 0.2s;
+        }
+        .index-label:hover { transform: translateX(5px); }
+
+        .catalog-nav {
+            position: absolute;
+            bottom: 20px;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            padding: 0 60px;
+            box-sizing: border-box;
+        }
+        .nav-btn {
+            background: rgba(212, 175, 55, 0.8);
+            border: none;
+            color: black;
+            padding: 5px 15px;
+            cursor: pointer;
+            font-weight: bold;
+            border-radius: 5px;
+        }
+
         #scroll-receipt {
             position: absolute;
             top: -650px;
@@ -118,9 +157,8 @@
             box-sizing: border-box;
         }
         #scroll-receipt.rolled-out { top: 0; }
-        .receipt-list { list-style: none; padding: 0; font-family: 'Courier New', monospace; font-size: 13px; color: #333; }
+        .receipt-list { list-style: none; padding: 0; font-family: 'Courier New', monospace; font-size: 13px; color: #333; margin-top: 20px; }
 
-        /* Gallery Overlays */
         #gallery-overlay {
             position: absolute;
             top: 0; left: 0; width: 100%; height: 100%;
@@ -134,7 +172,7 @@
         .zoom-in { transform: scale(4); opacity: 0; }
         #nav-arrow { position: absolute; bottom: 30px; right: 30px; width: 50px; cursor: pointer; z-index: 300; }
 
-        .placed-furniture { position: absolute; cursor: move; user-select: none; }
+        .placed-furniture { position: absolute; cursor: move; user-select: none; z-index: 20; }
     </style>
 </head>
 <body>
@@ -148,7 +186,7 @@
         <img src="pulltabs_savecheckout.png" class="pull-tab" onclick="toggleReceipt()">
     </div>
 
-    <div id="sub-header">CURATE YOUR SPACE</div>
+    <div id="sub-header">ROOM GLOW UP: DESIGN MANIFEST</div>
 
     <div id="room-canvas"></div>
 
@@ -166,7 +204,17 @@
         <div style="position:absolute; top:20%; left:40%; width:60px; height:90px; cursor:pointer;" onclick="showCatalog()"></div>
     </div>
 
-    <div id="furniture-catalog" ondblclick="addItemToRoom(event)"></div>
+    <div id="furniture-catalog" ondblclick="identifyAndAddItem(event)">
+        <div class="index-tabs">
+            <div class="index-label" onclick="jumpToPage(1)">COUCHES</div>
+            <div class="index-label" onclick="jumpToPage(3)">ARMCHAIRS</div>
+        </div>
+        <div class="catalog-nav">
+            <button class="nav-btn" onclick="changePage(-1)">PREV</button>
+            <span id="page-indicator" style="color:white; font-size: 11px; background: rgba(0,0,0,0.6); padding: 2px 8px;">PAGE 1</span>
+            <button class="nav-btn" onclick="changePage(1)">NEXT</button>
+        </div>
+    </div>
 
     <div id="gallery-overlay">
         <div id="door-click" class="door-zone hidden" onclick="triggerZoomEntry()"></div>
@@ -185,11 +233,9 @@
     const doorClick = document.getElementById('door-click');
 
     let galleryIdx = 0;
-    const gallerySequence = [
-        'rain.jpg', 'rain2.jpg', 'inspo_gallerydoors.jpg', 
-        'inspo_gallery1.jpg', 'inspo_gallery2.jpg', 'inspo_gallery3.jpg',
-        'inspo_gallery4.jpg', 'inspo_gallery5.jpg', 'inspo_gallery6.jpg'
-    ];
+    let catalogPage = 1;
+
+    const gallerySequence = ['rain.jpg', 'rain2.jpg', 'inspo_gallerydoors.jpg', 'inspo_gallery1.jpg', 'inspo_gallery2.jpg', 'inspo_gallery3.jpg', 'inspo_gallery4.jpg', 'inspo_gallery5.jpg', 'inspo_gallery6.jpg'];
 
     function openCases() {
         cabinet.classList.add('slide-left');
@@ -199,14 +245,8 @@
         }, 800);
     }
 
-    function showCatalog() {
-        catalog.classList.add('open');
-    }
-
-    function toggleReceipt() {
-        receipt.classList.toggle('rolled-out');
-    }
-
+    function showCatalog() { catalog.classList.add('open'); }
+    function toggleReceipt() { receipt.classList.toggle('rolled-out'); }
     function resetView() {
         catalog.classList.remove('open');
         gallery.style.display = 'none';
@@ -214,12 +254,61 @@
         cases.classList.add('hidden');
     }
 
-    function addItemToRoom(e) {
+    function changePage(dir) {
+        catalogPage += dir;
+        if (catalogPage < 1) catalogPage = 1;
+        if (catalogPage > 3) catalogPage = 3; 
+        updatePageIndicator();
+    }
+
+    function jumpToPage(p) {
+        catalogPage = p;
+        updatePageIndicator();
+    }
+
+    function updatePageIndicator() {
+        document.getElementById('page-indicator').innerText = "PAGE " + catalogPage;
+    }
+
+    function identifyAndAddItem(e) {
+        const rect = catalog.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+        let name = ""; let img = "";
+
+        const col = x < 375 ? 0 : 1; 
+        const row = y < 183 ? 0 : (y < 366 ? 1 : 2);
+        const index = col + (row * 2);
+
+        if (catalogPage === 1) {
+            switch(index) {
+                case 0: name = "Couch 1"; img = "couch1.png"; break;
+                case 1: name = "Couch 2"; img = "couch2.png"; break;
+                case 2: name = "Couch 3"; img = "couch3.png"; break;
+                case 3: name = "Couch 4"; img = "couch4.png"; break;
+                case 4: name = "Couch 5"; img = "couch5.png"; break;
+                case 5: name = "Couch 6"; img = "couch6.png"; break;
+            }
+        } else if (catalogPage === 2) {
+            if (index === 0) { name = "Couch 7"; img = "couch7.png"; }
+        } else if (catalogPage === 3) {
+            switch(index) {
+                case 0: name = "Armchair"; img = "armchair.png"; break;
+                case 1: name = "Armchair 1"; img = "armchair1.png"; break;
+                case 2: name = "Armchair 2"; img = "armchair2.png"; break;
+                case 3: name = "Armchair 3"; img = "armchair3.png"; break;
+            }
+        }
+
+        if (name && img) addItemToRoom(name, img);
+    }
+
+    function addItemToRoom(name, imgSrc) {
         const item = document.createElement('img');
-        item.src = 'furniture_asset.png'; 
+        item.src = imgSrc; 
         item.className = 'placed-furniture';
-        item.style.width = '120px';
-        item.style.left = '200px';
+        item.style.width = '200px'; 
+        item.style.left = '300px';  
         item.style.top = '200px';
         
         item.onmousedown = function(event) {
@@ -231,33 +320,24 @@
             }
             function onMouseMove(event) { moveAt(event.clientX, event.clientY); }
             document.addEventListener('mousemove', onMouseMove);
-            item.onmouseup = function() {
-                document.removeEventListener('mousemove', onMouseMove);
-            };
+            item.onmouseup = function() { document.removeEventListener('mousemove', onMouseMove); };
         };
         item.ondragstart = () => false;
         canvas.appendChild(item);
 
         const li = document.createElement('li');
-        li.textContent = "• Item Selected";
+        li.textContent = "• " + name;
         itemList.appendChild(li);
     }
 
-    function startInspo() {
-        galleryIdx = 0;
-        gallery.style.display = 'block';
-        gallery.style.backgroundImage = `url(${gallerySequence[0]})`;
-    }
-
+    function startInspo() { galleryIdx = 0; gallery.style.display = 'block'; gallery.style.backgroundImage = `url(${gallerySequence[0]})`; }
     function cycleGallery() {
         galleryIdx++;
         if (galleryIdx < gallerySequence.length) {
             gallery.style.backgroundImage = `url(${gallerySequence[galleryIdx]})`;
-            if (gallerySequence[galleryIdx] === 'inspo_gallerydoors.jpg') doorClick.classList.remove('hidden');
-            else doorClick.classList.add('hidden');
+            gallerySequence[galleryIdx] === 'inspo_gallerydoors.jpg' ? doorClick.classList.remove('hidden') : doorClick.classList.add('hidden');
         }
     }
-
     function triggerZoomEntry() {
         gallery.classList.add('zoom-in');
         setTimeout(() => {
