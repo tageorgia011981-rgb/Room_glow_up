@@ -20,8 +20,24 @@
             width: 100vw;
             height: 100vh;
             display: flex;
+            flex-direction: column;
             justify-content: center;
             align-items: center;
+        }
+
+        /* --- SUBHEADER SECTION --- */
+        #sub-header {
+            width: 800px;
+            height: 40px;
+            background: rgba(34, 34, 34, 0.8);
+            color: gold;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 1.2rem;
+            border: 2px solid #444;
+            border-bottom: none;
+            z-index: 10;
         }
 
         /* Workspace Canvas */
@@ -56,7 +72,7 @@
         }
         .pull-tab:hover { transform: translateY(15px); }
 
-        /* Sidebar: Cabinet & Cases */
+        /* Sidebar Assets */
         .sidebar-asset {
             position: absolute;
             left: 20px;
@@ -87,7 +103,7 @@
         }
         #furniture-catalog.open { top: 70px; }
 
-        /* Scroll Receipt (scrollreceipt.png) */
+        /* Scroll Receipt */
         #scroll-receipt {
             position: absolute;
             top: -650px;
@@ -131,6 +147,8 @@
         <img src="pulltabs_inspogallery.png" class="pull-tab" onclick="startInspo()">
         <img src="pulltabs_savecheckout.png" class="pull-tab" onclick="toggleReceipt()">
     </div>
+
+    <div id="sub-header">CURATE YOUR SPACE</div>
 
     <div id="room-canvas"></div>
 
@@ -221,7 +239,7 @@
         canvas.appendChild(item);
 
         const li = document.createElement('li');
-        li.textContent = "• Bespoke Furniture Item";
+        li.textContent = "• Item Selected";
         itemList.appendChild(li);
     }
 
