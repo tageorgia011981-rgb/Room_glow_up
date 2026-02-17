@@ -29,6 +29,7 @@
             position: relative;
             width: 800px;
             height: 600px;
+            background-image: url('mainbackground3.jpg'); 
             background-size: cover;
             background-position: center;
             border: 10px solid #222;
@@ -36,16 +37,24 @@
             overflow: hidden;
         }
 
-        /* Pull Tabs (png assets) */
-        .pull-tab {
+        /* Pull Tabs Group */
+        .tab-container {
             position: absolute;
-            cursor: pointer;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 15px;
             z-index: 150;
+        }
+
+        .pull-tab {
+            cursor: pointer;
+            width: 90px;
+            height: auto;
             transition: transform 0.3s ease;
         }
-        #catalog-tab { top: 0; left: 100px; width: 80px; }
-        #save-checkout-tab { top: 0; right: 100px; width: 80px; }
-        .pull-tab:hover { transform: translateY(10px); }
+        .pull-tab:hover { transform: translateY(15px); }
 
         /* Sidebar: Cabinet & Cases */
         .sidebar-asset {
@@ -61,7 +70,7 @@
         .hidden { display: none; }
         .slide-left { transform: translateY(-50%) translateX(-150%); }
 
-        /* Catalog Overlay (furniturecatalog.png) */
+        /* Catalog Overlay */
         #furniture-catalog {
             position: absolute;
             top: -110%;
@@ -76,33 +85,16 @@
             background-repeat: no-repeat;
             background-position: center;
         }
-        #furniture-catalog.open { top: 40px; }
+        #furniture-catalog.open { top: 70px; }
 
-        /* Item Preview Window */
-        #item-preview {
-            position: absolute;
-            bottom: 20px;
-            left: 20px;
-            width: 180px;
-            padding: 10px;
-            background: rgba(0, 0, 0, 0.9);
-            border: 1.5px solid #ffd700;
-            color: #fff;
-            font-size: 12px;
-            z-index: 110;
-            display: none;
-            pointer-events: none;
-        }
-        #item-preview img { width: 100%; margin-bottom: 5px; }
-
-        /* Scroll Receipt */
+        /* Scroll Receipt (scrollreceipt.png) */
         #scroll-receipt {
             position: absolute;
             top: -650px;
             right: 50px;
             width: 250px;
             height: 500px;
-            background-image: url('scroll_receipt.png');
+            background-image: url('scrollreceipt.png');
             background-size: 100% 100%;
             z-index: 140;
             transition: top 1s ease-in-out;
@@ -126,15 +118,19 @@
         .zoom-in { transform: scale(4); opacity: 0; }
         #nav-arrow { position: absolute; bottom: 30px; right: 30px; width: 50px; cursor: pointer; z-index: 300; }
 
-        /* Placed Furniture */
         .placed-furniture { position: absolute; cursor: move; user-select: none; }
     </style>
 </head>
 <body>
 
 <div id="main-container">
-    <img src="catalog_tab.png" id="catalog-tab" class="pull-tab" onclick="openCases()">
-    <img src="save_tab.png" id="save-checkout-tab" class="pull-tab" onclick="toggleReceipt()">
+    <div class="tab-container">
+        <img src="pulltabs_rooms.png" class="pull-tab" onclick="resetView()">
+        <img src="pulltabs_furniturecatalog.png" class="pull-tab" onclick="showCatalog()">
+        <img src="pulltabs_decorcloset.png" class="pull-tab" onclick="openCases()">
+        <img src="pulltabs_inspogallery.png" class="pull-tab" onclick="startInspo()">
+        <img src="pulltabs_savecheckout.png" class="pull-tab" onclick="toggleReceipt()">
+    </div>
 
     <div id="room-canvas"></div>
 
@@ -144,26 +140,15 @@
     </div>
 
     <div id="library-cabinet" class="sidebar-asset">
-        <img src="cabinet.png" style="width:100%">
+        <img src="roomscabinet.png" style="width:100%">
     </div>
 
     <div id="furniture-trunks" class="sidebar-asset hidden">
         <img src="furniturecases.png" style="width:100%">
         <div style="position:absolute; top:20%; left:40%; width:60px; height:90px; cursor:pointer;" onclick="showCatalog()"></div>
-        <div style="position:absolute; top:40%; left:40%; width:60px; height:90px; cursor:pointer;" onclick="showCatalog()"></div>
     </div>
 
-    <div id="furniture-catalog" 
-         onmousemove="updatePreview(event)" 
-         onmouseleave="hidePreview()" 
-         ondblclick="addItemToRoom(event)">
-        
-        <div id="item-preview">
-            <img id="preview-img" src="preview_sample.jpg">
-            <div id="preview-name">Selected Item</div>
-            <div id="preview-price">$0.00</div>
-        </div>
-    </div>
+    <div id="furniture-catalog" ondblclick="addItemToRoom(event)"></div>
 
     <div id="gallery-overlay">
         <div id="door-click" class="door-zone hidden" onclick="triggerZoomEntry()"></div>
@@ -180,7 +165,6 @@
     const canvas = document.getElementById('room-canvas');
     const gallery = document.getElementById('gallery-overlay');
     const doorClick = document.getElementById('door-click');
-    const preview = document.getElementById('item-preview');
 
     let galleryIdx = 0;
     const gallerySequence = [
@@ -205,14 +189,11 @@
         receipt.classList.toggle('rolled-out');
     }
 
-    function updatePreview(e) {
-        preview.style.display = 'block';
-        document.getElementById('preview-name').textContent = "Bespoke Furniture";
-        document.getElementById('preview-price').textContent = "$250.00";
-    }
-
-    function hidePreview() {
-        preview.style.display = 'none';
+    function resetView() {
+        catalog.classList.remove('open');
+        gallery.style.display = 'none';
+        cabinet.classList.remove('slide-left', 'hidden');
+        cases.classList.add('hidden');
     }
 
     function addItemToRoom(e) {
@@ -240,19 +221,22 @@
         canvas.appendChild(item);
 
         const li = document.createElement('li');
-        li.textContent = "• Bespoke Furniture - $250.00";
+        li.textContent = "• Bespoke Furniture Item";
         itemList.appendChild(li);
+    }
+
+    function startInspo() {
+        galleryIdx = 0;
+        gallery.style.display = 'block';
+        gallery.style.backgroundImage = `url(${gallerySequence[0]})`;
     }
 
     function cycleGallery() {
         galleryIdx++;
         if (galleryIdx < gallerySequence.length) {
             gallery.style.backgroundImage = `url(${gallerySequence[galleryIdx]})`;
-            if (gallerySequence[galleryIdx] === 'inspo_gallerydoors.jpg') {
-                doorClick.classList.remove('hidden');
-            } else {
-                doorClick.classList.add('hidden');
-            }
+            if (gallerySequence[galleryIdx] === 'inspo_gallerydoors.jpg') doorClick.classList.remove('hidden');
+            else doorClick.classList.add('hidden');
         }
     }
 
@@ -265,12 +249,6 @@
             doorClick.classList.add('hidden');
         }, 1500);
     }
-
-    function startInspo() {
-        gallery.style.display = 'block';
-        gallery.style.backgroundImage = `url(${gallerySequence[0]})`;
-    }
 </script>
-
 </body>
 </html>
