@@ -3,359 +3,240 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Room Glow Up - Affiliate Designer Suite</title>
+    <title>Room Glow Up</title>
+    <link href="https://fonts.googleapis.com/css2?family=Limelight&display=swap" rel="stylesheet">
     <style>
-        :root {
-            --glow-color: rgba(0, 128, 128, 0.8); /* Dark Teal Glow */
-            --transition-speed: 0.6s;
-            --bezier: cubic-bezier(0.25, 1, 0.5, 1);
-        }
-
-        body {
+        body, html {
             margin: 0;
             padding: 0;
-            background-color: #000;
+            width: 100%;
+            height: 100%;
+            font-family: 'Limelight', cursive;
+            background: #000;
             color: white;
-            font-family: Arial, sans-serif;
             overflow-x: hidden;
+            scroll-behavior: smooth;
         }
 
-        /* --- Header & Pull Tabs --- */
-        header {
+        /* --- SECTION 1: HOME --- */
+        #home-screen {
             height: 100vh;
+            width: 100vw;
+            background: url('Assets/mainbackground3.jpg') no-repeat center center;
+            background-size: cover;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            background: linear-gradient(to bottom, #001a1a, #000);
+            text-align: center;
         }
 
-        .pull-tabs-container {
-            position: fixed;
-            top: 0;
-            z-index: 1000;
+        .main-header {
+            font-size: 85px;
+            margin: 0;
+            /* Dark Teal with Shine Effect */
+            background: linear-gradient(120deg, #004d4d 30%, #00ffff 50%, #004d4d 70%);
+            background-size: 200% auto;
+            color: transparent;
+            -webkit-background-clip: text;
+            background-clip: text;
+            animation: shine-animation 4s linear infinite;
+        }
+
+        @keyframes shine-animation {
+            to { background-position: 200% center; }
+        }
+
+        .sub-header {
+            font-size: 32px;
+            color: #006666; /* Dark Teal */
+            margin-top: 10px;
+            margin-bottom: 50px;
+        }
+
+        /* --- PULL TABS ROW --- */
+        .tabs-row {
             display: flex;
-            gap: 10px;
+            gap: 20px;
+            z-index: 1000;
         }
 
         .pull-tab {
             cursor: pointer;
-            transition: transform 0.3s;
+            transition: transform 0.3s ease;
         }
 
         .pull-tab:hover {
-            transform: translateY(5px);
+            transform: translateY(12px);
         }
 
-        /* --- Work Zone Stage --- */
-        #work-zone {
-            position: relative;
+        /* --- SECTION 2: THE WORKSPACE --- */
+        #workspace {
             height: 100vh;
             width: 100vw;
+            background: url('Assets/rainbackground.jpg') no-repeat center center;
+            background-size: cover;
             display: flex;
             align-items: center;
             justify-content: center;
+            position: relative;
             overflow: hidden;
         }
 
         #main-canvas {
-            width: 800px;
-            height: 600px;
-            background: #111;
-            border: 2px solid #333;
+            width: 850px;
+            height: 550px;
+            background: rgba(0,0,0,0.2);
+            border: 2px solid #222;
             position: relative;
-            transition: transform var(--transition-speed) var(--bezier);
-            z-index: 5;
-            background-size: cover;
-            background-position: center;
-            cursor: pointer;
+            transition: transform 0.8s cubic-bezier(0.7, 0, 0.3, 1);
+            z-index: 50;
         }
 
-        #main-canvas.shifted {
-            transform: translateX(200px);
+        #workspace.shift-canvas #main-canvas {
+            transform: translateX(250px);
         }
 
-        /* --- Rooms Cabinet (Left) --- */
+        /* --- ASSETS GLIDING IN --- */
         #rooms-cabinet {
             position: absolute;
-            left: -500px;
+            left: -550px;
             top: 50%;
             transform: translateY(-50%);
-            width: 450px;
-            height: auto;
-            transition: left var(--transition-speed) var(--bezier);
-            z-index: 10;
+            width: 500px;
+            transition: left 0.8s cubic-bezier(0.7, 0, 0.3, 1);
+            z-index: 100;
         }
 
         #rooms-cabinet.active {
-            left: 50px;
+            left: 30px;
         }
 
-        .handle-hotspot {
+        /* Cabinet Labels */
+        .drawer-label {
             position: absolute;
-            width: 100px;
-            height: 40px;
-            cursor: pointer;
-            left: 50%;
+            width: 150px;
+            left: 55%;
             transform: translateX(-50%);
-        }
-
-        /* Individual handle positions (approximate) */
-        #handle-living { top: 20%; }
-        #handle-bedroom { top: 35%; }
-        #handle-dining { top: 50%; }
-        #handle-extra   { top: 65%; }
-        #handle-upload  { top: 80%; }
-
-        .handle-label {
-            position: absolute;
-            pointer-events: none;
-            transition: transform 0.3s, text-shadow 0.3s;
-            color: #daa520; /* Gold */
-            font-weight: bold;
+            cursor: pointer;
             text-align: center;
-            width: 100%;
+            color: #daa520; /* Gold */
+            text-transform: uppercase;
+            font-size: 14px;
+            letter-spacing: 2px;
         }
 
-        .handle-hotspot:hover .handle-label {
-            transform: translateY(-5px);
-            text-shadow: 0 0 15px var(--glow-color), 0 0 5px #fff;
+        .drawer-label span {
+            display: block;
+            transition: transform 0.3s ease, text-shadow 0.3s ease;
         }
 
-        /* --- Furniture Trunks (Left Trade) --- */
-        #furniture-trunk {
+        .drawer-label:hover span {
+            transform: translateY(-10px);
+            text-shadow: 0 0 15px cyan, 0 0 5px white;
+        }
+
+        #lbl-living { top: 21%; }
+        #lbl-bed    { top: 35%; }
+        #lbl-dining { top: 49%; }
+        #lbl-extra  { top: 63%; }
+        #lbl-upload { top: 77%; }
+
+        /* --- DECOR CLOSET (FROM BOTTOM) --- */
+        #closet-container {
             position: absolute;
-            left: -500px;
-            top: 50%;
-            transform: translateY(-50%);
-            width: 400px;
-            transition: left var(--transition-speed) var(--bezier);
-            z-index: 9;
-        }
-
-        #furniture-trunk.active {
-            left: 50px;
-        }
-
-        /* --- Furniture Catalog (Top) --- */
-        #furniture-catalog {
-            position: absolute;
-            top: -600px;
+            bottom: -600px;
             left: 50%;
             transform: translateX(-50%);
             width: 700px;
-            transition: top var(--transition-speed) var(--bezier);
-            z-index: 15;
+            transition: bottom 0.8s cubic-bezier(0.7, 0, 0.3, 1);
+            z-index: 150;
         }
 
-        #furniture-catalog.active {
-            top: 20px;
-        }
-
-        /* --- Decor Closet (Bottom) --- */
-        #decor-closet {
-            position: absolute;
-            bottom: -500px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 600px;
-            transition: bottom var(--transition-speed) var(--bezier);
-            z-index: 15;
-        }
-
-        #decor-closet.active {
+        #closet-container.active {
             bottom: 0;
         }
 
-        /* --- Scroll Receipt (Top Roll-out) --- */
-        #scroll-receipt {
+        /* --- SCROLL RECEIPT (FROM TOP) --- */
+        #receipt-scroll {
             position: absolute;
-            top: -800px;
+            top: -900px;
             left: 50%;
             transform: translateX(-50%);
-            width: 400px;
-            transition: top 1s var(--bezier);
-            z-index: 20;
+            width: 450px;
+            transition: top 1.2s cubic-bezier(0.7, 0, 0.3, 1);
+            z-index: 200;
         }
 
-        #scroll-receipt.active {
+        #receipt-scroll.active {
             top: 0;
-        }
-
-        /* --- Preview Info Box --- */
-        #item-preview-box {
-            position: absolute;
-            display: none;
-            background: rgba(0, 0, 0, 0.85);
-            border: 1px solid #daa520;
-            padding: 10px;
-            border-radius: 5px;
-            z-index: 100;
-            pointer-events: none;
-            font-size: 12px;
-            color: #fff;
-        }
-
-        /* --- Draggable Items on Stage --- */
-        .placed-item {
-            position: absolute;
-            cursor: move;
-            z-index: 10;
         }
 
     </style>
 </head>
 <body>
 
-<header>
-    <h1>Room Glow Up</h1>
-    <div class="pull-tabs-container">
-        <img src="pulltabs_rooms.png" class="pull-tab" onclick="toggleRooms()" alt="Rooms">
-        <img src="pulltabs_furniture.png" class="pull-tab" onclick="toggleFurniture()" alt="Furniture">
-        <img src="pulltabs_decor.png" class="pull-tab" onclick="toggleDecor()" alt="Decor">
-        <img src="pulltabs_savecheckout.png" class="pull-tab" onclick="toggleCheckout()" alt="Checkout">
-    </div>
-</header>
+    <section id="home-screen">
+        <h1 class="main-header">Room Glow Up</h1>
+        <div class="sub-header">Where Your Dream Space Comes To Life</div>
 
-<div id="work-zone">
-    <div id="main-canvas" onclick="lockRoom()"></div>
+        <div class="tabs-row">
+            <img src="Assets/pulltabs_rooms.png" class="pull-tab" onclick="actionRooms()">
+            <img src="Assets/pulltabs_furniturecatalog.png" class="pull-tab" onclick="actionFurniture()">
+            <img src="Assets/pulltabs_decorcloset.png" class="pull-tab" onclick="actionDecor()">
+            <img src="Assets/pulltabs_inspogallery.png" class="pull-tab">
+            <img src="Assets/pulltabs_savecheckout.png" class="pull-tab" onclick="actionSave()">
+        </div>
+    </section>
 
-    <div id="rooms-cabinet">
-        <img src="roomscabinet.png" style="width:100%;">
-        
-        <div id="handle-living" class="handle-hotspot" onmouseover="previewRoom('living')" onclick="cycleRoom('living')">
-            <div class="handle-label">LIVING ROOM</div>
-        </div>
-        <div id="handle-bedroom" class="handle-hotspot" onmouseover="previewRoom('bedroom')" onclick="cycleRoom('bedroom')">
-            <div class="handle-label">BEDROOM</div>
-        </div>
-        <div id="handle-dining" class="handle-hotspot" onmouseover="previewRoom('dining')" onclick="cycleRoom('dining')">
-            <div class="handle-label">DINING ROOM</div>
-        </div>
-        <div id="handle-extra" class="handle-hotspot" onmouseover="previewRoom('extra')" onclick="cycleRoom('extra')">
-            <div class="handle-label">EXTRA ROOMS</div>
-        </div>
-        <div id="handle-upload" class="handle-hotspot" onclick="triggerUpload()">
-            <div class="handle-label">UPLOAD YOURS</div>
-        </div>
-    </div>
+    <section id="workspace">
+        <div id="main-canvas"></div>
 
-    <div id="furniture-trunk">
-        <img id="trunk-img" src="image_4d8c6b.png" style="width:100%;">
+        <div id="rooms-cabinet">
+            <img src="Assets/roomscabinet.png" style="width:100%;">
+            <div id="lbl-living" class="drawer-label"><span>Living Room</span></div>
+            <div id="lbl-bed"    class="drawer-label"><span>Bedroom</span></div>
+            <div id="lbl-dining" class="drawer-label"><span>Dining Room</span></div>
+            <div id="lbl-extra"  class="drawer-label"><span>Extra Rooms</span></div>
+            <div id="lbl-upload" class="drawer-label"><span>Upload Yours</span></div>
         </div>
 
-    <div id="furniture-catalog">
-        <img src="furniturecatalog.png" style="width:100%;">
+        <div id="closet-container">
+            <img src="Assets/closetdoor.png" style="width:100%;">
         </div>
 
-    <div id="decor-closet">
-        <img src="closetdoor.png" style="width:100%;">
-    </div>
+        <div id="receipt-scroll">
+            <img src="Assets/scrollreceipt.png" style="width:100%;">
+        </div>
+    </section>
 
-    <div id="scroll-receipt">
-        <img src="image_4dfd48.png" style="width:100%;">
-        <div id="receipt-list" style="position:absolute; top:150px; left:50px; color:#daa520; width:300px;">
-            </div>
-    </div>
+    <script>
+        const workspace = document.getElementById('workspace');
+        const cabinet = document.getElementById('rooms-cabinet');
+        const closet = document.getElementById('closet-container');
+        const receipt = document.getElementById('receipt-scroll');
 
-    <input type="file" id="file-upload" style="display:none" onchange="handleFile(this)">
-
-    <div id="item-preview-box"></div>
-</div>
-
-<script>
-    const canvas = document.getElementById('main-canvas');
-    const cabinet = document.getElementById('rooms-cabinet');
-    const trunk = document.getElementById('furniture-trunk');
-    const catalog = document.getElementById('furniture-catalog');
-    const closet = document.getElementById('decor-closet');
-    const receipt = document.getElementById('scroll-receipt');
-    
-    let shoppingList = [];
-
-    // --- Navigation Logic ---
-    function toggleRooms() {
-        window.scrollTo({ top: window.innerHeight, behavior: 'smooth' });
-        canvas.classList.add('shifted');
-        cabinet.classList.add('active');
-        trunk.classList.remove('active');
-    }
-
-    function toggleFurniture() {
-        cabinet.classList.remove('active');
-        trunk.classList.add('active');
-        canvas.classList.add('shifted');
-        catalog.classList.add('active');
-    }
-
-    function toggleDecor() {
-        catalog.classList.remove('active');
-        closet.classList.toggle('active');
-    }
-
-    function toggleCheckout() {
-        catalog.classList.remove('active');
-        trunk.classList.remove('active');
-        cabinet.classList.remove('active');
-        canvas.classList.remove('shifted');
-        receipt.classList.toggle('active');
-    }
-
-    // --- Room Selection Logic ---
-    function previewRoom(category) {
-        // Logic to cycle background rapidly on hover (previews)
-        canvas.style.backgroundImage = `url('preview_${category}.jpg')`;
-    }
-
-    function cycleRoom(category) {
-        // Logic to cycle and stay on click
-        console.log("Cycling " + category);
-    }
-
-    function lockRoom() {
-        cabinet.classList.remove('active');
-        // Trigger the "Trade"
-        toggleFurniture();
-    }
-
-    function triggerUpload() {
-        document.getElementById('file-upload').click();
-    }
-
-    function handleFile(input) {
-        const reader = new FileReader();
-        reader.onload = function(e) {
-            canvas.style.backgroundImage = `url(${e.target.result})`;
-            lockRoom();
+        function actionRooms() {
+            workspace.scrollIntoView({ behavior: 'smooth' });
+            setTimeout(() => {
+                workspace.classList.add('shift-canvas');
+                cabinet.classList.add('active');
+            }, 600);
         }
-        reader.readAsDataURL(input.files[0]);
-    }
 
-    // --- Affiliate Item Logic ---
-    // Example for double-click to send to room
-    function sendToRoom(itemName, price, imgSrc) {
-        shoppingList.push({name: itemName, price: price});
-        updateReceipt();
-        // Create element on stage
-        const item = document.createElement('img');
-        item.src = imgSrc;
-        item.className = 'placed-item';
-        item.ondblclick = function() { removeFromRoom(this, itemName); };
-        canvas.appendChild(item);
-    }
+        function actionDecor() {
+            workspace.scrollIntoView({ behavior: 'smooth' });
+            closet.classList.toggle('active');
+        }
 
-    function removeFromRoom(element, itemName) {
-        element.remove();
-        shoppingList = shoppingList.filter(i => i.name !== itemName);
-        updateReceipt();
-    }
+        function actionSave() {
+            workspace.scrollIntoView({ behavior: 'smooth' });
+            receipt.classList.add('active');
+        }
 
-    function updateReceipt() {
-        const listDiv = document.getElementById('receipt-list');
-        listDiv.innerHTML = shoppingList.map(i => `<div>${i.name} - ${i.price}</div>`).join('');
-    }
-
-</script>
-
+        function actionFurniture() {
+            // Logic for the furniture catalog trade goes here
+        }
+    </script>
 </body>
 </html>
