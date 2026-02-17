@@ -3,195 +3,102 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Furniture Catalog</title>
+    <title>Room Glow Up</title>
+    <link href="https://fonts.googleapis.com/css2?family=Limelight&family=Special+Elite&display=swap" rel="stylesheet">
     <style>
-        body {
+        :root {
+            --gunmetal: #2a2d2f;
+            --silver: #c0c0c0;
+            --metal-shine: linear-gradient(145deg, #3e4245, #1a1c1e);
+            --glow: #ffffff;
+        }
+
+        body, html {
             margin: 0;
-            padding: 20px;
-            background-color: #1a1a1a;
-            color: #ffffff;
-            font-family: sans-serif;
-        }
-
-        .catalog-container {
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        .header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 20px;
-            border-bottom: 2px solid #333;
-            padding-bottom: 10px;
-        }
-
-        .page-info {
-            font-size: 1.2rem;
-            font-weight: bold;
-        }
-
-        .category-label {
-            color: #aaa;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-        }
-
-        .grid-container {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            grid-template-rows: repeat(2, 300px);
-            gap: 20px;
-        }
-
-        .grid-item {
-            background-color: #252525;
-            border: 1px solid #333;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            transition: transform 0.2s;
-            position: relative;
+            padding: 0;
+            height: 100%;
             overflow: hidden;
+            font-family: 'Limelight', cursive;
+            background: url('Assets/mainbackground.jpg') no-repeat center center fixed;
+            background-size: cover;
+            color: var(--silver);
         }
 
-        .grid-item:hover {
-            transform: scale(1.02);
-            border-color: #555;
+        .site-header {
+            text-align: center;
+            padding: 40px 0 10px 0;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.8);
         }
 
-        .grid-item img {
-            max-width: 80%;
-            max-height: 70%;
-            object-fit: contain;
+        .main-title {
+            font-size: 5rem;
+            margin: 0;
+            color: var(--silver);
+            font-weight: bold;
+            letter-spacing: 4px;
         }
 
-        .item-name {
-            margin-top: 10px;
-            font-size: 0.9rem;
-            color: #888;
+        .sub-title {
+            font-size: 1.8rem;
+            margin-top: -10px;
+            color: var(--silver);
+            opacity: 0.9;
         }
 
-        .controls {
-            margin-top: 30px;
+        .nav-container {
             display: flex;
             justify-content: center;
-            gap: 20px;
+            gap: 15px;
+            margin-top: 20px;
         }
 
-        button {
-            padding: 10px 25px;
-            background: #333;
-            color: white;
-            border: none;
+        .pull-tab {
+            width: 180px;
+            height: 60px;
+            background: var(--metal-shine);
+            border: 2px solid #555;
+            position: relative;
             cursor: pointer;
-            font-size: 1rem;
+            box-shadow: inset 0 0 10px #000, 3px 5px 10px rgba(0,0,0,0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: 0.3s;
         }
 
-        button:hover {
-            background: #444;
+        .pull-tab::before, .pull-tab::after {
+            content: '';
+            position: absolute;
+            width: 6px;
+            height: 6px;
+            background: #111;
+            border-radius: 50%;
+            top: 5px;
+        }
+        .pull-tab::before { left: 5px; }
+        .pull-tab::after { right: 5px; }
+
+        .label-card {
+            width: 85%;
+            height: 70%;
+            background: #ddd;
+            color: #000;
+            font-family: 'Special Elite', typewriter;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            font-size: 0.9rem;
+            transition: 0.3s;
         }
 
-        button:disabled {
-            opacity: 0.3;
-            cursor: not-allowed;
-        }
-    </style>
-</head>
-<body>
-
-<div class="catalog-container">
-    <div class="header">
-        <div class="category-label" id="categoryLabel">Loading...</div>
-        <div class="page-info" id="pageDisplay">Page 1 / 17</div>
-    </div>
-
-    <div class="grid-container" id="catalogGrid">
-        </div>
-
-    <div class="controls">
-        <button id="prevBtn" onclick="changePage(-1)">Previous</button>
-        <button id="nextBtn" onclick="changePage(1)">Next</button>
-    </div>
-</div>
-
-<script>
-    let currentPage = 1;
-    const totalPages = 17;
-
-    // The Master Inventory Mapping
-    const inventory = {
-        1: { label: "Seating - Couches", items: ["seating_couch1.png", "seating_couch2.png", "seating_couch3.png", "seating_couch4.png", "seating_couch5.png", "seating_couch6.png"] },
-        2: { label: "Seating - Couches", items: ["seating_couch7.png"] },
-        3: { label: "Seating - Armchairs", items: ["seating_armchair.png", "seating_armchair1.png", "seating_armchair2.png", "seating_armchair3.png"] },
-        4: { label: "Seating - Barstools", items: ["seating_barstool.png", "seating_barstool1.png", "seating_barstool2.png", "seating_barstool3.png"] },
-        5: { label: "Seating - Benches", items: ["seating_benches1.png", "seating_benches2.png"] },
-        6: { label: "Seating - Dining Chairs", items: ["seating_diningchair1.png", "seating_diningchair2.png", "seating_diningchair3.png", "seating_diningchair4.png"] },
-        7: { label: "Storage - Dressers", items: ["storage_dresser1.png", "storage_dresser2.png", "storage_dresser3.png", "storage_dresser4.png", "storage_dresser5.png", "storage_dresser6.png"] },
-        8: { label: "Storage - Cabinets", items: ["storage_cabinet1.png", "storage_cabinet2.png"] },
-        9: { label: "Storage - Shelves", items: ["storage_shelf1.png", "storage_shelf2.png"] },
-        10: { label: "Storage - Sideboards", items: ["storage_sideboard1.png", "storage_sideboard2.png"] },
-        11: { label: "Storage - Vanity", items: ["storage_vanity1.png"] },
-        12: { label: "Seating - Ottoman", items: ["seating_ottoman.png"] },
-        13: { label: "Tables - Dining", items: ["tables_dining1.png", "tables_dining2.png"] },
-        14: { label: "Tables - End Tables", items: ["tables_endtable1.png", "tables_endtable2.png"] },
-        15: { label: "Tables - Sofa Table", items: ["tables_sofatable1.png"] },
-        16: { label: "Beds", items: ["beds_bed1.png", "beds_bed2.png", "beds_bed3.png", "beds_bed4.png", "beds_bed5.png", "beds_bed6.png"] },
-        17: { label: "Beds", items: ["beds_bed7.png"] }
-    };
-
-    function renderPage() {
-        const grid = document.getElementById('catalogGrid');
-        const pageData = inventory[currentPage];
-        
-        document.getElementById('pageDisplay').innerText = `Page ${currentPage} / ${totalPages}`;
-        document.getElementById('categoryLabel').innerText = pageData.label;
-        
-        grid.innerHTML = '';
-
-        // Generate 6 slots (2x3 grid)
-        for (let i = 0; i < 6; i++) {
-            const slot = document.createElement('div');
-            slot.className = 'grid-item';
-            
-            if (pageData.items[i]) {
-                const img = document.createElement('img');
-                img.src = pageData.items[i];
-                img.alt = pageData.items[i];
-                
-                const name = document.createElement('div');
-                name.className = 'item-name';
-                name.innerText = pageData.items[i];
-                
-                slot.appendChild(img);
-                slot.appendChild(name);
-                
-                slot.ondblclick = () => {
-                    console.log("Selected item:", pageData.items[i]);
-                    // Custom function for your site logic here
-                };
-            }
-            
-            grid.appendChild(slot);
+        .pull-tab:hover .label-card {
+            background: var(--glow);
+            box-shadow: 0 0 15px var(--glow);
+            transform: translateY(-2px);
         }
 
-        document.getElementById('prevBtn').disabled = (currentPage === 1);
-        document.getElementById('nextBtn').disabled = (currentPage === totalPages);
-    }
-
-    function changePage(step) {
-        currentPage += step;
-        if (currentPage < 1) currentPage = 1;
-        if (currentPage > totalPages) currentPage = totalPages;
-        renderPage();
-    }
-
-    // Initial load
-    renderPage();
-</script>
-
-</body>
-</html>
+        .tab-lip {
+            position: absolute;
+            bottom: -5px;
