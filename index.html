@@ -4,29 +4,42 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Room Glow Up</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Limelight&display=swap" rel="stylesheet">
     <style>
         :root {
-            --dark-teal: #008080;
+            --dark-teal: #006666;
+            --shine-color: rgba(255, 255, 255, 0.8);
         }
 
         body, html {
             margin: 0;
             padding: 0;
-            width: 300%;
-            height: 300%;
-            font-family: 'Arial', sans-serif;
+            width: 100%;
+            height: 100%;
+            font-family: Arial, sans-serif;
             overflow-x: hidden;
+            scroll-behavior: smooth;
+        }
+
+        /* Background Layers */
+        #main-wrapper {
             background-image: url('Assets/mainbackground3.jpg');
             background-size: cover;
             background-attachment: fixed;
+            min-height: 200vh;
             transition: background-image 0.5s ease-in-out;
         }
 
-        /* Shining Effect for Header */
-        .header-container {
+        .rain-bg {
+            background-image: url('Assets/rainbackground.jpg') !important;
+        }
+
+        /* Header Styles */
+        header {
             text-align: center;
-            padding-top: 50px;
+            padding: 50px 20px;
         }
 
         h1 {
@@ -37,6 +50,7 @@
             text-transform: uppercase;
             position: relative;
             display: inline-block;
+            /* Shining Effect */
             background: linear-gradient(to right, var(--dark-teal) 20%, #fff 40%, #fff 60%, var(--dark-teal) 80%);
             background-size: 200% auto;
             color: #000;
@@ -58,94 +72,192 @@
             margin-top: 10px;
         }
 
-        /* Pull Tab Navigation */
-        .nav-container {
+        /* Top Pull Tabs */
+        .pull-tabs-container {
             display: flex;
             justify-content: center;
-            gap: 20px;
+            gap: 15px;
             margin-top: 30px;
-            position: relative;
-            z-index: 100;
         }
 
         .pull-tab {
             cursor: pointer;
             transition: transform 0.3s ease, filter 0.3s ease;
-            width: 150px; /* Adjust based on image scale */
+            height: 120px;
         }
 
         .pull-tab:hover {
             transform: translateY(-10px);
-            filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.8));
+            filter: drop-shadow(0 0 10px rgba(255, 255, 0, 0.7));
         }
 
-        /* Main Workspace Area */
+        /* Canvas Area */
         #main-canvas {
             width: 80%;
             height: 600px;
             margin: 50px auto;
-            border: 5px solid rgba(255, 255, 255, 0.2);
-            background: rgba(0, 0, 0, 0.1);
+            background-color: rgba(255,255,255,0.2);
+            border: 5px solid var(--dark-teal);
             position: relative;
             overflow: hidden;
+            background-size: cover;
+            background-position: center;
         }
 
-        /* Cabinets and Assets */
-        .sliding-asset {
-            position: absolute;
-            transition: transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-        }
-
-        #roomscabinet {
-            left: -100%;
-            top: 100px;
+        /* Cabinet Slide-in (Rooms) */
+        #rooms-cabinet {
+            position: fixed;
+            left: -500px;
+            top: 20%;
             width: 400px;
+            transition: left 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            z-index: 100;
         }
 
-        /* Utility for Background Change */
-        .rain-bg {
-            background-image: url('Assets/rainbackground.jpg');
+        #rooms-cabinet.active {
+            left: 0;
         }
+
+        .drawer-handle {
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        .drawer-handle:hover {
+            transform: scale(1.1);
+            filter: brightness(1.2);
+        }
+
+        /* Furniture Cases */
+        #furniture-cases {
+            position: fixed;
+            left: -500px;
+            top: 20%;
+            width: 400px;
+            transition: left 0.8s ease;
+            z-index: 99;
+        }
+
+        #furniture-cases.active {
+            left: 0;
+        }
+
+        /* Decor Closet (Bottom Slide) */
+        #closet-door {
+            position: fixed;
+            bottom: -600px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 600px;
+            transition: bottom 0.8s ease;
+            z-index: 101;
+        }
+
+        #closet-door.active {
+            bottom: 0;
+        }
+
+        /* Scroll Receipt */
+        #scroll-receipt {
+            position: fixed;
+            top: -800px;
+            right: 50px;
+            width: 300px;
+            transition: top 1s ease;
+            z-index: 102;
+        }
+
+        #scroll-receipt.active {
+            top: 100px;
+        }
+
+        /* Catalog Book */
+        #furniture-catalog-book {
+            display: none;
+            position: fixed;
+            top: 10%;
+            left: 10%;
+            width: 80%;
+            height: 80%;
+            background: white;
+            z-index: 200;
+            box-shadow: 0 0 50px rgba(0,0,0,0.5);
+            /* Logic for "opening like a book" would be handled via JS/CSS transforms */
+        }
+
+        .draggable-item {
+            position: absolute;
+            cursor: move;
+            max-width: 150px;
+        }
+
     </style>
 </head>
 <body>
 
-    <div class="header-container">
-        <h1 id="main-header">Room Glow Up</h1>
+<div id="main-wrapper">
+    <header>
+        <h1>Room Glow Up</h1>
         <h2>Where Your Dream Space Comes To Life.</h2>
-    </div>
-
-    <div class="nav-container">
-        <img src="Assets/pulltabs_rooms.png" alt="Rooms" class="pull-tab" onclick="triggerRooms()">
-        <img src="Assets/pulltabs_furniturecatalog.png" alt="Furniture Catalog" class="pull-tab">
-        <img src="Assets/pulltabs_decorcloset.png" alt="Decor Closet" class="pull-tab">
-        <img src="Assets/pulltabs_inspogallery.png" alt="Inspirational Gallery" class="pull-tab">
-        <img src="Assets/pulltabs_savecheckout.png" alt="Save/Check Out" class="pull-tab">
-    </div>
+        
+        <div class="pull-tabs-container">
+            <img src="Assets/pulltabs_rooms.png" alt="Rooms" class="pull-tab" onclick="triggerRooms()">
+            <img src="Assets/pulltabs_furniturecatalog.png" alt="Furniture Catalog" class="pull-tab" onclick="triggerCatalog()">
+            <img src="Assets/pulltabs_decorcloset.png" alt="Decor Closet" class="pull-tab" onclick="triggerCloset()">
+            <img src="Assets/pulltabs_inspogallery.png" alt="Inspirational Gallery" class="pull-tab">
+            <img src="Assets/pulltabs_savecheckout.png" alt="Save/Check Out" class="pull-tab" onclick="triggerSave()">
+        </div>
+    </header>
 
     <div id="main-canvas">
-        <img src="Assets/roomscabinet.png" id="roomscabinet" class="sliding-asset">
-        
         </div>
 
-    <script>
-        function triggerRooms() {
-            // Change background to rain
-            document.body.classList.add('rain-bg');
-            
-            // Slide in the cabinet
-            const cabinet = document.getElementById('roomscabinet');
-            cabinet.style.transform = 'translateX(100%)';
+    <div id="rooms-cabinet">
+        <img src="Assets/roomscabinet.png" alt="Rooms Cabinet" style="width: 100%;">
+        </div>
 
-            // Scroll down to show full cabinet
-            window.scrollTo({
-                top: document.getElementById('main-canvas').offsetTop,
-                behavior: 'smooth'
-            });
-        }
-    </script>
+    <div id="furniture-cases">
+        <img src="Assets/furniturecases.png" alt="Furniture Cases" style="width: 100%;">
+    </div>
+
+    <div id="closet-door">
+        <img src="Assets/closetdoor.png" alt="Closet Door" style="width: 100%;">
+    </div>
+
+    <img src="Assets/scrollreceipt.png" id="scroll-receipt" alt="Receipt">
+
+    <div id="furniture-catalog-book">
+        </div>
+</div>
+
+<script>
+    const wrapper = document.getElementById('main-wrapper');
+    const cabinet = document.getElementById('rooms-cabinet');
+    const cases = document.getElementById('furniture-cases');
+    const closet = document.getElementById('closet-door');
+    const receipt = document.getElementById('scroll-receipt');
+
+    function triggerRooms() {
+        wrapper.classList.add('rain-bg');
+        cabinet.classList.toggle('active');
+        window.scrollTo(0, 800);
+    }
+
+    function triggerCloset() {
+        closet.classList.toggle('active');
+        window.scrollTo(0, document.body.scrollHeight);
+    }
+
+    function triggerSave() {
+        receipt.classList.toggle('active');
+    }
+
+    function triggerCatalog() {
+        // Logic to display furniturecatalog pulltab action
+    }
+
+    // Drag and Drop Logic to be implemented for canvas items
+</script>
 
 </body>
 </html>
-
-
