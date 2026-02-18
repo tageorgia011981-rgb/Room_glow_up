@@ -7,6 +7,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Limelight&display=swap" rel="stylesheet">
     <style>
         :root {
+            /* Brushed Gold Palette */
             --gold-deep: #4d3300;
             --gold-brushed: #daa520;
             --gold-bright: #ffcc33;
@@ -26,12 +27,13 @@
             scroll-behavior: smooth;
         }
 
-        /* --- SECTION 1: HOME (mainbackground3.jpg) --- */
-        #hero-entrance {
+        /* --- FULL SCREEN BACKGROUND (NO CUT-OFF) --- */
+        .page-section {
             height: 100vh;
             width: 100vw;
-            background: url('Assets/mainbackground3.jpg') no-repeat center center;
             background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -40,13 +42,23 @@
             position: relative;
         }
 
+        #home-entrance {
+            background-image: url('Assets/mainbackground3.jpg');
+        }
+
+        /* GALLERY SECTION ONLY (RAIN BACKGROUND) */
+        #inspo-gallery {
+            display: none; /* Hidden until tab pulled */
+            background-image: url('Assets/rainbackground.jpg');
+        }
+
         /* --- SHARED GOLD SHINE ANIMATION --- */
         @keyframes goldShine {
             0% { background-position: 200% center; }
             100% { background-position: -200% center; }
         }
 
-        /* --- MAIN HEADER --- */
+        /* --- MAIN HEADER (160px) --- */
         .main-header {
             font-size: 160px;
             margin: 0;
@@ -58,15 +70,15 @@
             color: transparent;
             -webkit-background-clip: text;
             background-clip: text;
-            filter: drop-shadow(5px 5px 0px #2b1d00) drop-shadow(10px 15px 20px rgba(0,0,0,0.9));
+            filter: drop-shadow(5px 5px 0px #2b1d00) drop-shadow(10px 15px 25px rgba(0,0,0,0.9));
             animation: goldShine 6s linear infinite;
         }
 
-        /* --- SUB HEADER --- */
+        /* --- SUB HEADER (60px - SHORTER LENGTH) --- */
         .sub-header {
             font-size: 60px;
-            max-width: 950px;
-            margin: 10px auto 50px auto;
+            max-width: 950px; /* Limits length to stay under main title */
+            margin: 15px auto 50px auto;
             line-height: 1.1;
             letter-spacing: -1px;
             background: linear-gradient(to right, var(--gold-deep), var(--gold-brushed), var(--white-glint), var(--gold-brushed), var(--gold-deep));
@@ -74,19 +86,19 @@
             color: transparent;
             -webkit-background-clip: text;
             background-clip: text;
-            filter: drop-shadow(3px 3px 0px #2b1d00) drop-shadow(6px 8px 15px rgba(0,0,0,0.8));
+            filter: drop-shadow(3px 3px 0px #2b1d00) drop-shadow(6px 10px 15px rgba(0,0,0,0.8));
             animation: goldShine 6s linear infinite;
         }
 
-        /* --- THE PULL TABS ROW (ENLARGED & ALIGNED) --- */
+        /* --- PULL TABS RAIL (STRAIGHT LINE & ENLARGED) --- */
         #pull-tabs-row {
             display: flex;
-            flex-direction: row;      /* Absolute straight line */
-            justify-content: center;  /* Centered on screen */
-            align-items: center;      /* Vertically aligned */
-            gap: 30px;                /* Substantial gap between large tabs */
-            width: 95%;               /* Spans most of the screen width */
-            margin: 0 auto;
+            flex-direction: row;
+            flex-wrap: nowrap;
+            justify-content: center;
+            align-items: center;
+            gap: 25px;
+            width: 100%;
             z-index: 1000;
         }
 
@@ -94,85 +106,94 @@
             cursor: pointer;
             transition: transform 0.4s var(--heavy-glide);
             filter: drop-shadow(0 15px 20px rgba(0,0,0,0.8));
+            flex-shrink: 0;
         }
 
         .pull-tab img {
-            width: 220px;            /* Enlarged Width */
+            width: 220px; /* Enlarged Size */
             height: auto;
             display: block;
         }
 
         .pull-tab:hover {
-            transform: translateY(20px) scale(1.05); /* Lifts and grows slightly */
+            transform: translateY(25px) scale(1.03);
         }
 
-        /* --- SECTION 2: WORKSPACE (rainbackground.jpg) --- */
-        #design-zone {
-            height: 100vh;
-            width: 100vw;
-            background: url('Assets/rainbackground.jpg') no-repeat center center;
-            background-size: cover;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            position: relative;
-        }
-
-        #main-canvas {
-            width: 850px;
-            height: 550px;
-            background: rgba(0,0,0,0.4);
-            border: 4px solid #1a1a1a;
-            box-shadow: 0 0 80px rgba(0,0,0,1);
-        }
-
+        /* --- ASSETS GLIDING --- */
         #rooms-cabinet {
             position: absolute;
             left: -600px;
             top: 50%;
             transform: translateY(-50%);
-            width: 520px;
+            width: 550px;
             transition: left 0.9s var(--heavy-glide);
             z-index: 100;
         }
 
-        #rooms-cabinet.active { left: 40px; }
+        #rooms-cabinet.active {
+            left: 50px;
+        }
+
+        #main-canvas {
+            width: 850px;
+            height: 550px;
+            background: rgba(0,0,0,0.5);
+            border: 4px solid #1a1a1a;
+            box-shadow: 0 0 100px rgba(0,0,0,1);
+            transition: transform 0.8s var(--heavy-glide);
+        }
+
+        .shift-canvas #main-canvas {
+            transform: translateX(280px);
+        }
 
     </style>
 </head>
 <body>
 
-    <section id="hero-entrance">
+    <section id="home-entrance" class="page-section">
         <h1 class="main-header">Room Glow Up</h1>
         <div class="sub-header">Where Your Dream Space Comes To Life</div>
 
         <div id="pull-tabs-row">
-            <div class="pull-tab" onclick="actionRooms()"><img src="Assets/pulltabs_rooms.png" alt="Rooms"></div>
-            <div class="pull-tab" onclick="actionFurniture()"><img src="Assets/pulltabs_furniturecatalog.png" alt="Furniture Catalog"></div>
-            <div class="pull-tab" onclick="actionDecor()"><img src="Assets/pulltabs_decorcloset.png" alt="Decor Closet"></div>
-            <div class="pull-tab"><img src="Assets/pulltabs_inspogallery.png" alt="Inspirational Gallery"></div>
-            <div class="pull-tab" onclick="actionCheckout()"><img src="Assets/pulltabs_savecheckout.png" alt="Save/Check Out"></div>
+            <div class="pull-tab" onclick="openRooms()"><img src="Assets/pulltabs_rooms.png" alt="Rooms"></div>
+            <div class="pull-tab" onclick="openFurniture()"><img src="Assets/pulltabs_furniturecatalog.png" alt="Furniture Catalog"></div>
+            <div class="pull-tab" onclick="openDecor()"><img src="Assets/pulltabs_decorcloset.png" alt="Decor Closet"></div>
+            <div class="pull-tab" onclick="goToGallery()"><img src="Assets/pulltabs_inspogallery.png" alt="Inspirational Gallery"></div>
+            <div class="pull-tab" onclick="openSave()"><img src="Assets/pulltabs_savecheckout.png" alt="Save/Check Out"></div>
         </div>
-    </section>
 
-    <section id="design-zone">
-        <div id="main-canvas"></div>
         <div id="rooms-cabinet">
             <img src="Assets/roomscabinet.png" style="width:100%;">
         </div>
+
+        <div id="main-canvas"></div>
     </section>
 
+    <section id="inspo-gallery" class="page-section">
+        <h1 class="main-header" style="font-size: 100px;">Gallery</h1>
+        </section>
+
     <script>
-        function actionRooms() {
-            document.getElementById('design-zone').scrollIntoView({ behavior: 'smooth' });
-            setTimeout(() => {
-                document.getElementById('rooms-cabinet').classList.add('active');
-            }, 800);
+        const home = document.getElementById('home-entrance');
+        const cabinet = document.getElementById('rooms-cabinet');
+        const gallery = document.getElementById('inspo-gallery');
+
+        function openRooms() {
+            // Glide in the blue cabinet and shift canvas
+            home.classList.add('shift-canvas');
+            cabinet.classList.add('active');
         }
-        // Placeholders for other manifest actions
-        function actionFurniture() {}
-        function actionDecor() {}
-        function actionCheckout() {}
+
+        function goToGallery() {
+            // Smoothly hide main and show rain background gallery
+            home.style.display = 'none';
+            gallery.style.display = 'flex';
+        }
+
+        function openFurniture() { /* Furniture trade logic */ }
+        function openDecor() { /* Closet glide up logic */ }
+        function openSave() { /* Scroll receipt logic */ }
     </script>
 </body>
 </html>
