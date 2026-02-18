@@ -14,35 +14,32 @@
             --heavy-glide: cubic-bezier(0.7, 0, 0.3, 1);
         }
 
-        /* --- FULL SCREEN IMMERSION (NO CUT-OFF) --- */
-        html, body {
+        body, html {
             margin: 0;
             padding: 0;
             width: 100%;
             height: 100%;
-            background: #000;
             font-family: 'Limelight', cursive;
+            background-color: #000;
+            color: white;
+            overflow-x: hidden;
             scroll-behavior: smooth;
         }
 
-        body {
-            background: url('Assets/mainbackground3.jpg') no-repeat center center fixed;
-            background-size: cover;
-        }
-
-        /* --- THE ENTRANCE (FRONT & CENTER) --- */
+        /* --- BACKGROUND: FULL SCREEN NO CUT-OFF --- */
         #hero-entrance {
-            height: 100vh;
+            min-height: 100vh;
             width: 100vw;
+            background: url('Assets/mainbackground3.jpg') no-repeat center center;
+            background-size: cover;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
             text-align: center;
-            position: relative;
-            z-index: 10; /* Lower than the cabinet */
         }
 
+        /* --- GOLD SHINE ANIMATION --- */
         @keyframes goldShine {
             0% { background-position: 200% center; }
             100% { background-position: -200% center; }
@@ -57,44 +54,45 @@
             color: transparent;
             -webkit-background-clip: text;
             background-clip: text;
-            filter: drop-shadow(5px 5px 0px #2b1d00) drop-shadow(10px 15px 25px rgba(0,0,0,0.9));
+            filter: drop-shadow(5px 5px 0px #2b1d00) drop-shadow(10px 15px 20px rgba(0,0,0,0.9));
             animation: goldShine 6s linear infinite;
         }
 
         .sub-header {
             font-size: 60px;
-            max-width: 900px;
-            margin: 15px auto 45px auto;
+            max-width: 950px;
+            margin: 10px auto 40px auto;
             line-height: 1.1;
             background: linear-gradient(to right, var(--gold-deep), var(--gold-brushed), var(--white-glint), var(--gold-brushed), var(--gold-deep));
             background-size: 200% auto;
             color: transparent;
             -webkit-background-clip: text;
             background-clip: text;
-            filter: drop-shadow(3px 3px 0px #2b1d00) drop-shadow(6px 10px 15px rgba(0,0,0,0.8));
+            filter: drop-shadow(3px 3px 0px #2b1d00) drop-shadow(6px 8px 15px rgba(0,0,0,0.8));
             animation: goldShine 6s linear infinite;
         }
 
-        /* --- PULL TABS (ENLARGED & STRAIGHT LINE) --- */
+        /* --- THE PULL TAB RAIL (THE LINE-UP FIX) --- */
         #pull-tabs-row {
             display: flex;
-            flex-direction: row;
-            flex-wrap: nowrap; /* FORCES STRAIGHT LINE */
-            justify-content: center;
-            align-items: center;
-            gap: 30px;
+            flex-direction: row;      /* Forces side-by-side */
+            flex-wrap: nowrap;        /* Prevents stacking/dropping to next line */
+            justify-content: center;  /* Centers the whole row */
+            align-items: center;      /* Keeps them vertically aligned */
+            gap: 25px;                /* Equal space between each tab */
             width: 100%;
+            padding-top: 20px;
         }
 
         .pull-tab {
             cursor: pointer;
             transition: transform 0.4s var(--heavy-glide);
             filter: drop-shadow(0 15px 20px rgba(0,0,0,0.8));
-            flex-shrink: 0;
+            flex-shrink: 0;           /* Prevents tabs from getting squashed */
         }
 
         .pull-tab img {
-            width: 220px; /* ENLARGED */
+            width: 220px;             /* Your enlarged size */
             height: auto;
             display: block;
         }
@@ -103,8 +101,8 @@
             transform: translateY(20px) scale(1.05);
         }
 
-        /* --- THE DESIGN ZONE (RAIN BACKGROUND IS ONLY FOR GALLERY) --- */
-        #workspace-section {
+        /* --- DESIGN ZONE --- */
+        #design-zone {
             height: 100vh;
             width: 100vw;
             display: flex;
@@ -116,26 +114,23 @@
         #main-canvas {
             width: 850px;
             height: 550px;
-            background: rgba(0,0,0,0.5);
+            background: rgba(0,0,0,0.4);
             border: 4px solid #1a1a1a;
             box-shadow: 0 0 100px rgba(0,0,0,1);
-            transition: transform 0.8s var(--heavy-glide);
-            z-index: 50;
         }
 
-        /* --- THE BLUE CABINET (FRONT LAYER) --- */
         #rooms-cabinet {
-            position: fixed; /* Keeps it relative to screen, not header */
-            left: -600px;
-            top: 50%;
+            position: absolute;
+            left: -800px; 
+            top: 60%; 
             transform: translateY(-50%);
-            width: 550px;
-            transition: left 0.9s var(--heavy-glide);
-            z-index: 1000; /* HIGHER THAN HEADERS */
+            width: 750px; 
+            transition: left 1s var(--heavy-glide);
+            z-index: 500;
         }
 
         #rooms-cabinet.active {
-            left: 50px;
+            left: 20px;
         }
 
     </style>
@@ -147,43 +142,38 @@
         <div class="sub-header">Where Your Dream Space Comes To Life</div>
 
         <div id="pull-tabs-row">
-            <div class="pull-tab" onclick="actionRooms()"><img src="Assets/pulltabs_rooms.png"></div>
-            <div class="pull-tab" onclick="actionFurniture()"><img src="Assets/pulltabs_furniturecatalog.png"></div>
-            <div class="pull-tab" onclick="actionDecor()"><img src="Assets/pulltabs_decorcloset.png"></div>
-            <div class="pull-tab" onclick="actionGallery()"><img src="Assets/pulltabs_inspogallery.png"></div>
-            <div class="pull-tab" onclick="actionSave()"><img src="Assets/pulltabs_savecheckout.png"></div>
+            <div class="pull-tab" onclick="actionRooms()">
+                <img src="Assets/pulltabs_rooms.png" alt="Rooms">
+            </div>
+            <div class="pull-tab">
+                <img src="Assets/pulltabs_furniturecatalog.png" alt="Furniture">
+            </div>
+            <div class="pull-tab">
+                <img src="Assets/pulltabs_decorcloset.png" alt="Decor">
+            </div>
+            <div class="pull-tab">
+                <img src="Assets/pulltabs_inspogallery.png" alt="Inspo">
+            </div>
+            <div class="pull-tab">
+                <img src="Assets/pulltabs_savecheckout.png" alt="Checkout">
+            </div>
         </div>
     </section>
 
-    <section id="workspace-section">
+    <section id="design-zone">
         <div id="main-canvas"></div>
+        <div id="rooms-cabinet">
+            <img src="Assets/roomscabinet.png" style="width:100%;">
+        </div>
     </section>
-
-    <div id="rooms-cabinet">
-        <img src="Assets/roomscabinet.png" style="width:100%;">
-    </div>
 
     <script>
         function actionRooms() {
-            // 1. Scroll down to workspace
-            document.getElementById('workspace-section').scrollIntoView({ behavior: 'smooth' });
-            
-            // 2. Glide in the Blue Cabinet on top of everything
+            document.getElementById('design-zone').scrollIntoView({ behavior: 'smooth' });
             setTimeout(() => {
                 document.getElementById('rooms-cabinet').classList.add('active');
-                // Shift canvas to make room
-                document.getElementById('main-canvas').style.transform = "translateX(280px)";
             }, 800);
         }
-
-        function actionGallery() {
-            // Only here does the rainbackground.jpg appear
-            window.location.href = "#"; // Placeholder for gallery logic
-        }
-
-        function actionFurniture() {}
-        function actionDecor() {}
-        function actionSave() {}
     </script>
 </body>
 </html>
